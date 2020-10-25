@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2020/03/22)
+[date]: <> (2020/03/21)
 [title]: <> (A Quick Garbled Circuits Primer)
 [pandoc]: <> ()
 
@@ -32,23 +32,21 @@ Now, for every gate in the circuit, we do the following. For every combination o
 
 Here's the garbling of the first XOR gate:
 
-<table border="1">
-<tr><td>Inputs</td><td>Output</td><td>Encoding of output</td></tr>
-<tr><td>00</td><td>0</td><td>0 + hash(1, 6816, 6529)</td></tr>
-<tr><td>01</td><td>1</td><td>1 + hash(1, 6816, 4872)</td></tr>
-<tr><td>10</td><td>1</td><td>1 + hash(1, 8677, 6529)</td></tr>
-<tr><td>11</td><td>0</td><td>0 + hash(1, 8677, 4872)</td></tr>
-</table><br>
+| Inputs | Output | Encoding of output |
+| - | - | - |
+| 00 | 0 | 0 + hash(1, 6816, 6529) |
+| 01 | 1 | 1 + hash(1, 6816, 4872) |
+| 10 | 1 | 1 + hash(1, 8677, 6529) |
+| 11 | 0 | 0 + hash(1, 8677, 4872) |
 
 Notice that we are including the (encrypted forms of) 0 and 1 directly, because this XOR gate's outputs are directly final outputs of the program. Now, let's look at the leftmost AND gate:
 
-<table border="1">
-<tr><td>Inputs</td><td>Output</td><td>Encoding of output</td></tr>
-<tr><td>00</td><td>0</td><td>5990 + hash(2, 6816, 6529)</td></tr>
-<tr><td>01</td><td>0</td><td>5990 + hash(2, 6816, 4872)</td></tr>
-<tr><td>10</td><td>0</td><td>5990 + hash(2, 8677, 6529)</td></tr>
-<tr><td>11</td><td>1</td><td>1921 + hash(2, 8677, 4872)</td></tr>
-</table><br>
+| Inputs | Output | Encoding of output |
+| - | - | - |
+| 00 | 0 | 5990 + hash(2, 6816, 6529) |
+| 01 | 0 | 5990 + hash(2, 6816, 4872) |
+| 10 | 0 | 5990 + hash(2, 8677, 6529) |
+| 11 | 1 | 1921 + hash(2, 8677, 4872) |
 
 Here, the gate's outputs are just used as inputs to other gates, so we use labels instead of bits to hide these intermediate bits from the evaluator.
 

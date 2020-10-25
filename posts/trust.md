@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2020/08/21)
+[date]: <> (2020/08/20)
 [title]: <> (Trust Models)
 [pandoc]: <> ()
 

@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2020/10/19)
+[date]: <> (2020/10/18)
 [title]: <> (Gitcoin Grants Round 7 Retrospective)
 [pandoc]: <> (--mathjax)
 

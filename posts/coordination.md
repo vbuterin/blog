@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2020/09/12)
+[date]: <> (2020/09/11)
 [title]: <> (Coordination, Good and Bad)
 [pandoc]: <> (--mathjax)
 
@@ -24,7 +24,7 @@ We can think about this visually as a map, though in reality the map has many bi
 
 <center>
 <img src="/images/coordination/map.png" />
-</center><br><br>
+</center><br>
 
 The bottom-left corner, "every man for himself", is where we don't want to be. The top-right corner, total coordination, is ideal, but likely unachievable. But the landscape in the middle is far from an even slope up, with many reasonably safe and productive places that it might be best to settle down in and many deep dark caves to avoid.
 

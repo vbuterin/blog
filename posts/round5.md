@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2020/05/01)
+[date]: <> (2020/04/30)
 [title]: <> (Gitcoin Grants Round 5 Retrospective)
 [pandoc]: <> (--mathjax)
 
@@ -58,16 +58,9 @@ Hypothesis (1) also should be taken seriously; there's genuine value in preventi
 
 My explanation of hypothesis (2) starts, interestingly enough, with a defense of (1): why ossification is genuinely a risk. Suppose that there are two projects, A and B, and suppose that they are equal quality. But A already has an established base of contributors; B does not (we'll say for illustration it only has a few existing contributors). Here's how much matching you are contributing by participating in each project:
 
-<center>
-<table><tr>
-<td>Contributing to A</td><td>Contributing to B</td>
-</tr><tr>
-<td>&nbsp;</td><td>&nbsp;</td>
-</tr><tr>
-<td><img src="/images/round5/QF1.png"></td><td><img src="/images/round5/QF2.png"></td>
-</tr></table>
-</center>
-<br>
+| Contributing to A | Contributing to B |
+| - | - |
+| ![](/images/round5/QF1.png) | ![](/images/round5/QF2.png) |
 
 Clearly, you have more impact by supporting A, and so A gets even more contributors and B gets fewer; the rich get richer. Even if project B was _somewhat better_, the greater impact from supporting A could still create a lock-in that reinforces A's position. The current everyone-starts-from-zero-in-each-round mechanism greatly limits this type of entrenchment, because, well, everyone's matching gets reset and starts from zero.
 

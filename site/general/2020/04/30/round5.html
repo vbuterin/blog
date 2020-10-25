@@ -74,35 +74,20 @@
 <p>In a recent call with the Gitcoin team, hypothesis (3) was mentioned frequently. A specific issue was that people were worried about making recurring contributions because they were concerned whether or not the money that they lock up for a recurring contribution would be safe. Improving the payment system and notification workflow may help with this. Another option is to move away from explicit "streaming" and instead simply have the UI provide an option for repeating the last round's contributions and making edits from there.</p>
 <p>Hypothesis (1) also should be taken seriously; there's genuine value in preventing ossification and allowing space for new entrants. But I want to zoom in particularly on hypothesis (2), the coordination failure hypothesis.</p>
 <p>My explanation of hypothesis (2) starts, interestingly enough, with a defense of (1): why ossification is genuinely a risk. Suppose that there are two projects, A and B, and suppose that they are equal quality. But A already has an established base of contributors; B does not (we'll say for illustration it only has a few existing contributors). Here's how much matching you are contributing by participating in each project:</p>
-<center>
 <table>
-<tr>
-<td>
-Contributing to A
-</td>
-<td>
-Contributing to B
-</td>
+<thead>
+<tr class="header">
+<th>Contributing to A</th>
+<th>Contributing to B</th>
 </tr>
-<tr>
-<td>
- 
-</td>
-<td>
- 
-</td>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="/images/round5/QF1.png" /></td>
+<td><img src="/images/round5/QF2.png" /></td>
 </tr>
-<tr>
-<td>
-<img src="/images/round5/QF1.png">
-</td>
-<td>
-<img src="/images/round5/QF2.png">
-</td>
-</tr>
+</tbody>
 </table>
-</center>
-<p><br></p>
 <p>Clearly, you have more impact by supporting A, and so A gets even more contributors and B gets fewer; the rich get richer. Even if project B was <em>somewhat better</em>, the greater impact from supporting A could still create a lock-in that reinforces A's position. The current everyone-starts-from-zero-in-each-round mechanism greatly limits this type of entrenchment, because, well, everyone's matching gets reset and starts from zero.</p>
 <p>However, a very similar effect also is the cause behind the market failure preventing stable recurring contributions, and the every-round-reset <em>actually exacerbates it</em>. Look at the same picture above, except instead of thinking of A and B as <em>two different projects</em>, think of them as <em>the same project in the current round and in the next round</em>.</p>
 <p>We simplify the model as follows. An individual has two choices: contribute $10 in the current round, or contribute $5 in the current round and $5 in the next round. If the matchings in the two rounds were equal, then the latter option would actually be more favorable: because the matching is proportional to the square root of the donation size, the former might give you eg. a $200 match now, but the latter would give you $141 in the current round + $141 in the next round = $282. But if you see a large mass of people contributing in the current round, and you expect much fewer people to contribute in the second round, then the choice is not $200 versus $141 + $141, it might be $200 versus $141 + $5. And so you're better off joining the current round's frenzy. We can mathematically analyze the equilibrium:</p>

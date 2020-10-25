@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2020/08/18)
+[date]: <> (2020/08/17)
 [title]: <> (A Philosophy of Blockchain Validation)
 [pandoc]: <> ()
 

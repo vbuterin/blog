@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2020/01/29)
+[date]: <> (2020/01/28)
 [title]: <> (Review of Gitcoin Quadratic Funding Round 4)
 [pandoc]: <> (--mathjax)
 
@@ -40,7 +40,7 @@ There are two main objections that I heard, and both lead to interesting critici
 <img src="/images/round4-files/antiprosynth1.png" style="width:300px" />
 <img src="/images/round4-files/antiprosynth2.png" style="width:300px" />
 <img src="/images/round4-files/antiprosynth3.png" style="width:300px" />
-<br>
+<br><br>
 <i><small>Examples of @antiprosynth's recent tweets</small></i>
 <br><br>
 </center>
