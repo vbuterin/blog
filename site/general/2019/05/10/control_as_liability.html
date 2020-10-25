@@ -1,0 +1,57 @@
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
+<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="/css/misc.css">
+
+<script type="text/javascript" id="MathJax-script" async
+  src="/scripts/mathjax.js">
+</script>
+
+<style>
+@font-face {
+    font-family: MJXc-TeX-math-Iw;
+    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
+}
+@font-face {
+    font-family: MJXZERO;
+    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
+}
+@font-face {
+    font-family: MJXTEX;
+    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
+}
+
+.math { font-family: MJXc-TeX-math-Iw }
+</style>
+
+<div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Control as Liability" />
+<meta name="twitter:image" content="http://66.172.12.37/images/icon.png" />
+<h1 id="control-as-liability">Control as Liability</h1>
+<p>The regulatory and legal environment around internet-based services and applications has changed considerably over the last decade. When large-scale social networking platforms first became popular in the 2000s, the general attitude toward mass data collection was essentially "why not?". This was the age of Mark Zuckerberg <a href="https://archive.nytimes.com/www.nytimes.com/external/readwriteweb/2010/01/10/10readwriteweb-facebooks-zuckerberg-says-the-age-of-privac-82963.html">saying the age of privacy is over</a> and Eric Schmidt <a href="https://www.eff.org/deeplinks/2009/12/google-ceo-eric-schmidt-dismisses-privacy">arguing</a>, "If you have something that you don't want anyone to know, maybe you shouldn't be doing it in the first place." And it made personal sense for them to argue this: every bit of data you can get about others was a potential machine learning advantage for you, every single restriction a weakness, and if something happened to that data, the costs were relatively minor. Ten years later, things are very different.</p>
+<p>It is especially worth zooming in on a few particular trends.</p>
+<ul>
+<li><strong>Privacy</strong>. Over the last ten years, a number of privacy laws have been passed, most aggressively in Europe but also elsewhere, but the most recent is <a href="https://gdpr.eu/">the GDPR</a>. The GDPR has many parts, but among the most prominent are: (i) requirements for explicit consent, (ii) requirement to have a legal basis to process data, (iii) users' right to download all their data, (iv) users' right to require you to delete all their data. Other <a href="https://www.riskmanagementmonitor.com/canadas-own-gdpr-now-in-effect/">jurisdictions</a> are <a href="https://www.zdnet.com/article/australia-likely-to-get-its-own-gdpr/">exploring</a> similar rules.</li>
+<li><strong>Data localization rules</strong>. <a href="https://economictimes.indiatimes.com/tech/internet/the-india-draft-bill-on-data-protection-draws-inspiration-from-gdpr-but-has-its-limits/articleshow/65173684.cms?from=mdr">India</a>, <a href="https://iapp.org/resources/topics/russias-data-localization-law/">Russia</a> and many other jurisdictions increasingly <a href="https://en.wikipedia.org/wiki/Data_localization">have or are exploring</a> rules that require data on users within the country to be stored inside the country. And even when explicit laws do not exist, there's a growing shift toward concern (eg. <a href="https://qz.com/1613020/tiktok-might-be-a-chinese-cambridge-analytica-scale-privacy-threat/">1</a> <a href="https://thenextweb.com/podium/2019/03/09/eu-wants-tech-independence-from-the-us-but-itll-be-tricky/">2</a>) around data being moved to countries that are perceived to not sufficiently protect it.</li>
+<li><strong>Sharing economy regulation</strong>. Sharing economy companies such as Uber <a href="https://www.theguardian.com/technology/2015/sep/11/uber-driver-employee-ruling">are having a hard time</a> arguing to courts that, given the extent to which their applications control and direct drivers' activity, they should not be legally classified as employers.</li>
+<li><strong>Cryptocurrency regulation</strong>. A <a href="https://www.systems.cs.cornell.edu/docs/fincen-cvc-guidance-final.pdf">recent FINCEN guidance</a> attempts to clarify what categories of cryptocurrency-related activity are and are not subject to regulatory licensing requirements in the United States. Running a hosted wallet? Regulated. Running a wallet where the user controls their funds? Not regulated. Running an anonymizing mixing service? If you're <em>running</em> it, regulated. If you're just writing code... <em>not regulated</em>.</li>
+</ul>
+<p>As <a href="https://twitter.com/el33th4xor/status/1126527690264195082">Emin Gun Sirer points out</a>, the FINCEN cryptocurrency guidance is not at all haphazard; rather, it's trying to separate out categories of applications where the developer is actively controlling funds, from applications where the developer has no control. The guidance carefully separates out how <em>multisignature wallets</em>, where keys are held both by the operator and the user, are sometimes regulated and sometimes not:</p>
+<blockquote>
+<p>If the multiple-signature wallet provider restricts its role to creating un-hosted wallets that require adding a second authorization key to the wallet owner's private key in order to validate and complete transactions, the provider is not a money transmitter because it does not accept and transmit value. On the other hand, if ... the value is represented as an entry in the accounts of the provider, the owner does not interact with the payment system directly, or the provider maintains total independent control of the value, the provider will also qualify as a money transmitter.</p>
+</blockquote>
+<p>Although these events are taking place across a variety of contexts and industries, I would argue that there is a common trend at play. And the trend is this: <strong>control over users' data and digital possessions and activity is rapidly moving from an asset to a liability</strong>. Before, every bit of control you have was good: it gives you more flexibility to earn revenue, if not now then in the future. Now, every bit of control you have is a liability: you might be regulated because of it. If you exhibit control over your users' cryptocurrency, you are a money transmitter. If you have "sole discretion over fares, and can charge drivers a cancellation fee if they choose not to take a ride, prohibit drivers from picking up passengers not using the app and suspend or deactivate drivers' accounts", you are an employer. If you control your users' data, you're required to make sure you can argue just cause, have a compliance officer, and give your users access to download or delete the data.</p>
+<p>If you are an application builder, and you are both lazy and fear legal trouble, there is one easy way to make sure that you violate none of the above new rules: <em>don't build applications that centralize control</em>. If you build a wallet where the user holds their private keys, you really are still "just a software provider". If you build a "decentralized Uber" that really is just a slick UI combining a payment system, a reputation system and a search engine, and don't control the components yourself, you really won't get hit by many of the same legal issues. If you build a website that just... doesn't collect data (Static web pages? But that's impossible!) you don't have to even think about the GDPR.</p>
+<p>This kind of approach is of course not realistic for everyone. There will continue to be many cases where going without the conveniences of centralized control simply sacrifices too much for both developers and users, and there are also cases where the business model considerations mandate a more centralized approach (eg. it's easier to prevent non-paying users from using software if the software stays on your servers) win out. But we're definitely very far from having explored the full range of possibilities that more decentralized approaches offer.</p>
+<p>Generally, unintended consequences of laws, discouraging entire categories of activity when one wanted to only surgically forbid a few specific things, are considered to be a bad thing. Here though, I would argue that the forced shift in developers' mindsets, from "I want to control more things just in case" to "I want to control fewer things just in case", also has many positive consequences. Voluntarily giving up control, and voluntarily taking steps to deprive oneself of the ability to do mischief, does not come naturally to many people, and while ideologically-driven decentralization-maximizing projects exist today, it's not at all obvious at first glance that such services will continue to dominate as the industry mainstreams. What this trend in regulation does, however, is that it gives a big nudge in favor of those applications that are willing to take the centralization-minimizing, user-sovereignty-maximizing "can't be evil" route.</p>
+<p>Hence, even though these regulatory changes are arguably not pro-freedom, at least if one is concerned with the freedom of application developers, and the transformation of the internet into a subject of political focus is bound to have many negative knock-on effects, the particular trend of control becoming a liability is in a strange way <em>even more pro-cypherpunk</em> (even if not intentionally!) than policies of maximizing total freedom for application developers would have been. Though the present-day regulatory landscape is very far from an optimal one from the point of view of almost anyone's preferences, it has unintentionally dealt the movement for minimizing unneeded centralization and maximizing users' control of their own assets, private keys and data a surprisingly strong hand to execute on its vision. And it would be highly beneficial to the movement to take advantage of it.</p>
+ </div> 

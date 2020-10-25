@@ -1,7 +1,7 @@
 [category]: <> (General)
 [date]: <> (2018/07/22)
 [title]: <> (STARKs, Part 3: Into the Weeds)
-[pandoc]: <> ('--mathjax')
+[pandoc]: <> (--mathjax)
 
 # STARKs, Part 3: Into the Weeds
 
@@ -44,20 +44,20 @@ Here is the function we'll be doing a STARK of:
 We choose MIMC (see [paper](https://eprint.iacr.org/2016/492.pdf)) as the example because it is both (i) simple to understand and (ii) interesting enough to be useful in real life. The function can be viewed visually as follows:
 
 <center>
-<img src="http://vitalik.ca/files/posts_files/starks-part-3-files/MIMC.png" /><br>
+<img src="/images/starks-part-3-files/MIMC.png" /><br>
 <br>
 <small><i>Note: in many discussions of MIMC, you will typically see XOR used instead of +; this is because MIMC is typically done over binary fields, where addition _is_ XOR; here we are doing it over prime fields.</i></small>
-</center><br>
+</center>
 
 In our example, the round constants will be a relatively small list (eg. 64 items) that gets cycled through over and over again (that is, after `k[64]` it loops back to using `k[1]`).
 
 MIMC with a very large number of rounds, as we're doing here, is useful as a _verifiable delay function_ - a function which is difficult to compute, and particularly non-parallelizable to compute, but relatively easy to verify. MIMC by itself achieves this property to some extent because MIMC _can_ be computed "backward" (recovering the "input" from its corresponding "output"), but computing it backward takes about 100 times longer to compute than the forward direction (and neither direction can be significantly sped up by parallelization). So you can think of computing the function in the backward direction as being the act of "computing" the non-parallelizable proof of work, and computing the function in the forward direction as being the process of "verifying" it.
 
 <center>
-<img src="http://vitalik.ca/files/posts_files/starks-part-3-files/MIMC2.png" /><br>
+<img src="/images/starks-part-3-files/MIMC2.png" /><br>
 <br>
-<small><i>x -> x<sup>(2p-1)/3</sup> gives the inverse ofx -> x<sup>3</sup>; this is true because of <a href="https://en.wikipedia.org/wiki/Fermat%27s_little_theorem">Fermat's Little Theorem</a>, a theorem that despite its supposed littleness is arguably much more important to mathematics than Fermat's more famous "Last Theorem".</i></small>
-</center><br>
+<small><i>$x \rightarrow x^{(2p-1)/3}$ gives the inverse of $x \rightarrow x^3$; this is true because of <a href="https://en.wikipedia.org/wiki/Fermat%27s_little_theorem">Fermat's Little Theorem</a>, a theorem that despite its supposed littleness is arguably much more important to mathematics than Fermat's more famous "Last Theorem".</i></small>
+</center>
 
 What we will try to achieve here is to make verification much more efficient by using a STARK - instead of the verifier having to run MIMC in the forward direction themselves, the prover, after completing the computation in the "backward direction", would compute a STARK of the computation in the "forward direction", and the verifier would simply verify the STARK. The hope is that the overhead of computing a STARK can be less than the difference in speed running MIMC forwards relative to backwards, so a prover's time would still be dominated by the initial "backward" computation, and not the (highly parallelizable) STARK computation. Verification of a STARK can be relatively fast (in our python implementation, ~0.05-0.3 seconds), no matter how long the original computation is.
 
@@ -99,9 +99,9 @@ And the [Extended Euclidean Algorithm](https://en.wikipedia.org/wiki/Extended_Eu
 The above algorithm is relatively expensive; fortunately, for the special case where we need to do many modular inverses, there's a simple mathematical trick that allows us to compute many inverses, called [Montgomery batch inversion](https://books.google.com/books?id=kGu4lTznRdgC&pg=PA54&lpg=PA54&dq=montgomery+batch+inversion&source=bl&ots=tPJcPPOrCe&sig=Z3p_6YYwYloRU-f1K-nnv2D8lGw&hl=en&sa=X&ved=0ahUKEwjO8sumgJjcAhUDd6wKHWGNA9cQ6AEIRDAE#v=onepage&q=montgomery%20batch%20inversion&f=false):
 
 <center>
-<img src="http://vitalik.ca/files/posts_files/starks-part-3-files/MultiInv.png" /><br>
+<img src="/images/starks-part-3-files/MultiInv.png" /><br>
 <br>
-<small><i>Using Montgomery batch inversion to compute modular inverses. Inputs purple, outputs green, multiplication gates black; the red square is the <b>only</b> modular inversion.</i></small>
+<small><i>Using Montgomery batch inversion to compute modular inverses. Inputs purple, outputs green, multiplication gates black; the red square is the _only_ modular inversion.</i></small>
 </center>
 
 The code below implements this algorithm, with some slightly ugly special case logic so that if there are zeroes in the set of what we are inverting, it sets their inverse to 0 and moves along.
@@ -137,9 +137,7 @@ What is the output of <code>f.eval_poly_at([4, 5, 6], 2)</code> if the modulus i
 <b>Mouseover below for answer</b>
 <br>
 <div class="foo">
-
 $6 \cdot 2^{2} + 5 \cdot 2 + 4 = 38, 38 \bmod 31 = 7$.
-
 </div>
 </blockquote>
 
@@ -230,9 +228,9 @@ You can try running it on a few inputs yourself and check that it gives results 
 A Fourier transform takes as input `[x[0] .... x[n-1]]`, and its goal is to output `x[0] + x[1] + ... + x[n-1]` as the first element, `x[0] + x[1] * 2 + ... + x[n-1] * w**(n-1)` as the second element, etc etc; a fast Fourier transform accomplishes this by splitting the data in half, doing an FFT on both halves, and then gluing the result back together.
 
 <center>
-<img src="https://vitalik.ca/files/posts_files/starks-part-3-files/radix2fft.png" /><br>
+<img src="/images/starks-part-3-files/radix2fft.png" /><br>
 <small><i>A diagram of how information flows through the FFT computation. Notice how the FFT consists of a "gluing" step followed by two copies of the FFT on two halves of the data, and so on recursively until you're down to one element.</i></small>
-</center><br>
+</center>
 
 I recommend [this](http://web.cecs.pdx.edu/~maier/cs584/Lectures/lect07b-11-MG.pdf) for more intuition on how or why the FFT works and polynomial math in general, and [this thread](https://dsp.stackexchange.com/questions/41558/what-are-some-of-the-differences-between-dft-and-fft-that-make-fft-so-fast?rq=1) for some more specifics on DFT vs FFT, though be warned that most literature on Fourier transforms talks about Fourier transforms over _real and complex numbers_, not _prime fields_. If you find this too hard and don't want to understand it, just treat it as weird spooky voodoo that just works because you ran the code a few times and verified that it works, and you'll be fine too.
 
@@ -265,9 +263,9 @@ We start off by putting the values into a Merkle tree and using the Merkle root 
 This packs a lot into a few lines of code. The broad idea is to re-interpret the polynomial $P(x)$ as a polynomial $Q(x, y)$, where $P(x) = Q(x, x^4)$. If $P$ has degree $< N$, then $P'(y) = Q(special\_x, y)$ will have degree $< \frac{N}{4}$. Since we don't want to take the effort to actually compute $Q$ in coefficient form (that would take a still-relatively-nasty-and-expensive FFT!), we instead use another trick. For any given value of $x^{4}$, there are 4 corresponding values of $x$: $x$, $modulus - x$, and $x$ multiplied by the two modular square roots of $-1$. So we already have four values of $Q(?, x^4)$, which we can use to interpolate the polynomial $R(x) = Q(x, x^4)$, and from there calculate $R(special\_x) = Q(special\_x, x^4) = P'(x^4)$. There are $\frac{N}{4}$ possible values of $x^{4}$, and this lets us easily calculate all of them.
 
 <center>
-<img src="https://vitalik.ca/files/posts_files/starks-part-3-files/fri7.png" style="width:550px"/><br><br>
+<img src="/images/starks-part-3-files/fri7.png" style="width:550px"/><br>
 <small><i>A diagram from part 2; it helps to keep this in mind when understanding what's going on here</i></small>
-</center><br>
+</center>
 
 Our proof consists of some number (eg. 40) of random queries from the list of values of $x^{4}$ (using the Merkle root of the column as a seed), and for each query we provide Merkle branches of the five values of $Q(?, x^4)$:
 
@@ -313,13 +311,9 @@ We then convert the computation trace into a polynomial, "laying down" successiv
     p_evaluations = fft(computational_trace_polynomial, modulus, root_of_unity)
 
 <center>
-<img src="http://vitalik.ca/files/posts_files/starks-part-3-files/RootsOfUnity.png" /><br><br>
-<small><i>
-
-Black: powers of $g_1$. Purple: powers of $g_2$. Orange: 1. You can look at successive roots of unity as being arranged in a circle in this way. We are "laying" the computational trace along powers of $g_1$, and then extending it compute the values of the same polynomial at the intermediate values (ie. the powers of $g_2$).
-
-</i></small>
-</center><br>
+<img src="/images/starks-part-3-files/RootsOfUnity.png" /><br>
+<small><i>Black: powers of $g_1$. Purple: powers of $g_2$. Orange: 1. You can look at successive roots of unity as being arranged in a circle in this way. We are "laying" the computational trace along powers of $g_1$, and then extending it compute the values of the same polynomial at the intermediate values (ie. the powers of $g_2$).</i></small>
+</center>
 
 We can convert the round constants of MIMC into a polynomial. Because these round constants loop around very frequently (in our tests, every 64 steps), it turns out that they form a degree-64 polynomial, and we can fairly easily compute its expression, and its extension:
 
@@ -377,12 +371,8 @@ Probabilistically checking $D(x) \cdot Z(x) = Q(x)$ at a few randomly selected p
 The argument is as follows. The prover wants to prove $P(1) = input$ and $P(last\_step) = output$. If we take $I(x)$ as the _interpolant_ - the line that crosses the two points $(1, input)$ and $(last\_step, output)$, then $P(x) - I(x)$ would be equal to zero at those two points. Thus, it suffices to prove that $P(x) - I(x)$ is a multiple of $(x - 1) \cdot (x - last\_step)$, and we do that by... providing the quotient!
 
 <center>
-<img src="http://vitalik.ca/files/posts_files/starks-part-3-files/P_I_and_B.png" /><img src="http://vitalik.ca/files/posts_files/starks-part-3-files/P_I_and_B_2.png" /><br><br>
-<small><i>
-
-Purple: computational trace polynomial (P). Green: interpolant (I) (notice how the interpolant is constructed to equal the input (which should be the first step of the computational trace) at x=1 and the output (which should be the last step of the computational trace) at $x=g^{steps-1}$. Red: $P - I$. Yellow: the minimal polynomial that equals $0$ at $x=1$ and $x=g^{steps-1}$ (that is, $Z_2$). Pink: $\frac{P - I}{Z_2}$.
-
-</i></small>
+<img src="/images/starks-part-3-files/P_I_and_B.png" /><img src="/images/starks-part-3-files/P_I_and_B_2.png" /><br>
+<small><i>Purple: computational trace polynomial (P). Green: interpolant (I) (notice how the interpolant is constructed to equal the input (which should be the first step of the computational trace) at x=1 and the output (which should be the last step of the computational trace) at $x=g^{steps-1}$. Red: $P - I$. Yellow: the minimal polynomial that equals $0$ at $x=1$ and $x=g^{steps-1}$ (that is, $Z_2$). Pink: $\frac{P - I}{Z_2}$.</i></small>
 </center>
 
 <br>
@@ -392,12 +382,10 @@ Suppose you wanted to <i>also</i> prove that the value in the computational trac
 <b>Mouseover below for answer</b>
 <br>
 <div class="foo">
-
 Set $I(x)$ to be the interpolant of $(1, input), (g^{703}, 8018284612598740), (last\_step, output)$, and make a proof by providing the quotient $B(x) = \frac{P(x) - I(x)}{(x - 1) \cdot (x - g^{703}) \cdot (x - last\_step)}$
-
+<br>
 </div>
 </blockquote>
-<br>
 
 Now, we commit to the Merkle root of $P$, $D$ and $B$ combined together.
 

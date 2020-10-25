@@ -1,0 +1,113 @@
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
+<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="/css/misc.css">
+
+<script type="text/javascript" id="MathJax-script" async
+  src="/scripts/mathjax.js">
+</script>
+
+<style>
+@font-face {
+    font-family: MJXc-TeX-math-Iw;
+    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
+}
+@font-face {
+    font-family: MJXZERO;
+    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
+}
+@font-face {
+    font-family: MJXTEX;
+    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
+}
+
+.math { font-family: MJXc-TeX-math-Iw }
+</style>
+
+<div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Christmas Special" />
+<meta name="twitter:image" content="http://66.172.12.37/images/icon.png" />
+<h1 id="christmas-special">Christmas Special</h1>
+<p>Since it's Christmas time now, and we're theoretically supposed to be enjoying ourselves and spending time with our families instead of waging endless holy wars on Twitter, this blog post will offer some games that you can play with your friends that will help you have fun <em>and</em> at the same time understand some spooky mathematical concepts!</p>
+<h3 id="dimensional-chess">1.58 dimensional chess</h3>
+<center>
+<br> <a href="https://twitter.com/el33th4xor/status/1138777837320716288"><img src="/images/christmas-files/chess_tweet.png" /></a> <br><br>
+</center>
+<p>This is a variant of chess where the board is set up like this:</p>
+<center>
+<br> <img src="/images/christmas-files/chess.png" /> <br><br>
+</center>
+<p>The board is still a normal 8x8 board, but there are only 27 open squares. The other 37 squares should be covered up by checkers or Go pieces or anything else to denote that they are inaccessible. The rules are the same as chess, with a few exceptions:</p>
+<ul>
+<li>White pawns move up, black pawns move left. White pawns take going left-and-up or right-and-up, black pawns take going left-and-down or left-and-up. White pawns promote upon reaching the top, black pawns promote upon reaching the left.</li>
+<li>No en passant, castling, or two-step-forward pawn jumps.</li>
+<li>Chess pieces cannot move onto <em>or through</em> the 37 covered squares. Knights cannot move onto the 37 covered squares, but don't care what they move "through".</li>
+</ul>
+<p>The game is called 1.58 dimensional chess because the 27 open squares are chosen according to a pattern based on the <a href="https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle">Sierpinski triangle</a>. You start off with a single open square, and then every time you double the width, you take the shape at the end of the previous step, and copy it to the top left, top right and bottom left corners, but leave the bottom right corner inaccessible. Whereas in a one-dimensional structure, doubling the width increases the space by 2x, and in a two-dimensional structure, doubling the width increases the space by 4x (4 = 2<sup>2</sup>), and in a three-dimensional structure, doubling the width increases the space by 8x (8 = 2<sup>3</sup>), here doubling the width increases the space by 3x (3 = 2<sup>1.58496</sup>), hence "1.58 dimensional" (see <a href="https://en.wikipedia.org/wiki/Hausdorff_dimension">Hausdorff dimension</a> for details).</p>
+<p>The game is substantially simpler and more "tractable" than full-on chess, and it's an interesting exercise in showing how in <a href="https://en.wikipedia.org/wiki/Flatland">lower-dimensional spaces</a> defense becomes much easier than offense. Note that the relative value of different pieces may change here, and new kinds of endings become possible (eg. you can checkmate with just a bishop).</p>
+<h3 id="dimensional-tic-tac-toe">3 dimensional tic tac toe</h3>
+<center>
+<br> <img src="/images/christmas-files/tic4.png" /> <br><br>
+</center>
+<p>The goal here is to get 4 in a straight line, where the line can go in any direction, along an axis or diagonal, including between planes. For example in this configuration X wins:</p>
+<center>
+<br> <img src="/images/christmas-files/tic4_2.png" /> <br><br>
+</center>
+<p>It's considerably harder than <a href="https://www.quora.com/Is-there-a-way-to-never-lose-at-Tic-Tac-Toe">traditional 2D tic tac toe</a>, and hopefully much more fun!</p>
+<h3 id="modular-tic-tac-toe">Modular tic-tac-toe</h3>
+<p>Here, we go back down to having two dimensions, except we allow lines to wrap around:</p>
+<center>
+<br> <img src="/images/christmas-files/tic4_3.png" /> <br><small><i>X wins</i></small>
+</center>
+<p><br><br></p>
+<p>Note that we allow diagonal lines with any slope, as long as they pass through all four points. Particularly, this means that lines with slope +/- 2 and +/- 1/2 are admissible:</p>
+<center>
+<br> <img src="/images/christmas-files/tic4_4.png" /> <br><br>
+</center>
+<p>Mathematically, the board can be interpreted as a 2-dimensional vector space over <a href="https://en.wikipedia.org/wiki/Modular_arithmetic">integers modulo 4</a>, and the goal being to fill in a line that passes through four points over this space. Note that there exists at least one line passing through any two points.</p>
+<h3 id="tic-tac-toe-over-the-4-element-binary-field">Tic tac toe over the 4-element binary field</h3>
+<center>
+<br> <img src="/images/christmas-files/tic4_5.png" /> <br><br>
+</center>
+<p>Here, we have the same concept as above, except we use an even spookier mathematical structure, the <a href="https://en.wikipedia.org/wiki/Finite_field#Field_with_four_elements">4-element field</a> of polynomials over <span class="math inline">\(Z_2\)</span> modulo <span class="math inline">\(x^2 + x + 1\)</span>. This structure has pretty much no reasonable geometric interpretation, so I'll just give you the addition and multiplication tables:</p>
+<center>
+<br> <img src="/images/christmas-files/tic4_6.png" /> <br><br>
+</center>
+<p>OK fine, here are all possible lines, excluding the horizontal and the vertical lines (which are also admissible) for brevity:</p>
+<center>
+<br> <img src="/images/christmas-files/tic4_7.png" style="width: 450px" /> <br><br>
+</center>
+<p>The lack of geometric interpretation does make the game harder to play; you pretty much have to memorize the twenty winning combinations, though note that they are <em>basically</em> rotations and reflections of the same four basic shapes (axial line, diagonal line, diagonal line starting in the middle, that weird thing that doesn't look like a line).</p>
+<h3 id="now-play-1.77-dimensional-connect-four.-i-dare-you.">Now play 1.77 dimensional connect four. I dare you.</h3>
+<center>
+<br> <img src="/images/christmas-files/tic4_8.png" style="width: 450px" /> <br><br>
+</center>
+<h3 id="modular-poker">Modular poker</h3>
+<p>Everyone is dealt five (you can use whatever variant poker rules you want here in terms of how these cards are dealt and whether or not players have the right to swap cards out). The cards are interpreted as: jack = 11, queen = 12, king = 0, ace = 1. A hand is stronger than another hand, if it contains a longer sequence, with any constant difference between consecutive cards (allowing wraparound), than the other hand.</p>
+<p>Mathametically, this can be represented as, a hand is stronger if the player can come up with a line <span class="math inline">\(L(x) = mx+b\)</span> such that they have cards for the numbers <span class="math inline">\(L(0)\)</span>, <span class="math inline">\(L(1)\)</span> ... <span class="math inline">\(L(k)\)</span> for the highest <span class="math inline">\(k\)</span>.</p>
+<center>
+<br> <img src="/images/christmas-files/cards1.png" /> <br><small><i>Example of a full five-card winning hand. y = 4x + 5.</i></small>
+</center>
+<p><br><br></p>
+<p>To break ties between equal maximum-length sequences, count the number of distinct length-three sequences they have; the hand with more distinct length-three sequences wins.</p>
+<center>
+<br> <img src="/images/christmas-files/cards2.png" /> <br><small><i>This hand has four length-three sequences: K 2 4, K 4 8, 2 3 4, 3 8 K. This is rare.</i></small>
+</center>
+<p><br><br></p>
+<p>Only consider lines of length three or higher. If a hand has three or more of the same denomination, that counts as a sequence, but if a hand has two of the same denomination, any sequences passing through that denomination only count as one sequence.</p>
+<center>
+<br> <img src="/images/christmas-files/cards3.png" /> <br><small><i>This hand has no length-three sequences.</i></small>
+</center>
+<p><br><br></p>
+<p>If two hands are completely tied, the hand with the higher highest card (using J = 11, Q = 12, K = 0, A = 1 as above) wins.</p>
+<p>Enjoy!</p>
+ </div> 

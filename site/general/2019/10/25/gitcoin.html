@@ -1,0 +1,86 @@
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
+<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="/css/misc.css">
+
+<script type="text/javascript" id="MathJax-script" async
+  src="/scripts/mathjax.js">
+</script>
+
+<style>
+@font-face {
+    font-family: MJXc-TeX-math-Iw;
+    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
+}
+@font-face {
+    font-family: MJXZERO;
+    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
+}
+@font-face {
+    font-family: MJXTEX;
+    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
+}
+
+.math { font-family: MJXc-TeX-math-Iw }
+</style>
+
+<div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Review of Gitcoin Quadratic Funding Round 3" />
+<meta name="twitter:image" content="http://66.172.12.37/images/icon.png" />
+<h1 id="review-of-gitcoin-quadratic-funding-round-3">Review of Gitcoin Quadratic Funding Round 3</h1>
+<p><em>Special thanks to the Gitcoin team and especially Frank Chen for working with me through these numbers</em></p>
+<p>The next round of Gitcoin Grants quadratic funding has just finished, and we the numbers for how much each project has received <a href="https://gitcoin.co/blog/gitcoins-q3-match/">were just released</a>. Here are the top ten:</p>
+<center>
+<img src="/images/gitcoin-files/round3.png" style="width:750px" />
+</center>
+<p><br><br></p>
+<p>Altogether, $163,279 was donated to 80 projects by 477 contributors, augmented by a matching pool of $100,000. Nearly half came from four contributions above $10,000: $37,500 to Lighthouse, and $12,500 each to Gas Station Network, Black Girls Code and Public Health Incentives Layer. Out of the remainder, about half came from contributions between $1,000 and $10,000, and the rest came from smaller donations of various sizes. But what matters more here are not the raw donations, but rather the subsidies that the <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3243656">quadratic funding</a> mechanism applied. Gitcoin Grants is there to support valuable public goods in the Ethereum ecosystem, but also serve as a testbed for this new quadratic donation matching mechanism, and see how well it lives up to its promise of creating a democratic, market-based and efficient way of funding public goods. This time around, a modified formula based on <a href="https://ethresear.ch/t/pairwise-coordination-subsidies-a-new-quadratic-funding-design/5553">pairwise-bounded coordination subsidies</a> was used, which has the goal of minimizing distortion from large contributions from coordinated actors. And now we get to see how the experiment went.</p>
+<h3 id="judging-the-outcomes">Judging the Outcomes</h3>
+<p>First, the results. Ultimately, every mechanism for allocating resources, whether centralized, market-based, democratic or otherwise, must stand the test of delivering results, or else sooner or later it will be abandoned for another mechanism that is perceived to be better, even if it is less philosophically clean. Judging results is inherently a subjective exercise; any single person's analysis of a mechanism will inevitably be shaped by how well the results fit their own preferences and tastes. However, in those cases where a mechanism does output a surprising result, one can and should use that as an opportunity to learn, and see whether or not one missed some key information that other participants in the mechanism had.</p>
+<p>In my own case, I found the top results very agreeable and a quite reasonable catalogue of projects that are good for the Ethereum community. One of the disparities between these grants and the Ethereum Foundation grants is that the Ethereum Foundation grants (see recent rounds <a href="https://blog.ethereum.org/2019/08/26/announcing-ethereum-foundation-and-co-funded-grants/">here</a> and <a href="https://blog.ethereum.org/2019/02/21/ethereum-foundation-grants-program-wave-5/">here</a>) tend to overwhelmingly focus on technology with only a small section on education and community resources, whereas in the Gitcoin grants while technology still dominates, EthHub is #2 and lower down defiprime.com is #14 and cryptoeconomics.study is #17. In this case my personal opinion is that EF <em>has</em> made a genuine error in undervaluing grants to community/education organizations and Gitcoin's "collective instinct" is correct. Score one for new-age fancy quadratic market democracy.</p>
+<p>Another surprising result to me was Austin Griffith getting second place. I personally have never spent too much time thinking about Burner Wallet; I knew that it existed but in my mental space I did not take it too seriously, focusing instead on client development, L2 scaling, privacy and to a lesser extent smart contract wallets (the latter being a key use case of Gas Station Network at #8). After seeing Austin's impressive performance in this Gitcoin round, I asked a few people what was going on.</p>
+<p>Burner Wallet (<a href="https://xdai.io/">website</a>, <a href="https://settle.finance/blog/what-is-the-burner-wallet-and-whats-xdai/">explainer article</a>) is an "insta-wallet" that's very easy to use: just load it up on your desktop or phone, and there you have it. It was used successfully at EthDenver to sell food from food trucks, and generally many people appreciate its convenience. Its main weaknesses are lower security and that one of its features, support for xDAI, is dependent on a permissioned chain.</p>
+<p>Austin's Gitcoin grant is there to fund his <a href="https://gitcoin.co/grants/122/austin-griffith-ethereum-rampd">ongoing work</a>, and I have heard one criticism: there's many prototypes, but comparatively few "things taken to completion". There is also the critique that as great as Austin is, it's difficult to argue that he's as important to the success of Ethereum as, say, Lighthouse and Prysmatic, though one can reply that what matters is not total value, but rather the marginal value of giving a given project or person an extra $10,000. On the whole, however, I feel like quadratic funding's (Glen would say deliberate!) tendency to select for things like Burner Wallet with populist appeal is a much needed corrective to the influence of the Ethereum tech elite (including myself!) who often value technical impressiveness and undervalue simple and quick things that make it really easy for people to participate in Ethereum. This one is slightly more ambiguous, but I'll say score two for new-age fancy quadratic market democracy.</p>
+<p>The main thing that I was disappointed the Gitcoiner-ati did <em>not</em> support more was Gitcoin maintenance itself. The Gitcoin Sustainability Fund only got a total $1,119 in raw contributions from 18 participants, plus a match of $202. The optional 5% tips that users could give to Gitcoin upon donating were not included into the quadratic matching calculations, but raised another ~$1,000. Given the amount of effort the Gitcoin people put in to making quadratic funding possible, this is not nearly enough; Gitcoin clearly deserves more than 0.9% of the total donations in the round. Meanwhile, the Ethereum Foundation (as well as Consensys and individual donors) have been giving grants to Gitcoin that include supporting Gitcoin itself. Hopefully in future rounds people will support Gitcoin itself too, but for now, score one for good old-fashioned EF technocracy.</p>
+<p>On the whole, quadratic funding, while still young and immature, seems to be a remarkably effective complement to the funding preferences of existing institutions, and it seems worthwhile to continue it and even increase its scope and size in the future.</p>
+<h3 id="pairwise-bounded-quadratic-funding-vs-traditional-quadratic-funding">Pairwise-bounded quadratic funding vs traditional quadratic funding</h3>
+<p>Round 3 differs from previous rounds in that it uses a new <a href="https://ethresear.ch/t/pairwise-coordination-subsidies-a-new-quadratic-funding-design/5553">flavor of quadratic funding</a>, which limits the subsidy per pair of participants. For example, in traditional QF, if two people each donate $10, the subsidy would be $10, and if two people each donate $10,000, the subsidy would be $10,000. This property of traditional QF makes it highly vulnerable to collusion: two key employees of a project (or even two fake accounts owned by the same person) could each donate as much money as they have, and get back a very large subsidy. Pairwise-bounded QF computes the total subsidy to a project by looking through all pairs of contributors, and imposes a maximum bound on the total subsidy that any given pair of participants can trigger (combined across all projects). Pairwise-bounded QF also has the property that it generally penalizes projects that are dominated by large contributors:</p>
+<center>
+<img src="/images/gitcoin-files/chart2.png" />
+</center>
+<p><br><br></p>
+<p>The projects that lost the most relative to traditional QF seem to be projects that have a single large contribution (or sometimes two). For example, "fuzz geth and Parity for EVM consensus bugs" got a $415 match compared to the $2000 he would have gotten in traditional QF; the decrease is explained by the fact that the contributions are dominated by two large $4500 contributions. On the other hand, <a href="http://cryptoeconomics.study">cryptoeconomics.study</a> got $1274, <em>up</em> nearly double from the $750 it would have gotten in traditional QF; this is explained by the large diversity of contributions that the project received and particularly the lack of large sponsors: the largest contribution to cryptoeconomics.study was $100.</p>
+<p>Another desirable property of pairwise-bounded QF is that it privileges <em>cross-tribal</em> projects. That is, if there are projects that group A typically supports, and projects that group B typically supports, then projects that manage to get support from both groups get a more favorable subsidy (because the pairs that go between groups are not as saturated). Has this incentive for building bridges appeared in these results?</p>
+<p>Unfortunately, my code of honor as a social scientist obliges me to report the negative result: the Ethereum community just does not yet have enough internal tribal structure for effects like this to materialize, and even when there are differences in correlations they don't seem strongly connected to higher subsidies due to pairwise-bounding. Here are the cross-correlations between who contributed to different projects:</p>
+<center>
+<img src="/images/gitcoin-files/correlations.png" />
+</center>
+<p><br><br></p>
+<p>Generally, all projects are slightly positively correlated with each other, with a few exceptions with greater correlation and one exception with broad roughly zero correlation: <a href="https://gitcoin.co/grants/120/nori">Nori</a> (120 in this chart). However, Nori did not do well in pairwise-bounded QF, because over 94% of its donations came from a single $5000 donation.</p>
+<h3 id="dominance-of-large-projects">Dominance of large projects</h3>
+<p>One other pattern that we saw in this round is that popular projects got disproportionately large grants:</p>
+<center>
+<img src="/images/gitcoin-files/ratios.jpeg" />
+</center>
+<p><br><br></p>
+<p>To be clear, this is not just saying "more contributions, more match", it's saying "more contributions, <em>more match per dollar contributed</em>". Arguably, this is an intended feature of the mechanism. Projects that can get more people to donate to them represent public goods that serve a larger public, and so tragedy of the commons problems are more severe and hence contributions to them should be multiplied more to compensate. However, looking at the list, it's hard to argue that, say, Prysm ($3,848 contributed, $8,566 matched) is a more public good than Nimbus ($1,129 contributed, $496 matched; for the unaware, Prysm and Nimbus are both eth2 clients). The failure does not look too severe; on average, projects near the top do seem to serve a larger public and projects near the bottom do seem niche, but it seems clear that at least part of the disparity is not genuine publicness of the good, but rather inequality of attention. N units of marketing effort can attract attention of N people, and theoretically get N^2 resources.</p>
+<p>Of course, this could be solved via a "layer on top" venture-capital style: upstart new projects could get investors to support them, in return for a share of matched contributions received when they get large. Something like this would be needed eventually; predicting future public goods is as important a social function as predicting future private goods. But we could also consider less winner-take-all alternatives; the simplest one would be adjusting the QF formula so it uses an exponent of eg. 1.5 instead of 2. I can see it being worthwhile to try a future round of Gitcoin Grants with such a formula (<span class="math inline">\(\left(\sum_i x_i^{\frac{2}{3}}\right)^{\frac{3}{2}}\)</span> instead of <span class="math inline">\(\left(\sum_i x_i^{\frac{1}{2}}\right)^2\)</span>) to see what the results are like.</p>
+<h3 id="individual-leverage-curves">Individual leverage curves</h3>
+<p>One key question is, if you donate $1, or $5, or $100, how big an impact can you have on the amount of money that a project gets? Fortunately, we can use the data to calculate these deltas!</p>
+<center>
+<img src="/images/gitcoin-files/deltas.png" />
+</center>
+<p><br><br></p>
+<p>The different lines are for different projects; supporting projects with higher existing support will lead to you getting a bigger multiplier. In all cases, the first dollar is very valuable, with a matching ratio in some cases over 100:1. But the second dollar is much less valuable, and matching ratios quickly taper off; even for the largest projects increasing one's donation from $32 to $64 will only get a 1:1 match, and anything above $100 becomes almost a straight donation with nearly no matching. However, given that it's likely possible to get legitimate-looking Github accounts on the grey market for around those costs, having a cap of a few hundred dollars on the amount of matched funds that any particular account can direct seems like a very reasonable mitigation, despite its costs in limiting the bulk of the matching effect to small-sized donations.</p>
+<h3 id="conclusions">Conclusions</h3>
+<p>On the whole, this was by far the largest and the most data-rich Gitcoin funding round to date. It successfully attracted hundreds of contributors, reaching a size where we can finally see many significant effects in play and drown out the effects of the more naive forms of small-scale collusion. The experiment already seems to be leading to valuable information that can be used by future quadratic funding implementers to improve their quadratic funding implementations. The case of Austin Griffith is also interesting because $23,911 in funds that he received comes, in relative terms, surprisingly close to an average salary for a developer if the grants can be repeated on a regular schedule. What this means is that if Gitcoin Grants <em>does</em> continue operating regularly, and attracts and expands its pool of donations, we could be very close to seeing the first "quadratic freelancer" - someone directly "working for the public", funded by donations boosted by quadratic matching subsidies. And at that point we could start to see more experimentation in new forms of organization that live on top of quadratic funding gadgets as a base layer. All in all, this foretells an exciting and, err, radical public-goods funding future ahead of us.</p>
+ </div> 
