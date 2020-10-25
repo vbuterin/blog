@@ -11,3 +11,12 @@
 .post-link {
   display: block;
   font-size: 24px; }
+
+.python .dv {
+  color: #0086b3 }
+
+.python .kw {
+  color: #a71d5d }
+
+.python .cf {
+  color: #a71d5d }

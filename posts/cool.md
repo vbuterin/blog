@@ -1,6 +1,7 @@
 [category]: <> (General)
 [date]: <> (2020/10/25)
 [title]: <> (Test 1234)
+[pandoc]: <> ('--highlight-style=breezedark')
 
 # Test 1234
 
