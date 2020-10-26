@@ -1,2 +1,4 @@
 [title]: <> (Vitalik Buterin's website)
-[icon]: <> (http://66.172.12.37/images/icon.png)
+[icon]: <> (http://vitalik.ca/images/icon.png)
+[server]: <> (root@vitalik.ca)
+[website_root]: <> (/var/www/html)
