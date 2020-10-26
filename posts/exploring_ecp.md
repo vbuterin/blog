@@ -1,10 +1,11 @@
 [category]: <> (General)
-[date]: <> (2017/01/15)
+[date]: <> (2017/01/14)
 [title]: <> ([Mirror] Exploring Elliptic Curve Pairings)
 [pandoc]: <> (--mathjax)
 
 # [Mirror] Exploring Elliptic Curve Pairings
-_This is a mirror of the post at https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627 _
+
+_This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627</a>_
 
 **Trigger warning: math.**
 
@@ -14,7 +15,12 @@ You’re not expected to understand everything here the first time you read it, 
 
 Elliptic curves themselves are very much a nontrivial topic to understand, and this article will generally assume that you know how they work; if you do not, I recommend this article here as a primer: [https://blog.cloudflare.com/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography/](https://blog.cloudflare.com/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography/). As a quick summary, elliptic curve cryptography involves mathematical objects called “points” (these are literal two-dimensional points with $(x, y)$ coordinates), with special formulas for adding and subtracting them (ie. for calculating the coordinates of $R = P + Q$), and you can also multiply a point by an integer (ie. $P \cdot n = P + P + … + P$, though there’s a much faster way to compute it if $n$ is big).
 
-![Here’s how point addition looks like graphically.](https://cdn-images-1.medium.com/max/2000/1*2PxXNwMceh1XC_waAP9NiA.jpeg)
+<br>
+<center>
+<img src="https://cdn-images-1.medium.com/max/2000/1*2PxXNwMceh1XC_waAP9NiA.jpeg" /><br><br>
+<small><i>Here's how point addition looks like graphically.</i></small>
+</center>
+<br>
 
 There exists a special point called the “point at infinity” ($O$), the equivalent of zero in point arithmetic; it’s always the case that $P + O = P$. Also, a curve has an “**order**”; there exists a number $n$ such that $P \cdot n = O$ for any $P$ (and of course, $P \cdot (n+1) = P, P \cdot (7 \cdot n + 5) = P \cdot 5$, and so on). There is also some commonly agreed upon “generator point” $G$, which is understood to in some sense represent the number $1$. Theoretically, any point on a curve (except $O$) can be $G$; all that matters is that $G$ is standardized.
 
@@ -72,7 +78,11 @@ If you play around with this kind of math, you’ll notice that it’s perfectly
 
 Now, let’s talk about **extension fields**. You have probably already seen an extension field before; the most common example that you encounter in math textbooks is the field of complex numbers, where the field of real numbers is “extended” with the additional element $\sqrt{-1} = i$. Basically, extension fields work by taking an existing field, then “inventing” a new element and defining the relationship between that element and existing elements (in this case, $i^2 + 1 = 0$), making sure that this equation does not hold true for any number that is in the original field, and looking at the set of all linear combinations of elements of the original field and the new element that you have just created.
 
-![](https://cdn-images-1.medium.com/max/2000/1*qDOPI299SKvZuzeNnik4JA.png)
+<br>
+<center>
+<img src="https://cdn-images-1.medium.com/max/2000/1*qDOPI299SKvZuzeNnik4JA.png" />
+</center>
+<br>
 
 We can do extensions of prime fields too; for example, we can extend the prime field $\bmod 7$ that we described above with $i$, and then we can do:
 
@@ -136,7 +146,11 @@ $ax + by + c = 0$
 
 Where $a$, $b$ and $c$ are carefully chosen so that the line passes through points $P$ and $Q$. Because of how elliptic curve addition works (see the diagram at the top), this also means that it passes through $-P-Q$. And it goes up to infinity dependent on both $x$ and $y$, so the divisor becomes $[P]+ [Q] + [-P-Q] - 3 \cdot [O]$.
 
-![](https://cdn-images-1.medium.com/max/2000/1*alHa7VxwcLoJk4C_YU9Iog.png)
+<br>
+<center>
+<img src="https://cdn-images-1.medium.com/max/2000/1*alHa7VxwcLoJk4C_YU9Iog.png" />
+</center>
+<br>
 
 We know that every “rational function” (ie. a function defined only using a finite number of $+, -, \cdot$ and $/$ operations on the coordinates of the point) uniquely corresponds to some divisor, up to multiplication by a constant (ie. if two functions $F$ and $G$ have the same divisor, then $F = G \cdot k$ for some constant $k$).
 

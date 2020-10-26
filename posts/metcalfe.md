@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2017/07/28)
+[date]: <> (2017/07/27)
 [title]: <> (A Note on Metcalfe's Law, Externalities and Ecosystem Splits)
 [pandoc]: <> (--mathjax)
 

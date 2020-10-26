@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2019/11/23)
+[date]: <> (2019/11/22)
 [title]: <> (Hard Problems in Cryptocurrency: Five Years Later)
 [pandoc]: <> (--mathjax)
 
@@ -13,7 +13,7 @@ The problems are broken down into three categories: (i) cryptographic, and hence
 
 ## Cryptographic problems
 
-<blockquote style="background-color:#ffe4ff">
+<blockquote style="background-color:#ffe4ff; padding-top: 18px; padding-bottom: 18px">
 <h3>1. Blockchain Scalability</h3>
 One of the largest problems facing the cryptocurrency space today is the issue of scalability ... The main concern with [oversized blockchains] is trust: if there are only a few entities capable of running full nodes, then those entities can conspire and agree to give themselves a large number of additional bitcoins, and there would be no way for other users to see for themselves that a block is invalid without processing an entire block themselves.  
 **Problem:** create a blockchain design that maintains Bitcoin-like security guarantees, but where the maximum size of the most powerful node that needs to exist for the network to keep functioning is substantially sublinear in the number of transactions.
@@ -34,7 +34,7 @@ There are also other smaller developments like [Cross-shard communication via re
 
 That said, fully sharded blockchains have still not been seen in live operation (the partially sharded Zilliqa has recently started running). On the theoretical side, there are mainly disputes about details remaining, along with challenges having to do with stability of sharded networking, developer experience and mitigating risks of centralization; fundamental technical possibility no longer seems in doubt. But the challenges that _do_ remain are challenges that cannot be solved by just thinking about them; only developing the system and seeing ethereum 2.0 or some similar chain running live will suffice.
 
-<blockquote style="background-color:#ffe4ff"> <h3>2. Timestamping</h3>
+<blockquote style="background-color:#ffe4ff; padding-top: 18px; padding-bottom: 18px"> <h3>2. Timestamping</h3>
 **Problem:** create a distributed incentive-compatible system, whether it is an overlay on top of a blockchain or its own blockchain, which maintains the current time to high accuracy.
 All legitimate users have clocks in a normal distribution around some "real" time with standard deviation 20 seconds ... no two nodes are more than 20 seconds apart
 The solution is allowed to rely on an existing concept of "N nodes"; this would in practice be enforced with proof-of-stake or non-sybil tokens (see #9).
@@ -46,7 +46,7 @@ Status: **Some progress**. <img src="/images/progress-files/happy_face2.png" sty
 
 Ethereum has actually survived just fine with a 13-second block time and no particularly advanced timestamping technology; it uses a simple technique where a client does not accept a block whose stated timestamp is earlier than the client's local time. That said, this has not been tested under serious attacks. The recent [network-adjusted timestamps](https://ethresear.ch/t/network-adjusted-timestamps/4187) proposal tries to improve on the status quo by allowing the client to determine the consensus on the time in the case where the client does not locally know the current time to high accuracy; this has not yet been tested. But in general, timestamping is not currently at the foreground of perceived research challenges; perhaps this will change once more proof of stake chains (including Ethereum 2.0 but also others) come online as real live systems and we see what the issues are.
 
-<blockquote style="background-color:#ffe4ff"> <h3>3. Arbitrary Proof of Computation</h3>
+<blockquote style="background-color:#ffe4ff; padding-top: 18px; padding-bottom: 18px"> <h3>3. Arbitrary Proof of Computation</h3>
 **Problem:** create programs `POC_PROVE(P,I) -> (O,Q)` and `POC_VERIFY(P,O,Q) -> { 0, 1 }` such that `POC_PROVE` runs program `P` on input `I` and returns the program output `O` and a proof-of-computation `Q` and POC_VERIFY takes `P`, `O` and `Q` and outputs whether or not `Q` and `O` were legitimately produced by the `POC_PROVE` algorithm using `P`.
 </blockquote>
 
@@ -58,7 +58,7 @@ There are still challenges with efficiency; making arithmetization-friendly hash
 
 <a name="numberfour"></a>
 
-<blockquote style="background-color:#ffe4ff"> <h3>4. Code Obfuscation</h3>
+<blockquote style="background-color:#ffe4ff; padding-top: 18px; padding-bottom: 18px"> <h3>4. Code Obfuscation</h3>
 The holy grail is to create an obfuscator O, such that given any program P the obfuscator can produce a second program O(P) = Q such that P and Q return the same output if given the same input and, importantly, Q reveals no information whatsoever about the internals of P. One can hide inside of Q a password, a secret encryption key, or one can simply use Q to hide the proprietary workings of the algorithm itself.
 </blockquote>
 
@@ -70,7 +70,7 @@ A solution to code obfuscation would be very useful to blockchain protocols. The
 
 Unfortunately this continues to be a hard problem. There is continuing ongoing work in attacking the problem, one side making constructions (eg. [this](https://eprint.iacr.org/2018/615)) that try to reduce the number of assumptions on mathematical objects that we do not know practically exist (eg. general cryptographic multilinear maps) and another side trying to make practical implementations of the desired mathematical objects. However, all of these paths are still quite far from creating something viable and known to be secure. See [https://eprint.iacr.org/2019/463.pdf](https://eprint.iacr.org/2019/463.pdf) for a more general overview to the problem.
 
-<blockquote style="background-color:#ffe4ff"> <h3>5. Hash-Based Cryptography</h3>
+<blockquote style="background-color:#ffe4ff; padding-top: 18px; padding-bottom: 18px"> <h3>5. Hash-Based Cryptography</h3>
 **Problem:** create a signature algorithm relying on no security assumption but the random oracle property of hashes that maintains 160 bits of security against classical computers (ie. 80 vs. quantum due to Grover's algorithm) with optimal size and other properties.
 </blockquote>
 
@@ -82,7 +82,7 @@ The main not-yet-solved problem with hash-based cryptography is aggregate signat
 
 ## Consensus theory problems
 
-<blockquote style="background-color:#ffe4ff"> <h3>6. ASIC-Resistant Proof of Work</h3>
+<blockquote style="background-color:#ffe4ff; padding-top: 18px; padding-bottom: 18px"> <h3>6. ASIC-Resistant Proof of Work</h3>
 One approach at solving the problem is creating a proof-of-work algorithm based on a type of computation that is very difficult to specialize ... For a more in-depth discussion on ASIC-resistant hardware, see [https://blog.ethereum.org/2014/06/19/mining/](https://blog.ethereum.org/2014/06/19/mining/).
 </blockquote>
 
@@ -113,7 +113,7 @@ However, there is one possible exception: zero-knowledge-proof generation. Zero 
 
 Zero-knowledge proofs of blockchain validity provide great value to users of the blockchain, as they can substitute the need to verify the chain directly; [Coda](https://codaprotocol.com/) is doing this already, albeit with a simplified blockchain design that is heavily optimized for provability. Such proofs can significantly assist in improving the blockchain's safety and scalability. That said, the total amount of computation that realistically needs to be done is still much less than the amount that's currently done by proof of work miners, so this would at best be an add-on for proof of stake blockchains, not a full-on consensus algorithm.
 
-<blockquote style="background-color:#ffe4ff"> <h3>8. Proof of Stake</h3>
+<blockquote style="background-color:#ffe4ff; padding-top: 18px; padding-bottom: 18px"> <h3>8. Proof of Stake</h3>
 Another approach to solving the mining centralization problem is to abolish mining entirely, and move to some other mechanism for counting the weight of each node in the consensus. The most popular alternative under discussion to date is "proof of stake" - that is to say, instead of treating the consensus model as "one unit of CPU power, one vote" it becomes "one currency unit, one vote".
 </blockquote>
 
@@ -132,7 +132,7 @@ As of today, we have (among many other algorithms):
 
 There continues to be ongoing refinement (eg. [here](https://ethresear.ch/t/analysis-of-bouncing-attack-on-ffg/6113) and [here](https://ethresear.ch/t/saving-strategy-and-fmd-ghost/6226)) . Eth2 phase 0, the chain that will implement FFG, is currently under implementation and enormous progress has been made. Additionally, Tendermint has been running, in the form of the [Cosmos chain](https://cosmos.bigdipper.live/validators) for several months. Remaining arguments about proof of stake, in my view, have to do with optimizing the economic incentives, and further formalizing the [strategy for responding to 51% attacks](https://ethresear.ch/t/responding-to-51-attacks-in-casper-ffg/6363). Additionally, the [Casper CBC spec](https://github.com/ethereum/eth2.0-specs/issues/701) could still use concrete efficiency improvements.
 
-<blockquote style="background-color:#ffe4ff"> <h3>9. Proof of Storage</h3>
+<blockquote style="background-color:#ffe4ff; padding-top: 18px; padding-bottom: 18px"> <h3>9. Proof of Storage</h3>
 A third approach to the problem is to use a scarce computational resource other than computational power or currency. In this regard, the two main alternatives that have been proposed are storage and bandwidth. There is no way in principle to provide an after-the-fact cryptographic proof that bandwidth was given or used, so proof of bandwidth should most accurately be considered a subset of social proof, discussed in later problems, but proof of storage is something that certainly can be done computationally. An advantage of proof-of-storage is that it is completely ASIC-resistant; the kind of storage that we have in hard drives is already close to optimal.
 </blockquote>
 
@@ -144,7 +144,7 @@ There are a number of [blockchains planning to use proof of storage](https://en.
 
 <a name="numberten"></a>
 
-<blockquote style="background-color:#ffe4ff"> <h3>10. Stable-value cryptoassets</h3>
+<blockquote style="background-color:#ffe4ff; padding-top: 18px; padding-bottom: 18px"> <h3>10. Stable-value cryptoassets</h3>
 One of the main problems with Bitcoin is the issue of price volatility ... Problem: construct a cryptographic asset with a stable price.
 </blockquote>
 
@@ -154,7 +154,7 @@ Status: **Some progress**. <img src="/images/progress-files/happy_face2.png" sty
 
 However, while the MakerDAO system has survived tough economic conditions in 2019, the conditions were by no means the toughest that could happen. In the past, Bitcoin has [fallen by 75%](https://fortune.com/2017/09/18/bitcoin-crash-history/) over the course of two days; the same may happen to ether or any other collateral asset some day. Attacks on the underlying blockchain are an even larger untested risk, especially if compounded by price decreases at the same time. Another major challenge, and arguably the larger one, is that the stability of MakerDAO-like systems is dependent on some underlying oracle scheme. Different attempts at oracle systems do exist (see #16), but the jury is still out on how well they can hold up under large amounts of economic stress. So far, the collateral controlled by MakerDAO has been lower than the value of the MKR token; if this relationship reverses MKR holders may have a collective incentive to try to "loot" the MakerDAO system. There are ways to try to protect against such attacks, but they have not been tested in real life.
 
-<blockquote style="background-color:#ffe4ff"> <h3>11. Decentralized Public Goods Incentivization</h3>  
+<blockquote style="background-color:#ffe4ff; padding-top: 18px; padding-bottom: 18px"> <h3>11. Decentralized Public Goods Incentivization</h3>  
 One of the challenges in economic systems in general is the problem of "public goods". For example, suppose that there is a scientific research project which will cost $1 million to complete, and it is known that if it is completed the resulting research will save one million people $5 each. In total, the social benefit is clear ... [but] from the point of view of each individual person contributing does not make sense ... So far, most problems to public goods have involved centralization
 Additional Assumptions And Requirements: A fully trustworthy oracle exists for determining whether or not a certain public good task has been completed (in reality this is false, but this is the domain of another problem)
 </blockquote>
@@ -174,7 +174,7 @@ Outside of blockchain land, this is just the age-old question of how to collect 
 
 <a name="numbertwelve"></a>
 
-<blockquote style="background-color:#ffe4ff"> <h3>12. Reputation systems</h3>  
+<blockquote style="background-color:#ffe4ff; padding-top: 18px; padding-bottom: 18px"> <h3>12. Reputation systems</h3>  
 **Problem:** design a formalized reputation system, including a score rep(A,B) -> V where V is the reputation of B from the point of view of A, a mechanism for determining the probability that one party can be trusted by another, and a mechanism for updating the reputation given a record of a particular open or finalized interaction.
 </blockquote>
 
@@ -182,7 +182,7 @@ Status: **Slow progress**. <img src="/images/progress-files/happy_face3.png" sty
 
 There hasn't really been much work on reputation systems since 2014. Perhaps the best is the use of token curated registries to create curated lists of trustable entities/objects; the [Kleros ERC20 TCR](https://blog.kleros.io/erc20-becomes-part-of-the-token/) (yes, that's a [token-curated registry](https://medium.com/@tokencuratedregistry/a-simple-overview-of-token-curated-registries-84e2b7b19a06) of legitimate ERC20 tokens) is one example, and there is even an alternative interface to Uniswap ([http://uniswap.ninja](http://uniswap.ninja)) that uses it as the backend to get the list of tokens and ticker symbols and logos from. Reputation systems of the subjective variety have not really been tried, perhaps because there is just not enough information about the "social graph" of people's connections to each other that has already been published to chain in some form. If such information starts to exist for other reasons, then subjective reputation systems may become more popular.
 
-<blockquote style="background-color:#ffe4ff"> <h3>13. Proof of excellence</h3>  
+<blockquote style="background-color:#ffe4ff; padding-top: 18px; padding-bottom: 18px"> <h3>13. Proof of excellence</h3>  
 One interesting, and largely unexplored, solution to the problem of [token] distribution specifically (there are reasons why it cannot be so easily used for mining) is using tasks that are socially useful but require original human-driven creative effort and talent. For example, one can come up with a "proof of proof" currency that rewards players for coming up with mathematical proofs of certain theorems
 </blockquote>
 
@@ -192,7 +192,7 @@ The main alternative approach to token distribution that has instead become popu
 
 <a name="numberfifteensic"></a>
 
-<blockquote style="background-color:#ffe4ff"> <h3>15 [sic]. Anti-Sybil systems</h3>  
+<blockquote style="background-color:#ffe4ff; padding-top: 18px; padding-bottom: 18px"> <h3>15 [sic]. Anti-Sybil systems</h3>  
 A problem that is somewhat related to the issue of a reputation system is the challenge of creating a "unique identity system" - a system for generating tokens that prove that an identity is not part of a Sybil attack ... However, we would like to have a system that has nicer and more egalitarian features than "one-dollar-one-vote"; arguably, one-person-one-vote would be ideal.
 </blockquote>
 
@@ -208,7 +208,7 @@ There have been quite a few attempts at solving the unique-human problem. Attemp
 With the growing interest in techniques like [quadratic voting](https://en.wikipedia.org/wiki/Quadratic_voting) and [quadratic funding](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3243656), the need for some kind of human-based anti-sybil system continues to grow. Hopefully, ongoing development of these techniques and new ones can come to meet it.
 
 <a name="numberfourteensic"></a>
-<blockquote style="background-color:#ffe4ff"> <h3>14 [sic]. Decentralized contribution metrics</h3>  
+<blockquote style="background-color:#ffe4ff; padding-top: 18px; padding-bottom: 18px"> <h3>14 [sic]. Decentralized contribution metrics</h3>  
 Incentivizing the production of public goods is, unfortunately, not the only problem that centralization solves. The other problem is determining, first, which public goods are worth producing in the first place and, second, determining to what extent a particular effort actually accomplished the production of the public good. This challenge deals with the latter issue.
 </blockquote>
 
@@ -222,7 +222,7 @@ Quadratic funding has even been tried in real life with considerable success in 
 
 <a name="numbersixteen"></a>
 
-<blockquote style="background-color:#ffe4ff"> <h3>16. Decentralized success metrics</h3>
+<blockquote style="background-color:#ffe4ff; padding-top: 18px; padding-bottom: 18px"> <h3>16. Decentralized success metrics</h3>
 Problem: come up with and implement a decentralized method for measuring numerical real-world variables ... the system should be able to measure anything that humans can currently reach a rough consensus on (eg. price of an asset, temperature, global CO2 concentration)
 </blockquote>
 

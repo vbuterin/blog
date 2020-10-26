@@ -4,7 +4,7 @@
 [pandoc]: <> (--mathjax)
 
 # [Mirror] Cantor was Wrong: debunking the infinite set hierarchy
-This is a mirror of the post at https://medium.com/@VitalikButerin/cantor-was-wrong-debunking-the-infinite-set-hierarchy-e9ba5015102
+This is a mirror of the post at [https://medium.com/@VitalikButerin/cantor-was-wrong-debunking-the-infinite-set-hierarchy-e9ba5015102](https://medium.com/@VitalikButerin/cantor-was-wrong-debunking-the-infinite-set-hierarchy-e9ba5015102)
 
 By Vitalik Buterin, PhD at University of Basel
 

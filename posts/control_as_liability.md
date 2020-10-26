@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2019/05/10)
+[date]: <> (2019/05/09)
 [title]: <> (Control as Liability)
 [pandoc]: <> ()
 

@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2018/04/21)
+[date]: <> (2018/04/20)
 [title]: <> (On Radical Markets)
 [pandoc]: <> (--mathjax)
 
@@ -30,7 +30,7 @@ Now you might ask: doesn't the existing property system also achieve allocative 
 If there are many buyers you have to negotiate with, things get even harder. If a developer (in the real estate sense) is trying to make a large project that requires buying 100 existing properties, and 99 have already agreed, the remaining one has a strong incentive to charge a very high price, much higher than their actual personal valuation of the property, hoping that the developer will have no choice but to pay up.
 
 <center>
-<img src="https://nationalpostcom.files.wordpress.com/2012/11/highway-built-around-house03.jpg" style="width:450px" /><br>
+<img src="https://nationalpostcom.files.wordpress.com/2012/11/highway-built-around-house03.jpg" style="width:450px" /><br><br>
 <small><i>Well, not necessarily no choice. But a very inconvenient and both privately and socially wasteful choice.</i></small>
 </center>
 <br>
@@ -40,7 +40,7 @@ Re-auctioning everything once a year completely solves this problem of allocativ
 One of the more interesting ideas from the 19th century economists, and specifically Henry George, was a kind of property tax that did not have this problem: the [land value tax](https://en.wikipedia.org/wiki/Land_value_tax). The idea is to charge tax on the value of land, but not the _improvements to the land_; if you own a $100,000 plot of dirt you would have to pay $5,000 per year taxes on it regardless of whether you used the land to build a condominium or simply as a place to walk your pet doge.
 
 <center>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Shiba_inu_taiki.jpg/220px-Shiba_inu_taiki.jpg" style="width:250px"/><br>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Shiba_inu_taiki.jpg/220px-Shiba_inu_taiki.jpg" style="width:250px"/><br><br>
 <small><i>A doge.</i></small>
 </center>
 <br>
@@ -122,7 +122,7 @@ Another story from the blockchain and Ethereum space that has a more pro-radical
 That said, this is a problem that we have now, arguably, to a large extent overcome. After the spikes at the end of last year, Ethereum wallets developed more advanced algorithms for choosing what transaction fees to pay to ensure that one's transaction gets included in the chain, and today most users are happy to simply defer to them. In my own personal experience, the mental transaction costs of worrying about transaction fees do not really exist, much like a driver of a car does not worry about the gasoline consumed by every single turn, acceleration and braking made by their car.
 
 <center>
-<img src="/images/radical-markets-files/metamask1.png" style="width:200px"/><br>
+<img src="/images/radical-markets-files/metamask1.png" style="width:200px"/><br><br>
 <small><i>Personal price-setting AIs for interacting with open markets: already a reality in the Ethereum transaction fee market</i></small>
 </center>
 <br>
@@ -153,7 +153,7 @@ And ideas I have had in other contexts:
 * [DAICOs](https://ethresear.ch/t/explanation-of-daicos/465) (a more decentralized and safer alternative to ICOs)
 
 <center>
-<img src="https://cryptobriefing.com/wp-content/uploads/2018/02/Buterin-Copycat-Poster-1.png" style="width:400px" /><br>
+<img src="https://cryptobriefing.com/wp-content/uploads/2018/02/Buterin-Copycat-Poster-1.png" style="width:400px" /><br><br>
 <small><i>Twitter scammers: can prediction markets incentivize an autonomous swarm of human and AI-driven moderators to flag these posts and warn users not to send them ether within a few seconds of the post being made? And could such a system be generalized to the entire internet, where these is no single centralized moderator that can easily take posts down?</i></small>
 </center>
 <br>

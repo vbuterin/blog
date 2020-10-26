@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2017/11/10)
+[date]: <> (2017/11/09)
 [title]: <> (STARKs, Part I: Proofs with Polynomials)
 [pandoc]: <> (--mathjax)
 
@@ -15,7 +15,7 @@ So how does this other kind of zero knowledge proof work? First of all, let us r
 
 <center>
 <img src="/images/starks-part-1-files/starks_pic1.png" style="width:350px" />
-</center>
+</center><br>
 
 Let's go through a few examples:
 
@@ -25,7 +25,7 @@ Let's go through a few examples:
 
 <center>
 <img src="/images/starks-part-1-files/starks_pic2.png" style="width:350px" />
-</center>
+</center><br>
 
 So what's so hard about all this? As it turns out, the _zero knowledge_ (ie. privacy) guarantee is (relatively!) easy to provide; there are a bunch of ways to convert any computation into an instance of something like the three color graph problem, where a three-coloring of the graph corresponds to a solution of the original problem, and then use a traditional zero knowledge proof protocol to prove that you have a valid graph coloring without revealing what it is. This [excellent post by Matthew Green from 2014](https://blog.cryptographyengineering.com/2014/11/27/zero-knowledge-proofs-illustrated-primer/) describes this in some detail.
 
@@ -34,7 +34,7 @@ The much harder thing to provide is _succinctness_. Intuitively speaking, provin
 The general very high level intuition is that the protocols that accomplish this use similar math to what is used in [erasure coding](https://en.wikipedia.org/wiki/Erasure_coding), which is frequently used to make _data_ fault-tolerant. If you have a piece of data, and you encode the data as a line, then you can pick out four points on the line. Any two of those four points are enough to reconstruct the original line, and therefore also give you the other two points. Furthermore, if you make even the slightest change to the data, then it is guaranteed at least three of those four points. You can also encode the data as a degree-1,000,000 polynomial, and pick out 2,000,000 points on the polynomial; any 1,000,001 of those points will recover the original data and therefore the other points, and any deviation in the original data will change at least 1,000,000 points. The algorithms shown here will make heavy use of polynomials in this way for _error amplification_.
 
 <center>
-<img src="/images/starks-part-1-files/starks_pic_2p5.png" style="width:300px" /><br>
+<img src="/images/starks-part-1-files/starks_pic_2p5.png" style="width:300px" /><br><br>
 <small>Changing even one point in the original data will lead to large changes in a polynomial's trajectory</small>
 </center>
 <br>
@@ -47,13 +47,13 @@ The "traditional" way to prove this would be to just show all 1,000,000 points, 
 
 <center>
 <img src="/images/starks-part-1-files/starks_pic3.png" style="width:300px" />
-</center>
+</center><br>
 
 Let's mathematically transform the problem somewhat. Let $C(x)$ be a _constraint checking polynomial_; $C(x) = 0$ if $0 \leq x \leq 9$ and is nonzero otherwise. There's a simple way to construct $C(x)$: $x \cdot (x-1) \cdot (x-2) \cdot \ldots(x-9)$ (we'll assume all of our polynomials and other values use exclusively integers, so we don't need to worry about numbers in between).
 
 <center>
 <img src="/images/starks-part-1-files/starks_pic4.png" style="width:350px" />
-</center>
+</center><br>
 
 Now, the problem becomes: prove that you know $P$ such that $C(P(x)) = 0$ for all $x$ from 1 to 1,000,000. Let $Z(x) = (x-1) \cdot (x-2) \cdot \ldots (x-1000000)$. It's a known mathematical fact that _any_ polynomial which equals zero at all $x$ from 1 to 1,000,000 is a multiple of $Z(x)$. Hence, the problem can now be transformed again: prove that you know $P$ and $D$ such that $C(P(x)) = Z(x) \cdot D(x)$ for all $x$ (note that if you know a suitable $C(P(x))$ then dividing it by $Z(x)$ to compute $D(x)$ is not too difficult; you can use [long polynomial division](http://www.purplemath.com/modules/polydiv2.htm) or more realistically a faster algorithm based on [FFTs](https://en.wikipedia.org/wiki/Fast_Fourier_transform)). Now, we've converted our original statement into something that looks mathematically clean and possibly quite provable.
 
@@ -61,13 +61,13 @@ So how does one prove this claim? We can imagine the proof process as a three-st
 
 <center>
 <img src="/images/starks-part-1-files/starks_pic5.png" style="width:350px" />
-</center>
+</center><br>
 
 We assume the verifier already knows the evaluation of $Z(x)$ at all of these points; the $Z(x)$ is like a "public verification key" for this scheme that everyone must know ahead of time (clients that do not have the space to store $Z(x)$ in its entirety can simply store the Merkle root of $Z(x)$ and require the prover to also provide branches for every $Z(x)$ value that the verifier needs to query; alternatively, there are some number fields over which $Z(x)$ for certain $x$ is very easy to calculate). After receiving the commitment (ie. Merkle root) the verifier then selects a random 16 $x$ values between 1 and 1 billion, and asks the prover to provide the Merkle branches for $P(x)$ and $D(x)$ there. The prover provides these values, and the verifier checks that (i) the branches match the Merkle root that was provided earlier, and (ii) $C(P(x))$ actually equals $Z(x) \cdot D(x)$ in all 16 cases.
 
 <center>
 <img src="/images/starks-part-1-files/starks_pic6.png" style="width:350px" />
-</center>
+</center><br>
 
 We know that this proof _perfect completeness_ - if you actually know a suitable $P(x)$, then if you calculate $D(x)$ and construct the proof correctly it will always pass all 16 checks. But what about _soundness_ - that is, if a malicious prover provides a bad $P(x)$, what is the minimum probability that they will get caught? We can analyze as follows. Because $C(P(x))$ is a degree-10 polynomial composed with a degree-1,000,000 polynomial, its degree will be at most 10,000,000. In general, we know that two different degree-$N$ polynomials agree on at most $N$ points; hence, a degree-10,000,000 polynomial which is not equal to any polynomial which always equals $Z(x) \cdot D(x)$ for some $x$ will necessarily disagree with them all at at least 990,000,000 points. Hence, the probability that a bad $P(x)$ will get caught in even one round is already 99%; with 16 checks, the probability of getting caught goes up to $1 - 10^{-32}$; that is to say, the scheme is about as hard to spoof as it is to compute a hash collision.
 
@@ -79,7 +79,7 @@ The only thing a malicious prover without a valid $P(x)$ can do is try to make a
 
 <center>
 <img src="/images/starks-part-1-files/starks_pic7.png" style="width:500px" />
-</center>
+</center><br>
 
 ### Going Further
 
@@ -87,7 +87,7 @@ To illustrate the power of this technique, let's use it to do something a little
 
 <center>
 <img src="/images/starks-part-1-files/starks_pic8.png" style="width:350px" />
-</center>
+</center><br>
 
 The translated problem becomes: prove that you know $P$ and $D$ such that $C(P(x), P(x+1), P(x+2)) = Z(x) \cdot D(x)$. For each of the 16 indices that the proof audits, the prover will need to provide Merkle branches for $P(x)$, $P(x+1)$, $P(x+2)$ and $D(x)$. The prover will additionally need to provide Merkle branches to show that $P(0) = P(1) = 1$. Otherwise, the entire process is the same.
 

@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2019/09/23)
+[date]: <> (2019/09/22)
 [title]: <> (Understanding PLONK)
 [pandoc]: <> (--mathjax)
 

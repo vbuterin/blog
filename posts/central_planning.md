@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2018/11/26)
+[date]: <> (2018/11/25)
 [title]: <> ([Mirror] Central Planning as Overfitting)
 [pandoc]: <> ()
 

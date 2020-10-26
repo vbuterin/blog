@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2017/09/15)
+[date]: <> (2017/09/14)
 [title]: <> (A Prehistory of the Ethereum Protocol)
 [pandoc]: <> (--mathjax)
 
@@ -145,6 +145,8 @@ We did not manage to come up with a gas limit strategy that was less likely to b
 <br>
 
 ![](/images/prehistory-files/berlin.png)
+
+<br>
 
 After a mini-hackathon between Gavin, Jeff and myself, PoC9 was launched in March, and was intended to be the final proof of concept release. A testnet, Olympic, ran for four months, using the protocol that was intended to be used in the livenet, and Ethereum's long-term plan was established. Vinay Gupta wrote a blog post, "[The Ethereum Launch Process](https://blog.ethereum.org/2015/03/03/ethereum-launch-process/)", that described the four expected stages of Ethereum livenet development, and gave them their current names: Frontier, Homestead, Metropolis and Serenity.
 

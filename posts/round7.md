@@ -5,8 +5,6 @@
 
 # Gitcoin Grants Round 7 Retrospective
 
-# Gitcoin Grants Round 7 Retrospective
-
 Round 7 of Gitcoin Grants has successfully completed! This round has seen an unprecedented growth in interest and contributions, with $274,830 in contributions and $450,000 in matched funds distributed across 857 projects.
 
 The category structure was once again changed; this time was had a split between "dapp tech", "infrastructure tech" and "community". Here are the results:

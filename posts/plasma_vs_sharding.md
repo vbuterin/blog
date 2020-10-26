@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2019/06/13)
+[date]: <> (2019/06/12)
 [title]: <> (Sidechains vs Plasma vs Sharding)
 [pandoc]: <> (--mathjax)
 

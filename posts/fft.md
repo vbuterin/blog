@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2019/05/13)
+[date]: <> (2019/05/12)
 [title]: <> (Fast Fourier Transforms)
 [pandoc]: <> (--mathjax)
 
@@ -30,7 +30,7 @@
 
 <p>There are algorithms for both multi-point evaluation and interpolation that can do either operation in $O(N^2)$ time. Multi-point evaluation is simple: just separately evaluate the polynomial at each point. Here's python code for doing that:</p>
 
-<pre>
+```python
 def eval_poly_at(self, poly, x, modulus):
     y = 0
     power_of_x = 1
@@ -38,7 +38,7 @@ def eval_poly_at(self, poly, x, modulus):
         y += power_of_x * coefficient
         power_of_x *= x
     return y % modulus
-</pre>
+```
 
 <p>The algorithm runs a loop going through every coefficient and does one thing for each coefficient, so it runs in $O(N)$ time. Multi-point evaluation involves doing this evaluation at $N$ different points, so the total run time is $O(N^2)$.</p>
 
@@ -81,7 +81,7 @@ $$
 
 <p>Here's the full code:</p>
 
-<pre>
+```python
 def fft(vals, modulus, domain):
     if len(vals) == 1:
         return vals
@@ -93,28 +93,28 @@ def fft(vals, modulus, domain):
         o[i] = (x+y_times_root) % modulus
         o[i+len(L)] = (x-y_times_root) % modulus
     return o
-</pre>
+```
 
 <p>We can try running it:</p>
 
-<pre>
+```python
 >>> fft([3,1,4,1,5,9,2,6], 337, [1, 85, 148, 111, 336, 252, 189, 226])
 [31, 70, 109, 74, 334, 181, 232, 4]
-</pre>
+```
 
 <p>And we can check the result; evaluating the polynomial at the position $85$, for example, actually does give the result $70$. Note that this only works if the domain is "correct"; it needs to be of the form $[x^i$ % $modulus$ for $i$ in $range(n)]$ where $x^n = 1$.</p>
 
 <p>An inverse FFT is surprisingly simple:</p>
 
-<pre>
+```python
 def inverse_fft(vals, modulus, domain):
     vals = fft(vals, modulus, domain)
     return [x * modular_inverse(len(vals), modulus) % modulus for x in [vals[0]] + vals[1:][::-1]]
-</pre>
+```
 
 <p>Basically, run the FFT again, but reverse the result (except the first item stays in place) and divide every value by the length of the list.</p>
 
-<pre>
+```python
 >>> domain = [1, 85, 148, 111, 336, 252, 189, 226]
 >>> def modular_inverse(x, n): return pow(x, n - 2, n)
 >>> values = fft([3,1,4,1,5,9,2,6], 337, domain)
@@ -122,11 +122,11 @@ def inverse_fft(vals, modulus, domain):
 [31, 70, 109, 74, 334, 181, 232, 4]
 >>> inverse_fft(values, 337, domain)
 [3, 1, 4, 1, 5, 9, 2, 6]
-</pre>
+```
 
 <p>Now, what can we use this for? Here's one fun use case: we can use FFTs to multiply numbers very quickly. Suppose we wanted to multiply $1253$ by $1895$. Here is what we would do. First, we would convert the problem into one that turns out to be slightly easier: multiply the <em>polynomials</em> $[3, 5, 2, 1]$ by $[5, 9, 8, 1]$ (that's just the digits of the two numbers in increasing order), and then convert the answer back into a number by doing a single pass to carry over tens digits. We can multiply polynomials with FFTs quickly, because it turns out that if you convert a polynomial into <em>evaluation form</em> (ie. $f(x)$ for every $x$ in some domain $D$), then you can multiply two polynomials simply by multiplying their evaluations. So what we'll do is take the polynomials representing our two numbers in <em>coefficient form</em>, use FFTs to convert them to evaluation form, multiply them pointwise, and convert back:</p>
 
-<pre>
+```python
 >>> p1 = [3,5,2,1,0,0,0,0]
 >>> p2 = [5,9,8,1,0,0,0,0]
 >>> x1 = fft(p1, 337, domain)
@@ -140,7 +140,7 @@ def inverse_fft(vals, modulus, domain):
 [253, 183, 47, 61, 334, 296, 220, 74]
 >>> inverse_fft(x3, 337, domain)
 [15, 52, 79, 66, 30, 10, 1, 0]
-</pre>
+```
 
 <p>This requires three FFTs (each $O(N \cdot log(N))$ time) and one pointwise multiplication ($O(N)$ time), so it takes $O(N \cdot log(N))$ time altogether (technically a little bit more than $O(N \cdot log(N))$, because for very big numbers you would need replace $337$ with a bigger modulus and that would make multiplication harder, but close enough). This is <em>much faster</em> than schoolbook multiplication, which takes $O(N^2)$ time:</p>
 
@@ -169,10 +169,10 @@ def inverse_fft(vals, modulus, domain):
 
 <p>And if we read the digits from top to bottom, we get $2374435$. Let's check the answer....</p>
 
-<pre>
+```python
 >>> 1253 * 1895
 2374435
-</pre>
+```
 
 <p>Yay! It worked. In practice, on such small inputs, the difference between $O(N \cdot log(N))$ and $O(N^2)$ isn't <em>that</em> large, so schoolbook multiplication is faster than this FFT-based multiplication process just because the algorithm is simpler, but on large inputs it makes a really big difference.</p>
 
@@ -233,7 +233,7 @@ def inverse_fft(vals, modulus, domain):
 
 <p>So what do we get from all of this complexity? Well, we can try running the implementation, which features both a "naive" $O(N^2)$ multi-point evaluation and the optimized FFT-based one, and time both. Here are my results:</p>
 
-<pre>
+```python
 >>> import binary_fft as b
 >>> import time, random
 >>> f = b.BinaryField(1033)
@@ -242,17 +242,17 @@ def inverse_fft(vals, modulus, domain):
 0.5752472877502441
 >>> a = time.time(); x2 = b.fft(f, poly, list(range(1024))); time.time() - a
 0.03820443153381348
-</pre>
+```
 
 <p>And as the size of the polynomial gets larger, the naive implementation (<code>_simple_ft</code>) gets slower much more quickly than the FFT:</p>
 
-<pre>
+```python
 >>> f = b.BinaryField(2053)
 >>> poly = [random.randrange(2048) for i in range(2048)]
 >>> a = time.time(); x1 = b._simple_ft(f, poly); time.time() - a
 2.2243144512176514
 >>> a = time.time(); x2 = b.fft(f, poly, list(range(2048))); time.time() - a
 0.07896280288696289
-</pre>
+```
 
 <p>And voila, we have an efficient, scalable way to multi-point evaluate and interpolate polynomials. If we want to use FFTs to recover erasure-coded data where we are <em>missing</em> some pieces, then algorithms for this <a href="https://ethresear.ch/t/reed-solomon-erasure-code-recovery-in-n-log-2-n-time-with-ffts/3039">also exist</a>, though they are somewhat less efficient than just doing a single FFT. Enjoy!</p>

@@ -1,10 +1,11 @@
 [category]: <> (General)
-[date]: <> (2016/12/11)
+[date]: <> (2016/12/10)
 [title]: <> ([Mirror] Quadratic Arithmetic Programs: from Zero to Hero)
 [pandoc]: <> (--mathjax)
 
 # [Mirror] Quadratic Arithmetic Programs: from Zero to Hero
-_This is a mirror of the post at https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649 _
+
+_This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649</a> _
 
 There has been a lot of interest lately in the technology behind zk-SNARKs, and people are increasingly [trying to demystify](https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell/) something that many have come to call “moon math” due to its perceived sheer indecipherable complexity. zk-SNARKs are indeed quite challenging to grasp, especially due to the sheer number of moving parts that need to come together for the whole thing to work, but if we break the technology down piece by piece then comprehending it becomes simpler.
 
@@ -43,7 +44,11 @@ If you read the original code and the code here, you can fairly easily see that 
 
 Now, we convert this into something called a rank-1 constraint system (R1CS). An R1CS is a sequence of groups of three vectors ($a$, $b$, $c$), and the solution to an R1CS is a vector $s$, where $s$ must satisfy the equation $s . a \cdot s . b - s . c = 0$, where $.$ represents the dot product - in simpler terms, if we "zip together" $a$ and $s$, multiplying the two values in the same positions, and then take the sum of these products, then do the same to $b$ and $s$ and then $c$ and $s$, then the third result equals the product of the first two results. For example, this is a satisfied R1CS:
 
-![](https://cdn-images-1.medium.com/max/2000/1*wp6bmXoPEU_zZHzJFRq6IQ.png)
+<br>
+<center>
+<img src="https://cdn-images-1.medium.com/max/2000/1*wp6bmXoPEU_zZHzJFRq6IQ.png" />
+</center>
+<br>
 
 But instead of having just one constraint, we are going to have many constraints: one for each logic gate. There is a standard way of converting a logic gate into a $(a, b, c)$ triple depending on what the operation is ($+$, $-$, $\cdot$ or $/$) and whether the arguments are variables or numbers. The length of each vector is equal to the total number of variables in the system, including a dummy variable ~one at the first index representing the number $1$, the input variables, a dummy variable ~out representing the output, and then all of the intermediate variables ($sym_1$ and $sym_2$ above); the vectors are generally going to be very sparse, only filling in the slots corresponding to the variables that are affected by some particular logic gate.
 
@@ -123,7 +128,11 @@ Let’s do an example. Suppose that we want a polynomial that passes through $(1
 
 Which looks like this:
 
-![](https://cdn-images-1.medium.com/max/2000/1*wsBN9VA71EXm2L4EV-hwcw.png)
+<br>
+<center>
+<img src="https://cdn-images-1.medium.com/max/2000/1*wsBN9VA71EXm2L4EV-hwcw.png" />
+</center>
+<br>
 
 Now, we just need to “rescale” it so that the height at x=1 is right:
 
@@ -133,13 +142,21 @@ This gives us:
 
     1.5 * x**2 - 7.5 * x + 9
 
-![](https://cdn-images-1.medium.com/max/2000/1*8agIwBEX5YJ1HyZ4K5r5Gw.png)
+<br>
+<center>
+<img src="https://cdn-images-1.medium.com/max/2000/1*8agIwBEX5YJ1HyZ4K5r5Gw.png" />
+</center>
+<br>
 
 We then do the same with the other two points, and get two other similar-looking polynomials, except that they “stick out” at $x=2$ and $x=3$ instead of $x=1$. We add all three together and get:
 
     1.5 * x**2 - 5.5 * x + 7
 
-![](https://cdn-images-1.medium.com/max/2000/1*kAn6O2BcDOsMgSwRPvRfZA.png)
+<br>
+<center>
+<img src="https://cdn-images-1.medium.com/max/2000/1*kAn6O2BcDOsMgSwRPvRfZA.png" />
+</center>
+<br>
 
 With exactly the coordinates that we want. The algorithm as described above takes $O(n^3)$ time, as there are $n$ points and each point requires $O(n^2)$ time to multiply the polynomials together; with a little thinking, this can be reduced to $O(n^2)$ time, and with a lot more thinking, using fast Fourier transform algorithms and the like, it can be reduced even further — a crucial optimization when functions that get used in zk-SNARKs in practice often have many thousands of gates.
 
@@ -203,7 +220,11 @@ And lo and behold, what we have here is exactly the same as the set of three vec
 
 Now what’s the point of this crazy transformation? The answer is that instead of checking the constraints in the R1CS individually, we can now check *all of the constraints at the same time* by doing the dot product check *on the polynomials*.
 
-![](https://cdn-images-1.medium.com/max/2000/1*QD2EfVsbNguEXrjKJwNVMg.png)
+<br>
+<center>
+<img src="https://cdn-images-1.medium.com/max/2000/1*QD2EfVsbNguEXrjKJwNVMg.png" />
+</center>
+<br>
 
 Because in this case the dot product check is a series of additions and multiplications of polynomials, the result is itself going to be a polynomial. If the resulting polynomial, evaluated at every $x$ coordinate that we used above to represent a logic gate, is equal to zero, then that means that all of the checks pass; if the resulting polynomial evaluated at at least one of the $x$ coordinate representing a logic gate gives a nonzero value, then that means that the values going into and out of that logic gate are inconsistent (ie. the gate is $y = x \cdot sym_1$ but the provided values might be $x = 2,sym_1 = 2$ and $y = 5$).
 

@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2019/10/02)
+[date]: <> (2019/10/01)
 [title]: <> (In-person meatspace protocol to prove unconditional possession of a private key)
 [pandoc]: <> ()
 

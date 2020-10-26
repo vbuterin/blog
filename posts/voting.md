@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2017/12/18)
+[date]: <> (2017/12/17)
 [title]: <> (Notes on Blockchain Governance)
 [pandoc]: <> (--mathjax)
 
@@ -43,7 +43,7 @@ The coordination model of governance, in contrast, sees governance as something 
 The second (and crucially important) layer is coordination institutions. The purpose of a coordination institution is to create focal points around how and when individuals should act in order to better coordinate behavior. There are many situations, both in blockchain governance and in real life, where if you act in a certain way alone, you are likely to get nowhere (or worse), but if everyone acts together a desired result can be achieved.
 
 <center>
-<img src="/images/voting-files/coordinationgame.png" style="width:250px"/>
+<img src="/images/voting-files/coordinationgame.png" style="width:250px"/><br>
 <br>
 <small>An abstract coordination game. You benefit heavily from making the same move as everyone else.</small>
 </center>
@@ -53,7 +53,7 @@ In these cases, it's in your interest to go if everyone else is going, and stop 
 
 <center>
 <img src="/images/voting-files/byzantinegeneral.jpg" style="width:550px"/>
-<br>
+<br><br>
 <small>A Byzantine general rallying his troops forward. The purpose of this isn't just to make the soldiers feel brave and excited, but also to reassure them that <i>everyone else</i> feels brave and excited and will charge forward as well, so an individual soldier is not just committing suicide by charging forward alone.</small>
 </center>
 <br>

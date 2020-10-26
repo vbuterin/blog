@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2019/12/08)
+[date]: <> (2019/12/07)
 [title]: <> (Quadratic Payments: A Primer)
 [pandoc]: <> (--mathjax)
 
@@ -55,14 +55,9 @@ Let's draw this as a graph:
 
 Now let's look at all three beside each other:
 
-<center><table>
-<tr><td>One dollar one vote</td><td>Quadratic voting</td><td>One person one vote</td></tr>
-<tr>
-<td><img src="/images/qv-files/Market8.png"  /></td>
-<td><img src="/images/qv-files/Market10.png"  /></td>
-<td><img src="/images/qv-files/Market9.png" /></td>
-</tr>
-</table></center><br><br>
+| One dollar one vote | Quadratic voting | One person one vote |
+| - | - | - |
+| ![](/images/qv-files/Market8.png) | ![](/images/qv-files/Market10.png) | ![](/images/qv-files/Market9.png) |
 
 Notice that only quadratic voting has this nice property that the amount of influence you purchase is proportional to how much you care; the other two mechanisms either over-privilege concentrated interests or over-privilege diffuse interests.
 
@@ -83,7 +78,13 @@ Let us begin by exploring the first "flavor" of quadratic payments: quadratic vo
 
 This seems like a perfect target for quadratic voting. The goal is that option A gets chosen if in total people like A more, and option B gets chosen if in total people like B more. With simple voting ("one person one vote"), the distinction between stronger vs weaker preferences gets ignored, so on issues where one side is of very high value to a few people and the other side is of low value to more people, simple voting is likely to give wrong answers. With a private-goods market mechanism where people can buy as many votes as they want at the same price per vote, the individual with the strongest preference (or the wealthiest) carries everything. Quadratic voting, where you can make n votes in either direction at a cost of n<sup>2</sup>, is right in the middle between these two extremes, and creates the perfect balance.
 
-<br><center><img src="/images/qv-files/Market7.png?2e" /><br><i><small>Note that in the voting case, we're deciding two options, so different people will favor A over B or B over A; hence, unlike the graphs we saw earlier that start from zero, here voting and preference can both be positive or negative (which option is considered positive and which is negative doesn't matter; the math works out the same way)</small></i></center><br><br>
+<br>
+<center>
+<img src="/images/qv-files/Market7.png?2e" /><br><br>
+<i><small>Note that in the voting case, we're deciding two options, so different people will favor A over B or B over A; hence, unlike the graphs we saw earlier that start from zero, here voting and preference can both be positive or negative (which option is considered positive and which is negative doesn't matter; the math works out the same way)</small></i>
+</center>
+<br>
+<br>
 
 As shown above, because the n'th vote has a cost of `n`, the number of votes you make is proportional to how much you value one unit of influence over the decision (the value of the decision multiplied by the probability that one vote will tip the result), and hence proportional to how much you care about A being chosen over B or vice versa. Hence, we once again have this nice clean "preference adding" effect.
 
@@ -159,7 +160,7 @@ Fortunately, there are [technological means that can help](https://ethresear.ch/
 
 Another challenge is that quadratic payments, being a payment-based mechanism, continues to favor people with more money. Note that because the cost of votes is quadratic, this effect is dampened: someone with 100 times more money only has 10 times more influence, not 100 times, so the extent of the problem goes down by 90% (and even more for ultra-wealthy actors). That said, it may be desirable to mitigate this inequality of power further. This could be done either by denominating quadratic payments in a separate token of which everyone gets a fixed number of units, or giving each person an allocation of funds that can only be used for quadratic-payments use cases: this is basically [Andrew Yang's "democracy dollars"](https://www.yang2020.com/policies/democracydollars/) proposal.
 
-<center><img src="/images/qv-files/Oprah.png" style="height:300px" /><br></center>
+<center><img src="/images/qv-files/Oprah.png" style="height:300px" /><br><br></center>
 
 A third challenge is the "[rational ignorance](https://en.wikipedia.org/wiki/Rational_ignorance)" and "[rational irrationality](https://en.wikipedia.org/wiki/Rational_irrationality)" problems, which is that decentralized public decisions have the weakness that any single individual has very little effect on the outcome, and so little motivation to make sure they are supporting the decision that is best for the long term; instead, pressures such as tribal affiliation may dominate. There are many strands of philosophy that emphasize the ability of large crowds to be very wrong despite (or because of!) their size, and quadratic payments in any form do little to address this.
 

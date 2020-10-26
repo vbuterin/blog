@@ -1,10 +1,10 @@
 [category]: <> (General)
-[date]: <> (2016/12/30)
+[date]: <> (2016/12/29)
 [title]: <> ([Mirror] A Proof of Stake Design Philosophy)
 [pandoc]: <> (--mathjax)
 
 # [Mirror] A Proof of Stake Design Philosophy
-_This is a mirror of the post at https://medium.com/@VitalikButerin/a-proof-of-stake-design-philosophy-506585978d51 _
+_This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/a-proof-of-stake-design-philosophy-506585978d51">https://medium.com/@VitalikButerin/a-proof-of-stake-design-philosophy-506585978d51</a> _
 
 Systems like Ethereum (and Bitcoin, and NXT, and Bitshares, etc) are a fundamentally new class of cryptoeconomic organisms — decentralized, jurisdictionless entities that exist entirely in cyberspace, maintained by a combination of cryptography, economics and social consensus. They are kind of like BitTorrent, but they are also not like BitTorrent, as BitTorrent has no concept of state — a distinction that turns out to be crucially important. They are sometimes described as [decentralized autonomous corporations](https://letstalkbitcoin.com/is-bitcoin-overpaying-for-false-security), but they are also not quite corporations — you can’t hard fork Microsoft. They are kind of like open source software projects, but they are not quite that either — you can fork a blockchain, but not quite as easily as you can fork OpenOffice.
 
@@ -15,6 +15,8 @@ Each of these philosophies; Nakamoto consensus, social consensus, shareholder vo
 Myself, Vlad, Dominic, Jae and others all have their own views on why proof of stake protocols exist and how to design them, but here I intend to explain where I personally am coming from.
 
 I’ll proceed to listing observations and then conclusions directly.
+
+<br>
 
 * Cryptography is truly special in the 21st century because **cryptography is one of the very few fields where adversarial conflict continues to heavily favor the defender**. Castles are far easier to destroy than build, islands are defendable but can still be attacked, but an average person’s ECC keys are secure enough to resist even state-level actors. Cypherpunk philosophy is fundamentally about leveraging this precious asymmetry to create a world that better preserves the autonomy of the individual, and cryptoeconomics is to some extent an extension of that, except this time protecting the safety and liveness of complex systems of coordination and collaboration, rather than simply the integrity and confidentiality of private messages. **Systems that consider themselves ideological heirs to the cypherpunk spirit should maintain this basic property, and be much more expensive to destroy or disrupt than they are to use and maintain.**
 

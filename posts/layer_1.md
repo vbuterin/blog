@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2018/08/27)
+[date]: <> (2018/08/26)
 [title]: <> (Layer 1 Should Be Innovative in the Short Term but Less in the Long Term)
 [pandoc]: <> ()
 

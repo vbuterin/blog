@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2017/06/23)
+[date]: <> (2017/06/22)
 [title]: <> (On Path Independence)
 [pandoc]: <> (--mathjax)
 
@@ -11,15 +11,14 @@ Something like this:
 
 <center>
 <img src="/images/marketmakers-files/indep_diag1.png" style="width:450px"></img>
-</center>
-
+</center><br>
 
 Now, if you know anything about Newtonian dynamics, chances are you'll immediately recognize that this scheme is total bollocks. But how do you know? You could make an appeal to symmetry, saying "look, for every slice of the orbital path where you say gravity gives you high acceleration, there's a corresponding slice of the orbital path where gravity gives you just as high deceleration, so I don't see where the net gains are coming from". But then, suppose the man presses you. "Ah," he says, "but in that slice where there is high acceleration your initial velocity is low, and so you spend a lot of time inside of it, whereas in the corresponding slice, your incoming velocity is high, and so you have less time to decelerate". How do you really, conclusively, prove him wrong?
 
 One approach is to dig deeply into the math, calculate the integrals, and show that the supposed net gains are in fact exactly equal to zero. But there is also a simple approach: recognize that **energy is path-independent**. That is, when the spaceship moves from point $A$ to point $B$, where point $B$ is closer to the earth, its kinetic energy certainly goes up because its speed increases. But because total energy (kinetic plus potential) [is conserved](https://en.wikipedia.org/wiki/Conservation_of_energy), and potential energy is only dependent on the spaceship's _position_, and not how it got there, we know that regardless of what path from point $A$ to point $B$ the spaceship takes, once it gets to point $B$ _the total change in kinetic energy will be exactly the same_.
 
 <center>
-<img src="/images/marketmakers-files/indep_diag2.png" style="width:350px"></img><br>
+<img src="/images/marketmakers-files/indep_diag2.png" style="width:350px"></img><br><br>
 <small>Different paths, same change in energy </small>
 </center>
 <br>

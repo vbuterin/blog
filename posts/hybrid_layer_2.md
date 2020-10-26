@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2019/08/29)
+[date]: <> (2019/08/28)
 [title]: <> (The Dawn of Hybrid Layer 2 Protocols)
 [pandoc]: <> (--mathjax)
 

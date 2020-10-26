@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2017/11/23)
+[date]: <> (2017/11/22)
 [title]: <> (STARKs, Part II: Thank Goodness It's FRI-day)
 [pandoc]: <> (--mathjax)
 
@@ -12,7 +12,7 @@ In the last part of this series, we talked about how you can make some pretty in
 We'll start off by once again re-stating the problem. Suppose that you have a set of points, and you claim that they are all on the same polynomial, with degree less than $D$ (ie. $deg < 2$ means they're on the same line, $deg < 3$ means they're on the same line or parabola, etc). You want to create a succinct probabilistic proof that this is actually true.
 
 <center>
-<img src="/images/starks-part-2-files/fri1.png" style="width:500px" /><br>
+<img src="/images/starks-part-2-files/fri1.png" style="width:500px" /><br><br>
 <small>Left: points all on the same $deg < 3$ polynomial. Right: points not on the same $deg < 3$ polynomial</small>
 </center>
 <br>
@@ -24,7 +24,7 @@ If you want to verify that the points are _all_ on the same degree $< D$ polynom
 <br>
 <img src="/images/starks-part-2-files/proximity4.png" style="width:220px" />
 <img src="/images/starks-part-2-files/proximity3.png" style="width:220px" />
-<br>
+<br><br>
 <small>Top left: possibly close enough to a polynomial. Top right: not close enough to a polynomial. Bottom left: somewhat close to two polynomials, but not close enough to either one. Bottom right: definitely not close enough to a polynomial.</small>
 </center>
 <br>
@@ -37,7 +37,7 @@ The algorithm to check if a given set of values is on the same degree $< D$ poly
 
 <center>
 <img src="/images/starks-part-2-files/fri2.png" style="width:420px" /><br>
-</center>
+</center><br>
 
 Note that this is only a proximity test, because there's always the possibility that most points are on the same low-degree polynomial, but a few are not, and the $D+1$ sample missed those points entirely. However, we can derive the result that if less than 90% of the points are on the same degree $< D$ polynomial, then the test will fail with high probability. Specifically, if you make $D+k$ queries, and if at least some portion $p$ of the points are not on the same polynomial as the rest of the points, then the test will only pass with probability $(1 - p)^k$.
 
@@ -88,7 +88,7 @@ The above rules are all self-consistent. For example, if $p = 7$, then:
 More complex identities such as the distributive law also hold: $(2 + 4) \cdot 3$ and $2 \cdot 3 + 4 \cdot 3$ both evaluate to $4$. Even formulas like $(a^2 - b^2)$ = $(a - b) \cdot (a + b)$ are still true in this new kind of arithmetic. Division is the hardest part; we can't use regular division because we want the values to always remain integers, and regular division often gives non-integer results (as in the case of $3/5$). The funny $p-2$ exponent in the division formula above is a consequence of getting around this problem using [Fermat's little theorem](https://en.wikipedia.org/wiki/Fermat%27s_little_theorem), which states that for any nonzero $x < p$, it holds that $x^{p-1}$ % $p = 1$. This implies that $x^{p-2}$ gives a number which, if multiplied by $x$ one more time, gives $1$, and so we can say that $x^{p-2}$ (which is an integer) equals $\frac{1}{x}$. A somewhat more complicated but faster way to evaluate this modular division operator is the [extended Euclidean algorithm](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm), implemented in python [here](https://github.com/ethereum/py_ecc/blob/b036cf5cb37e9b89622788ec714a7da9cdb2e635/py_ecc/secp256k1/secp256k1.py#L34).
 
 <center>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Clock_group.svg/560px-Clock_group.svg.png" style="width:350px" /><br>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Clock_group.svg/560px-Clock_group.svg.png" style="width:350px" /><br><br>
 <small>Because of how the numbers "wrap around", modular arithmetic is sometimes called "clock math"</small>
 </center>
 <br>
@@ -99,7 +99,7 @@ Fermat's little theorem also has another interesting consequence. If $p-1$ is a 
 
 <center>
 <img src="/images/starks-part-2-files/fri4.png" style="width:350px" /><br>
-</center>
+</center><br>
 
 With higher exponents the results are more striking: for example, $x \rightarrow x^8$ with $p=17$ has only 3 possible results. And of course, $x \rightarrow x^{16}$ with $p=17$ has only 2 possible results: for $0$ it returns $0$, and for everything else it returns $1$.
 
@@ -113,7 +113,7 @@ This means that the "diagonal" ($x$, $x^{1000}$) now becomes a diagonal with a w
 
 <center>
 <img src="/images/starks-part-2-files/fri5.png" style="width:500px" />
-</center>
+</center><br>
 
 As it turns out, we can go further: we can have the prover only commit to the evaluation of $g$ on a single column. The key trick is that the original data itself already contains 1000 points that are on any given row, so we can simply sample those, derive the degree $< 1000$ polynomial that they are on, and then check that the corresponding point on the column is on the same polynomial. We then check that the column itself is $a < 1000$ polynomial.
 
@@ -130,6 +130,7 @@ The prover complexity is now basically as low as it can be. But we can still kno
 
 If the original polynomial has degree $< n$, then the rows have degree $< 2$ (ie. the rows are straight lines), and the column has degree $< \frac{n}{2}$. Hence, what we now have is a linear-time process for converting a problem of proving proximity to a polynomial of degree $< n$ into a problem of proving proximity to a polynomial of degree $< \frac{n}{2}$. Furthermore, the number of points that need to be committed to, and thus the prover's computational complexity, goes down by a factor of 2 each time (Eli Ben-Sasson likes to compare this aspect of FRI to [fast fourier transforms](https://en.wikipedia.org/wiki/Fast_Fourier_transform), with the key difference that unlike with FFTs, each step of recursion only introduces one new sub-problem instead of branching out into two). Hence, we can simply keep using the protocol on the column created in the previous round of the protocol, until the column becomes so small that we can simply check it directly; the total complexity is something like $n + \frac{n}{2} + \frac{n}{4} + ... \approx 2n$.
 
+<br>
 <center>
 <img src="/images/starks-part-2-files/fri7.png" style="width:500px" />
 </center>

@@ -1,0 +1,214 @@
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
+<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="/css/misc.css">
+
+<script type="text/javascript" id="MathJax-script" async
+  src="/scripts/mathjax.js">
+</script>
+
+<style>
+@font-face {
+    font-family: MJXc-TeX-math-Iw;
+    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
+}
+@font-face {
+    font-family: MJXZERO;
+    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
+}
+@font-face {
+    font-family: MJXTEX;
+    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
+}
+
+.math { font-family: MJXc-TeX-math-Iw }
+</style>
+
+<div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="[Mirror] Quadratic Arithmetic Programs: from Zero to Hero" />
+<meta name="twitter:image" content="http://66.172.12.37/images/icon.png" />
+<h1 id="mirror-quadratic-arithmetic-programs-from-zero-to-hero">[Mirror] Quadratic Arithmetic Programs: from Zero to Hero</h1>
+<p><em>This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">https://medium.com/<span class="citation" data-cites="VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649</span></a> </em></p>
+<p>There has been a lot of interest lately in the technology behind zk-SNARKs, and people are increasingly <a href="https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell/">trying to demystify</a> something that many have come to call "moon math" due to its perceived sheer indecipherable complexity. zk-SNARKs are indeed quite challenging to grasp, especially due to the sheer number of moving parts that need to come together for the whole thing to work, but if we break the technology down piece by piece then comprehending it becomes simpler.</p>
+<p>The purpose of this post is not to serve as a full introduction to zk-SNARKs; it assumes as background knowledge that (i) you know what zk-SNARKs are and what they do, and (ii) know enough math to be able to reason about things like polynomials (if the statement <span class="math inline">\(P(x) + Q(x) = (P + Q)(x)\)</span> , where <span class="math inline">\(P\)</span> and <span class="math inline">\(Q\)</span> are polynomials, seems natural and obvious to you, then you're at the right level). Rather, the post digs deeper into the machinery behind the technology, and tries to explain as well as possible the first half of the pipeline, as drawn by zk-SNARK researcher Eran Tromer here:</p>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*YD-ckgBfmmmRBCyVlhp8YQ.png" /></p>
+<p>The steps here can be broken up into two halves. First, zk-SNARKs cannot be applied to any computational problem directly; rather, you have to convert the problem into the right "form" for the problem to operate on. The form is called a "quadratic arithmetic program" (QAP), and transforming the code of a function into one of these is itself highly nontrivial. Along with the process for converting the code of a function into a QAP is another process that can be run alongside so that if you have an input to the code you can create a corresponding solution (sometimes called "witness" to the QAP). After this, there is another fairly intricate process for creating the actual "zero knowledge proof" for this witness, and a separate process for verifying a proof that someone else passes along to you, but these are details that are out of scope for this post.</p>
+<p>The example that we will choose is a simple one: proving that you know the solution to a cubic equation: <span class="math inline">\(x^3 + x + 5 = 35\)</span> (hint: the answer is <span class="math inline">\(3\)</span>). This problem is simple enough that the resulting QAP will not be so large as to be intimidating, but nontrivial enough that you can see all of the machinery come into play.</p>
+<p>Let us write out our function as follows:</p>
+<pre><code>def qeval(x):
+    y = x**3
+    return x + y + 5</code></pre>
+<p>The simple special-purpose programming language that we are using here supports basic arithmetic (<span class="math inline">\(+\)</span>, <span class="math inline">\(-\)</span>, <span class="math inline">\(\cdot\)</span>, <span class="math inline">\(/\)</span>), constant-power exponentiation (<span class="math inline">\(x^7\)</span> but not <span class="math inline">\(x^y\)</span>) and variable assignment, which is powerful enough that you can theoretically do any computation inside of it (as long as the number of computational steps is bounded; no loops allowed). Note that modulo (%) and comparison operators (<span class="math inline">\(&lt;\)</span>, <span class="math inline">\(&gt;\)</span>, <span class="math inline">\(\leq\)</span>, <span class="math inline">\(\geq\)</span>) are NOT supported, as there is no efficient way to do modulo or comparison directly in finite cyclic group arithmetic (be thankful for this; if there was a way to do either one, then elliptic curve cryptography would be broken faster than you can say "binary search" and "Chinese remainder theorem").</p>
+<p>You can extend the language to modulo and comparisons by providing bit decompositions (eg. <span class="math inline">\(13 = 2^3 + 2^2 + 1\)</span>) as auxiliary inputs, proving correctness of those decompositions and doing the math in binary circuits; in finite field arithmetic, doing equality (==) checks is also doable and in fact a bit easier, but these are both details we won't get into right now. We can extend the language to support conditionals (eg. if <span class="math inline">\(x &lt; 5: y = 7;\)</span> else: <span class="math inline">\(y = 9\)</span>) by converting them to an arithmetic form: <span class="math inline">\(y = 7 \cdot (x &lt; 5) + 9 \cdot (x \geq 5)\)</span> though note that both "paths" of the conditional would need to be executed, and if you have many nested conditionals then this can lead to a large amount of overhead.</p>
+<p>Let us now go through this process step by step. If you want to do this yourself for any piece of code, I <a href="https://github.com/ethereum/research/tree/master/zksnark">implemented a compiler here</a> (for educational purposes only; not ready for making QAPs for real-world zk-SNARKs quite yet!).</p>
+<h2 id="flattening">Flattening</h2>
+<p>The first step is a "flattening" procedure, where we convert the original code, which may contain arbitrarily complex statements and expressions, into a sequence of statements that are of two forms: <span class="math inline">\(x = y\)</span> (where <span class="math inline">\(y\)</span> can be a variable or a number) and <span class="math inline">\(x = y\)</span> <span class="math inline">\((op)\)</span> <span class="math inline">\(z\)</span> (where <span class="math inline">\(op\)</span> can be <span class="math inline">\(+\)</span>, <span class="math inline">\(-\)</span>, <span class="math inline">\(\cdot\)</span>, <span class="math inline">\(/\)</span> and <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span> can be variables, numbers or themselves sub-expressions). You can think of each of these statements as being kind of like logic gates in a circuit. The result of the flattening process for the above code is as follows:</p>
+<pre><code>sym_1 = x * x
+y = sym_1 * x
+sym_2 = y + x
+~out = sym_2 + 5</code></pre>
+<p>If you read the original code and the code here, you can fairly easily see that the two are equivalent.</p>
+<h2 id="gates-to-r1cs">Gates to R1CS</h2>
+<p>Now, we convert this into something called a rank-1 constraint system (R1CS). An R1CS is a sequence of groups of three vectors (<span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, <span class="math inline">\(c\)</span>), and the solution to an R1CS is a vector <span class="math inline">\(s\)</span>, where <span class="math inline">\(s\)</span> must satisfy the equation <span class="math inline">\(s . a \cdot s . b - s . c = 0\)</span>, where <span class="math inline">\(.\)</span> represents the dot product - in simpler terms, if we "zip together" <span class="math inline">\(a\)</span> and <span class="math inline">\(s\)</span>, multiplying the two values in the same positions, and then take the sum of these products, then do the same to <span class="math inline">\(b\)</span> and <span class="math inline">\(s\)</span> and then <span class="math inline">\(c\)</span> and <span class="math inline">\(s\)</span>, then the third result equals the product of the first two results. For example, this is a satisfied R1CS:</p>
+<br>
+<center>
+<img src="https://cdn-images-1.medium.com/max/2000/1*wp6bmXoPEU_zZHzJFRq6IQ.png" />
+</center>
+<p><br></p>
+<p>But instead of having just one constraint, we are going to have many constraints: one for each logic gate. There is a standard way of converting a logic gate into a <span class="math inline">\((a, b, c)\)</span> triple depending on what the operation is (<span class="math inline">\(+\)</span>, <span class="math inline">\(-\)</span>, <span class="math inline">\(\cdot\)</span> or <span class="math inline">\(/\)</span>) and whether the arguments are variables or numbers. The length of each vector is equal to the total number of variables in the system, including a dummy variable ~one at the first index representing the number <span class="math inline">\(1\)</span>, the input variables, a dummy variable ~out representing the output, and then all of the intermediate variables (<span class="math inline">\(sym_1\)</span> and <span class="math inline">\(sym_2\)</span> above); the vectors are generally going to be very sparse, only filling in the slots corresponding to the variables that are affected by some particular logic gate.</p>
+<p>First, we'll provide the variable mapping that we'll use:</p>
+<pre><code>&#39;~one&#39;, &#39;x&#39;, &#39;~out&#39;, &#39;sym_1&#39;, &#39;y&#39;, &#39;sym_2&#39;</code></pre>
+<p>The solution vector will consist of assignments for all of these variables, in that order.</p>
+<p>Now, we'll give the <span class="math inline">\((a, b, c)\)</span> triple for the first gate:</p>
+<pre><code>a = [0, 1, 0, 0, 0, 0]
+b = [0, 1, 0, 0, 0, 0]
+c = [0, 0, 0, 1, 0, 0]</code></pre>
+<p>You can see that if the solution vector contains <span class="math inline">\(3\)</span> in the second position, and <span class="math inline">\(9\)</span> in the fourth position, then regardless of the rest of the contents of the solution vector, the dot product check will boil down to <span class="math inline">\(3 \cdot 3 = 9\)</span>, and so it will pass. If the solution vector has <span class="math inline">\(-3\)</span> in the second position and <span class="math inline">\(9\)</span> in the fourth position, the check will also pass; in fact, if the solution vector has <span class="math inline">\(7\)</span> in the second position and <span class="math inline">\(49\)</span> in the fourth position then that check will still pass — the purpose of this first check is to verify the consistency of the inputs and outputs of the first gate only.</p>
+<p>Now, let's go on to the second gate:</p>
+<pre><code>a = [0, 0, 0, 1, 0, 0]
+b = [0, 1, 0, 0, 0, 0]
+c = [0, 0, 0, 0, 1, 0]</code></pre>
+<p>In a similar style to the first dot product check, here we're checking that <span class="math inline">\(sym_1 \cdot x = y\)</span>.</p>
+<p>Now, the third gate:</p>
+<pre><code>a = [0, 1, 0, 0, 1, 0]
+b = [1, 0, 0, 0, 0, 0]
+c = [0, 0, 0, 0, 0, 1]</code></pre>
+<p>Here, the pattern is somewhat different: it's multiplying the first element in the solution vector by the second element, then by the fifth element, adding the two results, and checking if the sum equals the sixth element. Because the first element in the solution vector is always one, this is just an addition check, checking that the output equals the sum of the two inputs.</p>
+<p>Finally, the fourth gate:</p>
+<pre><code>a = [5, 0, 0, 0, 0, 1]
+b = [1, 0, 0, 0, 0, 0]
+c = [0, 0, 1, 0, 0, 0]</code></pre>
+<p>Here, we're evaluating the last check, ~out <span class="math inline">\(= sym_2 + 5\)</span>. The dot product check works by taking the sixth element in the solution vector, adding five times the first element (reminder: the first element is <span class="math inline">\(1\)</span>, so this effectively means adding <span class="math inline">\(5\)</span>), and checking it against the third element, which is where we store the output variable.</p>
+<p>And there we have our R1CS with four constraints. The witness is simply the assignment to all the variables, including input, output and internal variables:</p>
+<pre><code>[1, 3, 35, 9, 27, 30]</code></pre>
+<p>You can compute this for yourself by simply "executing" the flattened code above, starting off with the input variable assignment <span class="math inline">\(x=3\)</span>, and putting in the values of all the intermediate variables and the output as you compute them.</p>
+<p>The complete R1CS put together is:</p>
+<pre><code>A
+[0, 1, 0, 0, 0, 0]
+[0, 0, 0, 1, 0, 0]
+[0, 1, 0, 0, 1, 0]
+[5, 0, 0, 0, 0, 1]
+
+B
+[0, 1, 0, 0, 0, 0]
+[0, 1, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 0]
+
+C
+[0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 1]
+[0, 0, 1, 0, 0, 0]</code></pre>
+<h2 id="r1cs-to-qap">R1CS to QAP</h2>
+<p>The next step is taking this R1CS and converting it into QAP form, which implements the exact same logic except using polynomials instead of dot products. We do this as follows. We go 3from four groups of three vectors of length six to six groups of three degree-3 polynomials, where evaluating the polynomials at each <em>x coordinate</em> represents one of the constraints. That is, if we evaluate the polynomials at <span class="math inline">\(x=1\)</span>, then we get our first set of vectors, if we evaluate the polynomials at <span class="math inline">\(x=2\)</span>, then we get our second set of vectors, and so on.</p>
+<p>We can make this transformation using something called a <em>Lagrange interpolation</em>. The problem that a Lagrange interpolation solves is this: if you have a set of points (ie. <span class="math inline">\((x, y)\)</span> coordinate pairs), then doing a Lagrange interpolation on those points gives you a polynomial that passes through all of those points. We do this by decomposing the problem: for each <span class="math inline">\(x\)</span> coordinate, we create a polynomial that has the desired <span class="math inline">\(y\)</span> coordinate at that <span class="math inline">\(x\)</span> coordinate and a <span class="math inline">\(y\)</span> coordinate of <span class="math inline">\(0\)</span> at all the other <span class="math inline">\(x\)</span> coordinates we are interested in, and then to get the final result we add all of the polynomials together.</p>
+<p>Let's do an example. Suppose that we want a polynomial that passes through <span class="math inline">\((1, 3), (2, 2)\)</span> and <span class="math inline">\((3, 4)\)</span>. We start off by making a polynomial that passes through <span class="math inline">\((1, 3), (2, 0)\)</span> and <span class="math inline">\((3, 0)\)</span>. As it turns out, making a polynomial that "sticks out" at <span class="math inline">\(x=1\)</span> and is zero at the other points of interest is easy; we simply do:</p>
+<pre><code>(x - 2) * (x - 3)</code></pre>
+<p>Which looks like this:</p>
+<br>
+<center>
+<img src="https://cdn-images-1.medium.com/max/2000/1*wsBN9VA71EXm2L4EV-hwcw.png" />
+</center>
+<p><br></p>
+<p>Now, we just need to "rescale" it so that the height at x=1 is right:</p>
+<pre><code>(x - 2) * (x - 3) * 3 / ((1 - 2) * (1 - 3))</code></pre>
+<p>This gives us:</p>
+<pre><code>1.5 * x**2 - 7.5 * x + 9</code></pre>
+<br>
+<center>
+<img src="https://cdn-images-1.medium.com/max/2000/1*8agIwBEX5YJ1HyZ4K5r5Gw.png" />
+</center>
+<p><br></p>
+<p>We then do the same with the other two points, and get two other similar-looking polynomials, except that they "stick out" at <span class="math inline">\(x=2\)</span> and <span class="math inline">\(x=3\)</span> instead of <span class="math inline">\(x=1\)</span>. We add all three together and get:</p>
+<pre><code>1.5 * x**2 - 5.5 * x + 7</code></pre>
+<br>
+<center>
+<img src="https://cdn-images-1.medium.com/max/2000/1*kAn6O2BcDOsMgSwRPvRfZA.png" />
+</center>
+<p><br></p>
+<p>With exactly the coordinates that we want. The algorithm as described above takes <span class="math inline">\(O(n^3)\)</span> time, as there are <span class="math inline">\(n\)</span> points and each point requires <span class="math inline">\(O(n^2)\)</span> time to multiply the polynomials together; with a little thinking, this can be reduced to <span class="math inline">\(O(n^2)\)</span> time, and with a lot more thinking, using fast Fourier transform algorithms and the like, it can be reduced even further — a crucial optimization when functions that get used in zk-SNARKs in practice often have many thousands of gates.</p>
+<p>Now, let's use Lagrange interpolation to transform our R1CS. What we are going to do is take the first value out of every <span class="math inline">\(a\)</span> vector, use Lagrange interpolation to make a polynomial out of that (where evaluating the polynomial at <span class="math inline">\(i\)</span> gets you the first value of the <span class="math inline">\(i\)</span>th <span class="math inline">\(a\)</span> vector), repeat the process for the first value of every <span class="math inline">\(b\)</span> and <span class="math inline">\(c\)</span> vector, and then repeat that process for the second values, the third, values, and so on. For convenience I'll provide the answers right now:</p>
+<pre><code>A polynomials
+[-5.0, 9.166, -5.0, 0.833]
+[8.0, -11.333, 5.0, -0.666]
+[0.0, 0.0, 0.0, 0.0]
+[-6.0, 9.5, -4.0, 0.5]
+[4.0, -7.0, 3.5, -0.5]
+[-1.0, 1.833, -1.0, 0.166]
+
+B polynomials
+[3.0, -5.166, 2.5, -0.333]
+[-2.0, 5.166, -2.5, 0.333]
+[0.0, 0.0, 0.0, 0.0]
+[0.0, 0.0, 0.0, 0.0]
+[0.0, 0.0, 0.0, 0.0]
+[0.0, 0.0, 0.0, 0.0]
+
+C polynomials
+[0.0, 0.0, 0.0, 0.0]
+[0.0, 0.0, 0.0, 0.0]
+[-1.0, 1.833, -1.0, 0.166]
+[4.0, -4.333, 1.5, -0.166]
+[-6.0, 9.5, -4.0, 0.5]
+[4.0, -7.0, 3.5, -0.5]</code></pre>
+<p>Coefficients are in ascending order, so the first polynomial above is actually <span class="math inline">\(0.833 \cdot x^3 — 5 \cdot x^2 + 9.166 \cdot x - 5\)</span>. This set of polynomials (plus a Z polynomial that I will explain later) makes up the parameters for this particular QAP instance. Note that all of the work up until this point needs to be done only once for every function that you are trying to use zk-SNARKs to verify; once the QAP parameters are generated, they can be reused.</p>
+<p>Let's try evaluating all of these polynomials at <span class="math inline">\(x=1\)</span>. Evaluating a polynomial at <span class="math inline">\(x=1\)</span> simply means adding up all the coefficients (as <span class="math inline">\(1^k = 1\)</span> for all <span class="math inline">\(k\)</span>), so it's not difficult. We get:</p>
+<pre><code>A results at x=1
+0
+1
+0
+0
+0
+0
+
+B results at x=1
+0
+1
+0
+0
+0
+0
+
+C results at x=1
+0
+0
+0
+1
+0
+0</code></pre>
+<p>And lo and behold, what we have here is exactly the same as the set of three vectors for the first logic gate that we created above.</p>
+<h2 id="checking-the-qap">Checking the QAP</h2>
+<p>Now what's the point of this crazy transformation? The answer is that instead of checking the constraints in the R1CS individually, we can now check <em>all of the constraints at the same time</em> by doing the dot product check <em>on the polynomials</em>.</p>
+<br>
+<center>
+<img src="https://cdn-images-1.medium.com/max/2000/1*QD2EfVsbNguEXrjKJwNVMg.png" />
+</center>
+<p><br></p>
+<p>Because in this case the dot product check is a series of additions and multiplications of polynomials, the result is itself going to be a polynomial. If the resulting polynomial, evaluated at every <span class="math inline">\(x\)</span> coordinate that we used above to represent a logic gate, is equal to zero, then that means that all of the checks pass; if the resulting polynomial evaluated at at least one of the <span class="math inline">\(x\)</span> coordinate representing a logic gate gives a nonzero value, then that means that the values going into and out of that logic gate are inconsistent (ie. the gate is <span class="math inline">\(y = x \cdot sym_1\)</span> but the provided values might be <span class="math inline">\(x = 2,sym_1 = 2\)</span> and <span class="math inline">\(y = 5\)</span>).</p>
+<p>Note that the resulting polynomial does not itself have to be zero, and in fact in most cases won't be; it could have any behavior at the points that don't correspond to any logic gates, as long as the result is zero at all the points that <em>do</em> correspond to some gate. To check correctness, we don't actually evaluate the polynomial <span class="math inline">\(t = A . s \cdot B . s - C . s\)</span> at every point corresponding to a gate; instead, we divide <span class="math inline">\(t\)</span> by another polynomial, <span class="math inline">\(Z\)</span>, and check that <span class="math inline">\(Z\)</span> evenly divides <span class="math inline">\(t\)</span> - that is, the division <span class="math inline">\(t / Z\)</span> leaves no remainder.</p>
+<p><span class="math inline">\(Z\)</span> is defined as <span class="math inline">\((x - 1) \cdot (x - 2) \cdot (x - 3) ...\)</span> - the simplest polynomial that is equal to zero at all points that correspond to logic gates. It is an elementary fact of algebra that <em>any</em> polynomial that is equal to zero at all of these points has to be a multiple of this minimal polynomial, and if a polynomial is a multiple of <span class="math inline">\(Z\)</span> then its evaluation at any of those points will be zero; this equivalence makes our job much easier.</p>
+<p>Now, let's actually do the dot product check with the polynomials above. First, the intermediate polynomials:</p>
+<pre><code>A . s = [43.0, -73.333, 38.5, -5.166]
+B . s = [-3.0, 10.333, -5.0, 0.666]
+C . s = [-41.0, 71.666, -24.5, 2.833]</code></pre>
+<p>Now, <span class="math inline">\(A . s \cdot B . s — C . s\)</span>:</p>
+<pre><code>t = [-88.0, 592.666, -1063.777, 805.833, -294.777, 51.5, -3.444]</code></pre>
+<p>Now, the minimal polynomial <span class="math inline">\(Z = (x - 1) \cdot (x - 2) \cdot (x - 3) \cdot (x - 4)\)</span>:</p>
+<pre><code>Z = [24, -50, 35, -10, 1]</code></pre>
+<p>And if we divide the result above by <span class="math inline">\(Z\)</span>, we get:</p>
+<pre><code>h = t / Z = [-3.666, 17.055, -3.444]</code></pre>
+<p>With no remainder.</p>
+<p>And so we have the solution for the QAP. If we try to falsify any of the variables in the R1CS solution that we are deriving this QAP solution from — say, set the last one to <span class="math inline">\(31\)</span> instead of <span class="math inline">\(30\)</span>, then we get a <span class="math inline">\(t\)</span> polynomial that fails one of the checks (in that particular case, the result at <span class="math inline">\(x=3\)</span> would equal <span class="math inline">\(-1\)</span> instead of <span class="math inline">\(0\)</span>), and furthermore <span class="math inline">\(t\)</span> would not be a multiple of <span class="math inline">\(Z\)</span>; rather, dividing <span class="math inline">\(t / Z\)</span> would give a remainder of <span class="math inline">\([-5.0, 8.833, -4.5, 0.666]\)</span>.</p>
+<p>Note that the above is a simplification; "in the real world", the addition, multiplication, subtraction and division will happen not with regular numbers, but rather with finite field elements — a spooky kind of arithmetic which is self-consistent, so all the algebraic laws we know and love still hold true, but where all answers are elements of some finite-sized set, usually integers within the range from <span class="math inline">\(0\)</span> to <span class="math inline">\(n-1\)</span> for some <span class="math inline">\(n\)</span>. For example, if <span class="math inline">\(n = 13\)</span>, then <span class="math inline">\(1 / 2 = 7\)</span> (and <span class="math inline">\(7 \cdot 2 = 1), 3 \cdot 5 = 2\)</span>, and so forth. Using finite field arithmetic removes the need to worry about rounding errors and allows the system to work nicely with elliptic curves, which end up being necessary for the rest of the zk-SNARK machinery that makes the zk-SNARK protocol actually secure.</p>
+<p>Special thanks to Eran Tromer for helping to explain many details about the inner workings of zk-SNARKs to me.</p>
+ </div> 

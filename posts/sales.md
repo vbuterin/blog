@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2017/06/10)
+[date]: <> (2017/06/09)
 [title]: <> (Analyzing Token Sale Models)
 [pandoc]: <> (--mathjax)
 
@@ -17,7 +17,7 @@ Let us review a few examples.
 
 <center>
 <img src="/images/sales-files/msc_chart.png" width="350px"></img>
-</center>
+</center><br>
 
 The [decentralized internet platform](http://maidsafe.net/) raised $7m [in five hours](https://www.forbes.com/sites/kashmirhill/2014/06/03/mastercoin-maidsafe-crowdsale/#7fda1c71207d). However, they made the mistake of accepting payment in two currencies (BTC and MSC), and giving a favorable rate to MSC buyers. This [led to](https://www.cryptocoinsnews.com/maidsafe-embroiled-safecoin-presale-mastercoin-pump-dump/) a temporary ~2x appreciation in the MSC price, as users rushed in to buy MSC to participate in the sale at the more favorable rate, but then the price saw a similarly steep drop after the sale ended. Many users converted their BTC to MSC to participate in the sale, but then the sale closed too quickly for them, leading to them being stuck with a ~30% loss.
 
@@ -42,7 +42,7 @@ Throughout 2016 and early 2017, the capped sale design was most popular. Capped 
 
 <center>
 <img src="https://cdn-images-1.medium.com/max/800/1*WHr0X7TZL6Rzn0sg3_R-Aw.png" width="550px"></img>
-</center>
+</center><br>
 
 Not only did the sale finish within two blocks, but also:
 
@@ -60,7 +60,7 @@ The purpose of this is to create a scheme where, if you buy at time $T$, then yo
 
 <center>
 <img src="/images/sales-files/gnosis_auction.png" width="550px"></img>
-</center>
+</center><br>
 
 The goal is to create a mechanism where the optimal strategy is simple. First, you personally decide what is the highest valuation you would be willing to buy at (call it V). Then, when the sale starts, you don't buy in immediately; rather, you wait until the valuation drops to below that level, and then send your transaction.
 
@@ -75,7 +75,7 @@ All of this would of course be an excellent piece of confirming evidence for the
 
 <center>
 <img src="/images/sales-files/gnosis_price_pic.png" width="550px"></img>
-</center>
+</center><br>
 
 Even in ETH terms, despite the massive ETH price rise, the price of 1 GNO has increased from ~0.6 ETH to ~0.8 ETH.
 
@@ -152,7 +152,7 @@ Here are a few possible mechanisms that follow some of the spirit of the above i
 * Sell an unlimited number of tokens at a price of $\$X$ and put 90% of the proceeds into a smart contract that guarantees a price floor of $\$0.9 \cdot X$. Have the price ceiling go up hyperbolically toward infinity, and the price floor go down linearly toward zero, over a five-year period.
 * Do the exact same thing AngelShares did, though stretch it out over 5 years instead of a few months.
 * Host a Gnosis-style reverse dutch auction. If the auction sells less than 100% of the token supply, put the remaining funds into an automated market maker that attempts to ensure the token's price stability (note that if the price continues going up anyway, then the market maker would be selling tokens, and some of these earnings could be given to the development team).
-* Immediately put all tokens into a market maker with parameters+variables $X$ (minimum price), $s$ (fraction of all tokens already sold), $t$ (time since sale started), $T$ (intended duration of sale, say 5 years), that sells tokens at a price of $\dfrac{k}{\frac{t}{T - s}}$ (this one is weird and may need to be economically studied more).
+* Immediately put all tokens into a market maker with parameters+variables $X$ (minimum price), $s$ (fraction of all tokens already sold), $t$ (time since sale started), $T$ (intended duration of sale, say 5 years), that sells tokens at a price of $\dfrac{k}{(\frac{t}{T - s})}$ (this one is weird and may need to be economically studied more).
 
 Note that there are other mechanisms that should be tried to solve other problems with token sales; for example, revenues going into a multisig of curators, which only hand out funds if milestones are being met, is one very interesting idea that should be done more. However, the design space is highly multidimensional, and there are a lot more things that could be tried.
 

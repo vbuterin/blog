@@ -1,16 +1,16 @@
 [category]: <> (General)
-[date]: <> (2017/07/17)
+[date]: <> (2017/07/16)
 [title]: <> (The Triangle of Harm)
 [pandoc]: <> (--mathjax)
 
 # The Triangle of Harm
 
 The following is a diagram from a slide that I made in one of my presentations at Cornell this week:
-<br>
+<br><br>
 <center>
-<img src="/images/triangle-of-harm-files/triangle_of_harm.png" style="width:450px"></img>
+<img src="/images/triangle-of-harm-files/triangle_of_harm.png" style="width:420px"></img>
 </center>
-<br>
+<br><br>
 If there was one diagram that could capture the core principle of Casper's incentivization philosophy, this might be it. Hence, it warrants some further explanation.
 
 The diagram shows three constituencies - the minority, the majority and the protocol (ie. users), and four arrows representing possible adversarial actions: the minority attacking the protocol, the minority attacking the majority, the majority attacking the protocol, and the majority attacking the minority. Examples of each include:

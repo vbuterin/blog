@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2017/12/15)
+[date]: <> (2017/12/14)
 [title]: <> (A Quick Gasprice Market Analysis)
 [pandoc]: <> ()
 
@@ -25,7 +25,7 @@ First, a chart of the deciles, taking 50-block moving averages to smooth it out:
 
 <center>
 <img src="/images/gas-analysis-files/gas_anal1.png" style="width:350px"/>
-</center>
+</center><br>
 
 What we see is a gasprice market that seems to actually stay reasonably stable over the course of more than three days. There are a few occasional spikes, most notably the one around block 4720000, but otherwise the deciles all stay within the same band all the way through. The only exception is the highest gasprice transaction (that red squiggle at the top left), which fluctuates wildly because it can be pushed upward by a single very-high-gasprice transaction.
 
@@ -33,7 +33,7 @@ We can try to interpret the data in another way: by calculating, for each gaspri
 
 <center>
 <img src="/images/gas-analysis-files/gas_anal2.png" style="width:350px"/>
-</center>
+</center><br>
 
 There is clear clustering going on at the 4, 10 and 20 levels; it seems to be an underexploited strategy to send transactions with fees slightly above these levels, getting in before the crowd of transactions right at the level but only paying a little more.
 
@@ -55,7 +55,7 @@ Another thing we can look at is timestamp differences - the difference between a
 
 <center>
 <img src="/images/gas-analysis-files/gas_anal3.png" style="width:350px"/>
-</center>
+</center><br>
 
 This makes a lot of sense, as a block that comes right after another block should be cleaning up only the transactions that are too low in gasprice for the parent block to have included, and a block that comes a long time after its predecessor would have many more not-yet-included transactions to choose from. The differences are large, suggesting that a single block is enough to bite off a very substantial chunk of the unconfirmed transaction pool, adding to the evidence that most transactions are included quite quickly.
 

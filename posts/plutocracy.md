@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2018/03/29)
+[date]: <> (2018/03/28)
 [title]: <> (Governance, Part 2: Plutocracy Is Still Bad)
 [pandoc]: <> (--mathjax)
 
@@ -9,7 +9,7 @@ Coin holder voting, both for governance of technical features, and for more exte
 
 I wrote about the issues with tightly coupled voting [in a blog post](https://vitalik.ca/general/2017/12/17/voting.html) last year, that focused on theoretical issues as well as focusing on some practical issues experienced by voting systems over the previous two years. Now, the latest scandal in DPOS land seems to be substantially worse. Because the delegate rewards in EOS are now so high (5% annual inflation, about $400m per year), the competition on who gets to run nodes has essentially become yet another frontier of US-China geopolitical economic warfare.
 
-<center><img src="https://pic4.zhimg.com/v2-a4b7403626be584f21d47837190e99e0_1200x500.jpg" style="width:400px" /></center>
+<center><img src="https://pic4.zhimg.com/v2-a4b7403626be584f21d47837190e99e0_1200x500.jpg" style="width:400px" /></center><br>
 
 And that's not my own interpretation; I quote from [this article (original in Chinese)](https://zhuanlan.zhihu.com/p/34902188):
 
@@ -17,7 +17,7 @@ And that's not my own interpretation; I quote from [this article (original in Ch
 
 > Looking at community recognition, Chinese nodes feel much less represented in the community than US and Korea. Since the EOS.IO official Twitter account was founded, there has never been any interaction with the mainland Chinese EOS community. For a listing of the EOS officially promoted events and interactions with communities see the picture below.
 
-<center><img src="/images/plutocracy-files/plutocracy_image1.png" style="width:400px" /></center>
+<center><img src="/images/plutocracy-files/plutocracy_image1.png" style="width:400px" /></center><br>
 
 > With no support from the developer community, facing competition from Korea, the Chinese EOS supernodes have invented a new strategy: buying votes.
 

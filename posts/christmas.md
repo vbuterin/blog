@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2019/12/25)
+[date]: <> (2019/12/24)
 [title]: <> (Christmas Special)
 [pandoc]: <> (--mathjax)
 

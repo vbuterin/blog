@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2019/04/04)
+[date]: <> (2019/04/03)
 [title]: <> (On Collusion)
 [pandoc]: <> (--mathjax)
 
@@ -101,7 +101,7 @@ Another possible example of futarchy is a governance system for a project with a
 
 <br>
 <center>
-<img src="https://ethresear.ch/uploads/default/original/2X/4/4236db5226633dcc00bb4924f55db33488707488.png" style="width:600px"/><br>
+<img src="https://ethresear.ch/uploads/default/original/2X/4/4236db5226633dcc00bb4924f55db33488707488.png" style="width:600px"/><br><br>
 <small><i>A graphical description of one form of futarchy, creating two markets representing the two "possible future worlds" and picking the one with a more favorable price. Source <a href="https://ethresear.ch/uploads/default/original/2X/4/4236db5226633dcc00bb4924f55db33488707488.png">this post on ethresear.ch</a></i></small>
 </center>
 <br>

@@ -1,5 +1,5 @@
 [category]: <> (General)
-[date]: <> (2018/08/08)
+[date]: <> (2018/08/07)
 [title]: <> (A Guide to 99% Fault Tolerant Consensus)
 [pandoc]: <> (--mathjax)
 
@@ -18,7 +18,7 @@ If a validator $i$ receives some message $v : i[1] : ... : i[k]$, where $i[1] ..
 At time $T + (N-1) \cdot D$, nodes stop listening. At this point, there is a guarantee that honest nodes have all "validly seen" the same set of values.
 
 <center>
-<img src="/images/99-fault-tolerant-files/Lamport.png" /><br>
+<img src="/images/99-fault-tolerant-files/Lamport.png" /><br><br>
 <i><small>Node 1 (red) is malicious, and nodes 0 and 2 (grey) are honest. At the start, the two honest nodes make their proposals $y$ and $x$, and the attacker proposes both $w$ and $z$ late. $w$ reaches node 0 on time but not node 2, and $z$ reaches neither node on time. At time $T + D$, nodes 0 and 2 rebroadcast all values they've seen that they have not yet broadcasted, but add their signatures on ($x$ and $w$ for node 0, $y$ for node 2). Both honest nodes saw ${x, y, w}$.</small></i>
 </center>
 <br>
