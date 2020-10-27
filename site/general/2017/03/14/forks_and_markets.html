@@ -32,10 +32,10 @@
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
-
+ <title> Hard Forks, Soft Forks, Defaults and Coercion </title> 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Hard Forks, Soft Forks, Defaults and Coercion" />
-<meta name="twitter:image" content="http://66.172.12.37/images/icon.png" />
+<meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
 <h1 id="hard-forks-soft-forks-defaults-and-coercion">Hard Forks, Soft Forks, Defaults and Coercion</h1>
 <p>One of the important arguments in the blockchain space is that of whether hard forks or soft forks are the preferred protocol upgrade mechanism. The basic difference between the two is that soft forks change the rules of a protocol by <em>strictly reducing</em> the set of transactions that is valid, so nodes following the old rules will still get on the new chain (provided that the majority of miners/validators implements the fork), whereas hard forks allow previously invalid transactions and blocks to become valid, so clients must upgrade their clients in order to stay on the hard-forked chain. There are also two sub-types of hard forks: <em>strictly expanding</em> hard forks, which strictly expand the set of transactions that is valid, and so effectively the old rules are a soft fork with respect to the new rules, and <em>bilateral</em> hard forks, where the two rulesets are incompatible both ways.</p>
 <p>Here is a Venn diagram to illustrate the fork types:</p>
