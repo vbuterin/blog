@@ -1,16 +1,28 @@
 .post-list {
   margin-left: 0;
+  padding-left: 0;
   list-style: none; }
   .post-list > li {
     margin-bottom: 30px; }
 
-.post-meta {
-  font-size: 14px;
-  color: #828282; }
 
-.post-link {
-  display: block;
-  font-size: 24px; }
+@media only screen and (orientation: landscape) {
+    .post-link {
+      display: block;
+      font-size: 24px; }
+
+    .post-meta {
+      font-size: 14px;
+      color: #828282; }
+}
+
+@media only screen and (orientation: portrait) {
+    .post-link {
+      display: block; }
+    .post-meta {
+      font-size: 24px;
+      color: #828282; }
+}
 
 .python .dv {
   color: #0086b3 }

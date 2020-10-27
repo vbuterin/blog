@@ -76,9 +76,9 @@ $$ct_1 * ct_2 = (R_1 * p + r_1 * 2 + m_1) * (R_2 * p + r_2 * 2 + m_2)$$
 
 Or:
 
-$$(R_1 * R_2 * p + r_1 * 2 + m_1 + r_2 * 2 + m_2) * p + \\
-(r_1 * r_2 * 2 + r_1 * m_2 + r_2 * m_1) * 2 + \\
-(m_1 * m_2)$$
+$$(R_1 * R_2 * p + r_1 * 2 + m_1 + r_2 * 2 + m_2) * p + $$
+$$(r_1 * r_2 * 2 + r_1 * m_2 + r_2 * m_1) * 2 + $$
+$$(m_1 * m_2)$$
 
 This was simply a matter of expanding the product above, and grouping together all the terms that contain $p$, then all the remaining terms that contain $2$, and finally the remaining term which is the product of the messages. If you decrypt, then once again the $mod\ p$ removes the first group, the $mod\ 2$ removes the second group, and only $m_1 * m_2$ is left.
 
@@ -172,7 +172,7 @@ $$enc(k_1 * k_1) + enc(k_1 * k_1 * 2)  + enc(k_1 * k_2 * 4)  + $$
 
 $$enc(k_2 * k_1 * 2) + enc(k_2 * k_1 * 4)  + enc(k_2 * k_2 * 8) $$
 
-Note that each noisy-encryption in the relinearization key has some even error $2e$, and the equation $<ct_1 \otimes ct_2, k \otimes k>$ itself has some error: if $<ct_1, k> = 2e_1 + m_1$ and $<ct_2 + k> = 2e_2 + m_2$, then $<ct_1 \otimes ct_2, k \otimes k> = <ct_1, k> * <ct_2 + k> = 2(2e_1e_2 + e_1m_2 + e_2m_1) + m_1m_2$. But this total error is still (relatively) small ($2e_1e_2 + e_1m_2 + e_2m_1$ plus $n^2 * log(p)$ fixed-size errors from the realinearization key), and the error is even, and so the result of this calculation still gives a value which, when inner-producted with $k$, gives $m_1 * m_2 + 2e'$ for some "combined error" $e'$.
+Note that each noisy-encryption in the relinearization key has some even error $2e$, and the equation $<ct_1 \otimes ct_2, k \otimes k>$ itself has some error: if $<ct_1, k> = 2e_1 + m_1$ and $<ct_2 + k> = 2e_2 + m_2$, then $<ct_1 \otimes ct_2, k \otimes k> =$ $<ct_1, k> * <ct_2 + k> =$ $2(2e_1e_2 + e_1m_2 + e_2m_1) + m_1m_2$. But this total error is still (relatively) small ($2e_1e_2 + e_1m_2 + e_2m_1$ plus $n^2 * log(p)$ fixed-size errors from the realinearization key), and the error is even, and so the result of this calculation still gives a value which, when inner-producted with $k$, gives $m_1 * m_2 + 2e'$ for some "combined error" $e'$.
 
 The broader technique we used here is a common trick in homomorphic encryption: provide pieces of the key encrypted under the key itself (or a different key if you are pedantic about avoiding circular security assumptions), such that someone computing on the data can compute the decryption equation, but only in such a way that the output itself is still encrypted. It was used in bootstrapping above, and it's used here; it's best to make sure you mentally understand what's going on in both cases.
 
