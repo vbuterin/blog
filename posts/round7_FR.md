@@ -102,5 +102,5 @@ Ce qui faut retenir ici est simplement que le rollup ZK a réussi à réduire le
 
 ### Conclusion
 
-Le 7ème tour a été un tour pivot pour les subventions Gitcoin. Le financement de contrepartie est devenu beaucoup plus durable. Les niveaux de financement sont maintenant suffisant pour financer avec succès les freelancers quadratiques, au point même de se demander si nous devons nous inquiéter d'un "surplus de financement"! La vérification de l'identité progresse. Les paiements sont devenus beaucoup plus efficaces avec l'introduction du [ZKSync] (https://wallet.zksync.io/) ZK rollup. J'ai hâte de voir les subventions se poursuivre pour de nombreuses autres tours à l'avenir.
+Le 7ème tour a été un tour pivot pour les subventions Gitcoin. Le financement de contrepartie est devenu beaucoup plus durable. Les niveaux de financement sont maintenant suffisant pour financer avec succès les freelancers quadratiques, au point même de se demander si nous devons nous inquiéter d'un "surplus de financement"! La vérification de l'identité progresse. Les paiements sont devenus beaucoup plus efficaces avec l'introduction du [ZKSync] (https://wallet.zksync.io/) ZK rollup. J'ai hâte de voir les subventions se poursuivre pour de nombreux autres tours à l'avenir.
 
