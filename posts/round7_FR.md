@@ -1,7 +1,7 @@
-[categorie] : <> (Général)
-[date] : <> (2020/10/18)
-[titre] : <> ( 7ème tour des subventions Gitcoin - Rétrospective )
-[pandoc] : <> (—mathjax)
+[category]: <> (Général)
+[date]: <> (2020/10/18)
+[title]: <> ( 7ème tour des subventions Gitcoin - Rétrospective )
+[pandoc]: <> (--mathjax)
 
 # 7ème tour des subventions Gitcoin - Rétrospective
 
