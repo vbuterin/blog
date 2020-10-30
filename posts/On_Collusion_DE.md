@@ -3,7 +3,6 @@
 [title]: <> (Über Kollusion)
 [pandoc]: <> (--mathjax)
 
-# Über Kollusion
 
 *Besonderer Dank geht an Glen Weyl, Phil Daian und Jinglan Wang für das Gegenlesen dieses Artikels, und an inlak16 für die Übersetzung.*
 

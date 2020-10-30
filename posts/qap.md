@@ -3,7 +3,6 @@
 [title]: <> ([Mirror] Quadratic Arithmetic Programs: from Zero to Hero)
 [pandoc]: <> (--mathjax)
 
-# [Mirror] Quadratic Arithmetic Programs: from Zero to Hero
 
 _This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649</a> _
 

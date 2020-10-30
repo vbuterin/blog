@@ -3,7 +3,6 @@
 [title]: <> (Understanding PLONK)
 [pandoc]: <> (--mathjax)
 
-# Understanding PLONK
 _Special thanks to Justin Drake, Karl Floersch, Hsiao-wei Wang, Barry Whitehat, Dankrad Feist, Kobi Gurkan and Zac Williamson for review_
 
 Very recently, Ariel Gabizon, Zac Williamson and Oana Ciobotaru announced a new general-purpose zero-knowledge proof scheme called [PLONK](https://eprint.iacr.org/2019/953), standing for the unwieldy quasi-backronym "Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge". While [improvements](https://eprint.iacr.org/2016/260.pdf) to general-purpose [zero-knowledge proof](https://arxiv.org/abs/1903.12243) protocols have been [coming](https://dci.mit.edu/zksharks) for [years](https://eprint.iacr.org/2017/1066), what PLONK (and the earlier but more complex [SONIC](https://www.benthamsgaze.org/2019/02/07/introducing-sonic-a-practical-zk-snark-with-a-nearly-trustless-setup/) and the more recent [Marlin](https://eprint.iacr.org/2019/1047.pdf)) bring to the table is a series of enhancements that may greatly improve the usability and progress of these kinds of proofs in general.

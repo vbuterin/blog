@@ -3,7 +3,6 @@
 [title]: <> (Hard Problems in Cryptocurrency: Five Years Later)
 [pandoc]: <> (--mathjax)
 
-# Hard Problems in Cryptocurrency: Five Years Later
 
 _Special thanks to Justin Drake and Jinglan Wang for feedback_
 

@@ -3,8 +3,6 @@
 [title]: <> (Trust Models)
 [pandoc]: <> ()
 
-# Trust Models
-
 One of the most valuable properties of many blockchain applications is _trustlessness_: the ability of the application to continue operating in an expected way without needing to rely on a specific actor to behave in a specific way even when their interests might change and push them to act in some different unexpected way in the future. Blockchain applications are never _fully_ trustless, but some applications are much closer to being trustless than others. If we want to make practical moves toward trust minimization, we want to have the ability to compare different degrees of trust.
 
 First, my simple one-sentence definition of trust: **trust is the use of any assumptions about the behavior of other people**. If before the pandemic you would walk down the street without making sure to keep two meters' distance from strangers so that they could not suddenly take out a knife and stab you, that's a kind of trust: both trust that people are very rarely completely deranged, and trust that the people managing the legal system continue to provide strong incentives against that kind of behavior. When you run a piece of code written by someone else, you trust that they wrote the code honestly (whether due to their own sense of decency or due to an economic interest in maintaining their reputations), or at least that _there exist_ enough people checking the code that a bug would be found. Not growing your own food is another kind of trust: trust that enough people will realize that it's in _their_ interests to grow food so they can sell it to you. You can trust different sizes of groups of people, and there are different kinds of trust.

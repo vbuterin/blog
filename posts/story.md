@@ -3,7 +3,6 @@
 [title]: <> (In-person meatspace protocol to prove unconditional possession of a private key)
 [pandoc]: <> ()
 
-# In-person meatspace protocol to prove unconditional possession of a private key
 _Recommended pre-reading: [https://ethresear.ch/t/minimal-anti-collusion-infrastructure/5413](https://ethresear.ch/t/minimal-anti-collusion-infrastructure/5413)_
 
 Alice slowly walks down the old, dusty stairs of the building into the basement. She thinks wistfully of the old days, when quadratic-voting in the World Collective Market was a much simpler process of linking her public key to a twitter account and opening up metamask to start firing off votes. Of course back then voting in the WCM was used for little; there were a few internet forums that used it for voting on posts, and a few million dollars donated to its [quadratic funding](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3243656) oracle. But then it grew, and then the game-theoretic attacks came.

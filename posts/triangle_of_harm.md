@@ -3,8 +3,6 @@
 [title]: <> (The Triangle of Harm)
 [pandoc]: <> (--mathjax)
 
-# The Triangle of Harm
-
 The following is a diagram from a slide that I made in one of my presentations at Cornell this week:
 <br><br>
 <center>

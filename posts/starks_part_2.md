@@ -3,8 +3,6 @@
 [title]: <> (STARKs, Part II: Thank Goodness It's FRI-day)
 [pandoc]: <> (--mathjax)
 
-# STARKs, Part II: Thank Goodness It's FRI-day
-
 _Special thanks to Eli Ben-Sasson for ongoing help and explanations, and Justin Drake for reviewing_
 
 In the last part of this series, we talked about how you can make some pretty interesting succinct proofs of computation, such as proving that you have computed the millionth Fibonacci number, using a technique involving polynomial composition and division. However, it rested on one critical ingredient: the ability to prove that at least the great majority of a given large set of points are on the same low-degree polynomial. This problem, called "low-degree testing", is perhaps the single most complex part of the protocol.

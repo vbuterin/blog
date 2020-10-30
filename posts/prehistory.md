@@ -3,7 +3,6 @@
 [title]: <> (A Prehistory of the Ethereum Protocol)
 [pandoc]: <> (--mathjax)
 
-# A Prehistory of the Ethereum Protocol
 
 Although the ideas behind the current Ethereum protocol have largely been stable for two years, Ethereum did not emerge all at once, in its current conception and fully formed. Before the blockchain has launched, the protocol went through a number of significant evolutions and design decisions. The purpose of this article will be to go through the various evolutions that the protocol went through from start to launch; the countless work that was done on the implementations of the protocol such as Geth, cppethereum, pyethereum, and EthereumJ, as well as the history of applications and businesses in the Ethereum ecosystem, is deliberately out of scope.
 

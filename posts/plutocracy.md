@@ -3,7 +3,6 @@
 [title]: <> (Governance, Part 2: Plutocracy Is Still Bad)
 [pandoc]: <> (--mathjax)
 
-# Governance, Part 2: Plutocracy Is Still Bad
 
 Coin holder voting, both for governance of technical features, and for more extensive use cases like deciding who runs validator nodes and who receives money from development bounty funds, is unfortunately continuing to be popular, and so it seems worthwhile for me to write another post explaining why I (and [Vlad Zamfir](https://medium.com/@Vlad_Zamfir/against-on-chain-governance-a4ceacd040ca) and others) do not consider it wise for Ethereum (or really, any base-layer blockchain) to start adopting these kinds of mechanisms in a tightly coupled form in any significant way.
 

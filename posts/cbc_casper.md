@@ -3,7 +3,6 @@
 [title]: <> (A CBC Casper Tutorial)
 [pandoc]: <> (--mathjax)
 
-# A CBC Casper Tutorial
 
 _Special thanks to Vlad Zamfir, Aditya Asgaonkar, Ameen Soleimani and Jinglan Wang for review_
 

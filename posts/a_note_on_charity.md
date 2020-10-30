@@ -3,7 +3,6 @@
 [title]: <> (A Note On Charity Through Marginal Price Discrimination)
 [pandoc]: <> (--mathjax)
 
-# A Note On Charity Through Marginal Price Discrimination
 **Updated 2018-07-28. See end note.**
 
 The following is an interesting idea that I had two years ago that I personally believe has promise and could be easily implemented in the context of a blockchain ecosystem, though if desired it could certainly also be implemented with more traditional technologies (blockchains would help get the scheme network effects by putting the core logic on a more neutral platform).

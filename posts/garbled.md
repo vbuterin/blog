@@ -3,7 +3,6 @@
 [title]: <> (A Quick Garbled Circuits Primer)
 [pandoc]: <> ()
 
-# A Quick Garbled Circuits Primer
 
 _Special thanks to Dankrad Feist for review_
 

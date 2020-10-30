@@ -3,7 +3,6 @@
 [title]: <> (Na colusão)
 [pandoc]: <> (--mathjax)
 
-# Na colusão
 
 *Agradecimentos especiais a Glen Weyl, Phil Daian e Jinglan Wang para revisão, e Jeff Prestes para tradução*
 

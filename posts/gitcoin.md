@@ -3,7 +3,6 @@
 [title]: <> (Review of Gitcoin Quadratic Funding Round 3)
 [pandoc]: <> (--mathjax)
 
-# Review of Gitcoin Quadratic Funding Round 3
 
 _Special thanks to the Gitcoin team and especially Frank Chen for working with me through these numbers_
 

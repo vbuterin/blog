@@ -3,7 +3,6 @@
 [title]: <> (On Collusion)
 [pandoc]: <> (--mathjax)
 
-# On Collusion
 
 _Special thanks to Glen Weyl, Phil Daian and Jinglan Wang for review_
 

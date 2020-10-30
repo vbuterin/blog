@@ -3,8 +3,6 @@
 [title]: <> (Gitcoin Grants Round 6 Retrospective)
 [pandoc]: <> (--mathjax)
 
-# Gitcoin Grants Round 6 Retrospective
-
 Round 6 of Gitcoin Grants has just finished, with $227,847 in contributions from 1,526 contributors and $175,000 in matched funds distributed across 695 projects. This time around, we had three categories: the two usual categories of "tech" and "community" (the latter renamed from "media" to reflect a desire for a broad emphasis), and the round-6-special category Crypto For Black Lives.
 
 First of all, here are the results, starting with the tech and community sections:

@@ -3,7 +3,6 @@
 [title]: <> ([Mirror] Zk-SNARKs: Under the Hood)
 [pandoc]: <> (--mathjax)
 
-# [Mirror] Zk-SNARKs: Under the Hood
 _This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6>https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6</a> _
 
 *This is the third part of a series of articles explaining how the technology behind zk-SNARKs works; the previous articles on [quadratic arithmetic programs](https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649) and [elliptic curve pairings](https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627) are required reading, and this article will assume knowledge of both concepts. Basic knowledge of what zk-SNARKs are and what they do is also assumed. See also [Christian Reitwiessner’s article here](https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell/) for another technical introduction.*

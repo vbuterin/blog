@@ -3,7 +3,6 @@
 [title]: <> (Gitcoin Grants Round 5 Retrospective)
 [pandoc]: <> (--mathjax)
 
-# Gitcoin Grants Round 5 Retrospective
 
 _Special thanks to Kevin Owocki and Frank Chen for help and review_
 

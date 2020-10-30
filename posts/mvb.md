@@ -3,7 +3,6 @@
 [title]: <> (Base Layers And Functionality Escape Velocity)
 [pandoc]: <> ()
 
-# Base Layers And Functionality Escape Velocity
 
 One common strand of thinking in blockchain land goes as follows: blockchains should be maximally simple, because they are a piece of infrastructure that is difficult to change and would lead to great harms if it breaks, and more complex functionality should be built on top, in the form of layer 2 protocols: [state channels](https://www.jeffcoleman.ca/state-channels/), [Plasma](https://ethresear.ch/t/minimal-viable-plasma/426), [rollup](https://ethresear.ch/t/on-chain-scaling-to-potentially-500-tx-sec-through-mass-tx-validation/3477), and so forth. Layer 2 should be the site of ongoing innovation, layer 1 should be the site of stability and maintenance, with large changes only in emergencies (eg. a one-time set of serious breaking changes to prevent the base protocol's cryptography from falling to quantum computers would be okay).
 

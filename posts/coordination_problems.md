@@ -3,7 +3,6 @@
 [title]: <> (Engineering Security Through Coordination Problems)
 [pandoc]: <> ()
 
-# Engineering Security Through Coordination Problems
 
 Recently, there was a small spat between the Core and Unlimited factions of the Bitcoin community, a spat which represents perhaps the fiftieth time the same theme was debated, but which is nonetheless interesting because of how it highlights a very subtle philosophical point about how blockchains work.
 

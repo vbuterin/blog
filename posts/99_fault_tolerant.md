@@ -3,8 +3,6 @@
 [title]: <> (A Guide to 99% Fault Tolerant Consensus)
 [pandoc]: <> (--mathjax)
 
-# A Guide to 99% Fault Tolerant Consensus
-
 _Special thanks to Emin Gun Sirer for review_
 
 We've heard for a long time that it's possible to achieve consensus with 50% fault tolerance in a synchronous network where messages broadcasted by any honest node are guaranteed to be received by all other honest nodes within some known time period (if an attacker has _more_ than 50%, they can perform a "51% attack", and there's an analogue of this for any algorithm of this type). We've also heard for a long time that if you want to relax the synchrony assumption, and have an algorithm that's "safe under asynchrony", the maximum achievable fault tolerance drops to 33% ([PBFT](http://pmg.csail.mit.edu/papers/osdi99.pdf), [Casper FFG](https://arxiv.org/abs/1710.09437), etc all fall into this category). But did you know that if you add _even more_ assumptions (specifically, you require _observers_, ie. users that are not actively participating in the consensus but care about its output, to also be actively watching the consensus, and not just downloading its output after the fact), you can increase fault tolerance all the way to 99%?

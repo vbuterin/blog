@@ -3,8 +3,6 @@
 [title]: <> (Notes on Blockchain Governance)
 [pandoc]: <> (--mathjax)
 
-# Notes on Blockchain Governance
-
 <small><i>In which I argue that "tightly coupled" on-chain voting is overrated, the status quo of "informal governance" as practiced by Bitcoin, Bitcoin Cash, Ethereum, Zcash and similar systems is much less bad than commonly thought, that people who think that the purpose of blockchains is to completely expunge soft mushy human intuitions and feelings in favor of completely algorithmic governance (emphasis on "completely") are absolutely crazy, and loosely coupled voting as done by Carbonvotes and similar systems is underrated, as well as describe what framework should be used when thinking about blockchain governance in the first place.<br><br>See also: <a href="https://medium.com/@Vlad_Zamfir/against-on-chain-governance-a4ceacd040ca">https://medium.com/@Vlad_Zamfir/against-on-chain-governance-a4ceacd040ca</a></i></small>
 
 One of the more interesting recent trends in blockchain governance is the resurgence of on-chain coin-holder voting as a multi-purpose decision mechanism. Votes by coin holders are sometimes used in order to decide who operates the super-nodes that run a network (eg. DPOS in EOS, NEO, Lisk and other systems), sometimes to vote on protocol paramters (eg. the Ethereum gas limit) and sometimes to vote on and directly implement protocol upgrades wholesale (eg. <a href="http://tezos.com/">Tezos</a>). In all of these cases, the votes are automatic - the protocol itself contains all of the logic needed to change the validator set or to update its own rules, and does this automatically in response to the result of votes.

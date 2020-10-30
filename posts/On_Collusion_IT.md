@@ -3,7 +3,6 @@
 [title]: <> (Situazioni di collusione)
 [pandoc]: <> (--mathjax)
 
-# Situazioni di collusione
 
 *Un ringraziamento speciale a Glen Weyl, Phil Daian e Jinglan Wang per la revisione, e Hacktar e matteopey per la traduzione*.
 

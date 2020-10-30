@@ -32,12 +32,11 @@
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
- <title> [Mirror] Exploring Elliptic Curve Pairings </title> 
+
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="[Mirror] Exploring Elliptic Curve Pairings" />
 <meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
-<h1 id="mirror-exploring-elliptic-curve-pairings">[Mirror] Exploring Elliptic Curve Pairings</h1>
-<p><em>This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">https://medium.com/<span class="citation" data-cites="VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627</span></a></em></p>
+ <br> <h1> [Mirror] Exploring Elliptic Curve Pairings </h1> <br> <br> <title> [Mirror] Exploring Elliptic Curve Pairings </title> <p><em>This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">https://medium.com/<span class="citation" data-cites="VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627</span></a></em></p>
 <p><strong>Trigger warning: math.</strong></p>
 <p>One of the key cryptographic primitives behind various constructions, including deterministic threshold signatures, zk-SNARKs and other simpler forms of zero-knowledge proofs is the elliptic curve pairing. Elliptic curve pairings (or "bilinear maps") are a recent addition to a 30-year-long history of using elliptic curves for cryptographic applications including encryption and digital signatures; pairings introduce a form of "encrypted multiplication", greatly expanding what elliptic curve-based protocols can do. The purpose of this article will be to go into elliptic curve pairings in detail, and explain a general outline of how they work.</p>
 <p>You're not expected to understand everything here the first time you read it, or even the tenth time; this stuff is genuinely hard. But hopefully this article will give you at least a bit of an idea as to what is going on under the hood.</p>

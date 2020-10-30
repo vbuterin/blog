@@ -3,8 +3,6 @@
 [title]: <> (STARKs, Part 3: Into the Weeds)
 [pandoc]: <> (--mathjax)
 
-# STARKs, Part 3: Into the Weeds
-
 _Special thanks to Eli ben Sasson for his kind assistance, as usual. Special thanks to Chih-Cheng Liang and Justin Drake for review, and to Ben Fisch for suggesting the reverse MIMC technique for a VDF (paper [here](https://eprint.iacr.org/2018/601.pdf))_
 
 _Trigger warning: math and lots of python_

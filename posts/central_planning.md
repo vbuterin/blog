@@ -3,7 +3,6 @@
 [title]: <> ([Mirror] Central Planning as Overfitting)
 [pandoc]: <> ()
 
-# [Mirror] Central Planning as Overfitting
 
 _This is a mirror of the post at https://radicalxchange.org/blog/posts/2018-11-26-4m9b8b/ written by myself and Glen Weyl_
 

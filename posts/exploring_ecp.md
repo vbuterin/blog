@@ -3,7 +3,6 @@
 [title]: <> ([Mirror] Exploring Elliptic Curve Pairings)
 [pandoc]: <> (--mathjax)
 
-# [Mirror] Exploring Elliptic Curve Pairings
 
 _This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627</a>_
 

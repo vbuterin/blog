@@ -3,7 +3,6 @@
 [title]: <> (Fast Fourier Transforms)
 [pandoc]: <> (--mathjax)
 
-# Fast Fourier Transforms
 
 <p><em>Trigger warning: specialized mathematical topic</em></p>
 

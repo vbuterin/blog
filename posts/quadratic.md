@@ -3,7 +3,6 @@
 [title]: <> (Quadratic Payments: A Primer)
 [pandoc]: <> (--mathjax)
 
-# Quadratic Payments: A Primer
 
 _Special thanks to Karl Floersch and Jinglan Wang for feedback_
 

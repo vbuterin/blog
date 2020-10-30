@@ -3,7 +3,6 @@
 [title]: <> (Exploring Fully Homomorphic Encryption)
 [pandoc]: <> (--mathjax)
 
-# Exploring Fully Homomorphic Encryption
 
 _Special thanks to Karl Floersch and Dankrad Feist for review_
 

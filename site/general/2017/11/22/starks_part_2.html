@@ -32,12 +32,11 @@
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
- <title> STARKs, Part II: Thank Goodness It's FRI-day </title> 
+
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="STARKs, Part II: Thank Goodness It's FRI-day" />
 <meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
-<h1 id="starks-part-ii-thank-goodness-its-fri-day">STARKs, Part II: Thank Goodness It's FRI-day</h1>
-<p><em>Special thanks to Eli Ben-Sasson for ongoing help and explanations, and Justin Drake for reviewing</em></p>
+ <br> <h1> STARKs, Part II: Thank Goodness It's FRI-day </h1> <br> <br> <title> STARKs, Part II: Thank Goodness It's FRI-day </title> <p><em>Special thanks to Eli Ben-Sasson for ongoing help and explanations, and Justin Drake for reviewing</em></p>
 <p>In the last part of this series, we talked about how you can make some pretty interesting succinct proofs of computation, such as proving that you have computed the millionth Fibonacci number, using a technique involving polynomial composition and division. However, it rested on one critical ingredient: the ability to prove that at least the great majority of a given large set of points are on the same low-degree polynomial. This problem, called "low-degree testing", is perhaps the single most complex part of the protocol.</p>
 <p>We'll start off by once again re-stating the problem. Suppose that you have a set of points, and you claim that they are all on the same polynomial, with degree less than <span class="math inline">\(D\)</span> (ie. <span class="math inline">\(deg &lt; 2\)</span> means they're on the same line, <span class="math inline">\(deg &lt; 3\)</span> means they're on the same line or parabola, etc). You want to create a succinct probabilistic proof that this is actually true.</p>
 <center>

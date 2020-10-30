@@ -3,7 +3,6 @@
 [title]: <> (Zmowa)
 [pandoc]: <> (--mathjax)
 
-# Zmowa
 
 *Specjalne podziękowania dla Glena Weyla, Phila Daiana i Jinglana Wanga za recenzję, i dla Dawida Kurdziela i bichvan2408 za tłumaczenie*
 

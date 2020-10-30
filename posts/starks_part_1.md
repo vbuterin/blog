@@ -3,8 +3,6 @@
 [title]: <> (STARKs, Part I: Proofs with Polynomials)
 [pandoc]: <> (--mathjax)
 
-# STARKs, Part I: Proofs with Polynomials
-
 _Special thanks to Eli Ben-Sasson for ongoing help, explanations and review, coming up with some of the examples used in this post, and most crucially of all inventing a lot of this stuff; thanks to Hsiao-wei Wang for reviewing_
 
 Hopefully many people by now have heard of [ZK-SNARKs](https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6), the general-purpose succinct zero knowledge proof technology that can be used for all sorts of usecases ranging from verifiable computation to privacy-preserving cryptocurrency. What you might not know is that ZK-SNARKs have a newer, shinier cousin: ZK-STARKs. With the T standing for "transparent", ZK-STARKs resolve one of the primary weaknesses of ZK-SNARKs, its reliance on a "trusted setup". They also come with much simpler cryptographic assumptions, avoiding the need for elliptic curves, pairings and the knowledge-of-exponent assumption and instead relying purely on hashes and information theory; this also means that they are secure even against attackers with quantum computers.

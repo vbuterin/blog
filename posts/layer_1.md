@@ -3,7 +3,6 @@
 [title]: <> (Layer 1 Should Be Innovative in the Short Term but Less in the Long Term)
 [pandoc]: <> ()
 
-# Layer 1 Should Be Innovative in the Short Term but Less in the Long Term
 
 **See update 2018-08-29**
 

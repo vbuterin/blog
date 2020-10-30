@@ -3,7 +3,6 @@
 [title]: <> (Sidechains vs Plasma vs Sharding)
 [pandoc]: <> (--mathjax)
 
-# Sidechains vs Plasma vs Sharding
 
 _Special thanks to Jinglan Wang for review and feedback_
 

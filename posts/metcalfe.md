@@ -3,7 +3,6 @@
 [title]: <> (A Note on Metcalfe's Law, Externalities and Ecosystem Splits)
 [pandoc]: <> (--mathjax)
 
-# A Note on Metcalfe's Law, Externalities and Ecosystem Splits
 
 Looks like it's blockchain split season [again](http://bitcoincash.org/). For background of various people discussing the topic, and whether such splits are good or bad:
 

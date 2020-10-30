@@ -3,7 +3,6 @@
 [title]: <> (A Quick Gasprice Market Analysis)
 [pandoc]: <> ()
 
-# A Quick Gasprice Market Analysis
 
 
 

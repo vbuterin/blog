@@ -3,7 +3,6 @@
 [title]: <> (The Dawn of Hybrid Layer 2 Protocols)
 [pandoc]: <> (--mathjax)
 
-# The Dawn of Hybrid Layer 2 Protocols
 
 _Special thanks to the Plasma Group team for review and feedback_
 

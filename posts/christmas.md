@@ -3,7 +3,6 @@
 [title]: <> (Christmas Special)
 [pandoc]: <> (--mathjax)
 
-# Christmas Special
 
 Since it's Christmas time now, and we're theoretically supposed to be enjoying ourselves and spending time with our families instead of waging endless holy wars on Twitter, this blog post will offer some games that you can play with your friends that will help you have fun _and_ at the same time understand some spooky mathematical concepts!
 

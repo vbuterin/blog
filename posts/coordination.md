@@ -3,7 +3,6 @@
 [title]: <> (Coordination, Good and Bad)
 [pandoc]: <> (--mathjax)
 
-# Coordination, Good and Bad
 
 _Special thanks to Karl Floersch and Jinglan Wang for feedback and review_
 

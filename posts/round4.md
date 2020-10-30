@@ -3,7 +3,6 @@
 [title]: <> (Review of Gitcoin Quadratic Funding Round 4)
 [pandoc]: <> (--mathjax)
 
-# Review of Gitcoin Quadratic Funding Round 4
 
 Round 4 of Gitcoin Grants quadratic funding has just completed, and here are the results:
 

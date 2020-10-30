@@ -3,7 +3,6 @@
 [title]: <> (A Philosophy of Blockchain Validation)
 [pandoc]: <> ()
 
-# A Philosophy of Blockchain Validation
 
 See also:
 

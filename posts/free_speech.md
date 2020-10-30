@@ -3,7 +3,6 @@
 [title]: <> (On Free Speech)
 [pandoc]: <> ()
 
-# On Free Speech
 
 _"A statement may be both true and dangerous. The previous sentence is such a statement." - David Friedman_
 
