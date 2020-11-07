@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,中文)
 [date]: <> (2020/11/06)
 [title]: <> (為什麼權益證明棒棒的（2020 年十一月）)
 [pandoc]: <> (--mathjax)
