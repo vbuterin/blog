@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Blockchains,Cryptography,Economics)
 [date]: <> (2019/11/22)
 [title]: <> (Hard Problems in Cryptocurrency: Five Years Later)
 [pandoc]: <> (--mathjax)

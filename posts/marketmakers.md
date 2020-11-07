@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Economics,Blockchains)
 [date]: <> (2017/06/22)
 [title]: <> (On Path Independence)
 [pandoc]: <> (--mathjax)

@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Fun)
 [date]: <> (2019/12/24)
 [title]: <> (Christmas Special)
 [pandoc]: <> (--mathjax)

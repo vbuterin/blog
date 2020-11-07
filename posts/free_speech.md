@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Philosophy)
 [date]: <> (2019/04/16)
 [title]: <> (On Free Speech)
 [pandoc]: <> ()

@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Blockchains)
 [date]: <> (2017/07/16)
 [title]: <> (The Triangle of Harm)
 [pandoc]: <> (--mathjax)

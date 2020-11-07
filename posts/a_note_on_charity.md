@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Economics)
 [date]: <> (2017/03/11)
 [title]: <> (A Note On Charity Through Marginal Price Discrimination)
 [pandoc]: <> (--mathjax)

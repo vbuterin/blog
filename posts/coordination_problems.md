@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Blockchains,Philosophy)
 [date]: <> (2017/05/08)
 [title]: <> (Engineering Security Through Coordination Problems)
 [pandoc]: <> ()

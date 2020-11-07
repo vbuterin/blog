@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Economics,Philosophy)
 [date]: <> (2019/12/07)
 [title]: <> (Quadratic Payments: A Primer)
 [pandoc]: <> (--mathjax)

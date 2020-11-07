@@ -1,9 +1,7 @@
-[category]: <> (Général)
+[category]: <> (General,Français)
 [date]: <> (2020/10/18)
 [title]: <> ( 7ème tour des subventions Gitcoin - Rétrospective )
 [pandoc]: <> (--mathjax)
-
-# 7ème tour des subventions Gitcoin - Rétrospective
 
 Le septième tour des subventions Gitcoin s'est terminé avec succès! Ce tour a connu une augmentation de l'intérêt pour Gitcoin sans précédent, ce qui s'est traduit par 274.830 $ de contributions et 450.000 $ en abondement répartis sur 857 projets.
 

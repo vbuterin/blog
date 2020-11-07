@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Philosophy)
 [date]: <> (2019/05/09)
 [title]: <> (Control as Liability)
 [pandoc]: <> ()

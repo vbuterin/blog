@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Cryptography)
 [date]: <> (2017/02/01)
 [title]: <> ([Mirror] Zk-SNARKs: Under the Hood)
 [pandoc]: <> (--mathjax)

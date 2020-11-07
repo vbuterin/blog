@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Blockchains,Economics)
 [date]: <> (2017/10/17)
 [title]: <> (On Medium-of-Exchange Token Valuations)
 [pandoc]: <> (--mathjax)

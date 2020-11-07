@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Cryptography)
 [date]: <> (2020/03/21)
 [title]: <> (A Quick Garbled Circuits Primer)
 [pandoc]: <> ()

@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Cryptography)
 [date]: <> (2017/11/22)
 [title]: <> (STARKs, Part II: Thank Goodness It's FRI-day)
 [pandoc]: <> (--mathjax)

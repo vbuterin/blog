@@ -2,3 +2,4 @@
 [icon]: <> (http://vitalik.ca/images/icon.png)
 [server]: <> (root@vitalik.ca)
 [website_root]: <> (/var/www/html)
+[posts_directory]: <> (general)

@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Blockchains)
 [date]: <> (2019/06/12)
 [title]: <> (Sidechains vs Plasma vs Sharding)
 [pandoc]: <> (--mathjax)

@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Philosophy)
 [date]: <> (2020/08/20)
 [title]: <> (Trust Models)
 [pandoc]: <> ()

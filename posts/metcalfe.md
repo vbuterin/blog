@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Blockchains,Philosophy,Economics)
 [date]: <> (2017/07/27)
 [title]: <> (A Note on Metcalfe's Law, Externalities and Ecosystem Splits)
 [pandoc]: <> (--mathjax)

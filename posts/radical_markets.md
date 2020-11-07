@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Economics,Philosophy)
 [date]: <> (2018/04/20)
 [title]: <> (On Radical Markets)
 [pandoc]: <> (--mathjax)

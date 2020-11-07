@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Blockchains,Philosophy)
 [date]: <> (2017/03/14)
 [title]: <> (Hard Forks, Soft Forks, Defaults and Coercion)
 [pandoc]: <> ()

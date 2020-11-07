@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Blockchains)
 [date]: <> (2018/12/05)
 [title]: <> (A CBC Casper Tutorial)
 [pandoc]: <> (--mathjax)

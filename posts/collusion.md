@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Economics,Philosophy)
 [date]: <> (2019/04/03)
 [title]: <> (On Collusion)
 [pandoc]: <> (--mathjax)

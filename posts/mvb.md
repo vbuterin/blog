@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Blockchains,Philosophy)
 [date]: <> (2019/12/26)
 [title]: <> (Base Layers And Functionality Escape Velocity)
 [pandoc]: <> ()

@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Gitcoin)
 [date]: <> (2020/04/30)
 [title]: <> (Gitcoin Grants Round 5 Retrospective)
 [pandoc]: <> (--mathjax)

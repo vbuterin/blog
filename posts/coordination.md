@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Economics,Philosophy)
 [date]: <> (2020/09/11)
 [title]: <> (Coordination, Good and Bad)
 [pandoc]: <> (--mathjax)

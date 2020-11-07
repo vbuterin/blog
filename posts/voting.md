@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Philosophy)
 [date]: <> (2017/12/17)
 [title]: <> (Notes on Blockchain Governance)
 [pandoc]: <> (--mathjax)

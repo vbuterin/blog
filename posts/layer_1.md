@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Blockchains)
 [date]: <> (2018/08/26)
 [title]: <> (Layer 1 Should Be Innovative in the Short Term but Less in the Long Term)
 [pandoc]: <> ()

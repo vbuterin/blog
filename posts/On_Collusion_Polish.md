@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Polski)
 [date]: <> (2000/01/01)
 [title]: <> (Zmowa)
 [pandoc]: <> (--mathjax)

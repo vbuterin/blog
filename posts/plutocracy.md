@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Economics,Philosophy)
 [date]: <> (2018/03/28)
 [title]: <> (Governance, Part 2: Plutocracy Is Still Bad)
 [pandoc]: <> (--mathjax)

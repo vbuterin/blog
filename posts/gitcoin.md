@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Gitcoin)
 [date]: <> (2019/10/24)
 [title]: <> (Review of Gitcoin Quadratic Funding Round 3)
 [pandoc]: <> (--mathjax)

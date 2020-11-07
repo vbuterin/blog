@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Math,Fun)
 [date]: <> (2019/04/01)
 [title]: <> ([Mirror] Cantor was Wrong: debunking the infinite set hierarchy)
 [pandoc]: <> (--mathjax)

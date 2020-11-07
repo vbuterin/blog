@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Blockchains,Philosophy)
 [date]: <> (2020/08/17)
 [title]: <> (A Philosophy of Blockchain Validation)
 [pandoc]: <> ()

@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Blockchains)
 [date]: <> (2017/09/14)
 [title]: <> (A Prehistory of the Ethereum Protocol)
 [pandoc]: <> (--mathjax)

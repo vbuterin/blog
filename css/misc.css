@@ -14,6 +14,14 @@
     .post-meta {
       font-size: 14px;
       color: #828282; }
+
+    .toc-category {
+      display: inline-block;
+      width: 100px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-right: 6px;
+      padding-left: 6px; }
 }
 
 @media only screen and (orientation: portrait) {
@@ -22,7 +30,16 @@
     .post-meta {
       font-size: 24px;
       color: #828282; }
+
+    .toc-category {
+      display: inline-block;
+      width: 200px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      padding-right: 12px;
+      padding-left: 12px; }
 }
+
 
 .python .dv {
   color: #0086b3 }

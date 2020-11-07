@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Cryptography,Math)
 [date]: <> (2019/05/12)
 [title]: <> (Fast Fourier Transforms)
 [pandoc]: <> (--mathjax)

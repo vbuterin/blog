@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Economics,Blockchains)
 [date]: <> (2017/06/09)
 [title]: <> (Analyzing Token Sale Models)
 [pandoc]: <> (--mathjax)

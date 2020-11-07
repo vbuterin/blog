@@ -1,4 +1,4 @@
-[category]: <> (General)
+[category]: <> (General,Blockchains)
 [date]: <> (2016/12/29)
 [title]: <> ([Mirror] A Proof of Stake Design Philosophy)
 [pandoc]: <> (--mathjax)
