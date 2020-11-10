@@ -3,9 +3,10 @@
 [title]: <> ([Mirror] Cantor was Wrong: debunking the infinite set hierarchy)
 [pandoc]: <> (--mathjax)
 
-This is a mirror of the post at [https://medium.com/@VitalikButerin/cantor-was-wrong-debunking-the-infinite-set-hierarchy-e9ba5015102](https://medium.com/@VitalikButerin/cantor-was-wrong-debunking-the-infinite-set-hierarchy-e9ba5015102)
+<i>This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/cantor-was-wrong-debunking-the-infinite-set-hierarchy-e9ba5015102">https://medium.com/@VitalikButerin/cantor-was-wrong-debunking-the-infinite-set-hierarchy-e9ba5015102</a>.</i>
 
 By Vitalik Buterin, PhD at University of Basel
+<br><br>
 
 A common strand of mathematics argues that, rather than being one single kind of infinity, there are actually an infinite hierarchy of different levels of infinity. Whereas the size of the set of integers is just plain infinite, and the set of rational numbers is just as big as the integers (because you can map every rational number to an integer by interleaving the digits of its numerator and denominator, eg. $0.456456456…. = \frac{456}{999} = \frac{152}{333} \rightarrow 135323$), the size of the set of *real* numbers is some kind of even bigger infinity, because there *is no way* to make a similar mapping from real numbers to the integers.
 
