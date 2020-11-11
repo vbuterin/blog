@@ -36,7 +36,16 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Sidechains vs Plasma vs Sharding" />
 <meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
- <br> <h1> Sidechains vs Plasma vs Sharding </h1> <br> <br> <title> Sidechains vs Plasma vs Sharding </title> <p><em>Special thanks to Jinglan Wang for review and feedback</em></p>
+
+
+<br>
+<h1 style="margin-bottom:7px"> Sidechains vs Plasma vs Sharding </h1>
+<small style="float:left; color: #888"> 2019 Jun 12 </small>
+<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<br> <br> <br>
+<title> Sidechains vs Plasma vs Sharding </title>
+
+<p><em>Special thanks to Jinglan Wang for review and feedback</em></p>
 <p>One question that often comes up is: how exactly is sharding different from sidechains or Plasma? All three architectures seem to involve a hub-and-spoke architecture with a central "main chain" that serves as the consensus backbone of the system, and a set of "child" chains containing actual user-level transactions. Hashes from the child chains are usually periodically published into the main chain (sharded chains with no hub are theoretically possible but haven't been done so far; this article will not focus on them, but the arguments are similar). Given this fundamental similarity, why go with one approach over the others?</p>
 <p>Distinguishing sidechains from Plasma is simple. Plasma chains are sidechains that have a non-custodial property: if there is any error in the Plasma chain, then the error can be detected, and users can safely exit the Plasma chain and prevent the attacker from doing any lasting damage. The only cost that users suffer is that they must wait for a challenge period and pay some higher transaction fees on the (non-scalable) base chain. Regular sidechains do not have this safety property, so they are less secure. However, designing Plasma chains is in many cases much harder, and one could argue that for many low-value applications the security is not worth the added complexity.</p>
 <p>So what about Plasma versus sharding? The key technical difference has to do with the notion of <strong>tight coupling</strong>. Tight coupling is a property of sharding, but NOT a property of sidechains or Plasma, that says that the validity of the main chain ("beacon chain" in ethereum 2.0) is inseparable from the validity of the child chains. That is, a child chain block that specifies an invalid main chain block as a dependency is by definition invalid, and more importantly a main chain block that includes an invalid child chain block is by definition invalid.</p>

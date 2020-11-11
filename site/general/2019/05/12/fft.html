@@ -36,7 +36,16 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Fast Fourier Transforms" />
 <meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
- <br> <h1> Fast Fourier Transforms </h1> <br> <br> <title> Fast Fourier Transforms </title> <p>
+
+
+<br>
+<h1 style="margin-bottom:7px"> Fast Fourier Transforms </h1>
+<small style="float:left; color: #888"> 2019 May 12 </small>
+<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<br> <br> <br>
+<title> Fast Fourier Transforms </title>
+
+<p>
 <em>Trigger warning: specialized mathematical topic</em>
 </p>
 <p>
@@ -76,13 +85,13 @@ The kind of Fourier transform we'll be talking about in this post is a similar a
 <p>
 There are algorithms for both multi-point evaluation and interpolation that can do either operation in <span class="math inline">\(O(N^2)\)</span> time. Multi-point evaluation is simple: just separately evaluate the polynomial at each point. Here's python code for doing that:
 </p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">def</span> eval_poly_at(<span class="va">self</span>, poly, x, modulus):</a>
-<a class="sourceLine" id="cb1-2" title="2">    y <span class="op">=</span> <span class="dv">0</span></a>
-<a class="sourceLine" id="cb1-3" title="3">    power_of_x <span class="op">=</span> <span class="dv">1</span></a>
-<a class="sourceLine" id="cb1-4" title="4">    <span class="cf">for</span> coefficient <span class="kw">in</span> poly:</a>
-<a class="sourceLine" id="cb1-5" title="5">        y <span class="op">+=</span> power_of_x <span class="op">*</span> coefficient</a>
-<a class="sourceLine" id="cb1-6" title="6">        power_of_x <span class="op">*=</span> x</a>
-<a class="sourceLine" id="cb1-7" title="7">    <span class="cf">return</span> y <span class="op">%</span> modulus</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">def</span> eval_poly_at(<span class="va">self</span>, poly, x, modulus):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>    y <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>    power_of_x <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>    <span class="cf">for</span> coefficient <span class="kw">in</span> poly:</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>        y <span class="op">+=</span> power_of_x <span class="op">*</span> coefficient</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>        power_of_x <span class="op">*=</span> x</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>    <span class="cf">return</span> y <span class="op">%</span> modulus</span></code></pre></div>
 <p>
 The algorithm runs a loop going through every coefficient and does one thing for each coefficient, so it runs in <span class="math inline">\(O(N)\)</span> time. Multi-point evaluation involves doing this evaluation at <span class="math inline">\(N\)</span> different points, so the total run time is <span class="math inline">\(O(N^2)\)</span>.
 </p>
@@ -142,57 +151,57 @@ The "glue" is relatively easy (and <span class="math inline">\(O(N)\)</span> in 
 <p>
 Here's the full code:
 </p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">def</span> fft(vals, modulus, domain):</a>
-<a class="sourceLine" id="cb2-2" title="2">    <span class="cf">if</span> <span class="bu">len</span>(vals) <span class="op">==</span> <span class="dv">1</span>:</a>
-<a class="sourceLine" id="cb2-3" title="3">        <span class="cf">return</span> vals</a>
-<a class="sourceLine" id="cb2-4" title="4">    L <span class="op">=</span> fft(vals[::<span class="dv">2</span>], modulus, domain[::<span class="dv">2</span>])</a>
-<a class="sourceLine" id="cb2-5" title="5">    R <span class="op">=</span> fft(vals[<span class="dv">1</span>::<span class="dv">2</span>], modulus, domain[::<span class="dv">2</span>])</a>
-<a class="sourceLine" id="cb2-6" title="6">    o <span class="op">=</span> [<span class="dv">0</span> <span class="cf">for</span> i <span class="kw">in</span> vals]</a>
-<a class="sourceLine" id="cb2-7" title="7">    <span class="cf">for</span> i, (x, y) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(L, R)):</a>
-<a class="sourceLine" id="cb2-8" title="8">        y_times_root <span class="op">=</span> y<span class="op">*</span>domain[i]</a>
-<a class="sourceLine" id="cb2-9" title="9">        o[i] <span class="op">=</span> (x<span class="op">+</span>y_times_root) <span class="op">%</span> modulus</a>
-<a class="sourceLine" id="cb2-10" title="10">        o[i<span class="op">+</span><span class="bu">len</span>(L)] <span class="op">=</span> (x<span class="op">-</span>y_times_root) <span class="op">%</span> modulus</a>
-<a class="sourceLine" id="cb2-11" title="11">    <span class="cf">return</span> o</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">def</span> fft(vals, modulus, domain):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>    <span class="cf">if</span> <span class="bu">len</span>(vals) <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>        <span class="cf">return</span> vals</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>    L <span class="op">=</span> fft(vals[::<span class="dv">2</span>], modulus, domain[::<span class="dv">2</span>])</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>    R <span class="op">=</span> fft(vals[<span class="dv">1</span>::<span class="dv">2</span>], modulus, domain[::<span class="dv">2</span>])</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>    o <span class="op">=</span> [<span class="dv">0</span> <span class="cf">for</span> i <span class="kw">in</span> vals]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>    <span class="cf">for</span> i, (x, y) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(L, R)):</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>        y_times_root <span class="op">=</span> y<span class="op">*</span>domain[i]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>        o[i] <span class="op">=</span> (x<span class="op">+</span>y_times_root) <span class="op">%</span> modulus</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>        o[i<span class="op">+</span><span class="bu">len</span>(L)] <span class="op">=</span> (x<span class="op">-</span>y_times_root) <span class="op">%</span> modulus</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>    <span class="cf">return</span> o</span></code></pre></div>
 <p>
 We can try running it:
 </p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" title="1"><span class="op">&gt;&gt;&gt;</span> fft([<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">6</span>], <span class="dv">337</span>, [<span class="dv">1</span>, <span class="dv">85</span>, <span class="dv">148</span>, <span class="dv">111</span>, <span class="dv">336</span>, <span class="dv">252</span>, <span class="dv">189</span>, <span class="dv">226</span>])</a>
-<a class="sourceLine" id="cb3-2" title="2">[<span class="dv">31</span>, <span class="dv">70</span>, <span class="dv">109</span>, <span class="dv">74</span>, <span class="dv">334</span>, <span class="dv">181</span>, <span class="dv">232</span>, <span class="dv">4</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> fft([<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">6</span>], <span class="dv">337</span>, [<span class="dv">1</span>, <span class="dv">85</span>, <span class="dv">148</span>, <span class="dv">111</span>, <span class="dv">336</span>, <span class="dv">252</span>, <span class="dv">189</span>, <span class="dv">226</span>])</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>[<span class="dv">31</span>, <span class="dv">70</span>, <span class="dv">109</span>, <span class="dv">74</span>, <span class="dv">334</span>, <span class="dv">181</span>, <span class="dv">232</span>, <span class="dv">4</span>]</span></code></pre></div>
 <p>
 And we can check the result; evaluating the polynomial at the position <span class="math inline">\(85\)</span>, for example, actually does give the result <span class="math inline">\(70\)</span>. Note that this only works if the domain is "correct"; it needs to be of the form <span class="math inline">\([x^i\)</span> % <span class="math inline">\(modulus\)</span> for <span class="math inline">\(i\)</span> in <span class="math inline">\(range(n)]\)</span> where <span class="math inline">\(x^n = 1\)</span>.
 </p>
 <p>
 An inverse FFT is surprisingly simple:
 </p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">def</span> inverse_fft(vals, modulus, domain):</a>
-<a class="sourceLine" id="cb4-2" title="2">    vals <span class="op">=</span> fft(vals, modulus, domain)</a>
-<a class="sourceLine" id="cb4-3" title="3">    <span class="cf">return</span> [x <span class="op">*</span> modular_inverse(<span class="bu">len</span>(vals), modulus) <span class="op">%</span> modulus <span class="cf">for</span> x <span class="kw">in</span> [vals[<span class="dv">0</span>]] <span class="op">+</span> vals[<span class="dv">1</span>:][::<span class="op">-</span><span class="dv">1</span>]]</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">def</span> inverse_fft(vals, modulus, domain):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>    vals <span class="op">=</span> fft(vals, modulus, domain)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>    <span class="cf">return</span> [x <span class="op">*</span> modular_inverse(<span class="bu">len</span>(vals), modulus) <span class="op">%</span> modulus <span class="cf">for</span> x <span class="kw">in</span> [vals[<span class="dv">0</span>]] <span class="op">+</span> vals[<span class="dv">1</span>:][::<span class="op">-</span><span class="dv">1</span>]]</span></code></pre></div>
 <p>
 Basically, run the FFT again, but reverse the result (except the first item stays in place) and divide every value by the length of the list.
 </p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb5-1" title="1"><span class="op">&gt;&gt;&gt;</span> domain <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">85</span>, <span class="dv">148</span>, <span class="dv">111</span>, <span class="dv">336</span>, <span class="dv">252</span>, <span class="dv">189</span>, <span class="dv">226</span>]</a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="op">&gt;&gt;&gt;</span> <span class="kw">def</span> modular_inverse(x, n): <span class="cf">return</span> <span class="bu">pow</span>(x, n <span class="op">-</span> <span class="dv">2</span>, n)</a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="op">&gt;&gt;&gt;</span> values <span class="op">=</span> fft([<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">6</span>], <span class="dv">337</span>, domain)</a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="op">&gt;&gt;&gt;</span> values</a>
-<a class="sourceLine" id="cb5-5" title="5">[<span class="dv">31</span>, <span class="dv">70</span>, <span class="dv">109</span>, <span class="dv">74</span>, <span class="dv">334</span>, <span class="dv">181</span>, <span class="dv">232</span>, <span class="dv">4</span>]</a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="op">&gt;&gt;&gt;</span> inverse_fft(values, <span class="dv">337</span>, domain)</a>
-<a class="sourceLine" id="cb5-7" title="7">[<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">2</span>, <span class="dv">6</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> domain <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">85</span>, <span class="dv">148</span>, <span class="dv">111</span>, <span class="dv">336</span>, <span class="dv">252</span>, <span class="dv">189</span>, <span class="dv">226</span>]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="kw">def</span> modular_inverse(x, n): <span class="cf">return</span> <span class="bu">pow</span>(x, n <span class="op">-</span> <span class="dv">2</span>, n)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> values <span class="op">=</span> fft([<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">6</span>], <span class="dv">337</span>, domain)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> values</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>[<span class="dv">31</span>, <span class="dv">70</span>, <span class="dv">109</span>, <span class="dv">74</span>, <span class="dv">334</span>, <span class="dv">181</span>, <span class="dv">232</span>, <span class="dv">4</span>]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> inverse_fft(values, <span class="dv">337</span>, domain)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a>[<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">2</span>, <span class="dv">6</span>]</span></code></pre></div>
 <p>
 Now, what can we use this for? Here's one fun use case: we can use FFTs to multiply numbers very quickly. Suppose we wanted to multiply <span class="math inline">\(1253\)</span> by <span class="math inline">\(1895\)</span>. Here is what we would do. First, we would convert the problem into one that turns out to be slightly easier: multiply the <em>polynomials</em> <span class="math inline">\([3, 5, 2, 1]\)</span> by <span class="math inline">\([5, 9, 8, 1]\)</span> (that's just the digits of the two numbers in increasing order), and then convert the answer back into a number by doing a single pass to carry over tens digits. We can multiply polynomials with FFTs quickly, because it turns out that if you convert a polynomial into <em>evaluation form</em> (ie. <span class="math inline">\(f(x)\)</span> for every <span class="math inline">\(x\)</span> in some domain <span class="math inline">\(D\)</span>), then you can multiply two polynomials simply by multiplying their evaluations. So what we'll do is take the polynomials representing our two numbers in <em>coefficient form</em>, use FFTs to convert them to evaluation form, multiply them pointwise, and convert back:
 </p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" title="1"><span class="op">&gt;&gt;&gt;</span> p1 <span class="op">=</span> [<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>]</a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="op">&gt;&gt;&gt;</span> p2 <span class="op">=</span> [<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">8</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>]</a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="op">&gt;&gt;&gt;</span> x1 <span class="op">=</span> fft(p1, <span class="dv">337</span>, domain)</a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="op">&gt;&gt;&gt;</span> x1</a>
-<a class="sourceLine" id="cb6-5" title="5">[<span class="dv">11</span>, <span class="dv">161</span>, <span class="dv">256</span>, <span class="dv">10</span>, <span class="dv">336</span>, <span class="dv">100</span>, <span class="dv">83</span>, <span class="dv">78</span>]</a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="op">&gt;&gt;&gt;</span> x2 <span class="op">=</span> fft(p2, <span class="dv">337</span>, domain)</a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="op">&gt;&gt;&gt;</span> x2</a>
-<a class="sourceLine" id="cb6-8" title="8">[<span class="dv">23</span>, <span class="dv">43</span>, <span class="dv">170</span>, <span class="dv">242</span>, <span class="dv">3</span>, <span class="dv">313</span>, <span class="dv">161</span>, <span class="dv">96</span>]</a>
-<a class="sourceLine" id="cb6-9" title="9"><span class="op">&gt;&gt;&gt;</span> x3 <span class="op">=</span> [(v1 <span class="op">*</span> v2) <span class="op">%</span> <span class="dv">337</span> <span class="cf">for</span> v1, v2 <span class="kw">in</span> <span class="bu">zip</span>(x1, x2)]</a>
-<a class="sourceLine" id="cb6-10" title="10"><span class="op">&gt;&gt;&gt;</span> x3</a>
-<a class="sourceLine" id="cb6-11" title="11">[<span class="dv">253</span>, <span class="dv">183</span>, <span class="dv">47</span>, <span class="dv">61</span>, <span class="dv">334</span>, <span class="dv">296</span>, <span class="dv">220</span>, <span class="dv">74</span>]</a>
-<a class="sourceLine" id="cb6-12" title="12"><span class="op">&gt;&gt;&gt;</span> inverse_fft(x3, <span class="dv">337</span>, domain)</a>
-<a class="sourceLine" id="cb6-13" title="13">[<span class="dv">15</span>, <span class="dv">52</span>, <span class="dv">79</span>, <span class="dv">66</span>, <span class="dv">30</span>, <span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">0</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> p1 <span class="op">=</span> [<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> p2 <span class="op">=</span> [<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">8</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> x1 <span class="op">=</span> fft(p1, <span class="dv">337</span>, domain)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> x1</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>[<span class="dv">11</span>, <span class="dv">161</span>, <span class="dv">256</span>, <span class="dv">10</span>, <span class="dv">336</span>, <span class="dv">100</span>, <span class="dv">83</span>, <span class="dv">78</span>]</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> x2 <span class="op">=</span> fft(p2, <span class="dv">337</span>, domain)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> x2</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a>[<span class="dv">23</span>, <span class="dv">43</span>, <span class="dv">170</span>, <span class="dv">242</span>, <span class="dv">3</span>, <span class="dv">313</span>, <span class="dv">161</span>, <span class="dv">96</span>]</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> x3 <span class="op">=</span> [(v1 <span class="op">*</span> v2) <span class="op">%</span> <span class="dv">337</span> <span class="cf">for</span> v1, v2 <span class="kw">in</span> <span class="bu">zip</span>(x1, x2)]</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> x3</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a>[<span class="dv">253</span>, <span class="dv">183</span>, <span class="dv">47</span>, <span class="dv">61</span>, <span class="dv">334</span>, <span class="dv">296</span>, <span class="dv">220</span>, <span class="dv">74</span>]</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> inverse_fft(x3, <span class="dv">337</span>, domain)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a>[<span class="dv">15</span>, <span class="dv">52</span>, <span class="dv">79</span>, <span class="dv">66</span>, <span class="dv">30</span>, <span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">0</span>]</span></code></pre></div>
 <p>
 This requires three FFTs (each <span class="math inline">\(O(N \cdot log(N))\)</span> time) and one pointwise multiplication (<span class="math inline">\(O(N)\)</span> time), so it takes <span class="math inline">\(O(N \cdot log(N))\)</span> time altogether (technically a little bit more than <span class="math inline">\(O(N \cdot log(N))\)</span>, because for very big numbers you would need replace <span class="math inline">\(337\)</span> with a bigger modulus and that would make multiplication harder, but close enough). This is <em>much faster</em> than schoolbook multiplication, which takes <span class="math inline">\(O(N^2)\)</span> time:
 </p>
@@ -221,8 +230,8 @@ So now we just take the result, and carry the tens digits over (this is a "walk 
 <p>
 And if we read the digits from top to bottom, we get <span class="math inline">\(2374435\)</span>. Let's check the answer....
 </p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" title="1"><span class="op">&gt;&gt;&gt;</span> <span class="dv">1253</span> <span class="op">*</span> <span class="dv">1895</span></a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="dv">2374435</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="dv">1253</span> <span class="op">*</span> <span class="dv">1895</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="dv">2374435</span></span></code></pre></div>
 <p>
 Yay! It worked. In practice, on such small inputs, the difference between <span class="math inline">\(O(N \cdot log(N))\)</span> and <span class="math inline">\(O(N^2)\)</span> isn't <em>that</em> large, so schoolbook multiplication is faster than this FFT-based multiplication process just because the algorithm is simpler, but on large inputs it makes a really big difference.
 </p>
@@ -397,23 +406,23 @@ And if you want to do an <em>inverse</em> FFT, to do interpolation, then you nee
 <p>
 So what do we get from all of this complexity? Well, we can try running the implementation, which features both a "naive" <span class="math inline">\(O(N^2)\)</span> multi-point evaluation and the optimized FFT-based one, and time both. Here are my results:
 </p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" title="1"><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> binary_fft <span class="im">as</span> b</a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> time, random</a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="op">&gt;&gt;&gt;</span> f <span class="op">=</span> b.BinaryField(<span class="dv">1033</span>)</a>
-<a class="sourceLine" id="cb8-4" title="4"><span class="op">&gt;&gt;&gt;</span> poly <span class="op">=</span> [random.randrange(<span class="dv">1024</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1024</span>)]</a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> time.time()<span class="op">;</span> x1 <span class="op">=</span> b._simple_ft(f, poly)<span class="op">;</span> time.time() <span class="op">-</span> a</a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="fl">0.5752472877502441</span></a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> time.time()<span class="op">;</span> x2 <span class="op">=</span> b.fft(f, poly, <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1024</span>)))<span class="op">;</span> time.time() <span class="op">-</span> a</a>
-<a class="sourceLine" id="cb8-8" title="8"><span class="fl">0.03820443153381348</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> binary_fft <span class="im">as</span> b</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> time, random</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> f <span class="op">=</span> b.BinaryField(<span class="dv">1033</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> poly <span class="op">=</span> [random.randrange(<span class="dv">1024</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1024</span>)]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> time.time()<span class="op">;</span> x1 <span class="op">=</span> b._simple_ft(f, poly)<span class="op">;</span> time.time() <span class="op">-</span> a</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="fl">0.5752472877502441</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> time.time()<span class="op">;</span> x2 <span class="op">=</span> b.fft(f, poly, <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1024</span>)))<span class="op">;</span> time.time() <span class="op">-</span> a</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a><span class="fl">0.03820443153381348</span></span></code></pre></div>
 <p>
 And as the size of the polynomial gets larger, the naive implementation (<code>_simple_ft</code>) gets slower much more quickly than the FFT:
 </p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb9-1" title="1"><span class="op">&gt;&gt;&gt;</span> f <span class="op">=</span> b.BinaryField(<span class="dv">2053</span>)</a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="op">&gt;&gt;&gt;</span> poly <span class="op">=</span> [random.randrange(<span class="dv">2048</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2048</span>)]</a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> time.time()<span class="op">;</span> x1 <span class="op">=</span> b._simple_ft(f, poly)<span class="op">;</span> time.time() <span class="op">-</span> a</a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="fl">2.2243144512176514</span></a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> time.time()<span class="op">;</span> x2 <span class="op">=</span> b.fft(f, poly, <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">2048</span>)))<span class="op">;</span> time.time() <span class="op">-</span> a</a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="fl">0.07896280288696289</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> f <span class="op">=</span> b.BinaryField(<span class="dv">2053</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> poly <span class="op">=</span> [random.randrange(<span class="dv">2048</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2048</span>)]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> time.time()<span class="op">;</span> x1 <span class="op">=</span> b._simple_ft(f, poly)<span class="op">;</span> time.time() <span class="op">-</span> a</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a><span class="fl">2.2243144512176514</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> time.time()<span class="op">;</span> x2 <span class="op">=</span> b.fft(f, poly, <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">2048</span>)))<span class="op">;</span> time.time() <span class="op">-</span> a</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="fl">0.07896280288696289</span></span></code></pre></div>
 <p>
 And voila, we have an efficient, scalable way to multi-point evaluate and interpolate polynomials. If we want to use FFTs to recover erasure-coded data where we are <em>missing</em> some pieces, then algorithms for this <a href="https://ethresear.ch/t/reed-solomon-erasure-code-recovery-in-n-log-2-n-time-with-ffts/3039">also exist</a>, though they are somewhat less efficient than just doing a single FFT. Enjoy!
 </p>

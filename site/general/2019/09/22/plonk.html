@@ -36,7 +36,16 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Understanding PLONK" />
 <meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
- <br> <h1> Understanding PLONK </h1> <br> <br> <title> Understanding PLONK </title> <p><em>Special thanks to Justin Drake, Karl Floersch, Hsiao-wei Wang, Barry Whitehat, Dankrad Feist, Kobi Gurkan and Zac Williamson for review</em></p>
+
+
+<br>
+<h1 style="margin-bottom:7px"> Understanding PLONK </h1>
+<small style="float:left; color: #888"> 2019 Sep 22 </small>
+<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<br> <br> <br>
+<title> Understanding PLONK </title>
+
+<p><em>Special thanks to Justin Drake, Karl Floersch, Hsiao-wei Wang, Barry Whitehat, Dankrad Feist, Kobi Gurkan and Zac Williamson for review</em></p>
 <p>Very recently, Ariel Gabizon, Zac Williamson and Oana Ciobotaru announced a new general-purpose zero-knowledge proof scheme called <a href="https://eprint.iacr.org/2019/953">PLONK</a>, standing for the unwieldy quasi-backronym "Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge". While <a href="https://eprint.iacr.org/2016/260.pdf">improvements</a> to general-purpose <a href="https://arxiv.org/abs/1903.12243">zero-knowledge proof</a> protocols have been <a href="https://dci.mit.edu/zksharks">coming</a> for <a href="https://eprint.iacr.org/2017/1066">years</a>, what PLONK (and the earlier but more complex <a href="https://www.benthamsgaze.org/2019/02/07/introducing-sonic-a-practical-zk-snark-with-a-nearly-trustless-setup/">SONIC</a> and the more recent <a href="https://eprint.iacr.org/2019/1047.pdf">Marlin</a>) bring to the table is a series of enhancements that may greatly improve the usability and progress of these kinds of proofs in general.</p>
 <p>The first improvement is that while PLONK still requires a trusted setup procedure similar to that needed for the <a href="https://minezcash.com/zcash-trusted-setup/">SNARKs in Zcash</a>, it is a "universal and updateable" trusted setup. This means two things: first, instead of there being one separate trusted setup for every program you want to prove things about, there is one single trusted setup for the whole scheme after which you can use the scheme with any program (up to some maximum size chosen when making the setup). Second, there is a way for multiple parties to participate in the trusted setup such that it is secure as long as any one of them is honest, and this multi-party procedure is fully sequential: first one person participates, then the second, then the third... The full set of participants does not even need to be known ahead of time; new participants could just add themselves to the end. This makes it easy for the trusted setup to have a large number of participants, making it quite safe in practice.</p>
 <p>The second improvement is that the "fancy cryptography" it relies on is one single standardized component, called a "polynomial commitment". PLONK uses "Kate commitments", based on a trusted setup and elliptic curve pairings, but you can instead swap it out with other schemes, such as <a href="https://vitalik.ca/general/2017/11/22/starks_part_2.html">FRI</a> (which would <a href="https://eprint.iacr.org/2019/1020">turn PLONK into a kind of STARK</a>) or DARK (based on hidden-order groups). This means the scheme is theoretically compatible with any (achievable) tradeoff between proof size and security assumptions.</p>

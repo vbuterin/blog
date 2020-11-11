@@ -36,7 +36,16 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="A CBC Casper Tutorial" />
 <meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
- <br> <h1> A CBC Casper Tutorial </h1> <br> <br> <title> A CBC Casper Tutorial </title> <p><em>Special thanks to Vlad Zamfir, Aditya Asgaonkar, Ameen Soleimani and Jinglan Wang for review</em></p>
+
+
+<br>
+<h1 style="margin-bottom:7px"> A CBC Casper Tutorial </h1>
+<small style="float:left; color: #888"> 2018 Dec 05 </small>
+<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<br> <br> <br>
+<title> A CBC Casper Tutorial </title>
+
+<p><em>Special thanks to Vlad Zamfir, Aditya Asgaonkar, Ameen Soleimani and Jinglan Wang for review</em></p>
 <p>In order to help more people understand "the other Casper" (Vlad Zamfir's CBC Casper), and specifically the instantiation that works best for blockchain protocols, I thought that I would write an explainer on it myself, from a less abstract and more "close to concrete usage" point of view. Vlad's descriptions of CBC Casper can be found <a href="https://www.youtube.com/watch?v=GNGbd_RbrzE">here</a> and <a href="https://github.com/ethereum/cbc-casper/wiki/FAQ">here</a> and <a href="https://github.com/cbc-casper/cbc-casper-paper">here</a>; you are welcome and encouraged to look through these materials as well.</p>
 <p>CBC Casper is designed to be fundamentally very versatile and abstract, and come to consensus on pretty much any data structure; you can use CBC to decide whether to choose 0 or 1, you can make a simple block-by-block chain run on top of CBC, or a <span class="math inline">\(2^{92}\)</span>-dimensional hypercube tangle DAG, and pretty much anything in between.</p>
 <p>But for simplicity, we will first focus our attention on one concrete case: a simple chain-based structure. We will suppose that there is a fixed validator set consisting of <span class="math inline">\(N\)</span> validators (a fancy word for "staking nodes"; we also assume that each node is staking the same amount of coins, cases where this is not true can be simulated by assigning some nodes multiple validator IDs), time is broken up into ten-second slots, and validator <span class="math inline">\(k\)</span> can create a block in slot <span class="math inline">\(k\)</span>, <span class="math inline">\(N + k\)</span>, <span class="math inline">\(2N + k\)</span>, etc. Each block points to one specific parent block. Clearly, if we wanted to make something maximally simple, we could just take this structure, impose a longest chain rule on top of it, and call it a day.</p>
