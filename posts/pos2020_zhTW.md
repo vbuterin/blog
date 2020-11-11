@@ -3,7 +3,7 @@
 [title]: <> (為什麼權益證明棒棒的（2020 年十一月）)
 [pandoc]: <> (--mathjax)
 
-_感谢Chih-Cheng Liang和Hsiao-wei Wang翻译这个文章_
+_感謝Chih-Cheng Liang, Hsiao-wei Wang和Jerry Ho翻譯這個文章_
 
 權益證明（Proof of Stake, PoS）比工作量證明（Proof of Work, PoW）在區塊鏈安全上更具優勢的關鍵因素有三個。
 
