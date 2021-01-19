@@ -1,4 +1,4 @@
-[category]: <> (General,Italiano)
+[category]: <> (Italiano)
 [date]: <> (2000/01/01)
 [title]: <> (Situazioni di collusione)
 [pandoc]: <> (--mathjax)
