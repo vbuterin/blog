@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import os, sys
+import os, sys, datetime
 
 HEADER = """
 
@@ -11,6 +11,7 @@ HEADER = """
 <link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
 <link rel="stylesheet" type="text/css" href="/css/misc.css">
+<link rel="alternate" type="application/rss+xml" href="https://vitalik.ca/feed.xml" title="Vitalik Buterin's blog">
 
 <script type="text/javascript" id="MathJax-script" async
   src="/scripts/mathjax.js">
@@ -107,6 +108,43 @@ def make_toc_item(metadata):
     link = os.path.join('/', metadata_to_path(metadata))
     return TOC_ITEM_TEMPLATE.format(year+' '+month+' '+day, link, metadata['title'])
 
+def generate_feed(global_config, metadatas):
+    def get_link(route):
+        return global_config['domain'] + "/" + route
+
+    def get_date(date_text):
+        year, month, day = (int(x) for x in date_text.split('/'))
+        date = datetime.date(year, month, day)
+        return date.strftime('%a, %d %b %Y 00:00:00 +0000')
+
+    def get_item(metadata):
+        return """  <item>
+      <title>{title}</title>
+      <link>{link}</link>
+      <guid>{link}</guid>
+      <pubDate>{pub_date}</pubDate>
+      <description>{description}</description>
+  </item>""".format(title=metadata['title'],
+                    link=get_link('/'.join([global_config['posts_directory'], metadata['date'], metadata['filename']])),
+                    pub_date=get_date(metadata['date']), description='')
+
+    return """<?xml version="1.0" ?>
+<rss version="2.0">
+<channel>
+  <title>{title}</title>
+  <link>{link}</link>
+  <description>{title}</description>
+  <image>
+      <url>https://vitalik.ca/images/icon.png</url>
+      <title>{title}</title>
+      <link>{link}</link>
+  </image>
+{items}
+</channel>
+</rss>
+""".format(title=global_config['title'], link=get_link(''),
+           image=global_config['icon'], items="\n".join(map(get_item, metadatas)))
+
 if __name__ == '__main__':
     # Get blog config
     global_config = extract_metadata(open('config.md'))
@@ -156,6 +194,8 @@ if __name__ == '__main__':
     sorted_metadatas = sorted(metadatas, key=lambda x: x['date'], reverse=True)
     toc_items = [make_toc_item(metadata) for metadata in sorted_metadatas]
 
+    feed = generate_feed(global_config, sorted_metadatas)
+
     toc = (
         HEADER +
         make_twitter_card(global_config, global_config) +
@@ -164,4 +204,5 @@ if __name__ == '__main__':
         TOC_FOOTER
     )
 
+    open('site/feed.xml', 'w').write(feed)
     open('site/index.html', 'w').write(toc)
