@@ -1463,6 +1463,7 @@ button.close { -webkit-appearance: none; padding: 0; cursor: pointer; background
  *, :after, :before { color: #000 !important; text-shadow: none !important; background: 0 0 !important; box-shadow: none !important; }
  a, a:visited { text-decoration: underline; }
  a[href]:after { content: " (" attr( href ) ")"; }
+ table a[href]::after { content: " (\1f517)"; }
  abbr[title]:after { content: " (" attr( title ) ")"; }
  a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
  blockquote, pre { border: 1px solid #999; page-break-inside: avoid; }
