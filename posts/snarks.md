@@ -127,7 +127,7 @@ As I alluded to earlier, we can make this _non-interactive_ using the **Fiat-Sha
 There are three major schemes that are widely used at the moment: **bulletproofs, Kate and FRI**.
 
 * Here is a description of Kate commitments by Dankrad Feist: [https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html](https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html)
-* Here is a description of bulletproofs by the curve25519-dalek team: [https://doc-internal.dalek.rs/bulletproofs/notes/inner_product_proof/index.html](https://doc-internal.dalek.rs/bulletproofs/notes/inner_product_proof/index.html)
+* Here is a description of bulletproofs by the curve25519-dalek team: [https://doc-internal.dalek.rs/bulletproofs/notes/inner_product_proof/index.html](https://doc-internal.dalek.rs/bulletproofs/notes/inner_product_proof/index.html), and here is an explanation-in-pictures by myself: [https://twitter.com/VitalikButerin/status/1371844878968176647](https://twitter.com/VitalikButerin/status/1371844878968176647)
 * Here is a description of FRI by... myself: [https://vitalik.ca/general/2017/11/22/starks_part_2.html](https://vitalik.ca/general/2017/11/22/starks_part_2.html)
 
 ### Whoa, whoa, take it easy. Try to explain one of them simply, without shipping me off to even more scary links
