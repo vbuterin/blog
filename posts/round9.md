@@ -42,7 +42,7 @@ We can measure this! To start off, let's compare the top-10 projects in this rou
 
 In all cases, about half of the top-10 carries over from the previous round and about half is new (the flipside, of course is that half the top-10 drops out). The charts are a slight understatement: the Gitcoin Grants dev fund and POAP appear to have dropped out but actually merely changed categories, so something like 40% churn may be a more accurate number.
 
-<br><center><img src="/images/round9/churn.png" style="width:550px" /></center><br><br>
+<br><center><img src="/images/round9/churn.jpg" style="width:550px" /></center><br><br>
 
 If you check the results from round 8 against [round 7](https://vitalik.ca/general/2020/10/18/round7.html), you also get about 50% churn, and comparing round 7 to [round 6](https://vitalik.ca/general/2020/07/22/round6.html) gives similar values. Hence, it is looking like the degree of churn is stable. To me, it seems like roughly 40-50% churn is a healthy level, balancing long-time projects' need for stability with the need to avoid new projects getting locked out, but this is of course only my subjective judgement.
 
