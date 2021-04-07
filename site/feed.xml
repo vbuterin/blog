@@ -1,0 +1,589 @@
+<?xml version="1.0" ?>
+<rss version="2.0">
+<channel>
+  <title>Vitalik Buterin's website</title>
+  <link>https://vitalik.ca/</link>
+  <description>Vitalik Buterin's website</description>
+  <image>
+      <url>http://vitalik.ca/images/icon.png</url>
+      <title>Vitalik Buterin's website</title>
+      <link>https://vitalik.ca/</link>
+  </image>
+
+<item>
+<title>Why sharding is great: demystifying the technical properties</title>
+<link>https://vitalik.ca/general/2021/04/07/sharding.html</link>
+<guid>https://vitalik.ca/general/2021/04/07/sharding.html</guid>
+<pubDate>Wed, 07 Apr 2021 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Gitcoin Grants Round 9: The Next Phase of Growth</title>
+<link>https://vitalik.ca/general/2021/04/02/round9.html</link>
+<guid>https://vitalik.ca/general/2021/04/02/round9.html</guid>
+<pubDate>Fri, 02 Apr 2021 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>The Most Important Scarce Resource is Legitimacy</title>
+<link>https://vitalik.ca/general/2021/03/23/legitimacy.html</link>
+<guid>https://vitalik.ca/general/2021/03/23/legitimacy.html</guid>
+<pubDate>Tue, 23 Mar 2021 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Prediction Markets: Tales from the Election</title>
+<link>https://vitalik.ca/general/2021/02/18/election.html</link>
+<guid>https://vitalik.ca/general/2021/02/18/election.html</guid>
+<pubDate>Thu, 18 Feb 2021 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>An approximate introduction to how zk-SNARKs are possible</title>
+<link>https://vitalik.ca/general/2021/01/26/snarks.html</link>
+<guid>https://vitalik.ca/general/2021/01/26/snarks.html</guid>
+<pubDate>Tue, 26 Jan 2021 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Why we need wide adoption of social recovery wallets</title>
+<link>https://vitalik.ca/general/2021/01/11/recovery.html</link>
+<guid>https://vitalik.ca/general/2021/01/11/recovery.html</guid>
+<pubDate>Mon, 11 Jan 2021 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>An Incomplete Guide to Rollups</title>
+<link>https://vitalik.ca/general/2021/01/05/rollup.html</link>
+<guid>https://vitalik.ca/general/2021/01/05/rollup.html</guid>
+<pubDate>Tue, 05 Jan 2021 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Endnotes on 2020: Crypto and Beyond</title>
+<link>https://vitalik.ca/general/2020/12/28/endnotes.html</link>
+<guid>https://vitalik.ca/general/2020/12/28/endnotes.html</guid>
+<pubDate>Mon, 28 Dec 2020 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Convex and Concave Dispositions</title>
+<link>https://vitalik.ca/general/2020/11/08/concave.html</link>
+<guid>https://vitalik.ca/general/2020/11/08/concave.html</guid>
+<pubDate>Sun, 08 Nov 2020 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>為什麼權益證明棒棒的（2020 年十一月）</title>
+<link>https://vitalik.ca/general/2020/11/06/pos2020_zhTW.html</link>
+<guid>https://vitalik.ca/general/2020/11/06/pos2020_zhTW.html</guid>
+<pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Why Proof of Stake (Nov 2020)</title>
+<link>https://vitalik.ca/general/2020/11/06/pos2020.html</link>
+<guid>https://vitalik.ca/general/2020/11/06/pos2020.html</guid>
+<pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Gitcoin Grants Round 7 Retrospective</title>
+<link>https://vitalik.ca/general/2020/10/18/round7.html</link>
+<guid>https://vitalik.ca/general/2020/10/18/round7.html</guid>
+<pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title> 7ème tour des subventions Gitcoin - Rétrospective </title>
+<link>https://vitalik.ca/general/2020/10/18/round7_FR.html</link>
+<guid>https://vitalik.ca/general/2020/10/18/round7_FR.html</guid>
+<pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Coordination, Good and Bad</title>
+<link>https://vitalik.ca/general/2020/09/11/coordination.html</link>
+<guid>https://vitalik.ca/general/2020/09/11/coordination.html</guid>
+<pubDate>Fri, 11 Sep 2020 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Trust Models</title>
+<link>https://vitalik.ca/general/2020/08/20/trust.html</link>
+<guid>https://vitalik.ca/general/2020/08/20/trust.html</guid>
+<pubDate>Thu, 20 Aug 2020 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>A Philosophy of Blockchain Validation</title>
+<link>https://vitalik.ca/general/2020/08/17/philosophy.html</link>
+<guid>https://vitalik.ca/general/2020/08/17/philosophy.html</guid>
+<pubDate>Mon, 17 Aug 2020 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Gitcoin Grants Round 6 Retrospective</title>
+<link>https://vitalik.ca/general/2020/07/22/round6.html</link>
+<guid>https://vitalik.ca/general/2020/07/22/round6.html</guid>
+<pubDate>Wed, 22 Jul 2020 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Exploring Fully Homomorphic Encryption</title>
+<link>https://vitalik.ca/general/2020/07/20/homomorphic.html</link>
+<guid>https://vitalik.ca/general/2020/07/20/homomorphic.html</guid>
+<pubDate>Mon, 20 Jul 2020 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Gitcoin Grants Round 5 Retrospective</title>
+<link>https://vitalik.ca/general/2020/04/30/round5.html</link>
+<guid>https://vitalik.ca/general/2020/04/30/round5.html</guid>
+<pubDate>Thu, 30 Apr 2020 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>A Quick Garbled Circuits Primer</title>
+<link>https://vitalik.ca/general/2020/03/21/garbled.html</link>
+<guid>https://vitalik.ca/general/2020/03/21/garbled.html</guid>
+<pubDate>Sat, 21 Mar 2020 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>預測市場：一個選舉小故事（2021年 二月）</title>
+<link>https://vitalik.ca/general/2020/02/18/election_zhTW.html</link>
+<guid>https://vitalik.ca/general/2020/02/18/election_zhTW.html</guid>
+<pubDate>Tue, 18 Feb 2020 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Review of Gitcoin Quadratic Funding Round 4</title>
+<link>https://vitalik.ca/general/2020/01/28/round4.html</link>
+<guid>https://vitalik.ca/general/2020/01/28/round4.html</guid>
+<pubDate>Tue, 28 Jan 2020 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Base Layers And Functionality Escape Velocity</title>
+<link>https://vitalik.ca/general/2019/12/26/mvb.html</link>
+<guid>https://vitalik.ca/general/2019/12/26/mvb.html</guid>
+<pubDate>Thu, 26 Dec 2019 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Christmas Special</title>
+<link>https://vitalik.ca/general/2019/12/24/christmas.html</link>
+<guid>https://vitalik.ca/general/2019/12/24/christmas.html</guid>
+<pubDate>Tue, 24 Dec 2019 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Quadratic Payments: A Primer</title>
+<link>https://vitalik.ca/general/2019/12/07/quadratic.html</link>
+<guid>https://vitalik.ca/general/2019/12/07/quadratic.html</guid>
+<pubDate>Sat, 07 Dec 2019 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Hard Problems in Cryptocurrency: Five Years Later</title>
+<link>https://vitalik.ca/general/2019/11/22/progress.html</link>
+<guid>https://vitalik.ca/general/2019/11/22/progress.html</guid>
+<pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Review of Gitcoin Quadratic Funding Round 3</title>
+<link>https://vitalik.ca/general/2019/10/24/gitcoin.html</link>
+<guid>https://vitalik.ca/general/2019/10/24/gitcoin.html</guid>
+<pubDate>Thu, 24 Oct 2019 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>In-person meatspace protocol to prove unconditional possession of a private key</title>
+<link>https://vitalik.ca/general/2019/10/01/story.html</link>
+<guid>https://vitalik.ca/general/2019/10/01/story.html</guid>
+<pubDate>Tue, 01 Oct 2019 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Understanding PLONK</title>
+<link>https://vitalik.ca/general/2019/09/22/plonk.html</link>
+<guid>https://vitalik.ca/general/2019/09/22/plonk.html</guid>
+<pubDate>Sun, 22 Sep 2019 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>The Dawn of Hybrid Layer 2 Protocols</title>
+<link>https://vitalik.ca/general/2019/08/28/hybrid_layer_2.html</link>
+<guid>https://vitalik.ca/general/2019/08/28/hybrid_layer_2.html</guid>
+<pubDate>Wed, 28 Aug 2019 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Sidechains vs Plasma vs Sharding</title>
+<link>https://vitalik.ca/general/2019/06/12/plasma_vs_sharding.html</link>
+<guid>https://vitalik.ca/general/2019/06/12/plasma_vs_sharding.html</guid>
+<pubDate>Wed, 12 Jun 2019 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Fast Fourier Transforms</title>
+<link>https://vitalik.ca/general/2019/05/12/fft.html</link>
+<guid>https://vitalik.ca/general/2019/05/12/fft.html</guid>
+<pubDate>Sun, 12 May 2019 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Control as Liability</title>
+<link>https://vitalik.ca/general/2019/05/09/control_as_liability.html</link>
+<guid>https://vitalik.ca/general/2019/05/09/control_as_liability.html</guid>
+<pubDate>Thu, 09 May 2019 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>On Free Speech</title>
+<link>https://vitalik.ca/general/2019/04/16/free_speech.html</link>
+<guid>https://vitalik.ca/general/2019/04/16/free_speech.html</guid>
+<pubDate>Tue, 16 Apr 2019 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>On Collusion</title>
+<link>https://vitalik.ca/general/2019/04/03/collusion.html</link>
+<guid>https://vitalik.ca/general/2019/04/03/collusion.html</guid>
+<pubDate>Wed, 03 Apr 2019 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>[Mirror] Cantor was Wrong: debunking the infinite set hierarchy</title>
+<link>https://vitalik.ca/general/2019/04/01/cantor.html</link>
+<guid>https://vitalik.ca/general/2019/04/01/cantor.html</guid>
+<pubDate>Mon, 01 Apr 2019 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>A CBC Casper Tutorial</title>
+<link>https://vitalik.ca/general/2018/12/05/cbc_casper.html</link>
+<guid>https://vitalik.ca/general/2018/12/05/cbc_casper.html</guid>
+<pubDate>Wed, 05 Dec 2018 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>[Mirror] Central Planning as Overfitting</title>
+<link>https://vitalik.ca/general/2018/11/25/central_planning.html</link>
+<guid>https://vitalik.ca/general/2018/11/25/central_planning.html</guid>
+<pubDate>Sun, 25 Nov 2018 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Layer 1 Should Be Innovative in the Short Term but Less in the Long Term</title>
+<link>https://vitalik.ca/general/2018/08/26/layer_1.html</link>
+<guid>https://vitalik.ca/general/2018/08/26/layer_1.html</guid>
+<pubDate>Sun, 26 Aug 2018 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>A Guide to 99% Fault Tolerant Consensus</title>
+<link>https://vitalik.ca/general/2018/08/07/99_fault_tolerant.html</link>
+<guid>https://vitalik.ca/general/2018/08/07/99_fault_tolerant.html</guid>
+<pubDate>Tue, 07 Aug 2018 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>STARKs, Part 3: Into the Weeds</title>
+<link>https://vitalik.ca/general/2018/07/21/starks_part_3.html</link>
+<guid>https://vitalik.ca/general/2018/07/21/starks_part_3.html</guid>
+<pubDate>Sat, 21 Jul 2018 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>On Radical Markets</title>
+<link>https://vitalik.ca/general/2018/04/20/radical_markets.html</link>
+<guid>https://vitalik.ca/general/2018/04/20/radical_markets.html</guid>
+<pubDate>Fri, 20 Apr 2018 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Governance, Part 2: Plutocracy Is Still Bad</title>
+<link>https://vitalik.ca/general/2018/03/28/plutocracy.html</link>
+<guid>https://vitalik.ca/general/2018/03/28/plutocracy.html</guid>
+<pubDate>Wed, 28 Mar 2018 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Notes on Blockchain Governance</title>
+<link>https://vitalik.ca/general/2017/12/17/voting.html</link>
+<guid>https://vitalik.ca/general/2017/12/17/voting.html</guid>
+<pubDate>Sun, 17 Dec 2017 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>A Quick Gasprice Market Analysis</title>
+<link>https://vitalik.ca/general/2017/12/14/gas_analysis.html</link>
+<guid>https://vitalik.ca/general/2017/12/14/gas_analysis.html</guid>
+<pubDate>Thu, 14 Dec 2017 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>STARKs, Part II: Thank Goodness It's FRI-day</title>
+<link>https://vitalik.ca/general/2017/11/22/starks_part_2.html</link>
+<guid>https://vitalik.ca/general/2017/11/22/starks_part_2.html</guid>
+<pubDate>Wed, 22 Nov 2017 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>STARKs, Part I: Proofs with Polynomials</title>
+<link>https://vitalik.ca/general/2017/11/09/starks_part_1.html</link>
+<guid>https://vitalik.ca/general/2017/11/09/starks_part_1.html</guid>
+<pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>On Medium-of-Exchange Token Valuations</title>
+<link>https://vitalik.ca/general/2017/10/17/moe.html</link>
+<guid>https://vitalik.ca/general/2017/10/17/moe.html</guid>
+<pubDate>Tue, 17 Oct 2017 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>A Prehistory of the Ethereum Protocol</title>
+<link>https://vitalik.ca/general/2017/09/14/prehistory.html</link>
+<guid>https://vitalik.ca/general/2017/09/14/prehistory.html</guid>
+<pubDate>Thu, 14 Sep 2017 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>A Note on Metcalfe's Law, Externalities and Ecosystem Splits</title>
+<link>https://vitalik.ca/general/2017/07/27/metcalfe.html</link>
+<guid>https://vitalik.ca/general/2017/07/27/metcalfe.html</guid>
+<pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>The Triangle of Harm</title>
+<link>https://vitalik.ca/general/2017/07/16/triangle_of_harm.html</link>
+<guid>https://vitalik.ca/general/2017/07/16/triangle_of_harm.html</guid>
+<pubDate>Sun, 16 Jul 2017 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>On Path Independence</title>
+<link>https://vitalik.ca/general/2017/06/22/marketmakers.html</link>
+<guid>https://vitalik.ca/general/2017/06/22/marketmakers.html</guid>
+<pubDate>Thu, 22 Jun 2017 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Analyzing Token Sale Models</title>
+<link>https://vitalik.ca/general/2017/06/09/sales.html</link>
+<guid>https://vitalik.ca/general/2017/06/09/sales.html</guid>
+<pubDate>Fri, 09 Jun 2017 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Engineering Security Through Coordination Problems</title>
+<link>https://vitalik.ca/general/2017/05/08/coordination_problems.html</link>
+<guid>https://vitalik.ca/general/2017/05/08/coordination_problems.html</guid>
+<pubDate>Mon, 08 May 2017 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Hard Forks, Soft Forks, Defaults and Coercion</title>
+<link>https://vitalik.ca/general/2017/03/14/forks_and_markets.html</link>
+<guid>https://vitalik.ca/general/2017/03/14/forks_and_markets.html</guid>
+<pubDate>Tue, 14 Mar 2017 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>A Note On Charity Through Marginal Price Discrimination</title>
+<link>https://vitalik.ca/general/2017/03/11/a_note_on_charity.html</link>
+<guid>https://vitalik.ca/general/2017/03/11/a_note_on_charity.html</guid>
+<pubDate>Sat, 11 Mar 2017 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>[Mirror] Zk-SNARKs: Under the Hood</title>
+<link>https://vitalik.ca/general/2017/02/01/zk_snarks.html</link>
+<guid>https://vitalik.ca/general/2017/02/01/zk_snarks.html</guid>
+<pubDate>Wed, 01 Feb 2017 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>[Mirror] Exploring Elliptic Curve Pairings</title>
+<link>https://vitalik.ca/general/2017/01/14/exploring_ecp.html</link>
+<guid>https://vitalik.ca/general/2017/01/14/exploring_ecp.html</guid>
+<pubDate>Sat, 14 Jan 2017 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>[Mirror] A Proof of Stake Design Philosophy</title>
+<link>https://vitalik.ca/general/2016/12/29/pos_design.html</link>
+<guid>https://vitalik.ca/general/2016/12/29/pos_design.html</guid>
+<pubDate>Thu, 29 Dec 2016 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>[Mirror] Quadratic Arithmetic Programs: from Zero to Hero</title>
+<link>https://vitalik.ca/general/2016/12/10/qap.html</link>
+<guid>https://vitalik.ca/general/2016/12/10/qap.html</guid>
+<pubDate>Sat, 10 Dec 2016 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Situazioni di collusione</title>
+<link>https://vitalik.ca/general/2000/01/01/On_Collusion_IT.html</link>
+<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_IT.html</guid>
+<pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Na colusão</title>
+<link>https://vitalik.ca/general/2000/01/01/On_Collusion_Portuguese.html</link>
+<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_Portuguese.html</guid>
+<pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Zmowa</title>
+<link>https://vitalik.ca/general/2000/01/01/On_Collusion_Polish.html</link>
+<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_Polish.html</guid>
+<pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Über Kollusion</title>
+<link>https://vitalik.ca/general/2000/01/01/On_Collusion_DE.html</link>
+<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_DE.html</guid>
+<pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+</channel>
+</rss>

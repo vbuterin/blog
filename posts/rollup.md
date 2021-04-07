@@ -115,7 +115,7 @@ Part of this is simply superior encoding: Ethereum's RLP wastes 1 byte per value
 
 * **Nonce**: the purpose of this parameter is to prevent replays. If the current nonce of an account is 5, the next transaction from that account must have nonce 5, but once the transaction is processed the nonce in the account will be incremented to 6 so the transaction cannot be processed again. In the rollup, we can omit the nonce entirely, because we just recover the nonce from the pre-state; if someone tries replaying a transaction with an earlier nonce, the signature would fail to verify, as the signature would be checked against data that contains the new higher nonce.
 *  **Gasprice**: we can allow users to pay with a fixed range of gasprices, eg. a choice of 16 consecutive powers of two. Alternatively, we could just have a fixed fee level in each batch, or even move gas payment outside the rollup protocol entirely and have transactors pay batch creators for inclusion through a channel.
-*  **Gas**: we could similarly just the total gas to a choice of consecutive powers of two. Alternatively, we could just have a gas limit only at the batch level.
+*  **Gas**: we could similarly restrict the total gas to a choice of consecutive powers of two. Alternatively, we could just have a gas limit only at the batch level.
 *  **To**: we can replace the 20-byte address with an _index_ (eg. if an address is the 4527th address added to the tree, we just use the index 4527 to refer to it. We would add a subtree to the state to store the mapping of indices to addresses).
 *  **Value**: we can store value in scientific notation. In most cases, transfers only need 1-3 significant digits.
 *  **Signature**: we can use [BLS aggregate signatures](https://ethresear.ch/t/pragmatic-signature-aggregation-with-bls/2105), which allows many signatures to be aggregated into a single ~32-96 byte (depending on protocol) signature. This signature can then be checked against the entire set of messages and senders in a batch all at once. The ~0.5 in the table represents the fact that there is a limit on how many signatures can be combined in an aggregate that can be verified in a single block, and so large batches would need one signature per ~100 transactions.
@@ -141,7 +141,7 @@ Some of the rollups being currently developed are using a "split batch" paradigm
 1. You can allow many sequencers in parallel to publish batches in order to improve censorship resistance, without worrying that some batches will be invalid because some other batch got included first.
 2. If a state root is fraudulent, you don't need to revert the entire batch; you can revert just the state root, and wait for someone to provide a new state root for the same batch. This gives transaction senders a better guarantee that their transactions will not be reverted.
 
-So all in all, there is a fairly complex zoo of technques that are trying to balance between complicated tradeoffs involving efficiency, simplicity, censorship resistance and other goals. It's still too early to say which combination of these ideas works best; time will tell.
+So all in all, there is a fairly complex zoo of techniques that are trying to balance between complicated tradeoffs involving efficiency, simplicity, censorship resistance and other goals. It's still too early to say which combination of these ideas works best; time will tell.
 
 ## How much scaling do rollups give you?
 
