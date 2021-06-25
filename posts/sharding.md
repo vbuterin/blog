@@ -32,7 +32,7 @@ Now we can look at the three classes of "easy solutions" that only get two of th
 
 **Sharding is a technique that gets you all three.** A sharded blockchain is:
 
-* **Scalable**: it can process far more transactions than a single node)
+* **Scalable**: it can process far more transactions than a single node
 * **Decentralized**: it can survive entirely on consumer laptops, with no dependency on "supernodes" whatsoever
 * **Secure**: an attacker can't target a small part of the system with a small amount of resources; they can only try to dominate and attack the whole thing
 
