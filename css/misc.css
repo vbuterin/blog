@@ -17,6 +17,7 @@
 
     .toc-category {
       display: inline-block;
+      word-wrap: normal;
       width: 100px;
       padding-top: 10px;
       padding-bottom: 10px;
@@ -33,6 +34,7 @@
 
     .toc-category {
       display: inline-block;
+      word-wrap: normal;
       width: 200px;
       padding-top: 20px;
       padding-bottom: 20px;
