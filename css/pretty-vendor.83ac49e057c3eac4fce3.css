@@ -393,7 +393,7 @@ dt { font-weight: 700; }
 dd { margin-left: 0; }
 abbr[data-original-title], abbr[title] { cursor: help; border-bottom: 1px dotted #777; }
 .initialism { font-size: 90%; text-transform: uppercase; }
-blockquote { padding: 10px 20px; margin: 0 0 20px; font-size: 17.5px; border-left: 5px solid #eee; }
+blockquote { padding: 10px 20px; margin: 0 0 20px; border-left: 5px solid #eee; }
 blockquote ol:last-child, blockquote p:last-child, blockquote ul:last-child { margin-bottom: 0; }
 blockquote .small, blockquote footer, blockquote small { display: block; font-size: 80%; line-height: 1.42857143; color: #777; }
 blockquote .small:before, blockquote footer:before, blockquote small:before { content: '\2014 \00A0'; }
