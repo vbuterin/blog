@@ -52,7 +52,7 @@ In the /r/ethtrader experiment, fear of people coming in and _buying_ donuts to 
 Some systems attempt to mitigate the plutocratic aspects of coin voting by making use of an identity system. In the case of the /r/ethtrader donut system, for example, although _governance polls_ are done via coin vote, the mechanism that determines _how many donuts (ie. coins) you get in the first place_ is based on Reddit accounts: 1 upvote from 1 Reddit account = $N$ donuts earned. The ideal goal of an identity system is to make it relatively easy for individuals to get one identity, but relatively difficult to get many identities. In the /r/ethtrader donut system, that's Reddit accounts, in the Gitcoin CLR matching gadget, it's Github accounts that are used for the same purpose. But identity, at least the way it has been implemented so far, is a fragile thing....
 
 <center>
-<a href="https://twitter.com/JamieJBartlett/status/1105151495773847552"><img src="../../../../images/collusion-files/clickfarm.png" style="width:400px" /></a>
+<a href="https://twitter.com/JamieJBartlett/status/1105151495773847552"><img src="../../../../images/collusion-files/clickfarm.jpg" style="width:400px" /></a>
 </center>
 <br>
 

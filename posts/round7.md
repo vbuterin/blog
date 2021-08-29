@@ -8,16 +8,16 @@ Round 7 of Gitcoin Grants has successfully completed! This round has seen an unp
 The category structure was once again changed; this time was had a split between "dapp tech", "infrastructure tech" and "community". Here are the results:
 
 <center>
-<img src="../../../../images/round_7_files/results1.png" style="width: 360px" />
-<img src="../../../../images/round_7_files/results2.png" style="width: 360px" />
-<img src="../../../../images/round_7_files/results3.png" style="width: 360px" />
+<img src="../../../../images/round_7_files/results1.jpg" style="width: 360px" />
+<img src="../../../../images/round_7_files/results2.jpg" style="width: 360px" />
+<img src="../../../../images/round_7_files/results3.jpg" style="width: 360px" />
 </center>
 
 ## Defi joins the matching!
 
 In this round, we were able to have much higher matching values than before. This was because the usual matchings, provided by the Ethereum Foundation and a few other actors, were supplemented for the first time by a high level of participation from various defi projects:
 
-![](../../../../images/round_7_files/matching.png)
+![](../../../../images/round_7_files/matching.jpg)
 
 The matchers were:
 
@@ -72,7 +72,7 @@ The concept of categories as it is currently implemented in Gitcoin Grants is a 
 
 But it gets more paradoxical from here. In Round 7, a ["collections" feature](https://gitcoin.co/grants/collections) was introduced halfway through the round:
 
-![](../../../../images/round_7_files/categories.png)
+![](../../../../images/round_7_files/categories.jpg)
 
 If you click "Add to Cart" on a collection, you immediately add everything in the collection to your cart. This is strange because this mechanism seems to send the exact _opposite_ message: users that don't understand the details well can choose to allocate funds to entire categories, but (unless they manually edit the amounts) they should not be making many active decisions _within_ each category.
 

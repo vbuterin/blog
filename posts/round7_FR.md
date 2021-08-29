@@ -8,16 +8,16 @@ Le septième tour des subventions Gitcoin s'est terminé avec succès! Ce tour a
 La structure des catégories a été une fois de plus modifiée; cette fois-ci, divisée entre "tech DApp", "infrastructure" et "communauté". Voici les résultats :
 
 <center>
-<img src="../../../../images/round_7_files/results1.png" style="width: 360px" />
-<img src="../../../../images/round_7_files/results2.png" style="width: 360px" />
-<img src="../../../../images/round_7_files/results3.png" style="width: 360px" />
+<img src="../../../../images/round_7_files/results1.jpg" style="width: 360px" />
+<img src="../../../../images/round_7_files/results2.jpg" style="width: 360px" />
+<img src="../../../../images/round_7_files/results3.jpg" style="width: 360px" />
 </center>
 
 ## Defi s'associe au mouvement !
 
 Lors de ce tour, le nombre de projets associés s'est avéré plus élevé qu'auparavant. En plus des projets habituels par la Fondation Ethereum ainsi que par quelques autres acteurs, se sont ajoutés pour la première fois différents projets defi :
 
- ![](../../../../images/round_7_files/matching.png)
+ ![](../../../../images/round_7_files/matching.jpg)
 
 Les participants étaient :
 * [Chainlink](https://chain.link/), un projet Oracle smart contract
@@ -71,7 +71,7 @@ Le concept de catégories tel qu'il est actuellement mis en œuvre dans les Subv
 
 Mais le paradoxe commence ici. Au cours du septième tour, une fonction ["collections"](https://gitcoin.co/grants/collections) a été introduite à mi-chemin :
 
- ![](../../../../images/round_7_files/categories.png)
+ ![](../../../../images/round_7_files/categories.jpg)
 
 Si vous cliquez sur « Ajouter au panier » sur une collection, vous ajoutez immédiatement tout ce qui se trouve dans la collection à votre panier. C'est étrange parce que ce mécanisme semble envoyer exactement le message contraire: les utilisateurs qui ne comprennent pas bien la nuance peuvent choisir d'allouer des fonds à des catégories entières, mais (à moins qu'ils ne modifient manuellement les montants) ils ne devraient pas prendre de décisions spécifiques à chaque catégorie.
 

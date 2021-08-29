@@ -6,7 +6,7 @@
 
 
 
-Here is [a file](../../../../images/gas-analysis-files/gas_analysis.json) that contains data, extracted from geth, about transaction fees in every block between 4710000 and 4730000. For each block, it contains an object of the form:
+Here is [a file](../../../../images/gas-analysis-files/gas_analysis.zip) that contains data, extracted from geth, about transaction fees in every block between 4710000 and 4730000. For each block, it contains an object of the form:
 
 ```
 {

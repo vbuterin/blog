@@ -72,7 +72,7 @@ The two are clearly correlated (coefficient -0.62), but very far from perfectly 
 Wealth concentration within the blockchain space in particular is an important problem, and it's a problem worth measuring and understanding. It's important for the blockchain space as a whole, as many people ([and US senate hearings](https://www.banking.senate.gov/hearings/cryptocurrencies-what-are-they-good-for)) are trying to figure out to what extent crypto is truly anti-elitist and to what extent it's just replacing old elites with new ones. It's also important when comparing different cryptocurrencies with each other.
 
 <center><br>
-<a href="https://twitter.com/RyanWatkins_/status/1394283802009145348"><img style="width:650px" src="../../../../images/gini/messari_data.png" /></a><br><br>
+<a href="https://twitter.com/RyanWatkins_/status/1394283802009145348"><img style="width:650px" src="../../../../images/gini/messari_data.jpg" /></a><br><br>
 <small><i>
 
 Share of coins explicitly allocated to specific insiders in a cryptocurrency's initial supply is one type of inequality. Note that the Ethereum data is slightly wrong: the insider and foundation shares should be 12.3% and 4.2%, not 15% and 5%.

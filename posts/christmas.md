@@ -9,7 +9,7 @@ Since it's Christmas time now, and we're theoretically supposed to be enjoying o
 ### 1.58 dimensional chess
 
 <center><br>
-[![](../../../../images/christmas-files/chess_tweet.png)](https://twitter.com/el33th4xor/status/1138777837320716288)
+[![](../../../../images/christmas-files/chess_tweet.jpg)](https://twitter.com/el33th4xor/status/1138777837320716288)
 <br><br>
 </center>
 

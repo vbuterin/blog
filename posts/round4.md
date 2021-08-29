@@ -37,7 +37,7 @@ There are two main objections that I heard, and both lead to interesting critici
 
 <center>
 <img src="../../../../images/round4-files/antiprosynth1.png" style="width:300px" />
-<img src="../../../../images/round4-files/antiprosynth2.png" style="width:300px" />
+<img src="../../../../images/round4-files/antiprosynth2.jpg" style="width:300px" />
 <img src="../../../../images/round4-files/antiprosynth3.png" style="width:300px" />
 <br><br>
 <i><small>Examples of @antiprosynth's recent tweets</small></i>

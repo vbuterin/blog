@@ -117,7 +117,7 @@ Blockchain ecosystems, Ethereum included, value freedom and decentralization. Bu
 Fortunately, we already have the seed of such an alternative! The Ethereum application-layer ecosystem exists, is growing increasingly powerful, and is already showing its public-spiritedness. Companies like Gnosis have been contributing to Ethereum client development, and various Ethereum DeFi projects have donated hundreds of thousands of dollars to the Gitcoin Grants matching pool.
 
 <center><br>
-<img src="../../../../images/round_7_files/matching.png" />
+<img src="../../../../images/round_7_files/matching.jpg" />
 <br>
 </center><br><br>
 
@@ -140,7 +140,7 @@ Hence, though the power of community-driven legitimacy effects is not infinite, 
 The concept of supporting public goods through value generated "out of the ether" by publicly supported conceptions of legitimacy has value going far beyond the Ethereum ecosystem. An important and immediate challenge and opportunity is NFTs. NFTs stand a great chance of significantly helping many kinds of public goods, especially of the creative variety, at least partially solve their [chronic and systemic funding deficiencies](https://en.wikipedia.org/wiki/Tragedy_of_the_commons).
 
 <center><br>
-<a href="https://www.theverge.com/2021/3/9/22321464/jack-dorsey-nft-tweet-auction-bitcoin-donate-charity"><img src="../../../../images/legitimacy-files/jack.png" style="width:450px" /></a>
+<a href="https://www.theverge.com/2021/3/9/22321464/jack-dorsey-nft-tweet-auction-bitcoin-donate-charity"><img src="../../../../images/legitimacy-files/jack.jpg" style="width:450px" /></a>
 <br><br>
 <i><small>Actually a very admirable first step.</small></i>
 </center><br><br>

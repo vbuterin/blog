@@ -137,7 +137,7 @@ Our politics are dominated by ads:
 
 And even the rivers and the skies [have ads](https://newyork.cbslocal.com/2018/11/13/are-led-boat-advertisements-on-the-hudson-river-going-a-step-too-far/). Now, there are some places that seem to not have this problem:
 
-<center><img src="../../../../images/qv-files/ads4.png" style="height:450px" /><br><br></center>
+<center><img src="../../../../images/qv-files/ads4.jpg" style="height:450px" /><br><br></center>
 
 But really they just have a different kind of ads:
 

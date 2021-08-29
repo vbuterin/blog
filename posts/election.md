@@ -146,7 +146,7 @@ Of course, not everyone suffers from excessive modesty. Many of the people makin
 
 <br>
 <center>
-<img src="../../../../images/election-files/q.png" style="width:50%"/><br><br>
+<img src="../../../../images/election-files/q.jpg" style="width:50%"/><br><br>
 <i>Not a sufferer of excessive modesty.</i>
 </center><br>
 

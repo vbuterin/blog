@@ -22,7 +22,7 @@ But there is also a very philosophically counterintuitive dark side to coordinat
 We can think about this visually as a map, though in reality the map has many billions of "dimensions" rather than two:
 
 <center>
-<img src="../../../../images/coordination/map.png" />
+<img src="../../../../images/coordination/map.jpg" />
 </center><br>
 
 The bottom-left corner, "every man for himself", is where we don't want to be. The top-right corner, total coordination, is ideal, but likely unachievable. But the landscape in the middle is far from an even slope up, with many reasonably safe and productive places that it might be best to settle down in and many deep dark caves to avoid.

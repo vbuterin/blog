@@ -35,9 +35,9 @@ We can measure this! To start off, let's compare the top-10 projects in this rou
 
 <br>
 <center>
-<img src="../../../../images/round9/combined1.png" style="width:350px; padding-right: 20px" />
-<img src="../../../../images/round9/combined2.png" style="width:350px" /><br><br>
-<img src="../../../../images/round9/combined3.png" style="width:350px" />
+<img src="../../../../images/round9/combined1.jpg" style="width:350px; padding-right: 20px" />
+<img src="../../../../images/round9/combined2.jpg" style="width:350px" /><br><br>
+<img src="../../../../images/round9/combined3.jpg" style="width:350px" />
 </center><br><br>
 
 In all cases, about half of the top-10 carries over from the previous round and about half is new (the flipside, of course is that half the top-10 drops out). The charts are a slight understatement: the Gitcoin Grants dev fund and POAP appear to have dropped out but actually merely changed categories, so something like 40% churn may be a more accurate number.
