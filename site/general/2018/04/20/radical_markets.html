@@ -1,33 +1,51 @@
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
-<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
-<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
-<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
-<link rel="stylesheet" type="text/css" href="/css/misc.css">
 
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="On Radical Markets">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
 <script type="text/javascript" id="MathJax-script" async
-  src="/scripts/mathjax.js">
+  src="../../../../scripts/tex-svg.js">
 </script>
 
 <style>
-@font-face {
-    font-family: MJXc-TeX-math-Iw;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXZERO;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXTEX;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-
-.math { font-family: MJXc-TeX-math-Iw }
 </style>
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
@@ -41,7 +59,7 @@
 <br>
 <h1 style="margin-bottom:7px"> On Radical Markets </h1>
 <small style="float:left; color: #888"> 2018 Apr 20 </small>
-<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
 <br> <br> <br>
 <title> On Radical Markets </title>
 
@@ -89,7 +107,7 @@
 <p>The remaining chapters bring up similar ideas that are similar in spirit to the discussion on Harberger taxes in their use of modern game-theoretic principles to make mathematically optimized versions of existing social institutions. One of the proposals is for something called quadratic voting, which I summarize as follows.</p>
 <p>Suppose that you can vote as many times as you want, but voting costs "voting tokens" (say each citizen is assigned <span class="math inline">\(N\)</span> voting tokens per year), and it costs tokens in a nonlinear way: your first vote costs one token, your second vote costs two tokens, and so forth. If someone feels more strongly about something, the argument goes, they would be willing to pay more for a single vote; quadratic voting takes advantage of this by perfectly aligning <em>quantity</em> of votes with <em>cost</em> of votes: if you're willing to pay up to 15 tokens for a vote, then you will keep buying votes until your last one costs 15 tokens, and so you will cast 15 votes in total. If you're willing to pay up to 30 tokens for a vote, then you will keep buying votes until you can't buy any more for a price less than or equal to 30 tokens, and so you will end up casting 30 votes. The voting is "quadratic" because the total amount you pay for <span class="math inline">\(N\)</span> votes goes up proportionately to <span class="math inline">\(N^2\)</span>.</p>
 <center>
-<img src="/images/radical-markets-files/quadratic_voting.png" style="width:300px" />
+<img src="../../../../images/radical-markets-files/quadratic_voting.png" style="width:300px" />
 </center>
 <p><br></p>
 <p>After this, the book describes a market for immigration visas that could greatly expand the number of immigrants admitted while making sure local residents benefit and at the same time aligning incentives to encourage visa sponsors to choose immigrants that are more ikely to succeed in the country and less likely to commit crimes, then an enhancement to antitrust law, and finally the idea of setting up markets for personal data.</p>
@@ -117,7 +135,7 @@
 <p>Another story from the blockchain and Ethereum space that has a more pro-radical-market conclusion is that of transaction fees. The notion of <a href="http://nakamotoinstitute.org/literature/micropayments-and-mental-transaction-costs/">mental transaction costs</a>, the idea that the inconvenience of even thinking about whether or not some small payment for a given digital good is worth it is enough of a burden to prevent "micro-markets" from working, is often used as an argument for why mass adoption of blockchain tech would be difficult: every transaction requires a small fee, and the mental expenditure of figuring out what fee to pay is itself a major usability barrier. These arguments increased further at the end of last year, when both <a href="https://bitinfocharts.com/comparison/bitcoin-transactionfees.html">Bitcoin</a> and <a href="https://bitinfocharts.com/comparison/ethereum-transactionfees.html">Ethereum</a> transaction fees briefly spiked up by a factor of over 100 due to high usage (talk about surge pricing!), and those who accidentally did not pay high enough fees saw their transactions get stuck for days.</p>
 <p>That said, this is a problem that we have now, arguably, to a large extent overcome. After the spikes at the end of last year, Ethereum wallets developed more advanced algorithms for choosing what transaction fees to pay to ensure that one's transaction gets included in the chain, and today most users are happy to simply defer to them. In my own personal experience, the mental transaction costs of worrying about transaction fees do not really exist, much like a driver of a car does not worry about the gasoline consumed by every single turn, acceleration and braking made by their car.</p>
 <center>
-<img src="/images/radical-markets-files/metamask1.png" style="width:200px"/><br><br> <small><i>Personal price-setting AIs for interacting with open markets: already a reality in the Ethereum transaction fee market</i></small>
+<img src="../../../../images/radical-markets-files/metamask1.png" style="width:200px"/><br><br> <small><i>Personal price-setting AIs for interacting with open markets: already a reality in the Ethereum transaction fee market</i></small>
 </center>
 <p><br></p>
 <p>A third kind of "radical market" that we are considering implementing in the context of Ethereum's consensus system is one for incentivizing deconcentration of validator nodes in <a href="https://medium.com/@jonchoi/ethereum-casper-101-7a851a4f1eb0">proof of stake consensus</a>. It's important for blockchains to be decentralized, a similar challenge to what antitrust law tries to solve, but the tools at our disposal are different. Posner and Weyl's solution to antitrust, banning institutional investment funds from owning shares in multiple competitors in the same industry, is far too subjective and human-judgement-dependent to work in a blockchain, but for our specific context we have a different solution: if a validator node commits an error, it gets penalized an amount proportional to the number of other nodes that have committed an error around the same time. This incentivizes nodes to set themselves up in such a way that their failure rate is maximally uncorrelated with everyone else's failure rate, reducing the chance that many nodes fail at the same time and threaten to the blockchain's integrity. I want to ask Posner and Weyl: though our exact approach is fairly application-specific, could a similarly elegant "market-based" solution be discovered to incentivize market deconcentration in general?</p>

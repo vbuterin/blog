@@ -6,7 +6,7 @@
 The following is a diagram from a slide that I made in one of my presentations at Cornell this week:
 <br><br>
 <center>
-<img src="/images/triangle-of-harm-files/triangle_of_harm.png" style="width:420px"></img>
+<img src="../../../../images/triangle-of-harm-files/triangle_of_harm.png" style="width:420px"></img>
 </center>
 <br><br>
 If there was one diagram that could capture the core principle of Casper's incentivization philosophy, this might be it. Hence, it warrants some further explanation.
@@ -35,8 +35,8 @@ This touches on a fundamental dichotomy: **speaker/listener fault equivalence**.
 
 <br><br>
 <center>
-<img src="/images/triangle-of-harm-files/mouthshut.jpg" style="height:300px"></img>
-<img src="/images/triangle-of-harm-files/canthearyou.jpg" style="height:300px; margin-left:100px"></img>
+<img src="../../../../images/triangle-of-harm-files/mouthshut.jpg" style="height:300px"></img>
+<img src="../../../../images/triangle-of-harm-files/canthearyou.jpg" style="height:300px; margin-left:100px"></img>
 </center>
 <br><br>
 

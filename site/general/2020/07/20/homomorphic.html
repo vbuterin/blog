@@ -1,33 +1,51 @@
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
-<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
-<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
-<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
-<link rel="stylesheet" type="text/css" href="/css/misc.css">
 
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Exploring Fully Homomorphic Encryption">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
 <script type="text/javascript" id="MathJax-script" async
-  src="/scripts/mathjax.js">
+  src="../../../../scripts/tex-svg.js">
 </script>
 
 <style>
-@font-face {
-    font-family: MJXc-TeX-math-Iw;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXZERO;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXTEX;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-
-.math { font-family: MJXc-TeX-math-Iw }
 </style>
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
@@ -41,18 +59,18 @@
 <br>
 <h1 style="margin-bottom:7px"> Exploring Fully Homomorphic Encryption </h1>
 <small style="float:left; color: #888"> 2020 Jul 20 </small>
-<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
 <br> <br> <br>
 <title> Exploring Fully Homomorphic Encryption </title>
 
 <p><em>Special thanks to Karl Floersch and Dankrad Feist for review</em></p>
 <p>Fully homomorphic encryption has for a long time been considered one of the holy grails of cryptography. The promise of fully homomorphic encryption (FHE) is powerful: it is a type of encryption that allows a third party to perform computations on encrypted data, and get an encrypted result that they can hand back to whoever has the decryption key for the original data, <em>without</em> the third party being able to decrypt the data or the result themselves.</p>
 <center>
-<img src="/images/fhe/HomoEncrypt.png?1" /><br>
+<img src="../../../../images/fhe/HomoEncrypt.png?1" /><br>
 </center>
 <p>As a simple example, imagine that you have a set of emails, and you want to use a third party spam filter to check whether or not they are spam. The spam filter has a desire for <em>privacy of their algorithm</em>: either the spam filter provider wants to keep their source code closed, or the spam filter depends on a very large database that they do not want to reveal publicly as that would make attacking easier, or both. However, you care about the <em>privacy of your data</em>, and don't want to upload your unencrypted emails to a third party. So here's how you do it:</p>
 <center>
-<img src="/images/fhe/HomoEncrypt2.png" /><br>
+<img src="../../../../images/fhe/HomoEncrypt2.png" /><br>
 </center>
 <p>Fully homomorphic encryption has many applications, including in the blockchain space. One key example is that can be used to implement privacy-preserving light clients (the light client hands the server an encrypted index <code>i</code>, the server computes and returns <code>data[0] * (i = 0) + data[1] * (i = 1) + ... + data[n] * (i = n)</code>, where <code>data[i]</code> is the i'th piece of data in a block or state along with its Merkle branch and <code>(i = k)</code> is an expression that returns 1 if <code>i = k</code> and otherwise 0; the light client gets the data it needs and the server learns nothing about what the light client asked).</p>
 <p>It can also be used for:</p>
@@ -92,7 +110,7 @@
 <p>This was simply a matter of expanding the product above, and grouping together all the terms that contain <span class="math inline">\(p\)</span>, then all the remaining terms that contain <span class="math inline">\(2\)</span>, and finally the remaining term which is the product of the messages. If you decrypt, then once again the <span class="math inline">\(mod\ p\)</span> removes the first group, the <span class="math inline">\(mod\ 2\)</span> removes the second group, and only <span class="math inline">\(m_1 * m_2\)</span> is left.</p>
 <p>But there are two problems here: first, the size of the ciphertext itself grows (the length roughly doubles when you multiply), and second, the "noise" (also often called "error") in the smaller <span class="math inline">\(\* 2\)</span> term also gets quadratically bigger. Adding this error into the ciphertexts was necessary because the security of this scheme is based on the <a href="https://oeis.org/wiki/Greatest_common_divisor#Approximate_GCD_problem">approximate GCD problem</a>:</p>
 <center>
-<img src="/images/fhe/approx_gcd.png" ><br><br>
+<img src="../../../../images/fhe/approx_gcd.png" ><br><br>
 </center>
 <p>Had we instead used the "exact GCD problem", breaking the system would be easy: if you just had a set of expressions of the form <span class="math inline">\(p * R_1 + m_1\)</span>, <span class="math inline">\(p * R_2 + m_2\)</span>..., then you could use the <a href="https://en.wikipedia.org/wiki/Euclidean_algorithm">Euclidean algorithm</a> to efficiently compute the greatest common divisor <span class="math inline">\(p\)</span>. But if the ciphertexts are only <em>approximate</em> multiples of <span class="math inline">\(p\)</span> with some "error", then extracting <span class="math inline">\(p\)</span> quickly becomes impractical, and so the scheme can be secure.</p>
 <p>Unfortunately, the error introduces the inherent limitation that if you multiply the ciphertexts by each other enough times, the error eventually grows big enough that it exceeds <span class="math inline">\(p\)</span>, and at that point the <span class="math inline">\(mod\ p\)</span> and <span class="math inline">\(mod\ 2\)</span> steps "interfere" with each other, making the data unextractable. This will be an inherent tradeoff in all of these homomorphic encryption schemes: extracting information from <em>approximate</em> equations "with errors" is much harder than extracting information from exact equations, but any error you add quickly increases as you do computations on encrypted data, bounding the amount of computation that you can do before the error becomes overwhelming. And <strong>this is why these schemes are only "somewhat" homomorphic</strong>.</p>
@@ -100,7 +118,7 @@
 <p>There are two classes of solution to this problem. First, in many somewhat homomorphic encryption schemes, there are clever tricks to make multiplication only increase the error by a constant factor (eg. 1000x) instead of squaring it. Increasing the error by 1000x still sounds by a lot, but keep in mind that if <span class="math inline">\(p\)</span> (or its equivalent in other schemes) is a 300-digit number, that means that you can multiply numbers by each other 100 times, which is enough to compute a very wide class of computations. Second, there is Craig Gentry's technique of "bootstrapping".</p>
 <p>Suppose that you have a ciphertext <span class="math inline">\(ct\)</span> that is an encryption of some <span class="math inline">\(m\)</span> under a key <span class="math inline">\(p\)</span>, that has a lot of error. The idea is that we "refresh" the ciphertext by turning it into a new ciphertext of <span class="math inline">\(m\)</span> under another key <span class="math inline">\(p_2\)</span>, where this process "clears out" the old error (though it will introduce a fixed amount of new error). The trick is quite clever. The holder of <span class="math inline">\(p\)</span> and <span class="math inline">\(p_2\)</span> provides a "bootstrapping key" that consists of an encryption of <em>the bits of <span class="math inline">\(p\)</span></em> under the key <span class="math inline">\(p_2\)</span>, as well as the public key for <span class="math inline">\(p_2\)</span>. Whoever is doing computations on data encrypted under <span class="math inline">\(p\)</span> would then take the bits of the ciphertext <span class="math inline">\(ct\)</span>, and individually encrypt these bits under <span class="math inline">\(p_2\)</span>. They would then <em>homomorphically compute the decryption under <span class="math inline">\(p\)</span></em> using these ciphertexts, and get out the single bit, which would be <span class="math inline">\(m\)</span> encrypted under <span class="math inline">\(p_2\)</span>.</p>
 <center>
-<img src="/images/fhe/bootstrapping.png" /><br><br>
+<img src="../../../../images/fhe/bootstrapping.png" /><br><br>
 </center>
 <p>This is difficult to understand, so we can restate it as follows. The decryption procedure <span class="math inline">\(dec(ct, p)\)</span> <em>is itself a computation</em>, and so it <em>can itself be implemented as a circuit</em> that takes as input the bits of <span class="math inline">\(ct\)</span> and the bits of <span class="math inline">\(p\)</span>, and outputs the decrypted bit <span class="math inline">\(m \in {0, 1}\)</span>. If someone has a ciphertext <span class="math inline">\(ct\)</span> encrypted under <span class="math inline">\(p\)</span>, a public key for <span class="math inline">\(p_2\)</span>, <em>and</em> the bits of <span class="math inline">\(p\)</span> encrypted under <span class="math inline">\(p_2\)</span>, then they can compute <span class="math inline">\(dec(ct, p) = m\)</span> "homomorphically", and get out <span class="math inline">\(m\)</span> encrypted under <span class="math inline">\(p_2\)</span>. Notice that the decryption procedure itself washes away the old error; it just outputs 0 or 1. The decryption procedure is itself a circuit, which contains additions or multiplications, so it will introduce new error, but this new error <em>does not depend</em> on the amount of error in the original encryption.</p>
 <p><small>(Note that we can avoid having a distinct new key <span class="math inline">\(p_2\)</span> (and if you want to bootstrap multiple times, also a <span class="math inline">\(p_3\)</span>, <span class="math inline">\(p_4\)</span>...) by just setting <span class="math inline">\(p_2 = p\)</span>. However, this introduces a new assumption, usually called "circular security"; it <a href="https://link.springer.com/content/pdf/10.1007%2F978-3-642-36594-2_32.pdf">becomes more difficult</a> to formally prove security if you do this, though many cryptographers think it's fine and circular security poses no significant risk in practice)</small></p>
@@ -156,7 +174,7 @@
 <p>In this example, we set the modulus <span class="math inline">\(p = 103\)</span>. The dot product is <code>3 * 2 + 14 * 71 + 15 * 82 + 92 * 81 + 65 * 8 = 10202</code>, and <span class="math inline">\(10202 = 99 * 103 + 5\)</span>. 5 itself is of course <span class="math inline">\(2 * 2 + 1\)</span>, so the message is 1. Note that in practice, the first element of the key is often set to <span class="math inline">\(1\)</span>; this makes it easier to generate ciphertexts for a particular value (see if you can figure out why).</p>
 <p>The security of the scheme is based on an assumption known as "<a href="https://en.wikipedia.org/wiki/Learning_with_errors">learning with errors</a>" (LWE) - or, in more jargony but also more understandable terms, the hardness of <em>solving systems of equations with errors</em>.</p>
 <center>
-<a href="https://cims.nyu.edu/~regev/papers/lwesurvey.pdf"><img src="/images/fhe/lwe.png" /></a><br>
+<a href="https://cims.nyu.edu/~regev/papers/lwesurvey.pdf"><img src="../../../../images/fhe/lwe.png" /></a><br>
 </center>
 <p><br></p>
 <p>A ciphertext can itself be viewed as an equation: <span class="math inline">\(k_1c_1 + .... + k_nc_n \approx 0\)</span>, where the key <span class="math inline">\(k_1 ... k_n\)</span> is the unknowns, the ciphertext <span class="math inline">\(c_1 ... c_n\)</span> is the coefficients, and the equality is only approximate because of both the message (0 or 1) and the error (<span class="math inline">\(2e\)</span> for some relatively small <span class="math inline">\(e\)</span>). The LWE assumption ensures that even if you have access to many of these ciphertexts, you cannot recover <span class="math inline">\(k\)</span>.</p>
@@ -172,7 +190,7 @@
 <p>The relinearization key consists of a set of vectors which, when inner-producted (modulo <span class="math inline">\(p\)</span>) with the key <span class="math inline">\(k\)</span>, give values of the form <span class="math inline">\(k_i * k_j * 2^d + 2e\)</span> (mod <span class="math inline">\(p\)</span>), one such vector for every possible triple <span class="math inline">\((i, j, d)\)</span>, where <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are indices in the key and <span class="math inline">\(d\)</span> is an exponent where <span class="math inline">\(2^d &lt; p\)</span> (note: if the key has length <span class="math inline">\(n\)</span>, there would be <span class="math inline">\(n^2 * log(p)\)</span> values in the relinearization key; make sure you understand why before continuing).</p>
 <center>
 <center>
-<img src="/images/fhe/relin.png" /><br>
+<img src="../../../../images/fhe/relin.png" /><br>
 </center>
 <small><i>Example assuming p = 15 and k has length 2. Formally, enc(x) here means "outputs x+2e if inner-producted with k".</i></small><br><br>
 </center>
@@ -187,7 +205,7 @@
 <h3 id="modulus-switching">Modulus switching</h3>
 <p>Here, we need to understand an important algebraic fact. A ciphertext is a vector <span class="math inline">\(ct\)</span>, such that <span class="math inline">\(&lt;ct, k&gt; = m+2e\)</span>, where <span class="math inline">\(m \in \{0,1\}\)</span>. But we can also look at the ciphertext from a different "perspective": consider <span class="math inline">\(\frac{ct}{2}\)</span> (modulo <span class="math inline">\(p\)</span>). <span class="math inline">\(&lt;\frac{ct}{2}, k&gt; = \frac{m}{2} + e\)</span>, where <span class="math inline">\(\frac{m}{2} \in \{0,\frac{p+1}{2}\}\)</span>. Note that because (modulo <span class="math inline">\(p\)</span>) <span class="math inline">\((\frac{p+1}{2})*2 = p+1 = 1\)</span>, division by 2 (modulo <span class="math inline">\(p\)</span>) maps <span class="math inline">\(1\)</span> to <span class="math inline">\(\frac{p+1}{2}\)</span>; this is a very convenient fact for us.</p>
 <center>
-<img src="/images/fhe/table.png" /><br><br>
+<img src="../../../../images/fhe/table.png" /><br><br>
 </center>
 <p><small>The scheme in this section uses both modular division (ie. multiplying by the <a href="https://en.wikipedia.org/wiki/Modular_multiplicative_inverse">modular multiplicative inverse</a>) and regular "rounded down" integer division; make sure you understand how both work and how they are different from each other.</small></p>
 <p>That is, the operation of dividing by 2 (modulo <span class="math inline">\(p\)</span>) converts small even numbers into small numbers, and it converts 1 into <span class="math inline">\(\frac{p}{2}\)</span> (rounded up). So if we look at <span class="math inline">\(\frac{ct}{2}\)</span> (modulo <span class="math inline">\(p\)</span>) instead of <span class="math inline">\(ct\)</span>, decryption involves computing <span class="math inline">\(&lt;\frac{ct}{2}, k&gt;\)</span> and seeing if it's closer to <span class="math inline">\(0\)</span> or <span class="math inline">\(\frac{p}{2}\)</span>. This "perspective" is much more robust to certain kinds of errors, where you know the error is small but can't guarantee that it's a multiple of 2.</p>
@@ -214,11 +232,11 @@
 <p>And so the bit <span class="math inline">\(1\)</span> is preserved through the transformation. The crazy thing about this procedure is: <em>none of it requires knowing <span class="math inline">\(k\)</span></em>. Now, an astute reader might notice: you reduced the <em>absolute</em> size of the error (from 256 to 2), but the <em>relative</em> size of the error remained unchanged, and even slightly increased: <span class="math inline">\(\frac{256}{9999} \approx 2.5\%\)</span> but <span class="math inline">\(\frac{4}{113} \approx 3.5\%\)</span>. Given that it's the relative error that causes ciphertexts to break, what have we gained here?</p>
 <p>The answer comes from what happens to error when you multiply ciphertexts. Suppose that we start with a ciphertext <span class="math inline">\(x\)</span> with error 100, and modulus <span class="math inline">\(p = 10^{16} - 1\)</span>. We want to repeatedly square <span class="math inline">\(x\)</span>, to compute <span class="math inline">\((((x^2)^2)^2)^2 = x^{16}\)</span>. First, the "normal way":</p>
 <center>
-<img src="/images/fhe/table2.png" /><br><br>
+<img src="../../../../images/fhe/table2.png" /><br><br>
 </center>
 <p>The error blows up too quickly for the computation to be possible. Now, let's do a modulus reduction after every multiplication. We assume the modulus reduction is imperfect and increases error by a factor of 10, so a 1000x modulo reduction only reduces error from 10000 to 100 (and not to 10):</p>
 <center>
-<img src="/images/fhe/table3.png" /><br><br>
+<img src="../../../../images/fhe/table3.png" /><br><br>
 </center>
 <p>The key mathematical idea here is that the <em>factor</em> by which error increases in a multiplication depends on the absolute size of the error, and not its relative size, and so if we keep doing modulus reductions to keep the error small, each multiplication only increases the error by a constant factor. And so, with a <span class="math inline">\(d\)</span> bit modulus (and hence <span class="math inline">\(\approx 2^d\)</span> room for "error"), we can do <span class="math inline">\(O(d)\)</span> multiplications! This is enough to bootstrap.</p>
 <h3 id="another-technique-matrices">Another technique: matrices</h3>

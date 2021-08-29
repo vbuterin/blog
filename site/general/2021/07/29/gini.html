@@ -20,36 +20,32 @@
 
 
 
-<link rel="alternate" type="application/rss+xml" href="/feed.xml" title="Against overuse of the Gini coefficient">
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Against overuse of the Gini coefficient">
 
 
 
-<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
-<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
-<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
-<link rel="stylesheet" type="text/css" href="/css/misc.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
 <script type="text/javascript" id="MathJax-script" async
-  src="/scripts/mathjax.js">
+  src="../../../../scripts/tex-svg.js">
 </script>
 
 <style>
-@font-face {
-    font-family: MJXc-TeX-math-Iw;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXZERO;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXTEX;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-
-.math { font-family: MJXc-TeX-math-Iw }
 </style>
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
@@ -63,7 +59,7 @@
 <br>
 <h1 style="margin-bottom:7px"> Against overuse of the Gini coefficient </h1>
 <small style="float:left; color: #888"> 2021 Jul 29 </small>
-<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
 <br> <br> <br>
 <title> Against overuse of the Gini coefficient </title>
 
@@ -75,7 +71,7 @@
 <p>There are two equivalent definitions of the Gini coefficient:</p>
 <p><strong>Area-above-curve definition</strong>: draw the graph of a function, where <span class="math inline">\(f(p)\)</span> equals the share of total income earned by the lowest-earning portion of the population (eg. <span class="math inline">\(f(0.1)\)</span> is the share of total income earned by the lowest-earning 10%). The Gini coefficient is the area between that curve and the <span class="math inline">\(y=x\)</span> line, as a portion of the whole triangle:</p>
 <center>
-<br> <img src="/images/gini/lorenz1.png" />
+<br> <img src="../../../../images/gini/lorenz1.png" />
 </center>
 <p><br></p>
 <p><strong>Average-difference definition</strong>: the Gini coefficient is half the average difference of incomes between each all possible pairs of individuals, divided by the mean income.</p>
@@ -95,13 +91,13 @@
 </ul>
 <p>Here are the Lorenz curves (fancy charts like we saw above) for both dystopias:</p>
 <center>
-<br> <img src="/images/gini/lorenz2.png" />
+<br> <img src="../../../../images/gini/lorenz2.png" />
 </center>
 <p><br></p>
 <p>Clearly, neither of those two dystopias are good places to live. <strong>But they are not-very-nice places to live in very different ways</strong>. Dystopia A gives each resident a coin flip between unthinkably horrific mass starvation if they end up on the left half on the distribution and egalitarian harmony if they end up on the right half. If you're <a href="https://en.wikipedia.org/wiki/Thanos">Thanos</a>, you might actually like it! If you're not, it's worth avoiding with the strongest force. Dystopia B, on the other hand, is Brave New World-like: everyone has decently good lives (at least at the time when that snapshot of everyone's resources is taken), but at the high cost of an extremely undemocratic power structure where you'd better hope you have a good overlord. If you're <a href="https://en.wikipedia.org/wiki/Curtis_Yarvin">Curtis Yarvin</a>, you might actually like it! If you're not, it's very much worth avoiding too.</p>
 <p>These two problems are different enough that they're worth analyzing and measuring separately. And this difference is not just theoretical. Here is a chart showing share of total income earned by the bottom 20% (a decent proxy for avoiding dystopia A) versus share of total income earned by the top 1% (a decent proxy for being near dystopia B):</p>
 <center>
-<p><img src="/images/gini/top1_vs_bottom20.png" /><br> <small><i></p>
+<p><img src="../../../../images/gini/top1_vs_bottom20.png" /><br> <small><i></p>
 Sources: <a href="https://data.worldbank.org/indicator/SI.DST.FRST.20">https://data.worldbank.org/indicator/SI.DST.FRST.20</a> (merging 2015 and 2016 data) and <a href="http://hdr.undp.org/en/indicators/186106">http://hdr.undp.org/en/indicators/186106</a>. </i></small><br>
 </center>
 <p><br></p>
@@ -109,7 +105,7 @@ Sources: <a href="https://data.worldbank.org/indicator/SI.DST.FRST.20">https://d
 <h2 id="why-gini-is-very-problematic-in-non-geographic-communities-eg.-internetcrypto-communities">Why Gini is <em>very</em> problematic in non-geographic communities (eg. internet/crypto communities)</h2>
 <p>Wealth concentration within the blockchain space in particular is an important problem, and it's a problem worth measuring and understanding. It's important for the blockchain space as a whole, as many people (<a href="https://www.banking.senate.gov/hearings/cryptocurrencies-what-are-they-good-for">and US senate hearings</a>) are trying to figure out to what extent crypto is truly anti-elitist and to what extent it's just replacing old elites with new ones. It's also important when comparing different cryptocurrencies with each other.</p>
 <center>
-<p><br> <a href="https://twitter.com/RyanWatkins_/status/1394283802009145348"><img style="width:650px" src="/images/gini/messari_data.png" /></a><br><br> <small><i></p>
+<p><br> <a href="https://twitter.com/RyanWatkins_/status/1394283802009145348"><img style="width:650px" src="../../../../images/gini/messari_data.png" /></a><br><br> <small><i></p>
 Share of coins explicitly allocated to specific insiders in a cryptocurrency's initial supply is one type of inequality. Note that the Ethereum data is slightly wrong: the insider and foundation shares should be 12.3% and 4.2%, not 15% and 5%. </i></small><br>
 </center>
 <p><br></p>
@@ -123,7 +119,7 @@ Share of coins explicitly allocated to specific insiders in a cryptocurrency's i
 </ul>
 <p>And even earlier than that, we had to deal with <a href="https://www.businessinsider.com/bitcoin-inequality-2014-1">this sensationalist article</a> from 2014:</p>
 <center>
-<br> <img src="/images/gini/article2014.png" style="width: 650px" /> <br><br><br>
+<br> <img src="../../../../images/gini/article2014.png" style="width: 650px" /> <br><br><br>
 </center>
 <p>In addition to common plain methodological mistakes (often either mixing up income vs wealth inequality, mixing up users vs accounts, or both) that such analyses make quite frequently, there is a deep and subtle problem with using the Gini coefficient to make these kinds of comparisons. The problem lies in key distinction between typical geographic communities (eg. cities, countries) and typical internet communities (eg. blockchains):</p>
 <p>A typical resident of a geographic community spends most of their time and resources in that community, and so measured inequality in a geographic community reflects inequality in total resources available to people. <strong>But in an internet community, measured inequality can come from two sources: (i) inequality in total resources available to different participants, and (ii) inequality in <em>level of interest</em> in participating in the community.</strong></p>
@@ -137,7 +133,7 @@ Share of coins explicitly allocated to specific insiders in a cryptocurrency's i
 <p><span class="math inline">\(\frac{\sum_{i=1}^n x_i^2}{(\sum_{i=1}^n x_i)^2}\)</span></p>
 <p>Or for you visual learners out there:</p>
 <center>
-<img src="/images/gini/herfindahl.png" /><br><br> <small><i> Herfindahl-Hirschman index: green area divided by total area. </i></small><br><br><br>
+<img src="../../../../images/gini/herfindahl.png" /><br><br> <small><i> Herfindahl-Hirschman index: green area divided by total area. </i></small><br><br><br>
 </center>
 <p>There are other alternatives to this; the <a href="https://en.wikipedia.org/wiki/Theil_index">Theil T index</a> has some similar properties though also some differences. A simpler-and-dumber alternative is the Nakamoto coefficient: the minimum number of participants needed to add up to more than 50% of the total. Note that all three of these concentration indices focus heavily on what happens near the top (and deliberately so): a large number of dabblers with a small quantity of resources contributes little or nothing to the index, while the act of two top participants merging can make a very big change to the index.</p>
 <p>For cryptocurrency communities, where concentration of resources is one of the biggest risks to the system but where someone only having 0.00013 coins is not any kind of evidence that they're actually starving, adopting indices like this is the obvious approach. But even for countries, it's probably worth talking about, and measuring, concentration of power and suffering from lack of resources more separately.</p>

@@ -1,33 +1,51 @@
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
-<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
-<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
-<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
-<link rel="stylesheet" type="text/css" href="/css/misc.css">
 
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="On Collusion">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
 <script type="text/javascript" id="MathJax-script" async
-  src="/scripts/mathjax.js">
+  src="../../../../scripts/tex-svg.js">
 </script>
 
 <style>
-@font-face {
-    font-family: MJXc-TeX-math-Iw;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXZERO;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXTEX;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-
-.math { font-family: MJXc-TeX-math-Iw }
 </style>
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
@@ -41,7 +59,7 @@
 <br>
 <h1 style="margin-bottom:7px"> On Collusion </h1>
 <small style="float:left; color: #888"> 2019 Apr 03 </small>
-<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
 <br> <br> <br>
 <title> On Collusion </title>
 
@@ -50,12 +68,12 @@
 <p>As a recent example of this move from theory toward deployment, Bihu, a Chinese platform that has recently released a coin-based mechanism for encouraging people to write posts. The basic mechanism (see whitepaper in Chinese <a href="https://www.chainwhy.com/whitepaper/keywhitepaper.html">here</a>) is that if a user of the platform holds KEY tokens, they have the ability to stake those KEY tokens on articles; every user can make <span class="math inline">\(k\)</span> "upvotes" per day, and the "weight" of each upvote is proportional to the stake of the user making the upvote. Articles with a greater quantity of stake upvoting them appear more prominently, and the author of an article gets a reward of KEY tokens roughly proportional to the quantity of KEY upvoting that article. This is an oversimplification and the actual mechanism has some nonlinearities baked into it, but they are not essential to the basic functioning of the mechanism. KEY has value because it can be used in various ways inside the platform, but particularly a percentage of all ad revenues get used to buy and burn KEY (yay, big thumbs up to them for doing this and not making yet another <a href="https://vitalik.ca/general/2017/10/17/moe.html">medium of exchange token</a>!).</p>
 <p>This kind of design is far from unique; incentivizing online content creation is something that very many people care about, and there have been many designs of a similar character, as well as some fairly different designs. And in this case this particular platform is already being used significantly:</p>
 <center>
-<img src="/images/collusion-files/screenie.png" />
+<img src="../../../../images/collusion-files/screenie.png" />
 </center>
 <p><br></p>
 <p>A few months ago, the Ethereum trading subreddit <a href="http://reddit.com/r/ethtrader">/r/ethtrader</a> introduced a somewhat similar experimental feature where a token called "donuts" is issued to users that make comments that get upvoted, with a set amount of donuts issued weekly to users in proportion to how many upvotes their comments received. The donuts could be used to buy the right to set the contents of the banner at the top of the subreddit, and could also be used to vote in community polls. However, unlike what happens in the KEY system, here the reward that B receives when A upvotes B is not proportional to A's existing coin supply; instead, each Reddit account has an equal ability to contribute to other Reddit accounts.</p>
 <center>
-<img src="/images/collusion-files/donuts.png" />
+<img src="../../../../images/collusion-files/donuts.png" />
 </center>
 <p><br></p>
 <p>These kinds of experiments, attempting to reward quality content creation in a way that goes beyond the known limitations of donations/microtipping, are very valuable; under-compensation of user-generated internet content is a very significant problem in society in general (see "<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3243656">liberal radicalism</a>" and "<a href="http://radicalmarkets.com/chapters/data-as-labor/">data as labor</a>"), and it's heartening to see crypto communities attempting to use the power of mechanism design to make inroads on solving it. <strong>But unfortunately, these systems are also vulnerable to attack.</strong></p>
@@ -68,7 +86,7 @@
 </ul>
 <p>Bribing attacks may sound farfetched (who here has ever accepted a bribe in real life?), but in a mature ecosystem they are much more realistic than they seem. In most <a href="https://vitalik.ca/general/2017/12/17/voting.html">contexts where bribing has taken place</a> in the blockchain space, the operators use a euphemistic new name to give the concept a friendly face: it's not a bribe, it's a "staking pool" that "shares dividends". Bribes can even be obfuscated: imagine a cryptocurrency exchange that offers zero fees and spends the effort to make an abnormally good user interface, and does not even try to collect a profit; instead, it uses coins that users deposit to participate in various coin voting systems. There will also inevitably be people that see in-group collusion as just plain normal; see a recent <a href="https://twitter.com/MapleLeafCap/status/1044958643731533825">scandal involving EOS DPOS</a> for one example:</p>
 <center>
-<a href="https://twitter.com/MapleLeafCap/status/1044958647535767552"><img src="/images/collusion-files/mapleleaf1.png" style="width:480px" /></a> <a href="https://twitter.com/MapleLeafCap/status/1044958649188327429"><img src="/images/collusion-files/mapleleaf2.png" style="width:480px" /></a>
+<a href="https://twitter.com/MapleLeafCap/status/1044958647535767552"><img src="../../../../images/collusion-files/mapleleaf1.png" style="width:480px" /></a> <a href="https://twitter.com/MapleLeafCap/status/1044958649188327429"><img src="../../../../images/collusion-files/mapleleaf2.png" style="width:480px" /></a>
 </center>
 <p><br></p>
 <p>Finally, there is the possibility of a "negative bribe", ie. blackmail or coercion, threatening participants with harm unless they act inside the mechanism in a certain way.</p>
@@ -76,13 +94,13 @@
 <h3 id="identity">Identity</h3>
 <p>Some systems attempt to mitigate the plutocratic aspects of coin voting by making use of an identity system. In the case of the /r/ethtrader donut system, for example, although <em>governance polls</em> are done via coin vote, the mechanism that determines <em>how many donuts (ie. coins) you get in the first place</em> is based on Reddit accounts: 1 upvote from 1 Reddit account = <span class="math inline">\(N\)</span> donuts earned. The ideal goal of an identity system is to make it relatively easy for individuals to get one identity, but relatively difficult to get many identities. In the /r/ethtrader donut system, that's Reddit accounts, in the Gitcoin CLR matching gadget, it's Github accounts that are used for the same purpose. But identity, at least the way it has been implemented so far, is a fragile thing....</p>
 <center>
-<a href="https://twitter.com/JamieJBartlett/status/1105151495773847552"><img src="/images/collusion-files/clickfarm.png" style="width:400px" /></a>
+<a href="https://twitter.com/JamieJBartlett/status/1105151495773847552"><img src="../../../../images/collusion-files/clickfarm.png" style="width:400px" /></a>
 </center>
 <p><br></p>
 <p>Oh, are you too lazy to make a big rack of phones? Well maybe you're looking <a href="http://buyaccs.com">for this</a>:</p>
 <br>
 <center>
-<a href="http://buyaccs.com"><img src="/images/collusion-files/buyaccs.png" style="width:500px" /></a><br><br> <small><i>Usual warning about how sketchy sites may or may not scam you, do your own research, etc. etc. applies.</i></small>
+<a href="http://buyaccs.com"><img src="../../../../images/collusion-files/buyaccs.png" style="width:500px" /></a><br><br> <small><i>Usual warning about how sketchy sites may or may not scam you, do your own research, etc. etc. applies.</i></small>
 </center>
 <p><br></p>
 <p>Arguably, attacking these mechanisms by simply controlling thousands of fake identities like a puppetmaster is <em>even easier</em> than having to go through the trouble of bribing people. And if you think the response is to just increase security to go up to <em>government-level</em> IDs? Well, if you want to get a few of those you can start exploring <a href="https://thehiddenwiki.com/Main_Page">here</a>, but keep in mind that there are specialized criminal organizations that are well ahead of you, and even if all the underground ones are taken down, hostile governments are definitely going to create fake passports by the millions if we're stupid enough to create systems that make that sort of activity profitable. And this doesn't even begin to mention attacks in the opposite direction, identity-issuing institutions attempting to disempower marginalized communities by <em>denying</em> them identity documents...</p>
@@ -182,13 +200,13 @@ C
 <p>A similar challenge arises when the goal is not funding, but rather determining what content should be most visible. What content do you think would get more dollar value supporting it: a legitimately high quality blog article benefiting thousands of people but benefiting each individual person relatively slightly, or this?</p>
 <br>
 <center>
-<img src="/images/collusion-files/cocacola.jpg" style="width:550px"/>
+<img src="../../../../images/collusion-files/cocacola.jpg" style="width:550px"/>
 </center>
 <p><br></p>
 <p>Or perhaps this?</p>
 <br>
 <center>
-<img src="/images/collusion-files/bitconnect.png" style="width:550px"/>
+<img src="../../../../images/collusion-files/bitconnect.png" style="width:550px"/>
 </center>
 <p><br></p>
 <p>Those who have been following recent politics "in the real world" might also point out a different kind of content that benefits highly centralized actors: social media manipulation by hostile governments. Ultimately, both centralized systems and decentralized systems are facing the same fundamental problem, which is that <strong>the "marketplace of ideas" (and of public goods more generally) is very far from an "efficient market" in the sense that economists normally use the term</strong>, and this leads to both underproduction of public goods even in "peacetime" but also vulnerability to active attacks. It's just a hard problem.</p>
@@ -197,7 +215,7 @@ C
 <h3 id="collusion-resistance-and-identity">Collusion resistance and identity</h3>
 <p>The other alternative is attacking the identity problem head-on. As mentioned above, simply going up to higher-security centralized identity systems, like passports and other government IDs, will not work at scale; in a sufficiently incentivized context, they are very insecure and vulnerable to the issuing governments themselves! Rather, the kind of "identity" we are talking about here is some kind of robust multifactorial set of claims that an actor identified by some set of messages actually is a unique individual. A very early proto-model of this kind of networked identity is arguably social recovery in HTC's blockchain phone:</p>
 <center>
-<img src="/images/collusion-files/htcphone.jpg" style="width:300px"/>
+<img src="../../../../images/collusion-files/htcphone.jpg" style="width:300px"/>
 </center>
 <p><br></p>
 <p>The basic idea is that your private key is secret-shared between up to five trusted contacts, in such a way that mathematically ensures that three of them can recover the original key, but two or fewer can't. This qualifies as an "identity system" - it's your five friends determining whether or not someone trying to recover your account actually is you. However, it's a special-purpose identity system trying to solve a problem - personal account security - that is different from (and easier than!) the problem of attempting to identify unique humans. That said, the general model of individuals making claims about each other can quite possibly be bootstrapped into some kind of more robust identity model. These systems could be augmented if desired using the "futarchy" mechanic described above: if someone makes a claim that someone is a unique human, and someone else disagrees, and both sides are willing to put down a bond to litigate the issue, the system can call together a judgement panel to determine who is right.</p>

@@ -8,16 +8,16 @@ Le septième tour des subventions Gitcoin s'est terminé avec succès! Ce tour a
 La structure des catégories a été une fois de plus modifiée; cette fois-ci, divisée entre "tech DApp", "infrastructure" et "communauté". Voici les résultats :
 
 <center>
-<img src="/images/round_7_files/results1.png" style="width: 360px" />
-<img src="/images/round_7_files/results2.png" style="width: 360px" />
-<img src="/images/round_7_files/results3.png" style="width: 360px" />
+<img src="../../../../images/round_7_files/results1.png" style="width: 360px" />
+<img src="../../../../images/round_7_files/results2.png" style="width: 360px" />
+<img src="../../../../images/round_7_files/results3.png" style="width: 360px" />
 </center>
 
 ## Defi s'associe au mouvement !
 
 Lors de ce tour, le nombre de projets associés s'est avéré plus élevé qu'auparavant. En plus des projets habituels par la Fondation Ethereum ainsi que par quelques autres acteurs, se sont ajoutés pour la première fois différents projets defi :
 
- ![](/images/round_7_files/matching.png)
+ ![](../../../../images/round_7_files/matching.png)
 
 Les participants étaient :
 * [Chainlink](https://chain.link/), un projet Oracle smart contract
@@ -71,7 +71,7 @@ Le concept de catégories tel qu'il est actuellement mis en œuvre dans les Subv
 
 Mais le paradoxe commence ici. Au cours du septième tour, une fonction ["collections"](https://gitcoin.co/grants/collections) a été introduite à mi-chemin :
 
- ![](/images/round_7_files/categories.png)
+ ![](../../../../images/round_7_files/categories.png)
 
 Si vous cliquez sur « Ajouter au panier » sur une collection, vous ajoutez immédiatement tout ce qui se trouve dans la collection à votre panier. C'est étrange parce que ce mécanisme semble envoyer exactement le message contraire: les utilisateurs qui ne comprennent pas bien la nuance peuvent choisir d'allouer des fonds à des catégories entières, mais (à moins qu'ils ne modifient manuellement les montants) ils ne devraient pas prendre de décisions spécifiques à chaque catégorie.
 
@@ -83,7 +83,7 @@ Une option serait d'avoir une cagnotte globale avec toutes les catégories et un
 
 Comme la collusion, les faux comptes et d'autres attaques sur les subventions Gitcoin ont récemment augmenté, le 7ème tour a ajouté une option de vérification supplémentaire basée sur le graph-social décentralisé de [BrightID](https://www.brightid.org/), qui à lui seul a amélioré la base utilisateurs du projet par un facteur de dix :
 
- ![](/images/round_7_files/brightid.jpg)
+ ![](../../../../images/round_7_files/brightid.jpg)
  
 C'est une bonne nouvelle car en plus d'aider la croissance de BrightID, il soumet également le projet à l'épreuve du Feu: il y a maintenant un intérêt à essayer de créer un grand nombre de faux comptes dessus! BrightID va faire face à un défi difficile, celui de permettre aux utilisateurs réguliers de se joindre de façon raisonnablement facile tout en résistant aux attaques de faux comptes et doublons. J'ai hâte de les voir essayer de relever le défi!
 
@@ -92,7 +92,7 @@ C'est une bonne nouvelle car en plus d'aider la croissance de BrightID, il soume
 Enfin, le 7ème tour a vu pour la première fois les Subventions Gitcoin expérimenter l'utilisation du [ZKSync](https://wallet.zksync.io/) ZK rollup pour réduire les frais de paiement:
 
 <center>
-<img src="/images/round_7_files/zkrollups.png" style="width:450px" />
+<img src="../../../../images/round_7_files/zkrollups.png" style="width:450px" />
 </center><br>
 
 Ce qui faut retenir ici est simplement que le rollup ZK a en effet réussi à réduire les frais! L'expérience utilisateur a bien fonctionné. De nombreux projets utilisants des rollups optimistes et ZK cherchent maintenant à [collaborer avec des portefeuilles](https://www.theblockcrypto.com/linked/80744/coinbase-wallet-optimisms-layer-2-rollup) sur des intégrations directes, ce qui devrait rendre cette technique plus facile à utiliser et ce de façon plus sécurisée.

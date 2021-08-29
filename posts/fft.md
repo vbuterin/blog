@@ -15,10 +15,10 @@
 <p>The original <a href="https://en.wikipedia.org/wiki/Fourier_transform">Fourier transform</a> is a mathematical operation that is often described as converting data between the "frequency domain" and the "time domain". What this means more precisely is that if you have a piece of data, then running the algorithm would come up with a collection of sine waves with different frequencies and amplitudes that, if you added them together, would approximate the original data. Fourier transforms can be used for such wonderful things as <a href="https://twitter.com/johncarlosbaez/status/1094671748501405696">expressing square orbits through epicycles</a> and <a href="https://en.wikipedia.org/wiki/Fourier_transform">deriving a set of equations that can draw an elephant</a>:</p>
 
 <p><center><table><tr><td>
-<img src="/images/fft-files/elephant1.png" /><br>
-<img src="/images/fft-files/elephant3.png" />
+<img src="../../../../images/fft-files/elephant1.png" /><br>
+<img src="../../../../images/fft-files/elephant3.png" />
 </td><td>
-<img src="/images/fft-files/elephant2.png" width="400px"/>
+<img src="../../../../images/fft-files/elephant2.png" width="400px"/>
 </td></tr></table><br>
 <small><i>Ok fine, Fourier transforms also have really important applications in signal processing, quantum mechanics, and other areas, and help make significant parts of the global economy happen. But come on, elephants are cooler.</i></small>
 </center><br></p>
@@ -67,7 +67,7 @@ $$
 <p>Note that the "glue" in the second procedure has runtime $O(N)$: if each of the two sub-lists has $N$ elements, then you need to run through every item in each list once, so it's $O(N)$ computation total. So the algorithm as a whole works by taking a problem of size $N$, and breaking it up into two problems of size $\frac{N}{2}$, plus $O(N)$ of "glue" execution. There is a theorem called the <a href="https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms%29">Master Theorem</a> that lets us compute the total runtime of algorithms like this. It has many sub-cases, but in the case where you break up an execution of size $N$ into $k$ sub-cases of size $\frac{N}{k}$ with $O(N)$ glue (as is the case here), the result is that the execution takes time $O(N \cdot log(N))$.</p>
 
 <p><center>
-<img src="/images/fft-files/sorting.png" /><br>
+<img src="../../../../images/fft-files/sorting.png" /><br>
 </center><br></p>
 
 <p>An FFT works in the same way. We take a problem of size $N$, break it up into two problems of size $\frac{N}{2}$, and do $O(N)$ glue work to combine the smaller solutions into a bigger solution, so we get $O(N \cdot log(N))$ runtime total - <em>much faster</em> than $O(N^2)$. Here is how we do it. I'll describe first how to use an FFT for multi-point evaluation (ie. for some domain $D$ and polynomial $P$, calculate $P(x)$ for every $x$ in $D$), and it turns out that you can use the same algorithm for interpolation with a minor tweak.</p>
@@ -205,7 +205,7 @@ def inverse_fft(vals, modulus, domain):
 <p>And we get the result, $[1, 1, 0, 1]$ (or $x^3 + x + 1$).</p>
 
 <p><center>
-<img src="/images/fft-files/addmult.png" style="width:600px"/><br><br>
+<img src="../../../../images/fft-files/addmult.png" style="width:600px"/><br><br>
 <small><i>Addition and multiplication tables for the binary field mod $x^4 + x + 1$. Field elements are expressed as integers converted from binary (eg. $x^3 + x^2 \rightarrow 1100 \rightarrow 12$)</i></small>
 </center><br></p>
 

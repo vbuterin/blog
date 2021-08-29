@@ -6,7 +6,7 @@
 
 
 
-Here is [a file](/images/gas-analysis-files/gas_analysis.json) that contains data, extracted from geth, about transaction fees in every block between 4710000 and 4730000. For each block, it contains an object of the form:
+Here is [a file](../../../../images/gas-analysis-files/gas_analysis.json) that contains data, extracted from geth, about transaction fees in every block between 4710000 and 4730000. For each block, it contains an object of the form:
 
 ```
 {
@@ -23,7 +23,7 @@ The "deciles" variable contains 11 values, where the lowest is the lowest gaspri
 First, a chart of the deciles, taking 50-block moving averages to smooth it out:
 
 <center>
-<img src="/images/gas-analysis-files/gas_anal1.png" style="width:350px"/>
+<img src="../../../../images/gas-analysis-files/gas_anal1.png" style="width:350px"/>
 </center><br>
 
 What we see is a gasprice market that seems to actually stay reasonably stable over the course of more than three days. There are a few occasional spikes, most notably the one around block 4720000, but otherwise the deciles all stay within the same band all the way through. The only exception is the highest gasprice transaction (that red squiggle at the top left), which fluctuates wildly because it can be pushed upward by a single very-high-gasprice transaction.
@@ -31,7 +31,7 @@ What we see is a gasprice market that seems to actually stay reasonably stable o
 We can try to interpret the data in another way: by calculating, for each gasprice level, the average number of blocks that you need to wait until you see a block where the lowest gasprice included is lower than that gasprice. Assuming that miners are rational and all have the same view (implying that if the lowest gasprice in a block is X, then that means there are no more transactions with gasprices above X waiting to be included), this might be a good proxy for the average amount of time that a transaction sender needs to wait to get included if they use that gasprice. The stats are:
 
 <center>
-<img src="/images/gas-analysis-files/gas_anal2.png" style="width:350px"/>
+<img src="../../../../images/gas-analysis-files/gas_anal2.png" style="width:350px"/>
 </center><br>
 
 There is clear clustering going on at the 4, 10 and 20 levels; it seems to be an underexploited strategy to send transactions with fees slightly above these levels, getting in before the crowd of transactions right at the level but only paying a little more.
@@ -53,7 +53,7 @@ The first miner is consistently higher than the others; the last is also higher 
 Another thing we can look at is timestamp differences - the difference between a block's timestamp and its parent. There is a clear correlation between timestamp difference and lowest gasprice:
 
 <center>
-<img src="/images/gas-analysis-files/gas_anal3.png" style="width:350px"/>
+<img src="../../../../images/gas-analysis-files/gas_anal3.png" style="width:350px"/>
 </center><br>
 
 This makes a lot of sense, as a block that comes right after another block should be cleaning up only the transactions that are too low in gasprice for the parent block to have included, and a block that comes a long time after its predecessor would have many more not-yet-included transactions to choose from. The differences are large, suggesting that a single block is enough to bite off a very substantial chunk of the unconfirmed transaction pool, adding to the evidence that most transactions are included quite quickly.

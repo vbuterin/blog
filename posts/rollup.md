@@ -49,14 +49,14 @@ There is a smart contract on-chain which maintains a **state root**: the Merkle 
 
 <br>
 <center>
-<img src="/images/rollup-files/diag1.png" />
+<img src="../../../../images/rollup-files/diag1.png" />
 </center><br>
 
 Anyone can publish a **batch**, a collection of transactions in a highly compressed form together with the previous state root and the new state root (the Merkle root _after_ processing the transactions). The contract checks that the previous state root in the batch matches its current state root; if it does, it switches the state root to the new state root.
 
 <br>
 <center>
-<img src="/images/rollup-files/diag2.png" />
+<img src="../../../../images/rollup-files/diag2.png" />
 </center><br>
 
 To support depositing and withdrawing, we add the ability to have transactions whose input or output is "outside" the rollup state. If a batch has inputs from the outside, the transaction submitting the batch needs to also transfer these assets to the rollup contract. If a batch has outputs to the outside, then upon processing the batch the smart contract initiates those withdrawals.
@@ -89,7 +89,7 @@ The security of an optimistic rollup depends on the idea that if someone publish
 
 <br>
 <center>
-<img src="/images/rollup-files/tree.png" />
+<img src="../../../../images/rollup-files/tree.png" />
 </center><br>
 
 A fraud proof claiming that a batch was invalid would contain the data in green: the batch itself (which could be checked against a hash stored on chain) and the parts of the Merkle tree needed to prove just the specific accounts that were read and/or modified by the batch. The nodes in the tree in yellow can be reconstructed from the nodes in green and so do not need to be provided. This data is sufficient to execute the batch and compute the post-state root (note that this is exactly the same as how [stateless clients](https://ethresear.ch/t/the-stateless-client-concept/172) verify individual blocks). If the computed post-state root and the provided post-state root in the batch are not the same, then the batch is fraudulent.

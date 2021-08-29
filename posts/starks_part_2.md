@@ -10,18 +10,18 @@ In the last part of this series, we talked about how you can make some pretty in
 We'll start off by once again re-stating the problem. Suppose that you have a set of points, and you claim that they are all on the same polynomial, with degree less than $D$ (ie. $deg < 2$ means they're on the same line, $deg < 3$ means they're on the same line or parabola, etc). You want to create a succinct probabilistic proof that this is actually true.
 
 <center>
-<img src="/images/starks-part-2-files/fri1.png" style="width:500px" /><br><br>
+<img src="../../../../images/starks-part-2-files/fri1.png" style="width:500px" /><br><br>
 <small>Left: points all on the same $deg < 3$ polynomial. Right: points not on the same $deg < 3$ polynomial</small>
 </center>
 <br>
 If you want to verify that the points are _all_ on the same degree $< D$ polynomial, you would have to actually check every point, as if you fail to check even one point there is always some chance that that point will not be on the polynomial even if all the others are. But what you _can_ do is _probabilistically check_ that at least _some fraction_ (eg. 90%) of all the points are on the same polynomial.
 
 <center>
-<img src="/images/starks-part-2-files/proximity1.png" style="width:220px" />
-<img src="/images/starks-part-2-files/proximity2.png" style="width:220px" />
+<img src="../../../../images/starks-part-2-files/proximity1.png" style="width:220px" />
+<img src="../../../../images/starks-part-2-files/proximity2.png" style="width:220px" />
 <br>
-<img src="/images/starks-part-2-files/proximity4.png" style="width:220px" />
-<img src="/images/starks-part-2-files/proximity3.png" style="width:220px" />
+<img src="../../../../images/starks-part-2-files/proximity4.png" style="width:220px" />
+<img src="../../../../images/starks-part-2-files/proximity3.png" style="width:220px" />
 <br><br>
 <small>Top left: possibly close enough to a polynomial. Top right: not close enough to a polynomial. Bottom left: somewhat close to two polynomials, but not close enough to either one. Bottom right: definitely not close enough to a polynomial.</small>
 </center>
@@ -34,7 +34,7 @@ Clearly, $D$ points is **not** enough. $D$ points are exactly what you need to u
 The algorithm to check if a given set of values is on the same degree $< D$ polynomial with $D+1$ queries is not too complex. First, select a random subset of $D$ points, and use something like Lagrange interpolation (search for "Lagrange interpolation" [here](https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649) for a more detailed description) to recover the unique degree $< D$ polynomial that passes through all of them. Then, randomly sample one more point, and check that it is on the same polynomial.
 
 <center>
-<img src="/images/starks-part-2-files/fri2.png" style="width:420px" /><br>
+<img src="../../../../images/starks-part-2-files/fri2.png" style="width:420px" /><br>
 </center><br>
 
 Note that this is only a proximity test, because there's always the possibility that most points are on the same low-degree polynomial, but a few are not, and the $D+1$ sample missed those points entirely. However, we can derive the result that if less than 90% of the points are on the same degree $< D$ polynomial, then the test will fail with high probability. Specifically, if you make $D+k$ queries, and if at least some portion $p$ of the points are not on the same polynomial as the rest of the points, then the test will only pass with probability $(1 - p)^k$.
@@ -52,7 +52,7 @@ In the first stage of the proof, the prover commits to (ie. makes a Merkle tree 
 The verifier then randomly picks perhaps a few dozen rows and columns (possibly using [the Merkle root of the square as a source of pseudorandomness](https://en.wikipedia.org/wiki/Fiat%E2%80%93Shamir_heuristic) if we want a non-interactive proof), and for each row or column that it picks the verifier asks for a sample of, say, 1010 points on the row and column, making sure in each case that one of the points demanded is on the diagonal. The prover must reply back with those points, along with Merkle branches proving that they are part of the original data committed to by the prover. The verifier checks that the Merkle branches match up, and that the points that the prover provides actually do correspond to a degree-1000 polynomial.
 
 <center>
-<img src="/images/starks-part-2-files/fri3.png" style="width:450px" />
+<img src="../../../../images/starks-part-2-files/fri3.png" style="width:450px" />
 </center>
 <br>
 
@@ -96,7 +96,7 @@ With modular math we've created an entirely new system of arithmetic, and becaus
 Fermat's little theorem also has another interesting consequence. If $p-1$ is a multiple of some number $k$, then the function $x \rightarrow x^k$ has a small "image" - that is, the function can only give $\frac{p-1}{k} + 1$ possible results. For example, $x \rightarrow x^2$ with $p=17$ has only 9 possible results.
 
 <center>
-<img src="/images/starks-part-2-files/fri4.png" style="width:350px" /><br>
+<img src="../../../../images/starks-part-2-files/fri4.png" style="width:350px" /><br>
 </center><br>
 
 With higher exponents the results are more striking: for example, $x \rightarrow x^8$ with $p=17$ has only 3 possible results. And of course, $x \rightarrow x^{16}$ with $p=17$ has only 2 possible results: for $0$ it returns $0$, and for everything else it returns $1$.
@@ -110,13 +110,13 @@ Specifically, we will work with $p =$ 1,000,005,001. We pick this modulus becaus
 This means that the "diagonal" ($x$, $x^{1000}$) now becomes a diagonal with a wraparound; as $x^{1000}$ can only take on 1,000,006 possible values, we only need 1,000,006 rows. And so, the full evaluation of $g(x,  x^{1000})$ now has only ~$10^{15}$ elements.
 
 <center>
-<img src="/images/starks-part-2-files/fri5.png" style="width:500px" />
+<img src="../../../../images/starks-part-2-files/fri5.png" style="width:500px" />
 </center><br>
 
 As it turns out, we can go further: we can have the prover only commit to the evaluation of $g$ on a single column. The key trick is that the original data itself already contains 1000 points that are on any given row, so we can simply sample those, derive the degree $< 1000$ polynomial that they are on, and then check that the corresponding point on the column is on the same polynomial. We then check that the column itself is $a < 1000$ polynomial.
 
 <center>
-<img src="/images/starks-part-2-files/fri6.png" style="width:550px" />
+<img src="../../../../images/starks-part-2-files/fri6.png" style="width:550px" />
 </center>
 <br>
 
@@ -130,7 +130,7 @@ If the original polynomial has degree $< n$, then the rows have degree $< 2$ (ie
 
 <br>
 <center>
-<img src="/images/starks-part-2-files/fri7.png" style="width:500px" />
+<img src="../../../../images/starks-part-2-files/fri7.png" style="width:500px" />
 </center>
 <br>
 

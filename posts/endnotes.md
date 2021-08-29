@@ -9,8 +9,8 @@ I'm writing this sitting in Singapore, the city in which I've now spent nearly h
 
 <table cellspacing="0" cellpadding="0" style="border:none">
 <tr style="border:none">
-<td style="border:none"><img src="/images/endnotes-files/monkey1.png" style="width:400px" /></td>
-<td style="border:none"><img src="/images/endnotes-files/rocket.png" style="width:400px"/></td>
+<td style="border:none"><img src="../../../../images/endnotes-files/monkey1.png" style="width:400px" /></td>
+<td style="border:none"><img src="../../../../images/endnotes-files/rocket.png" style="width:400px"/></td>
 </tr>
 <tr style="border:none; background-color: transparent">
 <td style="border:none"><i><center>Where we started</center></i></td>
@@ -30,7 +30,7 @@ This is not merely of interest to "pure" online services. Though goods in the ph
 
 <br>
 <center>
-<img src="/images/round_7_files/results2.png" style="width:50%" /><img src="/images/round_7_files/results3.png" style="width:50%" />
+<img src="../../../../images/round_7_files/results2.png" style="width:50%" /><img src="../../../../images/round_7_files/results3.png" style="width:50%" />
 <br><br>
 <i><small>Examples of important public goods in the Ethereum ecosystem that were funded by the <a href="https://vitalik.ca/general/2020/10/18/round7.html">recent Gitcoin quadratic funding round</a>. Open source software ecosystems, including blockchains, are hugely dependent on public goods.</small></i><br><br>
 </center>
@@ -52,7 +52,7 @@ The disagreements within Bitcoin would soon turn into an all-out civil war. They
 The community split was chaotic, and one can see this in how the channels of communication were split up in the divorce: [/r/bitcoin](http://reddit.com/r/bitcoin) stayed under the control of supporters of Bitcoin (BTC). [/r/btc](http://reddit.com/r/btc) was controlled by supporters of Bitcoin Cash (BCH). [Bitcoin.org](https://bitcoin.org) was controlled by supporters of Bitcoin (BTC). [Bitcoin.com](https://bitcoin.com) on the other hand was controlled by supporters of Bitcoin Cash (BCH). Each side claimed themselves to be the true Bitcoin. The result looked remarkably similar to one of those civil wars that happens from time to time that results in a country splitting in half, the two halves calling themselves almost identical names that differ only in which subset of the words "democratic", "people's" and "republic" appears on each side. Neither side had the ability to destroy the other, and of course there was no higher authority to adjudicate the dispute.
 
 <br><center>
-<img src="/images/endnotes-files/forks.png" />
+<img src="../../../../images/endnotes-files/forks.png" />
 <br><br>
 <small><i>Major Bitcoin forks, as of 2020. Does not include Bitcoin Diamond, Bitcoin Rhodium, Bitcoin Private, or any of the other long list of Bitcoin forks that I would highly recommend you just ignore completely, except to sell (and perhaps you should sell some of the forks listed above too, eg. <a href="https://github.com/vbuterin/cult-of-craig">BSV is definitely a scam!</a>)</i></small>
 </center><br>
@@ -69,7 +69,7 @@ One of the key intellectual undercurrents of the 2000s era was the recognition o
 
 These differences are very meaningful and measurable. For one example, see [this Swiss study](https://www.econ.uzh.ch/static/wp/econwp353.pdf) on compensating differentials for immoral work - how much extra do employers have to pay to convince someone to do a job if that job is considered morally unsavory?
 
-![](/images/endnotes-files/swisspaper.png)
+![](../../../../images/endnotes-files/swisspaper.png)
 
 As we can see, the effects are massive: if a job is widely considered immoral, you need to pay employees almost twice as much for them to be willing to do it. From personal experience, I would even argue that this understates the case: in many cases, top-quality workers would not be willing to work for a company that they think is bad for the world at almost any price. "Work" that is difficult to formalize (eg. word-of-mouth marketing) functions similarly: if people think a project is good, they will do it for free, if they do not, they will not do it at all. This is also likely why blockchain projects that raise a lot of money but are unscrupulous, or even just corporate-controlled profit-oriented "VC chains", tend to fail: even a billion dollars of capital cannot compete with a project _having a soul_.
 
@@ -94,7 +94,7 @@ How have these predictions fared? The answer is interesting: I would say that th
 What we see in 2020 is this: Big Government is as powerful as ever, but Big Business is _also_ as powerful as ever. "[Big Protest Mob](https://www.amazon.sg/Revolt-Public-Crisis-Authority-Millennium/dp/1732265143)" is as powerful as ever too, as is Big Tech, and soon enough perhaps Big Cryptography. It's a densely populated jungle, with an uneasy peace between many complicated actors. If you define success as the total absence of a category of powerful actor or even a category of activity that you dislike, then you will probably leave the 21st century disappointed. But if you define success more through what happens than through what doesn't happen, and you are okay with imperfect outcomes, there is enough space to make everyone happy.
 
 <center>
-<img src="/images/endnotes-files/monkey2.jpg" style="width:500px"/>
+<img src="../../../../images/endnotes-files/monkey2.jpg" style="width:500px"/>
 <br><br>
 <small><i>Often, the boundary between multiple intersecting worlds is the most interesting place to be. The monkeys get it.</i></small>
 </center><br>

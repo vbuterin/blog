@@ -1,33 +1,51 @@
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
-<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
-<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
-<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
-<link rel="stylesheet" type="text/css" href="/css/misc.css">
 
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Review of Gitcoin Quadratic Funding Round 3">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
 <script type="text/javascript" id="MathJax-script" async
-  src="/scripts/mathjax.js">
+  src="../../../../scripts/tex-svg.js">
 </script>
 
 <style>
-@font-face {
-    font-family: MJXc-TeX-math-Iw;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXZERO;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXTEX;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-
-.math { font-family: MJXc-TeX-math-Iw }
 </style>
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
@@ -41,14 +59,14 @@
 <br>
 <h1 style="margin-bottom:7px"> Review of Gitcoin Quadratic Funding Round 3 </h1>
 <small style="float:left; color: #888"> 2019 Oct 24 </small>
-<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
 <br> <br> <br>
 <title> Review of Gitcoin Quadratic Funding Round 3 </title>
 
 <p><em>Special thanks to the Gitcoin team and especially Frank Chen for working with me through these numbers</em></p>
 <p>The next round of Gitcoin Grants quadratic funding has just finished, and we the numbers for how much each project has received <a href="https://gitcoin.co/blog/gitcoins-q3-match/">were just released</a>. Here are the top ten:</p>
 <center>
-<img src="/images/gitcoin-files/round3.png" style="width:750px" />
+<img src="../../../../images/gitcoin-files/round3.png" style="width:750px" />
 </center>
 <p><br><br></p>
 <p>Altogether, $163,279 was donated to 80 projects by 477 contributors, augmented by a matching pool of $100,000. Nearly half came from four contributions above $10,000: $37,500 to Lighthouse, and $12,500 each to Gas Station Network, Black Girls Code and Public Health Incentives Layer. Out of the remainder, about half came from contributions between $1,000 and $10,000, and the rest came from smaller donations of various sizes. But what matters more here are not the raw donations, but rather the subsidies that the <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3243656">quadratic funding</a> mechanism applied. Gitcoin Grants is there to support valuable public goods in the Ethereum ecosystem, but also serve as a testbed for this new quadratic donation matching mechanism, and see how well it lives up to its promise of creating a democratic, market-based and efficient way of funding public goods. This time around, a modified formula based on <a href="https://ethresear.ch/t/pairwise-coordination-subsidies-a-new-quadratic-funding-design/5553">pairwise-bounded coordination subsidies</a> was used, which has the goal of minimizing distortion from large contributions from coordinated actors. And now we get to see how the experiment went.</p>
@@ -63,21 +81,21 @@
 <h3 id="pairwise-bounded-quadratic-funding-vs-traditional-quadratic-funding">Pairwise-bounded quadratic funding vs traditional quadratic funding</h3>
 <p>Round 3 differs from previous rounds in that it uses a new <a href="https://ethresear.ch/t/pairwise-coordination-subsidies-a-new-quadratic-funding-design/5553">flavor of quadratic funding</a>, which limits the subsidy per pair of participants. For example, in traditional QF, if two people each donate $10, the subsidy would be $10, and if two people each donate $10,000, the subsidy would be $10,000. This property of traditional QF makes it highly vulnerable to collusion: two key employees of a project (or even two fake accounts owned by the same person) could each donate as much money as they have, and get back a very large subsidy. Pairwise-bounded QF computes the total subsidy to a project by looking through all pairs of contributors, and imposes a maximum bound on the total subsidy that any given pair of participants can trigger (combined across all projects). Pairwise-bounded QF also has the property that it generally penalizes projects that are dominated by large contributors:</p>
 <center>
-<img src="/images/gitcoin-files/chart2.png" />
+<img src="../../../../images/gitcoin-files/chart2.png" />
 </center>
 <p><br><br></p>
 <p>The projects that lost the most relative to traditional QF seem to be projects that have a single large contribution (or sometimes two). For example, "fuzz geth and Parity for EVM consensus bugs" got a $415 match compared to the $2000 he would have gotten in traditional QF; the decrease is explained by the fact that the contributions are dominated by two large $4500 contributions. On the other hand, <a href="http://cryptoeconomics.study">cryptoeconomics.study</a> got $1274, <em>up</em> nearly double from the $750 it would have gotten in traditional QF; this is explained by the large diversity of contributions that the project received and particularly the lack of large sponsors: the largest contribution to cryptoeconomics.study was $100.</p>
 <p>Another desirable property of pairwise-bounded QF is that it privileges <em>cross-tribal</em> projects. That is, if there are projects that group A typically supports, and projects that group B typically supports, then projects that manage to get support from both groups get a more favorable subsidy (because the pairs that go between groups are not as saturated). Has this incentive for building bridges appeared in these results?</p>
 <p>Unfortunately, my code of honor as a social scientist obliges me to report the negative result: the Ethereum community just does not yet have enough internal tribal structure for effects like this to materialize, and even when there are differences in correlations they don't seem strongly connected to higher subsidies due to pairwise-bounding. Here are the cross-correlations between who contributed to different projects:</p>
 <center>
-<img src="/images/gitcoin-files/correlations.png" />
+<img src="../../../../images/gitcoin-files/correlations.png" />
 </center>
 <p><br><br></p>
 <p>Generally, all projects are slightly positively correlated with each other, with a few exceptions with greater correlation and one exception with broad roughly zero correlation: <a href="https://gitcoin.co/grants/120/nori">Nori</a> (120 in this chart). However, Nori did not do well in pairwise-bounded QF, because over 94% of its donations came from a single $5000 donation.</p>
 <h3 id="dominance-of-large-projects">Dominance of large projects</h3>
 <p>One other pattern that we saw in this round is that popular projects got disproportionately large grants:</p>
 <center>
-<img src="/images/gitcoin-files/ratios.jpeg" />
+<img src="../../../../images/gitcoin-files/ratios.jpeg" />
 </center>
 <p><br><br></p>
 <p>To be clear, this is not just saying "more contributions, more match", it's saying "more contributions, <em>more match per dollar contributed</em>". Arguably, this is an intended feature of the mechanism. Projects that can get more people to donate to them represent public goods that serve a larger public, and so tragedy of the commons problems are more severe and hence contributions to them should be multiplied more to compensate. However, looking at the list, it's hard to argue that, say, Prysm ($3,848 contributed, $8,566 matched) is a more public good than Nimbus ($1,129 contributed, $496 matched; for the unaware, Prysm and Nimbus are both eth2 clients). The failure does not look too severe; on average, projects near the top do seem to serve a larger public and projects near the bottom do seem niche, but it seems clear that at least part of the disparity is not genuine publicness of the good, but rather inequality of attention. N units of marketing effort can attract attention of N people, and theoretically get N^2 resources.</p>
@@ -85,7 +103,7 @@
 <h3 id="individual-leverage-curves">Individual leverage curves</h3>
 <p>One key question is, if you donate $1, or $5, or $100, how big an impact can you have on the amount of money that a project gets? Fortunately, we can use the data to calculate these deltas!</p>
 <center>
-<img src="/images/gitcoin-files/deltas.png" />
+<img src="../../../../images/gitcoin-files/deltas.png" />
 </center>
 <p><br><br></p>
 <p>The different lines are for different projects; supporting projects with higher existing support will lead to you getting a bigger multiplier. In all cases, the first dollar is very valuable, with a matching ratio in some cases over 100:1. But the second dollar is much less valuable, and matching ratios quickly taper off; even for the largest projects increasing one's donation from $32 to $64 will only get a 1:1 match, and anything above $100 becomes almost a straight donation with nearly no matching. However, given that it's likely possible to get legitimate-looking Github accounts on the grey market for around those costs, having a cap of a few hundred dollars on the amount of matched funds that any particular account can direct seems like a very reasonable mitigation, despite its costs in limiting the bulk of the matching effect to small-sized donations.</p>

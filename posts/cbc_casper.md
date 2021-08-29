@@ -13,7 +13,7 @@ CBC Casper is designed to be fundamentally very versatile and abstract, and come
 But for simplicity, we will first focus our attention on one concrete case: a simple chain-based structure. We will suppose that there is a fixed validator set consisting of $N$ validators (a fancy word for "staking nodes"; we also assume that each node is staking the same amount of coins, cases where this is not true can be simulated by assigning some nodes multiple validator IDs), time is broken up into ten-second slots, and validator $k$ can create a block in slot $k$, $N + k$, $2N + k$, etc. Each block points to one specific parent block. Clearly, if we wanted to make something maximally simple, we could just take this structure, impose a longest chain rule on top of it, and call it a day.
 
 <center>
-<img src="/images/cbc-casper-files/Chain3.png" /><br><br>
+<img src="../../../../images/cbc-casper-files/Chain3.png" /><br><br>
 <small><i>The green chain is the longest chain (length 6) so it is considered to be the "canonical chain".</i></small>
 </center>
 
@@ -26,7 +26,7 @@ However, what we care about here is adding some notion of "finality" - the idea 
 We will take this one step at a time. First, we replace the fork choice rule (the rule that chooses which chain among many possible choices is "the canonical chain", ie. the chain that users should care about), moving away from the simple longest-chain-rule and instead using "latest message driven GHOST". To show how LMD GHOST works, we will modify the above example. To make it more concrete, suppose the validator set has size 5, which we label $A$, $B$, $C$, $D$, $E$, so validator $A$ makes the blocks at slots 0 and 5, validator $B$ at slots 1 and 6, etc. A client evaluating the LMD GHOST fork choice rule cares only about the most recent (ie. highest-slot) message (ie. block) signed by each validator:
 
 <center>
-<img src="/images/cbc-casper-files/Chain4.png" /><br><br>
+<img src="../../../../images/cbc-casper-files/Chain4.png" /><br><br>
 <small><i>Latest messages in blue, slots from left to right (eg. $A$'s block on the left is at slot 0, etc.)</i></small>
 </center>
 <br>
@@ -34,18 +34,18 @@ We will take this one step at a time. First, we replace the fork choice rule (th
 Now, we will use only these messages as source data for the "greedy heaviest observed subtree" (GHOST) fork choice rule: start at the genesis block, then each time there is a fork choose the side where more of the latest messages support that block's subtree (ie. more of the latest messages support either that block or one of its descendants), and keep doing this until you reach a block with no children. We can compute for each block the subset of latest messages that support either the block or one of its descendants:
 
 <center>
-<img src="/images/cbc-casper-files/Chain5.png" /><br>
+<img src="../../../../images/cbc-casper-files/Chain5.png" /><br>
 </center><br>
 
 Now, to compute the head, we start at the beginning, and then at each fork pick the higher number: first, pick the bottom chain as it has 4 latest messages supporting it versus 1 for the single-block top chain, then at the next fork support the middle chain. The result is the same longest chain as before. Indeed, in a well-running network (ie. the orphan rate is low), almost all of the time LMD GHOST and the longest chain rule _will_ give the exact same answer. But in more extreme circumstances, this is not always true. For example, consider the following chain, with a more substantial three-block fork:
 
 <center>
-<img src="/images/cbc-casper-files/Chain6.png" /><br><br>
+<img src="../../../../images/cbc-casper-files/Chain6.png" /><br><br>
 <small><i>Scoring blocks by chain length. If we follow the longest chain rule, the top chain is longer, so the top chain wins.</i></small><br>
 </center>
 <br>
 <center>
-<img src="/images/cbc-casper-files/Chain7.png" /><br><br>
+<img src="../../../../images/cbc-casper-files/Chain7.png" /><br><br>
 <small><i>Scoring blocks by number of supporting latest messages and using the GHOST rule (latest message from each validator shown in blue). The bottom chain has more recent support, so if we follow the LMD GHOST rule the bottom chain wins, though it's not yet clear which of the three blocks takes precedence.</i></small>
 </center>
 <br>
@@ -57,7 +57,7 @@ The LMD GHOST approach is advantageous in part because it is better at extractin
 But the LMD GHOST approach has another nice property: it's _sticky_. For example, suppose that for two rounds, $\frac{4}{5}$ of validators voted for the same chain (we'll assume that the one of the five validators that did not, $B$, is attacking):
 
 <center>
-<img src="/images/cbc-casper-files/Chain8.png" /><br>
+<img src="../../../../images/cbc-casper-files/Chain8.png" /><br>
 </center>
 <br>
 
@@ -65,11 +65,11 @@ What would need to actually happen for the chain on top to become the canonical 
 
 <center>
 <table style="text-align:center" cellpadding="20px"><tr>
-<td><img src="/images/cbc-casper-files/Chain9.png" width="320px" /><br><br><i>A's view</i></td>
-<td><img src="/images/cbc-casper-files/Chain10.png" width="320px" /><br><br><i>C's view</i></td>
+<td><img src="../../../../images/cbc-casper-files/Chain9.png" width="320px" /><br><br><i>A's view</i></td>
+<td><img src="../../../../images/cbc-casper-files/Chain10.png" width="320px" /><br><br><i>C's view</i></td>
 </tr><tr>
-<td><img src="/images/cbc-casper-files/Chain11.png" width="320px" /><br><br><i>D's view</i></td>
-<td><img src="/images/cbc-casper-files/Chain11point5.png" width="320px" /><br><br><i>E's view</i></td>
+<td><img src="../../../../images/cbc-casper-files/Chain11.png" width="320px" /><br><br><i>D's view</i></td>
+<td><img src="../../../../images/cbc-casper-files/Chain11point5.png" width="320px" /><br><br><i>E's view</i></td>
 </tr></table>
 <small><i>Blocks produced by each validator in green, the latest messages we know that they saw from each of the other validators in blue.</i></small>
 </center>
@@ -82,7 +82,7 @@ $A$'s view contains four latest-messages supporting the bottom chain, and none s
 Note that our simulation of the validators' views is "out of date" in that, for example, it does not capture that $D$ and $E$ could have seen the more recent block by $C$. However, this does not alter the calculation for the top vs bottom chain, because we can very generally say that any validator's new message will have the same opinion as their previous messages, unless two other validators have already switched sides first.
 
 <center>
-<img src="/images/cbc-casper-files/Chain12.png" width="700px" /><br><br>
+<img src="../../../../images/cbc-casper-files/Chain12.png" width="700px" /><br><br>
 <small>
 
 _A minimal viable attack. $A$ and $C$ illegally switch over to support $B$'s block (and can get penalized for this), giving it a 3-2 advantage, and at this point it becomes legal for $D$ and $E$ to also switch over._
@@ -108,7 +108,7 @@ This approach to consensus has many nice benefits. First of all, the short-term 
 CBC can be extended further in many ways. First, one can come up with other safety oracles; higher-round clique oracles can reach $\frac{1}{3}$ fault tolerance. Second, we can add validator rotation mechanisms. The simplest is to allow the validator set to change by a small percentage every time the $q=\frac{3}{4}$ clique oracle is satisfied, but there are other things that we can do as well. Third, we can go beyond chain-like structures, and instead look at structures that increase the density of messages per unit time, like the Serenity beacon chain's attestation structure:
 
 <center>
-<img src="/images/cbc-casper-files/Chain13.png" /><br>
+<img src="../../../../images/cbc-casper-files/Chain13.png" /><br>
 </center>
 <br>
 
@@ -117,7 +117,7 @@ In this case, it becomes worthwhile to separate _attestations_ from _blocks_; a 
 To make CBC Casper's safety "cryptoeconomically enforceable", we need to add validity and slashing conditions. First, we'll start with the validity rule. A block contains both a parent block and a set of attestations that it knows about that are not yet part of the chain (similar to "uncles" in the current Ethereum PoW chain). For the block to be valid, the block's parent must be the result of executing the LMD GHOST fork choice rule given the information included in the chain including in the block itself.
 
 <center>
-<img src="/images/cbc-casper-files/Chain14.png" /><br><br>
+<img src="../../../../images/cbc-casper-files/Chain14.png" /><br><br>
 <small><i>Dotted lines are uncle links, eg. when E creates a block, E notices that C is not yet part of the chain, and so includes a reference to C.</i></small>
 </center>
 
@@ -127,8 +127,8 @@ We now can make CBC Casper safe with only one slashing condition: you cannot mak
 
 <center>
 <table style="text-align:center" cellpadding="20px"><tr>
-<td><img src="/images/cbc-casper-files/Chain15.png" width="300px" /><br>OK</td>
-<td><img src="/images/cbc-casper-files/Chain16.png" width="300px" /><br>Not OK</td>
+<td><img src="../../../../images/cbc-casper-files/Chain15.png" width="300px" /><br>OK</td>
+<td><img src="../../../../images/cbc-casper-files/Chain16.png" width="300px" /><br>Not OK</td>
 </tr></table>
 </center>
 
@@ -139,17 +139,17 @@ Liveness in CBC Casper piggybacks off of the liveness of whatever the underlying
 Suppose that at some time $T$, the network "calms down" and synchrony assumptions are once again satisfied. Then, everyone will converge on the same view of the chain, with the same head $H$. From there, validators will begin to sign messages supporting $H$ or descendants of $H$. From there, the chain can proceed smoothly, and will eventually satisfy a clique oracle, at which point $H$ becomes finalized.
 
 <center>
-<img src="/images/cbc-casper-files/Chain17.png" height="100px" /><br><br>
+<img src="../../../../images/cbc-casper-files/Chain17.png" height="100px" /><br><br>
 <small><i>Chaotic network due to high latency.</i></small><br>
 </center>
 <br>
 <center>
-<img src="/images/cbc-casper-files/Chain18.png" height="100px" /><br><br>
+<img src="../../../../images/cbc-casper-files/Chain18.png" height="100px" /><br><br>
 <small><i>Network latency subsides, a majority of validators see all of the same blocks or at least enough of them to get to the same head when executing the fork choice, and start building on the head, further reinforcing its advantage in the fork choice rule.</i></small><br>
 </center>
 <br>
 <center>
-<img src="/images/cbc-casper-files/Chain19.png" height="100px" /><br><br>
+<img src="../../../../images/cbc-casper-files/Chain19.png" height="100px" /><br><br>
 <small><i>Chain proceeds "peacefully" at low latency. Soon, a clique oracle will be satisfied.</i></small>
 </center>
 <br>

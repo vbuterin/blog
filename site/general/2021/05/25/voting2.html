@@ -1,39 +1,51 @@
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
 
 
-<link rel="alternate" type="application/rss+xml" href="/feed.xml" title="Blockchain voting is overrated among uninformed people but underrated among informed people">
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Blockchain voting is overrated among uninformed people but underrated among informed people">
 
 
 
-<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
-<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
-<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
-<link rel="stylesheet" type="text/css" href="/css/misc.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
 <script type="text/javascript" id="MathJax-script" async
-  src="/scripts/mathjax.js">
+  src="../../../../scripts/tex-svg.js">
 </script>
 
 <style>
-@font-face {
-    font-family: MJXc-TeX-math-Iw;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXZERO;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXTEX;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-
-.math { font-family: MJXc-TeX-math-Iw }
 </style>
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
@@ -47,7 +59,7 @@
 <br>
 <h1 style="margin-bottom:7px"> Blockchain voting is overrated among uninformed people but underrated among informed people </h1>
 <small style="float:left; color: #888"> 2021 May 25 </small>
-<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
 <br> <br> <br>
 <title> Blockchain voting is overrated among uninformed people but underrated among informed people </title>
 
@@ -56,7 +68,7 @@
 <p>Blockchains are a technology which is all about providing guarantees about process integrity. If a process is run on a blockchain, the process is guaranteed to run according to some pre-agreed code and provide the correct output. No one can prevent the execution, no one can tamper with the execution, and no one can censor and block any users' inputs from being processed.</p>
 <p>So at first glance, it seems that blockchains provide exactly what voting needs. And I'm far from the only person to have had that thought; <a href="https://www.alaskapublic.org/2021/04/15/alaska-would-be-first-state-to-use-blockchain-based-voting-system-under-proposed-bill/">plenty</a> of major <a href="https://inc42.com/buzz/india-explores-blockchain-based-e-voting-by-2024-general-elections/">prospective</a> users <a href="https://fortune.com/2018/07/03/blockchain-voting-trial-zug/">are interested</a>. But as it turns out, some people have a very different opinion....</p>
 <center>
-<br> <a href="https://www.computerworld.com/article/3430697/why-blockchain-could-be-a-threat-to-democracy.html"><img src="/images/voting2-files/votingthreat.png" style="width:550px" /></a>
+<br> <a href="https://www.computerworld.com/article/3430697/why-blockchain-could-be-a-threat-to-democracy.html"><img src="../../../../images/voting2-files/votingthreat.png" style="width:550px" /></a>
 </center>
 <p><br><br></p>
 <p>Despite the seeming perfect match between the needs of voting and the technological benefits that blockchains provide, we regularly see scary articles <a href="https://www.computerworld.com/article/3430697/why-blockchain-could-be-a-threat-to-democracy.html">arguing against the combination</a> of the two. And it's not just a single article: <a href="https://www.scientificamerican.com/article/are-blockchains-the-answer-for-secure-elections-probably-not/">here's an anti-blockchain-voting piece from Scientific American</a>, here's <a href="https://www.cnet.com/news/blockchain-isnt-answer-to-voting-system-woes/">another from CNet</a>, and here's <a href="https://arstechnica.com/tech-policy/2018/11/blockchain-based-elections-would-be-a-disaster-for-democracy/">another from ArsTechnica</a>. And it's not just random tech journalists: <a href="https://www.schneier.com/blog/archives/2020/11/on-blockchain-voting.html">Bruce Schneier</a> is against blockchain voting, and researchers at MIT <a href="https://people.csail.mit.edu/rivest/pubs/PSNR20.pdf">wrote a whole paper</a> arguing that it's a bad idea. So what's going on?</p>
@@ -73,7 +85,7 @@
 <p>Blockchain voting protocols get hacked all the time. Two years ago, a blockchain voting tech company called Voatz was all the rage, and many people were very excited about it. But last year, some MIT researchers discovered a <a href="https://internetpolicy.mit.edu/wp-content/uploads/2020/02/SecurityAnalysisOfVoatz_Public.pdf">string of critical security vulnerabilities</a> in their platform. Meanwhile, in Moscow, a blockchain voting system that was going to be used for an upcoming election <a href="https://medium.com/swlh/why-was-moscows-blockchain-voting-system-cracked-a-month-before-an-election-6da5e6d9abbb">was hacked</a>, fortunately a month before the election took place.</p>
 <p>The hacks were pretty serious. Here is a table of the attack capabilities that <a href="https://internetpolicy.mit.edu/wp-content/uploads/2020/02/SecurityAnalysisOfVoatz_Public.pdf">researchers analyzing Voatz</a> managed to uncover:</p>
 <center>
-<br> <img src="/images/voting2-files/voatzpaper.png" style="width:650px" />
+<br> <img src="../../../../images/voting2-files/voatzpaper.png" style="width:650px" />
 </center>
 <p><br><br></p>
 <p>This by itself is not an argument against <em>ever</em> using blockchain voting. But it is an argument that blockchain voting software should be designed more carefully, and scaled up slowly and incrementally over time.</p>
@@ -89,13 +101,13 @@
 <h2 id="secure-electronic-voting-without-blockchains">Secure electronic voting without blockchains</h2>
 <p>The concept of cryptographically secured execution of social mechanisms was not invented by blockchain geeks, and indeed existed far before us. Outside the blockchain space, there is a 20-year-old tradition of cryptographers working on the secure electronic voting problem, and the good news is that there <em>have</em> been solutions. An important paper that is cited by much of the literature of the last two decades is Juels, Catalano and Jakobsson's 2002 paper titled "<a href="https://eprint.iacr.org/2002/165.pdf">Coercion-Resistant Electronic Elections</a>":</p>
 <center>
-<br> <img src="/images/voting2-files/elections.png" style="width:650px" /> <br><br><br>
+<br> <img src="../../../../images/voting2-files/elections.png" style="width:650px" /> <br><br><br>
 </center>
 <p>Since then, there have been many iterations on the concept; <a href="https://orbilu.uni.lu/bitstream/10993/29212/1/Civitas-VFinal.pdf">Civitas</a> is one prominent example, though there are <a href="https://www.usenix.org/system/files/conference/jets15/jets_0302-achenbach.pdf">also</a> <a href="https://www.researchgate.net/publication/221947496_Coercion-Resistant_Cryptographic_Voting_Implementing_Free_and_Secret_Electronic_Elections">many</a> <a href="https://link.springer.com/chapter/10.1007/978-3-642-32747-6_5">others</a>. These protocols all use a similar set of core techniques. There is an agreed-upon set of "talliers" and there is a trust assumption that the majority of the talliers is honest. The talliers each have "shares" of a private key secret-shared among themselves, and the corresponding public key is published. Voters publish votes encrypted to the talliers' public key, and talliers use a <a href="https://www.cs.virginia.edu/~evans/pragmaticmpc/pragmaticmpc.pdf">secure multi-party computation (MPC) protocol</a> to decrypt and verify the votes and compute the tally. The tallying computation is done "inside the MPC": the talliers never learn their private key, and they compute the final result without learning anything about any individual vote beyond what can be learned from looking at the final result itself.</p>
 <p>Encrypting votes provides privacy, and some additional infrastructure such as <a href="https://en.wikipedia.org/wiki/Mix_network">mix-nets</a> is added on top to make the privacy stronger. To provide coercion resistance, one of two techniques is used. One option is that during the registration phase (the phase in which the talliers learn each registered voter's public key), the voter generates or receives a secret key. The corresponding public key is secret shared among the talliers, and the talliers' MPC only counts a vote if it is signed with the secret key. A voter has no way to prove to a third party what their secret key is, so if they are bribed or coerced they can simply show and cast a vote signed with the wrong secret key. Alternatively, a voter could have the ability to send a message to <em>change</em> their secret key. A voter has no way of proving to a third party that they did <em>not</em> send such a message, leading to the same result.</p>
 <p>The second option is a technique where voters can make multiple votes where the second overrides the first. If a voter is bribed or coerced, they can make a vote for the briber/coercer's preferred candidate, but later send another vote to override the first.</p>
 <center>
-<br> <img src="/images/voting2-files/tallyingscheme.png" style="width:650px" /> <br><br> <small><i>Giving voters the ability to make a later vote that can override an earlier vote is the key coercion-resistance mechanism of <a href="https://www.usenix.org/system/files/conference/jets15/jets_0302-achenbach.pdf">this protocol from 2015.</a></i></small><br><br>
+<br> <img src="../../../../images/voting2-files/tallyingscheme.png" style="width:650px" /> <br><br> <small><i>Giving voters the ability to make a later vote that can override an earlier vote is the key coercion-resistance mechanism of <a href="https://www.usenix.org/system/files/conference/jets15/jets_0302-achenbach.pdf">this protocol from 2015.</a></i></small><br><br>
 </center>
 <p>Now, we get to a key important nuance in all of these protocols. They all rely on an outside primitive to complete their security guarantees: the <strong>bulletin board</strong> (this is the "BB" in the figure above). The bulletin board is a place where any voter can send a message, with a guarantee that (i) anyone can read the bulletin board, and (ii) anyone can send a message to the bulletin board that gets accepted. Most of the coercion-resistant voting papers that you can find will casually reference the existence of a bulletin board (<a href="https://www.usenix.org/system/files/conference/jets15/jets_0302-achenbach.pdf">eg.</a> "as is common for electronic voting schemes, we assume a publicly accessible append-only bulletin board"), but far fewer papers talk about how this bulletin board can actually be <em>implemented</em>. And here, you can hopefully see where I am going with this: <strong>the most secure way to implement a bulletin board <em>is</em> to just use an existing blockchain!</strong></p>
 <h2 id="secure-electronic-voting-with-blockchains">Secure electronic voting with blockchains</h2>
@@ -107,7 +119,7 @@
 <p>The Ethereum ecosystem is currently experimenting with a <a href="https://github.com/appliedZKP/maci">system called MACI</a> that combines together a blockchain, ZK-SNARKs and a single central actor that guarantees coercion resistance (but has no power to compromise any properties other than coercion resistance). MACI is not very technically difficult. Users participate by signing a message with their private key, encrypting the signed message to a public key published by a central server, and publishing the encrypted signed message to the blockchain. The server downloads the messages from the blockchain, decrypts them, processes them, and outputs the result along with a ZK-SNARK to ensure that they did the computation correctly.</p>
 <br>
 <center>
-<img src="https://vitalik.ca/images/round9/maci2.png" style="width:500px"/>
+<img src="https://vitalik.ca../../../../images/round9/maci2.png" style="width:500px"/>
 </center>
 <p><br><br></p>
 <p>Users cannot prove how they participated, because they have the ability to send a "key change" message to trick anyone trying to audit them: they can first send a key change message to change their key from A to B, and then send a "fake message" signed with A. The server would reject the message, but no one else would have any way of knowing that the key change message had ever been sent. There is a trust requirement on the server, though only for privacy and coercion resistance; the server cannot publish an incorrect result either by computing incorrectly or by censoring messages. In the long term, multi-party computation can be used to decentralize the server somewhat, strengthening the privacy and coercion resistance guarantees.</p>
@@ -125,7 +137,7 @@
 <p>The <a href="https://people.csail.mit.edu/rivest/pubs/PSNR20.pdf">recent MIT paper</a> criticizing blockchain voting includes this helpful table, depicting <em>any</em> form of paperless voting as being fundamentally too difficult to secure:</p>
 <br>
 <center>
-<img src="/images/voting2-files/fourcategories.png" style="width:650px"/>
+<img src="../../../../images/voting2-files/fourcategories.png" style="width:650px"/>
 </center>
 <p><br><br></p>
 <p>The key property that the authors focus on is <strong>software-independence</strong>, which they define as "the property that an undetected change or error in a system's software cannot cause an undetectable change in the election outcome". Basically, a bug in the code should not be able to accidentally make Prezzy McPresidentface the new president of the country (or, more realistically, a deliberately inserted bug should not be able to increase some candidate's share from 42% to 52%).</p>
@@ -153,7 +165,7 @@
 <p>These improvements in security technology point to a future where consumer hardware might be more trusted in the future than it is today. Investments made in this area in the last few years are likely to keep paying off over the next decade, and we could expect further significant improvements. But what are the benefits of making voting electronic (blockchain based or otherwise) that justify exploring this whole space?</p>
 <p><strong>My answer is simple: voting would become much more efficient, allowing us to do it much more often</strong>. Currently, formal democratic input into organizations (governmental <em>or</em> corporate) tends to be limited to a single vote once every 1-6 years. This effectively means that each voter is only putting less than one bit of input into the system each year. Perhaps in large part as a result of this, decentralized decision-making in our society is heavily bifurcated into two extremes: pure democracy and pure markets. Democracy is either very inefficient (corporate and government votes) or very insecure (social media likes/retweets). Markets are far more technologically efficient and are much more secure than social media, but their fundamental economic logic makes them a poor fit for many kinds of decision problems, particularly having to do with public goods.</p>
 <center>
-<br> <img src="/images/voting2-files/triangle.png" /><br><br> <i><small>Yes, I know it's yet another triangle, and I really really apologize for having to use it. But please bear with me just this once.... (ok fine, I'm sure I'll make even more triangles in the future; just suck it up and deal with it)</small></i>
+<br> <img src="../../../../images/voting2-files/triangle.png" /><br><br> <i><small>Yes, I know it's yet another triangle, and I really really apologize for having to use it. But please bear with me just this once.... (ok fine, I'm sure I'll make even more triangles in the future; just suck it up and deal with it)</small></i>
 </center>
 <p><br><br></p>
 <p>There is a lot that we could do if we could build more systems that are somewhere in between democracy and markets, benefiting from the egalitarianism of the former, the technical efficiency of the latter and economic properties all along the spectrum in between the two extremes. <a href="https://vitalik.ca/general/2019/12/07/quadratic.html">Quadratic funding</a> is an excellent example of this. Liquid democracy is another excellent example. Even if we don't introduce fancy new delegation mechanisms or quadratic math, there's a lot that we could do by doing voting <em>much more</em> and at smaller scales more adapted to the information available to each individual voter. But the challenge with all of these ideas is that in order to have a scheme that durably maintains <em>any</em> level of democraticness at all, you need some form of sybil resistance and vote-buying mitigation: exactly the problems that these fancy ZK-SNARK + MPC + blockchain voting schemes are trying to solve.</p>

@@ -12,7 +12,7 @@ The first improvement is that while PLONK still requires a trusted setup procedu
 The second improvement is that the "fancy cryptography" it relies on is one single standardized component, called a "polynomial commitment". PLONK uses "Kate commitments", based on a trusted setup and elliptic curve pairings, but you can instead swap it out with other schemes, such as [FRI](https://vitalik.ca/general/2017/11/22/starks_part_2.html) (which would [turn PLONK into a kind of STARK](https://eprint.iacr.org/2019/1020)) or DARK (based on hidden-order groups). This means the scheme is theoretically compatible with any (achievable) tradeoff between proof size and security assumptions.
 
 <center>
-<img src="/images/plonk-files/Tradeoffs.png" />
+<img src="../../../../images/plonk-files/Tradeoffs.png" />
 </center><br>
 
 What this means is that use cases that require different tradeoffs between proof size and security assumptions (or developers that have different ideological positions about this question) can still share the bulk of the same tooling for "arithmetization" - the process for converting a program into a set of polynomial equations that the polynpomial commitments are then used to check. If this kind of scheme becomes widely adopted, we can thus expect rapid progress in improving shared arithmetization techniques.
@@ -24,13 +24,13 @@ Let us start with an explanation of how PLONK works, in a somewhat abstracted fo
 Here is an example of the problem of finding $x$ such that $P(x) = x^3 + x + 5 = 35$ (hint: <span title="Though other solutions also exist over fields where -31 has a square root; since SNARKs are done over prime fields this is something to watch out for!">$x = 3$</span>):
 
 <center>
-<img src="/images/plonk-files/Circuit.png" />
+<img src="../../../../images/plonk-files/Circuit.png" />
 </center><br>
 
 We can label the gates and wires as follows:
 
 <center>
-<img src="/images/plonk-files/Circuit2.png" />
+<img src="../../../../images/plonk-files/Circuit2.png" />
 </center><br>
 
 On the gates and wires, we have two types of constraints: **gate constraints** (equations between wires attached to the same gate, eg. $a_1 \cdot b_1 = c_1$) and **copy constraints** (claims about equality of different wires anywhere in the circuit, eg. $a_0 = a_1 = b_1 = b_2 = a_3$ or $c_0 = a_1$). We will need to create a structured system of equations, which will ultimately reduce to a very small number of polynomial equations, to represent both.
@@ -72,7 +72,7 @@ $$
 But we can also view polynomials in "evaluation form". For example, we can think of the above as being "the" degree $< 4$ polynomial with evaluations $(-2, 1, 0, 1)$ at the coordinates $(0, 1, 2, 3)$ respectively.
 
 <center>
-<img src="/images/plonk-files/polynomial_graph.png" />
+<img src="../../../../images/plonk-files/polynomial_graph.png" />
 </center><br>
 
 Now here's the next step. Systems of many equations of the same form can be re-interpreted as a single equation over polynomials. For example, suppose that we have the system:
@@ -106,7 +106,7 @@ Our strategy will be to design a "coordinate pair accumulator", a polynomial $p(
 For example, letting $v_1 = 3$ and $v_2 = 2$, we get:
 
 <center>
-<img src="/images/plonk-files/polynomial_graph3.png" style="width:440px"/><br>
+<img src="../../../../images/plonk-files/polynomial_graph3.png" style="width:440px"/><br>
 
 <table style="padding-right:136px; border-collapse: collapse;" align="center">
 <tr> <td style="border: 1px solid black"align="right" width="136px"> X(x) </td> <td style="border: 1px solid black" align="center" width="84px">0</td> <td style="border: 1px solid black" align="center" width="84px">1</td> <td style="border: 1px solid black" align="center" width="84px">2</td> <td style="border: 1px solid black" align="center" width="84px">3</td> <td style="border: 1px solid black" align="center" width="84px">4</td> </tr>

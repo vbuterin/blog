@@ -9,7 +9,7 @@ Suppose that someone walks up to you and starts exclaiming to you that he thinks
 Something like this:
 
 <center>
-<img src="/images/marketmakers-files/indep_diag1.png" style="width:450px"></img>
+<img src="../../../../images/marketmakers-files/indep_diag1.png" style="width:450px"></img>
 </center><br>
 
 Now, if you know anything about Newtonian dynamics, chances are you'll immediately recognize that this scheme is total bollocks. But how do you know? You could make an appeal to symmetry, saying "look, for every slice of the orbital path where you say gravity gives you high acceleration, there's a corresponding slice of the orbital path where gravity gives you just as high deceleration, so I don't see where the net gains are coming from". But then, suppose the man presses you. "Ah," he says, "but in that slice where there is high acceleration your initial velocity is low, and so you spend a lot of time inside of it, whereas in the corresponding slice, your incoming velocity is high, and so you have less time to decelerate". How do you really, conclusively, prove him wrong?
@@ -17,7 +17,7 @@ Now, if you know anything about Newtonian dynamics, chances are you'll immediate
 One approach is to dig deeply into the math, calculate the integrals, and show that the supposed net gains are in fact exactly equal to zero. But there is also a simple approach: recognize that **energy is path-independent**. That is, when the spaceship moves from point $A$ to point $B$, where point $B$ is closer to the earth, its kinetic energy certainly goes up because its speed increases. But because total energy (kinetic plus potential) [is conserved](https://en.wikipedia.org/wiki/Conservation_of_energy), and potential energy is only dependent on the spaceship's _position_, and not how it got there, we know that regardless of what path from point $A$ to point $B$ the spaceship takes, once it gets to point $B$ _the total change in kinetic energy will be exactly the same_.
 
 <center>
-<img src="/images/marketmakers-files/indep_diag2.png" style="width:350px"></img><br><br>
+<img src="../../../../images/marketmakers-files/indep_diag2.png" style="width:350px"></img><br><br>
 <small>Different paths, same change in energy </small>
 </center>
 <br>
@@ -69,7 +69,7 @@ What this means is that a "reserve bleeding" attack on a market maker that prese
 Now, this does not mean that market makers cannot lose money, compared to other holding strategies. If, when you start off, 1 MKR = 5 ETH, and then the MKR price moves, and we compare the performance of holding 5 MKR and 12.5 ETH in the market maker versus the performance of just holding the assets, the result looks like this:
 
 <center>
-<img src="/images/marketmakers-files/marketmaker.png" style="width:550px"></img>
+<img src="../../../../images/marketmakers-files/marketmaker.png" style="width:550px"></img>
 </center>
 
 Holding a balanced portfolio always wins, except in the case where prices stay exactly the same, in which case the returns of the market maker and the balanced portfolio are equal. Hence, the purpose of a market maker of this type is to subsidize guaranteed liquidity as a public good for users, serving as trader of last resort, and not to earn revenue. However, we certainly can modify the market maker to earn revenue, and quite simply: we have it charge a spread. That is, the market maker might charge $1.005\cdot p$ for buys and offer only $0.995\cdot p$ for sells. Now, being the beneficiary of a market maker becomes a bet: if, in the long run, prices tend to move in one direction, then the market maker loses, at least relative to what they could have gained if they had a balanced portfolio. If, on the other hand, prices tend to bounce around wildly but ultimately come back to the same point, then the market maker can earn a nice profit. This sacrifices the "path independence" property, but in such a way that any deviations from path independence are always in the market maker's favor.
@@ -83,7 +83,7 @@ $tokenA\_balance(p) = \sqrt{k\cdot p}$
 $tokenB\_balance(p) = \sqrt{k/p}$ 
 
 <center>
-<img src="/images/marketmakers-files/indep_diag3.png" style="width:350px"></img><br>
+<img src="../../../../images/marketmakers-files/indep_diag3.png" style="width:350px"></img><br>
 </center>
 <br>
 Where $p$ is the price of $tokenB$ denominated in $tokenA$. In general, you can make a path-independent market maker by defining any (monotonic) relation between $tokenA\_balance$ and $tokenB\_balance$ and calculating its derivative at any point to give the price. 

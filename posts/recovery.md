@@ -70,7 +70,7 @@ What we need is a wallet design which satisfies three key criteria:
 The best-in-class technology for solving these problems [back in 2013](https://bitcoinmagazine.com/articles/multisig-revolution-incomplete-1406578252) was multisig. You could have a wallet that has three keys, where any two of them are needed to send a transaction.
 
 <center>
-<img src="https://vitalik.ca/images/social-recovery-files/diag1.png" style="padding:15px"/>
+<img src="https://vitalik.ca../../../../images/social-recovery-files/diag1.png" style="padding:15px"/>
 </center><br>
 
 This technology was originally developed within the Bitcoin ecosystem, but excellent multisig wallets (eg. see [Gnosis Safe](https://gnosis-safe.io/)) now exist for Ethereum too. Multisig wallets have been highly successful within organizations: the Ethereum Foundation uses a 4-of-7 multisig wallet to store [its funds](https://etherscan.io/address/0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae), as do many other orgs in the Ethereum ecosystem.
@@ -89,7 +89,7 @@ This gets us to my preferred method for securing a wallet: social recovery. A so
 The signing key has the ability to add or remove guardians, though only after a delay (often 1-3 days).
 
 <center>
-<img src="https://vitalik.ca/images/social-recovery-files/diag2.png" style="padding:15px"/>
+<img src="https://vitalik.ca../../../../images/social-recovery-files/diag2.png" style="padding:15px"/>
 </center><br>
 
 Under all normal circumstances, the user can simply use their social recovery wallet like a regular wallet, signing messages with their signing key so that each transaction signed can fly off with a single confirmation click much like it would in a "traditional" wallet like Metamask.
@@ -127,15 +127,15 @@ We can extend social recovery to deal with such issues by adding a [vault](https
 Currently, the two major wallets that have implemented social recovery are the [Argent wallet](https://www.argent.xyz/) and the [Loopring wallet](https://loopring.io/):
 
 <center>
-<img src="https://vitalik.ca/images/social-recovery-files/loopring.png" style="width:35%; padding-right: 10%" />
-<img src="https://vitalik.ca/images/social-recovery-files/argent.png" style="width:34.6%" />
+<img src="https://vitalik.ca../../../../images/social-recovery-files/loopring.png" style="width:35%; padding-right: 10%" />
+<img src="https://vitalik.ca../../../../images/social-recovery-files/argent.png" style="width:34.6%" />
 </center>
 <br>
 
 The Argent wallet is the first major, and still the most popular, "smart contract wallet" currently in use, and social recovery is one of its main selling points. The Argent wallet includes an interface by which guardians can be added and removed:
 
 <center>
-<img src="https://vitalik.ca/images/social-recovery-files/argentrecovery.png" style="width:34.6%" />
+<img src="https://vitalik.ca../../../../images/social-recovery-files/argentrecovery.png" style="width:34.6%" />
 </center>
 <br>
 

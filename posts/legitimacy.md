@@ -8,7 +8,7 @@ _Special thanks to Karl Floersch, Aya Miyaguchi and Mr Silly for ideas, feedback
 The Bitcoin and Ethereum blockchain ecosystems both spend far more on network security - the goal of proof of work mining - than they do on everything else combined. The Bitcoin blockchain has paid an average of about _$38 million per day_ in block rewards to miners since the start of the year, plus [about $5m/day in transaction fees](https://ycharts.com/indicators/bitcoin_total_transaction_fees_per_day). The Ethereum blockchain comes in second, at $19.5m/day in block rewards plus [$18m/day in tx fees](https://etherscan.io/chart/transactionfee). Meanwhile, the Ethereum Foundation's annual budget, paying for research, protocol development, grants and all sorts of other expenses, is a mere $30 million _per year_. Non-EF-sourced funding exists too, but it is at most only a few times larger. Bitcoin ecosystem expenditures on R&D are likely even lower. Bitcoin ecosystem R&D is largely funded by companies (with $250m total raised so far [according to this page](https://www.crunchbase.com/hub/bitcoin-companies-seed-funding)), and [this report](https://blog.bitmex.com/who-funds-bitcoin-development/) suggests about 57 employees; assuming fairly high salaries and many paid developers not being counted, that works out to about $20m per year. 
 
 <center>
-<img src="/images/legitimacy-files/chart.png" /><br><br>
+<img src="../../../../images/legitimacy-files/chart.png" /><br><br>
 </center>
 
 Clearly, this expenditure pattern _is a massive misallocation of resources_. The last 20% of network hashpower provides _vastly_ less value to the ecosystem than those same resources would if they had gone into research and core protocol development. So why not just.... cut the PoW budget by 20% and redirect the funds to those other things instead?
@@ -22,7 +22,7 @@ The powerful social force that is creating this effect is worth understanding. A
 To better understand the force that we are getting at, another important example is the epic saga of Steem and [Hive](https://hive.io/). In early 2020, [Justin Sun](https://www.theverge.com/21459906/bittorrent-tron-acquisition-justin-sun-us-china) bought [Steem-the-company](https://www.coindesk.com/justin-sun-bought-steemit-steem-moved-to-limit-his-power), which is not the same thing as Steem-the-blockchain but did hold about 20% of the STEEM token supply. The community, naturally, did not trust Justin Sun. So they made an on-chain vote to formalize what they considered to be a longstanding "gentleman's agreement" that Steem-the-company's coins were held in trust for the common good of Steem-the-blockchain and should not be used to vote. With the help of coins held by exchanges, Justin Sun made a counterattack, and won control of enough delegates to unilaterally control the chain. The community saw no further in-protocol options. So instead they made a fork of Steem-the-blockchain, called Hive, and copied over all of the STEEM token balances - except those, including Justin Sun's, which participated in the attack.
 
 <center>
-<br><img src="/images/legitimacy-files/hive.png" style="width:500px" />
+<br><img src="../../../../images/legitimacy-files/hive.png" style="width:500px" />
 <br><br>
 <i><small>And they got plenty of applications on board. If they had not managed this, far more users would have either stayed on Steem or moved to some different project entirely.</small></i>
 <br><br><br>
@@ -43,7 +43,7 @@ _See also: my earlier [post on blockchain governance](/general/2017/12/17/voting
 To understand the workings of legitimacy, we need to dig down into some game theory. There are many situations in life that demand **coordinated behavior**: if you act in a certain way alone, you are likely to get nowhere (or worse), but if everyone acts together a desired result can be achieved.
 
 <center><br>
-<img src="/images/voting-files/coordinationgame.png" />
+<img src="../../../../images/voting-files/coordinationgame.png" />
 <br><br>
 <i><small> An abstract coordination game. You benefit heavily from making the same move as everyone else. </small></i><br><br>
 </center>
@@ -57,7 +57,7 @@ Now, we are ready to define legitimacy.
 Legitimacy is a phenomenon that arises naturally in coordination games. If you're not in a coordination game, there's no reason to act according to your expectation of how other people will act, and so legitimacy is not important. But as we have seen, coordination games are everywhere in society, and so legitimacy turns out to be quite important indeed. In almost any environment with coordination games that exists for long enough, there inevitably emerge some mechanisms that can choose which decision to take. These mechanisms are powered by an established culture that everyone pays attention to these mechanisms and (usually) does what they say. Each person reasons that because _everyone else_ follows these mechanisms, if they do something different they will only create conflict and suffer, or at least be left in a lonely forked ecosystem all by themselves. If a mechanism successfully has the ability to make these choices, then that mechanism has legitimacy.
 
 <center><br>
-<img src="/images/voting-files/byzantinegeneral.jpg" style="width:500px" />
+<img src="../../../../images/voting-files/byzantinegeneral.jpg" style="width:500px" />
 <br><br>
 <i><small>  A Byzantine general rallying his troops forward. The purpose of this isn't just to make the soldiers feel brave and excited, but also to reassure them that everyone else feels brave and excited and will charge forward as well, so an individual soldier is not just committing suicide by charging forward alone. </small></i><br><br>
 </center>
@@ -86,8 +86,8 @@ There are two ways to respond to this fact. The first way is to be proud of thes
 <center>
 <br>
 <table><tr style="border:0px">
-<td style="border:0px"><a href="https://twitter.com/francispouliot_/status/1366465485546655744"><img src="/images/legitimacy-files/bitcoin1.png" /></a></td>
-<td style="border:0px"><a href="https://blog.wasabiwallet.io/bitcoin-knots-donation/"><img src="/images/legitimacy-files/bitcoin2.png" /></a></td>
+<td style="border:0px"><a href="https://twitter.com/francispouliot_/status/1366465485546655744"><img src="../../../../images/legitimacy-files/bitcoin1.png" /></a></td>
+<td style="border:0px"><a href="https://blog.wasabiwallet.io/bitcoin-knots-donation/"><img src="../../../../images/legitimacy-files/bitcoin2.png" /></a></td>
 </tr></table>
 <br>
 </center>
@@ -110,14 +110,14 @@ This is also a conception of legitimacy: any project that makes the allocation t
 
 Blockchain ecosystems, Ethereum included, value freedom and decentralization. But the public goods ecology of most of these blockchains is, regrettably, still quite authority-driven and centralized: whether it's Ethereum, Zcash or any other major blockchain, there is typically one (or at most 2-3) entities that far outspend everyone else, giving independent teams that want to build public goods few options. I call this model of public goods funding "Central Capital Coordinators for Public-goods" (CCCPs).
 
-<br><center><img src="/images/legitimacy-files/cccp.png" /></center><br><br>
+<br><center><img src="../../../../images/legitimacy-files/cccp.png" /></center><br><br>
 
 **This state of affairs is not the fault of the organizations themselves, who are typically valiantly doing their best to support the ecosystem. Rather, it's the rules of the ecosystem that are being _unfair to that organization_, because they hold the organization to an unfairly high standard.** Any single centralized organization will inevitably have blindspots and at least a few categories and teams whose value that it fails to understand; this is not because anyone involved is doing anything wrong, but because such perfection is beyond the reach of small groups of humans. So there is great value in creating a more diversified and resilient approach to public goods funding to take the pressure off any single organization.
 
 Fortunately, we already have the seed of such an alternative! The Ethereum application-layer ecosystem exists, is growing increasingly powerful, and is already showing its public-spiritedness. Companies like Gnosis have been contributing to Ethereum client development, and various Ethereum DeFi projects have donated hundreds of thousands of dollars to the Gitcoin Grants matching pool.
 
 <center><br>
-<img src="/images/round_7_files/matching.png" />
+<img src="../../../../images/round_7_files/matching.png" />
 <br>
 </center><br><br>
 
@@ -140,7 +140,7 @@ Hence, though the power of community-driven legitimacy effects is not infinite, 
 The concept of supporting public goods through value generated "out of the ether" by publicly supported conceptions of legitimacy has value going far beyond the Ethereum ecosystem. An important and immediate challenge and opportunity is NFTs. NFTs stand a great chance of significantly helping many kinds of public goods, especially of the creative variety, at least partially solve their [chronic and systemic funding deficiencies](https://en.wikipedia.org/wiki/Tragedy_of_the_commons).
 
 <center><br>
-<a href="https://www.theverge.com/2021/3/9/22321464/jack-dorsey-nft-tweet-auction-bitcoin-donate-charity"><img src="/images/legitimacy-files/jack.png" style="width:450px" /></a>
+<a href="https://www.theverge.com/2021/3/9/22321464/jack-dorsey-nft-tweet-auction-bitcoin-donate-charity"><img src="../../../../images/legitimacy-files/jack.png" style="width:450px" /></a>
 <br><br>
 <i><small>Actually a very admirable first step.</small></i>
 </center><br><br>

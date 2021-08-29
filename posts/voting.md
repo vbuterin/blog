@@ -30,7 +30,7 @@ So far, all in all, on-chain governance seems like a very good bargain.... so wh
 To start off, we need to describe more clearly what the process of "blockchain governance" <em>is</em>. Generally speaking, there are two informal models of governance, that I will call the "decision function" view of governance and the "coordination" view of governance. The decision function view treats governance as a function $f(x_1, x_2 ... x_n) \rightarrow y$, where the inputs are the wishes of various legitimate stakeholders (senators, the president, property owners, shareholders, voters, etc) and the output is the decision.
 
 <center>
-<img src="/images/voting-files/decisionfunction.png" style="width:350px"/>
+<img src="../../../../images/voting-files/decisionfunction.png" style="width:350px"/>
 </center>
 <br>
 
@@ -41,7 +41,7 @@ The coordination model of governance, in contrast, sees governance as something 
 The second (and crucially important) layer is coordination institutions. The purpose of a coordination institution is to create focal points around how and when individuals should act in order to better coordinate behavior. There are many situations, both in blockchain governance and in real life, where if you act in a certain way alone, you are likely to get nowhere (or worse), but if everyone acts together a desired result can be achieved.
 
 <center>
-<img src="/images/voting-files/coordinationgame.png" style="width:250px"/><br>
+<img src="../../../../images/voting-files/coordinationgame.png" style="width:250px"/><br>
 <br>
 <small>An abstract coordination game. You benefit heavily from making the same move as everyone else.</small>
 </center>
@@ -50,7 +50,7 @@ The second (and crucially important) layer is coordination institutions. The pur
 In these cases, it's in your interest to go if everyone else is going, and stop if everyone else is stopping. You can think of coordination institutions as putting up green or red flags in the air saying "go" or "stop", <em>with an established culture</em> that everyone watches these flags and (usually) does what they say. Why do people have the incentive to follow these flags? Because <em>everyone else</em> is already following these flags, and you have the incentive to do the same thing as what everyone else is doing.
 
 <center>
-<img src="/images/voting-files/byzantinegeneral.jpg" style="width:550px"/>
+<img src="../../../../images/voting-files/byzantinegeneral.jpg" style="width:550px"/>
 <br><br>
 <small>A Byzantine general rallying his troops forward. The purpose of this isn't just to make the soldiers feel brave and excited, but also to reassure them that <i>everyone else</i> feels brave and excited and will charge forward as well, so an individual soldier is not just committing suicide by charging forward alone.</small>
 </center>
@@ -76,10 +76,10 @@ Ethereum also has a history with coin voting, including:
 * <strong>The EIP 186/649/669 Carbonvote</strong>: <a href="http://carbonvote.com/">http://carbonvote.com/</a>
 
 <center>
-<img src="/images/voting-files/vote2.png" style="height:340px" />
-<img src="/images/voting-files/vote3.png" style="height:340px" />
+<img src="../../../../images/voting-files/vote2.png" style="height:340px" />
+<img src="../../../../images/voting-files/vote3.png" style="height:340px" />
 <br><br>
-<img src="/images/voting-files/vote1.png" style="width:480px" />
+<img src="../../../../images/voting-files/vote1.png" style="width:480px" />
 </center>
 <br>
 
@@ -122,14 +122,14 @@ Second, and more damningly, in practice it seems like people, at least in their 
 Here's LiskElite, with 55 members (out of a total 101):
 
 <p><center>
-<img src="/images/voting-files/liskpool1.png" style="width:450px" />
+<img src="../../../../images/voting-files/liskpool1.png" style="width:450px" />
 </center>
 <br></p>
 
 Here's LiskGDT, with 33 members:
 
 <p><center>
-<img src="/images/voting-files/liskpool2.png" style="width:450px" />
+<img src="../../../../images/voting-files/liskpool2.png" style="width:450px" />
 </center>
 <br></p>
 
@@ -164,7 +164,7 @@ This criticism applies to both tightly coupled and loosely coupled voting equall
 Let's look at the existing live experiment that we have in tightly coupled voting on Ethereum, the gas limit. Here's the gas limit evolution over the past two years:
 
 <center>
-<img src="/images/voting-files/governance3.png" style="width:450px" />
+<img src="../../../../images/voting-files/governance3.png" style="width:450px" />
 </center>
 <br>
 

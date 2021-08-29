@@ -9,14 +9,14 @@ Since it's Christmas time now, and we're theoretically supposed to be enjoying o
 ### 1.58 dimensional chess
 
 <center><br>
-[![](/images/christmas-files/chess_tweet.png)](https://twitter.com/el33th4xor/status/1138777837320716288)
+[![](../../../../images/christmas-files/chess_tweet.png)](https://twitter.com/el33th4xor/status/1138777837320716288)
 <br><br>
 </center>
 
 This is a variant of chess where the board is set up like this:
 
 <center><br>
-![](/images/christmas-files/chess.png)
+![](../../../../images/christmas-files/chess.png)
 <br><br>
 </center>
 
@@ -33,14 +33,14 @@ The game is substantially simpler and more "tractable" than full-on chess, and i
 ### 3 dimensional tic tac toe
 
 <center><br>
-![](/images/christmas-files/tic4.png)
+![](../../../../images/christmas-files/tic4.png)
 <br><br>
 </center>
 
 The goal here is to get 4 in a straight line, where the line can go in any direction, along an axis or diagonal, including between planes. For example in this configuration X wins:
 
 <center><br>
-![](/images/christmas-files/tic4_2.png)
+![](../../../../images/christmas-files/tic4_2.png)
 <br><br>
 </center>
 
@@ -51,14 +51,14 @@ It's considerably harder than [traditional 2D tic tac toe](https://www.quora.com
 Here, we go back down to having two dimensions, except we allow lines to wrap around:
 
 <center><br>
-![](/images/christmas-files/tic4_3.png)
+![](../../../../images/christmas-files/tic4_3.png)
 <br><small><i>X wins</i></small></center>
 <br><br>
 
 Note that we allow diagonal lines with any slope, as long as they pass through all four points. Particularly, this means that lines with slope +/- 2 and +/- 1/2 are admissible:
 
 <center><br>
-![](/images/christmas-files/tic4_4.png)
+![](../../../../images/christmas-files/tic4_4.png)
 <br><br>
 </center>
 
@@ -67,21 +67,21 @@ Mathematically, the board can be interpreted as a 2-dimensional vector space ove
 ### Tic tac toe over the 4-element binary field
 
 <center><br>
-![](/images/christmas-files/tic4_5.png)
+![](../../../../images/christmas-files/tic4_5.png)
 <br><br>
 </center>
 
 Here, we have the same concept as above, except we use an even spookier mathematical structure, the [4-element field](https://en.wikipedia.org/wiki/Finite_field#Field_with_four_elements) of polynomials over $Z_2$ modulo $x^2 + x + 1$. This structure has pretty much no reasonable geometric interpretation, so I'll just give you the addition and multiplication tables:
 
 <center><br>
-![](/images/christmas-files/tic4_6.png)
+![](../../../../images/christmas-files/tic4_6.png)
 <br><br>
 </center>
 
 OK fine, here are all possible lines, excluding the horizontal and the vertical lines (which are also admissible) for brevity:
 
 <center><br>
-<img src="/images/christmas-files/tic4_7.png" style="width: 450px" />
+<img src="../../../../images/christmas-files/tic4_7.png" style="width: 450px" />
 <br><br>
 </center>
 
@@ -90,7 +90,7 @@ The lack of geometric interpretation does make the game harder to play; you pret
 ### Now play 1.77 dimensional connect four. I dare you.
 
 <center><br>
-<img src="/images/christmas-files/tic4_8.png" style="width: 450px" />
+<img src="../../../../images/christmas-files/tic4_8.png" style="width: 450px" />
 <br><br>
 </center>
 
@@ -101,21 +101,21 @@ Everyone is dealt five (you can use whatever variant poker rules you want here i
 Mathametically, this can be represented as, a hand is stronger if the player can come up with a line $L(x) = mx+b$ such that they have cards for the numbers $L(0)$, $L(1)$ ... $L(k)$ for the highest $k$.
 
 <center><br>
-![](/images/christmas-files/cards1.png)
+![](../../../../images/christmas-files/cards1.png)
 <br><small><i>Example of a full five-card winning hand. y = 4x + 5.</i></small></center>
 <br><br>
 
 To break ties between equal maximum-length sequences, count the number of distinct length-three sequences they have; the hand with more distinct length-three sequences wins.
 
 <center><br>
-![](/images/christmas-files/cards2.png)
+![](../../../../images/christmas-files/cards2.png)
 <br><small><i>This hand has four length-three sequences: K 2 4, K 4 8, 2 3 4, 3 8 K. This is rare.</i></small></center>
 <br><br>
 
 Only consider lines of length three or higher. If a hand has three or more of the same denomination, that counts as a sequence, but if a hand has two of the same denomination, any sequences passing through that denomination only count as one sequence.
 
 <center><br>
-![](/images/christmas-files/cards3.png)
+![](../../../../images/christmas-files/cards3.png)
 <br><small><i>This hand has no length-three sequences.</i></small></center>
 <br><br>
 

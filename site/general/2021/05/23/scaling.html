@@ -1,39 +1,51 @@
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
 
 
-<link rel="alternate" type="application/rss+xml" href="/feed.xml" title="The Limits to Blockchain Scalability">
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="The Limits to Blockchain Scalability">
 
 
 
-<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
-<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
-<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
-<link rel="stylesheet" type="text/css" href="/css/misc.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
 <script type="text/javascript" id="MathJax-script" async
-  src="/scripts/mathjax.js">
+  src="../../../../scripts/tex-svg.js">
 </script>
 
 <style>
-@font-face {
-    font-family: MJXc-TeX-math-Iw;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXZERO;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXTEX;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-
-.math { font-family: MJXc-TeX-math-Iw }
 </style>
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
@@ -47,7 +59,7 @@
 <br>
 <h1 style="margin-bottom:7px"> The Limits to Blockchain Scalability </h1>
 <small style="float:left; color: #888"> 2021 May 23 </small>
-<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
 <br> <br> <br>
 <title> The Limits to Blockchain Scalability </title>
 
@@ -56,7 +68,7 @@
 <p>As it turns out, there are important and quite subtle technical factors that limit blockchain scaling, both with sharding and without. In many cases there are solutions, but even with the solutions there are limits. This post will go through what many of these issues are.</p>
 <br>
 <center>
-<a href="https://twitter.com/elonmusk/status/1393738154889338884"><img src="/images/scaling-files/elontweet.png" /></a><br><br> <small><i>Just increase the parameters, and all problems are solved. But at what cost?</i></small>
+<a href="https://twitter.com/elonmusk/status/1393738154889338884"><img src="../../../../images/scaling-files/elontweet.png" /></a><br><br> <small><i>Just increase the parameters, and all problems are solved. But at what cost?</i></small>
 </center>
 <p><br></p>
 <h2 id="its-crucial-for-blockchain-decentralization-for-regular-users-to-be-able-to-run-a-node">It's crucial for blockchain decentralization for regular users to be able to run a node</h2>
@@ -65,14 +77,14 @@
 <p>By the morning, arguments on Twitter, and on the one community forum that was not censoring the discussion, discussions are everywhere. But by then a significant part of the 4.5 million coins had been converted on-chain to other assets, and billions of dollars of defi transactions had taken place. 79% of the consensus nodes, and all the major block explorers and endpoints for light wallets, were following this new chain. Perhaps the new dev fund will fund some development, or perhaps it will just all be embezzled by the leading pools and exchanges and their cronies. But regardless of how it turns out, the fund is for all intents and purposes a fait accompli, and regular users have no way to fight back.</p>
 <br>
 <center>
-<img src="/images/scaling-files/forkwars.png" /><br><br> <small><i>Movie coming soon. Maybe it can be funded by MolochDAO or something.</i></small>
+<img src="../../../../images/scaling-files/forkwars.png" /><br><br> <small><i>Movie coming soon. Maybe it can be funded by MolochDAO or something.</i></small>
 </center>
 <p><br></p>
 <p>Can this happen on your blockchain? The elites of your blockchain community, including pools, block explorers and hosted nodes, are probably quite well-coordinated; quite likely they're all in the same telegram channels and wechat groups. If they really <em>want</em> to organize a sudden change to the protocol rules to further their own interests, then they probably can. The Ethereum blockchain has fully resolved <a href="https://blog.ethereum.org/2016/11/25/security-alert-11242016-consensus-bug-geth-v1-4-19-v1-5-2/">consensus failures</a> in ten hours; if your blockchain has only one client implementation, and you only need to deploy a code change to a few dozen nodes, coordinating a change to client code can be done much faster. The only reliable way to make this kind of coordinated social attack <em>not</em> effective is through passive defense from the one constituency that actually is decentralized: the <em>users</em>.</p>
 <p>Imagine how the story would have played out if the users were running nodes that verify the chain (whether directly or through <a href="https://vitalik.ca/general/2021/04/07/sharding.html#improving-sharding-with-better-security-models">more advanced indirect techniques</a>), and automatically reject blocks that break the protocol rules <em>even if</em> over 90% of the miners or stakers support those blocks. If <em>every</em> user ran a verifying node, then the attack would have quickly failed: a few mining pools and exchanges would have forked off and looked quite foolish in the process. But even if <em>some</em> users ran verifying nodes, the attack would not have led to a <em>clean victory</em> for the attacker; rather, it would have led to <em>chaos</em>, with different users seeing different views of the chain. At the very least, the ensuing market panic and likely persistent chain split would greatly reduce the attackers' profits. The thought of navigating such a protracted conflict would itself deter most attacks.</p>
 <br>
 <center>
-<a href="https://twitter.com/hasufl/status/1376998067040366593"><img src="/images/scaling-files/hasutweet.png" /></a><br><br> <small><i>Listen to Hasu on this one.</i></small>
+<a href="https://twitter.com/hasufl/status/1376998067040366593"><img src="../../../../images/scaling-files/hasutweet.png" /></a><br><br> <small><i>Listen to Hasu on this one.</i></small>
 </center>
 <p><br></p>
 <p>If you have a community of 37 node runners and 80000 passive listeners that check signatures and block headers, the attacker wins. If you have a community where everyone runs a node, the attacker loses. We don't know what the exact threshold is at which <a href="https://vitalik.ca/general/2020/08/17/philosophy.html">herd immunity</a> against coordinated attacks kicks in, but there is one thing that's absolutely clear: more nodes good, fewer nodes bad, and we definitely need more than a few dozen or few hundred.</p>
@@ -120,7 +132,7 @@
 <p>The main argument here is, as you might guess, the same as elsewhere: the difference between theory and practice. <em>In theory</em>, there are <a href="https://www.amazon.com/SAMSUNG-870-QVO-SATA-MZ-77Q8T0B/dp/B089C3TZL9/ref=sr_1_3?dchild=1&amp;keywords=8tb&amp;qid=1621637865&amp;s=pc&amp;sr=1-3">8 TB solid state drives</a> that you can buy on Amazon (you <em>do</em> need SSDs or NVME; HDDs are too slow for storing the blockchain state). <em>In practice</em>, the laptop that was used to write this blog post has 512 GB, and if you make people go buy their own hardware, many of them will just get lazy (or they can't afford $800 for an 8 TB SSD) and use a centralized provider. And even if you can fit a blockchain onto some storage, a high level of activity can easily quickly burn through the disk and force you to keep getting a new one.</p>
 <br>
 <center>
-<img src="/images/scaling-files/poll.png" /><br><br> <small><i>A poll in a group of blockchain protocol researchers of how much disk space everyone has. Small sample size, I know, but still...</i></small>
+<img src="../../../../images/scaling-files/poll.png" /><br><br> <small><i>A poll in a group of blockchain protocol researchers of how much disk space everyone has. Small sample size, I know, but still...</i></small>
 </center>
 <p><br></p>
 <p>Additionally, storage size determines the time needed for a new node to be able to come online and start participating in the network. Any data that existing nodes have to store is data that a new node has to download. This initial sync time (and bandwidth) is also a major barrier to users being able to run nodes. While writing this blog post, syncing a new geth node took me ~15 hours. If Ethereum had 10x more usage, syncing a new geth node would take at least a week, and it would be much more likely to just lead to your internet connection getting throttled. This is all even more important during an attack, when a successful response to the attack will likely involve many users spinning up new nodes when they were not running nodes before.</p>
@@ -128,7 +140,7 @@
 <p>Additionally, there are interaction effects between these three types of costs. Because databases use tree structures internally to store and retrieve data, the cost of fetching data from a database increases with the logarithm of the size of the database. In fact, because the top level (or top few levels) can be cached in RAM, the disk access cost is proportional to the <em>size of the database as a multiple of the size of the data cached in RAM</em>.</p>
 <br>
 <center>
-<img src="/images/scaling-files/tree.png" /><br><br> <small><i>Don't take this diagram too literally; different databases work in different ways, and often the part in memory is just a single (but big) layer (see <a href="http://paperhub.s3.amazonaws.com/18e91eb4db2114a06ea614f0384f2784.pdf">LSM trees</a> as used in leveldb). But the basic principles are the same.</i></small>
+<img src="../../../../images/scaling-files/tree.png" /><br><br> <small><i>Don't take this diagram too literally; different databases work in different ways, and often the part in memory is just a single (but big) layer (see <a href="http://paperhub.s3.amazonaws.com/18e91eb4db2114a06ea614f0384f2784.pdf">LSM trees</a> as used in leveldb). But the basic principles are the same.</i></small>
 </center>
 <p><br></p>
 <p>For example, if the cache is 4 GB, and we assume that each layer of the database is 4x bigger than the previous, then Ethereum's current ~64 GB state would require ~2 accesses. But if the state size increases by 4x to ~256 GB, then this would increase to ~3 accesses (so 1.5x more accesses per read). Hence, a 4x increase in the gas limit, which would increase both the state size and the number of reads, could actually translate into a ~6x increase in block verification time. The effect may be even stronger: hard disks often take longer to read and write when they are full than when they are near-empty.</p>
@@ -141,7 +153,7 @@
 <p>As a result, sharded blockchains can safely have very high levels of transaction throughput that non-sharded blockchains cannot. This does require a lot of cryptographic cleverness in creating efficient substitutes for naive full validation that successfully reject invalid blocks, but it can be done: the <a href="https://hackmd.io/@vbuterin/das">theory</a> is <a href="https://vitalik.ca/general/2021/01/26/snarks.html">well-established</a> and proof-of-concepts based on <a href="https://github.com/ethereum/eth2.0-specs/blob/dev/specs/sharding/beacon-chain.md">draft specifications</a> are already <a href="https://github.com/protolambda/eth2-das">being worked on</a>.</p>
 <br>
 <center>
-<img src="https://vitalik.ca/images/sharding-files/beacon_chain.jpg" /><br>
+<img src="https://vitalik.ca../../../../images/sharding-files/beacon_chain.jpg" /><br>
 </center>
 <p><br></p>
 <p>Ethereum is planning to use <strong>quadratic sharding</strong>, where total scalability is limited by the fact that a node has to be able to process both a single shard and the beacon chain which has to perform some fixed amount of management work for each shard. If shards are too big, nodes can no longer process individual shards, and if there are too many shards, nodes can no longer process the beacon chain. The product of these two constraints forms the upper bound.</p>
@@ -162,7 +174,7 @@
 <p>An important property of a blockchain that users really value is <strong>permanence</strong>. A digital asset stored on a server will stop existing in 10 years when the company goes bankrupt or loses interest in maintaining that ecosystem. An NFT on Ethereum, on the other hand, <em>is forever</em>.</p>
 <br>
 <center>
-<img src="/images/scaling-files/cryptokitties.png" /><br><br> <small><i>Yes, people will still be downloading and examining your cryptokitties in the year 2371. Deal with it.</i></small>
+<img src="../../../../images/scaling-files/cryptokitties.png" /><br><br> <small><i>Yes, people will still be downloading and examining your cryptokitties in the year 2371. Deal with it.</i></small>
 </center>
 <p><br></p>
 <p>But once a blockchain's capacity gets too high, it becomes harder to store all that data, until at some point there's a large risk that some part of history will just end up being stored by... nobody.</p>

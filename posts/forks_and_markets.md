@@ -10,7 +10,7 @@ Here is a Venn diagram to illustrate the fork types:
 
 <br>
 <center>
-<img src="/images/forks-and-markets-files/venn.png" style="width: 450px">
+<img src="../../../../images/forks-and-markets-files/venn.png" style="width: 450px">
 </center>
 <br>
 
@@ -51,7 +51,7 @@ First, bilateral hard forks. In the best case, the situation is simple. The two 
 
 <br>
 <center>
-<img src="/images/forks-and-markets-files/4RqDn4J.png" style="width:540px">
+<img src="../../../../images/forks-and-markets-files/4RqDn4J.png" style="width:540px">
 </center>
 <br>
 

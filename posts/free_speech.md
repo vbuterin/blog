@@ -12,7 +12,7 @@ Freedom of speech is a topic that many internet communities have struggled with 
 
 A common, and in my own view frustrating, argument that I often hear is that "freedom of speech" is exclusively a legal restriction on what _governments_ can act against, and has nothing to say regarding the actions of private entities such as corporations, privately-owned platforms, internet forums and conferences. One of the larger examples of "private censorship" in cryptocurrency communities was the decision of Theymos, the moderator of the [/r/bitcoin](http://reddit.com/r/bitcoin) subreddit, to start heavily moderating the subreddit, forbidding arguments in favor of increasing the Bitcoin blockchain's transaction capacity via a hard fork.
 
-<br><center><img src="/images/free-speech-files/theymos.png" /></center><br>
+<br><center><img src="../../../../images/free-speech-files/theymos.png" /></center><br>
 
 Here is a timeline of the censorship as catalogued by John Blocke: [https://medium.com/johnblocke/a-brief-and-incomplete-history-of-censorship-in-r-bitcoin-c85a290fe43](https://medium.com/@johnblocke/a-brief-and-incomplete-history-of-censorship-in-r-bitcoin-c85a290fe43)
 
@@ -20,8 +20,8 @@ Here is Theymos's post defending his policies: [https://www.reddit.com/r/Bitcoin
 
 A common strategy used by defenders of Theymos's censorship was to say that heavy-handed moderation is okay because /r/bitcoin is "a private forum" owned by Theymos, and so he has the right to do whatever he wants in it; those who dislike it should move to other forums:
 
-<br><center><img src="/images/free-speech-files/theymos2.png" /></center><br>
-<br><center><img src="/images/free-speech-files/theymos3.png" /></center><br>
+<br><center><img src="../../../../images/free-speech-files/theymos2.png" /></center><br>
+<br><center><img src="../../../../images/free-speech-files/theymos3.png" /></center><br>
 
 And it's true that Theymos has not _broken any laws_ by moderating his forum in this way. But to most people, it's clear that there is still some kind of free speech violation going on. So what gives? First of all, it's crucially important to recognize that freedom of speech is not just a _law in some countries_. It's also a social principle. And the underlying goal of the social principle is the same as the underlying goal of the law: to foster an environment where the ideas that win are ideas that are good, rather than just ideas that happen to be favored by people in a position of power. And governmental power is not the only kind of power that we need to protect from; there is also a corporation's power to fire someone, an internet forum moderator's power to [delete almost every post in a discussion thread](https://cdn-images-1.medium.com/max/800/1*LPey4Z4mNwFE-ruiUkLYEw.png), and many other kinds of power hard and soft.
 
@@ -50,12 +50,12 @@ If, instead, Theymos had created a subreddit called /r/bitcoinsmallblockers, and
 About a year ago at Deconomy I publicly shouted down Craig Wright, [a scammer claiming to be Satoshi Nakamoto](https://github.com/vbuterin/cult-of-craig), finishing my explanation of why the things he says make no sense with the question "why is this fraud allowed to speak at this conference?"
 
 <br><center>
-[![](/images/free-speech-files/me_against_craig.png)](https://www.youtube.com/watch?v=WaWcJPSs9Yw&feature=youtu.be&t=20m33s)
+[![](../../../../images/free-speech-files/me_against_craig.png)](https://www.youtube.com/watch?v=WaWcJPSs9Yw&feature=youtu.be&t=20m33s)
 </center><br>
 
 Of course, Craig Wright's partisans replied back with.... [accusations of censorship](https://coingeek.com/samson-mow-vitalik-buterin-exposed/):
 
-<br><center><img src="/images/free-speech-files/craigwright.png" /></center><br>
+<br><center><img src="../../../../images/free-speech-files/craigwright.png" /></center><br>
 
 Did I try to "silence" Craig Wright? I would argue, no. One could argue that this is because "Deconomy is not a public space", but I think the much better argument is that a conference is fundamentally different from an internet forum. An internet forum can actually try to be a fully neutral medium for discussion where anything goes; a conference, on the other hand, is by its very nature a highly curated list of presentations, allocating a limited number of speaking slots and actively channeling a large amount of attention to those lucky enough to get a chance to speak. A conference is an editorial act by the organizers, saying "here are some ideas and views that we think people really should be exposed to and hear". Every conference "censors" almost every viewpoint because there's not enough space to give them all a chance to speak, and this is inherent to the format; so raising an objection to a conference's judgement in making its selections is absolutely a legitimate act.
 
@@ -63,7 +63,7 @@ This extends to other kinds of selective platforms. Online platforms such as Fac
 
 A more recent example of this principle at work is the #DelistBSV campaign, where some cryptocurrency exchanges, most famously [Binance](https://support.binance.com/hc/en-us/articles/360026666152), removed support for trading BSV (the Bitcoin fork promoted by Craig Weight). Once again, many people, even [reasonable people](https://decryptmedia.com/6552/binance-kraken-delisting-bitcoin-sv-sets-bad-precedent), accused this campaign of being an [exercise in censorship](https://twitter.com/angela_walch/status/1117921461304475649), raising parallels to credit card companies blocking Wikileaks:
 
-<br><center><img src="/images/free-speech-files/craigwright2.png" /></center><br>
+<br><center><img src="../../../../images/free-speech-files/craigwright2.png" /></center><br>
 
 I personally have been a [critic of the power wielded by centralized exchanges](https://techcrunch.com/2018/07/06/vitalik-buterin-i-definitely-hope-centralized-exchanges-go-burn-in-hell-as-much-as-possible/). Should I oppose #DelistBSV on free speech grounds? I would argue no, it's ok to support it, but this is definitely a much closer call.
 

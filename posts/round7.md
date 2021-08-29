@@ -8,16 +8,16 @@ Round 7 of Gitcoin Grants has successfully completed! This round has seen an unp
 The category structure was once again changed; this time was had a split between "dapp tech", "infrastructure tech" and "community". Here are the results:
 
 <center>
-<img src="/images/round_7_files/results1.png" style="width: 360px" />
-<img src="/images/round_7_files/results2.png" style="width: 360px" />
-<img src="/images/round_7_files/results3.png" style="width: 360px" />
+<img src="../../../../images/round_7_files/results1.png" style="width: 360px" />
+<img src="../../../../images/round_7_files/results2.png" style="width: 360px" />
+<img src="../../../../images/round_7_files/results3.png" style="width: 360px" />
 </center>
 
 ## Defi joins the matching!
 
 In this round, we were able to have much higher matching values than before. This was because the usual matchings, provided by the Ethereum Foundation and a few other actors, were supplemented for the first time by a high level of participation from various defi projects:
 
-![](/images/round_7_files/matching.png)
+![](../../../../images/round_7_files/matching.png)
 
 The matchers were:
 
@@ -72,7 +72,7 @@ The concept of categories as it is currently implemented in Gitcoin Grants is a 
 
 But it gets more paradoxical from here. In Round 7, a ["collections" feature](https://gitcoin.co/grants/collections) was introduced halfway through the round:
 
-![](/images/round_7_files/categories.png)
+![](../../../../images/round_7_files/categories.png)
 
 If you click "Add to Cart" on a collection, you immediately add everything in the collection to your cart. This is strange because this mechanism seems to send the exact _opposite_ message: users that don't understand the details well can choose to allocate funds to entire categories, but (unless they manually edit the amounts) they should not be making many active decisions _within_ each category.
 
@@ -84,7 +84,7 @@ One option would be to have one matching pool and have _all_ the categories just
 
 As collusion, fake accounts and other attacks on Gitcoin Grants have been recently increasing, Round 7 added an additional verification option with the decentralized social-graph-based [BrightID](https://www.brightid.org/), and single-handedly boosted the project's userbase by a factor of ten:
 
-![](/images/round_7_files/brightid.jpg)
+![](../../../../images/round_7_files/brightid.jpg)
 
 This is good, because along with helping BrightID's growth, it also subjects the project to a trial-by-fire: there's now a large incentive to try to create a large number of fake accounts on it! BrightID is going to face a tough challenge making it reasonably easy for regular users to join but at the same time resist attacks from fake and duplicate accounts. I look forward to seeing them try to meet the challenge!
 
@@ -93,7 +93,7 @@ This is good, because along with helping BrightID's growth, it also subjects the
 Finally, Round 7 was the first round where Gitcoin Grants experimented with using the [ZkSync](https://wallet.zksync.io/) ZK rollup to decrease fees for payments:
 
 <center>
-<img src="/images/round_7_files/zkrollups.png" style="width:450px" />
+<img src="../../../../images/round_7_files/zkrollups.png" style="width:450px" />
 </center><br>
 
 The main thing to report here is simply that the ZK rollup successfully did decrease fees! The user experience worked well. Many optimistic and ZK rollup projects are now looking at [collaborating with wallets](https://www.theblockcrypto.com/linked/80744/coinbase-wallet-optimisms-layer-2-rollup) on direct integrations, which should increase the usability and security of such techniques further.

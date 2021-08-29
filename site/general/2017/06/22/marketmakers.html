@@ -1,33 +1,51 @@
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
-<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
-<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
-<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
-<link rel="stylesheet" type="text/css" href="/css/misc.css">
 
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="On Path Independence">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
 <script type="text/javascript" id="MathJax-script" async
-  src="/scripts/mathjax.js">
+  src="../../../../scripts/tex-svg.js">
 </script>
 
 <style>
-@font-face {
-    font-family: MJXc-TeX-math-Iw;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXZERO;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXTEX;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-
-.math { font-family: MJXc-TeX-math-Iw }
 </style>
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
@@ -41,20 +59,20 @@
 <br>
 <h1 style="margin-bottom:7px"> On Path Independence </h1>
 <small style="float:left; color: #888"> 2017 Jun 22 </small>
-<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
 <br> <br> <br>
 <title> On Path Independence </title>
 
 <p>Suppose that someone walks up to you and starts exclaiming to you that he thinks he has figured out how to create a source of unlimited free energy. His scheme looks as follows. First, you get a spaceship up to low Earth orbit. There, Earth's gravity is fairly high, and so the spaceship will start to accelerate heavily toward the earth. The spaceship puts itself into a trajectory so that it barely brushes past the Earth's atmosphere, and then keeps hurtling far into space. Further in space, the gravity is lower, and so the spaceship can go higher before it starts once again coming down. When it comes down, it takes a curved path toward the Earth, so as to maximize its time in low orbit, maximizing the acceleration it gets from the high gravity there, so that after it passes by the Earth it goes even higher. After it goes high enough, it flies through the Earth's atmosphere, slowing itself down but using the waste heat to power a thermal reactor. Then, it would go back to step one and keep going.</p>
 <p>Something like this:</p>
 <center>
-<img src="/images/marketmakers-files/indep_diag1.png" style="width:450px"></img>
+<img src="../../../../images/marketmakers-files/indep_diag1.png" style="width:450px"></img>
 </center>
 <p><br></p>
 <p>Now, if you know anything about Newtonian dynamics, chances are you'll immediately recognize that this scheme is total bollocks. But how do you know? You could make an appeal to symmetry, saying "look, for every slice of the orbital path where you say gravity gives you high acceleration, there's a corresponding slice of the orbital path where gravity gives you just as high deceleration, so I don't see where the net gains are coming from". But then, suppose the man presses you. "Ah," he says, "but in that slice where there is high acceleration your initial velocity is low, and so you spend a lot of time inside of it, whereas in the corresponding slice, your incoming velocity is high, and so you have less time to decelerate". How do you really, conclusively, prove him wrong?</p>
 <p>One approach is to dig deeply into the math, calculate the integrals, and show that the supposed net gains are in fact exactly equal to zero. But there is also a simple approach: recognize that <strong>energy is path-independent</strong>. That is, when the spaceship moves from point <span class="math inline">\(A\)</span> to point <span class="math inline">\(B\)</span>, where point <span class="math inline">\(B\)</span> is closer to the earth, its kinetic energy certainly goes up because its speed increases. But because total energy (kinetic plus potential) <a href="https://en.wikipedia.org/wiki/Conservation_of_energy">is conserved</a>, and potential energy is only dependent on the spaceship's <em>position</em>, and not how it got there, we know that regardless of what path from point <span class="math inline">\(A\)</span> to point <span class="math inline">\(B\)</span> the spaceship takes, once it gets to point <span class="math inline">\(B\)</span> <em>the total change in kinetic energy will be exactly the same</em>.</p>
 <center>
-<img src="/images/marketmakers-files/indep_diag2.png" style="width:350px"></img><br><br> <small>Different paths, same change in energy </small>
+<img src="../../../../images/marketmakers-files/indep_diag2.png" style="width:350px"></img><br><br> <small>Different paths, same change in energy </small>
 </center>
 <p><br> Furthermore, we know that the kinetic energy gain from going <em>from point <span class="math inline">\(A\)</span> to point <span class="math inline">\(A\)</span></em> is also independent of the path you take along the way: in all cases it's exactly zero.</p>
 <hr />
@@ -91,7 +109,7 @@ Bancor would offer ever decreasing prices for X coins during a bank run, until i
 <p>What this means is that a "reserve bleeding" attack on a market maker that preserves this kind of path independence property is impossible. Even if some trolls successfully create a market panic that drops prices to near-zero, when the panic subsides, and prices return to their original levels, the market maker's position will be unchanged - even if both the price, and the market maker's balances, made a bunch of crazy moves in the meantime.</p>
 <p>Now, this does not mean that market makers cannot lose money, compared to other holding strategies. If, when you start off, 1 MKR = 5 ETH, and then the MKR price moves, and we compare the performance of holding 5 MKR and 12.5 ETH in the market maker versus the performance of just holding the assets, the result looks like this:</p>
 <center>
-<img src="/images/marketmakers-files/marketmaker.png" style="width:550px"></img>
+<img src="../../../../images/marketmakers-files/marketmaker.png" style="width:550px"></img>
 </center>
 <p>Holding a balanced portfolio always wins, except in the case where prices stay exactly the same, in which case the returns of the market maker and the balanced portfolio are equal. Hence, the purpose of a market maker of this type is to subsidize guaranteed liquidity as a public good for users, serving as trader of last resort, and not to earn revenue. However, we certainly can modify the market maker to earn revenue, and quite simply: we have it charge a spread. That is, the market maker might charge <span class="math inline">\(1.005\cdot p\)</span> for buys and offer only <span class="math inline">\(0.995\cdot p\)</span> for sells. Now, being the beneficiary of a market maker becomes a bet: if, in the long run, prices tend to move in one direction, then the market maker loses, at least relative to what they could have gained if they had a balanced portfolio. If, on the other hand, prices tend to bounce around wildly but ultimately come back to the same point, then the market maker can earn a nice profit. This sacrifices the "path independence" property, but in such a way that any deviations from path independence are always in the market maker's favor.</p>
 <p>There are many designs that path-independent market makers could take; if you are willing to create a token that can issue an unlimited quantity of units, then the "constant reserve ratio" mechanism (where for some constant ratio <span class="math inline">\(0 \leq r \leq 1\)</span>, the token supply is <span class="math inline">\(p^{1/r - 1}\)</span> and the reserve size is <span class="math inline">\(r \cdot p^{1/r}\)</span> also counts as one, provided that it is implemented correctly and path independence is not compromised by bounds and rounding errors.</p>
@@ -99,7 +117,7 @@ Bancor would offer ever decreasing prices for X coins during a bank run, until i
 <p><span class="math inline">\(tokenA\_balance(p) = \sqrt{k\cdot p}\)</span></p>
 <p><span class="math inline">\(tokenB\_balance(p) = \sqrt{k/p}\)</span></p>
 <center>
-<img src="/images/marketmakers-files/indep_diag3.png" style="width:350px"></img><br>
+<img src="../../../../images/marketmakers-files/indep_diag3.png" style="width:350px"></img><br>
 </center>
 <p><br> Where <span class="math inline">\(p\)</span> is the price of <span class="math inline">\(tokenB\)</span> denominated in <span class="math inline">\(tokenA\)</span>. In general, you can make a path-independent market maker by defining any (monotonic) relation between <span class="math inline">\(tokenA\_balance\)</span> and <span class="math inline">\(tokenB\_balance\)</span> and calculating its derivative at any point to give the price.</p>
 <hr />

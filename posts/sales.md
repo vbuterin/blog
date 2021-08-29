@@ -14,7 +14,7 @@ Let us review a few examples.
 #### Maidsafe
 
 <center>
-<img src="/images/sales-files/msc_chart.png" width="350px"></img>
+<img src="../../../../images/sales-files/msc_chart.png" width="350px"></img>
 </center><br>
 
 The [decentralized internet platform](http://maidsafe.net/) raised $7m [in five hours](https://www.forbes.com/sites/kashmirhill/2014/06/03/mastercoin-maidsafe-crowdsale/#7fda1c71207d). However, they made the mistake of accepting payment in two currencies (BTC and MSC), and giving a favorable rate to MSC buyers. This [led to](https://www.cryptocoinsnews.com/maidsafe-embroiled-safecoin-presale-mastercoin-pump-dump/) a temporary ~2x appreciation in the MSC price, as users rushed in to buy MSC to participate in the sale at the more favorable rate, but then the price saw a similarly steep drop after the sale ended. Many users converted their BTC to MSC to participate in the sale, but then the sale closed too quickly for them, leading to them being stuck with a ~30% loss.
@@ -57,7 +57,7 @@ The Gnosis sale attempted to alleviate these issues with a novel mechanism: the 
 The purpose of this is to create a scheme where, if you buy at time $T$, then you are guaranteed to buy in at a valuation which is at most $\frac{1}{T}$.
 
 <center>
-<img src="/images/sales-files/gnosis_auction.png" width="550px"></img>
+<img src="../../../../images/sales-files/gnosis_auction.png" width="550px"></img>
 </center><br>
 
 The goal is to create a mechanism where the optimal strategy is simple. First, you personally decide what is the highest valuation you would be willing to buy at (call it V). Then, when the sale starts, you don't buy in immediately; rather, you wait until the valuation drops to below that level, and then send your transaction.
@@ -72,7 +72,7 @@ However, many people predicted that because of "fear of missing out" (FOMO), man
 All of this would of course be an excellent piece of confirming evidence for the narrative that markets are totally irrational, people don't think clearly before throwing in large quantities of money (and often, as a subtext, that the entire space needs to be somehow suppressed to prevent further exuberance) if it weren't for one inconvenient fact: **_the traders who bought into the sale were right_**.
 
 <center>
-<img src="/images/sales-files/gnosis_price_pic.png" width="550px"></img>
+<img src="../../../../images/sales-files/gnosis_price_pic.png" width="550px"></img>
 </center><br>
 
 Even in ETH terms, despite the massive ETH price rise, the price of 1 GNO has increased from ~0.6 ETH to ~0.8 ETH.

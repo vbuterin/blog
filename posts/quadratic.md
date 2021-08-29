@@ -14,11 +14,11 @@ To the proponents of these voting schemes, this is not just another slight impro
 
 To understand what is going on, let us first consider an existing social technology: money, and property rights - the invisible social technology that generally hides behind money. Money and private property are extremely powerful social technologies, for all the reasons classical economists have been stating for over a hundred years. If Bob is producing apples, and Alice wants to buy apples, we can economically model the interaction between the two, and the results _seem to make sense_:
 
-<center><img src="/images/qv-files/Market1.png" /></center><br><br>
+<center><img src="../../../../images/qv-files/Market1.png" /></center><br><br>
 
 Alice keeps buying apples until the marginal value of the next apple to her is less than the cost of producing it, which is pretty much exactly the optimal thing that could happen. And if the cost of producing the apples is greater than their value to Alice, then Alice just doesn't buy any:
 
-<center><img src="/images/qv-files/Market2.png" /></center><br><br>
+<center><img src="../../../../images/qv-files/Market2.png" /></center><br><br>
 
 This is all formalized in results such as the "[fundamental theorems of welfare economics](https://en.wikipedia.org/wiki/Fundamental_theorems_of_welfare_economics)". Now, those of you who have learned some economics may be screaming, but what about [imperfect competition](https://en.wikipedia.org/wiki/Imperfect_competition)? [Asymmetric information](https://en.wikipedia.org/wiki/Information_asymmetry)? [Economic inequality](https://en.wikipedia.org/wiki/Economic_inequality)? [Public goods](https://en.wikipedia.org/wiki/Public_good)? [Externalities](https://en.wikipedia.org/wiki/Externality)? Many activities in the real world, including those that are key to the progress of human civilization, benefit (or harm) many people in complicated ways. These activities and the consequences that arise from them often cannot be neatly decomposed into sequences of distinct trades between two parties.
 
@@ -34,13 +34,13 @@ First of all, let's see what happens if we just put up a plain old regular marke
 
 Phrased less mathematically, either you value the article enough (and/or are rich enough) to pay, and if that's the case it's in your interest to keep paying (and influencing) quite a lot, or you don't value the article enough and you contribute nothing. Hence, the only blog articles that get published would be articles where some single person is willing to [basically pay for it themselves](https://en.wikipedia.org/wiki/Patronage) (in my experiment in 2011, this prediction was experimentally verified: in [most](https://bitcointalk.org/index.php?topic=23934.msg306437#msg306437) [rounds](https://bitcointalk.org/index.php?topic=28681.msg360909#msg360909), over half of the total contribution came from a single donor).
 
-<center><img src="/images/qv-files/Market8.png" /></center><br><br>
+<center><img src="../../../../images/qv-files/Market8.png" /></center><br><br>
 
 Note that _this reasoning applies for any kind of mechanism that involves "buying influence" over matters of public concern_. This includes paying for public goods, shareholder voting in corporations, public advertising, bribing politicians, and much more. The little guy has too little influence (not quite zero, because in the real world things like altruism exist) and the big guy has too much. If you had an intuition that markets work great for buying apples, but money is corrupting in "the public sphere", this is basically a simplified mathematical model that shows why.
 
 We can also consider a different mechanism: one-person-one-vote. Let's say you can either vote that I deserve a reward for writing this article, or you can vote that I don't, and my reward is proportional to the number of votes in my favor. We can interpret this as follows: your first "contribution" costs only a small amount of effort, so you'll support an article if you care about it enough, but after that point there is no more room to contribute further; your second contribution "costs" infinity.
 
-<center><img src="/images/qv-files/Market9.png" /></center><br><br>
+<center><img src="../../../../images/qv-files/Market9.png" /></center><br><br>
 
 Now, you might notice that neither of the graphs above look quite right. The first graph over-privileges people who _care a lot_ (or are wealthy), the second graph over-privileges people who _care only a little_, which is also a problem. The single sheep's desire to live is more important than the two wolves' desire to have a tasty dinner.
 
@@ -50,19 +50,19 @@ So how do we match these two up? The answer is clever: _your n'th unit of influe
 
 Let's draw this as a graph:
 
-<center><img src="/images/qv-files/Market10.png" /></center><br><br>
+<center><img src="../../../../images/qv-files/Market10.png" /></center><br><br>
 
 Now let's look at all three beside each other:
 
 | One dollar one vote | Quadratic voting | One person one vote |
 | - | - | - |
-| ![](/images/qv-files/Market8.png) | ![](/images/qv-files/Market10.png) | ![](/images/qv-files/Market9.png) |
+| ![](../../../../images/qv-files/Market8.png) | ![](../../../../images/qv-files/Market10.png) | ![](../../../../images/qv-files/Market9.png) |
 
 Notice that only quadratic voting has this nice property that the amount of influence you purchase is proportional to how much you care; the other two mechanisms either over-privilege concentrated interests or over-privilege diffuse interests.
 
 Now, you might ask, where does the _quadratic_ come from? Well, the _marginal_ cost of the n'th vote is $n (or $0.01 * n), but the _total_ cost of n votes is $\approx \frac{n^2}{2}$. You can view this geometrically as follows:
 
-<center><img src="/images/qv-files/qv_triangle.png" /></center><br><br>
+<center><img src="../../../../images/qv-files/qv_triangle.png" /></center><br><br>
 
 
 The total cost is the area of a triangle, and you probably learned in math class that area is base * height / 2. And since here base and height are proportionate, that basically means that total cost is proportional to number of votes squared - hence, "quadratic". But honestly it's easier to think "your n'th unit of influence costs $n".
@@ -79,7 +79,7 @@ This seems like a perfect target for quadratic voting. The goal is that option A
 
 <br>
 <center>
-<img src="/images/qv-files/Market7.png?2e" /><br><br>
+<img src="../../../../images/qv-files/Market7.png?2e" /><br><br>
 <i><small>Note that in the voting case, we're deciding two options, so different people will favor A over B or B over A; hence, unlike the graphs we saw earlier that start from zero, here voting and preference can both be positive or negative (which option is considered positive and which is negative doesn't matter; the math works out the same way)</small></i>
 </center>
 <br>
@@ -93,7 +93,7 @@ We can extend quadratic voting in multiple ways. First, we can allow voting betw
 
 Second, we can look not just at voting between discrete options, but also at voting on the setting of a thermostat: anyone can push the thermostat up or down by 0.01 degrees n times by paying a cost of n<sup>2</sup>.
 
-<center><img src="/images/qv-files/tug_of_war.png" /><br><small><i>Plot twist: the side wanting it colder only wins when they convince the other side that "C" stands for "caliente".</i></small></center><br><br>
+<center><img src="../../../../images/qv-files/tug_of_war.png" /><br><small><i>Plot twist: the side wanting it colder only wins when they convince the other side that "C" stands for "caliente".</i></small></center><br><br>
 
 ### Quadratic funding
 
@@ -107,7 +107,7 @@ $$(\sum_{i=1}^n \sqrt{c_i})^2$$
 
 If that sounds complicated, here it is graphically:
 
-<center><img src="/images/qv-files/quadratic_funding.png" /></center><br><br>
+<center><img src="../../../../images/qv-files/quadratic_funding.png" /></center><br><br>
 
 In any case where there is more than one contributor, the computed payment is greater than the raw sum of contributions; the difference comes out of a central subsidy pool (eg. if ten people each donate $1, then the sum-of-square-roots is $10, and the square of that is $100, so the subsidy is $90). Note that if the subsidy pool is not big enough to make the full required payment to every project, we can just divide the subsidies proportionately by whatever constant makes the totals add up to the subsidy pool's budget; **you can prove that this solves the tragedy-of-the-commons problem as well as you can with that subsidy budget**.
 
@@ -117,7 +117,7 @@ Second, one can look at the formula through a quadratic voting lens. We interpre
 
 Quadratic funding is starting to be explored as a mechanism for funding public goods already; [Gitcoin grants](https://vitalik.ca/general/2019/10/24/gitcoin.html) for funding public goods in the Ethereum ecosystem is currently the biggest example, and the most recent round led to results that, in my own view, did a quite good job of making a fair allocation to support projects that the community deems valuable.
 
-<center><img src="/images/qv-files/round3.png" /><br><small><i>Numbers in white are raw contribution totals; numbers in green are the extra subsidies.</i></small></center><br><br>
+<center><img src="../../../../images/qv-files/round3.png" /><br><small><i>Numbers in white are raw contribution totals; numbers in green are the extra subsidies.</i></small></center><br><br>
 
 ### Quadratic attention payments
 
@@ -125,23 +125,23 @@ _See also the original post: [https://kortina.nyc/essays/speech-is-free-distribu
 
 One of the defining features of modern capitalism that people love to hate is ads. Our cities have ads:
 
-<center><img src="/images/qv-files/ads1.jpg" style="height:300px" /><br><small><i>Source: <a href="https://www.flickr.com/photos/argonavigo/36657795264">https://www.flickr.com/photos/argonavigo/36657795264</a></i></small></center><br><br>
+<center><img src="../../../../images/qv-files/ads1.jpg" style="height:300px" /><br><small><i>Source: <a href="https://www.flickr.com/photos/argonavigo/36657795264">https://www.flickr.com/photos/argonavigo/36657795264</a></i></small></center><br><br>
 
 Our subway turnstiles have ads:
 
-<center><img src="/images/qv-files/ads2.jpg" style="height:300px" /><br><small><i>Source: <a href="https://commons.wikimedia.org/wiki/File:NYC,_subway_ad_on_Prince_St.jpg">https://commons.wikimedia.org/wiki/File:NYC,_subway_ad_on_Prince_St.jpg</a></i></small></center><br><br>
+<center><img src="../../../../images/qv-files/ads2.jpg" style="height:300px" /><br><small><i>Source: <a href="https://commons.wikimedia.org/wiki/File:NYC,_subway_ad_on_Prince_St.jpg">https://commons.wikimedia.org/wiki/File:NYC,_subway_ad_on_Prince_St.jpg</a></i></small></center><br><br>
 
 Our politics are dominated by ads:
 
-<center><img src="/images/qv-files/ads3.jpg" style="height:300px" /><br><small><i>Source: <a href="https://upload.wikimedia.org/wikipedia/commons/e/e3/Billboard_Challenging_the_validity_of_Barack_Obama%27s_Birth_Certificate.JPG">https://upload.wikimedia.org/wikipedia/commons/e/e3/Billboard_Challenging_the_validity_of_Barack_Obama%27s_Birth_Certificate.JPG</a></i></small></center><br><br>
+<center><img src="../../../../images/qv-files/ads3.jpg" style="height:300px" /><br><small><i>Source: <a href="https://upload.wikimedia.org/wikipedia/commons/e/e3/Billboard_Challenging_the_validity_of_Barack_Obama%27s_Birth_Certificate.JPG">https://upload.wikimedia.org/wikipedia/commons/e/e3/Billboard_Challenging_the_validity_of_Barack_Obama%27s_Birth_Certificate.JPG</a></i></small></center><br><br>
 
 And even the rivers and the skies [have ads](https://newyork.cbslocal.com/2018/11/13/are-led-boat-advertisements-on-the-hudson-river-going-a-step-too-far/). Now, there are some places that seem to not have this problem:
 
-<center><img src="/images/qv-files/ads4.png" style="height:450px" /><br><br></center>
+<center><img src="../../../../images/qv-files/ads4.png" style="height:450px" /><br><br></center>
 
 But really they just have a different kind of ads:
 
-<center><img src="/images/qv-files/ads5.jpg" style="height:300px" /><br><br></center>
+<center><img src="../../../../images/qv-files/ads5.jpg" style="height:300px" /><br><br></center>
 
 Now, recently there are attempts to move beyond this [in some cities](https://www.theguardian.com/cities/2015/aug/11/can-cities-kick-ads-ban-urban-billboards). And [on Twitter](https://twitter.com/jack/status/1189634360472829952). But let's look at the problem systematically and try to see what's going wrong. The answer is actually surprisingly simple: public advertising is the evil twin of public goods production. In the case of public goods production, there is one actor that is taking on an expenditure to produce some product, and this product benefits a large number of people. Because these people cannot effectively coordinate to pay for the public goods by themselves, we get much less public goods than we need, and the ones we do get are those favored by wealthy actors or centralized authorities. Here, there is one actor that reaps a large _benefit_ from forcing other people to look at some image, and this action _harms_ a large number of people. Because these people cannot effectively coordinate to buy out the slots for the ads, we get ads we don't want to see, that are favored by... wealthy actors or centralized authorities.
 
@@ -159,7 +159,7 @@ Fortunately, there are [technological means that can help](https://ethresear.ch/
 
 Another challenge is that quadratic payments, being a payment-based mechanism, continues to favor people with more money. Note that because the cost of votes is quadratic, this effect is dampened: someone with 100 times more money only has 10 times more influence, not 100 times, so the extent of the problem goes down by 90% (and even more for ultra-wealthy actors). That said, it may be desirable to mitigate this inequality of power further. This could be done either by denominating quadratic payments in a separate token of which everyone gets a fixed number of units, or giving each person an allocation of funds that can only be used for quadratic-payments use cases: this is basically [Andrew Yang's "democracy dollars"](https://www.yang2020.com/policies/democracydollars/) proposal.
 
-<center><img src="/images/qv-files/Oprah.png" style="height:300px" /><br><br></center>
+<center><img src="../../../../images/qv-files/Oprah.png" style="height:300px" /><br><br></center>
 
 A third challenge is the "[rational ignorance](https://en.wikipedia.org/wiki/Rational_ignorance)" and "[rational irrationality](https://en.wikipedia.org/wiki/Rational_irrationality)" problems, which is that decentralized public decisions have the weakness that any single individual has very little effect on the outcome, and so little motivation to make sure they are supporting the decision that is best for the long term; instead, pressures such as tribal affiliation may dominate. There are many strands of philosophy that emphasize the ability of large crowds to be very wrong despite (or because of!) their size, and quadratic payments in any form do little to address this.
 

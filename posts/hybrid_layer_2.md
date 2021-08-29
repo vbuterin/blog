@@ -11,7 +11,7 @@ Current approaches to layer 2 scaling - basically, Plasma and state channels - a
 But at the same time, there is a resurgence of a forgotten category of "semi-layer-2" protocols - a category which promises less extreme gains in scaling, but with the benefit of much easier generalization and more favorable security models. A [long-forgotten blog post from 2014](https://blog.ethereum.org/2014/09/17/scalability-part-1-building-top/) introduced the idea of "shadow chains", an architecture where block data is published on-chain, but blocks are not _verified_ by default. Rather, blocks are tentatively accepted, and only finalized after some period of time (eg. 2 weeks). During those 2 weeks, a tentatively accepted block can be challenged; only then is the block verified, and if the block proves to be invalid then the chain from that block on is reverted, and the original publisher's deposit is penalized. The contract does not keep track of the full state of the system; it only keeps track of the state root, and users themselves can calculate the state by processing the data submitted to the chain from start to head. A more recent proposal, [ZK Rollup](https://ethresear.ch/t/on-chain-scaling-to-potentially-500-tx-sec-through-mass-tx-validation/3477), does the same thing without challenge periods, by using ZK-SNARKs to verify blocks' validity.
 
 <center>
-<img src="/images/hybrid-layer-2-files/RollupAnatomy.png"><br>
+<img src="../../../../images/hybrid-layer-2-files/RollupAnatomy.png"><br>
 <small><i>Anatomy of a ZK Rollup package that is published on-chain. Hundreds of "internal transactions" that affect the state (ie. account balances) of the ZK Rollup system are compressed into a package that contains ~10 bytes per internal transaction that specifies the state transitions, plus a ~100-300 byte SNARK proving that the transitions are all valid.</i></small>
 </center><br>
 
@@ -47,9 +47,9 @@ Because data-on-chain computation-off-chain layer 2 techniques don't have data a
 But what if you want more scalability? Then there is a large middle ground between data-on-chain layer 2 and data-off-chain layer 2 protocols, with many hybrid approaches that give you some of the benefits of both. To give a simple example, the history storage blowup in a decentralized exchange implemented on Plasma Cash can be prevented by publishing a mapping of which orders are matched with which orders (that's less than 4 bytes per order) on chain:
 
 <center>
-<img src="/images/hybrid-layer-2-files/Plasma%20Cash%200.png" style="width:180px; padding: 40px">
-<img src="/images/hybrid-layer-2-files/Plasma%20Cash%201.png" style="width:180px; padding: 40px">
-<img src="/images/hybrid-layer-2-files/Plasma%20Cash%202.png" style="width:180px; padding: 40px"><br>
+<img src="../../../../images/hybrid-layer-2-files/Plasma%20Cash%200.png" style="width:180px; padding: 40px">
+<img src="../../../../images/hybrid-layer-2-files/Plasma%20Cash%201.png" style="width:180px; padding: 40px">
+<img src="../../../../images/hybrid-layer-2-files/Plasma%20Cash%202.png" style="width:180px; padding: 40px"><br>
 <small><i><b>Left</b>: History data a Plasma Cash user needs to store if they own 1 coin. <b>Middle:</b> History data a Plasma Cash user needs to store if they own 1 coin that was exchanged with another coin using an atomic swap. <b>Right</b>: History data a Plasma Cash user needs to store if the order matching is published on chain.</i></small>
 </center><br>
 

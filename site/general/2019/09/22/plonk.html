@@ -1,33 +1,51 @@
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
-<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
-<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
-<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
-<link rel="stylesheet" type="text/css" href="/css/misc.css">
 
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Understanding PLONK">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
 <script type="text/javascript" id="MathJax-script" async
-  src="/scripts/mathjax.js">
+  src="../../../../scripts/tex-svg.js">
 </script>
 
 <style>
-@font-face {
-    font-family: MJXc-TeX-math-Iw;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXZERO;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXTEX;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-
-.math { font-family: MJXc-TeX-math-Iw }
 </style>
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
@@ -41,7 +59,7 @@
 <br>
 <h1 style="margin-bottom:7px"> Understanding PLONK </h1>
 <small style="float:left; color: #888"> 2019 Sep 22 </small>
-<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
 <br> <br> <br>
 <title> Understanding PLONK </title>
 
@@ -50,7 +68,7 @@
 <p>The first improvement is that while PLONK still requires a trusted setup procedure similar to that needed for the <a href="https://minezcash.com/zcash-trusted-setup/">SNARKs in Zcash</a>, it is a "universal and updateable" trusted setup. This means two things: first, instead of there being one separate trusted setup for every program you want to prove things about, there is one single trusted setup for the whole scheme after which you can use the scheme with any program (up to some maximum size chosen when making the setup). Second, there is a way for multiple parties to participate in the trusted setup such that it is secure as long as any one of them is honest, and this multi-party procedure is fully sequential: first one person participates, then the second, then the third... The full set of participants does not even need to be known ahead of time; new participants could just add themselves to the end. This makes it easy for the trusted setup to have a large number of participants, making it quite safe in practice.</p>
 <p>The second improvement is that the "fancy cryptography" it relies on is one single standardized component, called a "polynomial commitment". PLONK uses "Kate commitments", based on a trusted setup and elliptic curve pairings, but you can instead swap it out with other schemes, such as <a href="https://vitalik.ca/general/2017/11/22/starks_part_2.html">FRI</a> (which would <a href="https://eprint.iacr.org/2019/1020">turn PLONK into a kind of STARK</a>) or DARK (based on hidden-order groups). This means the scheme is theoretically compatible with any (achievable) tradeoff between proof size and security assumptions.</p>
 <center>
-<img src="/images/plonk-files/Tradeoffs.png" />
+<img src="../../../../images/plonk-files/Tradeoffs.png" />
 </center>
 <p><br></p>
 <p>What this means is that use cases that require different tradeoffs between proof size and security assumptions (or developers that have different ideological positions about this question) can still share the bulk of the same tooling for "arithmetization" - the process for converting a program into a set of polynomial equations that the polynpomial commitments are then used to check. If this kind of scheme becomes widely adopted, we can thus expect rapid progress in improving shared arithmetization techniques.</p>
@@ -58,12 +76,12 @@
 <p>Let us start with an explanation of how PLONK works, in a somewhat abstracted format that focuses on polynomial equations without immediately explaining how those equations are verified. A key ingredient in PLONK, as is the case in the <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">QAPs used in SNARKs</a>, is a procedure for converting a problem of the form "give me a value <span class="math inline">\(X\)</span> such that a specific program <span class="math inline">\(P\)</span> that I give you, when evaluated with <span class="math inline">\(X\)</span> as an input, gives some specific result <span class="math inline">\(Y\)</span>" into the problem "give me a set of values that satisfies a set of math equations". The program <span class="math inline">\(P\)</span> can represent many things; for example the problem could be "give me a solution to this sudoku", which you would encode by setting <span class="math inline">\(P\)</span> to be a sudoku verifier plus some initial values encoded and setting <span class="math inline">\(Y\)</span> to <span class="math inline">\(1\)</span> (ie. "yes, this solution is correct"), and a satisfying input <span class="math inline">\(X\)</span> would be a valid solution to the sudoku. This is done by representing <span class="math inline">\(P\)</span> as a circuit with logic gates for addition and multiplication, and converting it into a system of equations where the variables are the values on all the wires and there is one equation per gate (eg. <span class="math inline">\(x_6 = x_4 \cdot x_7\)</span> for multiplication, <span class="math inline">\(x_8 = x_5 + x_9\)</span> for addition).</p>
 <p>Here is an example of the problem of finding <span class="math inline">\(x\)</span> such that <span class="math inline">\(P(x) = x^3 + x + 5 = 35\)</span> (hint: <span title="Though other solutions also exist over fields where -31 has a square root; since SNARKs are done over prime fields this is something to watch out for!"><span class="math inline">\(x = 3\)</span></span>):</p>
 <center>
-<img src="/images/plonk-files/Circuit.png" />
+<img src="../../../../images/plonk-files/Circuit.png" />
 </center>
 <p><br></p>
 <p>We can label the gates and wires as follows:</p>
 <center>
-<img src="/images/plonk-files/Circuit2.png" />
+<img src="../../../../images/plonk-files/Circuit2.png" />
 </center>
 <p><br></p>
 <p>On the gates and wires, we have two types of constraints: <strong>gate constraints</strong> (equations between wires attached to the same gate, eg. <span class="math inline">\(a_1 \cdot b_1 = c_1\)</span>) and <strong>copy constraints</strong> (claims about equality of different wires anywhere in the circuit, eg. <span class="math inline">\(a_0 = a_1 = b_1 = b_2 = a_3\)</span> or <span class="math inline">\(c_0 = a_1\)</span>). We will need to create a structured system of equations, which will ultimately reduce to a very small number of polynomial equations, to represent both.</p>
@@ -91,7 +109,7 @@ y=x^{3}-5 x^{2}+7 x-2
 \]</span></p>
 <p>But we can also view polynomials in "evaluation form". For example, we can think of the above as being "the" degree <span class="math inline">\(&lt; 4\)</span> polynomial with evaluations <span class="math inline">\((-2, 1, 0, 1)\)</span> at the coordinates <span class="math inline">\((0, 1, 2, 3)\)</span> respectively.</p>
 <center>
-<img src="/images/plonk-files/polynomial_graph.png" />
+<img src="../../../../images/plonk-files/polynomial_graph.png" />
 </center>
 <p><br></p>
 <p>Now here's the next step. Systems of many equations of the same form can be re-interpreted as a single equation over polynomials. For example, suppose that we have the system:</p>
@@ -113,7 +131,7 @@ Q_{L}(x) a(x)+Q_{R}(x) b(x)+Q_{O}(x) c(x)+Q_{M}(x) a(x) b(x)+Q_{C}(x)=0
 <p>Our strategy will be to design a "coordinate pair accumulator", a polynomial <span class="math inline">\(p(x)\)</span> which works as follows. First, let <span class="math inline">\(X(x)\)</span> and <span class="math inline">\(Y(x)\)</span> be two polynomials representing the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> coordinates of a set of points (eg. to represent the set <span class="math inline">\(((0, -2), (1, 1), (2, 0), (3, 1))\)</span> you might set <span class="math inline">\(X(x) = x\)</span> and <span class="math inline">\(Y(x) = x_3 - 5x_2 + 7x - 2)\)</span>. Our goal will be to let <span class="math inline">\(p(x)\)</span> represent all the points up to (but not including) the given position, so <span class="math inline">\(p(0)\)</span> starts at <span class="math inline">\(1\)</span>, <span class="math inline">\(p(1)\)</span> represents just the first point, <span class="math inline">\(p(2)\)</span> the first and the second, etc. We will do this by "randomly" selecting two constants, <span class="math inline">\(v_1\)</span> and <span class="math inline">\(v_2\)</span>, and constructing <span class="math inline">\(p(x)\)</span> using the constraints <span class="math inline">\(p(0) = 1\)</span> and <span class="math inline">\(p(x+1) = p(x) \cdot (v_1 + X(x) + v_2 \cdot Y(x))\)</span> at least within the domain <span class="math inline">\((0, 1, 2, 3)\)</span>.</p>
 <p>For example, letting <span class="math inline">\(v_1 = 3\)</span> and <span class="math inline">\(v_2 = 2\)</span>, we get:</p>
 <center>
-<p><img src="/images/plonk-files/polynomial_graph3.png" style="width:440px"/><br></p>
+<p><img src="../../../../images/plonk-files/polynomial_graph3.png" style="width:440px"/><br></p>
 <table style="padding-right:136px; border-collapse: collapse;" align="center">
 <tr>
 <td style="border: 1px solid black" align="right" width="136px">

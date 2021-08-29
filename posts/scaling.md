@@ -9,7 +9,7 @@ Just how far can you push the scalability of a blockchain? Can you really, as [E
 
 As it turns out, there are important and quite subtle technical factors that limit blockchain scaling, both with sharding and without. In many cases there are solutions, but even with the solutions there are limits. This post will go through what many of these issues are.
 
-<br><center><a href="https://twitter.com/elonmusk/status/1393738154889338884"><img src="/images/scaling-files/elontweet.png" /></a><br><br>
+<br><center><a href="https://twitter.com/elonmusk/status/1393738154889338884"><img src="../../../../images/scaling-files/elontweet.png" /></a><br><br>
 <small><i>Just increase the parameters, and all problems are solved. But at what cost?</i></small>
 </center><br>
 
@@ -21,7 +21,7 @@ An hour later, you're in a telegram chat with the other two small pools who were
 
 By the morning, arguments on Twitter, and on the one community forum that was not censoring the discussion, discussions are everywhere. But by then a significant part of the 4.5 million coins had been converted on-chain to other assets, and billions of dollars of defi transactions had taken place. 79% of the consensus nodes, and all the major block explorers and endpoints for light wallets, were following this new chain. Perhaps the new dev fund will fund some development, or perhaps it will just all be embezzled by the leading pools and exchanges and their cronies. But regardless of how it turns out, the fund is for all intents and purposes a fait accompli, and regular users have no way to fight back.
 
-<br><center><img src="/images/scaling-files/forkwars.png" /><br><br>
+<br><center><img src="../../../../images/scaling-files/forkwars.png" /><br><br>
 <small><i>Movie coming soon. Maybe it can be funded by MolochDAO or something.</i></small>
 </center><br>
 
@@ -29,7 +29,7 @@ Can this happen on your blockchain? The elites of your blockchain community, inc
 
 Imagine how the story would have played out if the users were running nodes that verify the chain (whether directly or through [more advanced indirect techniques](https://vitalik.ca/general/2021/04/07/sharding.html#improving-sharding-with-better-security-models)), and automatically reject blocks that break the protocol rules _even if_ over 90% of the miners or stakers support those blocks. If _every_ user ran a verifying node, then the attack would have quickly failed: a few mining pools and exchanges would have forked off and looked quite foolish in the process. But even if _some_ users ran verifying nodes, the attack would not have led to a _clean victory_ for the attacker; rather, it would have led to _chaos_, with different users seeing different views of the chain. At the very least, the ensuing market panic and likely persistent chain split would greatly reduce the attackers' profits. The thought of navigating such a protracted conflict would itself deter most attacks.
 
-<br><center><a href="https://twitter.com/hasufl/status/1376998067040366593"><img src="/images/scaling-files/hasutweet.png" /></a><br><br>
+<br><center><a href="https://twitter.com/hasufl/status/1376998067040366593"><img src="../../../../images/scaling-files/hasutweet.png" /></a><br><br>
 <small><i>Listen to Hasu on this one.</i></small>
 </center><br>
 
@@ -84,7 +84,7 @@ When Starkware did an experiment in 2019 where they published 500 kB blocks  aft
 
 The main argument here is, as you might guess, the same as elsewhere: the difference between theory and practice. _In theory_, there are [8 TB solid state drives](https://www.amazon.com/SAMSUNG-870-QVO-SATA-MZ-77Q8T0B/dp/B089C3TZL9/ref=sr_1_3?dchild=1&keywords=8tb&qid=1621637865&s=pc&sr=1-3) that you can buy on Amazon (you _do_ need SSDs or NVME; HDDs are too slow for storing the blockchain state). _In practice_, the laptop that was used to write this blog post has 512 GB, and if you make people go buy their own hardware, many of them will just get lazy (or they can't afford $800 for an 8 TB SSD) and use a centralized provider. And even if you can fit a blockchain onto some storage, a high level of activity can easily quickly burn through the disk and force you to keep getting a new one.
 
-<br><center><img src="/images/scaling-files/poll.png" /><br><br>
+<br><center><img src="../../../../images/scaling-files/poll.png" /><br><br>
 <small><i>A poll in a group of blockchain protocol researchers of how much disk space everyone has. Small sample size, I know, but still...</i></small>
 </center><br>
 
@@ -94,7 +94,7 @@ Additionally, storage size determines the time needed for a new node to be able 
 
 Additionally, there are interaction effects between these three types of costs. Because databases use tree structures internally to store and retrieve data, the cost of fetching data from a database increases with the logarithm of the size of the database. In fact, because the top level (or top few levels) can be cached in RAM, the disk access cost is proportional to the _size of the database as a multiple of the size of the data cached in RAM_.
 
-<br><center><img src="/images/scaling-files/tree.png" /><br><br>
+<br><center><img src="../../../../images/scaling-files/tree.png" /><br><br>
 <small><i>Don't take this diagram too literally; different databases work in different ways, and often the part in memory is just a single (but big) layer (see <a href="http://paperhub.s3.amazonaws.com/18e91eb4db2114a06ea614f0384f2784.pdf">LSM trees</a> as used in leveldb). But the basic principles are the same.</i></small>
 </center><br> 
 
@@ -114,7 +114,7 @@ Another possible medium-term solution is using ZK-SNARKs to verify transactions.
 
 As a result, sharded blockchains can safely have very high levels of transaction throughput that non-sharded blockchains cannot. This does require a lot of cryptographic cleverness in creating efficient substitutes for naive full validation that successfully reject invalid blocks, but it can be done: the [theory](https://hackmd.io/@vbuterin/das) is [well-established](https://vitalik.ca/general/2021/01/26/snarks.html) and proof-of-concepts based on [draft specifications](https://github.com/ethereum/eth2.0-specs/blob/dev/specs/sharding/beacon-chain.md) are already [being worked on](https://github.com/protolambda/eth2-das).
 
-<br><center><img src="https://vitalik.ca/images/sharding-files/beacon_chain.jpg" /><br>
+<br><center><img src="https://vitalik.ca../../../../images/sharding-files/beacon_chain.jpg" /><br>
 </center><br>
 
 Ethereum is planning to use **quadratic sharding**, where total scalability is limited by the fact that a node has to be able to process both a single shard and the beacon chain which has to perform some fixed amount of management work for each shard. If shards are too big, nodes can no longer process individual shards, and if there are too many shards, nodes can no longer process the beacon chain. The product of these two constraints forms the upper bound.
@@ -143,7 +143,7 @@ A minimum user count of under 1,000 is almost certainly fine. A minimum user cou
 
 An important property of a blockchain that users really value is **permanence**. A digital asset stored on a server will stop existing in 10 years when the company goes bankrupt or loses interest in maintaining that ecosystem. An NFT on Ethereum, on the other hand, _is forever_.
 
-<br><center><img src="/images/scaling-files/cryptokitties.png" /><br><br>
+<br><center><img src="../../../../images/scaling-files/cryptokitties.png" /><br><br>
 <small><i>Yes, people will still be downloading and examining your cryptokitties in the year 2371. Deal with it.</i></small>
 </center><br>
 

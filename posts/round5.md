@@ -9,8 +9,8 @@ _Special thanks to Kevin Owocki and Frank Chen for help and review_
 Round 5 of Gitcoin Grants has just finished, with $250,000 of matching split between tech, media, and the new (non-Ethereum-centric) category of "public health". In general, it seems like the mechanism and the community are settling down into a regular rhythm. People know what it means to contribute, people know what to expect, and the results emerge in a relatively predictable pattern - even if which specific grants get the most funds is not so easy to predict.
 
 <center>
-<img src="/images/round5/tech2.jpg" style="width:350px" />
-<img src="/images/round5/media2.jpg" style="width:350px" />
+<img src="../../../../images/round5/tech2.jpg" style="width:350px" />
+<img src="../../../../images/round5/media2.jpg" style="width:350px" />
 </center><br>
 
 ### Stability of income
@@ -20,7 +20,7 @@ So let's go straight into the analysis. One important property worth looking at 
 On the media side, we do see some balance between stability and dynamism:
 
 <center>
-<img src="/images/round5/media_scatter.png?1" />
+<img src="../../../../images/round5/media_scatter.png?1" />
 </center><br>
 
 Week in Ethereum had the highest total amount received in both [the previous round](https://vitalik.ca/general/2020/01/28/round4.html) and the current round. EthHub and Bankless are also near the top in both the current round and the previous round. On the other hand, Antiprosynthesis, the (beloved? notorious? famous?) Twitter info-warrior, has decreased from $13,813 to $5,350, while [Chris Blec's YouTube channel](https://gitcoin.co/grants/174/defi-educational-videos-by-chris-blec) has _increased_ from $5,851 to $12,803. So some churn, but also some continuity between rounds.
@@ -28,13 +28,13 @@ Week in Ethereum had the highest total amount received in both [the previous rou
 On the tech side, we see much more churn in the winners, with a less clear relationship between income last round and income this round:
 
 <center>
-<img src="/images/round5/tech_scatter.png?1" />
+<img src="../../../../images/round5/tech_scatter.png?1" />
 </center><br>
 
 Last round, the winner was Tornado Cash, claiming $30,783; this round, they are down to $8,154. This round, the three roughly-even winners are [Samczsun](https://gitcoin.co/grants/444/white-hat-hacking) ($4,631 contributions + $15,704 match = $20,335 total), [Arboreum](https://gitcoin.co/grants/618/arboreum) ($16,084 contributions + $9,046 match = $25,128 total) and [1inch.exchange](https://gitcoin.co/grants/246/1split) ($58,566 contributions + $7,893 match = $66,459 total), in the latter case the bulk coming from one contribution:
 
 <center>
-<a href="https://gitcoin.co/tgerring"><img src="/images/round5/tgerring.png" /></a>
+<a href="https://gitcoin.co/tgerring"><img src="../../../../images/round5/tgerring.png" /></a>
 </center><br>
 
 In the previous round, those three winners were not even in the top ten, and in some cases not even part of Gitcoin Grants at all.
@@ -59,7 +59,7 @@ My explanation of hypothesis (2) starts, interestingly enough, with a defense of
 
 | Contributing to A | Contributing to B |
 | - | - |
-| ![](/images/round5/QF1.png) | ![](/images/round5/QF2.png) |
+| ![](../../../../images/round5/QF1.png) | ![](../../../../images/round5/QF2.png) |
 
 Clearly, you have more impact by supporting A, and so A gets even more contributors and B gets fewer; the rich get richer. Even if project B was _somewhat better_, the greater impact from supporting A could still create a lock-in that reinforces A's position. The current everyone-starts-from-zero-in-each-round mechanism greatly limits this type of entrenchment, because, well, everyone's matching gets reset and starts from zero.
 
@@ -67,13 +67,13 @@ However, a very similar effect also is the cause behind the market failure preve
 
 We simplify the model as follows. An individual has two choices: contribute $10 in the current round, or contribute $5 in the current round and $5 in the next round. If the matchings in the two rounds were equal, then the latter option would actually be more favorable: because the matching is proportional to the square root of the donation size, the former might give you eg. a $200 match now, but the latter would give you $141 in the current round + $141 in the next round = $282. But if you see a large mass of people contributing in the current round, and you expect much fewer people to contribute in the second round, then the choice is not $200 versus $141 + $141, it might be $200 versus $141 + $5. And so you're better off joining the current round's frenzy. We can mathematically analyze the equilibrium:
 
-<center><img src="/images/round5/split.png" /></center><br>
+<center><img src="../../../../images/round5/split.png" /></center><br>
 
-So there is a substantial region within which the bad equilibrium of everyone concentrating is sticky: if more than about 3/4 of contributors are expected to concentrate, it seems in your interest to also concentrate. A mathematically astute reader may note that there is [always some intermediate strategy](/images/round5/split2.png) that involves splitting but at a ratio different from 50/50, which you can prove performs better than either full concentrating _or_ the even split, but here we get back to hypothesis (3) above: the UI doesn't offer such a complex menu of choices, it just offers the choice of a one-time contribution or a recurring contribution, so people pick one or the other.
+So there is a substantial region within which the bad equilibrium of everyone concentrating is sticky: if more than about 3/4 of contributors are expected to concentrate, it seems in your interest to also concentrate. A mathematically astute reader may note that there is [always some intermediate strategy](../../../../images/round5/split2.png) that involves splitting but at a ratio different from 50/50, which you can prove performs better than either full concentrating _or_ the even split, but here we get back to hypothesis (3) above: the UI doesn't offer such a complex menu of choices, it just offers the choice of a one-time contribution or a recurring contribution, so people pick one or the other.
 
 How might we fix this? One option is to add a bit of continuity to matching ratios: when computing pairwise matches, match against not just the current round's contributors but, say, 1/3 of the previous round's contributors as well:
 
-<center><img src="/images/round5/QF3.png" /></center><br>
+<center><img src="../../../../images/round5/QF3.png" /></center><br>
 
 This makes some philosophical sense: the objective of quadratic funding is to subsidize contributions to projects that are detected to be public goods because multiple people have contributed to them, and contributions in the previous round are certainly also evidence of a project's value, so why not reuse those? So here, moving away from everyone-starts-from-zero toward this partial carryover of matching ratios would mitigate the round concentration effect - but, of course, it would exacerbate the risk of entrenchment. Hence, some experimentation and balance may be in order. A broader philosophical question is, is there really a deep inherent tradeoff between risk of entrenchment and stability of income, or is there some way we could get both?
 
@@ -81,7 +81,7 @@ This makes some philosophical sense: the objective of quadratic funding is to su
 
 This round also introduced negative contributions, a feature proposed in my [review of the previous round](https://vitalik.ca/general/2020/01/28/round4.html). But as with recurring contributions, very few people made negative contributions, to the point where their impact on the results was negligible. Also, there was [active](https://twitter.com/evan_van_ness/status/1250152866519621632?s=20) [opposition](https://twitter.com/evan_van_ness/status/1248390335048216576?s=20) to [negative](https://twitter.com/ljxie/status/1250178888946176000?s=20) [contributions](https://twitter.com/josephdelong/status/1250175753372807170?s=20):
 
-<center><img src="/images/round5/meme.jpeg" /><br><small><i>Source: honestly I have no idea, someone else sent it to me and they forgot where they found it. Sorry :(</i></small></center><br>
+<center><img src="../../../../images/round5/meme.jpeg" /><br><small><i>Source: honestly I have no idea, someone else sent it to me and they forgot where they found it. Sorry :(</i></small></center><br>
 
 The main source of opposition was basically what I predicted in the previous round. Adding a mechanism that allows people to penalize others, even if deservedly so, can have tricky and easily harmful social consequences. Some people even opposed the negative contribution mechanism to the point where they took care to give positive contributions to everyone who received a negative contribution.
 
@@ -94,7 +94,7 @@ One approach would be to hide more information: instead of just hiding _who_ mad
 This round saw much larger-scale attempts at collusion:
 
 <center>
-<a href="https://twitter.com/owocki/status/1250097472694702080"><img src="/images/round5/collusion_tweet.png" /></a>
+<a href="https://twitter.com/owocki/status/1250097472694702080"><img src="../../../../images/round5/collusion_tweet.png" /></a>
 </center><br>
 
 It does seem clear that, at current scales, stronger protections against manipulation are goingto be required. The first thing that can be done is adding a stronger identity verification layer than Github accounts; this is something that the Gitcoin team is already working on. There is definitely a complex tradeoff between security and inclusiveness to be worked through, but it is not especially difficult to implement a first version. And if the identity problem is solved to a reasonable extent, that will likely be enough to prevent collusion at current scales. But in the longer term, we are going to need protection not just against manipulating the system by making many fake accounts, but also against collusion via bribes (explicit and implicit).
@@ -109,6 +109,6 @@ The challenge with hiding contributions is that we lose the "social proof" motiv
 
 All in all, Gitcoin Grants is establishing itself as a significant pillar of the Ethereum ecosystem that more and more projects are relying on for some or all of their support. While it has a relatively low amount of funding at present, and so inevitably underfunds almost everything it touches, we hope that over time we'll continue to see larger sources of funding for the matching pools appear. One option is [MEV auctions](https://ethresear.ch/t/mev-auction-auctioning-transaction-ordering-rights-as-a-solution-to-miner-extractable-value/6788), another is that new or existing token projects looking to do airdrops could provide the tokens to a matching pool. A third is transaction fees of various applications. With larger amounts of funding, Gitcoin Grants could serve as a more significant funding stream - though to get to that point, further iteration and work on fine-tuning the mechanism will be required.
 
-<center><img src="/images/round5/health2.jpg" style="width:375px" /></center><br>
+<center><img src="../../../../images/round5/health2.jpg" style="width:375px" /></center><br>
 
 Additionally, this round saw Gitcoin Grants' first foray into applications beyond Ethereum with the health section. There is growing interest in quadratic funding from local government bodies and other non-blockchain groups, and it would be very valuable to see quadratic funding more broadly deployed in such contexts. That said, there are unique challenges there too. First, there's issues around onboarding people who do not already have cryptocurrency. Second, the Ethereum community is naturally expert in the needs of the Ethereum community, but neither it nor average people are expert in, eg. medical support for the coronavirus pandemic. We should expect quadratic funding to perform worse when the participants are not experts in the domain they're being asked to contribute to. Will non-blockchain uses of QF focus on domains where there's a clear local community that's expert in its own needs, or will people try larger-scale deployments soon? If we do see larger-scale deployments, how will those turn out? There's still a lot of questions to be answered.

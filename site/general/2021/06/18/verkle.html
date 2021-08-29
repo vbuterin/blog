@@ -1,39 +1,51 @@
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
 
 
-<link rel="alternate" type="application/rss+xml" href="/feed.xml" title="Verkle trees">
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Verkle trees">
 
 
 
-<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
-<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
-<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
-<link rel="stylesheet" type="text/css" href="/css/misc.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
 <script type="text/javascript" id="MathJax-script" async
-  src="/scripts/mathjax.js">
+  src="../../../../scripts/tex-svg.js">
 </script>
 
 <style>
-@font-face {
-    font-family: MJXc-TeX-math-Iw;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXZERO;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXTEX;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-
-.math { font-family: MJXc-TeX-math-Iw }
 </style>
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
@@ -47,7 +59,7 @@
 <br>
 <h1 style="margin-bottom:7px"> Verkle trees </h1>
 <small style="float:left; color: #888"> 2021 Jun 18 </small>
-<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
 <br> <br> <br>
 <title> Verkle trees </title>
 
@@ -58,25 +70,25 @@
 <p>In terms of the <em>structure</em> of the tree (how the nodes in the tree are arranged and what they contain), a Verkle tree is very similar to the <a href="https://ethereum.stackexchange.com/questions/6415/eli5-how-does-a-merkle-patricia-trie-tree-work">Merkle Patricia tree</a> currently used in Ethereum. Every node is either (i) empty, (ii) a leaf node containing a key and value, or (iii) an intermediate node that has some fixed number of children (the "width" of the tree). The value of an intermediate node is computed as a hash of the values of its children.</p>
 <p>The location of a value in the tree is based on its key: in the diagram below, to get to the node with key <code>4cc</code>, you start at the root, then go down to the child at position <code>4</code>, then go down to the child at position <code>c</code> (remember: <code>c = 12</code> in hexadecimal), and then go down again to the child at position <code>c</code>. To get to the node with key <code>baaa</code>, you go to the position-<code>b</code> child of the root, and then the position-<code>a</code> child of <em>that</em> node. The node at path <code>(b,a)</code> directly contains the node with key <code>baaa</code>, because there are no other keys in the tree starting with <code>ba</code>.</p>
 <center>
-<br><img src="/images/verkle-files/verkle.png"><br><br> <small><i>The structure of nodes in a hexary (16 children per parent) Verkle tree, here filled with six (key, value) pairs.</i></small><br><br><br>
+<br><img src="../../../../images/verkle-files/verkle.png"><br><br> <small><i>The structure of nodes in a hexary (16 children per parent) Verkle tree, here filled with six (key, value) pairs.</i></small><br><br><br>
 </center>
 <p>The only real difference in the <em>structure</em> of Verkle trees and Merkle Patricia trees is that Verkle trees are wider in practice. <em>Much</em> wider. Patricia trees are at their most efficient when <code>width = 2</code> (so Ethereum's hexary Patricia tree is actually quite suboptimal). Verkle trees, on the other hand, get shorter and shorter proofs the higher the width; the only limit is that if width gets <em>too</em> high, proofs start to take too long to create. The <a href="https://notes.ethereum.org/@vbuterin/verkle_tree_eip">Verkle tree proposed for Ethereum</a> has a width of 256, and some even favor raising it to 1024 (!!).</p>
 <h2 id="commitments-and-proofs">Commitments and proofs</h2>
 <p>In a Merkle tree (including Merkle Patricia trees), the proof of a value consists of the entire set of <em>sister nodes</em>: the proof must contain all nodes in the tree that <em>share a parent</em> with any of the nodes in the path going down to the node you are trying to prove. That may be a little complicated to understand, so here's a picture of a proof for the value in the <code>4ce</code> position. Sister nodes that must be included in the proof are highlighted in red.</p>
 <center>
-<br><img src="/images/verkle-files/verkle2.png"><br><br> <br><br>
+<br><img src="../../../../images/verkle-files/verkle2.png"><br><br> <br><br>
 </center>
 <p>That's a lot of nodes! You need to provide the sister nodes at each level, because you need the entire set of children of a node to compute the value of that node, and you need to keep doing this until you get to the root. You might think that this is not that bad because most of the nodes are zeroes, but that's only because this tree has very few nodes. If this tree had 256 randomly-allocated nodes, the top layer would almost certainly have all 16 nodes full, and the second layer would on average be ~63.3% full.</p>
 <p><strong>In a Verkle tree, on the other hand, you do not need to provide sister nodes; instead, you just provide the path, with a little bit extra as a proof.</strong> This is why Verkle trees benefit from greater width and Merkle Patricia trees do not: a tree with greater width leads to shorter paths in both cases, but in a Merkle Patricia tree this effect is overwhelmed by the higher cost of needing to provide all the <code>width - 1</code> sister nodes per level in a proof. In a Verkle tree, that cost does not exist.</p>
 <p>So what is this little extra that we need as a proof? To understand that, we first need to circle back to one key detail: the hash function used to compute an inner node from its children is not a regular hash. Instead, it's a <strong>vector commitment</strong>.</p>
 <p>A vector commitment scheme is a special type of hash function, hashing a list <span class="math inline">\(h(z_1, z_2 ... z_n) \rightarrow C\)</span>. But vector commitments have the special property that for a commitment <span class="math inline">\(C\)</span> and a value <span class="math inline">\(z_i\)</span>, it's possible to make a short proof that <span class="math inline">\(C\)</span> is the commitment to some list where the value at the i'th position is <span class="math inline">\(z_i\)</span>. In a Verkle proof, this short proof replaces the function of the sister nodes in a Merkle Patricia proof, giving the verifier confidence that a child node really is the child at the given position of its parent node.</p>
 <center>
-<br><img src="/images/verkle-files/verkle3.png"><br><br> <small><i>No sister nodes required in a proof of a value in the tree; just the path itself plus a few short proofs to link each commitment in the path to the next.</i></small><br><br><br>
+<br><img src="../../../../images/verkle-files/verkle3.png"><br><br> <small><i>No sister nodes required in a proof of a value in the tree; just the path itself plus a few short proofs to link each commitment in the path to the next.</i></small><br><br><br>
 </center>
 <p>In practice, we use a primitive even more powerful than a vector commitment, called a <strong>polynomial commitment</strong>. Polynomial commitments let you hash a polynomial, and make a proof for the evaluation of the hashed polynomial at <em>any</em> point. You can use polynomial commitments as vector commitments: if we agree on a set of standardized coordinates <span class="math inline">\((c_1, c_2 ... c_n)\)</span>, given a list <span class="math inline">\((y_1, y_2 ... y_n)\)</span> you can commit to the polynomial <span class="math inline">\(P\)</span> where <span class="math inline">\(P(c_i) = y_i\)</span> for all <span class="math inline">\(i \in [1..n]\)</span> (you can find this polynomial with <a href="https://en.wikipedia.org/wiki/Lagrange_polynomial">Lagrange interpolation</a>). I talk about polynomial commitments at length <a href="https://vitalik.ca/general/2021/01/26/snarks.html#polynomial-commitments">in my article on ZK-SNARKs</a>. The two polynomial commitment schemes that are the easiest to use are <a href="https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html">KZG commitments</a> and <a href="https://twitter.com/VitalikButerin/status/1371844878968176647">bulletproof-style commitments</a> (in both cases, a commitment is a single 32-48 byte elliptic curve point). Polynomial commitments give us more flexibility that lets us improve efficiency, and it just so happens that the simplest and most efficient vector commitments available <em>are</em> the polynomial commitments.</p>
 <p>This scheme is already very powerful as it is: <strong>if you use a KZG commitment and proof, the proof size is 96 bytes per intermediate node, nearly 3x more space-efficient than a simple Merkle proof</strong> if we set width = 256. However, it turns out that we can increase space-efficiency even further.</p>
 <center>
-<br><img src="/images/verkle-files/notfinalform.png"><br><br>
+<br><img src="../../../../images/verkle-files/notfinalform.png"><br><br>
 </center>
 <p><br></p>
 <h2 id="merging-the-proofs">Merging the proofs</h2>
@@ -99,7 +111,7 @@
 <p><span class="math inline">\(A_i(X) - 9 = X^2 + X - 6\)</span>, and <span class="math inline">\(\frac{X^2 + X - 6}{X - 2}\)</span> gives a clean <span class="math inline">\(X - 3\)</span>. But if we tried to fit in <span class="math inline">\((x_i = 2, y_i = 10)\)</span>, this would not work; <span class="math inline">\(X^2 + X - 7\)</span> <em>cannot</em> be cleanly divided by <span class="math inline">\(X - 2\)</span> without a fractional remainder.</p>
 <p>The rest of the proof involves providing a polynomial commitment to <span class="math inline">\(g(X)\)</span> and then proving that the commitment is actually correct. Once again, see <a href="https://notes.ethereum.org/nrQqhVpQRi6acQckwm1Ryg#Proof">Dankrad's more technical description</a> for the rest of the proof.</p>
 <center>
-<br><img src="/images/verkle-files/verkle5.png"><br><br> <small><i>One single proof proves an unlimited number of parent-child relationships.</i></small><br><br><br>
+<br><img src="../../../../images/verkle-files/verkle5.png"><br><br> <small><i>One single proof proves an unlimited number of parent-child relationships.</i></small><br><br><br>
 </center>
 <p>And there we have it, that's what a maximally efficient Verkle proof looks like.</p>
 <h3 id="key-properties-of-proof-sizes-using-this-scheme">Key properties of proof sizes using this scheme</h3>

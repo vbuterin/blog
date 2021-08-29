@@ -1,33 +1,51 @@
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
-<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
-<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
-<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
-<link rel="stylesheet" type="text/css" href="/css/misc.css">
 
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Notes on Blockchain Governance">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
 <script type="text/javascript" id="MathJax-script" async
-  src="/scripts/mathjax.js">
+  src="../../../../scripts/tex-svg.js">
 </script>
 
 <style>
-@font-face {
-    font-family: MJXc-TeX-math-Iw;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXZERO;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXTEX;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-
-.math { font-family: MJXc-TeX-math-Iw }
 </style>
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
@@ -41,7 +59,7 @@
 <br>
 <h1 style="margin-bottom:7px"> Notes on Blockchain Governance </h1>
 <small style="float:left; color: #888"> 2017 Dec 17 </small>
-<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
 <br> <br> <br>
 <title> Notes on Blockchain Governance </title>
 
@@ -65,19 +83,19 @@ Yes, but why would you want to make [a minority chain split] easier? Splits dest
 <h3 id="what-is-blockchain-governance">What is Blockchain Governance?</h3>
 <p>To start off, we need to describe more clearly what the process of "blockchain governance" <em>is</em>. Generally speaking, there are two informal models of governance, that I will call the "decision function" view of governance and the "coordination" view of governance. The decision function view treats governance as a function <span class="math inline">\(f(x_1, x_2 ... x_n) \rightarrow y\)</span>, where the inputs are the wishes of various legitimate stakeholders (senators, the president, property owners, shareholders, voters, etc) and the output is the decision.</p>
 <center>
-<img src="/images/voting-files/decisionfunction.png" style="width:350px"/>
+<img src="../../../../images/voting-files/decisionfunction.png" style="width:350px"/>
 </center>
 <p><br></p>
 <p>The decision function view is often useful as an approximation, but it clearly frays very easily around the edges: people often can and do break the law and get away with it, sometimes rules are ambiguous, and sometimes revolutions happen - and all three of these possibilities are, at least sometimes, <em>a good thing</em>. And often even behavior inside the system is shaped by incentives created by <em>the possibility</em> of acting outside the system, and this once again is at least sometimes a good thing.</p>
 <p>The coordination model of governance, in contrast, sees governance as something that exists in layers. The bottom layer is, in the real world, the laws of physics themselves (as a geopolitical realist would say, guns and bombs), and in the blockchain space we can abstract a bit further and say that it is each individual's ability to run whatever software they want in their capacity as a user, miner, stakeholder, validator or whatever other kind of agent a blockchain protocol allows them to be. The bottom layer is always the ultimate deciding layer; if, for example, all Bitcoin users wake up one day and decides to edit their clients' source code and replace the entire code with an Ethereum client that listens to balances of a particular ERC20 token contract, then that means that that ERC20 token <em>is</em> bitcoin. The bottom layer's ultimate governing power cannot be stopped, but the actions that people take on this layer can be <em>influenced</em> by the layers above it.</p>
 <p>The second (and crucially important) layer is coordination institutions. The purpose of a coordination institution is to create focal points around how and when individuals should act in order to better coordinate behavior. There are many situations, both in blockchain governance and in real life, where if you act in a certain way alone, you are likely to get nowhere (or worse), but if everyone acts together a desired result can be achieved.</p>
 <center>
-<img src="/images/voting-files/coordinationgame.png" style="width:250px"/><br> <br> <small>An abstract coordination game. You benefit heavily from making the same move as everyone else.</small>
+<img src="../../../../images/voting-files/coordinationgame.png" style="width:250px"/><br> <br> <small>An abstract coordination game. You benefit heavily from making the same move as everyone else.</small>
 </center>
 <p><br></p>
 <p>In these cases, it's in your interest to go if everyone else is going, and stop if everyone else is stopping. You can think of coordination institutions as putting up green or red flags in the air saying "go" or "stop", <em>with an established culture</em> that everyone watches these flags and (usually) does what they say. Why do people have the incentive to follow these flags? Because <em>everyone else</em> is already following these flags, and you have the incentive to do the same thing as what everyone else is doing.</p>
 <center>
-<img src="/images/voting-files/byzantinegeneral.jpg" style="width:550px"/> <br><br> <small>A Byzantine general rallying his troops forward. The purpose of this isn't just to make the soldiers feel brave and excited, but also to reassure them that <i>everyone else</i> feels brave and excited and will charge forward as well, so an individual soldier is not just committing suicide by charging forward alone.</small>
+<img src="../../../../images/voting-files/byzantinegeneral.jpg" style="width:550px"/> <br><br> <small>A Byzantine general rallying his troops forward. The purpose of this isn't just to make the soldiers feel brave and excited, but also to reassure them that <i>everyone else</i> feels brave and excited and will charge forward as well, so an individual soldier is not just committing suicide by charging forward alone.</small>
 </center>
 <p><br></p>
 <blockquote>
@@ -97,7 +115,7 @@ Yes, but why would you want to make [a minority chain split] easier? Splits dest
 <li><strong>The EIP 186/649/669 Carbonvote</strong>: <a href="http://carbonvote.com/">http://carbonvote.com/</a></li>
 </ul>
 <center>
-<img src="/images/voting-files/vote2.png" style="height:340px" /> <img src="/images/voting-files/vote3.png" style="height:340px" /> <br><br> <img src="/images/voting-files/vote1.png" style="width:480px" />
+<img src="../../../../images/voting-files/vote2.png" style="height:340px" /> <img src="../../../../images/voting-files/vote3.png" style="height:340px" /> <br><br> <img src="../../../../images/voting-files/vote1.png" style="width:480px" />
 </center>
 <p><br></p>
 <p>These three are all examples of <em>loosely coupled</em> coin voting, or coin voting as a layer 2 coordination institution. Ethereum does not have any examples of <em>tightly coupled</em> coin voting (or, coin voting as a layer 1 in-protocol feature), though it <em>does</em> have an example of tightly coupled <em>miner</em> voting: miners' right to vote on the gas limit. Clearly, tightly coupled voting and loosely coupled voting are competitors in the governance mechanism space, so it's worth dissecting: what are the advantages and disadvantages of each one?</p>
@@ -124,14 +142,14 @@ Yes, but why would you want to make [a minority chain split] easier? Splits dest
 <p>Here's LiskElite, with 55 members (out of a total 101):</p>
 <p>
 <center>
-<img src="/images/voting-files/liskpool1.png" style="width:450px" />
+<img src="../../../../images/voting-files/liskpool1.png" style="width:450px" />
 </center>
 <br>
 </p>
 <p>Here's LiskGDT, with 33 members:</p>
 <p>
 <center>
-<img src="/images/voting-files/liskpool2.png" style="width:450px" />
+<img src="../../../../images/voting-files/liskpool2.png" style="width:450px" />
 </center>
 <br>
 </p>
@@ -156,7 +174,7 @@ Additionally, even if coin holders <em>are</em> the only relevant class of user 
 <h3 id="centralization">Centralization</h3>
 <p>Let's look at the existing live experiment that we have in tightly coupled voting on Ethereum, the gas limit. Here's the gas limit evolution over the past two years:</p>
 <center>
-<img src="/images/voting-files/governance3.png" style="width:450px" />
+<img src="../../../../images/voting-files/governance3.png" style="width:450px" />
 </center>
 <p><br></p>
 <p>You might notice that the general feel of the curve is a bit like another chart that may be quite familiar to you:</p>

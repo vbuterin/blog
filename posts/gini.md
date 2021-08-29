@@ -18,7 +18,7 @@ There are two equivalent definitions of the Gini coefficient:
 **Area-above-curve definition**: draw the graph of a function, where $f(p)$ equals the share of total income earned by the lowest-earning portion of the population (eg. $f(0.1)$ is the share of total income earned by the lowest-earning 10%). The Gini coefficient is the area between that curve and the $y=x$ line, as a portion of the whole triangle:
 
 <center><br>
-<img src="/images/gini/lorenz1.png" />
+<img src="../../../../images/gini/lorenz1.png" />
 </center><br>
 
 **Average-difference definition**: the Gini coefficient is half the average difference of incomes between each all possible pairs of individuals, divided by the mean income.
@@ -50,7 +50,7 @@ To understand the difference between the two problems more clearly, let's look a
 Here are the Lorenz curves (fancy charts like we saw above) for both dystopias:
 
 <center><br>
-<img src="/images/gini/lorenz2.png" />
+<img src="../../../../images/gini/lorenz2.png" />
 </center><br>
 
 Clearly, neither of those two dystopias are good places to live. **But they are not-very-nice places to live in very different ways**. Dystopia A gives each resident a coin flip between unthinkably horrific mass starvation if they end up on the left half on the distribution and egalitarian harmony if they end up on the right half. If you're [Thanos](https://en.wikipedia.org/wiki/Thanos), you might actually like it! If you're not, it's worth avoiding with the strongest force. Dystopia B, on the other hand, is Brave New World-like: everyone has decently good lives (at least at the time when that snapshot of everyone's resources is taken), but at the high cost of an extremely undemocratic power structure where you'd better hope you have a good overlord. If you're [Curtis Yarvin](https://en.wikipedia.org/wiki/Curtis_Yarvin), you might actually like it! If you're not, it's very much worth avoiding too.
@@ -58,7 +58,7 @@ Clearly, neither of those two dystopias are good places to live. **But they are 
 These two problems are different enough that they're worth analyzing and measuring separately. And this difference is not just theoretical. Here is a chart showing share of total income earned by the bottom 20% (a decent proxy for avoiding dystopia A) versus share of total income earned by the top 1% (a decent proxy for being near dystopia B):
 
 <center>
-<img src="/images/gini/top1_vs_bottom20.png" /><br>
+<img src="../../../../images/gini/top1_vs_bottom20.png" /><br>
 <small><i>
 
 Sources: [https://data.worldbank.org/indicator/SI.DST.FRST.20](https://data.worldbank.org/indicator/SI.DST.FRST.20) (merging 2015 and 2016 data) and [http://hdr.undp.org/en/indicators/186106](http://hdr.undp.org/en/indicators/186106).
@@ -72,7 +72,7 @@ The two are clearly correlated (coefficient -0.62), but very far from perfectly 
 Wealth concentration within the blockchain space in particular is an important problem, and it's a problem worth measuring and understanding. It's important for the blockchain space as a whole, as many people ([and US senate hearings](https://www.banking.senate.gov/hearings/cryptocurrencies-what-are-they-good-for)) are trying to figure out to what extent crypto is truly anti-elitist and to what extent it's just replacing old elites with new ones. It's also important when comparing different cryptocurrencies with each other.
 
 <center><br>
-<a href="https://twitter.com/RyanWatkins_/status/1394283802009145348"><img style="width:650px" src="/images/gini/messari_data.png" /></a><br><br>
+<a href="https://twitter.com/RyanWatkins_/status/1394283802009145348"><img style="width:650px" src="../../../../images/gini/messari_data.png" /></a><br><br>
 <small><i>
 
 Share of coins explicitly allocated to specific insiders in a cryptocurrency's initial supply is one type of inequality. Note that the Ethereum data is slightly wrong: the insider and foundation shares should be 12.3% and 4.2%, not 15% and 5%.
@@ -91,7 +91,7 @@ And even earlier than that, we had to deal with [this sensationalist article](ht
 
 <center>
 <br>
-<img src="/images/gini/article2014.png" style="width: 650px" />
+<img src="../../../../images/gini/article2014.png" style="width: 650px" />
 <br><br><br>
 </center>
 
@@ -118,7 +118,7 @@ $\frac{\sum_{i=1}^n x_i^2}{(\sum_{i=1}^n x_i)^2}$
 Or for you visual learners out there:
 
 <center>
-<img src="/images/gini/herfindahl.png" /><br><br>
+<img src="../../../../images/gini/herfindahl.png" /><br><br>
 <small><i>
 Herfindahl-Hirschman index: green area divided by total area.
 </i></small><br><br><br>

@@ -13,14 +13,14 @@ As a recent example of this move from theory toward deployment, Bihu, a Chinese 
 This kind of design is far from unique; incentivizing online content creation is something that very many people care about, and there have been many designs of a similar character, as well as some fairly different designs. And in this case this particular platform is already being used significantly:
 
 <center>
-<img src="/images/collusion-files/screenie.png" />
+<img src="../../../../images/collusion-files/screenie.png" />
 </center>
 <br>
 
 A few months ago, the Ethereum trading subreddit [/r/ethtrader](http://reddit.com/r/ethtrader) introduced a somewhat similar experimental feature where a token called "donuts" is issued to users that make comments that get upvoted, with a set amount of donuts issued weekly to users in proportion to how many upvotes their comments received. The donuts could be used to buy the right to set the contents of the banner at the top of the subreddit, and could also be used to vote in community polls. However, unlike what happens in the KEY system, here the reward that B receives when A upvotes B is not proportional to A's existing coin supply; instead, each Reddit account has an equal ability to contribute to other Reddit accounts.
 
 <center>
-<img src="/images/collusion-files/donuts.png" />
+<img src="../../../../images/collusion-files/donuts.png" />
 </center>
 <br>
 
@@ -38,8 +38,8 @@ The actual Bihu mechanism seemed to anticipate this, and has some superlinear lo
 Bribing attacks may sound farfetched (who here has ever accepted a bribe in real life?), but in a mature ecosystem they are much more realistic than they seem. In most [contexts where bribing has taken place](https://vitalik.ca/general/2017/12/17/voting.html) in the blockchain space, the operators use a euphemistic new name to give the concept a friendly face: it's not a bribe, it's a "staking pool" that "shares dividends". Bribes can even be obfuscated: imagine a cryptocurrency exchange that offers zero fees and spends the effort to make an abnormally good user interface, and does not even try to collect a profit; instead, it uses coins that users deposit to participate in various coin voting systems. There will also inevitably be people that see in-group collusion as just plain normal; see a recent [scandal involving EOS DPOS](https://twitter.com/MapleLeafCap/status/1044958643731533825) for one example:
 
 <center>
-<a href="https://twitter.com/MapleLeafCap/status/1044958647535767552"><img src="/images/collusion-files/mapleleaf1.png" style="width:480px" /></a>
-<a href="https://twitter.com/MapleLeafCap/status/1044958649188327429"><img src="/images/collusion-files/mapleleaf2.png" style="width:480px" /></a>
+<a href="https://twitter.com/MapleLeafCap/status/1044958647535767552"><img src="../../../../images/collusion-files/mapleleaf1.png" style="width:480px" /></a>
+<a href="https://twitter.com/MapleLeafCap/status/1044958649188327429"><img src="../../../../images/collusion-files/mapleleaf2.png" style="width:480px" /></a>
 </center>
 <br>
 
@@ -52,7 +52,7 @@ In the /r/ethtrader experiment, fear of people coming in and _buying_ donuts to 
 Some systems attempt to mitigate the plutocratic aspects of coin voting by making use of an identity system. In the case of the /r/ethtrader donut system, for example, although _governance polls_ are done via coin vote, the mechanism that determines _how many donuts (ie. coins) you get in the first place_ is based on Reddit accounts: 1 upvote from 1 Reddit account = $N$ donuts earned. The ideal goal of an identity system is to make it relatively easy for individuals to get one identity, but relatively difficult to get many identities. In the /r/ethtrader donut system, that's Reddit accounts, in the Gitcoin CLR matching gadget, it's Github accounts that are used for the same purpose. But identity, at least the way it has been implemented so far, is a fragile thing....
 
 <center>
-<a href="https://twitter.com/JamieJBartlett/status/1105151495773847552"><img src="/images/collusion-files/clickfarm.png" style="width:400px" /></a>
+<a href="https://twitter.com/JamieJBartlett/status/1105151495773847552"><img src="../../../../images/collusion-files/clickfarm.png" style="width:400px" /></a>
 </center>
 <br>
 
@@ -60,7 +60,7 @@ Oh, are you too lazy to make a big rack of phones? Well maybe you're looking [fo
 
 <br>
 <center>
-<a href="http://buyaccs.com"><img src="/images/collusion-files/buyaccs.png" style="width:500px" /></a><br><br>
+<a href="http://buyaccs.com"><img src="../../../../images/collusion-files/buyaccs.png" style="width:500px" /></a><br><br>
 <small><i>Usual warning about how sketchy sites may or may not scam you, do your own research, etc. etc. applies.</i></small>
 </center>
 <br>
@@ -115,7 +115,7 @@ A similar challenge arises when the goal is not funding, but rather determining 
 
 <br>
 <center>
-<img src="/images/collusion-files/cocacola.jpg" style="width:550px"/> 
+<img src="../../../../images/collusion-files/cocacola.jpg" style="width:550px"/> 
 </center>
 <br>
 
@@ -123,7 +123,7 @@ Or perhaps this?
 
 <br>
 <center>
-<img src="/images/collusion-files/bitconnect.png" style="width:550px"/>
+<img src="../../../../images/collusion-files/bitconnect.png" style="width:550px"/>
 </center>
 <br>
 
@@ -138,7 +138,7 @@ But it's not just identity issues that public goods games are vulnerable too; it
 The other alternative is attacking the identity problem head-on. As mentioned above, simply going up to higher-security centralized identity systems, like passports and other government IDs, will not work at scale; in a sufficiently incentivized context, they are very insecure and vulnerable to the issuing governments themselves! Rather, the kind of "identity" we are talking about here is some kind of robust multifactorial set of claims that an actor identified by some set of messages actually is a unique individual. A very early proto-model of this kind of networked identity is arguably social recovery in HTC's blockchain phone:
 
 <center>
-<img src="/images/collusion-files/htcphone.jpg" style="width:300px"/>
+<img src="../../../../images/collusion-files/htcphone.jpg" style="width:300px"/>
 </center>
 <br>
 

@@ -1,33 +1,51 @@
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
-<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
-<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
-<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
-<link rel="stylesheet" type="text/css" href="/css/misc.css">
 
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="The Dawn of Hybrid Layer 2 Protocols">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
 <script type="text/javascript" id="MathJax-script" async
-  src="/scripts/mathjax.js">
+  src="../../../../scripts/tex-svg.js">
 </script>
 
 <style>
-@font-face {
-    font-family: MJXc-TeX-math-Iw;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXZERO;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXTEX;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-
-.math { font-family: MJXc-TeX-math-Iw }
 </style>
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
@@ -41,7 +59,7 @@
 <br>
 <h1 style="margin-bottom:7px"> The Dawn of Hybrid Layer 2 Protocols </h1>
 <small style="float:left; color: #888"> 2019 Aug 28 </small>
-<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
 <br> <br> <br>
 <title> The Dawn of Hybrid Layer 2 Protocols </title>
 
@@ -49,7 +67,7 @@
 <p>Current approaches to layer 2 scaling - basically, Plasma and state channels - are increasingly moving from theory to practice, but at the same time it is becoming easier to see the inherent challenges in treating these techniques as a fully fledged scaling solution for Ethereum. Ethereum was arguably successful in large part because of its very easy developer experience: you write a program, publish the program, and anyone can interact with it. Designing a state channel or Plasma application, on the other hand, relies on a lot of explicit reasoning about incentives and application-specific development complexity. State channels work well for specific use cases such as repeated payments between the same two parties and two-player games (as successfully implemented in <a href="https://www.celer.network/">Celer</a>), but more generalized usage is proving challenging. Plasma, particularly <a href="https://www.learnplasma.org/en/learn/cash.html">Plasma Cash</a>, can work well for payments, but generalization similarly incurs challenges: even implementing a decentralized exchange requires clients to store much more history data, and generalizing to Ethereum-style smart contracts on Plasma seems extremely difficult.</p>
 <p>But at the same time, there is a resurgence of a forgotten category of "semi-layer-2" protocols - a category which promises less extreme gains in scaling, but with the benefit of much easier generalization and more favorable security models. A <a href="https://blog.ethereum.org/2014/09/17/scalability-part-1-building-top/">long-forgotten blog post from 2014</a> introduced the idea of "shadow chains", an architecture where block data is published on-chain, but blocks are not <em>verified</em> by default. Rather, blocks are tentatively accepted, and only finalized after some period of time (eg. 2 weeks). During those 2 weeks, a tentatively accepted block can be challenged; only then is the block verified, and if the block proves to be invalid then the chain from that block on is reverted, and the original publisher's deposit is penalized. The contract does not keep track of the full state of the system; it only keeps track of the state root, and users themselves can calculate the state by processing the data submitted to the chain from start to head. A more recent proposal, <a href="https://ethresear.ch/t/on-chain-scaling-to-potentially-500-tx-sec-through-mass-tx-validation/3477">ZK Rollup</a>, does the same thing without challenge periods, by using ZK-SNARKs to verify blocks' validity.</p>
 <center>
-<img src="/images/hybrid-layer-2-files/RollupAnatomy.png"><br> <small><i>Anatomy of a ZK Rollup package that is published on-chain. Hundreds of "internal transactions" that affect the state (ie. account balances) of the ZK Rollup system are compressed into a package that contains ~10 bytes per internal transaction that specifies the state transitions, plus a ~100-300 byte SNARK proving that the transitions are all valid.</i></small>
+<img src="../../../../images/hybrid-layer-2-files/RollupAnatomy.png"><br> <small><i>Anatomy of a ZK Rollup package that is published on-chain. Hundreds of "internal transactions" that affect the state (ie. account balances) of the ZK Rollup system are compressed into a package that contains ~10 bytes per internal transaction that specifies the state transitions, plus a ~100-300 byte SNARK proving that the transitions are all valid.</i></small>
 </center>
 <p><br></p>
 <p>In both cases, the main chain is used to verify data <em>availability</em>, but does not (directly) verify block <em>validity</em> or perform any significant computation, unless challenges are made. This technique is thus not a jaw-droppingly huge scalability gain, because the on-chain data overhead eventually presents a bottleneck, but it is nevertheless a very significant one. Data is cheaper than computation, and there are ways to compress transaction data very significantly, particularly because the great majority of data in a transaction is the signature and many signatures can be compressed into one through many forms of aggregation. ZK Rollup promises 500 tx/sec, a 30x gain over the Ethereum chain itself, by compressing each transaction to a mere ~10 bytes; signatures do not need to be included because their validity is verified by the zero-knowledge proof. With BLS aggregate signatures a similar throughput can be achieved in shadow chains (more recently called "optimistic rollup" to highlight its similarities to ZK Rollup). The upcoming <a href="https://eth.wiki/en/roadmap/istanbul">Istanbul hard fork</a> will reduce the gas cost of data from 68 per byte to 16 per byte, increasing the throughput of these techniques by another 4x (that's <strong>over 2000 transactions per second</strong>).</p>
@@ -72,7 +90,7 @@
 <p><br><br></p>
 <p>But what if you want more scalability? Then there is a large middle ground between data-on-chain layer 2 and data-off-chain layer 2 protocols, with many hybrid approaches that give you some of the benefits of both. To give a simple example, the history storage blowup in a decentralized exchange implemented on Plasma Cash can be prevented by publishing a mapping of which orders are matched with which orders (that's less than 4 bytes per order) on chain:</p>
 <center>
-<img src="/images/hybrid-layer-2-files/Plasma%20Cash%200.png" style="width:180px; padding: 40px"> <img src="/images/hybrid-layer-2-files/Plasma%20Cash%201.png" style="width:180px; padding: 40px"> <img src="/images/hybrid-layer-2-files/Plasma%20Cash%202.png" style="width:180px; padding: 40px"><br> <small><i><b>Left</b>: History data a Plasma Cash user needs to store if they own 1 coin. <b>Middle:</b> History data a Plasma Cash user needs to store if they own 1 coin that was exchanged with another coin using an atomic swap. <b>Right</b>: History data a Plasma Cash user needs to store if the order matching is published on chain.</i></small>
+<img src="../../../../images/hybrid-layer-2-files/Plasma%20Cash%200.png" style="width:180px; padding: 40px"> <img src="../../../../images/hybrid-layer-2-files/Plasma%20Cash%201.png" style="width:180px; padding: 40px"> <img src="../../../../images/hybrid-layer-2-files/Plasma%20Cash%202.png" style="width:180px; padding: 40px"><br> <small><i><b>Left</b>: History data a Plasma Cash user needs to store if they own 1 coin. <b>Middle:</b> History data a Plasma Cash user needs to store if they own 1 coin that was exchanged with another coin using an atomic swap. <b>Right</b>: History data a Plasma Cash user needs to store if the order matching is published on chain.</i></small>
 </center>
 <p><br></p>
 <p>Even outside of the decentralized exchange context, the amount of history that users need to store in Plasma can be reduced by having the Plasma chain periodically publish some per-user data on-chain. One could also imagine a platform which works like Plasma in the case where some state <em>does</em> have a logical "owner" and works like ZK or optimistic rollup in the case where it does not. Plasma developers <a href="https://plasma.build/t/rollup-plasma-for-mass-exits-complex-disputes/90">are already starting to work</a> on these kinds of optimizations.</p>

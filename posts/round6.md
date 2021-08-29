@@ -8,8 +8,8 @@ Round 6 of Gitcoin Grants has just finished, with $227,847 in contributions from
 First of all, here are the results, starting with the tech and community sections:
 
 <center>
-<img src="/images/round6/tech.jpg" style="width:350px" />
-<img src="/images/round6/community.jpg" style="width:350px" />
+<img src="../../../../images/round6/tech.jpg" style="width:350px" />
+<img src="../../../../images/round6/community.jpg" style="width:350px" />
 <br></center>
 
 ### Stability of income
@@ -26,13 +26,13 @@ Round 6 had two mechanisms to try to provide more stability of income:
 First from the tech category:
 
 <center>
-<img src="/images/round6/techtable.png" />
+<img src="../../../../images/round6/techtable.png" />
 </center><br>
 
 Now from the community category:
 
 <center>
-<img src="/images/round6/communitytable.png" />
+<img src="../../../../images/round6/communitytable.png" />
 </center><br>
 
 Clearly, the rule helps reduce volatility, pretty much exactly as expected. That said, one could argue that this result is trivial: you could argue that all that's going on here is something very similar to grabbing part of the revenue from round N (eg. see how the new EIP-1559 Community Fund earned less than it otherwise would have) and moving it into round N+1. Sure, numerically speaking the revenues are more "stable", but individual projects could have just provided this stability to themselves by only spending 2/3 of the pot from each round, and using the remaining third later when some future round is unexpectedly low. Why should the quadratic funding mechanism significantly increase its complexity just to achieve a gain in stability that projects could simply provide for themselves?
@@ -54,7 +54,7 @@ Unexpectedly, this grant proved to have a double function. First, it provided $6
 Coin votes have been [used in the past](https://www.etherchain.org/coinvote), and have the advantage that they come with an answer to the key problem of determining who is a "real community member" - the answer is, your membership in the Ethereum community is proportional to how much ETH you have. However, they are plutocratic; in the famous DAO coin vote, a single "yes" voter voted with more ETH than all "no" voters put together (~20% of the total).
 
 <center>
-<img src="/images/round6/daocoinvote.png" style="width:350px" />
+<img src="../../../../images/round6/daocoinvote.png" style="width:350px" />
 </center><br>
 
 The alternative, looking at github, reddit and twitter comments and votes to measure sentiment (sometimes derided as "proof of social media") is egalitarian, but it is easily exploitable, comes with no skin-in-the-game, and frequently falls under criticisms of "foreign interference" (are those _really_ ethereum community members disagreeing with the proposal, or just those dastardly bitcoiners coming in from across the pond to stir up trouble?).
@@ -62,7 +62,7 @@ The alternative, looking at github, reddit and twitter comments and votes to mea
 Quadratic funding falls perfectly in the middle: the need to contribute monetary value to vote ensures that the votes of those who _really_ care about the project count more than the votes of less-concerned outsiders, and the square-root function ensures that the votes of individual ultra-wealthy "whales" cannot beat out a poorer, but broader, coalition.
 
 <center>
-<img src="/images/round6/quadraticpayments.png" style="width:600px" /><br><br><small><i>A diagram from my <a href="https://vitalik.ca/general/2019/12/07/quadratic.html">post on quadratic payments</a> showing how quadratic payments is "in the middle" between the extremes of voting-like systems and money-like systems, and avoids the worst flaws of both.</i></small>
+<img src="../../../../images/round6/quadraticpayments.png" style="width:600px" /><br><br><small><i>A diagram from my <a href="https://vitalik.ca/general/2019/12/07/quadratic.html">post on quadratic payments</a> showing how quadratic payments is "in the middle" between the extremes of voting-like systems and money-like systems, and avoids the worst flaws of both.</i></small>
 </center><br>
 
 This raises the question: might it make sense to try to use explicit quadratic _voting_ (with the ability to vote "yes" or "no" to a proposal) as an additional signaling tool to determine community sentiment for ethereum protocol proposals?
@@ -72,7 +72,7 @@ This raises the question: might it make sense to try to use explicit quadratic _
 Since round 5, Gitcoin Grants has had three categories per round: tech, community (called "media" before), and some "guest" category that appears only during that specific round. In round 5 this was COVID relief; in round 6, it's Crypto For Black Lives.
 
 <center>
-<img src="/images/round6/blacklives.jpg" style="width:350px" />
+<img src="../../../../images/round6/blacklives.jpg" style="width:350px" />
 </center>
 
 By far the largest recipient was Black Girls CODE, claiming over 80% of the matching pot. My guess for why this happened is simple: Black Girls CODE is an established project that has been participating in the grants for several rounds already, whereas the other projects were new entrants that few people in the Ethereum community knew well. In addition, of course, the Ethereum community "understands" the value of helping people code more than it understands chambers of commerce and bail funds.
@@ -88,19 +88,19 @@ Now, the bad news. This round saw an unprecedented amount of attempted collusion
 Blatant attempted bribery:
 
 <center><br>
-<img src="/images/round6/pic1.jpeg" style="width:480px"/><br>
+<img src="../../../../images/round6/pic1.jpeg" style="width:480px"/><br>
 </center><br>
 
 Impersonation:
 
 <center><br>
-<img src="/images/round6/pic2.png" style="width:480px"/><br>
+<img src="../../../../images/round6/pic2.png" style="width:480px"/><br>
 </center><br>
 
 Many contributions with funds clearly coming from a single address:
 
 <center><br>
-<img src="/images/round6/pic3.png" style="width:480px" /><br>
+<img src="../../../../images/round6/pic3.png" style="width:480px" /><br>
 </center><br>
 
 The big question is: how much fraudulent activity can be prevented in a fully automated/technological way, without requiring detailed analysis of each and every case? If quadratic funding cannot survive such fraud without needing to resort to expensive case-by-case judgement, then regardless of its virtues in an ideal world, in reality it would not be a very good mechanism!

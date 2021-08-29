@@ -12,7 +12,7 @@ Blockchains are a technology which is all about providing guarantees about proce
 So at first glance, it seems that blockchains provide exactly what voting needs. And I'm far from the only person to have had that thought; [plenty](https://www.alaskapublic.org/2021/04/15/alaska-would-be-first-state-to-use-blockchain-based-voting-system-under-proposed-bill/) of major [prospective](https://inc42.com/buzz/india-explores-blockchain-based-e-voting-by-2024-general-elections/) users [are interested](https://fortune.com/2018/07/03/blockchain-voting-trial-zug/). But as it turns out, some people have a very different opinion....
 
 <center><br>
-<a href="https://www.computerworld.com/article/3430697/why-blockchain-could-be-a-threat-to-democracy.html"><img src="/images/voting2-files/votingthreat.png" style="width:550px" /></a>
+<a href="https://www.computerworld.com/article/3430697/why-blockchain-could-be-a-threat-to-democracy.html"><img src="../../../../images/voting2-files/votingthreat.png" style="width:550px" /></a>
 </center><br><br>
 
 Despite the seeming perfect match between the needs of voting and the technological benefits that blockchains provide, we regularly see scary articles [arguing against the combination](https://www.computerworld.com/article/3430697/why-blockchain-could-be-a-threat-to-democracy.html) of the two. And it's not just a single article: [here's an anti-blockchain-voting piece from Scientific American](https://www.scientificamerican.com/article/are-blockchains-the-answer-for-secure-elections-probably-not/), here's [another from CNet](https://www.cnet.com/news/blockchain-isnt-answer-to-voting-system-woes/), and here's [another from ArsTechnica](https://arstechnica.com/tech-policy/2018/11/blockchain-based-elections-would-be-a-disaster-for-democracy/). And it's not just random tech journalists: [Bruce Schneier](https://www.schneier.com/blog/archives/2020/11/on-blockchain-voting.html) is against blockchain voting, and researchers at MIT [wrote a whole paper](https://people.csail.mit.edu/rivest/pubs/PSNR20.pdf) arguing that it's a bad idea. So what's going on?
@@ -37,7 +37,7 @@ Blockchain voting protocols get hacked all the time. Two years ago, a blockchain
 The hacks were pretty serious. Here is a table of the attack capabilities that [researchers analyzing Voatz](https://internetpolicy.mit.edu/wp-content/uploads/2020/02/SecurityAnalysisOfVoatz_Public.pdf) managed to uncover:
 
 <center><br>
-<img src="/images/voting2-files/voatzpaper.png" style="width:650px" />
+<img src="../../../../images/voting2-files/voatzpaper.png" style="width:650px" />
 </center><br><br>
 
 This by itself is not an argument against _ever_ using blockchain voting. But it is an argument that blockchain voting software should be designed more carefully, and scaled up slowly and incrementally over time.
@@ -60,7 +60,7 @@ The need for the first requirement is obvious: you want people to vote based on 
 The concept of cryptographically secured execution of social mechanisms was not invented by blockchain geeks, and indeed existed far before us. Outside the blockchain space, there is a 20-year-old tradition of cryptographers working on the secure electronic voting problem, and the good news is that there _have_ been solutions. An important paper that is cited by much of the literature of the last two decades is Juels, Catalano and Jakobsson's 2002 paper titled "[Coercion-Resistant Electronic Elections](https://eprint.iacr.org/2002/165.pdf)":
 
 <center><br>
-<img src="/images/voting2-files/elections.png" style="width:650px" />
+<img src="../../../../images/voting2-files/elections.png" style="width:650px" />
 <br><br><br>
 </center>
 
@@ -71,7 +71,7 @@ Encrypting votes provides privacy, and some additional infrastructure such as [m
 The second option is a technique where voters can make multiple votes where the second overrides the first. If a voter is bribed or coerced, they can make a vote for the briber/coercer's preferred candidate, but later send another vote to override the first.
 
 <center><br>
-<img src="/images/voting2-files/tallyingscheme.png" style="width:650px" />
+<img src="../../../../images/voting2-files/tallyingscheme.png" style="width:650px" />
 <br><br>
 <small><i>Giving voters the ability to make a later vote that can override an earlier vote is the key coercion-resistance mechanism of <a href="https://www.usenix.org/system/files/conference/jets15/jets_0302-achenbach.pdf">this protocol from 2015.</a></i></small><br><br>
 </center>
@@ -92,7 +92,7 @@ These more sophisticated voting systems are not _just_ using blockchains; they r
 
 The Ethereum ecosystem is currently experimenting with a [system called MACI](https://github.com/appliedZKP/maci) that combines together a blockchain, ZK-SNARKs and a single central actor that guarantees coercion resistance (but has no power to compromise any properties other than coercion resistance). MACI is not very technically difficult. Users participate by signing a message with their private key, encrypting the signed message to a public key published by a central server, and publishing the encrypted signed message to the blockchain. The server downloads the messages from the blockchain, decrypts them, processes them, and outputs the result along with a ZK-SNARK to ensure that they did the computation correctly.
 
-<br><center><img src="https://vitalik.ca/images/round9/maci2.png" style="width:500px"/></center><br><br>
+<br><center><img src="https://vitalik.ca../../../../images/round9/maci2.png" style="width:500px"/></center><br><br>
 
 Users cannot prove how they participated, because they have the ability to send a "key change" message to trick anyone trying to audit them: they can first send a key change message to change their key from A to B, and then send a "fake message" signed with A. The server would reject the message, but no one else would have any way of knowing that the key change message had ever been sent. There is a trust requirement on the server, though only for privacy and coercion resistance; the server cannot publish an incorrect result either by computing incorrectly or by censoring messages. In the long term, multi-party computation can be used to decentralize the server somewhat, strengthening the privacy and coercion resistance guarantees.
 
@@ -112,7 +112,7 @@ But now we get back to the second, deeper, critique of electronic voting of any 
 
 The [recent MIT paper](https://people.csail.mit.edu/rivest/pubs/PSNR20.pdf) criticizing blockchain voting includes this helpful table, depicting _any_ form of paperless voting as being fundamentally too difficult to secure:
 
-<br><center><img src="/images/voting2-files/fourcategories.png" style="width:650px"/></center><br><br>
+<br><center><img src="../../../../images/voting2-files/fourcategories.png" style="width:650px"/></center><br><br>
 
 The key property that the authors focus on is **software-independence**, which they define as "the property that an undetected change or error in a system’s software cannot cause an undetectable change in the election outcome". Basically, a bug in the code should not be able to accidentally make Prezzy McPresidentface the new president of the country (or, more realistically, a deliberately inserted bug should not be able to increase some candidate's share from 42% to 52%).
 
@@ -152,7 +152,7 @@ These improvements in security technology point to a future where consumer hardw
 **My answer is simple: voting would become much more efficient, allowing us to do it much more often**. Currently, formal democratic input into organizations (governmental _or_ corporate) tends to be limited to a single vote once every 1-6 years. This effectively means that each voter is only putting less than one bit of input into the system each year. Perhaps in large part as a result of this, decentralized decision-making in our society is heavily bifurcated into two extremes: pure democracy and pure markets. Democracy is either very inefficient (corporate and government votes) or very insecure (social media likes/retweets). Markets are far more technologically efficient and are much more secure than social media, but their fundamental economic logic makes them a poor fit for many kinds of decision problems, particularly having to do with public goods.
 
 <center><br>
-<img src="/images/voting2-files/triangle.png" /><br><br>
+<img src="../../../../images/voting2-files/triangle.png" /><br><br>
 <i><small>Yes, I know it's yet another triangle, and I really really apologize for having to use it. But please bear with me just this once.... (ok fine, I'm sure I'll make even more triangles in the future; just suck it up and deal with it)</small></i>
 </center><br><br>
 

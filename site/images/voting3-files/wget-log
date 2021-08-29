@@ -1,0 +1,11 @@
+--2021-08-16 13:36:54--  https://pbs.twimg.com/media/E6T0_piVcAADvBt?format=jpg
+Resolving pbs.twimg.com (pbs.twimg.com)... 2600:1480:4000:e5::, 192.229.237.101
+Connecting to pbs.twimg.com (pbs.twimg.com)|2600:1480:4000:e5::|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 106163 (104K) [image/jpeg]
+Saving to: ‘bribeattempt.jpg’
+
+bribeattempt.jpg      0%[                    ]       0  --.-KB/s               bribeattempt.jpg     98%[==================> ] 101.84K   313KB/s               bribeattempt.jpg    100%[===================>] 103.67K   319KB/s    in 0.3s    
+
+2021-08-16 13:36:55 (319 KB/s) - ‘bribeattempt.jpg’ saved [106163/106163]
+

@@ -1,33 +1,51 @@
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
-<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
-<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
-<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
-<link rel="stylesheet" type="text/css" href="/css/misc.css">
 
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Coordination, Good and Bad">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
 <script type="text/javascript" id="MathJax-script" async
-  src="/scripts/mathjax.js">
+  src="../../../../scripts/tex-svg.js">
 </script>
 
 <style>
-@font-face {
-    font-family: MJXc-TeX-math-Iw;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXZERO;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXTEX;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-
-.math { font-family: MJXc-TeX-math-Iw }
 </style>
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
@@ -41,7 +59,7 @@
 <br>
 <h1 style="margin-bottom:7px"> Coordination, Good and Bad </h1>
 <small style="float:left; color: #888"> 2020 Sep 11 </small>
-<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
 <br> <br> <br>
 <title> Coordination, Good and Bad </title>
 
@@ -58,7 +76,7 @@
 <p>But there is also a very philosophically counterintuitive dark side to coordination. <strong>While it is emphatically true that "everyone coordinating with everyone" leads to much better outcomes than "every man for himself", what that does NOT imply is that each individual step toward more coordination is necessarily beneficial</strong>. If coordination is improved in an unbalanced way, the results can easily be harmful.</p>
 <p>We can think about this visually as a map, though in reality the map has many billions of "dimensions" rather than two:</p>
 <center>
-<img src="/images/coordination/map.png" />
+<img src="../../../../images/coordination/map.png" />
 </center>
 <p><br></p>
 <p>The bottom-left corner, "every man for himself", is where we don't want to be. The top-right corner, total coordination, is ideal, but likely unachievable. But the landscape in the middle is far from an even slope up, with many reasonably safe and productive places that it might be best to settle down in and many deep dark caves to avoid.</p>
@@ -160,7 +178,7 @@ C
 <p>But there is another, brighter and more actionable, conclusion from this line of thinking: if we want to create mechanisms that are stable, then we know that one important ingredient in doing so is finding ways to make it more difficult for collusions, especially large-scale collusions, to happen and to maintain themselves. In the case of voting, we have the <a href="https://en.wikipedia.org/wiki/Secret_ballot">secret ballot</a> - a mechanism that ensures that voters have no way to prove to third parties how they voted, even if they want to prove it (<a href="https://github.com/appliedzkp/maci">MACI</a> is one project trying to use cryptography to extend secret-ballot principles to an online context). This disrupts trust between voters and bribers, heavily restricting undesired collusions that can happen. In that case of antitrust and other corporate malfeasance, we often rely on whistleblowers and even <a href="https://www.mahanyertl.com/2019/antitrust-whistleblower-reward/">give them rewards</a>, explicitly incentivizing participants in a harmful collusion to defect. And in the case of public infrastructure more broadly, we have that oh-so-important concept: <strong>decentralization</strong>.</p>
 <p>One naive view of why decentralization is valuable is that it's about reducing risk from single points of technical failure. In traditional "enterprise" distributed systems, this is often actually true, but in many other cases we know that this is not sufficient to explain what's going on. It's instructive here to look at blockchains. A large mining pool publicly showing how they have internally distributed their nodes and network dependencies doesn't do much to calm community members scared of mining centralization. And pictures like these, showing 90% of Bitcoin hashpower at the time being capable of showing up to the same conference panel, do quite a bit to scare people:</p>
 <center>
-<img src="/images/coordination/mining_centralization.png" />
+<img src="../../../../images/coordination/mining_centralization.png" />
 </center>
 <p><br><br></p>
 <p>But why is this image scary? From a "decentralization as fault tolerance" view, large miners being able to talk to each other causes no harm. But if we look at "decentralization" as being the presence of barriers to harmful collusion, then the picture becomes quite scary, because it shows that those barriers are not nearly as strong as we thought. Now, in reality, the barriers are still far from zero; the fact that those miners can easily perform technical coordination and likely are all in the same Wechat groups does <em>not</em>, in fact, mean that Bitcoin is "in practice little better than a centralized company".</p>
@@ -178,7 +196,7 @@ C
 <p>There are two core operating principles that we can use to achieve this end: (1) <strong>supporting counter-coordination</strong> and (2) <strong>skin-in-the-game</strong>. The idea behind counter-coordination is this: we know that we cannot design systems to be <em>passively</em> robust to collusions, in large part because there is an extremely large number of ways to organize a collusion and there is no passive mechanism that can detect them, but what we can do is <em>actively</em> respond to collusions and strike back.</p>
 <p>In digital systems such as blockchains (this could also be applied to more mainstream systems, eg. DNS), a major and crucially important form of counter-coordination is <strong>forking</strong>.</p>
 <center>
-<img src="/images/coordination/forkwars.png" />
+<img src="../../../../images/coordination/forkwars.png" />
 </center>
 <p><br><br></p>
 <p>If a system gets taken over by a harmful coalition, the dissidents can come together and create an alternative version of the system, which has (mostly) the same rules except that it removes the power of the attacking coalition to control the system. Forking is very easy in an open-source software context; the main challenge in creating a successful fork is usually gathering the <strong>legitimacy</strong> (game-theoretically viewed as a form of "<a href="https://en.wikipedia.org/wiki/Common_knowledge_(logic)">common knowledge</a>") needed to get all those who disagree with the main coalition's direction to follow along with you.</p>
@@ -190,7 +208,7 @@ C
 <h3 id="structuring-coordination">Structuring Coordination</h3>
 <p>This all leads us to an interesting view of what it is that people building social systems <em>do</em>. One of the goals of building an effective social system is, in large part, determining <em>the structure of coordination</em>: which groups of people and in what configurations can come together to further their group goals, and which groups cannot?</p>
 <center>
-<img src="/images/coordination/structure.png" style="width:650px" /> <br> <br> <i><small>Different coordination structures, different outcomes</small></i> <br><br>
+<img src="../../../../images/coordination/structure.png" style="width:650px" /> <br> <br> <i><small>Different coordination structures, different outcomes</small></i> <br><br>
 </center>
 <p>Sometimes, more coordination is good: it's better when people can work together to collectively solve their problems. At other times, more coordination is dangerous: a subset of participants could coordinate to disenfranchise everyone else. And at still other times, more coordination is necessary for another reason: to enable the broader community to "strike back" against a collusion attacking the system.</p>
 <p>In all three of those cases, there are different mechanisms that can be used to achieve these ends. Of course, it is very difficult to prevent communication outright, and it is very difficult to make coordination perfect. But there are many options in between that can nevertheless have powerful effects.</p>

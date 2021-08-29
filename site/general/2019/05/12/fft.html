@@ -1,33 +1,51 @@
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
-<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
-<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
-<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
-<link rel="stylesheet" type="text/css" href="/css/misc.css">
 
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Fast Fourier Transforms">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
 <script type="text/javascript" id="MathJax-script" async
-  src="/scripts/mathjax.js">
+  src="../../../../scripts/tex-svg.js">
 </script>
 
 <style>
-@font-face {
-    font-family: MJXc-TeX-math-Iw;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXZERO;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXTEX;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-
-.math { font-family: MJXc-TeX-math-Iw }
 </style>
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
@@ -41,7 +59,7 @@
 <br>
 <h1 style="margin-bottom:7px"> Fast Fourier Transforms </h1>
 <small style="float:left; color: #888"> 2019 May 12 </small>
-<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
 <br> <br> <br>
 <title> Fast Fourier Transforms </title>
 
@@ -65,10 +83,10 @@ The original <a href="https://en.wikipedia.org/wiki/Fourier_transform">Fourier t
 <table>
 <tr>
 <td>
-<img src="/images/fft-files/elephant1.png" /><br> <img src="/images/fft-files/elephant3.png" />
+<img src="../../../../images/fft-files/elephant1.png" /><br> <img src="../../../../images/fft-files/elephant3.png" />
 </td>
 <td>
-<img src="/images/fft-files/elephant2.png" width="400px"/>
+<img src="../../../../images/fft-files/elephant2.png" width="400px"/>
 </td>
 </tr>
 </table>
@@ -132,7 +150,7 @@ Note that the "glue" in the second procedure has runtime <span class="math inlin
 </p>
 <p>
 <center>
-<img src="/images/fft-files/sorting.png" /><br>
+<img src="../../../../images/fft-files/sorting.png" /><br>
 </center>
 <br>
 </p>
@@ -270,7 +288,7 @@ And we get the result, <span class="math inline">\([1, 1, 0, 1]\)</span> (or <sp
 </p>
 <p>
 <center>
-<img src="/images/fft-files/addmult.png" style="width:600px"/><br><br> <small><i>Addition and multiplication tables for the binary field mod <span class="math inline">\(x^4 + x + 1\)</span>. Field elements are expressed as integers converted from binary (eg. <span class="math inline">\(x^3 + x^2 \rightarrow 1100 \rightarrow 12\)</span>)</i></small>
+<img src="../../../../images/fft-files/addmult.png" style="width:600px"/><br><br> <small><i>Addition and multiplication tables for the binary field mod <span class="math inline">\(x^4 + x + 1\)</span>. Field elements are expressed as integers converted from binary (eg. <span class="math inline">\(x^3 + x^2 \rightarrow 1100 \rightarrow 12\)</span>)</i></small>
 </center>
 <br>
 </p>

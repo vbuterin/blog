@@ -20,36 +20,32 @@
 
 
 
-<link rel="alternate" type="application/rss+xml" href="/feed.xml" title="Moving beyond coin voting governance">
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Moving beyond coin voting governance">
 
 
 
-<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
-<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
-<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
-<link rel="stylesheet" type="text/css" href="/css/misc.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
 <script type="text/javascript" id="MathJax-script" async
-  src="/scripts/mathjax.js">
+  src="../../../../scripts/tex-svg.js">
 </script>
 
 <style>
-@font-face {
-    font-family: MJXc-TeX-math-Iw;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXZERO;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXTEX;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-
-.math { font-family: MJXc-TeX-math-Iw }
 </style>
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
@@ -63,7 +59,7 @@
 <br>
 <h1 style="margin-bottom:7px"> Moving beyond coin voting governance </h1>
 <small style="float:left; color: #888"> 2021 Aug 16 </small>
-<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
 <br> <br> <br>
 <title> Moving beyond coin voting governance </title>
 
@@ -82,11 +78,11 @@
 <h3 id="the-need-for-degov-for-funding-public-goods">The need for DeGov for funding public goods</h3>
 <p>It is worth stepping back and seeing the absurdity of the present situation. Daily mining issuance rewards from Ethereum are about 13500 ETH, or about $40m, <a href="https://etherscan.io/chart/blockreward">per day</a>. <a href="https://etherscan.io/chart/transactionfee">Transaction fees</a> are similarly high; the <a href="https://etherscan.io/chart/transactionfee">non-EIP-1559-burned portion</a> continues to be around 1,500 ETH (~$4.5m) per day. So there are many billions of dollars per year going to fund network security. Now, what is the budget of the Ethereum Foundation? About $30-60 million per year. There are non-EF actors (eg. Consensys) contributing to development, but they are not much larger. The situation in Bitcoin is similar, with perhaps even less funding going into non-security public goods.</p>
 <p>Here is the situation in a chart:</p>
-<p><img src="/images/legitimacy-files/chart.png" /></p>
+<p><img src="../../../../images/legitimacy-files/chart.png" /></p>
 <p>Within the Ethereum ecosystem, one can make a case that this disparity does not matter too much; tens of millions of dollars per year is "enough" to do the needed R&amp;D and adding more funds <a href="https://en.wikipedia.org/wiki/The_Mythical_Man-Month">does not necessarily improve things</a>, and so the risks to the platform's <a href="https://nakamoto.com/credible-neutrality/">credible neutrality</a> from instituting in-protocol developer funding exceed the benefits. But in many smaller ecosystems, both ecosystems within Ethereum and entirely separate blockchains like BCH and Zcash, the same debate is brewing, and at those smaller scales the imbalance makes a big difference.</p>
 <p>Enter DAOs. A project that launches as a "pure" DAO from day 1 can achieve a combination of two properties that were previously impossible to combine: (i) sufficiency of developer funding, and (ii) credible neutrality of funding (the much-coveted "fair launch"). Instead of developer funding coming from a hardcoded list of receiving addresses, the decisions can be made by the DAO itself.</p>
 <p><br></p>
-<p><img src="/images/voting3-files/issuance_types.png" /></p>
+<p><img src="../../../../images/voting3-files/issuance_types.png" /></p>
 <p><br></p>
 <p>Of course, it's difficult to make a launch perfectly fair, and unfairness from information asymmetry can often be worse than unfairness from explicit premines (was Bitcoin <em>really</em> a fair launch considering how few people had a chance to even hear about it by the time 1/4 of the supply had already been handed out by the end of 2010?). But even still, in-protocol compensation for non-security public goods from day one seems like a potentially significant step forward toward getting sufficient and more credibly neutral developer funding.</p>
 <h3 id="the-need-for-degov-for-protocol-maintenance-and-upgrades">The need for DeGov for protocol maintenance and upgrades</h3>
@@ -104,7 +100,7 @@
 <p>There is one major type of strategy being attempted for solving the first problem (and therefore also mitigating the third problem): <a href="https://en.wikipedia.org/wiki/Liquid_democracy">delegation</a>. Smallholders don't have to personally judge each decision; instead, they can delegate to community members that they trust. This is an honorable and worthy experiment; we shall see how well delegation can mitigate the problem.</p>
 <center>
 <p><br></p>
-<p><img src="/images/voting3-files/gitcoin_page.png" style="width:550px" /></p>
+<p><img src="../../../../images/voting3-files/gitcoin_page.png" style="width:550px" /></p>
 <p><small></p>
 <p><em>My voting delegation page in the Gitcoin DAO</em></p>
 </small><br>
@@ -118,7 +114,7 @@
 <p>The problems get much worse once determined attackers trying to subvert the system enter the picture. The fundamental vulnerability of coin voting is simple to understand. <strong>A token in a protocol with coin voting is a bundle of two rights that are combined into a single asset: (i) some kind of economic interest in the protocol's revenue and (ii) the right to participate in governance. This combination is deliberate: the goal is to align power and responsibility. But in fact, these two rights are very easy to unbundle from each other</strong>. Imagine a simple wrapper contract that has these rules: if you deposit 1 XYZ into the contract, you get back 1 WXYZ. That WXYZ can be converted back into an XYZ at any time, plus in addition it accrues dividends. Where do the dividends come from? Well, while the XYZ coins are inside the wrapper contract, it's the wrapper contract that has the ability to use them however it wants in governance (making proposals, voting on proposals, etc). The wrapper contract simply auctions off this right every day, and distributes the profits among the original depositors.</p>
 <center>
 <p><br></p>
-<p><img src="/images/voting3-files/wrapper1.png" /></p>
+<p><img src="../../../../images/voting3-files/wrapper1.png" /></p>
 <br>
 </center>
 <p>As an XYZ holder, is it in your interest to deposit your coins into the contract? If you are a very large holder, it might not be; you like the dividends, but you are scared of what a misaligned actor might do with the governance power you are selling them. But if you are a smaller holder, then it very much is. If the governance power auctioned by the wrapper contract gets bought up by an attacker, you personally only suffer a small fraction of the cost of the bad governance decisions that your token is contributing to, but you personally gain the full benefit of the dividend from the governance rights auction. This situation is a classic tragedy of the commons.</p>
@@ -153,7 +149,7 @@
 <p>The simplest example is borrowing from a defi lending platform (eg. <a href="https://compound.finance/">Compound</a>). Someone who already holds ETH can lock up their ETH in a CDP ("collateralized debt position") in one of these platforms, and once they do that the CDP contract allows them to borrow an amount of XYZ up to eg. half the value of the ETH that they put in. They can then do whatever they want with this XYZ. To recover their ETH, they would eventually need to pay back the XYZ that they borrowed, plus interest.</p>
 <center>
 <p><br></p>
-<p><img src="/images/voting3-files/wrapper2.png" /></p>
+<p><img src="../../../../images/voting3-files/wrapper2.png" /></p>
 <br>
 </center>
 <p>Note that throughout this process, <em>the borrower has no financial exposure to XYZ</em>. That is, if they use their XYZ to vote for a governance decision that destroys the value of XYZ, they do not lose a penny as a result. The XYZ they are holding is XYZ that they have to eventually pay back into the CDP regardless, so they do not care if its value goes up or down. <strong>And so we have achieved unbundling: the borrower has governance power without economic interest, and the lender has economic interest without governance power</strong>.</p>
@@ -162,7 +158,7 @@
 <p>At present, many blockchains and DAOs with coin voting have so far managed to avoid these attacks in their most severe forms. There are occasional signs of attempted bribes:</p>
 <center>
 <p><br></p>
-<p><a href="https://twitter.com/MonetSupply/status/1415526055348031489?s=19"><img src="/images/voting3-files/bribeattempt.jpg" style="width:600px"/></a></p>
+<p><a href="https://twitter.com/MonetSupply/status/1415526055348031489?s=19"><img src="../../../../images/voting3-files/bribeattempt.jpg" style="width:600px"/></a></p>
 </br>
 </center>
 <p>But despite all of these important issues, there have been much fewer examples of outright voter bribing, including obfuscated forms such as using financial markets, that simple economic reasoning would suggest. The natural question to ask is: why haven't more outright attacks happened yet?</p>
@@ -197,7 +193,7 @@
 <p>Fork-friendliness is arguably a skin-in-the-game strategy, if forks are done in the way that Hive forked from Steem. In the case that a ruinous governance decision succeeds and can no longer be opposed inside the protocol, users can take it upon themselves to make a fork. Furthermore, in that fork, the coins that voted for the bad decision can be destroyed.</p>
 <center>
 <p><br></p>
-<p><img src="/images/coordination/forkwars.png" /></p>
+<p><img src="../../../../images/coordination/forkwars.png" /></p>
 </br>
 </center>
 <p>This sounds harsh, and perhaps it even feels like a violation of an implicit norm that the "immutability of the ledger" should remain sacrosanct when forking a coin. But the idea seems much more reasonable when seen from a different perspective. We keep the idea of a strong firewall where individual coin balances are expected to be inviolate, <em>but only apply that protection to coins that do not participate in governance</em>. If you participate in governance, even indirectly by putting your coins into a wrapper mechanism, then you may be held liable for the costs of your actions.</p>
@@ -207,7 +203,7 @@
 <p>The most popular solution to these kinds of issues is <a href="https://blog.ethereum.org/2014/08/21/introduction-futarchy/">futarchy</a>, introduced by Robin Hanson in the early 2000s. Votes become bets: to vote in favor of a proposal, you make a bet that the proposal will lead to a good outcome, and to vote against the proposal, you make a bet that the proposal will lead to a poor outcome. Futarchy introduces individual responsibility for obvious reasons: if you make good bets, you get more coins, and if you make bad bets you lose your coins.</p>
 <center>
 <p><br></p>
-<p><img src="/images/election-files/chartovertime.png" /></p>
+<p><img src="../../../../images/election-files/chartovertime.png" /></p>
 <br>
 </center>
 <p>"Pure" futarchy has proven difficult to introduce, because in practice objective functions are very difficult to define (it's not just coin price that people want!), but various hybrid forms of futarchy may well work. Examples of hybrid futarchy include:</p>

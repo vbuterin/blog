@@ -11,10 +11,10 @@ Gitcoin Grants Round 9 has just finished, and as usual the round has been a succ
 
 <br>
 <center>
-<img src="/images/round9/results1.jpg" style="width:350px; padding-right: 10px" />
-<img src="/images/round9/results2.jpg" style="width:350px; padding-right: 10px" />
-<img src="/images/round9/results3.jpg" style="width:350px; padding-right: 10px" />
-<img src="/images/round9/results4.jpg" style="width:350px; padding-right: 10px" />
+<img src="../../../../images/round9/results1.jpg" style="width:350px; padding-right: 10px" />
+<img src="../../../../images/round9/results2.jpg" style="width:350px; padding-right: 10px" />
+<img src="../../../../images/round9/results3.jpg" style="width:350px; padding-right: 10px" />
+<img src="../../../../images/round9/results4.jpg" style="width:350px; padding-right: 10px" />
 </center><br><br>
 
 However, with growing scale, round 9 has also brought out unique and unprecedented challenges. The most important among them is collusion and fraud: in round 9, over 15% of contributions were detected as being probably fraudulent. This was, of course, inevitable and expected from the start; I have actually been surprised at how long it has taken for people to start to make serious attempts to exploit the mechanism. The Gitcoin team has responded in force, and has [published a blog post](https://medium.com/block-science/deterring-adversarial-behavior-at-scale-in-gitcoin-grants-a8a5cd7899ff) detailing their strategies for detecting and responding to adversarial behavior along with a [general governance overview](https://gitcoin.co/blog/gitcoin-grants-round-9-governance-brief/). **However, it is my opinion that to successfully limit adversarial behavior in the long run more serious reforms, with serious sacrifices, are going to be required**.
@@ -23,7 +23,7 @@ However, with growing scale, round 9 has also brought out unique and unprecedent
 
 Gitcoin continues to be successful in attracting many matching funders this round. [BadgerDAO](https://badgerdao.medium.com/), a project that describes itself as a "DAO dedicated to building products and infrastructure to bring Bitcoin to DeFi", has donated $300,000 to the matching pool - the largest single donation so far.
 
-<br><center><img src="/images/round9/fundersleague.png" style="width:600px" /></center><br><br>
+<br><center><img src="../../../../images/round9/fundersleague.png" style="width:600px" /></center><br><br>
 
 Other new funders include [Uniswap](https://app.uniswap.org/), [Stakefish](https://stake.fish/), [Maskbook](https://mask.io/), [FireEyes](https://medium.com/fire-eyes-dao), [Polygon](https://polygon.technology/), [SushiSwap](https://sushi.com/) and [TheGraph](https://thegraph.com/). As Gitcoin Grants continues to establish itself as a successful home for Ethereum public goods funding, it is also continuing to attract legitimacy as a focal point for donations from projects wishing to support the ecosystem. This is a sign of success, and hopefully it will continue and grow further. The next goal should be to get not just one-time contributions to the matching pool, but long-term commitments to repeated contributions (or even newly launched tokens donating a percentage of their holdings to the matching pool)!
 
@@ -35,14 +35,14 @@ We can measure this! To start off, let's compare the top-10 projects in this rou
 
 <br>
 <center>
-<img src="/images/round9/combined1.png" style="width:350px; padding-right: 20px" />
-<img src="/images/round9/combined2.png" style="width:350px" /><br><br>
-<img src="/images/round9/combined3.png" style="width:350px" />
+<img src="../../../../images/round9/combined1.png" style="width:350px; padding-right: 20px" />
+<img src="../../../../images/round9/combined2.png" style="width:350px" /><br><br>
+<img src="../../../../images/round9/combined3.png" style="width:350px" />
 </center><br><br>
 
 In all cases, about half of the top-10 carries over from the previous round and about half is new (the flipside, of course is that half the top-10 drops out). The charts are a slight understatement: the Gitcoin Grants dev fund and POAP appear to have dropped out but actually merely changed categories, so something like 40% churn may be a more accurate number.
 
-<br><center><img src="/images/round9/churn.jpg" style="width:550px" /></center><br><br>
+<br><center><img src="../../../../images/round9/churn.jpg" style="width:550px" /></center><br><br>
 
 If you check the results from round 8 against [round 7](https://vitalik.ca/general/2020/10/18/round7.html), you also get about 50% churn, and comparing round 7 to [round 6](https://vitalik.ca/general/2020/07/22/round6.html) gives similar values. Hence, it is looking like the degree of churn is stable. To me, it seems like roughly 40-50% churn is a healthy level, balancing long-time projects' need for stability with the need to avoid new projects getting locked out, but this is of course only my subjective judgement.
 
@@ -54,7 +54,7 @@ The challenging new phenomenon this round was the sheer scale of the adversarial
 For this round, the Gitcoin team, in consultation with the community, decided to eat the cost of the fraud. Each project received the maximum of the match award it would receive if fraudulent transactions were accepted and the match award it would receive if they were not; the difference, about $33,000 in total, was paid out of Gitcoin's treasury. For future rounds, however, the team aims to be significantly stricter about security.
 
 <center>
-<br><img src="/images/round9/gitcoindiagram1.png" style="width:500px"/>
+<br><img src="../../../../images/round9/gitcoindiagram1.png" style="width:500px"/>
 <br><br>
 <i><small>A diagram from <a href="https://medium.com/block-science/deterring-adversarial-behavior-at-scale-in-gitcoin-grants-a8a5cd7899ff">the Gitcoin team's post</a> describin their process for finding and dealing with adversarial behavior.</small></i>
 <br><br><br>
@@ -70,7 +70,7 @@ But the fact that we can't achieve perfection doesn't mean that we can't try to 
 
 <center>
 <br>
-<img src="/images/round9/gitcoindiagram2.png" style="width:550px"/>
+<img src="../../../../images/round9/gitcoindiagram2.png" style="width:550px"/>
 <br><br>
 <i><small>Picture courtesy of the Gitcoin team's excellent blog post.</small></i><br><br>
 </center>
@@ -84,7 +84,7 @@ One important form of passive security is making some form of unique-human verif
 A second major issue this round had to do with Maskbook. In February, Maskbook [announced a token](https://masknetwork.medium.com/introducing-the-mask-public-twitter-offering-e227597f1021) and the token distribution included a retroactive airdrop to anyone who had donated to Maskbook in previous rounds.
 
 <center>
-<a href="https://masknetwork.medium.com/introducing-the-mask-public-twitter-offering-e227597f1021"><img src="/images/round9/maskbookdiagram.png" /></a><br><br>
+<a href="https://masknetwork.medium.com/introducing-the-mask-public-twitter-offering-e227597f1021"><img src="../../../../images/round9/maskbookdiagram.png" /></a><br><br>
 <i><small>The table from Maskbook's announcement post showing who is eligible for the airdrops.</small></i><br><br>
 </center>
 
@@ -95,7 +95,7 @@ Another project attempted what some construed as a "wink wink nudge nudge" strat
 In both cases, what we are seeing is that _collusion is a spectrum, not a binary_. In fact, there's a pretty wide part of the spectrum that even completely well-meaning and legitimate projects and their contributors could easily engage in.
 
 <center>
-<img src="/images/round9/motivations.png"/>
+<img src="../../../../images/round9/motivations.png"/>
 </center><br><br>
 
 Note that this is a somewhat unusual "moral hierarchy". Normally, the more acceptable motivations would be the altruistic ones, and the less acceptable motivations would be the selfish ones. Here, though, the motivations closest to the left _and_ the right are selfish; the altruistic motivation is close to the left, but it's not the _only_ motivation close to the left. The key differentiator is something more subtle: **are you contributing because you like the consequences of the project getting funded (inside-the-mechanism), or are you contributing because you like some (outside-the-mechanism) consequences of _you personally_ funding the project?**
@@ -111,7 +111,7 @@ The simplest approach would be to delist projects whose behavior comes too close
 The solution comes in the form of a technology called [MACI](https://github.com/appliedZKP/maci).
 
 <center><br>
-<a href="https://ethresear.ch/t/minimal-anti-collusion-infrastructure/5413"><img src="/images/round9/maci.png" style="width:600px"/></a>
+<a href="https://ethresear.ch/t/minimal-anti-collusion-infrastructure/5413"><img src="../../../../images/round9/maci.png" style="width:600px"/></a>
 </center><br><br>
 
 MACI is a toolkit that allows you to run _collusion-resistant applications_, which simultaneously guarantee several key properties:
@@ -125,7 +125,7 @@ Collusion resistance is the key property: it makes bribes (or retroactive airdro
 
 The technical description of how this works is not that difficult. Users participate by signing a message with their private key, encrypting the signed message to a _public key_ published by a central server, and publishing the encrypted signed message to the blockchain. The server downloads the messages from the blockchain, decrypts them, processes them, and outputs the result along with a [ZK-SNARK](https://vitalik.ca/general/2021/01/26/snarks.html) to ensure that they did the computation correctly. 
 
-<br><center><img src="/images/round9/maci2.png" style="width:500px"/></center><br><br>
+<br><center><img src="../../../../images/round9/maci2.png" style="width:500px"/></center><br><br>
 
 Users cannot prove how they participated, because they have the ability to send a "key change" message to trick anyone trying to audit them: they can first send a key change message to change their key from A to B, and then send a "fake message" signed with A. The server would reject the message, but no one else would have any way of knowing that the key change message had ever been sent. There is a trust requirement on the server, though only for privacy and coercion resistance; the server cannot publish an incorrect result either by computing incorrectly or by censoring messages. In the long term, [multi-party computation](https://blog.ethereum.org/2014/12/26/secret-sharing-daos-crypto-2-0/) can be used to decentralize the server somewhat, strengthening the privacy and coercion resistance guarantees.
 

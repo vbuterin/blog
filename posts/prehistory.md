@@ -12,7 +12,7 @@ Let us first begin with the very earliest version of what would eventually becom
 
 [https://web.archive.org/web/20150627031414/http://vbuterin.com/ultimatescripting.html](https://web.archive.org/web/20150627031414/http://vbuterin.com/ultimatescripting.html)
 
-![](/images/prehistory-files/ultimatescripting.png)
+![](../../../../images/prehistory-files/ultimatescripting.png)
 
 Notice that this is very far from the later and more expansive vision of Ethereum: it specialized purely in what Mastercoin was trying to specialize in already, namely two-party contracts where parties A and B would both put in money, and then they would later get money out according to some formula specified in the contract (eg. a bet would say "if X happens then give all the money to A, otherwise give all the money to B"). The scripting language was not Turing-complete.
 
@@ -20,14 +20,14 @@ The Mastercoin team was impressed, but they were not interested in dropping ever
 
 [https://web.archive.org/web/20131219030753/http://vitalik.ca/ethereum.html](https://lh6.googleusercontent.com/soPo_aa2YSpV8DvGGZbGjAkZehtiqJEa8dPzOM4ZSZxAvZcAfNbnVqErQL1JlG8lcmgpQyXmb3cO9m21asJQKZZmTXGQsLOtvTgBTp_5LOxfdWRZpgh3pys7Os3GK5dFGCL6aIpd)
 
-![](/images/prehistory-files/ethereumwhitepaper.png)
+![](../../../../images/prehistory-files/ethereumwhitepaper.png)
 
 
 Here you can see the results of a substantial rearchitecting, largely a result of a long walk through San Francisco I took in November once I realized that smart contracts could potentially be fully generalized. Instead of the scripting language being simply a way of describing the terms of relations between two parties, contracts were themselves fully-fledged accounts, and had the ability to hold, send and receive assets, and even maintain a permanent storage (back then, the permanent storage was called "memory", and the only temporary "memory" was the 256 registers). The language switched from being a stack-based machine to being a register-based one on my own volition; I had little argument for this other than that it seemed more sophisticated.
 
 Additionally, notice that there is now a built-in fee mechanism:
 
-![](/images/prehistory-files/txfee.png)
+![](../../../../images/prehistory-files/txfee.png)
 
 
 At this point, ether literally was gas; after every single computational step, the balance of the contract that a transaction was calling would drop a little bit, and if the contract ran out of money execution would halt. Note that this "receiver pays" mechanism meant that the contract itself had to require the sender to pay the contract a fee, and immediately exit if this fee is not present; the protocol allocated an allowance of 16 free execution steps to allow contracts to reject non-fee-paying transactions.
@@ -38,12 +38,12 @@ At this point, ether literally was gas; after every single computational step, t
 
 This was the time when the Ethereum protocol was entirely my own creation. From here on, however, new participants started to join the fold. By far the most prominent on the protocol side was Gavin Wood, who reached out to me in an about.me message in December 2013:
 
-![](/images/prehistory-files/gavwoodmessage.png)
+![](../../../../images/prehistory-files/gavwoodmessage.png)
 
 
 Jeffrey Wilcke, lead developer of the Go client (back then called "ethereal") also reached out and started coding around the same time, though his contributions were much more on the side of client development rather than protocol research.
 
-![](/images/prehistory-files/jeffreywilcke.png)
+![](../../../../images/prehistory-files/jeffreywilcke.png)
 
 <center><small><i>
 "Hey Jeremy, glad to see you're interested in Ethereum..."
@@ -58,13 +58,13 @@ Second, a discussion between him and myself (during a walk in San Francisco, so 
 
 Gavin can also be largely credited for the subtle change in vision from viewing Ethereum as a platform for building programmable money, with blockchain-based contracts that can hold digital assets and transfer them according to pre-set rules, to a general-purpose computing platform. This started with subtle changes in emphasis and terminology, and later this influence became stronger with the increasing emphasis on the "Web 3" ensemble, which saw Ethereum as being one piece of a suite of decentralized technologies, the other two being Whisper and Swarm.
 
-![](/images/prehistory-files/web3suite.png)
+![](../../../../images/prehistory-files/web3suite.png)
 
 
 There were also changes made around the start of 2014 that were suggested by others. We ended up moving back to a stack-based architecture after the idea was suggested by Andrew Miller and others.
 
-![](/images/prehistory-files/amiller1.png)
-![](/images/prehistory-files/amiller2.png)
+![](../../../../images/prehistory-files/amiller1.png)
+![](../../../../images/prehistory-files/amiller2.png)
 
 Charles Hoskinson suggested the switch from Bitcoin's SHA256 to the newer SHA3 (or, more accurately, keccak256). Although there was some controversy for a while, discussions with Gavin, Andrew and others led to establishing that the size of values on the stack should be limited to 32 bytes; the other alternative being considered, unlimited-size integers, had the problem that it was too difficult to figure out how much gas to charge for additions, multiplications and other operations.
 
@@ -78,7 +78,7 @@ The initial mining algorithm that we had in mind, back in January 2014, was a co
 
 [https://github.com/ethereum/wiki/blob/master/Dagger.md](https://github.com/ethereum/wiki/blob/master/Dagger.md)
 
-![](/images/prehistory-files/daggerspec.png)
+![](../../../../images/prehistory-files/daggerspec.png)
 
 
 Dagger was named after the "directed acyclic graph" (DAG), the mathematical structure that is used in the algorithm. The idea is that every N blocks, a new DAG would be pseudorandomly generated from a seed, and the bottom layer of the DAG would be a collection of nodes that takes several gigabytes to store. However, generating any individual value in the DAG would require calculating only a few thousand entries. A "Dagger computation" involved getting some number of values in random positions in this bottom-level dataset and hashing them together. This meant that there was a fast way to make a Dagger calculation - already having the data in memory, and a slow, but not memory intensive way - regenerating each value from the DAG that you need to get from scratch.
@@ -93,7 +93,7 @@ The next algorithm was something called Random Circuit, described in this google
 
 Finally, we came full circle with an algorithm called "Dagger Hashimoto". "Dashimoto", as it was sometimes called in short, borrowed many ideas from [Hashimoto](https://pdfs.semanticscholar.org/3b23/7cc60c1b9650e260318d33bec471b8202d5e.pdf), a proof of work algorithm by Thaddeus Dryja that pioneered the notion of "I/O bound proof of work", where the dominant limiting factor in mining speed was not hashes per second, but rather megabytes per second of RAM access. However, it combined this with Dagger's notion of light-client-friendly DAG-generated datasets. After many rounds of tweaking by myself, Matthew, Tim and others, the ideas finally converged into the algorithm we now call [Ethash](https://github.com/ethereum/wiki/wiki/Ethash).
 
-![](/images/prehistory-files/hashimoto.png)
+![](../../../../images/prehistory-files/hashimoto.png)
 
 
 
@@ -103,7 +103,7 @@ Finally, we came full circle with an algorithm called "Dagger Hashimoto". "Dashi
 
 By the summer of 2014, the protocol had considerably stabilized, with the major exception of the proof of work algorithm which would not reach the Ethash phase until around the beginning of 2015, and a semi-formal specification existed in the form of Gavin's [yellow paper](http://gavwood.com/Paper.pdf).
 
-![](/images/prehistory-files/yellowpaper.png)
+![](../../../../images/prehistory-files/yellowpaper.png)
 
 In August 2014, I developed and introduced [the uncle mechanism](https://blog.ethereum.org/2014/07/11/toward-a-12-second-block-time/), which allows Ethereum's blockchain to have a shorter block time and higher capacity while mitigating centralization risks. This was introduced as part of PoC6.
 
@@ -127,7 +127,7 @@ This was all implemented in PoC7; after PoC7, the protocol did not really change
 
 In early 2015, came the pre-launch security audits organized by Jutta Steiner and others, which included both software code audits and academic audits. The software audits were primarily on the C++ and Go implementations, which were led by Gavin Wood and Jeffrey Wilcke, respectively, though there was also a smaller audit on my pyethereum implementation. Of the two academic audits, one was performed by Ittay Eyal (of "selfish mining" fame), and the other by Andrew Miller and others from Least Authority. The Eyal audit led to a minor protocol change: the total difficulty of a chain would not include uncles. The [Least Authority audit](https://leastauthority.com/blog/least_authority_performs_incentive_analysis_for_ethereum/) was more focused on smart contract and gas economics, as well as the Patricia tree. This audit led to several protocol changes. One small one is the use of sha3(addr) and sha3(key) as trie keys instead of the address and key directly; this would make it harder to perform a worst-case attack on the trie.
 
-![](/images/prehistory-files/leastauthority.png)
+![](../../../../images/prehistory-files/leastauthority.png)
 
 <center>
 <small><i>And a warning that was perhaps a bit too far ahead of its time...</i></small>
@@ -143,7 +143,7 @@ We did not manage to come up with a gas limit strategy that was less likely to b
 <hr />
 <br>
 
-![](/images/prehistory-files/berlin.png)
+![](../../../../images/prehistory-files/berlin.png)
 
 <br>
 
@@ -151,7 +151,7 @@ After a mini-hackathon between Gavin, Jeff and myself, PoC9 was launched in Marc
 
 Olympic ran for four months. In the first two months, many bugs were found in the various implementations, consensus failures happened, among other issues, but around June the network noticeably stabilized. In July a decision was made to make a code-freeze, followed by a release, and on July 30 the release took place.
 
-![](/images/prehistory-files/release.png)
+![](../../../../images/prehistory-files/release.png)
 
 
 

@@ -19,7 +19,7 @@ What's the result? In practice, these sales would often end in as little as 30 s
 
 <center><br>
 
-<img src="/images/prices/bat_fees.png" style="width:550px" /><br>
+<img src="../../../../images/prices/bat_fees.png" style="width:550px" /><br>
 
 <small><i>The most expensive transaction in the BAT sale set a fee of 580,000 gwei, paying a fee of $6,600 to get included in the sale.</i></small>
 
@@ -31,7 +31,7 @@ In more recent times, ICOs have become less popular, but NFTs and NFT sales are 
 
 <center><br>
 
-<img src="/images/prices/basefee_spike.png" style="width:700px" /><br>
+<img src="../../../../images/prices/basefee_spike.png" style="width:700px" /><br>
 
 <small><i>And this isn't even the biggest one; some NFT sales have created gas price spikes as high as 2000 gwei.</i></small>
 
@@ -47,7 +47,7 @@ Many of the arguments are very similar between the examples in the blockchain sp
 
 <center><br>
 
-<img src="/images/prices/baddies.png" style="width:650px" />
+<img src="../../../../images/prices/baddies.png" style="width:650px" />
 
 <br></center>
 
@@ -94,7 +94,7 @@ There is one remaining issue. For fixed and limited-supply NFTs, you might get t
 
 <center><br>
 
-![](/images/prices/ethcc.png)
+![](../../../../images/prices/ethcc.png)
 
 <small><i>A fun mildly-grey-hat tactic for conference tickets is to disguise the pool being sold at market rate as the bottom tier of "sponsorships". You may end up with a bunch of people's faces on the sponsor board, but... maybe that's fine? After all, EthCC had John Lilic's face on their sponsor board!</i></small>
 

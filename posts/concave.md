@@ -7,7 +7,7 @@ One of the major philosophical differences that I have noticed in how people app
 In mathematical terms, we can rephrase this as follows: do you expect the world that we are living in, and in particular the way that it responds to the actions that we take, to fundamentally be [**concave**](https://en.wikipedia.org/wiki/Concave_function) or [**convex**](https://en.wikipedia.org/wiki/Convex_function)?
 
 <br><center>
-<img src="/images/convex-files/convex1.png" />
+<img src="../../../../images/convex-files/convex1.png" />
 </center><br><br>
 
 Someone with a concave disposition might say things like this:
@@ -33,7 +33,7 @@ This difference between concave and convex mindsets is not at all limited to arc
 
 <br>
 <center>
-<img src="/images/convex-files/carnivore.png" /></center>
+<img src="../../../../images/convex-files/carnivore.png" /></center>
 <br><br>
 
 But in all of these questions too, I personally find myself fairly consistently coming out on the side of balance.
@@ -51,7 +51,7 @@ By similar economic logic, an outright prohibition on some behavior may cause mo
 Another example of effects like this in [Laffer curve](https://en.wikipedia.org/wiki/Laffer_curve): a tax rate of zero raises no revenue, a tax rate of 100% raises no revenue because no one bothers to work, but some tax rate in the middle raises the most revenue. There are debates about what that revenue-maximizing rate is, but in general there's broad agreement that the chart looks something like this:
 
 <br><center>
-<img src="/images/convex-files/laffer.png" />
+<img src="../../../../images/convex-files/laffer.png" />
 </center><br><br>
 
 If you had to pick either the average of two proposed tax plans, or a coin-flip between them, it's obvious that the average is usually best. And taxes are not the only phenomenon that are like this; economics studies a [wide array of "diminishing returns" phenomena](https://en.wikipedia.org/wiki/Diminishing_returns) which occur everywhere in production, consumption and many other aspects of regular day-to-day behavior. Finally, a common flip-side of diminishing returns is accelerating costs: to give one notable example, if you take [standard economic models of utility of money](https://www.forbes.com/sites/rogerkay/2013/08/05/how-the-marginal-utility-of-money-balances-with-value/), they directly imply that double the economic inequality can cause four times the harm.
@@ -62,7 +62,7 @@ Another point of complexity is that in the real world, policies are not just sin
 
 Well, you could take the geographic compromise, and enjoy your peaceful existence at the arithmetic midpoint between the two lovely cities at.... 
 
-<br><center><img src="/images/convex-files/streetmap2.png" /><br><br>This Assembly of God church about 29km southwest of Ithaca, NY.
+<br><center><img src="../../../../images/convex-files/streetmap2.png" /><br><br>This Assembly of God church about 29km southwest of Ithaca, NY.
 </center><br><br>
 
 Or you could be even more mathematically pure, and take the straight-line midpoint between Toronto and New York without even bothering to stay on the Earth's surface. Then, you're still pretty close to that church, but you're six kilometers under it. A different way to compromise is spending six months every year in Toronto and six months in New York - and this may well be an actually reasonable path for some people to take.
@@ -71,7 +71,7 @@ The point is, when the options being presented to you are more complicated than 
 
 And this is to be expected: "convex" and "concave" are terms best suited to mathematical functions where the input and the output are both one-dimensional. The real world is high-dimensional - and as machine-learning researchers have [now well established](https://www.kdnuggets.com/2015/11/theoretical-deep-learning.html), in high-dimensional environments the most common setting that you can expect to find yourself in is not a universally convex or universally concave one, but rather a _saddle point_: a point where the local region is convex in some directions but concave in other directions.
 
-<br><center><img src="/images/convex-files/saddlepoint.png"
+<br><center><img src="../../../../images/convex-files/saddlepoint.png"
  /><br><br>A saddle point. Convex left-to-right, concave forward-to-backward.
 </center><br><br>
 

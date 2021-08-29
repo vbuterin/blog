@@ -8,7 +8,7 @@ _Special thanks to Dankrad Feist and Aditya Asgaonkar for review_
 Sharding is the future of Ethereum scalability, and it will be key to helping the ecosystem support many thousands of transactions per second and allowing large portions of the world to regularly use the platform at an affordable cost. However, it is also one of the more misunderstood concepts in the Ethereum ecosystem and in blockchain ecosystems more broadly. It refers to a very specific set of ideas with very specific properties, but it often gets conflated with techniques that have very different and often much weaker security properties. The purpose of this post will be to explain exactly what specific properties sharding provides, how it differs from other technologies that are _not_ sharding, and what sacrifices a sharded system has to make to achieve these properties.
 
 <center>
-<img src="/images/sharding-files/beacon_chain.jpg" />
+<img src="../../../../images/sharding-files/beacon_chain.jpg" />
 <i><small>One of the many depictions of a sharded version of Ethereum. Original diagram by Hsiao-wei Wang, design by Quantstamp.</small></i><br>
 </center>
 
@@ -16,7 +16,7 @@ Sharding is the future of Ethereum scalability, and it will be key to helping th
 
 The best way to describe sharding starts from the problem statement that shaped and inspired the solution: **the Scalability Trilemma**.
 
-<br><center><img src="/images/sharding-files/trilemma.png" /></center><br>
+<br><center><img src="../../../../images/sharding-files/trilemma.png" /></center><br>
 
 The scalability trilemma says that there are three properties that a blockchain try to have, and that, **if you stick to "simple" techniques, you can only get two of those three**. The three properties are:
 
@@ -46,7 +46,7 @@ The core idea is as follows. Suppose that you have a proof of stake chain with a
 
 Hence, what we do is we **randomly split up the work of doing the verification**. We randomly shuffle the validator list, and we assign the first 100 validators in the shuffled list to verify the first block, the second 100 validators in the shuffled list to verify the second block, etc. A randomly selected group of validators that gets assigned to verify a block (or perform some other task) is called a **committee**.
 
-<br><center><img src="/images/sharding-files/committees.png" /></center><br><br>
+<br><center><img src="../../../../images/sharding-files/committees.png" /></center><br><br>
 
 When a validator verifies a block, they publish a signature attesting to the fact that they did so. Everyone else, instead of verifying 100 entire blocks, now only verifies 10000 signatures - a much smaller amount of work, especially with [BLS signature aggregation](https://ethresear.ch/t/pragmatic-signature-aggregation-with-bls/2105). Instead of every block being broadcasted through the same P2P network, each block is broadcasted on a different sub-network, and nodes need only join the subnets corresponding to the blocks that they are responsible for (or are interested in for other reasons).
 
@@ -82,7 +82,7 @@ Validating a block in a blockchain involves both computation and data availabili
 
 Scalably validating computation is relatively easy; there are two families of techniques: **fraud proofs** and **ZK-SNARKs**.
 
-<br><center><img src="/images/rollup-files/tree.png" /><br><br>
+<br><center><img src="../../../../images/rollup-files/tree.png" /><br><br>
 <small><i>Fraud proofs are one way to verify computation scalably.</i></small><br><br>
 </center>
 
@@ -102,7 +102,7 @@ A fraud proof cannot be used to verify availability of data. Fraud proofs for _c
 This is expanded on in **[the fisherman's dilemma](https://github.com/ethereum/research/wiki/A-note-on-data-availability-and-erasure-coding)**:
 
 <center><br>
-<img src="/images/sharding-files/fisherman_dilemma.png" />
+<img src="../../../../images/sharding-files/fisherman_dilemma.png" />
 </center><br>
 
 The core idea is that the two "worlds", one where V1 is an evil publisher and V2 is an honest challenger and the other where V1 is an honest publisher and V2 is an evil challenger, are indistinguishable to anyone who was not trying to download that particular piece of data at the time. And of course, in a scalable decentralized blockchain, each individual node can only hope to download a small portion of the data, so only a small portion of nodes would see anything about what went on except for the mere fact that there was a disagreement.
@@ -122,7 +122,7 @@ The key is a technology called [**data availability sampling**](https://hackmd.i
 1. Use a tool called **erasure coding** to expand a piece of data with N chunks into a piece of data with 2N chunks such that _any N_ of those chunks can recover the entire data.
 2. To check for availability, instead of trying to download the _entire_ data, users simply **randomly select a constant number of positions in the block** (eg. 30 positions), and accept the block only when they have successfully found the chunks in the block at _all_ of their selected positions.
 
-<br><center><img src="/images/sharding-files/sampling.png" /></center><br><br>
+<br><center><img src="../../../../images/sharding-files/sampling.png" /></center><br><br>
 
 Erasure codes transform a "check for 100% availability" (every single piece of data is available) problem into a "check for 50% availability" (at least half of the pieces are available) problem. Random sampling solves the 50% availability problem. If less than 50% of the data is available, then at least one of the checks will almost certainly fail, and if at least 50% of the data is available then, while some nodes may fail to recognize a block as available, it takes only one honest node to run the erasure code reconstruction procedure to bring back the remaining 50% of the block. And so, instead of needing to download 1 MB to check the availability of a 1 MB block, you need only download a few kilobytes. This makes it feasible to run data availability checking on _every_ block. See [this post](https://hackmd.io/@vbuterin/sharding_proposal#Blob-publication-process) for how this checking can be efficiently implemented with peer-to-peer subnets.
 

@@ -22,7 +22,7 @@ But there is also a very philosophically counterintuitive dark side to coordinat
 We can think about this visually as a map, though in reality the map has many billions of "dimensions" rather than two:
 
 <center>
-<img src="/images/coordination/map.png" />
+<img src="../../../../images/coordination/map.png" />
 </center><br>
 
 The bottom-left corner, "every man for himself", is where we don't want to be. The top-right corner, total coordination, is ideal, but likely unachievable. But the landscape in the middle is far from an even slope up, with many reasonably safe and productive places that it might be best to settle down in and many deep dark caves to avoid.
@@ -75,7 +75,7 @@ But there is another, brighter and more actionable, conclusion from this line of
 One naive view of why decentralization is valuable is that it's about reducing risk from single points of technical failure. In traditional "enterprise" distributed systems, this is often actually true, but in many other cases we know that this is not sufficient to explain what's going on. It's instructive here to look at blockchains. A large mining pool publicly showing how they have internally distributed their nodes and network dependencies doesn't do much to calm community members scared of mining centralization. And pictures like these, showing 90% of Bitcoin hashpower at the time being capable of showing up to the same conference panel, do quite a bit to scare people:
 
 <center>
-<img src="/images/coordination/mining_centralization.png" />
+<img src="../../../../images/coordination/mining_centralization.png" />
 </center><br><br>
 
 But why is this image scary? From a "decentralization as fault tolerance" view, large miners being able to talk to each other causes no harm. But if we look at "decentralization" as being the presence of barriers to harmful collusion, then the picture becomes quite scary, because it shows that those barriers are not nearly as strong as we thought. Now, in reality, the barriers are still far from zero; the fact that those miners can easily perform technical coordination and likely are all in the same Wechat groups does _not_, in fact, mean that Bitcoin is "in practice little better than a centralized company".
@@ -100,7 +100,7 @@ There are two core operating principles that we can use to achieve this end: (1)
 In digital systems such as blockchains (this could also be applied to more mainstream systems, eg. DNS), a major and crucially important form of counter-coordination is **forking**.
 
 <center>
-<img src="/images/coordination/forkwars.png" />
+<img src="../../../../images/coordination/forkwars.png" />
 </center><br><br>
 
 If a system gets taken over by a harmful coalition, the dissidents can come together and create an alternative version of the system, which has (mostly) the same rules except that it removes the power of the attacking coalition to control the system. Forking is very easy in an open-source software context; the main challenge in creating a successful fork is usually gathering the **legitimacy** (game-theoretically viewed as a form of "[common knowledge](https://en.wikipedia.org/wiki/Common_knowledge_(logic))") needed to get all those who disagree with the main coalition's direction to follow along with you.
@@ -120,7 +120,7 @@ Forking is a powerful form of counter-coordination precisely because it introduc
 This all leads us to an interesting view of what it is that people building social systems _do_. One of the goals of building an effective social system is, in large part, determining _the structure of coordination_: which groups of people and in what configurations can come together to further their group goals, and which groups cannot?
 
 <center>
-<img src="/images/coordination/structure.png" style="width:650px" />
+<img src="../../../../images/coordination/structure.png" style="width:650px" />
 <br>
 <br>
 <i><small>Different coordination structures, different outcomes</small></i>

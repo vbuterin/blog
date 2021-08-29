@@ -1,0 +1,134 @@
+### Exploring Fully Homomorphic Encryption
+
+Fully homomorphic encryption has for a long time been considered one of the holy grails of cryptography. The promise of fully homomorphic encryption (FHE) is simple: it is a type of encryption that allows a third party to perform computations on encrypted data, and get an encrypted result, _without_ being able to decrypt the data or the result.
+
+<center>
+<img src="https://vitalik.ca/files/posts_files/fhe/HomoEncrypt.png" !><br>
+</center>
+
+As a simple example, imagine that you have a set of emails, and you want to use a third party spam filter to check whether or not they are spam. Either the spam filter provider wants to keep their source code closed, or the spam filter depends on a very large database that they do not want to reveal publicly as that would make attacking easier, or both. However, you care about the privacy of your data, and don't want to upload your emails to a third party. So here's how you do it:
+
+<center>
+<img src="https://vitalik.ca/files/posts_files/fhe/HomoEncrypt2.png" !><br>
+</center>
+
+Fully homomorphic encryption has many applications, including in the blockchain space where it can be used to implement privacy-preserving light clients (the light client hands the server an encrypted index `i`, the server computes `data[0] * (i = 0) + data[1] * (i = 1) + ... + data[n] * (i = n)`, where `data[i]` is the i'th piece of data in a block or state along with its Merkle branch and `(i = k)` is an expression that returns 1 if `i = k` and otherwise 0, and returns the output; the light client gets the data it needs and the server learns nothing about what the light client asked).
+
+And it turns out that fully homomorphic encryption is, conceptually, quite easy to understand!
+
+### Partially, Somewhat, Fully homomorphic encryption
+
+First, a note on definitions. There are different kinds of homomorphic encryption, some more powerful than others, and they are separated by what kinds of functions one can compute on the encrypted data.
+
+* **Partially homomorphic encryption** allows evaluating only a _very_ limited set of operations on encrypted data: either just additions (so given `encrypt(a)` and `encrypt(b)` you can compute `encrypt(a+b)` and `encrypt(a*x)` for some `x` that you know), or just multiplications (given `encrypt(a)` and `encrypt(b)` you can compute `encrypt(a*b)`).
+* **Somewhat homomorphic encryption** allows computing additions as well as a _limited_ number of multiplications (alternatively, polynomials up to a limited degree). That is, if you get `encrypt(x1) ... encrypt(xn)` (assuming these are "original" encryptions and not already the result of homomorphic computation), you can compute `encrypt(p(x1 ... xn))`, _as long as_ `p(x1 ... xn)` is a polynomial with degree `< D` for some specific degree bound `D` (`D` is usually very low, think 5-15).
+* **Fully homomorphic encryption** allows unlimited additions and multiplications. Additions and multiplications let you replicate any binary circuit gates (`AND(x, y) = x*y`, `OR(x, y) = x+y-x*y`, `XOR(x, y) = x+y-2*x*y` or just `x+y` if you only care about even vs odd, `NOT(x) = 1-x`...), so this is sufficient to do arbitrary computation on encrypted data.
+
+Partially homomorphic encryption is fairly easy; eg. RSA has a multiplicative homomorphism: $enc(x) = x^e$, $enc(y) = y^e$, so $enc(x) * enc(y) = (xy)^e = enc(xy)$. Elliptic curves can offer similar properties with addition. Allowing _both_ addition and multiplication is, it turns out, significantly harder.
+
+### A simple somewhat-HE algorithm
+
+Here, we will go through a somewhat-homomorphic encryption algorithm (ie. one that supports a limited number of multiplications) that is surprisingly simple. A more complex version of this category of technique was used by Craig Gentry to create [the first-ever _fully_ homomorphic scheme](https://crypto.stanford.edu/craig/craig-thesis.pdf) in 2009. More recent efforts have switched to using different schemes based on vectors and matrices, but we will still go through this technique first.
+
+We will describe all of these encryption schemes as _secret-key_ schemes; that is, the same key is used to encrypt and decrypt. Any secret-key HE scheme can be turned into a public key scheme easily: a "public key" is typically just a set of many encryptions of zero, as well as an encryption of one (and possibly more powers of two). To encrypt a value, generate it by adding together the appropriate subset of the non-zero encryptions, and then adding a random subset of the encryptions of zero to "randomize" the ciphertext and make it infeasible to tell what it represents.
+
+The secret key here is a large prime, $p$ (think of $p$ as having hundreds or even thousands of digits). The scheme can only encrypt 0 or 1, and "addition" becomes XOR, ie. 1 + 1 = 0. To encrypt a value $m$ (which is either 0 or 1), generate a large random value $R$ (this will typically be even larger than $p$) and a smaller random value $r$ (typically much smaller than $p$), and output:
+
+$$enc(m) = R * p + r * 2 + m$$
+
+To decrypt a ciphertext, compute:
+
+$$dec(ct) = (ct\ mod\ p)\ mod\ 2$$
+
+To add two ciphertexts $ct_1$ and $ct_2$, you simply, well, add them: $ct_1 + ct_2$. And to multiply two ciphertexts, you once again... multiply them: $ct_1 * ct_2$. We can prove the homomorphic property (that the sum of the encryptions is an encryption of the sum, and likewise for products) as follows.
+
+Let:
+
+$$ct_1 = R_1 * p + r_1 * 2 + m_1$$
+$$ct_2 = R_2 * p + r_2 * 2 + m_2$$
+
+We add:
+
+$$ct_1 + ct_2 = R_1 * p + R_2 * p + r_1 * 2 + r_2 * 2 + m_1 + m_2$$
+
+Which can be rewritten as:
+
+$$(R_1 + R_2) * p + (r_1 + r_2) * 2 + (m_1 + m_2)$$
+
+Which is of the exact same "form" as a ciphertext of $m_1 + m_2$. If you decrypt it, the first $mod\ p$ removes the first term, the second $mod\ 2$ removes the second term, and what's left is $m_1 + m_2$ (remember that if $m_1 = 1$ and $m_2 = 1$ then the 2 will get absorbed into the second term and you'll be left with zero). And so, voila, we have additive homomorphism!
+
+Now let's check multiplication:
+
+$$ct_1 * ct_2 = (R_1 * p + r_1 * 2 + m_1) * (R_2 * p + r_2 * 2 + m_2)$$
+
+Or:
+
+$$(R_1 * R_2 * p + r_1 * 2 + m_1 + r_2 * 2 + m_2) * p + (r_1 * r_2 * 2 + r_1 * m_2 + r_2 * m_1) * 2 + (m_1 * m_2)$$
+
+This was simply a matter of expanding the product, and grouping together all the terms that contain $p$, then all the remaining terms that contain $2$, and finally the remaining term which is the product of the messages. If you decrypt, then once again the $mod\ p$ removes the first group, the $mod\ 2$ removes the second group, and only $m_1 * m_2$ is left.
+
+But there are two problems here: first, the size of the ciphertext itself grows (the length roughly doubles when you multiply), and second, the "noise" in the smaller $* 2$ term also gets quadratically bigger. Adding this noise into the ciphertexts was necessary because the security of this scheme is based on the [approximate GCD problem](https://oeis.org/wiki/Greatest_common_divisor#Approximate_GCD_problem):
+
+<center>
+<img src="https://vitalik.ca/files/posts_files/fhe/approx_gcd.png" !><br>
+</center>
+
+Essentially, if you just had a set of expressions of the form $p * R_1 + m_1$, $p * R_2 + m_2$..., then you could use the [Euclidean algorithm](https://en.wikipedia.org/wiki/Euclidean_algorithm) to efficiently compute the greatest common divisor, which would give you the secret key $p$ and break the encryption, but if the ciphertexts are only _approximate_ multiples with some noise, then doing this quickly becomes impractical. Unfortunately, the noise introduces the inherent limitation that if you multiply the ciphertexts by each other enough, it eventually grows big enough that it exceeds $p$, and at that point the $mod\ p$ and $mod\ 2$ steps "interfere" with each other, making the data unextractable. This will be an inherent tradeoff in all of these homomorphic encryption schemes: extracting information from _approximate_ equations "with errors" is much harder than extracting information from exact equations, but the approximateness adds noise that bounds the amount of computation that you can do before the noise gets overwhelming. And **this is why these schemes are only "somewhat" homomorphic**.
+
+## Bootstrapping
+
+There are two classes of solution to this problem. First, in many somewhat homomorphic encryption schemes, there are clever tricks to make multiplication only increase the error by a constant factor (eg. 1000x) instead of squaring it. Increasing the error by 1000x still sounds by a lot, but keep in mind that if $p$ (or its equivalent in other schemes) is a 300-digit number, that means that you can multiply numbers by each other 100 times, which is enough to compute a very wide class of computations. Second, there is Craig Gentry's technique of "bootstrapping".
+
+Suppose that you have a ciphertext $ct$ that is an encryption of some $m$ under a key $p$, that has a lot of error. The idea is that we "refresh" the ciphertext by turning it into a new ciphertext of $m$ under another key $p_2$, where this process "clears out" the old error (though it will introduce a fixed amount of new error). The trick is surprisingly clever and simple. The holder of $p$ and $p_2$ provides a "bootstrapping key" that consists of an encryption of _the bits of $p$_ under the key $p_2$, as well as the public key for $p_2$. Whoever is doing computations on data encrypted under $p$ would then take the bits of the ciphertext $ct$, and individually encrypt these bits under $p_2$. They would then _homomorphically compute the decryption under $p$_ using these ciphertexts, and get out the single bit, which would be $m$ encrypted under $p_2$.
+
+This is difficult to understand, so we can restate it as follows. The decryption procedure $dec(ct, p)$ _is iteself a computation_, and so it _can itself be implemented as a circuit_ that takes as input the bits of $ct$ and the bits of $p$, and outputs the decrypted bit $m \in {0, 1}$. If someone has a ciphertext $ct$ encrypted under $p$, a public key for $p_2$, _and_ the bits of $p$ encrypted under $p_2$, then they can compute $dec(ct, p) = m$ "homomorphically", and get out $m$ encrypted under $p_2$. Notice that the decryption procedure itself washes away the old error; it just outputs 0 or 1. The decryption procedure is itself a circuit, which contains additions or multiplications, so it will introduce new error, but this new error _does not depend_ on the amount of error in the original encryption.
+
+But.... there is a catch. In the scheme as described above, the error blows up so quickly that even the decryption circuit of the scheme itself is too much for it. That is, the new $m$ encrypted under $p_2$ would _already_ have so much error that it is unreadable. This is because each AND gate doubles the bit-length of the error, so a scheme using a $d$-bit modulus $p$ can only handle less than $log(d)$ multiplications, but decryption requires computing $mod\ p$, which requires... more than $log(d)$ multiplications.
+
+Craig Gentry came up with clever techniques to get around this problem, but they are arguably too complicated to explain; instead, we will skip straight to newer work from 2011 and 2013, that solves this problem in a different way.
+
+## Learning with errors
+
+To move further, we will introduce a different type of somewhat-homomorphic encryption, and show how to bootstrap it. Here, we will move away from keys and ciphertexts being _integers_, and instead have keys and ciphertexts be _vectors_. Given a key $k = {k_1, k_2 .... k_n}$, to encrypt a message $m$, construct a $c = {c_1, c_2 ... c_n}$ such that the inner product (or "[dot product](https://en.wikipedia.org/wiki/Dot_product)") $<k, c> = k_1c_1 + k_2c_2 + ... + k_nc_n$ modulo some prime $p$ is even if you want to represent $m=0$ and odd if you want to represent $m=1$ (this is the same "mod p mod 2" trick we used earlier). Note that here the $mod\ p$ is typically a "symmetric" mod, that is, it returns a number between $-\frac{p}{2}$ and $\frac{p}{2}$ (eg. 137 mod 10 = -3, 212 mod 10 = 2); this allows our error to be positive or negative.
+
+<center>
+<table>
+<tr><td><b>Key</b></td><td>3</td><td>14</td><td>15</td><td>92</td><td>65</td></tr>
+<tr><td><b>Ciphertext</b></td><td>2</td><td>71</td><td>82</td><td>81</td><td>8</td></tr>
+</table><br>
+</center>
+
+In this example the dot product is `3 * 2 + 14 * 71 + 15 * 82 + 92 * 81 + 65 * 8 = 10202`, and $10202 = 99 * 103 + 5$. 5 itself is of course $2 * 2 + 1$, so the message is 1. In practice, the first item in the key is typically set to $1$; this makes it easier to generate ciphertexts as you can first generate all items after the first randomly, compute $R = k_2c_2 + ... + k_nc_n$, and then set $c_1 = x - R$ for any desired $x$ so that the complete sum $k_1c_1 + ... + k_nc_n$ equals $x$.
+
+The security of the scheme is based on an assumption known as "[learning with errors](https://en.wikipedia.org/wiki/Learning_with_errors)" (LWE) - or, in more jargony but also more understandable terms, the hardness of _solving systems of equations with errors_.
+
+<center>
+<a href="https://cims.nyu.edu/~regev/papers/lwesurvey.pdf"><img src="https://vitalik.ca/files/posts_files/fhe/lwe.png" !></a><br>
+</center>
+
+A ciphertext can itself be viewed as an equation: $k_1c_1 + .... + k_nc_n \approx 0$, where the key $k_1 ... k_n$ is the unknowns, the ciphertext $c_1 ... c_n$ is the coefficients, and the equality is approximate because of both the message and the error. The LWE assumption ensures that even given many of these ciphertexts, you cannot recover $k$.
+
+It is easy to verify that the encryption is additive: if $<ct_1, k> = 2e_1 + m_1$ and $<ct_2, k> = 2e_2 + m_2$, then $<ct_1 + ct_2, k> = 2(e_1 + e_2) + m_1 + m_2$ (the addition here is modulo $p$). What is harder is multiplication: unlike with numbers, there is no natural way to multiply two length-n vectors into another length-n vector. The best that we can do is the [outer product](https://en.wikipedia.org/wiki/Outer_product): a vector containing the products of each possible pair where the first element comes from the first vector and the second element comes from the second vector. That is, $a \otimes b = a_1b_1 + a_2b_1 + ... + a_nb_1 + a_1b_2 + ... + a_nb_2 + ... + a_nb_n$. There is the convenient mathematical identity $<a \otimes b, c \otimes d> = <a, b> * <c, d>$, which we can use to do multiplication.
+
+Given two ciphertexts $c_1$ and $c_2$, we can compute the outer product $c_1 \otimes c_2$. If both $c_1$ and $c_2$ were encrypted with $k$, then $<c_1, k> = 2e_1 + m_1$ and $<c_2, k> = 2e_2 + m_2$. The outer product $c_1 \otimes c_2$ can be viewed as an encryption of $m_1 * m_2$ under $k \otimes k$; we can see this by looking what happens when we try to decrypt with $k \otimes k$:
+
+$$<c_1 \otimes c_2, k \otimes k>$$
+$$= <c_1, k> * <c_2, k>$$
+$$ = (2e_1 + m_1) * (2e_2 + m_2)$$
+$$ = 2(e_1m_2 + e_2m_1 + 2e_1e_2) + m_1m_2$$
+
+So this works. But there is, as you may have already seen, a catch: the size of the ciphertext, and the key, grows quadratically. We solve this with a "relinearization" procedure. The encrypter provides a "relinearization key" which consists of a set of vectors which, when inner-producted (modulo $p$) with the key $k$, give values of the form $k_i * k_j * 2^d + 2e$ (mod $p$) for every $i$ and $j$ in the key and for every power $2^d$ less than $p$ (ie. if the key has length $n$, there would be $n^2 * log(p)$ values in the relinearization key). The $2e$ is an "error term", which prevents the key from being extracted from these equations.
+
+You can think of these as "noisy" encryptions of $k$ itself under $k$. 
+
+<center>
+<table>
+<tr style="color:green"><td>$enc(k_1 * k_1)$</td><td>$enc(k_1 * k_1 * 2)$</td><td>$enc(k_1 * k_1 * 4)$</td><td>$enc(k_1 * k_1 * 8)$</td></tr>
+<tr style="color:red"><td>$enc(k_1 * k_2)$</td><td>$enc(k_1 * k_2 * 2)$</td><td>$enc(k_1 * k_2 * 4)$</td><td>$enc(k_1 * k_2 * 8)$</td></tr>
+<tr style="color:pink"><td>$enc(k_2 * k_1)$</td><td>$enc(k_2 * k_1 * 2)$</td><td>$enc(k_2 * k_1 * 4)$</td><td>$enc(k_2 * k_1 * 8)$</td></tr>
+<tr style="color:orange"><td>$enc(k_2 * k_2)$</td><td>$enc(k_2 * k_2 * 2)$</td><td>$enc(k_2 * k_2 * 4)$</td><td>$enc(k_2 * k_2 * 8)$</td></tr>
+</table><br>
+<small><i>Example assuming $p = 15$ and $k$ has length 2</i></small>
+</center>
+
+Now, let us take a step back to our goal. We want to generate a ciphertext which, encrypted under $k$, gives $m_1 * m_2$. With the relinearization key, we can this by computing _an encryption of_ $<ct_1 \otimes ct_2, k \otimes k>$, by combining together these elements of the relinearization key. That is, $<ct_1 \otimes ct_2, k \otimes k>$ is just a big sum of elements of the form $ct_{1_i} * ct_{2_j} * k_p * k_q$. $ct_{1_i} * ct_{2,j}$ are just a bunch of numbers in the clear that we know, so we _really_ have a big sum of elements of the form $n * k_p * k_q$. And what do we have in our relinearization key? A bunch of elements of the form $n * k_p * k_q$ for every possible combination of $p$ and $q$! Having all the powers of two in our linearization key allows us to generate the total sum by just adding up $\le log(p)$ elements together for each $(p, q)$ pair.

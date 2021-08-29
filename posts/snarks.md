@@ -31,7 +31,7 @@ Such a procedure could even be turned into a non-interactive proof using the **F
 But unfortunately there is a fatal flaw in naively applying random sampling to spot-check a computation in this way: computation is inherently _fragile_. If a malicious prover flips one bit somewhere in the middle of a computation, they can make it give a completely different result, and a random sampling verifier would almost never find out.
 
 <center>
-<img src="/images/snarks-files/randomsample.png" />
+<img src="../../../../images/snarks-files/randomsample.png" />
 <br><br>
 <i><small>It only takes one deliberately inserted error, that a random check would almost never catch, to make a computation give a completely incorrect result.</small></i>
 </center><br>
@@ -108,7 +108,7 @@ It's worth noting that these primitives can be constructed from each other. If y
 And if you can evaluate, you can do all kinds of checks. This is because there is a [mathematical theorem](https://en.wikipedia.org/wiki/Schwartz%E2%80%93Zippel_lemma) that says, approximately, that if some equation involving some polynomials holds true at a _randomly selected coordinate_, then it almost certainly holds true for the polynomials as a whole. So if all we have is a mechanism to prove evaluations, we can check eg. our equation $P(x + 2) - P(x + 1) - P(x) = Z(x) * H(x)$ using an interactive game:
 
 <center>
-<img src="/images/snarks-files/SchwartzZippel.png" />
+<img src="../../../../images/snarks-files/SchwartzZippel.png" />
 <br><br>
 </center>
 
@@ -158,7 +158,7 @@ Notice that $Q$ and $R$ both have degree $< \frac{n}{2}$. Because $S$ is a linea
 From here, we simply repeat the game with $S$, progressively "reducing" the polynomial we care about to a lower and lower degree, until it's at a sufficiently low degree that we can check it directly.
 
 <center>
-<img src="/images/snarks-files/FRI.png" />
+<img src="../../../../images/snarks-files/FRI.png" />
 <br><br>
 </center>
 
@@ -208,7 +208,7 @@ More complex identities such as the distributive law also hold: $(2 + 4) \cdot 3
 Division is the hardest part; we can't use regular division because we want the values to always remain integers, and regular division often gives non-integer results (as in the case of $3/5$). We get around this problem using [Fermat's little theorem](https://en.wikipedia.org/wiki/Fermat%27s_little_theorem), which states that for any nonzero $x < p$, it holds that $x^{p-1}$ % $p = 1$. This implies that $x^{p-2}$ gives a number which, if multiplied by $x$ one more time, gives $1$, and so we can say that $x^{p-2}$ (which is an integer) equals $\frac{1}{x}$. A somewhat more complicated but faster way to evaluate this modular division operator is the [extended Euclidean algorithm](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm), implemented in python [here](https://github.com/ethereum/py_ecc/blob/b036cf5cb37e9b89622788ec714a7da9cdb2e635/py_ecc/secp256k1/secp256k1.py#L34).
 
 <center>
-<img src="/images/snarks-files/clock.png" style="width:350px" /><br><br>
+<img src="../../../../images/snarks-files/clock.png" style="width:350px" /><br><br>
 <small>Because of how the numbers "wrap around", modular arithmetic is sometimes called "clock math"</small>
 </center>
 <br>

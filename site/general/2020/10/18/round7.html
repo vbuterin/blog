@@ -1,33 +1,51 @@
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
-<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
-<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
-<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
-<link rel="stylesheet" type="text/css" href="/css/misc.css">
 
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Gitcoin Grants Round 7 Retrospective">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
 <script type="text/javascript" id="MathJax-script" async
-  src="/scripts/mathjax.js">
+  src="../../../../scripts/tex-svg.js">
 </script>
 
 <style>
-@font-face {
-    font-family: MJXc-TeX-math-Iw;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXZERO;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXTEX;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-
-.math { font-family: MJXc-TeX-math-Iw }
 </style>
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
@@ -41,18 +59,18 @@
 <br>
 <h1 style="margin-bottom:7px"> Gitcoin Grants Round 7 Retrospective </h1>
 <small style="float:left; color: #888"> 2020 Oct 18 </small>
-<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
 <br> <br> <br>
 <title> Gitcoin Grants Round 7 Retrospective </title>
 
 <p>Round 7 of Gitcoin Grants has successfully completed! This round has seen an unprecedented growth in interest and contributions, with $274,830 in contributions and $450,000 in matched funds distributed across 857 projects.</p>
 <p>The category structure was once again changed; this time was had a split between "dapp tech", "infrastructure tech" and "community". Here are the results:</p>
 <center>
-<img src="/images/round_7_files/results1.png" style="width: 360px" /> <img src="/images/round_7_files/results2.png" style="width: 360px" /> <img src="/images/round_7_files/results3.png" style="width: 360px" />
+<img src="../../../../images/round_7_files/results1.png" style="width: 360px" /> <img src="../../../../images/round_7_files/results2.png" style="width: 360px" /> <img src="../../../../images/round_7_files/results3.png" style="width: 360px" />
 </center>
 <h2 id="defi-joins-the-matching">Defi joins the matching!</h2>
 <p>In this round, we were able to have much higher matching values than before. This was because the usual matchings, provided by the Ethereum Foundation and a few other actors, were supplemented for the first time by a high level of participation from various defi projects:</p>
-<p><img src="/images/round_7_files/matching.png" /></p>
+<p><img src="../../../../images/round_7_files/matching.png" /></p>
 <p>The matchers were:</p>
 <ul>
 <li><a href="https://chain.link/">Chainlink</a>, a smart contract oracle project</li>
@@ -91,18 +109,18 @@
 <h3 id="lets-talk-about-categories">Let's talk about categories...</h3>
 <p>The concept of categories as it is currently implemented in Gitcoin Grants is a somewhat strange one. Each category has a fixed total matching amount that is split between projects within that category. What this mechanism basically says is that the community can be trusted to choose between projects <em>within</em> a category, but we need a separate technocratic judgement to judge how the funds are split between the different categories in the first place.</p>
 <p>But it gets more paradoxical from here. In Round 7, a <a href="https://gitcoin.co/grants/collections">"collections" feature</a> was introduced halfway through the round:</p>
-<p><img src="/images/round_7_files/categories.png" /></p>
+<p><img src="../../../../images/round_7_files/categories.png" /></p>
 <p>If you click "Add to Cart" on a collection, you immediately add everything in the collection to your cart. This is strange because this mechanism seems to send the exact <em>opposite</em> message: users that don't understand the details well can choose to allocate funds to entire categories, but (unless they manually edit the amounts) they should not be making many active decisions <em>within</em> each category.</p>
 <p>Which is it? Do we trust the radical quadratic fancy democracy to allocate within categories but not between them, do we trust it to allocate between categories but nudge people away from making fine-grained decisions within them, or something else entirely? I recommend that for Round 8 we think harder about the philosophical challenges here and come up with a more principled approach.</p>
 <p>One option would be to have one matching pool and have <em>all</em> the categories just be a voluntary UI layer. Another would be to experiment with <em>even more</em> "affirmative action" to bootstrap particular categories: for example, we could split the Community matching into a $25,000 matching pool for each major world region (eg. North America + Oceania, Latin America, Europe, Africa, Middle East, India, East + Southeast Asia) to try to give projects in more neglected areas a leg up. There are many possibilities here! One hybrid route is that the "focused" pools could <em>themselves</em> be quadratic funded in the previous round!</p>
 <h3 id="identity-verification">Identity verification</h3>
 <p>As collusion, fake accounts and other attacks on Gitcoin Grants have been recently increasing, Round 7 added an additional verification option with the decentralized social-graph-based <a href="https://www.brightid.org/">BrightID</a>, and single-handedly boosted the project's userbase by a factor of ten:</p>
-<p><img src="/images/round_7_files/brightid.jpg" /></p>
+<p><img src="../../../../images/round_7_files/brightid.jpg" /></p>
 <p>This is good, because along with helping BrightID's growth, it also subjects the project to a trial-by-fire: there's now a large incentive to try to create a large number of fake accounts on it! BrightID is going to face a tough challenge making it reasonably easy for regular users to join but at the same time resist attacks from fake and duplicate accounts. I look forward to seeing them try to meet the challenge!</p>
 <h3 id="zk-rollups-for-scalability">ZK rollups for scalability</h3>
 <p>Finally, Round 7 was the first round where Gitcoin Grants experimented with using the <a href="https://wallet.zksync.io/">ZkSync</a> ZK rollup to decrease fees for payments:</p>
 <center>
-<img src="/images/round_7_files/zkrollups.png" style="width:450px" />
+<img src="../../../../images/round_7_files/zkrollups.png" style="width:450px" />
 </center>
 <p><br></p>
 <p>The main thing to report here is simply that the ZK rollup successfully did decrease fees! The user experience worked well. Many optimistic and ZK rollup projects are now looking at <a href="https://www.theblockcrypto.com/linked/80744/coinbase-wallet-optimisms-layer-2-rollup">collaborating with wallets</a> on direct integrations, which should increase the usability and security of such techniques further.</p>

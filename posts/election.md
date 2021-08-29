@@ -19,7 +19,7 @@ I decided to make an experiment on the blockchain that I helped to create: I bou
 
 <br>
 <center>
-<img src="/images/election-files/neoliberal.png" />
+<img src="../../../../images/election-files/neoliberal.png" />
 <br>
 </center>
 <br>
@@ -42,8 +42,8 @@ And this is where I [pushed back against ne0liberal in September](https://twitte
 <table><tr>
 <td>PredictIt</td><td>Augur</td>
 </tr><tr>
-<td><img src="/images/election-files/predictit_prices.png" /></td>
-<td><img src="/images/election-files/augur_prices.png" /></td>
+<td><img src="../../../../images/election-files/predictit_prices.png" /></td>
+<td><img src="../../../../images/election-files/augur_prices.png" /></td>
 </tr></table>
 </center>
 <br>
@@ -57,7 +57,7 @@ Then the election happened. After an initial scare where Trump at first won more
 But on the other hand, you can make a case that the prediction markets bettter estimated the _margin_ of victory. The median of Nate's probability distribution was somewhere around 370 of 538 electoral college votes going to Biden:
 
 <center>
-<img src="/images/election-files/nate_biden.png" />
+<img src="../../../../images/election-files/nate_biden.png" />
 </center><br>
 
 The Trump markets didn't give a probability distribution, but if you _had to_ guess a probability distribution from the statistic "40% chance Trump will win", you would probably give one with a median somewhere around 300 EC votes for Biden. The actual result: 306. So the net score for prediction markets vs Nate seems to me, on reflection, ambiguous.
@@ -89,7 +89,7 @@ Recapping the above, here's the pipeline in diagram form:
 
 <br>
 <center>
-<img src="/images/election-files/pipeline.png" />
+<img src="../../../../images/election-files/pipeline.png" />
 </center><br><br>
 
 I did this many times; the slippage on Catnip meant that I could normally make trades only up to about $5,000 to $10,000 at a time without prices becoming too unfavorable (when I had skipped Foundry and bought NTRUMP with DAI directly, the limit was closer to $1,000). And after two months, I had accumulated over 367,000 NTRUMP.
@@ -119,7 +119,7 @@ Capital costs - the inconvenience and opportunity cost of locking up large amoun
 
 <br>
 <center>
-<img src="/images/election-files/winnings.png" style="width:50%"/><br>
+<img src="../../../../images/election-files/winnings.png" style="width:50%"/><br>
 </center><br><br>
 
 Now, the interest rates are looking less favorable. And if you add to that the possibility, however remote, that a smart contract hack, or a truly unprecedented political event, actually _will_ happen, it looks less favorable still.
@@ -146,7 +146,7 @@ Of course, not everyone suffers from excessive modesty. Many of the people makin
 
 <br>
 <center>
-<img src="/images/election-files/q.png" style="width:50%"/><br><br>
+<img src="../../../../images/election-files/q.png" style="width:50%"/><br><br>
 <i>Not a sufferer of excessive modesty.</i>
 </center><br>
 
@@ -193,7 +193,7 @@ Crypto is a young ecosystem. It is an ecosystem that is still quite disconnected
 
 <br>
 <center>
-<img src="/images/election-files/chartovertime.png"/><br>
+<img src="../../../../images/election-files/chartovertime.png"/><br>
 </center><br>
 
 Thus, there is a _selection pressure_ in favor of the type of people who make bets that turn out to be correct. After ten rounds of this, good predictors will have more capital to bet with, and bad predictors will have less capital to bet with. This does _not_ rely on anyone "getting wiser" or "learning their lesson" or any other assumption about humans' capacity to reason and learn. It is simply a result of selection dynamics that over time, participants that are good at making correct guesses will come to dominate the ecosystem.

@@ -7,8 +7,8 @@
 Round 4 of Gitcoin Grants quadratic funding has just completed, and here are the results:
 
 <center>
-<img src="/images/round4-files/tech_vertical.jpg" style="width:365px" />
-<img src="/images/round4-files/media_vertical.jpg" style="width:365px" />
+<img src="../../../../images/round4-files/tech_vertical.jpg" style="width:365px" />
+<img src="../../../../images/round4-files/media_vertical.jpg" style="width:365px" />
 <br><br>
 </center>
 
@@ -27,7 +27,7 @@ The one proposed change to the quadratic funding implementation for tech that I 
 Now, we get to the new media section. In the first few days of the round, the leading recipient of the grants was "@antiprosynth Twitter account activity": an Ethereum community member who is [very active on twitter](https://twitter.com/antiprosynth) promoting Ethereum and refuting misinformation from Bitcoin maximalists, asking for help from the Gitcoin QF crowd to.... fund his tweeting activities. At its peak, the projected matching going to @antiprosynth exceeded $20,000. This naturally proved to be controversial, with many criticizing this move and questioning whether or not a Twitter account is a legitimate public good:
 
 <center>
-<a href="https://twitter.com/hitchcott/status/1216548157238079490"><img src="/images/round4-files/tweet1.png" /></a>
+<a href="https://twitter.com/hitchcott/status/1216548157238079490"><img src="../../../../images/round4-files/tweet1.png" /></a>
 <br><br>
 </center>
 
@@ -36,9 +36,9 @@ On the surface, it does indeed seem like someone getting paid $20,000 for operat
 There are two main objections that I heard, and both lead to interesting criticisms of quadratic funding in its current implementation. First, there was criticism of **overpayment**. Twittering is a fairly "trivial" activity; it does not require _that_ much work, lots of people do it for free, and it doesn't provide nearly as much long-term value as something more substantive like [EthHub](https://ethhub.io/) or the [Zero Knowledge Podcast](https://gitcoin.co/grants/329/zero-knowledge-podcast-2). Hence, it feels wrong to pay a full-time salary for it.
 
 <center>
-<img src="/images/round4-files/antiprosynth1.png" style="width:300px" />
-<img src="/images/round4-files/antiprosynth2.png" style="width:300px" />
-<img src="/images/round4-files/antiprosynth3.png" style="width:300px" />
+<img src="../../../../images/round4-files/antiprosynth1.png" style="width:300px" />
+<img src="../../../../images/round4-files/antiprosynth2.png" style="width:300px" />
+<img src="../../../../images/round4-files/antiprosynth3.png" style="width:300px" />
 <br><br>
 <i><small>Examples of @antiprosynth's recent tweets</small></i>
 <br><br>
@@ -59,7 +59,7 @@ The particular story of @antiprosynth had what is in my opinion a happy ending: 
 Traditionally, public goods of the type that Gitcoin Grants quadratic funding is trying to support were selected and funded by governments. The motivation of @antiprosynth's tweets is "aggregating Ethereum-related news, fighting information asymmetry and fine-tuning/signaling a consistent narrative for Ethereum (and ETH)": essentially, fighting the good fight against anti-Ethereum misinformation by [bitcoin maximalists](https://blog.ethereum.org/2014/11/20/bitcoin-maximalism-currency-platform-network-effects/). And, lo and behold, governments too have a rich history of [sponsoring social media participants](https://en.wikipedia.org/wiki/State-sponsored_Internet_propaganda) to argue on their behalf. And it seems likely that most of these governments see themselves as "fighting the good fight against anti-[X] misinformation by [Y] {extremists, imperialists, totalitarians}", just as the Ethereum community feels a need to fight the good fight against maximalist trolls. From the inside view of each individual country (and in our case the Ethereum community) organized social media participation seems to be a clear public good (ignoring the possibility of blowback effects, which are real and important). But from the outside view of the entire world, it can be viewed as a zero-sum game.
 
 <center>
-<img src="/images/round4-files/threelayer.png" />
+<img src="../../../../images/round4-files/threelayer.png" />
 <br><br>
 </center>
 
@@ -74,7 +74,7 @@ What kind of marketing is positive-sum (good for tribe and good for world) and w
 The story has another plot twist, which reveals yet another feature (or bug?) or quadratic funding. Quadratic funding [was originally described](https://arxiv.org/abs/1809.06421) as "Formal Rules for a Society Neutral among Communities", the intention being to use it at a very large, potentially even global, scale. Anyone can participate as a project or as a participant, and projects that support public goods that are good for _any_ "public" would be supported. In the case of Gitcoin Grants, however, the matching funds are coming from Ethereum organizations, and so there is an expectation that the system is there to support Ethereum projects. But there is nothing in the rules of quadratic funding that privileges Ethereum projects and prevents, say, Ethereum Classic projects from seeking funding using the same platform! And, of course, this is exactly what happened:
 
 <center>
-<a href="https://gitcoin.co/grants/324/yazanator-twitter-account-activity"> <img src="/images/round4-files/tweet2.png" /></a>
+<a href="https://gitcoin.co/grants/324/yazanator-twitter-account-activity"> <img src="../../../../images/round4-files/tweet2.png" /></a>
 <br><br>
 </center>
 
@@ -93,7 +93,7 @@ But even if we adopt the first solution, defining boundaries for the quadratic f
 Another issue that came to the forefront this round was the issue of collusion. The math behind quadratic funding, which compensates for tragedies of the commons by magnifying individual contributions based on the total number and size of other contributions to the same project, only works if there is an actual tragedy of the commons limiting natural donations to the project. If there is a "quid pro quo", where people get something individually in exchange for their contributions, the mechanism can easily over-compensate. The long-run solution to this is something like [MACI](https://github.com/barryWhiteHat/maci), a cryptographic system that ensures that contributors have no way to prove their contributions to third parties, so any such collusion would have to be done by honor system. In the short run, however, the rules and enforcement has not yet been set, and this has led to vigorous debate about what kinds of quid pro quo are legitimate:
 
 <center>
-<a href="https://twitter.com/ricburton/status/1217591449908404225"><img src="/images/round4-files/tweet3.png" /></a>
+<a href="https://twitter.com/ricburton/status/1217591449908404225"><img src="../../../../images/round4-files/tweet3.png" /></a>
 <br><br>
 </center>
 

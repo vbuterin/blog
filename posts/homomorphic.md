@@ -9,13 +9,13 @@ _Special thanks to Karl Floersch and Dankrad Feist for review_
 Fully homomorphic encryption has for a long time been considered one of the holy grails of cryptography. The promise of fully homomorphic encryption (FHE) is powerful: it is a type of encryption that allows a third party to perform computations on encrypted data, and get an encrypted result that they can hand back to whoever has the decryption key for the original data, _without_ the third party being able to decrypt the data or the result themselves.
 
 <center>
-<img src="/images/fhe/HomoEncrypt.png?1" /><br>
+<img src="../../../../images/fhe/HomoEncrypt.png?1" /><br>
 </center>
 
 As a simple example, imagine that you have a set of emails, and you want to use a third party spam filter to check whether or not they are spam. The spam filter has a desire for _privacy of their algorithm_: either the spam filter provider wants to keep their source code closed, or the spam filter depends on a very large database that they do not want to reveal publicly as that would make attacking easier, or both. However, you care about the _privacy of your data_, and don't want to upload your unencrypted emails to a third party. So here's how you do it:
 
 <center>
-<img src="/images/fhe/HomoEncrypt2.png" /><br>
+<img src="../../../../images/fhe/HomoEncrypt2.png" /><br>
 </center>
 
 Fully homomorphic encryption has many applications, including in the blockchain space. One key example is that can be used to implement privacy-preserving light clients (the light client hands the server an encrypted index `i`, the server computes and returns `data[0] * (i = 0) + data[1] * (i = 1) + ... + data[n] * (i = n)`, where `data[i]` is the i'th piece of data in a block or state along with its Merkle branch and `(i = k)` is an expression that returns 1 if `i = k` and otherwise 0; the light client gets the data it needs and the server learns nothing about what the light client asked).
@@ -84,7 +84,7 @@ This was simply a matter of expanding the product above, and grouping together a
 But there are two problems here: first, the size of the ciphertext itself grows (the length roughly doubles when you multiply), and second, the "noise" (also often called "error") in the smaller $\* 2$ term also gets quadratically bigger. Adding this error into the ciphertexts was necessary because the security of this scheme is based on the [approximate GCD problem](https://oeis.org/wiki/Greatest_common_divisor#Approximate_GCD_problem):
 
 <center>
-<img src="/images/fhe/approx_gcd.png" ><br><br>
+<img src="../../../../images/fhe/approx_gcd.png" ><br><br>
 </center>
 
 Had we instead used the "exact GCD problem", breaking the system would be easy: if you just had a set of expressions of the form $p * R_1 + m_1$, $p * R_2 + m_2$..., then you could use the [Euclidean algorithm](https://en.wikipedia.org/wiki/Euclidean_algorithm) to efficiently compute the greatest common divisor $p$. But if the ciphertexts are only _approximate_ multiples of $p$ with some "error", then extracting $p$ quickly becomes impractical, and so the scheme can be secure.
@@ -98,7 +98,7 @@ There are two classes of solution to this problem. First, in many somewhat homom
 Suppose that you have a ciphertext $ct$ that is an encryption of some $m$ under a key $p$, that has a lot of error. The idea is that we "refresh" the ciphertext by turning it into a new ciphertext of $m$ under another key $p_2$, where this process "clears out" the old error (though it will introduce a fixed amount of new error). The trick is quite clever. The holder of $p$ and $p_2$ provides a "bootstrapping key" that consists of an encryption of _the bits of $p$_ under the key $p_2$, as well as the public key for $p_2$. Whoever is doing computations on data encrypted under $p$ would then take the bits of the ciphertext $ct$, and individually encrypt these bits under $p_2$. They would then _homomorphically compute the decryption under $p$_ using these ciphertexts, and get out the single bit, which would be $m$ encrypted under $p_2$.
 
 <center>
-<img src="/images/fhe/bootstrapping.png" /><br><br>
+<img src="../../../../images/fhe/bootstrapping.png" /><br><br>
 </center>
 
 
@@ -126,7 +126,7 @@ In this example, we set the modulus $p = 103$. The dot product is `3 * 2 + 14 * 
 The security of the scheme is based on an assumption known as "[learning with errors](https://en.wikipedia.org/wiki/Learning_with_errors)" (LWE) - or, in more jargony but also more understandable terms, the hardness of _solving systems of equations with errors_.
 
 <center>
-<a href="https://cims.nyu.edu/~regev/papers/lwesurvey.pdf"><img src="/images/fhe/lwe.png" /></a><br>
+<a href="https://cims.nyu.edu/~regev/papers/lwesurvey.pdf"><img src="../../../../images/fhe/lwe.png" /></a><br>
 </center><br>
 
 A ciphertext can itself be viewed as an equation: $k_1c_1 + .... + k_nc_n \approx 0$, where the key $k_1 ... k_n$ is the unknowns, the ciphertext $c_1 ... c_n$ is the coefficients, and the equality is only approximate because of both the message (0 or 1) and the error ($2e$ for some relatively small $e$). The LWE assumption ensures that even if you have access to many of these ciphertexts, you cannot recover $k$.
@@ -156,7 +156,7 @@ The relinearization key consists of a set of vectors which, when inner-producted
 
 <center>
 <center>
-<img src="/images/fhe/relin.png" /><br>
+<img src="../../../../images/fhe/relin.png" /><br>
 </center>
 <small><i>Example assuming p = 15 and k has length 2. Formally, enc(x) here means "outputs x+2e if inner-producted with k".</i></small><br><br>
 </center>
@@ -182,7 +182,7 @@ This new ciphertext has considerably more error in it: the $n^2 * log(p)$ differ
 Here, we need to understand an important algebraic fact. A ciphertext is a vector $ct$, such that $<ct, k> = m+2e$, where $m \in \{0,1\}$. But we can also look at the ciphertext from a different "perspective": consider $\frac{ct}{2}$ (modulo $p$). $<\frac{ct}{2}, k> = \frac{m}{2} + e$, where $\frac{m}{2} \in \{0,\frac{p+1}{2}\}$. Note that because (modulo $p$) $(\frac{p+1}{2})*2 = p+1 = 1$, division by 2 (modulo $p$) maps $1$ to $\frac{p+1}{2}$; this is a very convenient fact for us.
 
 <center>
-<img src="/images/fhe/table.png" /><br><br>
+<img src="../../../../images/fhe/table.png" /><br><br>
 </center>
 
 <small>The scheme in this section uses both modular division (ie. multiplying by the [modular multiplicative inverse](https://en.wikipedia.org/wiki/Modular_multiplicative_inverse)) and regular "rounded down" integer division; make sure you understand how both work and how they are different from each other.</small>
@@ -221,13 +221,13 @@ And so the bit $1$ is preserved through the transformation. The crazy thing abou
 The answer comes from what happens to error when you multiply ciphertexts. Suppose that we start with a ciphertext $x$ with error 100, and modulus $p = 10^{16} - 1$. We want to repeatedly square $x$, to compute $(((x^2)^2)^2)^2 = x^{16}$. First, the "normal way":
 
 <center>
-<img src="/images/fhe/table2.png" /><br><br>
+<img src="../../../../images/fhe/table2.png" /><br><br>
 </center>
 
 The error blows up too quickly for the computation to be possible. Now, let's do a modulus reduction after every multiplication. We assume the modulus reduction is imperfect and increases error by a factor of 10, so a 1000x modulo reduction only reduces error from 10000 to 100 (and not to 10):
 
 <center>
-<img src="/images/fhe/table3.png" /><br><br>
+<img src="../../../../images/fhe/table3.png" /><br><br>
 </center>
 
 The key mathematical idea here is that the _factor_ by which error increases in a multiplication depends on the absolute size of the error, and not its relative size, and so if we keep doing modulus reductions to keep the error small, each multiplication only increases the error by a constant factor. And so, with a $d$ bit modulus (and hence $\approx 2^d$ room for "error"), we can do $O(d)$ multiplications! This is enough to bootstrap.

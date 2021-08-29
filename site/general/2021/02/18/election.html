@@ -1,33 +1,51 @@
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
-<link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
-<link rel="stylesheet" type="text/css" href="/css/font-vendor.b86e2bf451b246b1a88e.css">
-<link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
-<link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
-<link rel="stylesheet" type="text/css" href="/css/misc.css">
 
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Prediction Markets: Tales from the Election">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
 <script type="text/javascript" id="MathJax-script" async
-  src="/scripts/mathjax.js">
+  src="../../../../scripts/tex-svg.js">
 </script>
 
 <style>
-@font-face {
-    font-family: MJXc-TeX-math-Iw;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXZERO;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-@font-face {
-    font-family: MJXTEX;
-    src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
-}
-
-.math { font-family: MJXc-TeX-math-Iw }
 </style>
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
@@ -41,7 +59,7 @@
 <br>
 <h1 style="margin-bottom:7px"> Prediction Markets: Tales from the Election </h1>
 <small style="float:left; color: #888"> 2021 Feb 18 </small>
-<small style="float:right; color: #888"><a href="/">See all posts</a></small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
 <br> <br> <br>
 <title> Prediction Markets: Tales from the Election </title>
 
@@ -54,7 +72,7 @@
 <h2 id="before-the-election">Before the Election</h2>
 <br>
 <center>
-<img src="/images/election-files/neoliberal.png" /> <br>
+<img src="../../../../images/election-files/neoliberal.png" /> <br>
 </center>
 <p><br></p>
 <p>My first bet on this election was actually not on a blockchain at all. When <a href="https://en.wikipedia.org/wiki/Kanye_West_2020_presidential_campaign">Kanye announced his presidential bid</a> in July, a political theorist whom I ordinarily quite respect for his high-quality and original thinking immediately claimed on Twitter that he was confident that this would split the anti-Trump vote and lead to a Trump victory. I remember thinking at the time that this particular opinion of his was over-confident, perhaps even a result of over-internalizing the heuristic that if a viewpoint seems clever and contrarian then it is likely to be correct. So <a href="https://marginalrevolution.com/marginalrevolution/2012/11/a-bet-is-a-tax-on-bullshit.html">of course</a> I offered to make a $200 bet, myself betting the boring conventional pro-Biden view, and he honorably accepted.</p>
@@ -79,10 +97,10 @@ Augur
 </tr>
 <tr>
 <td>
-<img src="/images/election-files/predictit_prices.png" />
+<img src="../../../../images/election-files/predictit_prices.png" />
 </td>
 <td>
-<img src="/images/election-files/augur_prices.png" />
+<img src="../../../../images/election-files/augur_prices.png" />
 </td>
 </tr>
 </table>
@@ -93,7 +111,7 @@ Augur
 <p>Then the election happened. After an initial scare where Trump at first won more seats than we expected, Biden turned out to be the eventual winner. Whether or not the election itself validated or refuted the efficiency of prediction markets is a topic that, as far as I can tell, is quite open to interpretation. On the one hand, by a standard <a href="https://arbital.com/p/bayes_rule_guide/">Bayes rule</a> application, I should decrease my confidence of prediction markets, at least relative to Nate Silver. Prediction markets gave a 60% chance of Biden winning, Nate Silver gave a <a href="https://projects.fivethirtyeight.com/2020-election-forecast/">90% chance of Biden winning</a>. Since Biden in fact won, this is one piece of evidence that I live in a world where Nate gives the more correct answers.</p>
 <p>But on the other hand, you can make a case that the prediction markets bettter estimated the <em>margin</em> of victory. The median of Nate's probability distribution was somewhere around 370 of 538 electoral college votes going to Biden:</p>
 <center>
-<img src="/images/election-files/nate_biden.png" />
+<img src="../../../../images/election-files/nate_biden.png" />
 </center>
 <p><br></p>
 <p>The Trump markets didn't give a probability distribution, but if you <em>had to</em> guess a probability distribution from the statistic "40% chance Trump will win", you would probably give one with a median somewhere around 300 EC votes for Biden. The actual result: 306. So the net score for prediction markets vs Nate seems to me, on reflection, ambiguous.</p>
@@ -114,7 +132,7 @@ Augur
 <p>Recapping the above, here's the pipeline in diagram form:</p>
 <br>
 <center>
-<img src="/images/election-files/pipeline.png" />
+<img src="../../../../images/election-files/pipeline.png" />
 </center>
 <p><br><br></p>
 <p>I did this many times; the slippage on Catnip meant that I could normally make trades only up to about $5,000 to $10,000 at a time without prices becoming too unfavorable (when I had skipped Foundry and bought NTRUMP with DAI directly, the limit was closer to $1,000). And after two months, I had accumulated over 367,000 NTRUMP.</p>
@@ -135,7 +153,7 @@ Augur
 <p>Capital costs - the inconvenience and opportunity cost of locking up large amounts of money - are a challenge that I have come to appreciate much more than I did before. Just looking at the Augur side of things, I needed to lock up 308,249 DAI for an average of about two months to make a $56,803 profit. This works out to about a 175% annualized interest rate; so far, quite a good deal, even compared to the various yield farming crazes of the summer of 2020. But this becomes worse when you take into account what I needed to do on MakerDAO. Because I wanted to keep my exposure to ETH the same, I needed to get my DAI through a CDP, and safely using a CDP required a collateral ratio of over 3x. Hence, the total amount of capital I <em>actually</em> needed to lock up was somewhere around a million dollars.</p>
 <br>
 <center>
-<img src="/images/election-files/winnings.png" style="width:50%"/><br>
+<img src="../../../../images/election-files/winnings.png" style="width:50%"/><br>
 </center>
 <p><br><br></p>
 <p>Now, the interest rates are looking less favorable. And if you add to that the possibility, however remote, that a smart contract hack, or a truly unprecedented political event, actually <em>will</em> happen, it looks less favorable still.</p>
@@ -151,7 +169,7 @@ Augur
 <p>Of course, not everyone suffers from excessive modesty. Many of the people making predictions <em>in favor</em> of Trump winning the election were arguably fooled by their own excessive contrarianism. Ethereum benefited from my youthful suppression of my own modesty and fears, but there are plenty of other projects that could have benefited from more intellectual humility and avoided failures.</p>
 <br>
 <center>
-<img src="/images/election-files/q.png" style="width:50%"/><br><br> <i>Not a sufferer of excessive modesty.</i>
+<img src="../../../../images/election-files/q.png" style="width:50%"/><br><br> <i>Not a sufferer of excessive modesty.</i>
 </center>
 <p><br></p>
 <p>But nevertheless it seems to me more true than ever that, as goes the <a href="https://en.wikipedia.org/wiki/The_Second_Coming_(poem)">famous Yeats quote</a>, "the best lack all conviction, while the worst are full of passionate intensity." Whatever the faults of overconfidence or contrarianism sometimes may be, it seems clear to me that spreading a society-wide message that the solution is to simply trust the existing outputs of society, whether those come in the form of academic institutions, media, governments or markets, is <em>not</em> the solution. All of these institutions can only work precisely because of the presence of individuals who think that they do not work, or who at least think that they can be wrong at least some of the time.</p>
@@ -200,7 +218,7 @@ Augur
 <p>Crypto is a young ecosystem. It is an ecosystem that is still quite disconnected from the mainstream, Elon's recent tweets notwithstanding, and that does not yet have much expertise in the minutiae of electoral politics. Those who <em>are</em> experts in electoral politics have a hard time getting into crypto, and crypto has a large presence of not-always-correct forms of contrarianism especially when it comes to politics. But what happened this year is that within the crypto space, prediction market users who correctly expected Biden to win got an 18% increase to their capital, and prediction market users who incorrectly expected Trump to win got a 100% decrease to their capital (or at least the portion they put into the bet).</p>
 <br>
 <center>
-<img src="/images/election-files/chartovertime.png"/><br>
+<img src="../../../../images/election-files/chartovertime.png"/><br>
 </center>
 <p><br></p>
 <p>Thus, there is a <em>selection pressure</em> in favor of the type of people who make bets that turn out to be correct. After ten rounds of this, good predictors will have more capital to bet with, and bad predictors will have less capital to bet with. This does <em>not</em> rely on anyone "getting wiser" or "learning their lesson" or any other assumption about humans' capacity to reason and learn. It is simply a result of selection dynamics that over time, participants that are good at making correct guesses will come to dominate the ecosystem.</p>

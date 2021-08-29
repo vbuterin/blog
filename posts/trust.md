@@ -17,7 +17,7 @@ For the purposes of analyzing blockchain protocols, I tend to break down trust i
 For now, let us focus on the first two. We can draw a graph:
 
 <center>
-<img src="/images/trust/trustout.png" />
+<img src="../../../../images/trust/trustout.png" />
 </center>
 <br>
 

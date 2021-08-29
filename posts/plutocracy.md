@@ -16,7 +16,7 @@ And that's not my own interpretation; I quote from [this article (original in Ch
 
 > Looking at community recognition, Chinese nodes feel much less represented in the community than US and Korea. Since the EOS.IO official Twitter account was founded, there has never been any interaction with the mainland Chinese EOS community. For a listing of the EOS officially promoted events and interactions with communities see the picture below.
 
-<center><img src="/images/plutocracy-files/plutocracy_image1.png" style="width:400px" /></center><br>
+<center><img src="../../../../images/plutocracy-files/plutocracy_image1.png" style="width:400px" /></center><br>
 
 > With no support from the developer community, facing competition from Korea, the Chinese EOS supernodes have invented a new strategy: buying votes.
 
@@ -40,7 +40,7 @@ Now, some candidates will want to secure their position by sharing more; by shar
 
 But it gets worse. At this point, there's an incentive for delegates to form alliances (aka political parties, aka cartels) to coordinate their share percentages; this reduces losses to the cartel from chaotic competition that accidentally leads to some delegates not getting enough votes. Once a cartel is in place, it can start bringing its share percentages down, as dislodging it is a hard coordination problem: if a cartel offers 80%, then a new entrant offers 90%, then to a voter, seeking a share of that extra 10% is not worth the risk of either (i) voting for someone who gets insufficient votes and does not pay rewards, or (ii) voting for someone who gets too many votes and so pays out a reward that's excessively diluted.
 
-<center><img src="/images/plutocracy-files/plutocracy_image2.png" /></center>
+<center><img src="../../../../images/plutocracy-files/plutocracy_image2.png" /></center>
 
 <small><i>Sidenote: <a href="https://bitshares.org/technology/delegated-proof-of-stake-consensus/">Bitshares DPOS</a> used approval voting, where you can vote for as many candidates as you want; it should be pretty obvious that with even slight bribery, the equilibrium there is that everyone just votes for everyone.</i></small>
 

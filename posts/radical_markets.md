@@ -76,7 +76,7 @@ The remaining chapters bring up similar ideas that are similar in spirit to the 
 Suppose that you can vote as many times as you want, but voting costs "voting tokens" (say each citizen is assigned $N$ voting tokens per year), and it costs tokens in a nonlinear way: your first vote costs one token, your second vote costs two tokens, and so forth. If someone feels more strongly about something, the argument goes, they would be willing to pay more for a single vote; quadratic voting takes advantage of this by perfectly aligning _quantity_ of votes with _cost_ of votes: if you're willing to pay up to 15 tokens for a vote, then you will keep buying votes until your last one costs 15 tokens, and so you will cast 15 votes in total. If you're willing to pay up to 30 tokens for a vote, then you will keep buying votes until you can't buy any more for a price less than or equal to 30 tokens, and so you will end up casting 30 votes. The voting is "quadratic" because the total amount you pay for $N$ votes goes up proportionately to $N^2$.
 
 <center>
-<img src="/images/radical-markets-files/quadratic_voting.png" style="width:300px" />
+<img src="../../../../images/radical-markets-files/quadratic_voting.png" style="width:300px" />
 </center>
 <br>
 
@@ -121,7 +121,7 @@ Another story from the blockchain and Ethereum space that has a more pro-radical
 That said, this is a problem that we have now, arguably, to a large extent overcome. After the spikes at the end of last year, Ethereum wallets developed more advanced algorithms for choosing what transaction fees to pay to ensure that one's transaction gets included in the chain, and today most users are happy to simply defer to them. In my own personal experience, the mental transaction costs of worrying about transaction fees do not really exist, much like a driver of a car does not worry about the gasoline consumed by every single turn, acceleration and braking made by their car.
 
 <center>
-<img src="/images/radical-markets-files/metamask1.png" style="width:200px"/><br><br>
+<img src="../../../../images/radical-markets-files/metamask1.png" style="width:200px"/><br><br>
 <small><i>Personal price-setting AIs for interacting with open markets: already a reality in the Ethereum transaction fee market</i></small>
 </center>
 <br>

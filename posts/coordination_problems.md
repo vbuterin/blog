@@ -46,7 +46,7 @@ There are two levels of "light clients" that are generally possible in blockchai
 
 <br>
 <center>
-<img src="/images/coordination-problems-files/ethblockchain_oneblock.png" width="400px"></img><br>
+<img src="../../../../images/coordination-problems-files/ethblockchain_oneblock.png" width="400px"></img><br>
 <small><i>Look, it's a Merkle tree!</i></small>
 </center>
 <br>
