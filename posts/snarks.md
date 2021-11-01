@@ -101,7 +101,7 @@ Here are some common examples of things you can do with various polynomial commi
 
 * **Add them**: given $com(P)$, $com(Q)$ and $com(R)$ check if $P + Q = R$
 * **Multiply them**: given $com(P)$, $com(Q)$ and $com(R)$ check if $P * Q = R$
-* **Evaluate at a point**: given $P$, $w$, $z$ and a supplemental proof (or "witness") $Q$, verify that $P(w) = z$
+* **Evaluate at a point**: given $com(P)$, $w$, $z$ and a supplemental proof (or "witness") $Q$, verify that $P(w) = z$
 
 It's worth noting that these primitives can be constructed from each other. If you can add and multiply, then you can evaluate: to prove that $P(w) = z$, you can construct $Q(x) = \frac{P(x) - z}{x - w}$, and the verifier can check if $Q(x) * (x - w) + z \stackrel{?}{=} P(x)$. This works because if such a polynomial $Q(x)$ _exists_, then $P(x) - z = Q(x) * (x - w)$, which means that $P(x) - z$ equals zero at $w$ (as $x - w$ equals zero at $w$) and so $P(x)$ equals $z$ at $w$.
 
