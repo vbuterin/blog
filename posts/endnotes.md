@@ -30,7 +30,7 @@ This is not merely of interest to "pure" online services. Though goods in the ph
 
 <br>
 <center>
-<img src="../../../../images/round_7_files/results2.png" style="width:50%" /><img src="../../../../images/round_7_files/results3.png" style="width:50%" />
+<img src="../../../../images/round_7_files/results2.jpg" style="width:50%" /><img src="../../../../images/round_7_files/results3.jpg" style="width:50%" />
 <br><br>
 <i><small>Examples of important public goods in the Ethereum ecosystem that were funded by the <a href="https://vitalik.ca/general/2020/10/18/round7.html">recent Gitcoin quadratic funding round</a>. Open source software ecosystems, including blockchains, are hugely dependent on public goods.</small></i><br><br>
 </center>

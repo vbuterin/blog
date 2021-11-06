@@ -119,7 +119,7 @@ MathJax = {
 <p>The Ethereum ecosystem is currently experimenting with a <a href="https://github.com/appliedZKP/maci">system called MACI</a> that combines together a blockchain, ZK-SNARKs and a single central actor that guarantees coercion resistance (but has no power to compromise any properties other than coercion resistance). MACI is not very technically difficult. Users participate by signing a message with their private key, encrypting the signed message to a public key published by a central server, and publishing the encrypted signed message to the blockchain. The server downloads the messages from the blockchain, decrypts them, processes them, and outputs the result along with a ZK-SNARK to ensure that they did the computation correctly.</p>
 <br>
 <center>
-<img src="https://vitalik.ca../../../../images/round9/maci2.png" style="width:500px"/>
+<img src="../../../../images/round9/maci2.png" style="width:500px"/>
 </center>
 <p><br><br></p>
 <p>Users cannot prove how they participated, because they have the ability to send a "key change" message to trick anyone trying to audit them: they can first send a key change message to change their key from A to B, and then send a "fake message" signed with A. The server would reject the message, but no one else would have any way of knowing that the key change message had ever been sent. There is a trust requirement on the server, though only for privacy and coercion resistance; the server cannot publish an incorrect result either by computing incorrectly or by censoring messages. In the long term, multi-party computation can be used to decentralize the server somewhat, strengthening the privacy and coercion resistance guarantees.</p>
