@@ -40,7 +40,7 @@ I disagree with some, agree with others. I have always been suspicious of critic
 
 But at the same time, I am far from a [Walter Block-style defender](https://cdn.mises.org/Defending_the_Undefendable_2018.pdf) of _all_ locally-voluntary two-party commerce. I've written up my own viewpoints expressing similar concerns to parts of Wendy Brown's list in various articles:
 
-* [Multiple](https://vitalik.ca/general/2018/03/28/plutocracy.html) pieces [decrying](https://vitalik.ca/general/2019/04/03/collusion.html) decrying the evils of vote buying, or even [financialized governance generally](https://vitalik.ca/general/2021/08/16/voting3.html)
+* [Multiple](https://vitalik.ca/general/2018/03/28/plutocracy.html) pieces [decrying](https://vitalik.ca/general/2019/04/03/collusion.html) the evils of vote buying, or even [financialized governance generally](https://vitalik.ca/general/2021/08/16/voting3.html)
 * The [importance](https://vitalik.ca/general/2019/12/07/quadratic.html) of [public goods funding](https://share.transistor.fm/s/0f9aa81e). 
 * Failure modes in financial markets due to [subtle issues like capital efficiency](https://vitalik.ca/general/2021/02/18/election.html).
 
@@ -56,7 +56,7 @@ Out of the standard assumptions in what gets pejoratively called "spherical cow 
 
 </center>
 
-This assumption is often used to bootstrap complex contraptions such as [the VCG mechanism](https://en.wikipedia.org/wiki/Vickrey%E2%80%93Clarke%E2%80%93Groves_mechanism), whose theoretical optimality is based on beautiful arguments that because the price each player pays only depends on _other players' bids_, each player has no incentive to make a bid that does not reflect their true value to manipulate the price. A beautiful argument in theory, but it breaks down completely once you introduce the possibility that even two of the players are either allies or adversaries outside the mechanism.
+This assumption is often used to bootstrap complex contraptions such as [the VCG mechanism](https://en.wikipedia.org/wiki/Vickrey%E2%80%93Clarke%E2%80%93Groves_mechanism), whose theoretical optimality is based on beautiful arguments that because the price each player pays only depends on _other players' bids_, each player has no incentive to make a bid that does not reflect their true value in order to manipulate the price. A beautiful argument in theory, but it breaks down completely once you introduce the possibility that even two of the players are either allies or adversaries outside the mechanism.
 
 Economics, and economics-inspired philosophy, is great at describing the complexities that arise when the number of players "playing the game" increases from one to two (see the tale of Crusoe and Friday in Murray Rothbard's [The Ethics of Liberty](https://mises.org/library/crusoe-social-philosophy) for one example). But what this philosophical tradition completely misses is that going up to _three_ players adds an even further layer of complexity. In an interaction between two people, the two can ignore each other, fight or trade. In an interaction between three people, there exists a new strategy: any two of the three can communicate and band together to gang up on the third. Three is the smallest denominator where it's possible to talk about a 51%+ attack that has someone outside the clique to be a victim.
 

@@ -96,6 +96,8 @@ Finally, we have a size-1 problem: prove that the final modified $C^*$ (in this 
 
 On the whole, the proof contains $2 * log(n)$ elliptic curve points and one number (for pedants: one _field element_). Verifying the proof takes logarithmic time in every step except one: computing the new $G'_i$ values. This step is, unfortunately, linear.
 
+_See also: [Dankrad Feist's more detailed explanation](https://dankradfeist.de/ethereum/2021/07/27/inner-product-arguments.html) of inner product arguments._
+
 ### Extension to polynomial evaluations
 
 We can extend to polynomial evaluations with a simple clever trick. Suppose we are trying to prove $P(z) = a$. The prover and the verifier can extend the base points $G_0 ... G_{n-1}$ by attaching powers of $z$ to them: the new base points become $(G_0, 1), (G_1, z) ... (G_{n-1}, z^{n-1})$. These pairs can be treated as mathematical objects (for pedants: _group elements_) much like elliptic curve points themselves; to add them you do so element-by-element: $(A, x) + (B, y) =$ $(A + B,\ x + y)$, using elliptic curve addition for the points and regular field addition for the numbers.
@@ -225,7 +227,7 @@ This expands into the following (grouping the $1$, $r$ and $r^2$ terms together)
 
 $$(A \cdot Z_1) \circ (B \cdot Z_1) - u_1 * (C \cdot Z_1)$$
 
-$$r((A \cdot Z_1) \circ BZ_2 + (A \cdot Z_2) \circ BZ_1 - u_1 * (C \cdot Z_2) + u_2 * (C \cdot Z_1))$$
+$$r((A \cdot Z_1) \circ (B \cdot Z_2) + (A \cdot Z_2) \circ (B \cdot Z_1) - u_1 * (C \cdot Z_2) - u_2 * (C \cdot Z_1))$$
 
 $$r^2((A \cdot Z_2) \circ (B \cdot Z_2) - u_2 * (C \cdot Z_2))$$
 
