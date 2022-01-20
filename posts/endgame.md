@@ -3,7 +3,7 @@
 [title]: <> (Endgame)
 [pandoc]: <> (--mathjax)
 
-_Special thanks to a whole bunch of people from Optimism and Flashbots for discussion and thought that went into this piece, and Karl Floersch, Phil Daian and Alex Obadia for feedback and review._
+_Special thanks to a whole bunch of people from Optimism and Flashbots for discussion and thought that went into this piece, and Karl Floersch, Phil Daian, Hasu and Alex Obadia for feedback and review._
 
 Consider the average "big block chain" - very high block frequency, very high block size, many thousands of transactions per second, but also highly centralized: because the blocks are so big, only a few dozen or few hundred nodes can afford to run a fully participating node that can create blocks or verify the existing chain. What would it take to make such a chain acceptably trustless and censorship resistant, at least by [my standards](https://vitalik.ca/general/2021/05/23/scaling.html#its-crucial-for-blockchain-decentralization-for-regular-users-to-be-able-to-run-a-node)?
 
@@ -24,7 +24,7 @@ What do we get after all of this is done? **We get a chain where block _producti
 
 ### Now, consider one possible long-term future for rollups...
 
-Imagine that one particular rollup - whether Arbitrum, Optimism, Zksync or something completely new - does a really good job of engineering their node implementation, to the point where it really can do 10,000 transactions per second if given powerful enough hardware. The techniques for doing this are in-principle well-known, and implementations were made by [Dan Larimer](https://medium.com/eosio/eosio-dawn-3-0-now-available-49a3b99242d7) and others many years ago: split up execution into one CPU thread running the unparallelizable but cheap business logic and a huge number of other threads running the expensive but highly parallelizable cryptography. Imagine also that Ethereum [implements sharding with data availability sampling](https://hackmd.io/@vbuterin/das), and has the space to store that rollup's on-chain data between its 64 shards. As a result, everyone migrates to this rollup. What would that world look like?
+Imagine that one particular rollup - whether Arbitrum, Optimism, Zksync, StarkNet or something completely new - does a really good job of engineering their node implementation, to the point where it really can do 10,000 transactions per second if given powerful enough hardware. The techniques for doing this are in-principle well-known, and implementations were made by [Dan Larimer](https://medium.com/eosio/eosio-dawn-3-0-now-available-49a3b99242d7) and others many years ago: split up execution into one CPU thread running the unparallelizable but cheap business logic and a huge number of other threads running the expensive but highly parallelizable cryptography. Imagine also that Ethereum [implements sharding with data availability sampling](https://hackmd.io/@vbuterin/das), and has the space to store that rollup's on-chain data between its 64 shards. As a result, everyone migrates to this rollup. What would that world look like?
 
 <center><br>
 

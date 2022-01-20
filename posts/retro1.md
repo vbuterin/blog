@@ -56,7 +56,7 @@ Some other key remaining differences are:
 
 Of course, this could have two causes: (i) a smaller but more skilled number of badge holders ("technocrats") can make better decisions than "the crowd", and (ii) it's easier to judge quality retroactively than ahead of time. And this gets us an interesting question: **what if a simple way to summarize much of the above findings is that technocrats are smarter but the crowd is more diverse**?
 
-## Could we make bagde holders and their outputs more diverse?
+## Could we make badge holders and their outputs more diverse?
 
 To better understand the problem, let us zoom in on the one specific example that I already mentioned above: [ethereum.cn](http://ethereum.cn/). This is an excellent Chinese Ethereum community project (though not the only one! See also [EthPlanet](https://www.ethplanet.org/)), which has been providing a lot of resources in Chinese for people to learn about Ethereum, including translations of many highly technical articles written by Ethereum community members and about Ethereum originally in English.
 
