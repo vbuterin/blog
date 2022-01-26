@@ -45,7 +45,7 @@ Perhaps the best example of a project trying to do this is [POAP](https://poap.x
     
 <small><i>
     
-Part of [my own POAP collection](https://app.poap.xyz/scan/vitalik.eth), much of which came the events that I attended over the years.
+Part of [my own POAP collection](https://app.poap.xyz/scan/vitalik.eth), much of which came from the events that I attended over the years.
     
 </i></small>
 
