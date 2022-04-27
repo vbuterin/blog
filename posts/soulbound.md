@@ -92,7 +92,7 @@ Can we limit transferability without going all the way and basing everything on 
 
 ## Non-transferability and privacy
 
-Cryptographically strong privacy for transferable assets is fairly easy to understand: you take your coins, put them into [tornado.cash](https://tornado.cash/) or a similar platform, and withdraw them into a fresh account. But how can we add privacy for soulbound items where you cannot just move them into a fresh account or even a smart contract? If proof of huamnity starts getting more adoption, privacy becomes even more important, as the alternative is all of our activity being mapped on-chain directly to a human face.
+Cryptographically strong privacy for transferable assets is fairly easy to understand: you take your coins, put them into [tornado.cash](https://tornado.cash/) or a similar platform, and withdraw them into a fresh account. But how can we add privacy for soulbound items where you cannot just move them into a fresh account or even a smart contract? If proof of humanity starts getting more adoption, privacy becomes even more important, as the alternative is all of our activity being mapped on-chain directly to a human face.
 
 Fortunately, a few fairly simple technical options are possible:
 

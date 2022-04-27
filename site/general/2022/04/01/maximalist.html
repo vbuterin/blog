@@ -1,0 +1,253 @@
+
+
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
+
+
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="In Defense of Bitcoin Maximalism">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="../../../../scripts/tex-svg.js">
+</script>
+
+<style>
+</style>
+
+<div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="In Defense of Bitcoin Maximalism" />
+<meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
+
+
+<br>
+<h1 style="margin-bottom:7px"> In Defense of Bitcoin Maximalism </h1>
+<small style="float:left; color: #888"> 2022 Apr 01 </small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
+<br> <br> <br>
+<title> In Defense of Bitcoin Maximalism </title>
+
+<p>We've been hearing for years that the future is <a href="https://www.law.ox.ac.uk/business-law-blog/blog/2020/07/blockchain-not-bitcoin-represents-next-step-financial-evolution-and">blockchain, not Bitcoin</a>. The future of the world won't be one major cryptocurrency, or even a few, but many cryptocurrencies - and the winning ones will have strong leadership under one central roof to adapt rapidly to users' needs for scale. Bitcoin is a <a href="https://www.cnbc.com/2021/05/20/some-millennials-call-bitcoin-boomer-coin-prefer-dogecoin-altcoins.html">boomer</a> <a href="https://www.reddit.com/r/CryptoCurrency/comments/lrw9e4/bitcoin_is_now_boomer_crypto_prove_me_wrong/">coin</a>, and Ethereum is soon to follow; it will be newer and more energetic assets that attract the new waves of mass users who don't care about weird libertarian ideology or "self-sovereign verification", are turned off by toxicity and anti-government mentality, and just want blockchain defi and games that are <em>fast</em> and <em>work</em>.</p>
+<p>But what if this narrative is all wrong, and the ideas, habits and practices of Bitcoin maximalism are in fact pretty close to correct? What if Bitcoin is far more than an outdated pet rock tied to a network effect? What if Bitcoin maximalists actually deeply understand that they are operating in a very hostile and uncertain world where there are things that need to be fought for, and their actions, personalities and opinions on protocol design deeply reflect that fact? What if we live in a world of <em>honest</em> cryptocurrencies (of which there are very few) and <em>grifter</em> cryptocurrencies (of which there are very many), and a healthy dose of <em>intolerance</em> is in fact necessary to prevent the former from sliding into the latter? That is the argument that this post will make.</p>
+<h2 id="we-live-in-a-dangerous-world-and-protecting-freedom-is-serious-business">We live in a dangerous world, and protecting freedom is serious business</h2>
+<p>Hopefully, this is much more obvious now than it was six weeks ago, when many people still seriously thought that Vladimir Putin is a misunderstood and kindly character who is merely trying to protect Russia and save Western Civilization from the gaypocalypse. But it's still worth repeating. <strong>We live in a dangerous world, where there are plenty of bad-faith actors who do not listen to compassion and reason.</strong></p>
+<p>A blockchain is at its core a security technology - a technology that is fundamentally all about protecting people and helping them survive in such an unfriendly world. It is, like the <a href="https://lotr.fandom.com/wiki/Phial_of_Galadriel">Phial of Galadriel</a>, "a light to you in dark places, when all other lights go out". It is not a low-cost light, or a fluorescent hippie energy-efficient light, or a high-performance light. It is a light that sacrifices on <em>all</em> of those dimensions to optimize for one thing and one thing only: <em>to be a light that does when it needs to do when you're facing the toughest challenge of your life and there is a friggin twenty foot spider staring at you in the face</em>.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/maximalist/shelob.jpg" /></p>
+<p><small><i></p>
+<p><em>Source: <a href="https://www.blackgate.com/2014/12/23/frodo-baggins-lady-galadriel-and-the-games-of-the-mighty/">https://www.blackgate.com/2014/12/23/frodo-baggins-lady-galadriel-and-the-games-of-the-mighty/</a></em></p>
+</i></small>
+</center>
+<p><br></p>
+<p>Blockchains are being used every day by unbanked and underbanked people, by activists, by sex workers, by refugees, and by many other groups either who are uninteresting for profit-seeking centralized financial institutions to serve, or who have enemies that don't <em>want</em> them to be served. They are used as a primary lifeline by many people to make their payments and store their savings.</p>
+<p>And to that end, public blockchains sacrifice <em>a lot</em> for security:</p>
+<ul>
+<li>Blockchains require each transaction to be independently verified thousands of times to be accepted.</li>
+<li>Unlike centralized systems that confirm transactions in a few hundred milliseconds, blockchains require users to wait anywhere from 10 seconds to 10 minutes to get a confirmation.</li>
+<li>Blockchains require users to be fully in charge of authenticating themselves: if you lose your key, you lose your coins.</li>
+<li>Blockchains sacrifice privacy, requiring <a href="https://vitalik.ca/general/2021/01/26/snarks.html">even crazier and more expensive technology</a> to get that privacy back.</li>
+</ul>
+<p><strong>What are all of these sacrifices for? To create a system that can survive in an unfriendly world, and actually do the job of being "a light in dark places, when all other lights go out".</strong></p>
+<p>Excellent at that task requires two key ingredients: (i) a <strong>robust and defensible technology stack</strong> and (ii) a <strong>robust and defensible culture</strong>. The key property to have in a robust and defensible technology stack is a focus on <em>simplicity</em> and <em>deep mathematical purity</em>: a 1 MB block size, a 21 million coin limit, and a simple Nakamoto consensus proof of work mechanism that even a high school student can understand. The protocol design must be easy to justify decades and centuries down the line; <em>the technology and parameter choices must be a work of art</em>.</p>
+<p>The second ingredient is the <em>culture</em> of uncompromising, steadfast minimalism. This must be a culture that can stand unyieldingly in defending itself against corporate and government actors trying to co-opt the ecosystem from outside, as well as bad actors <em>inside</em> the crypto space trying to exploit it for personal profit, <a href="https://github.com/vbuterin/cult-of-craig">of</a> which <a href="https://www.theverge.com/21459906/bittorrent-tron-acquisition-justin-sun-us-china">there</a> are <a href="https://www.coindesk.com/tech/2022/01/27/how-did-a-former-quadriga-exec-end-up-running-a-defi-protocol-wonderland-founder-explains/">many</a>.</p>
+<p>Now, what do Bitcoin and Ethereum culture actually look like? Well, let's ask Kevin Pham:</p>
+<center>
+<p><br><a href="https://twitter.com/_kevin_pham/status/927792297365848064"></p>
+<p><img src="../../../../images/maximalist/pham1.png" /></p>
+</a>
+</center>
+<p><br></p>
+<p>Don't believe this is representative? Well, let's ask Kevin Pham again:</p>
+<center>
+<p><br><a href="https://twitter.com/_kevin_pham/status/927795191985012736"></p>
+<p><img src="../../../../images/maximalist/pham2.png" /></p>
+</a><br>
+</center>
+<p>Now, you might say, this is just Ethereum people having fun, and at the end of the day they understand what they have to do and what they are dealing with. But do they? Let's look at the kinds of people that Vitalik Buterin, the founder of Ethereum, hangs out with:</p>
+<center>
+<p><br></p>
+<table>
+<tr>
+<td style="width:50%">
+<p><img src="../../../../images/maximalist/meetingchina.jpg" style="width:360px" /></p>
+<small>
+<center>
+<i>Vitalik hangs out with elite tech CEOs in Beijing, China.</i>
+</center>
+<p></small></p>
+</td>
+<td>
+<p><img src="../../../../images/maximalist/meetingputin.jpg" style="width:360px" /></p>
+<small>
+<center>
+<i>Vitalik meets Vladimir Putin in Russia.</i>
+</center>
+<p></small></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><img src="../../../../images/maximalist/meetingbakrat.jpg" style="width:360px" /></p>
+<small>
+<center>
+<i>Vitalik meets Nir Bakrat, mayor of Jerusalem.</i>
+</center>
+<p></small></p>
+</td>
+<td>
+<center>
+<p><img src="../../../../images/maximalist/meetingmacri.jpg" style="width:360px" /></p>
+<small>
+<center>
+<i>Vitalik shakes hands with Argentinian former president Mauricio Macri.</i>
+</center>
+<p></small></p>
+</center>
+</td>
+</tr>
+<tr>
+<td>
+<p><img src="../../../../images/maximalist/meetingschmidt.jpg" style="width:360px" /></p>
+<small>
+<center>
+<i>Vitalik gives a friendly hello to Eric Schmidt, former CEO of Google and advisor to US Department of Defense.</i>
+</center>
+<p></small></p>
+</td>
+<td>
+<p><img src="../../../../images/maximalist/meetingaudrey.jpg" style="width:360px" /></p>
+<small>
+<center>
+<i>Vitalik has his first of many meetings with Audrey Tang, digital minister of Taiwan.</i>
+</center>
+<p></small></p>
+</td>
+</tr>
+</table>
+<p><small></p>
+</small>
+</center>
+<p><br></p>
+<p>And this is only a small selection. The immediate question that anyone looking at this should ask is: <em>what the hell is the point of publicly meeting with all these people</em>? Some of these people are very decent entrepreneurs and politicians, but others are actively involved in serious human rights abuses that Vitalik certainly does not support. Does Vitalik not realize just how much some of these people are geopolitically at each other's throats?</p>
+<p>Now, maybe he is just an idealistic person who believes in talking to people to help bring about world peace, and a follower of <a href="https://en.wikipedia.org/wiki/Frederick_Douglass">Frederick Douglass's</a> dictum to "unite with anybody to do right and with nobody to do wrong". But there's also a simpler hypothesis: <em>Vitalik is a hippy-happy globetrotting pleasure and status-seeker, and he deeply enjoys meeting and feeling respected by people who are important</em>. And it's not just Vitalik; companies like Consensys are totally happy to <a href="https://consensys.net/blog/press-release/quara-holding-joins-consensys-partner-program/">partner with Saudi Arabia</a>, and the ecosystem as a whole keeps trying to look to mainstream figures for validation.</p>
+<p>Now ask yourself the question: when the time comes, <em>actually important</em> things are happening on the blockchain - <em>actually important things that offend people who are powerful</em> - which ecosystem would be more willing to put its foot down and refuse to censor them no matter how much pressure is applied on them to do so? The ecosystem with globe-trotting nomads who really really care about being everyone's friend, or the ecosystem with people who take pictures of themslves with an AR15 and an axe as a side hobby?</p>
+<h2 id="currency-is-not-just-the-first-app.-its-by-far-the-most-successful-one.">Currency is not "just the first app". It's by far the most successful one.</h2>
+<p>Many people of the "blockchain, not Bitcoin" persuasion argue that cryptocurrency is the first application of blockchains, but it's a very boring one, and the true potential of blockchains lies in bigger and more exciting things. Let's go through the list of applications in <a href="https://ethereum.org/en/whitepaper/#applications">the Ethereum whitepaper</a>:</p>
+<ul>
+<li>Issuing tokens</li>
+<li>Financial derivatives</li>
+<li>Stablecoins</li>
+<li>Identity and reputation systems</li>
+<li>Decentralized file storage</li>
+<li>Decentralized autonomous organizations (DAOs)</li>
+<li>Peer-to-peer gambling</li>
+<li>Prediction markets</li>
+</ul>
+<p>Many of these categories have applications that have launched and that have at least <em>some</em> users. That said, cryptocurrency people really value empowering under-banked people in the "Global South". Which of these applications actually have lots of users in the Global South?</p>
+<p>As it turns out, by far the most successful one is storing wealth and payments. <a href="https://triple-a.io/crypto-ownership-argentina/">3% of Argentinians</a> own cryptocurrency, as do <a href="https://triple-a.io/crypto-ownership-nigeria/">6% of Nigerians</a> and <a href="https://triple-a.io/crypto-ownership-ukraine/">12% of people in Ukraine</a>. By far the biggest instance of a government using blockchains to <em>accomplish something useful today</em> is <a href="https://donate.thedigital.gov.ua/">cryptocurrency donations to the government of Ukraine</a>, which have raised <a href="https://twitter.com/antiprosynth/status/1506192508799361024">more than $100 million</a> if you include donations to non-governmental Ukraine-related efforts.</p>
+<p><a href="https://donate.thedigital.gov.ua/"></p>
+<p><img src="../../../../images/maximalist/donateukraine.png" /></p>
+<p></a><br></p>
+<p>What other application has anywhere close to that level of actual, real adoption today? Perhaps the closest is <a href="https://ens.domains/">ENS</a>. DAOs are real and growing, but today far too many of them are appealing to wealthy rich-country people whose main interest is having fun and using cartoon-character profiles to satisfy their first-world need for self-expression, and not build schools and hospitals and solve other real world problems.</p>
+<p>Thus, we can see the two sides pretty clearly: team "blockchain", privileged people in wealthy countries who love to virtue-signal about "moving beyond money and capitalism" and can't help being excited about "decentralized governance experimentation" as a hobby, and team "Bitcoin", a highly diverse group of both rich and poor people in many countries around the world including the Global South, who are actually using the capitalist tool of free self-sovereign money to provide real value to human beings today.</p>
+<h2 id="focusing-exclusively-on-being-money-makes-for-better-money">Focusing exclusively on being money makes for better money</h2>
+<p>A common misconception about why Bitcoin does not support "richly stateful" smart contracts goes as follows. Bitcoin really really values being simple, and particularly having low technical complexity, to reduce the chance that something will go wrong. As a result, it doesn't want to add the more complicated features and opcodes that are necessary to be able to support more complicated smart contracts in Ethereum.</p>
+<p>This misconception is, of course, wrong. In fact, there are <em>plenty</em> of ways to add rich statefulness into Bitcoin; search for the word "<a href="https://bitcoinops.org/en/topics/covenants/">covenants</a>" in Bitcoin chat archives to see many proposals being discussed. And many of these proposals are surprisingly simple. The reason why covenants have not been added is <em>not</em> that Bitcoin developers see the value in rich statefulness but find even a little bit more protocol complexity intolerable. Rather, it's because Bitcoin developers are <a href="https://bitcoinops.org/en/newsletters/2022/03/09/#limiting-script-language-expressiveness">worried about the risks</a> of the <a href="https://vitalik.ca/general/2022/02/28/complexity.html">systemic complexity</a> that rich statefulness being possible would introduce into the ecosystem!</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/maximalist/bitcoinpaper.png" /></p>
+<p><small><i></p>
+<p>A recent <a href="https://arxiv.org/pdf/2006.16714.pdf">paper by Bitcoin researchers</a> describes some ways to introduce covenants to add some degree of rich statefulness to Bitcoin.</p>
+<p></i></small><br></p>
+</center>
+<p>Ethereum's <a href="https://coinmarketcap.com/alexandria/glossary/miner-extractable-value-mev">battle with miner-extractable value (MEV)</a> is an excellent example of this problem appearing in practice. It's very easy in Ethereum to build applications where the next person to interact with some contract gets a substantial reward, causing transactors and miners to fight over it, and contributing greatly to network centralization risk and <a href="https://notes.ethereum.org/@vbuterin/pbs_censorship_resistance">requiring complicated workarounds</a>. In Bitcoin, building such systemically risky applications is hard, in large part because Bitcoin lacks rich statefulness and focuses on the simple (and MEV-free) use case of <em>just being money</em>.</p>
+<p>Systemic contagion can happen in non-technical ways too. Bitcoin just being money means that Bitcoin requires relatively few developers, helping to reduce the risk that developers will start demanding <a href="https://ethereum-magicians.org/t/eip-2025-a-proposal-to-fund-eth1-x-through-18-months-of-a-0-044eth-developer-block-reward/3282">to print themselves free money</a> to build new protocol features. Bitcoin just being money reduces pressure for core developers to keep adding features to "keep up with the competition" and "serve developers' needs".</p>
+<p>In so many ways, systemic effects are real, and it's just not possible for a currency to "enable" an ecosystem of highly complex and risky decentralized applications without that complexity biting it back <em>somehow</em>. Bitcoin makes the safe choice. If Ethereum continues its layer-2-centric approach, ETH-the-currency <em>may</em> gain some distance from the application ecosystem that it's enabling and thereby get some protection. So-called high-performance layer-1 platforms, on the other hand, stand no chance.</p>
+<h2 id="in-general-the-earliest-projects-in-an-industry-are-the-most-genuine">In general, the earliest projects in an industry are the most "genuine"</h2>
+<p>Many industries and fields follow a similar pattern. First, some new exciting technology either gets invented, or gets a big leap of improvement to the point where it's actually usable for something. At the beginning, the technology is still clunky, it is too risky for almost anyone to touch as an investment, and there is no "social proof" that people can use it to become successful. As a result, the first people involved are going to be the idealists, tech geeks and others who are genuinely excited about the technology and its potential to improve society.</p>
+<p>Once the technology proves itself enough, however, the normies come in - an event that in internet culture is often called <a href="https://en.wikipedia.org/wiki/Eternal_September">Eternal September</a>. And these are not just regular kindly normies who want to feel part of something exciting, but <em>business</em> normies, wearing <em>suits</em>, who start scouring the ecosystem wolf-eyed for ways to make money - with armies of venture capitalists just as eager to make their own money supporting them from the sidelines. In the extreme cases, outright <em>grifters</em> come in, creating blockchains with no redeeming social or technical value which are basically borderline scams. But the reality is that the line from "altruistic idealist" and "grifter" is really a spectrum. And the longer an ecosystem keeps going, the harder it is for any new project on the altruistic side of the spectrum to get going.</p>
+<p>One noisy proxy for the blockchain industry's slow replacement of philosophical and idealistic values with short-term profit-seeking values is the larger and larger size of premines: the allocations that developers of a cryptocurrency give to themselves.</p>
+<center>
+<p><img src="../../../../images/maximalist/premine.png" /></p>
+<p><i><small></p>
+<p>Source for insider allocations: <a href="https://twitter.com/RyanWatkins_/status/1394283802009145348">Messari</a>.</p>
+<p></small></i></p>
+</center>
+<p>Which blockchain communities deeply value self-sovereignty, privacy and decentralization, and are making to get big sacrifices to get it? And which blockchain communities are just trying to pump up their market caps and make money for founders and investors? The above chart should make it pretty clear.</p>
+<h2 id="intolerance-is-good">Intolerance is good</h2>
+<p>The above makes it clear why Bitcoin's status as the first cryptocurrency gives it unique advantages that are extremely difficult for any cryptocurrency created within the last five years to replicate. But now we get to the biggest objection against Bitcoin maximalist culture: <em>why is it so toxic</em>?</p>
+<p>The case for Bitcoin toxicity stems from <a href="https://www.nationalreview.com/corner/conquests-laws-john-derbyshire/">Conquest's second law</a>. In Robert Conquest's original formulation, the law says that "<strong>any organization not explicitly and constitutionally right-wing will sooner or later become left-wing</strong>". But really, this is just a special case of a much more general pattern, and one that in the modern age of relentlessly homogenizing and conformist social media is more relevant than ever:</p>
+<blockquote>
+<p><strong>If you want to retain an identity that is different from the mainstream, then you need a really strong culture that actively resists and fights assimilation into the mainstream every time it tries to assert its hegemony.</strong></p>
+</blockquote>
+<p>Blockchains are, as I mentioned above, very fundamentally and explicitly a counterculture movement that is trying to create and preserve something different from the mainstream. At a time when the world is splitting up into great power blocs that actively suppress social and economic interaction between them, blockchains are one of the very few things that can remain global. At a time when more and more people are reaching for censorship to defeat their short-term enemies, blockchains steadfastly continue to censor nothing.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/maximalist/300.png" /></p>
+<p><small></p>
+<p><em>The only correct way to respond to "reasonable adults" trying to tell you that to "become mainstream" you have to compromise on your "extreme" values. Because once you compromise once, you can't stop.</em></p>
+</small>
+</center>
+<p><br></p>
+<p>Blockchain communities also have to fight bad actors on the <em>inside</em>. Bad actors include:</p>
+<ul>
+<li><strong>Scammers</strong>, who make and sell projects that are ultimately valueless (or worse, actively harmful) but cling to the "crypto" and "decentralization" brand (as well as highly abstract ideas of humanism and friendship) for legitimacy.</li>
+<li><strong>Collaborationists</strong>, who publicly and loudly virtue-signal about working together with governments and actively <a href="https://twitter.com/vitalikbuterin/status/1341219519545556992">try</a> to <a href="https://cryptonews.com/news/bitcoin-digital-property-ethereum-digital-security-argues-michael-saylor.htm">convince</a> governments to use coercive force against their competitors.</li>
+<li><strong>Corporatists</strong>, who try to use their resources to take over the development of blockchains, and often push for protocol changes that enable centralization.</li>
+</ul>
+<p>One <em>could</em> stand against all of these actors with a smiling face, politely telling the world why they "disagree with their priorities". But this is unrealistic: the bad actors will try hard to embed themselves into your community, and at that point it becomes psychologically hard to criticize them with the sufficient level of scorn that they truly require: the people you're criticizing are <em>friends of your friends</em>. And so any culture that values <a href="https://en.wikipedia.org/wiki/Agreeableness">agreeableness</a> will simply fold before the challenge, and let scammers roam freely through the wallets of innocent newbies.</p>
+<p>What kind of culture <em>won't</em> fold? A culture that is willing and eager to tell both scammers on the inside and powerful opponents on the outside to <a href="https://en.wikipedia.org/wiki/Russian_warship,_go_fuck_yourself">go the way of the Russian warship</a>.</p>
+<h2 id="weird-crusades-against-seed-oils-are-good">Weird crusades against seed oils are good</h2>
+<p>One powerful bonding tool to help a community maintain internal cohesion around its distinctive values, and avoid falling into the morass that is the mainstream, is weird beliefs and crusades that are in a similar spirit, even if not directly related, to the core mission. Ideally, these crusades should be at least partially <em>correct</em>, poking at a genuine blind spot or inconsistency of mainstream values.</p>
+<p>The Bitcoin community is good at this. Their most recent crusade is a <a href="https://www.vice.com/en/article/v7djay/the-newest-bitcoin-diet-trend-is-hating-seed-oils">war against seed oils</a>, oils derived from vegetable seeds <a href="https://www.healthline.com/nutrition/are-vegetable-and-seed-oils-bad">high in omega-6</a> fatty acids that are <a href="https://scholar.google.com/scholar?q=omega+6+health">harmful</a> to human health.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/maximalist/seedoils.jpg" /></p>
+</center>
+<p><br></p>
+<p>This Bitcoiner crusade gets treated skeptically when <a href="https://www.vice.com/en/article/v7djay/the-newest-bitcoin-diet-trend-is-hating-seed-oils">reviewed in the media</a>, but the media treats the topic <a href="https://techcrunch.com/2022/02/02/zero-acre-biotech-fermentation-alternative-to-wasteful-unhealthy-vegetable-oils/">much more favorably</a> when "respectable" tech firms are tackling it. The crusade helps to remind Bitcoiners that the mainstream media is fundamentally tribal and hypocritical, and so the media's <a href="https://www.pymnts.com/cryptocurrency/2022/from-the-us-and-eu-to-russia-crypto-money-laundering-is-under-attack/">shrill attempts</a> to <a href="https://www.coindesk.com/policy/2022/03/22/crypto-implicated-in-child-porn-terrorism-french-official-says-calling-for-end-to-online-anynomity/">slander</a> cryptocurrency as being primarily for money laundering and terrorism should be treated with the same level of scorn.</p>
+<h2 id="be-a-maximalist">Be a maximalist</h2>
+<p>Maximalism is often derided in the media as both a dangerous toxic right-wing cult, and as a paper tiger that will disappear as soon as some other cryptocurrency comes in and takes over Bitcoin's supreme network effect. But the reality is that <strong>none of the arguments for maximalism that I describe above depend at all on network effects</strong>. Network effects really are logarithmic, not quadratic: once a cryptocurrency is "big enough", it has enough liquidity to function and multi-cryptocurrency payment processors will easily add it to their collection. But the claim that Bitcoin is an outdated pet rock and its value derives <em>entirely</em> from a walking-zombie network effect that just needs a little push to collapse is similarly completely wrong.</p>
+<p>Crypto-assets like Bitcoin have real cultural and structural advantages that make them powerful assets worth holding and using. Bitcoin is an excellent example of the category, though it's certainly not the only one; other honorable cryptocurrencies do exist, and maximalists have been willing to support and use them. Maximalism is not just Bitcoin-for-the-sake-of-Bitcoin; rather, it's a very genuine realization that most other cryptoassets are scams, and a culture of intolerance is unavoidable and necessary to protect newbies and make sure at least one corner of that space continues to be a corner worth living in.</p>
+<p><strong>It's better to mislead ten newbies into avoiding an investment that turns out good than it is to allow a single newbie to get bankrupted by a grifter.</strong></p>
+<p><strong>It's better to make your protocol too simple and fail to serve ten low-value short-attention-span gambling applications than it is to make it too complex and fail to serve the central sound money use case that underpins everything else.</strong></p>
+<p><strong>And it's better to offend millions by standing aggressively for what you believe in than it is to try to keep everyone happy and end up standing for nothing.</strong></p>
+<p><strong>Be brave. Fight for your values. Be a maximalist.</strong></p>
+ </div> 

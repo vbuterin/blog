@@ -1,0 +1,6 @@
+--2022-02-28 22:40:15--  https://preview.redd.it/paa4fwmlk3471.png?width=1488
+Resolving preview.redd.it (preview.redd.it)... 151.101.193.140, 151.101.129.140, 151.101.65.140, ...
+Connecting to preview.redd.it (preview.redd.it)|151.101.193.140|:443... connected.
+HTTP request sent, awaiting response... 403 Forbidden
+2022-02-28 22:40:15 ERROR 403: Forbidden.
+
