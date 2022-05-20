@@ -58,7 +58,7 @@ The problem with that approach: those forms of sharding are largely just ideas a
 
 ## More or less features in the EVM?
 
-Realistically, the specification of the EVM was basically, with the exception fo security auditing, viable for launch by mid-2014. However, over the next few months we continued actively exploring new features that we felt might be really important for a decentralized application blockchain. Some did not go in, others did.
+Realistically, the specification of the EVM was basically, with the exception of security auditing, viable for launch by mid-2014. However, over the next few months we continued actively exploring new features that we felt might be really important for a decentralized application blockchain. Some did not go in, others did.
 
 * We **considered [adding a `POST` opcode](https://blog.ethereum.org/2014/08/27/state-ethereum-august-edition/), but decided against it.** The `POST` opcode would have made an _asynchronous_ call, that would get executed after the rest of the transaction finishes.
 * We **considered [adding an `ALARM` opcode](https://github.com/ethereum/go-ethereum/issues/117), but decided against it.** `ALARM` would have functioned like `POST`, except executing the asynchronous call in some future block, allowing contracts to schedule operations.
