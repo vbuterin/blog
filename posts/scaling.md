@@ -114,7 +114,7 @@ Another possible medium-term solution is using ZK-SNARKs to verify transactions.
 
 As a result, sharded blockchains can safely have very high levels of transaction throughput that non-sharded blockchains cannot. This does require a lot of cryptographic cleverness in creating efficient substitutes for naive full validation that successfully reject invalid blocks, but it can be done: the [theory](https://hackmd.io/@vbuterin/das) is [well-established](https://vitalik.ca/general/2021/01/26/snarks.html) and proof-of-concepts based on [draft specifications](https://github.com/ethereum/eth2.0-specs/blob/dev/specs/sharding/beacon-chain.md) are already [being worked on](https://github.com/protolambda/eth2-das).
 
-<br><center><img src="https://vitalik.ca../../../../images/sharding-files/beacon_chain.jpg" /><br>
+<br><center><img src="../../../../images/sharding-files/beacon_chain.jpg" /><br>
 </center><br>
 
 Ethereum is planning to use **quadratic sharding**, where total scalability is limited by the fact that a node has to be able to process both a single shard and the beacon chain which has to perform some fixed amount of management work for each shard. If shards are too big, nodes can no longer process individual shards, and if there are too many shards, nodes can no longer process the beacon chain. The product of these two constraints forms the upper bound.
