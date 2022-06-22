@@ -3,6 +3,8 @@
 [title]: <> (La Guía Incompleta de los Rollups)
 [pandoc]: <> ()
 
+_Gracias a [j4c0b0bl4nd0n](https://github.com/j4c0b0bl4nd0n) para la traducción_
+
 Los Rollups están de moda en la comunidad de Ethereum y están [destinados a ser la solución de escalabilidad clave](https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698)  para Ethereum en el futuro previsible. Pero, ¿qué es exactamente esta tecnología, qué podemos esperar de ella y cómo podremos usarla? Este post intentará responder algunas de esas preguntas clave.
 
 ## Antecedentes: ¿Qué es el escalado de capa-1 y capa-2?
