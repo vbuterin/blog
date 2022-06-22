@@ -30,7 +30,7 @@ Suppose that you have an Ethereum wallet, and you want to prove that this wallet
 * The **private input** ($w$): your address $A$, and the private key $k$ to your address
 * The **public input** ($x$): the set of all addresses with verified proof-of-humanity profiles $\{H_1 ... H_n\}$
 * The **verification function** $f(x, w)$:
-	* Interpret $w$ as the pair $(A, \sigma)$, and $x$ as the list of valid profiles $\{H_1 ... H_n\}$
+	* Interpret $w$ as the pair $(A, k)$, and $x$ as the list of valid profiles $\{H_1 ... H_n\}$
 	* Verify that $A$ is one of the addresses in $\{H_1 ... H_n\}$
 	* Verify that $privtoaddr(k) = A$
 	* Return $True$ if both verifications pass, $False$ if either verification fails
@@ -213,6 +213,8 @@ A simple example of what can't (easily) be made private is Uniswap. In Uniswap, 
 You _could_ make a centrally-operated, but safe and private, Uniswap with ZK-SNARKed garbled circuits, but it's not clear that the benefits of doing this are worth the costs. There may not even be any real benefit: the contract would need to be able to tell users what the prices of the assets are, and the block-by-block changes in the prices tell a lot about what the trading activity is.
 
 Blockchains can make state information _global_, ZK-SNARKs can make state information _private_, but we don't really have any good way to make state information _global and private_ at the same time.
+
+_Edit: you can use multi-party computation to implement shared private state. But this requires an honest-majority threshold assumption, and one that's likely unstable in practice because (unlike eg. with 51% attacks) a malicious majority could collude to break the privacy without ever being detected._
 
 ## Putting the primitives together
 
