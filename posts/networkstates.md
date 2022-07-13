@@ -104,7 +104,7 @@ You can find a bunch more juicy examples in the chapter titled, appropriately, "
 
 But pretty soon, Balaji's examples do start to point to some particular themes: a deep dislike of the "woke" US left, exemplified by the New York Times, a combination of strong discomfort with the Chinese Communist Party's authoritarianism with an understanding of why the CCP often justifiably fears the United States, and an appreciation of the love of freedom of the US right (exemplified by Bitcoin maximalists) combined with a dislike of their hostility toward cooperation and order.
 
-Next, we get Balaji's overview of [the political realignments in recent history](https://thenetworkstate.com/left-is-the-new-right-is-the-new-left), and finally we get to see core model of politics in the present day: [NYT, CCP, BTC](https://thenetworkstate.com/nyt-ccp-btc).
+Next, we get Balaji's overview of [the political realignments in recent history](https://thenetworkstate.com/left-is-the-new-right-is-the-new-left), and finally we get to his core model of politics in the present day: [NYT, CCP, BTC](https://thenetworkstate.com/nyt-ccp-btc).
 
 <center><br>
 
