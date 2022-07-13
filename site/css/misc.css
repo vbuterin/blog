@@ -17,11 +17,11 @@
 
     .toc-category {
       display: inline-block;
-      width: 100px;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      padding-right: 6px;
-      padding-left: 6px; }
+      width: 85px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-right: 4px;
+      padding-left: 4px; }
 }
 
 @media only screen and (orientation: portrait) {

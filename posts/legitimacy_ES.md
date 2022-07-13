@@ -1,4 +1,4 @@
-[category]: <> (General,Economics,Blockchains,Philosophy)
+[category]: <> (Español)
 [date]: <> (2021/03/23)
 [title]: <> (El recurso escaso más importante es la legitimidad)
 [pandoc]: <> (--mathjax)
