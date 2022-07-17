@@ -28,6 +28,9 @@ function toggleDark(r) {//this function is executed when switching from the curr
         blockquote p, li{
             color: #99fff5;
         }
+        td, th{
+            color: #121111;
+        }
         `;
         document.head.appendChild(style);
     }
