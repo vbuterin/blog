@@ -1,0 +1,48 @@
+.dark_icon{
+    display: none;
+}
+
+.mood_switcher{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#darkmode {
+    width: 90px;
+    background: transparent;
+    border: none;
+    position: static;
+    right: 20px;
+    top: 20px;
+    z-index: 1000;
+}
+
+#darkmode img{
+    width: 100%;
+    z-index: 1000;
+    margin: 5px 0px;
+}
+
+[data-theme="light"] {
+    background: #fff;
+}
+
+[data-theme="dark"] {
+    background: #0F2633;
+    color: #fff;
+}
+
+.mobile_version{
+    display: none;
+}
+@media (min-width: 320px) and (max-width: 480px) {
+    .mobile_version{
+        display: block;
+    }
+    .desktop_version{
+        display: none;
+    }
+    
+}
+

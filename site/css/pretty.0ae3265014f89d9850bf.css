@@ -981,7 +981,7 @@ pre[class*="language-"] { padding: 1em; margin: .5em 0; overflow: auto; }
 div.mermaidTooltip { position: fixed !important; text-align: center; max-width: 200px; padding: 2px; font-family: 'trebuchet ms', verdana, arial; font-size: 12px; background: #ffffde; border: 1px solid #aa3; border-radius: 2px; pointer-events: none; z-index: 100; }
 
 /* for markdown-body */
-.markdown-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; padding-top: 40px; padding-bottom: 40px; max-width: 758px; overflow: visible !important; position: relative; }
+.markdown-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; /*padding-top: 40px;*/ padding-bottom: 40px; max-width: 758px; overflow: visible !important; position: relative; }
 /*fixed style for bootstrap comflict*/
 .markdown-body .emoji { vertical-align: top; }
 .markdown-body pre { border: inherit !important; }

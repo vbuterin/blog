@@ -33,6 +33,24 @@ HEADER = """
 .math { font-family: MJXc-TeX-math-Iw }
 </style>
 
+<!---------------------------------------------
+------------Dark Mode function start----------
+----------------------------------------------->
+<link rel="stylesheet" href="$root/dark-mode/dark-mode.css">
+
+<div class="mood_switcher">
+  <button id="darkmode" type="button" onclick="toggleDark()">
+    <span id="night" class="material-icons"><img src="$root/dark-mode/day.png" alt=""></span>
+    <span class="dark_icon" id="light" class="material-icons"><img src="$root/dark-mode/night.png" alt=""></span>
+  </button>
+</div>
+
+<script src="$root/dark-mode/dark-mode.js"></script>
+
+<!---------------------------------------------
+-------------Dark Mode function end-----------
+----------------------------------------------->
+
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
 """
