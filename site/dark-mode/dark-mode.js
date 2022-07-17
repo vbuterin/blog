@@ -25,7 +25,7 @@ function toggleDark(r) {//this function is executed when switching from the curr
     if (dataTheme === "dark") {
         var style = document.createElement('style');
         style.innerHTML = `
-        blockquote p{
+        blockquote p, li{
             color: #99fff5;
         }
         `;
