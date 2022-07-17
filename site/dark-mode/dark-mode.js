@@ -22,14 +22,23 @@ function toggleDark(r) {//this function is executed when switching from the curr
         document.getElementById("light").style.display = "block";
         localStorage.setItem("data-theme", "light");
     }
+    if (dataTheme === "dark") {
+        var style = document.createElement('style');
+        style.innerHTML = `
+        blockquote p{
+            color: #99fff5;
+        }
+        `;
+        document.head.appendChild(style);
+    }
 }
 
-if (dataTheme === "dark") {
-    var style = document.createElement('style');
-    style.innerHTML = `
-    blockquote p{
-        color: #f8f7f2;
-    }
-    `;
-    document.head.appendChild(style);
-}
+// if (dataTheme === "dark") {
+//     var style = document.createElement('style');
+//     style.innerHTML = `
+//     blockquote p{
+//         color: #f8f7f2;
+//     }
+//     `;
+//     document.head.appendChild(style);
+// }
