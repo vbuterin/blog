@@ -1,0 +1,121 @@
+
+/* Light Mode Colors */
+:root {
+	--color-text: #333;
+	--color-bg: #fafafa;
+	--color-heading: #333;
+	--color-divider: #e7e7e7;
+	--color-anchor: #337ab7;
+	--color-toggle-checked: #9740f6;
+}
+
+/* Dark Mode Colors */
+html.dark {
+	--color-text: #fafafa;
+	--color-bg: #1c1c1c;
+	--color-heading: #dfdfdf;
+	--color-divider: #393939;
+	--color-anchor: #77e1cd;
+}
+
+/* Global colors */
+html, body {
+	background-color: var(--color-bg);
+	color: var(--color-text);
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: var(--color-heading);
+}
+
+p, li, div, span, th, td, dd, dl {
+	color: var(--color-text);
+}
+
+a:link, a:visited, a:active, a:checked {
+	color: var(--color-anchor);
+}
+
+.markdown-body hr {
+	background-color: var(--color-divider);
+}
+
+/* Light/Dark Mode Toggle */
+#color-mode-switch {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+#color-mode-switch > span {
+	font-size: 30px;
+	display: inline-block;
+	margin-right: 8px;
+}
+
+#color-mode-switch input[type=checkbox] {
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+#color-mode-switch label {
+	cursor: pointer;
+	text-indent: -9999px;
+	width: 60px;
+	height: 30px;
+	background: grey;
+	display: block;
+	border-radius: 30px;
+	position: relative;
+	margin: 0;
+}
+
+#color-mode-switch label:after {
+	content: '';
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	width: 20px;
+	height: 20px;
+	background: #fff;
+	border-radius: 90px;
+	transition: 0.3s;
+}
+
+#color-mode-switch input:checked + label {
+	background: var(--color-toggle-checked);
+}
+
+#color-mode-switch input:checked + label:after {
+	left: calc(100% - 5px);
+	transform: translateX(-100%);
+}
+
+#color-mode-switch label:active:after {
+	width: 30px;
+}
+
+@media screen and (min-width: 1273px) {
+	#color-mode-switch > span {
+		font-size: 16px;
+	}
+
+	#color-mode-switch label {
+		width: 42px;
+		height: 21px;
+		border-radius: 30px;
+	}
+
+	#color-mode-switch label:after {
+		top: 3px;
+		left: 3px;
+		width: 15px;
+		height: 15px;
+	}
+
+
+	#color-mode-switch input:checked + label:after {
+		left: calc(100% - 3px);
+	}
+}

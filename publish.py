@@ -10,6 +10,7 @@ HEADER = """
 <link rel="stylesheet" type="text/css" href="/css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="/css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="/css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="/css/global.css">
 <link rel="stylesheet" type="text/css" href="/css/misc.css">
 
 <script type="text/javascript" id="MathJax-script" async
@@ -121,21 +122,21 @@ if __name__ == '__main__':
     for file_location in sys.argv[1:]:
         filename = os.path.split(file_location)[1]
         print("Processing file: {}".format(filename))
-        
+
         # Extract path
         file_data = open(file_location).read()
         metadata = extract_metadata(open(file_location), filename)
         path = metadata_to_path(metadata)
         print("Path selected: {}".format(path))
-        
+
         # Make sure target directory exists
         truncated_path = os.path.split(path)[0]
         os.system('mkdir -p {}'.format(os.path.join('site', truncated_path)))
-        
+
         # Generate the html file
         out_location = os.path.join('site', path)
         options = metadata.get('pandoc', '')
-        
+
         os.system('pandoc -o /tmp/temp_output.html {} {}'.format(file_location, options))
         total_file_contents = (
             HEADER +
@@ -143,7 +144,7 @@ if __name__ == '__main__':
             defancify(open('/tmp/temp_output.html').read()) +
             FOOTER
         )
-    
+
         # Put it in the desired location
         open(out_location, 'w').write(total_file_contents)
 
