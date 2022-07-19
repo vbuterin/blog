@@ -33,6 +33,26 @@
     color: #fff;
 }
 
+[data-theme="dark"] a {
+    color: rgb(149, 214, 255);
+}
+
+[data-theme="dark"] .post-meta {
+    color: rgb(255, 255, 255);
+}
+
+[data-theme="dark"] td,th {
+    color: #121111;
+}
+
+[data-theme="dark"] blockquote p {
+    color: rgb(149, 214, 255);
+}
+
+[data-theme="dark"] li {
+    color: rgb(186, 229, 255);
+}
+
 .mobile_version{
     display: none;
 }
@@ -45,4 +65,5 @@
     }
     
 }
+
 
