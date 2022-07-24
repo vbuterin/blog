@@ -24,15 +24,15 @@ html, body {
 	color: var(--color-text);
 }
 
-h1, h2, h3, h4, h5, h6 {
+#doc h1, #doc h2, #doc h3, #doc h4, #doc h5, #doc h6 {
 	color: var(--color-heading);
 }
 
-p, li, div, span, th, td, dd, dl {
+#doc, #doc div, #doc span, #doc p, #doc li, #doc th, #doc td, #doc dd, #doc dl {
 	color: var(--color-text);
 }
 
-a:link, a:visited, a:active, a:checked {
+#doc a:link, #doc a:visited, #doc a:active, #doc a:checked {
 	color: var(--color-anchor);
 }
 
