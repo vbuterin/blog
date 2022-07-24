@@ -2,7 +2,6 @@
 import os, sys
 
 HEADER = """
-
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 <link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
@@ -30,37 +29,74 @@ HEADER = """
     font-family: MJXTEX;
     src: url("https://assets.hackmd.io/build/MathJax/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff")
 }
-
 .math { font-family: MJXc-TeX-math-Iw }
 </style>
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+    <span>Enable Dark Mode</span>
+    <input type="checkbox" id="switch" />
+    <label for="switch">Dark Mode Toggle</label>
+</div>
 """
 
-FOOTER = """ </div> """
+FOOTER = """</div>"""
 
 TOC_HEADER = """
-
 <br>
 <h1>{}</h1>
 <br>
 <br>
 <ul class="post-list">
-
 """
 
-TOC_FOOTER = """ </ul> """
+TOC_FOOTER = """</ul>"""
 
 TOC_ITEM_TEMPLATE = """
-
 <li>
     <span class="post-meta">{}</span>
     <h3>
       <a class="post-link" href="{}">{}</a>
     </h3>
 </li>
+"""
 
+TOGGLE_COLOR_SCHEME_JS = """
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 """
 
 TWITTER_CARD_TEMPLATE = """
@@ -142,7 +178,8 @@ if __name__ == '__main__':
             HEADER +
             make_twitter_card(metadata, global_config) +
             defancify(open('/tmp/temp_output.html').read()) +
-            FOOTER
+            FOOTER +
+            TOGGLE_COLOR_SCHEME_JS
         )
 
         # Put it in the desired location
@@ -162,7 +199,8 @@ if __name__ == '__main__':
         make_twitter_card(global_config, global_config) +
         TOC_HEADER.format(global_config['title']) +
         ''.join(toc_items) +
-        TOC_FOOTER
+        TOC_FOOTER +
+        TOGGLE_COLOR_SCHEME_JS
     )
 
     open('site/index.html', 'w').write(toc)

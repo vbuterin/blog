@@ -28,7 +28,6 @@
 <link rel="stylesheet" type="text/css" href="./css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="./css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="./css/pretty-vendor.83ac49e057c3eac4fce3.css">
-<link rel="stylesheet" type="text/css" href="./css/global.css">
 <link rel="stylesheet" type="text/css" href="./css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -57,12 +56,6 @@ MathJax = {
 <meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
 
 <title> Vitalik Buterin's website </title>
-
-<div id="color-mode-switch">
-  <span>Enable Dark Mode</span>
-  <input type="checkbox" id="switch" />
-  <label for="switch">Dark Mode Toggle</label>
-</div>
 
 <br>
 
@@ -819,38 +812,3 @@ MathJax = {
 </li>
 
  </ul>
-
-<script type="text/javascript">
-  // Update root html class to set CSS colors
-  const toggleDarkMode = () => {
-    const root = document.querySelector('html');
-    root.classList.toggle('dark');
-  }
-
-  // Update local storage value for colorScheme
-  const toggleColorScheme = () => {
-    const colorScheme = localStorage.getItem('colorScheme');
-    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
-    else localStorage.setItem('colorScheme', 'light');
-  }
-
-  // Set toggle input handler
-  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
-  if (toggle) toggle.onclick = () => {
-    toggleDarkMode();
-    toggleColorScheme();
-  }
-
-  // Check for color scheme on init
-  const checkColorScheme = () => {
-    const colorScheme = localStorage.getItem('colorScheme');
-    // Default to light for first view
-    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
-    // If previously saved to dark, toggle switch and update colors
-    if (colorScheme === 'dark') {
-      toggle.checked = true;
-      toggleDarkMode();
-    }
-  }
-  checkColorScheme();
-</script>
