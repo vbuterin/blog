@@ -11,27 +11,15 @@ These are high promises. Can network states live up to them? Do network states a
 
 ## Table of contents
 
-- [Table of contents](#table-of-contents)
-- [What is a network state?](#what-is-a-network-state)
-- [So what kinds of network states could we build?](#so-what-kinds-of-network-states-could-we-build)
-- [What is Balaji's megapolitical case for network states?](#what-is-balajis-megapolitical-case-for-network-states)
-- [Do you have to agree with Balaji's megapolitics to like network states?](#do-you-have-to-agree-with-balajis-megapolitics-to-like-network-states)
-- [What does cryptocurrency have to do with network states?](#what-does-cryptocurrency-have-to-do-with-network-states)
-	- [The spiritual alignment](#the-spiritual-alignment)
-	- [The practical alignment](#the-practical-alignment)
-- [What aspects of Balaji's vision do I like?](#what-aspects-of-balajis-vision-do-i-like)
-	- [But what about this particular baizuo that's currently writing this review? Do network states actually interest me?](#but-what-about-this-particular-baizuo-thats-currently-writing-this-review-do-network-states-actually-interest-me)
-- [What aspects of Balaji's vision do I take issue with?](#what-aspects-of-balajis-vision-do-i-take-issue-with)
-	- [The "founder" thing](#the-founder-thing)
-	- [What about everyone who is not wealthy?](#what-about-everyone-who-is-not-wealthy)
-	- [Nowhere to run](#nowhere-to-run)
-	- [So what about those negative externalities?](#so-what-about-those-negative-externalities)
-- [Non-Balajian network states](#non-balajian-network-states)
-- [Is there a middle way?](#is-there-a-middle-way)
-	- [Founder to start is okay (though not the only way), but we really need a baked-in roadmap to exit-to-community](#founder-to-start-is-okay-though-not-the-only-way-but-we-really-need-a-baked-in-roadmap-to-exit-to-community)
-	- [Network states should be run by something that's not coin-driven governance](#network-states-should-be-run-by-something-thats-not-coin-driven-governance)
-	- [Network states commit to making themselves friendly through outside representation in governance](#network-states-commit-to-making-themselves-friendly-through-outside-representation-in-governance)
-	- [Conclusion](#conclusion)
+* [What is a network state?](#what-is-a-network-state)
+* [So what kinds of network states could we build?](#so-what-kinds-of-network-states-could-we-build)
+* [What is Balaji’s megapolitical case for network states?](#what-is-balajis-megapolitical-case-for-network-states)
+* [Do you have to like Balaji's megapolitics to like network states?](#do-you-have-to-agree-with-balajis-megapolitics-to-like-network-states)
+* [What does cryptocurrency have to do with network states?](#what-does-cryptocurrency-have-to-do-with-network-states)
+* [What aspects of Balaji's vision do I like?](#what-aspects-of-balajis-vision-do-i-like)
+* [What aspects of Balaji's vision do I take issue with?](#what-aspects-of-balajis-vision-do-i-take-issue-with)
+* [Non-Balajian network states](#non-balajian-network-states)
+* [Is there a middle way?](#is-there-a-middle-way)
 
 ## What is a network state?
 
