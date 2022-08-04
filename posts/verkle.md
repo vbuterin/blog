@@ -37,7 +37,7 @@ So what is this little extra that we need as a proof? To understand that, we fir
 
 A vector commitment scheme is a special type of hash function, hashing a list $h(z_1, z_2 ... z_n) \rightarrow C$. But vector commitments have the special property that for a commitment $C$ and a value $z_i$, it's possible to make a short proof that $C$ is the commitment to some list where the value at the i'th position is $z_i$. In a Verkle proof, this short proof replaces the function of the sister nodes in a Merkle Patricia proof, giving the verifier confidence that a child node really is the child at the given position of its parent node.
 
-<center><br><img src="../../../../images/verkle-files/verkle3.png class="padded" /><br><br>
+<center><br><img src="../../../../images/verkle-files/verkle3.png" class="padded" /><br><br>
 <small><i>No sister nodes required in a proof of a value in the tree; just the path itself plus a few short proofs to link each commitment in the path to the next.</i></small><br><br><br>
 </center>
 
