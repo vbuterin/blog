@@ -3,7 +3,6 @@
 [title]: <> (On Radical Markets)
 [pandoc]: <> (--mathjax)
 
-
 Recently I had the fortune to have received an advance copy of Eric Posner and Glen Weyl's new book, _[Radical Markets](https://www.amazon.ca/dp/B0773X7RKB/ref=dp-kindle-redirect?_encoding=UTF8&btkr=1)_, which could be best described as an interesting new way of looking at the subject that is sometimes called "[political economy](https://en.wikipedia.org/wiki/Political_economy)" - tackling the big questions of how markets and politics and society intersect. The general philosophy of the book, as I interpret it, can be expressed as follows. Markets are great, and price mechanisms are an awesome way of guiding the use of resources in society and bringing together many participants' objectives and information into a coherent whole. However, markets are socially constructed because they depend on property rights that are socially constructed, and there are many different ways that markets and property rights can be constructed, some of which are unexplored and potentially far better than what we have today. Contra doctrinaire libertarians, freedom is a high-dimensional design space.
 
 The book interests me for multiple reasons. First, although I spend most of my time in the blockchain/crypto space heading up the Ethereum project and in some cases providing various kinds of support to projects in the space, I do also have broader interests, of which the use of economics and mechanism design to make more open, free, egalitarian and efficient systems for human cooperation, including improving or replacing present-day corporations and governments, is a major one. The intersection of interests between the Ethereum community and Posner and Weyl's work is multifaceted and plentiful; _Radical Markets_ dedicates an entire chapter to the idea of "markets for personal data", redefining the economic relationship between ourselves and services like Facebook, and well, look what the Ethereum community is working on: [markets](https://cointelegraph.com/news/blockchain-startup-can-help-consumers-profit-from-their-personal-data) [for](https://cointelegraph.com/news/marketplace-aims-to-resell-personal-data-and-create-passive-income-stream-for-users) [personal](https://datum.org/) [data](https://blog.enigma.co/the-enigma-data-marketplace-is-live-84a269ec17fb).
@@ -61,7 +60,7 @@ Posner and Weyl then point out that if more investment efficiency is desired, a 
 This concept of quadratic deadweight loss is a truly important insight in economics, and is arguably the deep reason why "moderation in all things" is such an attractive principle: the first step you take away from an extreme will generally be the most valuable.
 
 <center>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Deadweight-loss-price-ceiling.svg/350px-Deadweight-loss-price-ceiling.svg.png" style="width:300px" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Deadweight-loss-price-ceiling.svg/350px-Deadweight-loss-price-ceiling.svg.png" style="width:300px" class="padded" />
 </center>
 <br>
 
@@ -76,7 +75,7 @@ The remaining chapters bring up similar ideas that are similar in spirit to the 
 Suppose that you can vote as many times as you want, but voting costs "voting tokens" (say each citizen is assigned $N$ voting tokens per year), and it costs tokens in a nonlinear way: your first vote costs one token, your second vote costs two tokens, and so forth. If someone feels more strongly about something, the argument goes, they would be willing to pay more for a single vote; quadratic voting takes advantage of this by perfectly aligning _quantity_ of votes with _cost_ of votes: if you're willing to pay up to 15 tokens for a vote, then you will keep buying votes until your last one costs 15 tokens, and so you will cast 15 votes in total. If you're willing to pay up to 30 tokens for a vote, then you will keep buying votes until you can't buy any more for a price less than or equal to 30 tokens, and so you will end up casting 30 votes. The voting is "quadratic" because the total amount you pay for $N$ votes goes up proportionately to $N^2$.
 
 <center>
-<img src="../../../../images/radical-markets-files/quadratic_voting.png" style="width:300px" />
+<img src="../../../../images/radical-markets-files/quadratic_voting.png" style="width:300px" class="padded" />
 </center>
 <br>
 

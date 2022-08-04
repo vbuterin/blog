@@ -79,7 +79,7 @@ When Starkware did an experiment in 2019 where they published 500 kB blocks  aft
 
 ### Storage
 
-* **Bad answer**: 10 terabytes 
+* **Bad answer**: 10 terabytes
 * **Correct answer**: 512 gigabytes
 
 The main argument here is, as you might guess, the same as elsewhere: the difference between theory and practice. _In theory_, there are [8 TB solid state drives](https://www.amazon.com/SAMSUNG-870-QVO-SATA-MZ-77Q8T0B/dp/B089C3TZL9/ref=sr_1_3?dchild=1&keywords=8tb&qid=1621637865&s=pc&sr=1-3) that you can buy on Amazon (you _do_ need SSDs or NVME; HDDs are too slow for storing the blockchain state). _In practice_, the laptop that was used to write this blog post has 512 GB, and if you make people go buy their own hardware, many of them will just get lazy (or they can't afford $800 for an 8 TB SSD) and use a centralized provider. And even if you can fit a blockchain onto some storage, a high level of activity can easily quickly burn through the disk and force you to keep getting a new one.
@@ -94,9 +94,9 @@ Additionally, storage size determines the time needed for a new node to be able 
 
 Additionally, there are interaction effects between these three types of costs. Because databases use tree structures internally to store and retrieve data, the cost of fetching data from a database increases with the logarithm of the size of the database. In fact, because the top level (or top few levels) can be cached in RAM, the disk access cost is proportional to the _size of the database as a multiple of the size of the data cached in RAM_.
 
-<br><center><img src="../../../../images/scaling-files/tree.png" /><br><br>
+<br><center><img src="../../../../images/scaling-files/tree.png" class="padded" /><br><br>
 <small><i>Don't take this diagram too literally; different databases work in different ways, and often the part in memory is just a single (but big) layer (see <a href="http://paperhub.s3.amazonaws.com/18e91eb4db2114a06ea614f0384f2784.pdf">LSM trees</a> as used in leveldb). But the basic principles are the same.</i></small>
-</center><br> 
+</center><br>
 
 For example, if the cache is 4 GB, and we assume that each layer of the database is 4x bigger than the previous, then Ethereum's current ~64 GB state would require ~2 accesses. But if the state size increases by 4x to ~256 GB, then this would increase to ~3 accesses (so 1.5x more accesses per read). Hence, a 4x increase in the gas limit, which would increase both the state size and the number of reads, could actually translate into a ~6x increase in block verification time. The effect may be even stronger: hard disks often take longer to read and write when they are full than when they are near-empty.
 
@@ -114,7 +114,7 @@ Another possible medium-term solution is using ZK-SNARKs to verify transactions.
 
 As a result, sharded blockchains can safely have very high levels of transaction throughput that non-sharded blockchains cannot. This does require a lot of cryptographic cleverness in creating efficient substitutes for naive full validation that successfully reject invalid blocks, but it can be done: the [theory](https://hackmd.io/@vbuterin/das) is [well-established](https://vitalik.ca/general/2021/01/26/snarks.html) and proof-of-concepts based on [draft specifications](https://github.com/ethereum/eth2.0-specs/blob/dev/specs/sharding/beacon-chain.md) are already [being worked on](https://github.com/protolambda/eth2-das).
 
-<br><center><img src="../../../../images/sharding-files/beacon_chain.jpg" /><br>
+<br><center><img src="../../../../images/sharding-files/beacon_chain.jpg" class="padded" /><br>
 </center><br>
 
 Ethereum is planning to use **quadratic sharding**, where total scalability is limited by the fact that a node has to be able to process both a single shard and the beacon chain which has to perform some fixed amount of management work for each shard. If shards are too big, nodes can no longer process individual shards, and if there are too many shards, nodes can no longer process the beacon chain. The product of these two constraints forms the upper bound.

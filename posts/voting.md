@@ -3,7 +3,7 @@
 [title]: <> (Notes on Blockchain Governance)
 [pandoc]: <> (--mathjax)
 
-<small><i>In which I argue that "tightly coupled" on-chain voting is overrated, the status quo of "informal governance" as practiced by Bitcoin, Bitcoin Cash, Ethereum, Zcash and similar systems is much less bad than commonly thought, that people who think that the purpose of blockchains is to completely expunge soft mushy human intuitions and feelings in favor of completely algorithmic governance (emphasis on "completely") are absolutely crazy, and loosely coupled voting as done by Carbonvotes and similar systems is underrated, as well as describe what framework should be used when thinking about blockchain governance in the first place.<br><br>See also: <a href="https://medium.com/@Vlad_Zamfir/against-on-chain-governance-a4ceacd040ca">https://medium.com/@Vlad_Zamfir/against-on-chain-governance-a4ceacd040ca</a></i></small>
+<small><i>In which I argue that "tightly coupled" on-chain voting is overrated, the status quo of "informal governance" as practiced by Bitcoin, Bitcoin Cash, Ethereum, Zcash and similar systems is much less bad than commonly thought, that people who think that the purpose of blockchains is to completely expunge soft mushy human intuitions and feelings in favor of completely algorithmic governance (emphasis on "completely") are absolutely crazy, and loosely coupled voting as done by Carbonvotes and similar systems is underrated, as well as describe what framework should be used when thinking about blockchain governance in the first place.<br><br>See also: <a href="<<https://medium.com/@Vlad_Zamfir/against-on-chain-governance-a4ceacd040ca>>">https://medium.com/@Vlad_Zamfir/against-on-chain-governance-a4ceacd040ca</a></i></small>
 
 One of the more interesting recent trends in blockchain governance is the resurgence of on-chain coin-holder voting as a multi-purpose decision mechanism. Votes by coin holders are sometimes used in order to decide who operates the super-nodes that run a network (eg. DPOS in EOS, NEO, Lisk and other systems), sometimes to vote on protocol paramters (eg. the Ethereum gas limit) and sometimes to vote on and directly implement protocol upgrades wholesale (eg. <a href="http://tezos.com/">Tezos</a>). In all of these cases, the votes are automatic - the protocol itself contains all of the logic needed to change the validator set or to update its own rules, and does this automatically in response to the result of votes.
 
@@ -30,7 +30,7 @@ So far, all in all, on-chain governance seems like a very good bargain.... so wh
 To start off, we need to describe more clearly what the process of "blockchain governance" <em>is</em>. Generally speaking, there are two informal models of governance, that I will call the "decision function" view of governance and the "coordination" view of governance. The decision function view treats governance as a function $f(x_1, x_2 ... x_n) \rightarrow y$, where the inputs are the wishes of various legitimate stakeholders (senators, the president, property owners, shareholders, voters, etc) and the output is the decision.
 
 <center>
-<img src="../../../../images/voting-files/decisionfunction.png" style="width:350px"/>
+<img src="../../../../images/voting-files/decisionfunction.png" style="width:350px" class="padded" />
 </center>
 <br>
 
@@ -41,7 +41,7 @@ The coordination model of governance, in contrast, sees governance as something 
 The second (and crucially important) layer is coordination institutions. The purpose of a coordination institution is to create focal points around how and when individuals should act in order to better coordinate behavior. There are many situations, both in blockchain governance and in real life, where if you act in a certain way alone, you are likely to get nowhere (or worse), but if everyone acts together a desired result can be achieved.
 
 <center>
-<img src="../../../../images/voting-files/coordinationgame.png" style="width:250px"/><br>
+<img src="../../../../images/voting-files/coordinationgame.png" style="width:250px" class="padded" /><br>
 <br>
 <small>An abstract coordination game. You benefit heavily from making the same move as everyone else.</small>
 </center>
@@ -50,7 +50,7 @@ The second (and crucially important) layer is coordination institutions. The pur
 In these cases, it's in your interest to go if everyone else is going, and stop if everyone else is stopping. You can think of coordination institutions as putting up green or red flags in the air saying "go" or "stop", <em>with an established culture</em> that everyone watches these flags and (usually) does what they say. Why do people have the incentive to follow these flags? Because <em>everyone else</em> is already following these flags, and you have the incentive to do the same thing as what everyone else is doing.
 
 <center>
-<img src="../../../../images/voting-files/byzantinegeneral.jpg" style="width:550px"/>
+<img src="../../../../images/voting-files/byzantinegeneral.jpg" style="width:550px" />
 <br><br>
 <small>A Byzantine general rallying his troops forward. The purpose of this isn't just to make the soldiers feel brave and excited, but also to reassure them that <i>everyone else</i> feels brave and excited and will charge forward as well, so an individual soldier is not just committing suicide by charging forward alone.</small>
 </center>
@@ -71,15 +71,15 @@ The key questions of governance thus become:
 
 Ethereum also has a history with coin voting, including:
 
-* <strong>DAO proposal votes</strong>: <a href="https://daostats.github.io/proposals.html">https://daostats.github.io/proposals.html</a>
-* <strong>The DAO Carbonvote</strong>: <a href="http://v1.carbonvote.com/">http://v1.carbonvote.com/</a>
-* <strong>The EIP 186/649/669 Carbonvote</strong>: <a href="http://carbonvote.com/">http://carbonvote.com/</a>
+* <strong>DAO proposal votes</strong>: <a href="<<https://daostats.github.io/proposals.html>>">https://daostats.github.io/proposals.html</a>
+* <strong>The DAO Carbonvote</strong>: <a href="<<http://v1.carbonvote.com/>>">http://v1.carbonvote.com/</a>
+* <strong>The EIP 186/649/669 Carbonvote</strong>: <a href="<<http://carbonvote.com/>>">http://carbonvote.com/</a>
 
 <center>
 <img src="../../../../images/voting-files/vote2.png" style="height:340px" />
 <img src="../../../../images/voting-files/vote3.png" style="height:340px" />
 <br><br>
-<img src="../../../../images/voting-files/vote1.png" style="width:480px" />
+<img src="../../../../images/voting-files/vote1.png" style="width:480px" class="padded" />
 </center>
 <br>
 
@@ -155,7 +155,7 @@ Another important objection to voting is that coin holders are only one class of
 </center>
 <br>
 
-And if you want to see a review of a project that seems to combine all of these disadvantages at the same time, see this: <a href="https://btcgeek.com/bitshares-trying-memorycoin-year-ago-disastrous-ends/">https://btcgeek.com/bitshares-trying-memorycoin-year-ago-disastrous-ends/</a>.
+And if you want to see a review of a project that seems to combine all of these disadvantages at the same time, see this: <a href="<<https://btcgeek.com/bitshares-trying-memorycoin-year-ago-disastrous-ends/>>">https://btcgeek.com/bitshares-trying-memorycoin-year-ago-disastrous-ends/</a>.
 
 This criticism applies to both tightly coupled and loosely coupled voting equally; however, loosely coupled voting is more amenable to compromises that mitigate its unrepresentativeness, and we will discuss this more later.
 
@@ -171,7 +171,7 @@ Let's look at the existing live experiment that we have in tightly coupled votin
 You might notice that the general feel of the curve is a bit like another chart that may be quite familiar to you:
 
 <center>
-<img src="https://philoofalexandria.files.wordpress.com/2011/10/top_marginal_income_tax_rate_1913-2003.jpg" style="width:450px" />
+<img src="https://philoofalexandria.files.wordpress.com/2011/10/top_marginal_income_tax_rate_1913-2003.jpg" style="width:450px" class="padded" />
 </center>
 <br>
 
@@ -197,8 +197,8 @@ However, I am also not willing to go the other way and say that coin voting, or 
 
 So how do we solve this conundrum? Well, first, we can heed [the words of slatestarcodex](http://slatestarcodex.com/2017/11/21/contra-robinson-on-public-food/) in the context of traditional politics:
 
-> The rookie mistake is: you see that some system is partly Moloch [ie. captured by misaligned special interests], so you say "Okay, we’ll fix that by putting it under the control of this other system. And we’ll control this other system by writing 'DO NOT BECOME MOLOCH' on it in bright red marker."  
-> ("I see capitalism sometimes gets misaligned. Let's fix it by putting it under control of the government. We'll control the government by having only virtuous people in high offices.")  
+> The rookie mistake is: you see that some system is partly Moloch [ie. captured by misaligned special interests], so you say "Okay, we’ll fix that by putting it under the control of this other system. And we’ll control this other system by writing 'DO NOT BECOME MOLOCH' on it in bright red marker."
+> ("I see capitalism sometimes gets misaligned. Let's fix it by putting it under control of the government. We'll control the government by having only virtuous people in high offices.")
 > I'm not going to claim there’s a great alternative, but the occasionally-adequate alternative is the neoliberal one – find a couple of elegant systems that all optimize along different criteria approximately aligned with human happiness, pit them off against each other in a structure of checks and balances, hope they screw up in different places like in that swiss cheese model, keep enough individual free choice around that people can exit any system that gets too terrible, and let cultural evolution do the rest.
 
 In blockchain governance, it seems like this is the only way forward as well. The approach for blockchain governance that I advocate is "multifactorial consensus", where different coordination flags and different mechanisms and groups are polled, and the ultimate decision depends on the collective result of all of these mechanisms together. These coordination flags may include:

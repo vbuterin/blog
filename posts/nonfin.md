@@ -38,11 +38,11 @@ From the point of view of someone coming in later who just receives these two me
 
 <center><br>
 
-![](../../../../images/nonfin/keychange.png)
+![](../../../../images/nonfin/keychange.png){.padded}
 
 </center><br>
 
-This is equivalent to the famous [double-spend problem](https://en.wikipedia.org/wiki/Double-spending) in designing decentralized currencies, except instead of the goal being to prevent a previous owner of a coin from being able to send it again, here the goal is to prevent the previous key controlling an account from being able to change the key. **Just like creating a decentralized currency, doing account management in a decentralized way requires something like a blockchain**. A blockchain can timestamp the key change messages, providing common knowledge over whether B or C came first. 
+This is equivalent to the famous [double-spend problem](https://en.wikipedia.org/wiki/Double-spending) in designing decentralized currencies, except instead of the goal being to prevent a previous owner of a coin from being able to send it again, here the goal is to prevent the previous key controlling an account from being able to change the key. **Just like creating a decentralized currency, doing account management in a decentralized way requires something like a blockchain**. A blockchain can timestamp the key change messages, providing common knowledge over whether B or C came first.
 
 [3] and [4] are harder. In general, my own preferred solution is [multisig and social recovery wallets](https://vitalik.ca/general/2021/01/11/recovery.html), where a group of friends, family members and other contacts can transfer control of your account to a new key if it gets lost or stolen. For critical operations (eg. transferring large quantities of funds, or signing an important contract), participation of this group can also be required.
 
@@ -82,7 +82,7 @@ Sometimes, negative reputation can be empowering and positive reputation can be 
 
 Readers of the strong civil-libertarian persuasion may also want to consider the case of an anonymous reputation system for clients of sex workers: you want to protect privacy, but you also might want a system where if a client mistreats a sex worker, they get a "black mark" that encourages other workers to be more careful or stay away. In this way, negative reputation that's hard to hide can actually empower the vulnerable and protect safety. The point here is not to defend some _specific_ scheme for negative reputation; rather, it's to show that there's very real value that negative reputation unlocks, and a successful system needs to support it _somehow_.
 
-Negative reputation does not have to be _unlimited_ negative reputation: I would argue that it should always be possible to create a new profile at some cost (perhaps sacrificing a lot or all of your existing positive reputation). There is a balance between [too little accountability and too much accountability](https://twitter.com/VitalikButerin/status/1534507352736645121). But having _some_ technology that makes negative reputation possible in the first place is a prerequisite for unlocking this design space. 
+Negative reputation does not have to be _unlimited_ negative reputation: I would argue that it should always be possible to create a new profile at some cost (perhaps sacrificing a lot or all of your existing positive reputation). There is a balance between [too little accountability and too much accountability](https://twitter.com/VitalikButerin/status/1534507352736645121). But having _some_ technology that makes negative reputation possible in the first place is a prerequisite for unlocking this design space.
 
 ## Committing to scarcity
 
@@ -94,7 +94,7 @@ An even more effective usecase is many-at-a-time issuance: if an artists wants t
 
 <center><br>
 
-![](../../../../images/nonfin/merkle.png)
+![](../../../../images/nonfin/merkle.png){.padded}
 <small><i>
 
 By publishing a single Merkle root and max count on-chain, you can commit issue a limited quantity of attestations. In this example, there are only five possible valid Merkle branches that could satisfy the proof check. Astute readers may notice a conceptual similarity to [Plasma chains](https://ethereum.org/en/developers/docs/scaling/plasma/).
@@ -122,17 +122,17 @@ Sure, you _could_ run an oracle off-chain and require the data to be imported on
 One key goal of the [Decentralized Society paper](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4105763) is the idea that it should be possible to _make calculations_ over the graph of attestations. A really important one is **measuring decentralization** and diversity. For example, many people [seem](https://twitter.com/VitalikButerin/status/1264948490834247681) to [agree](https://twitter.com/VitalikButerin/status/1265252184813420544) that an ideal voting mechanism would somehow keep diversity in mind, giving greater weight to projects that are supported not just by the largest number of _coins_ or even _humans_, but by the largest number of _truly distinct perspectives_.
 
 <center><br>
-	
-<table><tr style="border:none"><td style="border:none">
+
+<table class="transparent"><tr><td>
 
 ![](../../../../images/nonfin/tweet1.png)
 
-</td><td style="border:none">
+</td><td>
 
 ![](../../../../images/nonfin/tweet2.png)
 
 </td></tr></table>
-	
+
 </center><br>
 
 Quadratic funding as implemented in [Gitcoin Grants](https://gitcoin.co/grants) also includes some [explicitly diversity-favoring logic](https://ethresear.ch/t/pairwise-coordination-subsidies-a-new-quadratic-funding-design/5553) to mitigate attacks.

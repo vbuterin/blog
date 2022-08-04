@@ -14,7 +14,7 @@ Let us review a few examples.
 #### Maidsafe
 
 <center>
-<img src="../../../../images/sales-files/msc_chart.png" width="350px"></img>
+<img src="../../../../images/sales-files/msc_chart.png" width="350px" class="padded" />
 </center><br>
 
 The [decentralized internet platform](http://maidsafe.net/) raised $7m [in five hours](https://www.forbes.com/sites/kashmirhill/2014/06/03/mastercoin-maidsafe-crowdsale/#7fda1c71207d). However, they made the mistake of accepting payment in two currencies (BTC and MSC), and giving a favorable rate to MSC buyers. This [led to](https://www.cryptocoinsnews.com/maidsafe-embroiled-safecoin-presale-mastercoin-pump-dump/) a temporary ~2x appreciation in the MSC price, as users rushed in to buy MSC to participate in the sale at the more favorable rate, but then the price saw a similarly steep drop after the sale ended. Many users converted their BTC to MSC to participate in the sale, but then the sale closed too quickly for them, leading to them being stuck with a ~30% loss.
@@ -26,7 +26,7 @@ This sale, and several others after it (cough cough [WeTrust](https://blog.wetru
 The Ethereum sale was uncapped, and ran for 42 days. The sale price was 2000 ETH for 1 BTC for the first 14 days, and then started increasing linearly, finishing at 1337 ETH for 1 BTC.
 
 <center>
-<img src="https://cdn-images-1.medium.com/max/800/1*zl1MuV2-RoVzs8X1HOleJA.png" width="550px"></img>
+<img src="https://cdn-images-1.medium.com/max/800/1*zl1MuV2-RoVzs8X1HOleJA.png" width="550px" class="padded" />
 </center>
 <br>
 
@@ -72,7 +72,7 @@ However, many people predicted that because of "fear of missing out" (FOMO), man
 All of this would of course be an excellent piece of confirming evidence for the narrative that markets are totally irrational, people don't think clearly before throwing in large quantities of money (and often, as a subtext, that the entire space needs to be somehow suppressed to prevent further exuberance) if it weren't for one inconvenient fact: **_the traders who bought into the sale were right_**.
 
 <center>
-<img src="../../../../images/sales-files/gnosis_price_pic.png" width="550px"></img>
+<img src="../../../../images/sales-files/gnosis_price_pic.png" width="550px" class="padded" />
 </center><br>
 
 Even in ETH terms, despite the massive ETH price rise, the price of 1 GNO has increased from ~0.6 ETH to ~0.8 ETH.
@@ -153,4 +153,3 @@ Here are a few possible mechanisms that follow some of the spirit of the above i
 * Immediately put all tokens into a market maker with parameters+variables $X$ (minimum price), $s$ (fraction of all tokens already sold), $t$ (time since sale started), $T$ (intended duration of sale, say 5 years), that sells tokens at a price of $\dfrac{k}{(\frac{t}{T - s})}$ (this one is weird and may need to be economically studied more).
 
 Note that there are other mechanisms that should be tried to solve other problems with token sales; for example, revenues going into a multisig of curators, which only hand out funds if milestones are being met, is one very interesting idea that should be done more. However, the design space is highly multidimensional, and there are a lot more things that could be tried.
-

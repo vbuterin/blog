@@ -3,7 +3,6 @@
 [title]: <> (Fast Fourier Transforms)
 [pandoc]: <> (--mathjax)
 
-
 <p><em>Trigger warning: specialized mathematical topic</em></p>
 
 <p><em>Special thanks to Karl Floersch for feedback</em></p>
@@ -14,7 +13,7 @@
 
 <p>The original <a href="https://en.wikipedia.org/wiki/Fourier_transform">Fourier transform</a> is a mathematical operation that is often described as converting data between the "frequency domain" and the "time domain". What this means more precisely is that if you have a piece of data, then running the algorithm would come up with a collection of sine waves with different frequencies and amplitudes that, if you added them together, would approximate the original data. Fourier transforms can be used for such wonderful things as <a href="https://twitter.com/johncarlosbaez/status/1094671748501405696">expressing square orbits through epicycles</a> and <a href="https://en.wikipedia.org/wiki/Fourier_transform">deriving a set of equations that can draw an elephant</a>:</p>
 
-<p><center><table><tr><td>
+<p><center><table class="transparent"><tr><td>
 <img src="../../../../images/fft-files/elephant1.png" /><br>
 <img src="../../../../images/fft-files/elephant3.png" />
 </td><td>
@@ -67,7 +66,7 @@ $$
 <p>Note that the "glue" in the second procedure has runtime $O(N)$: if each of the two sub-lists has $N$ elements, then you need to run through every item in each list once, so it's $O(N)$ computation total. So the algorithm as a whole works by taking a problem of size $N$, and breaking it up into two problems of size $\frac{N}{2}$, plus $O(N)$ of "glue" execution. There is a theorem called the <a href="https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms%29">Master Theorem</a> that lets us compute the total runtime of algorithms like this. It has many sub-cases, but in the case where you break up an execution of size $N$ into $k$ sub-cases of size $\frac{N}{k}$ with $O(N)$ glue (as is the case here), the result is that the execution takes time $O(N \cdot log(N))$.</p>
 
 <p><center>
-<img src="../../../../images/fft-files/sorting.png" /><br>
+<img src="../../../../images/fft-files/sorting.png" class="padded" /><br>
 </center><br></p>
 
 <p>An FFT works in the same way. We take a problem of size $N$, break it up into two problems of size $\frac{N}{2}$, and do $O(N)$ glue work to combine the smaller solutions into a bigger solution, so we get $O(N \cdot log(N))$ runtime total - <em>much faster</em> than $O(N^2)$. Here is how we do it. I'll describe first how to use an FFT for multi-point evaluation (ie. for some domain $D$ and polynomial $P$, calculate $P(x)$ for every $x$ in $D$), and it turns out that you can use the same algorithm for interpolation with a minor tweak.</p>
@@ -199,7 +198,7 @@ def inverse_fft(vals, modulus, domain):
     1 0 1 1 0 1
   -   1 1 0 0 1    [(x⁴ + x + 1) shifted right by one to reflect being multipled by x]
    ------------
-    1 1 0 1 0 0 
+    1 1 0 1 0 0
 </pre>
 
 <p>And we get the result, $[1, 1, 0, 1]$ (or $x^3 + x + 1$).</p>
@@ -216,7 +215,7 @@ def inverse_fft(vals, modulus, domain):
 <p>The reason we needed the domain to have the "structure" of a multiplicative group with $2^n$ elements before is that we needed to reduce the size of the domain by a factor of two by squaring each number in it: the domain $[1, 85, 148, 111, 336, 252, 189, 226]$ gets reduced to $[1, 148, 336, 189]$ because $1$ is the square of both $1$ and $336$, $148$ is the square of both $85$ and $252$, and so forth. But what if in a binary field there's a different way to halve the size of a domain? It turns out that there is: given a domain containing $2^k$ values, including zero (technically the domain must be a <em><a href="https://en.wikipedia.org/wiki/Linear_subspace">subspace</a></em>), we can construct a half-sized new domain $D'$ by taking $x \cdot (x+k)$ for $x$ in $D$ using some specific $k$ in $D$. Because the original domain is a subspace, since $k$ is in the domain, any $x$ in the domain has a corresponding $x+k$ also in the domain, and the function $f(x) = x \cdot (x+k)$ returns the same value for $x$ and $x+k$ so we get the same kind of two-to-one correspondence that squaring gives us.</p>
 
 <center>
-<table border="1" cellpadding="10"><tr>
+<table cellpadding="10"><tr>
 <td>$x$</td><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td>
 </tr><tr>
 <td>$x \cdot (x+1)$</td><td>0</td><td>0</td><td>6</td><td>6</td><td>7</td><td>7</td><td>1</td><td>1</td><td>4</td><td>4</td><td>2</td><td>2</td><td>3</td><td>3</td><td>5</td><td>5</td>

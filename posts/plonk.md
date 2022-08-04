@@ -12,7 +12,7 @@ The first improvement is that while PLONK still requires a trusted setup procedu
 The second improvement is that the "fancy cryptography" it relies on is one single standardized component, called a "polynomial commitment". PLONK uses "Kate commitments", based on a trusted setup and elliptic curve pairings, but you can instead swap it out with other schemes, such as [FRI](https://vitalik.ca/general/2017/11/22/starks_part_2.html) (which would [turn PLONK into a kind of STARK](https://eprint.iacr.org/2019/1020)) or DARK (based on hidden-order groups). This means the scheme is theoretically compatible with any (achievable) tradeoff between proof size and security assumptions.
 
 <center>
-<img src="../../../../images/plonk-files/Tradeoffs.png" />
+<img src="../../../../images/plonk-files/Tradeoffs.png" class="padded" />
 </center><br>
 
 What this means is that use cases that require different tradeoffs between proof size and security assumptions (or developers that have different ideological positions about this question) can still share the bulk of the same tooling for "arithmetization" - the process for converting a program into a set of polynomial equations that the polynpomial commitments are then used to check. If this kind of scheme becomes widely adopted, we can thus expect rapid progress in improving shared arithmetization techniques.
@@ -24,13 +24,13 @@ Let us start with an explanation of how PLONK works, in a somewhat abstracted fo
 Here is an example of the problem of finding $x$ such that $P(x) = x^3 + x + 5 = 35$ (hint: <span title="Though other solutions also exist over fields where -31 has a square root; since SNARKs are done over prime fields this is something to watch out for!">$x = 3$</span>):
 
 <center>
-<img src="../../../../images/plonk-files/Circuit.png" />
+<img src="../../../../images/plonk-files/Circuit.png" class="padded" />
 </center><br>
 
 We can label the gates and wires as follows:
 
 <center>
-<img src="../../../../images/plonk-files/Circuit2.png" />
+<img src="../../../../images/plonk-files/Circuit2.png" class="padded" />
 </center><br>
 
 On the gates and wires, we have two types of constraints: **gate constraints** (equations between wires attached to the same gate, eg. $a_1 \cdot b_1 = c_1$) and **copy constraints** (claims about equality of different wires anywhere in the circuit, eg. $a_0 = a_1 = b_1 = b_2 = a_3$ or $c_0 = a_1$). We will need to create a structured system of equations, which will ultimately reduce to a very small number of polynomial equations, to represent both.
@@ -59,7 +59,7 @@ $$
 Q_{L}=1, Q_{R}=0, Q_{M}=0, Q_{O}=0, Q_{C}=-x
 $$
 
-You may have noticed that each end of a wire, as well as each wire in a set of wires that clearly must have the same value (eg. $x$), corresponds to a distinct variable; there's nothing so far forcing the output of one gate to be the same as the input of another gate (what we call "copy constraints"). PLONK does of course have a way of enforcing copy constraints, but we'll get to this later. So now we have a problem where a prover wants to prove that they have a bunch of $x_{a_i}, x_{b_i}$ and $x_{c_i}$ values that satisfy a bunch of equations that are of the same form. This is still a big problem, but unlike "find a satisfying input to this computer program" it's a very _structured_ big problem, and we have mathematical tools to "compress" it.
+You may have noticed that each end of a wire, as well as each wire in a set of wires that clearly must have the same value (eg. $x$), corresponds to a distinct variable; there's nothing so far forcing the output of one gate to be the same as the input of another gate (what we call "copy constraints"). PLONK does of course have a way of enforcing copy constraints, but we'll get to this later. So now we have a problem where a prover wants to prove that they have a bunch of $x_{a_i}, x_{b_i}$ and $x_{c_i}$ values that satisfy a bunch of equations that are of the same form. This is still a big problem, but unlike "find a satisfying input to this computer program" it's a very_structured_ big problem, and we have mathematical tools to "compress" it.
 
 ### From linear systems to polynomials
 
@@ -165,7 +165,7 @@ The user-provided polynomials are:
 The program-specific polynomials that the prover and verifier need to compute ahead of time are:
 
 * $Q_L(x), Q_R(x), Q_O(x), Q_M(x), Q_C(x)$, which together represent the gates in the circuit (note that $Q_C(x)$ encodes public inputs, so it may need to be computed or modified at runtime)
-* The "permutation polynomials" $\sigma_a(x), \sigma_b(x)$ and $\sigma_c(x)$, which encode the copy constraints between the $a$, $b$ and $c$ wires 
+* The "permutation polynomials" $\sigma_a(x), \sigma_b(x)$ and $\sigma_c(x)$, which encode the copy constraints between the $a$, $b$ and $c$ wires
 
 Note that the verifier need only store commitments to these polynomials. The only remaining polynomial in the above equations is $Z(x) = (x - 1) \cdot (x - \omega) \cdot ... \cdot (x - \omega ^{n-1})$ which is designed to evaluate to zero at all those points. Fortunately, $\omega$ can be chosen to make this polynomial very easy to evaluate: the usual technique is to choose $\omega$ to satisfy $\omega ^n = 1$, in which case $Z(x) = x^n - 1$.
 
@@ -189,7 +189,7 @@ is also a polynomial (using another polynomial commitment). This works because i
 
 So how do the commitments themselves work? Kate commitments are, fortunately, much simpler than FRI. A trusted-setup procedure generates a set of elliptic curve points $G, G \cdot s, G \cdot s^2$ .... $G \cdot s^n$, as well as $G_2 \cdot s$, where $G$ and $G_2$ are the generators of two elliptic curve groups and $s$ is a secret that is forgotten once the procedure is finished (note that there is a multi-party version of this setup, which is secure as long as at least one of the participants forgets their share of the secret). These points are published and considered to be "the proving key" of the scheme; anyone who needs to make a polynomial commitment will need to use these points. A commitment to a degree-d polynomial is made by multiplying each of the first d+1 points in the proving key by the corresponding coefficient in the polynomial, and adding the results together.
 
-Notice that this provides an "evaluation" of that polynomial at $s$, without knowing $s$. For example, $x^3 + 2x^2+5$ would be represented by $(G \cdot s^3) + 2 \cdot (G \cdot s^2) + 5 \cdot G$. We can use the notation $[P]$ to refer to $P$ encoded in this way (ie. $G \cdot P(s)$). When doing the subtract-and-divide trick, you can prove that the two polynomials actually satisfy the relation by using [elliptic curve pairings](https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627): check that $e([P] - G \cdot a, G_2) = e([Q], [x] - G_2 \cdot z)$ as a proxy for checking that $P(x) - a = Q(x) \cdot (x - z)$. 
+Notice that this provides an "evaluation" of that polynomial at $s$, without knowing $s$. For example, $x^3 + 2x^2+5$ would be represented by $(G \cdot s^3) + 2 \cdot (G \cdot s^2) + 5 \cdot G$. We can use the notation $[P]$ to refer to $P$ encoded in this way (ie. $G \cdot P(s)$). When doing the subtract-and-divide trick, you can prove that the two polynomials actually satisfy the relation by using [elliptic curve pairings](https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627): check that $e([P] - G \cdot a, G_2) = e([Q], [x] - G_2 \cdot z)$ as a proxy for checking that $P(x) - a = Q(x) \cdot (x - z)$.
 
 But there are more recently other types of polynomial commitments coming out too. A new scheme called DARK ("Diophantine arguments of knowledge") uses "hidden order groups" such as [class groups](https://blogs.ams.org/mathgradblog/2018/02/10/introduction-ideal-class-groups/) to implement another kind of polynomial commitment. Hidden order groups are unique because they allow you to compress arbitrarily large numbers into group elements, even numbers much larger than the size of the group element, in a way that can't be "spoofed"; constructions from VDFs to [accumulators](https://ethresear.ch/t/rsa-accumulators-for-plasma-cash-history-reduction/3739) to range proofs to polynomial commitments can be built on top of this. Another option is to use bulletproofs, using regular elliptic curve groups at the cost of the proof taking much longer to verify. Because polynomial commitments are much simpler than full-on zero knowledge proof schemes, we can expect more such schemes to get created in the future.
 

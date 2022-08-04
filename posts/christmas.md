@@ -3,7 +3,6 @@
 [title]: <> (Christmas Special)
 [pandoc]: <> (--mathjax)
 
-
 Since it's Christmas time now, and we're theoretically supposed to be enjoying ourselves and spending time with our families instead of waging endless holy wars on Twitter, this blog post will offer some games that you can play with your friends that will help you have fun _and_ at the same time understand some spooky mathematical concepts!
 
 ### 1.58 dimensional chess
@@ -33,14 +32,14 @@ The game is substantially simpler and more "tractable" than full-on chess, and i
 ### 3 dimensional tic tac toe
 
 <center><br>
-![](../../../../images/christmas-files/tic4.png)
+![](../../../../images/christmas-files/tic4.png){.padded}
 <br><br>
 </center>
 
 The goal here is to get 4 in a straight line, where the line can go in any direction, along an axis or diagonal, including between planes. For example in this configuration X wins:
 
 <center><br>
-![](../../../../images/christmas-files/tic4_2.png)
+![](../../../../images/christmas-files/tic4_2.png){.padded}
 <br><br>
 </center>
 
@@ -67,21 +66,21 @@ Mathematically, the board can be interpreted as a 2-dimensional vector space ove
 ### Tic tac toe over the 4-element binary field
 
 <center><br>
-![](../../../../images/christmas-files/tic4_5.png)
+![](../../../../images/christmas-files/tic4_5.png){.padded}
 <br><br>
 </center>
 
 Here, we have the same concept as above, except we use an even spookier mathematical structure, the [4-element field](https://en.wikipedia.org/wiki/Finite_field#Field_with_four_elements) of polynomials over $Z_2$ modulo $x^2 + x + 1$. This structure has pretty much no reasonable geometric interpretation, so I'll just give you the addition and multiplication tables:
 
 <center><br>
-![](../../../../images/christmas-files/tic4_6.png)
+![](../../../../images/christmas-files/tic4_6.png){.padded}
 <br><br>
 </center>
 
 OK fine, here are all possible lines, excluding the horizontal and the vertical lines (which are also admissible) for brevity:
 
 <center><br>
-<img src="../../../../images/christmas-files/tic4_7.png" style="width: 450px" />
+<img src="../../../../images/christmas-files/tic4_7.png" style="width: 450px" class="padded" />
 <br><br>
 </center>
 

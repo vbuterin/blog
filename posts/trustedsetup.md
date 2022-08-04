@@ -11,7 +11,7 @@ Many cryptographic protocols, especially in the areas of [data availability samp
 
 <center>
 
-![](../../../../images/trustedsetup/setup1.png)
+![](../../../../images/trustedsetup/setup1.png){.padded}
 
 </center>
 
@@ -39,17 +39,17 @@ However, any IPA-based proofs take $O(N)$ time to verify, and there's an unavoid
 
 <center>
 
-![](../../../../images/trustedsetup/ipa_bases.png)
+![](../../../../images/trustedsetup/ipa_bases.png){.padded}
 
 <small>
-    
+
 _A valid commitment to the polynomial $3x^3 + 8x^2 + 2x + 6$ under one set of base points is a valid commitment to $3x^3 + 4x^2 + 2x + 6$ under a different set of base points._
-    
+
 </small></center>
 
 If we want to make an IPA-based _proof_ for some statement (say, that this polynomial evaluated at $x = 10$ equals $3826$), the proof should pass with the first set of base points and fail with the second. Hence, whatever the proof verification procedure is cannot avoid somehow taking into account each and every one of the $S_i$ values, and so it unavoidably takes $O(N)$ time.
 
-**But with a trusted setup, there is a hidden mathematical relationship between the points**. It's guaranteed that $S_{i+1} = s * S_i$ with the same factor $s$ between any two adjacent points. If $[S_0, S_1 ... S_i ... S_{n-1}]$ is a valid setup, the "edited setup" $[S_0, S_1 ... (S_i * 2) ... S_{n-1}]$ _cannot also be a valid setup_. **Hence, we don't need $O(n)$ computation; instead, we take advantage of this mathematical relationship to verify anything we need to verify in constant time.**
+**But with a trusted setup, there is a hidden mathematical relationship between the points**. It's guaranteed that $S_{i+1} = s * S_i$ with the same factor $s$ between any two adjacent points. If $[S_0, S_1 ... S_i ... S_{n-1}]$ is a valid setup, the "edited setup" $[S_0, S_1 ... (S_i * 2) ... S_{n-1}]$_cannot also be a valid setup_. **Hence, we don't need $O(n)$ computation; instead, we take advantage of this mathematical relationship to verify anything we need to verify in constant time.**
 
 However, the mathematical relationship has to remain secret: if $s$ is known, then anyone could come up with a commitment that stands for many different polynomials: if $C$ commits to $P(x)$, it also commits to $\frac{P(x) * x}{s}$, or $P(x) - x + s$, or many other things. This would completely break all applications of polynomial commitments. **Hence, while some secret $s$ must have existed at one point to make possible the mathematical link between the $S_i$ values that enables efficient verification, the $s$ must also have been forgotten.**
 
@@ -61,7 +61,7 @@ The solution to this is multi-participant trusted setups, where by "multi" we me
 
 <center>
 
-![](../../../../images/trustedsetup/multiparticipants.png)
+![](../../../../images/trustedsetup/multiparticipants.png){.padded}
 
 </center>
 
@@ -83,20 +83,20 @@ $[G_1, G_1 * (st), G_1 * (st)^2 ... G_1 * (st)^{n_1-1}]$ &nbsp;
 
 $[G_2, G_2 * (st), G_2 * (st)^2 ... G_2 * (st)^{n_2-1}]$
 
-That is to say, you've created a valid setup with the secret $s * t$! You never give your $t$ to the previous participants, and the previous participants never give you their secrets that went into $s$. And as long as any one of the participants is honest and does not reveal their part of the secret, the combined secret does not get revealed. In particular, finite fields have the property that if you know know $s$ but not $t$, and $t$ is securely randomly generated, then you know _nothing_ about $s*t$!
+That is to say, you've created a valid setup with the secret $s *t$! You never give your $t$ to the previous participants, and the previous participants never give you their secrets that went into $s$. And as long as any one of the participants is honest and does not reveal their part of the secret, the combined secret does not get revealed. In particular, finite fields have the property that if you know know $s$ but not $t$, and $t$ is securely randomly generated, then you know _nothing_ about $s*t$!
 
 ## Verifying the setup
 
-To verify that each participant actually participated, each participant can provide a proof that consists of (i) the $G_1 * s$ point that they received and (ii) $G_2 * t$, where $t$ is the secret that they introduce. The list of these proofs can be used to verify that the final setup combines together all the secrets (as opposed to, say, the last participant just forgetting the previous values and outputting a setup with just their own secret, which they keep so they can cheat in any protocols that use the setup).
+To verify that each participant actually participated, each participant can provide a proof that consists of (i) the $G_1 *s$ point that they received and (ii) $G_2* t$, where $t$ is the secret that they introduce. The list of these proofs can be used to verify that the final setup combines together all the secrets (as opposed to, say, the last participant just forgetting the previous values and outputting a setup with just their own secret, which they keep so they can cheat in any protocols that use the setup).
 
 <center>
 
-![](../../../../images/trustedsetup/verifying.png)
+![](../../../../images/trustedsetup/verifying.png){.padded}
 
 <small>
-    
+
 _$s_1$ is the first participant's secret, $s_2$ is the second participant's secret, etc. The pairing check at each step proves that the setup at each step actually came from a combination of the setup at the previous step and a new secret known by the participant at that step._
-    
+
 </small></center>
 
 Each participant should reveal their proof on some publicly verifiable medium (eg. personal website, transaction from their .eth address, Twitter). Note that this mechanism does _not_ prevent someone from claiming to have participated at some index where someone else has (assuming that other person has revealed their proof), but it's generally considered that this does not matter: if someone is willing to lie about having participated, they would also be willing to lie about having deleted their secret. As long as at least one of the people who publicly claim to have participated is honest, the setup is secure.

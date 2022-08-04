@@ -3,8 +3,7 @@
 [title]: <> ([Mirror] Exploring Elliptic Curve Pairings)
 [pandoc]: <> (--mathjax)
 
-
-_This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627</a>_
+_This is a mirror of the post at <a href="<<<https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627>>>">https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627</a>_
 
 **Trigger warning: math.**
 
@@ -23,19 +22,19 @@ Elliptic curves themselves are very much a nontrivial topic to understand, and t
 
 There exists a special point called the “point at infinity” ($O$), the equivalent of zero in point arithmetic; it’s always the case that $P + O = P$. Also, a curve has an “**order**”; there exists a number $n$ such that $P \cdot n = O$ for any $P$ (and of course, $P \cdot (n+1) = P, P \cdot (7 \cdot n + 5) = P \cdot 5$, and so on). There is also some commonly agreed upon “generator point” $G$, which is understood to in some sense represent the number $1$. Theoretically, any point on a curve (except $O$) can be $G$; all that matters is that $G$ is standardized.
 
-Pairings go a step further in that they allow you to check certain kinds of more complicated equations on elliptic curve points — for example, if $P = G \cdot p, Q = G \cdot q$ and $R = G \cdot r$, you can check whether or not $p \cdot q = r$, having just $P, Q$ and $R$ as inputs. This might seem like the fundamental security guarantees of elliptic curves are being broken, as information about $p$ is leaking from just knowing P, but it turns out that the leakage is highly contained — specifically, the [decisional Diffie Hellman problem](https://en.wikipedia.org/wiki/Decisional_Diffie%E2%80%93Hellman_assumption) is easy, but the computational Diffie Hellman problem (knowing $P$ and $Q$ in the above example, *computing* $R = G \cdot p \cdot q$) and the [discrete logarithm problem](https://en.wikipedia.org/wiki/Discrete_logarithm) (recovering $p$ from $P$) remain computationally infeasible (at least, if they were before).
+Pairings go a step further in that they allow you to check certain kinds of more complicated equations on elliptic curve points — for example, if $P = G \cdot p, Q = G \cdot q$ and $R = G \cdot r$, you can check whether or not $p \cdot q = r$, having just $P, Q$ and $R$ as inputs. This might seem like the fundamental security guarantees of elliptic curves are being broken, as information about $p$ is leaking from just knowing P, but it turns out that the leakage is highly contained — specifically, the [decisional Diffie Hellman problem](https://en.wikipedia.org/wiki/Decisional_Diffie%E2%80%93Hellman_assumption) is easy, but the computational Diffie Hellman problem (knowing $P$ and $Q$ in the above example, _computing_ $R = G \cdot p \cdot q$) and the [discrete logarithm problem](https://en.wikipedia.org/wiki/Discrete_logarithm) (recovering $p$ from $P$) remain computationally infeasible (at least, if they were before).
 
-A third way to look at what pairings do, and one that is perhaps most illuminating for most of the use cases that we are about, is that if you view elliptic curve points as one-way encrypted numbers (that is, $encrypt(p) = p \cdot G = P$), then whereas traditional elliptic curve math lets you check *linear* constraints on the numbers (eg. if $P = G \cdot p, Q = G \cdot q$ and $R = G \cdot r$, checking $5 \cdot P + 7 \cdot Q = 11 \cdot R$ is *really* checking that $5 \cdot p + 7 \cdot q = 11 \cdot r$), pairings let you check *quadratic* constraints (eg. checking $e(P, Q) \cdot e(G, G \cdot 5) = 1$ is *really* checking that $p \cdot q + 5 = 0$). And going up to quadratic is enough to let us work with deterministic threshold signatures, quadratic arithmetic programs and all that other good stuff.
+A third way to look at what pairings do, and one that is perhaps most illuminating for most of the use cases that we are about, is that if you view elliptic curve points as one-way encrypted numbers (that is, $encrypt(p) = p \cdot G = P$), then whereas traditional elliptic curve math lets you check _linear_ constraints on the numbers (eg. if $P = G \cdot p, Q = G \cdot q$ and $R = G \cdot r$, checking $5 \cdot P + 7 \cdot Q = 11 \cdot R$ is _really_ checking that $5 \cdot p + 7 \cdot q = 11 \cdot r$), pairings let you check _quadratic_ constraints (eg. checking $e(P, Q) \cdot e(G, G \cdot 5) = 1$ is _really_ checking that $p \cdot q + 5 = 0$). And going up to quadratic is enough to let us work with deterministic threshold signatures, quadratic arithmetic programs and all that other good stuff.
 
-Now, what is this funny $e(P, Q)$ operator that we introduced above? This is the pairing. Mathematicians also sometimes call it a *bilinear map*; the word “bilinear” here basically means that it satisfies the constraints:
+Now, what is this funny $e(P, Q)$ operator that we introduced above? This is the pairing. Mathematicians also sometimes call it a _bilinear map_; the word “bilinear” here basically means that it satisfies the constraints:
 
 $e(P, Q + R) = e(P, Q) \cdot e(P, R)$
 
 $e(P + S, Q) = e(P, Q) \cdot e(S, Q)$
 
-Note that $+$ and $\cdot$ can be arbitrary operators; when you’re creating fancy new kinds of mathematical objects, abstract algebra doesn’t care how $+$ and $\cdot$ are *defined*, as long as they are consistent in the usual ways, eg. $a + b = b + a, (a \cdot b) \cdot c = a \cdot (b \cdot c)$ and $(a \cdot c) + (b \cdot c) = (a + b) \cdot c$.
+Note that $+$ and $\cdot$ can be arbitrary operators; when you’re creating fancy new kinds of mathematical objects, abstract algebra doesn’t care how $+$ and $\cdot$ are _defined_, as long as they are consistent in the usual ways, eg. $a + b = b + a, (a \cdot b) \cdot c = a \cdot (b \cdot c)$ and $(a \cdot c) + (b \cdot c) = (a + b) \cdot c$.
 
-If $P$, $Q$, $R$ and $S$ were simple *numbers*, then making a simple pairing is easy: we can do $e(x, y) = 2^{xy}$. Then, we can see:
+If $P$, $Q$, $R$ and $S$ were simple _numbers_, then making a simple pairing is easy: we can do $e(x, y) = 2^{xy}$. Then, we can see:
 
 $e(3, 4+ 5) = 2^{3 \cdot 9} = 2^{27}$
 
@@ -43,7 +42,7 @@ $e(3, 4) \cdot e(3, 5) = 2^{3 \cdot 4} \cdot 2^{3 \cdot 5} = 2^{12} \cdot 2^{15}
 
 It’s bilinear!
 
-However, such simple pairings are not suitable for cryptography because the objects that they work on are simple integers and are too easy to analyze; integers make it easy to divide, compute logarithms, and make various other computations; simple integers have no concept of a “public key” or a “one-way function”. Additionally, with the pairing described above you can go backwards - knowing $x$, and knowing $e(x, y)$, you can simply compute a division and a logarithm to determine $y$. We want mathematical objects that are as close as possible to “black boxes”, where you can add, subtract, multiply and divide, *but do nothing else*. This is where elliptic curves and elliptic curve pairings come in.
+However, such simple pairings are not suitable for cryptography because the objects that they work on are simple integers and are too easy to analyze; integers make it easy to divide, compute logarithms, and make various other computations; simple integers have no concept of a “public key” or a “one-way function”. Additionally, with the pairing described above you can go backwards - knowing $x$, and knowing $e(x, y)$, you can simply compute a division and a logarithm to determine $y$. We want mathematical objects that are as close as possible to “black boxes”, where you can add, subtract, multiply and divide, _but do nothing else_. This is where elliptic curves and elliptic curve pairings come in.
 
 It turns out that it is possible to make a bilinear map over elliptic curve points — that is, come up with a function $e(P, Q)$ where the inputs $P$ and $Q$ are elliptic curve points, and where the output is what’s called an $(F_p)^{12}$ element (at least in the specific case we will cover here; the specifics differ depending on the details of the curve, more on this later), but the math behind doing so is quite complex.
 
@@ -79,7 +78,7 @@ Now, let’s talk about **extension fields**. You have probably already seen an 
 
 <br>
 <center>
-<img src="https://cdn-images-1.medium.com/max/2000/1*qDOPI299SKvZuzeNnik4JA.png" />
+<img src="https://cdn-images-1.medium.com/max/2000/1*qDOPI299SKvZuzeNnik4JA.png" class="padded" />
 </center>
 <br>
 
@@ -131,7 +130,7 @@ $f(x, y) = x - P_x$
 
 The divisor is $[P] + [-P] - 2 \cdot [O]$ (the square brackets are used to represent the fact that we are referring to *the presence of the point $P$ in the set of zeroes and infinities of the function*, not the point P itself; $[P] + [Q]$ is **not** the same thing as $[P + Q]$). The reasoning is as follows:
 
-* The function is equal to zero at $P$, since $x$ *is* $P_x$, so $x - P_x = 0$
+* The function is equal to zero at $P$, since $x$ _is_ $P_x$, so $x - P_x = 0$
 
 * The function is equal to zero at $-P$, since $-P$ and $P$ share the same $x$ coordinate
 
@@ -147,7 +146,7 @@ Where $a$, $b$ and $c$ are carefully chosen so that the line passes through poin
 
 <br>
 <center>
-<img src="https://cdn-images-1.medium.com/max/2000/1*alHa7VxwcLoJk4C_YU9Iog.png" />
+<img src="https://cdn-images-1.medium.com/max/2000/1*alHa7VxwcLoJk4C_YU9Iog.png" class="padded" />
 </center>
 <br>
 
@@ -175,18 +174,18 @@ $n \cdot [P + Q] - n \cdot [O]$
 
 Notice that this divisor is of exactly the same format as the divisor for $F_P$ and $F_Q$ above. Hence, $F_P \cdot F_Q \cdot g^n = F_{P + Q}$.
 
-Now, we introduce a procedure called the “final exponentiation” step, where we take the result of our functions above ($F_P, F_Q$, etc.) and raise it to the power $z = (p^{12} - 1) / n$, where $p^{12} - 1$ is the order of the multiplicative group in $(F_p)^{12}$ (ie. for *any* $x \in (F_p)^{12}, x^{(p^{12} - 1)} = 1$). Notice that if you apply this exponentiation to any result that has *already* been raised to the power of $n$, you get an exponentiation to the power of $p^{12} - 1$, so the result turns into $1$. Hence, after final exponentiation, $g^n$ cancels out and we get $F_P^z \cdot F_Q^z = (F_{P + Q})^z$. There’s some bilinearity for you.
+Now, we introduce a procedure called the “final exponentiation” step, where we take the result of our functions above ($F_P, F_Q$, etc.) and raise it to the power $z = (p^{12} - 1) / n$, where $p^{12} - 1$ is the order of the multiplicative group in $(F_p)^{12}$ (ie. for _any_ $x \in (F_p)^{12}, x^{(p^{12} - 1)} = 1$). Notice that if you apply this exponentiation to any result that has _already_ been raised to the power of $n$, you get an exponentiation to the power of $p^{12} - 1$, so the result turns into $1$. Hence, after final exponentiation, $g^n$ cancels out and we get $F_P^z \cdot F_Q^z = (F_{P + Q})^z$. There’s some bilinearity for you.
 
-Now, if you want to make a function that’s bilinear in both arguments, you need to go into spookier math, where instead of taking $F_P$ of a value directly, you take $F_P$ of a *divisor*, and that’s where the full “Tate pairing” comes from. To prove some more results you have to deal with notions like “linear equivalence” and “Weil reciprocity”, and the rabbit hole goes on from there. You can find more reading material on all of this [here](http://www.math.ru.nl/~bosma/Students/MScThesis_DennisMeffert.pdf) and [here](http://people.cs.nctu.edu.tw/~rjchen/ECC2012S/Elliptic%20Curves%20Number%20Theory%20And%20Cryptography%202n.pdf).
+Now, if you want to make a function that’s bilinear in both arguments, you need to go into spookier math, where instead of taking $F_P$ of a value directly, you take $F_P$ of a _divisor_, and that’s where the full “Tate pairing” comes from. To prove some more results you have to deal with notions like “linear equivalence” and “Weil reciprocity”, and the rabbit hole goes on from there. You can find more reading material on all of this [here](http://www.math.ru.nl/~bosma/Students/MScThesis_DennisMeffert.pdf) and [here](http://people.cs.nctu.edu.tw/~rjchen/ECC2012S/Elliptic%20Curves%20Number%20Theory%20And%20Cryptography%202n.pdf).
 
 For an implementation of a modified version of the Tate pairing, called the optimal Ate paring, [see here](https://github.com/ethereum/py_pairing/blob/master/py_ecc/bn128/bn128_pairing.py). The code implements [Miller’s algorithm](https://crypto.stanford.edu/pbc/notes/ep/miller.html), which is needed to actually compute $F_P$.
 
 Note that the fact pairings like this are possible is somewhat of a mixed blessing: on the one hand, it means that all the protocols we can do with pairings become possible, but is also means that we have to be more careful about what elliptic curves we use.
 
-Every elliptic curve has a value called an *embedding degree*; essentially, the smallest $k$ such that $p^k - 1$ is a multiple of $n$ (where $p$ is the prime used for the field and $n$ is the curve order). In the fields above, $k = 12$, and in the fields used for traditional ECC (ie. where we don’t care about pairings), the embedding degree is often extremely large, to the point that pairings are computationally infeasible to compute; however, if we are not careful then we can generate fields where $k = 4$ or even $1$.
+Every elliptic curve has a value called an _embedding degree_; essentially, the smallest $k$ such that $p^k - 1$ is a multiple of $n$ (where $p$ is the prime used for the field and $n$ is the curve order). In the fields above, $k = 12$, and in the fields used for traditional ECC (ie. where we don’t care about pairings), the embedding degree is often extremely large, to the point that pairings are computationally infeasible to compute; however, if we are not careful then we can generate fields where $k = 4$ or even $1$.
 
 If $k = 1$, then the “discrete logarithm” problem for elliptic curves (essentially, recovering $p$ knowing only the point $P = G \cdot p$, the problem that you have to solve to “crack” an elliptic curve private key) can be reduced into a similar math problem over $F_p$, where the problem becomes much easier (this is called the [MOV attack](https://crypto.stanford.edu/pbc/notes/elliptic/movattack.html)); using curves with an embedding degree of $12$ or higher ensures that this reduction is either unavailable, or that solving the discrete log problem over pairing results is at least as hard as recovering a private key from a public key “the normal way” (ie. computationally infeasible). Do not worry; all standard curve parameters have been thoroughly checked for this issue.
 
 Stay tuned for a mathematical explanation of how zk-SNARKs work, coming soon.
 
-*Special thanks to Christian Reitwiessner, Ariel Gabizon (from Zcash) and Alfred Menezes for reviewing and making corrections.*
+_Special thanks to Christian Reitwiessner, Ariel Gabizon (from Zcash) and Alfred Menezes for reviewing and making corrections._

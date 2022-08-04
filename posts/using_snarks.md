@@ -17,7 +17,7 @@ Suppose that you have a public input $x$, a private input $w$, and a (public) fu
 
 <center><br>
 
-![](../../../../images/using_snarks/definition.png)
+![](../../../../images/using_snarks/definition.png){.padded}
 
 </center><br>
 
@@ -30,10 +30,10 @@ Suppose that you have an Ethereum wallet, and you want to prove that this wallet
 * The **private input** ($w$): your address $A$, and the private key $k$ to your address
 * The **public input** ($x$): the set of all addresses with verified proof-of-humanity profiles $\{H_1 ... H_n\}$
 * The **verification function** $f(x, w)$:
-	* Interpret $w$ as the pair $(A, k)$, and $x$ as the list of valid profiles $\{H_1 ... H_n\}$
-	* Verify that $A$ is one of the addresses in $\{H_1 ... H_n\}$
-	* Verify that $privtoaddr(k) = A$
-	* Return $True$ if both verifications pass, $False$ if either verification fails
+  * Interpret $w$ as the pair $(A, k)$, and $x$ as the list of valid profiles $\{H_1 ... H_n\}$
+  * Verify that $A$ is one of the addresses in $\{H_1 ... H_n\}$
+  * Verify that $privtoaddr(k) = A$
+  * Return $True$ if both verifications pass, $False$ if either verification fails
 
 The prover generates their address $A$ and the associated key $k$, and provides $w = (A, k)$ as the private input to $f$. They take the public input, the current set of verified proof-of-humanity profiles $\{H_1 ... H_n\}$, from the chain. They run the ZK-SNARK proving algorithm, which (assuming the inputs are correct) generates the proof. The prover sends the proof to the verifier and they provide the block height at which they obtained the list of verified profiles.
 
@@ -49,7 +49,7 @@ We can solve this by instead passing in as a public input an on-chain Merkle roo
 
 <center><br>
 
-![](../../../../images/using_snarks/merkle_tree.png)
+![](../../../../images/using_snarks/merkle_tree.png){.padded}
 
 </center><br>
 
@@ -63,7 +63,7 @@ Here's how we solve this. Anyone who has a coin has a private secret $s$. They l
 
 <center><br>
 
-![](../../../../images/using_snarks/coin.png)
+![](../../../../images/using_snarks/coin.png){.padded}
 
 </center><br>
 
@@ -72,9 +72,9 @@ To spend a coin, the sender must make a ZK-SNARK where:
 * The **public input** contains a nullifier $N$, the current or recent Merkle root $R$, and a new leaf $L'$ (the intent is that recipient has a secret $s'$, and passes to the sender $L' = hash(s', 1)$)
 * The **private input** contains a secret $s$, a leaf $L$ and a Merkle branch $M$
 * The **verification function** checks that:
-	* $M$ is a valid Merkle branch proving that $L$ is a leaf in a tree with root $R$, where $R$ is the current Merkle root of the state
-	* $hash(s, 1) = L$
-	* $hash(s, 2) = N$
+  * $M$ is a valid Merkle branch proving that $L$ is a leaf in a tree with root $R$, where $R$ is the current Merkle root of the state
+  * $hash(s, 1) = L$
+  * $hash(s, 2) = N$
 
 The transaction contains the nullifier $N$ and the new leaf $L'$. We don't actually prove anything about $L'$, but we "mix it in" to the proof to prevent $L'$ from being modified by third parties when the transaction is in-flight.
 
@@ -104,35 +104,33 @@ We'll start with a simple version: we use nullifiers. A user generates a nullifi
 
 Now, we'll move on to the more complex version. Instead of just making it easy to prove if someone used the same epoch twice, this next protocol will actually _reveal their private key_ in that case. Our core technique will rely on the "two points make a line" trick: if you reveal one point on a line, you've revealed little, but if you reveal two points on a line, you've revealed the whole line.
 
-For each epoch $e$, we take the line $L_e(x) = hash(k, e) * x + k$. The slope of the line is $hash(k, e)$, and the y-intercept is $k$; neither is known to the public. To make a _certificate_ for a message $m$, the sender provides $y = L_e(hash(m)) =$ $hash(k, e) * hash(m) + k$, along with a ZK-SNARK proving that $y$ was computed correctly.
+For each epoch $e$, we take the line $L_e(x) = hash(k, e) *x + k$. The slope of the line is $hash(k, e)$, and the y-intercept is $k$; neither is known to the public. To make a _certificate_ for a message $m$, the sender provides $y = L_e(hash(m)) =$ $hash(k, e)* hash(m) + k$, along with a ZK-SNARK proving that $y$ was computed correctly.
 
 <center><br>
 
-![](../../../../images/using_snarks/line.png)
+![](../../../../images/using_snarks/line.png){.padded}
 
 </center><br>
 
 To recap, the ZK-SNARK here is as follows:
 
 * **Public input**:
-	* $\{A_1 ... A_n\}$, the list of valid accounts
-	* $m$, the message that the certificate is verifying
-	* $e$, the epoch number used for the certificate
-	* $y$, the line function evaluation
+  * $\{A_1 ... A_n\}$, the list of valid accounts
+  * $m$, the message that the certificate is verifying
+  * $e$, the epoch number used for the certificate
+  * $y$, the line function evaluation
 * **Private input**:
-	* $k$, your private key
+  * $k$, your private key
 * **Verification function**:
-	* Check that $privtoaddr(k)$ is in $\{A_1 ... A_n\}$
-	* Check that $y = hash(k, e) * hash(m) + k$
+  * Check that $privtoaddr(k)$ is in $\{A_1 ... A_n\}$
+  * Check that $y = hash(k, e) * hash(m) + k$
 
-
-
-But what if someone uses a single epoch twice? That means they published two values $m_1$ and $m_2$ and the corresponding certificate values $y_1 = hash(k, e) * hash(m_1) + k$ and $y_2 = hash(k, e) * hash(m_2) + k$. We can use the two points to recover the line, and hence the y-intercept (which is the private key):
+But what if someone uses a single epoch twice? That means they published two values $m_1$ and $m_2$ and the corresponding certificate values $y_1 = hash(k, e) *hash(m_1) + k$ and $y_2 = hash(k, e)* hash(m_2) + k$. We can use the two points to recover the line, and hence the y-intercept (which is the private key):
 
 <center><br>
 
 $k = y_1 - hash(m_1) * \frac{y_2 - y_1}{hash(m_2) - hash(m_1)}$
-	
+
 </center><br>
 
 So if someone reuses an epoch, they leak out their private key for everyone to see. Depending on the circumstance, this could imply stolen funds, a slashed validator, or simply the private key getting broadcasted and included into a smart contract, at which point the corresponding address would get removed from the set.
@@ -150,18 +148,18 @@ The reputation system could support positive or negative reputation; however, su
 Anyone can make a post by publishing a message on-chain that contains the post, and a ZK-SNARK proving that either (i) you own some scarce external identity, eg. proof-of-humanity, that entitles you to create an account, or (ii) that you made some specific previous post. Specifically, the ZK-SNARK is as follows:
 
 * **Public inputs**:
-	* The nullifier $N$
-	* A recent blockchain state root $R$
-	* The post contents ("mixed in" to the proof to bind it to the post, but we don't do any computation on it)
+  * The nullifier $N$
+  * A recent blockchain state root $R$
+  * The post contents ("mixed in" to the proof to bind it to the post, but we don't do any computation on it)
 * **Private inputs**:
-	* Your private key $k$
-	* Either an external identity (with address $A$), or the nullifier $N_{prev}$ used by the previous post
-	* A Merkle proof $M$ proving inclusion of $A$ or $N_{prev}$ on-chain
-	* The number $i$ of posts that you have previously made with this account
+  * Your private key $k$
+  * Either an external identity (with address $A$), or the nullifier $N_{prev}$ used by the previous post
+  * A Merkle proof $M$ proving inclusion of $A$ or $N_{prev}$ on-chain
+  * The number $i$ of posts that you have previously made with this account
 * **Verification function**:
-	* Check that $M$ is a valid Merkle branch proving that (either $A$ or $N_{prev}$, whichever is provided) is a leaf in a tree with root $R$
-	* Check that $N = enc(i, k)$, where $enc$ is an encryption function (eg. AES)
-	* If $i = 0$, check that $A = privtoaddr(k)$, otherwise check that $N_{prev} = enc(i-1, k)$
+  * Check that $M$ is a valid Merkle branch proving that (either $A$ or $N_{prev}$, whichever is provided) is a leaf in a tree with root $R$
+  * Check that $N = enc(i, k)$, where $enc$ is an encryption function (eg. AES)
+  * If $i = 0$, check that $A = privtoaddr(k)$, otherwise check that $N_{prev} = enc(i-1, k)$
 
 In addition to verifying the proof, the chain also checks that (i) $R$ actually is a recent state root, and (ii) the nullifier $N$ has not yet been used. So far, this is like the privacy-preserving coin introduced earlier, but we add a procedure for "minting" a new account, and we remove the ability to "send" your account to a different key - instead, all nullifiers are generated using your original key.
 
@@ -182,7 +180,7 @@ Suppose that a post uses a root $R$ and stores $\{N, \bar{h}, \bar{u}\}$. In the
 
 <center><br>
 
-![](../../../../images/using_snarks/0chan.png)
+![](../../../../images/using_snarks/0chan.png){.padded}
 
 </center><br>
 

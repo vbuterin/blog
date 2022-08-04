@@ -19,7 +19,7 @@ I decided to make an experiment on the blockchain that I helped to create: I bou
 
 <br>
 <center>
-<img src="../../../../images/election-files/neoliberal.png" />
+<img src="../../../../images/election-files/neoliberal.png" class="padded" />
 <br>
 </center>
 <br>
@@ -39,7 +39,7 @@ And this is where I [pushed back against ne0liberal in September](https://twitte
 
 <br>
 <center>
-<table><tr>
+<table class="transparent centered"><tr>
 <td>PredictIt</td><td>Augur</td>
 </tr><tr>
 <td><img src="../../../../images/election-files/predictit_prices.png" /></td>
@@ -52,7 +52,7 @@ The main response my Twitter friends gave to this was that blockchain-based mark
 
 ## The Election
 
-Then the election happened. After an initial scare where Trump at first won more seats than we expected, Biden turned out to be the eventual winner. Whether or not the election itself validated or refuted the efficiency of prediction markets is a topic that, as far as I can tell, is quite open to interpretation. On the one hand, by a standard [Bayes rule](https://arbital.com/p/bayes_rule_guide/) application, I should decrease my confidence of prediction markets, at least relative to Nate Silver. Prediction markets gave a 60% chance of Biden winning, Nate Silver gave a [90% chance of Biden winning](https://projects.fivethirtyeight.com/2020-election-forecast/). Since Biden in fact won, this is one piece of evidence that I live in a world where Nate gives the more correct answers. 
+Then the election happened. After an initial scare where Trump at first won more seats than we expected, Biden turned out to be the eventual winner. Whether or not the election itself validated or refuted the efficiency of prediction markets is a topic that, as far as I can tell, is quite open to interpretation. On the one hand, by a standard [Bayes rule](https://arbital.com/p/bayes_rule_guide/) application, I should decrease my confidence of prediction markets, at least relative to Nate Silver. Prediction markets gave a 60% chance of Biden winning, Nate Silver gave a [90% chance of Biden winning](https://projects.fivethirtyeight.com/2020-election-forecast/). Since Biden in fact won, this is one piece of evidence that I live in a world where Nate gives the more correct answers.
 
 But on the other hand, you can make a case that the prediction markets bettter estimated the _margin_ of victory. The median of Nate's probability distribution was somewhere around 370 of 538 electoral college votes going to Biden:
 
@@ -89,7 +89,7 @@ Recapping the above, here's the pipeline in diagram form:
 
 <br>
 <center>
-<img src="../../../../images/election-files/pipeline.png" />
+<img src="../../../../images/election-files/pipeline.png" class="padded" />
 </center><br><br>
 
 I did this many times; the slippage on Catnip meant that I could normally make trades only up to about $5,000 to $10,000 at a time without prices becoming too unfavorable (when I had skipped Foundry and bought NTRUMP with DAI directly, the limit was closer to $1,000). And after two months, I had accumulated over 367,000 NTRUMP.
@@ -119,7 +119,7 @@ Capital costs - the inconvenience and opportunity cost of locking up large amoun
 
 <br>
 <center>
-<img src="../../../../images/election-files/winnings.png" style="width:50%"/><br>
+<img src="../../../../images/election-files/winnings.png" style="width:50%" class="padded" /><br>
 </center><br><br>
 
 Now, the interest rates are looking less favorable. And if you add to that the possibility, however remote, that a smart contract hack, or a truly unprecedented political event, actually _will_ happen, it looks less favorable still.
@@ -169,11 +169,11 @@ Suppose that you are a small participant, so your individual bets won't affect t
 
 The standard theory here relies on the [Kelly criterion](https://en.wikipedia.org/wiki/Kelly_criterion). Essentially, you should act to maximize the expected logarithm of your assets. In this case, we can solve the resulting equation. Suppose you invest portion $r$ of your money into buying A-token for $0.4. Your expected new log-wealth, from your point of view, would be:
 
-$0.5 * log((1-r) + \frac{r}{0.4}) + 0.5 * log(1-r)$
+$0.5 *log((1-r) + \frac{r}{0.4}) + 0.5* log(1-r)$
 
 The first term is the 50% chance (from your point of view) that the bet pays off, and the portion $r$ that you invest grows by 2.5x (as you bought dollars at 40 cents). The second term is the 50% chance that the bet does not pay off, and you lose the portion you bet. We can use calculus to find the $r$ that maximizes this; for the lazy, [here's WolframAlpha](https://www.wolframalpha.com/input/?i=maximize+0.5+*+log%28%281-r%29+%2B+%5Cfrac%7Br%7D%7B0.4%7D%29+%2B+0.5+*+log%281-r%29). The answer is $r = \frac{1}{6}$. If other people buy and the price for A on the market gets up to 47% (and B gets down to 48%), we can redo the calculation for the last trader who would flip the market over to make it correctly favor A:
 
-$0.5 * log((1-r) + \frac{r}{0.47}) + 0.5 * log(1-r)$
+$0.5 *log((1-r) + \frac{r}{0.47}) + 0.5* log(1-r)$
 
 Here, the expected-log-wealth-maximizing $r$ is a mere 0.0566. The conclusion is clear: when decisions are close and when there is a lot of noise, it turns out that it only makes sense to invest a small portion of your money in a market. And this is assuming rationality; most people invest _less_ into uncertain gambles than the Kelly criterion says they should. Capital costs stack on top even further. But if an attacker _really_ wants to force outcome B through because they want it to happen for personal reasons, they can simply put _all_ of their capital toward buying that token. All in all, the game can easily be lopsided more than 20:1 in favor of the attacker.
 
@@ -193,7 +193,7 @@ Crypto is a young ecosystem. It is an ecosystem that is still quite disconnected
 
 <br>
 <center>
-<img src="../../../../images/election-files/chartovertime.png"/><br>
+<img src="../../../../images/election-files/chartovertime.png" class="padded" /><br>
 </center><br>
 
 Thus, there is a _selection pressure_ in favor of the type of people who make bets that turn out to be correct. After ten rounds of this, good predictors will have more capital to bet with, and bad predictors will have less capital to bet with. This does _not_ rely on anyone "getting wiser" or "learning their lesson" or any other assumption about humans' capacity to reason and learn. It is simply a result of selection dynamics that over time, participants that are good at making correct guesses will come to dominate the ecosystem.

@@ -31,7 +31,7 @@ Such a procedure could even be turned into a non-interactive proof using the **F
 But unfortunately there is a fatal flaw in naively applying random sampling to spot-check a computation in this way: computation is inherently _fragile_. If a malicious prover flips one bit somewhere in the middle of a computation, they can make it give a completely different result, and a random sampling verifier would almost never find out.
 
 <center>
-<img src="../../../../images/snarks-files/randomsample.png" />
+<img src="../../../../images/snarks-files/randomsample.png" class="padded" />
 <br><br>
 <i><small>It only takes one deliberately inserted error, that a random check would almost never catch, to make a computation give a completely incorrect result.</small></i>
 </center><br>
@@ -77,7 +77,7 @@ Checking the equation $A(x) + B(x) = C(x)$ with these polynomials checks all fou
 
 You can even check relationships between a large number of _adjacent evaluations of the same polynomial_ using a simple polynomial equation. This is slightly more advanced. Suppose that you want to check that, for a given polynomial $F$, $F(x+2) = F(x) + F(x+1)$ within the integer range $\{0, 1 ... 98\}$ (so if you _also_ check $F(0) = F(1) = 1$, then $F(100)$ would be the 100th [Fibonacci](https://en.wikipedia.org/wiki/Fibonacci_number) number).
 
-As polynomials, $F(x+2) - F(x+1) - F(x)$ would not be exactly zero, as it could give arbitrary answers _outside_ the range $x = \{0, 1 ... 98\}$. But we can do something clever. In general, there is a rule that if a polynomial $P$ is zero across some set $S=\{x_1, x_2 ... x_n\}$ then it can be expressed as $P(x) = Z(x) * H(x)$, where $Z(x) =$ $(x - x_1) * (x - x_2) * ... * (x - x_n)$ and $H(x)$ is also a polynomial. In other words, **any polynomial that equals zero across some set is a (polynomial) multiple of the simplest (lowest-degree) polynomial that equals zero across that same set**. 
+As polynomials, $F(x+2) - F(x+1) - F(x)$ would not be exactly zero, as it could give arbitrary answers _outside_ the range $x = \{0, 1 ... 98\}$. But we can do something clever. In general, there is a rule that if a polynomial $P$ is zero across some set $S=\{x_1, x_2 ... x_n\}$ then it can be expressed as $P(x) = Z(x) *H(x)$, where $Z(x) =$ $(x - x_1)* (x - x_2) *...* (x - x_n)$ and $H(x)$ is also a polynomial. In other words, **any polynomial that equals zero across some set is a (polynomial) multiple of the simplest (lowest-degree) polynomial that equals zero across that same set**.
 
 Why is this the case? It is a nice corollary of polynomial long division: [the factor theorem](https://en.wikipedia.org/wiki/Factor_theorem). We know that, when dividing $P(x)$ by $Z(x)$, we will get a quotient $Q(x)$ and a remainer $R(x)$ which satisfy $P(x) = Z(x) * Q(x) + R(x)$, where the degree of the remainder $R(x)$ is strictly less than that of $Z(x)$. Since we know that $P$ is zero on all of $S$, it means that $R$ has to be zero on all of $S$ as well. So we can simply compute $R(x)$ via polynomial interpolation, since it's a polynomial of degree at most $n-1$ and we know $n$ values (the zeroes at $S$). Interpolating a polynomial with all zeroes gives the zero polynomial, thus $R(x) = 0$ and $H(x)= Q(x)$.
 
@@ -85,7 +85,7 @@ Going back to our example, if we have a polynomial $F$ that encodes Fibonacci nu
 
 $H(x) = \frac{F(x+2) - F(x+1) - F(x)}{Z(x)}$
 
-Where $Z(x) = (x - 0) * (x - 1) * ... * (x - 98)$.
+Where $Z(x) = (x - 0) *(x - 1)* ... * (x - 98)$.
 
 You can calculate $Z(x)$ yourself (ideally you would have it precomputed), check the equation, and if the check passes then $F(x)$ satisfies the condition!
 
@@ -103,12 +103,12 @@ Here are some common examples of things you can do with various polynomial commi
 * **Multiply them**: given $com(P)$, $com(Q)$ and $com(R)$ check if $P * Q = R$
 * **Evaluate at a point**: given $com(P)$, $w$, $z$ and a supplemental proof (or "witness") $Q$, verify that $P(w) = z$
 
-It's worth noting that these primitives can be constructed from each other. If you can add and multiply, then you can evaluate: to prove that $P(w) = z$, you can construct $Q(x) = \frac{P(x) - z}{x - w}$, and the verifier can check if $Q(x) * (x - w) + z \stackrel{?}{=} P(x)$. This works because if such a polynomial $Q(x)$ _exists_, then $P(x) - z = Q(x) * (x - w)$, which means that $P(x) - z$ equals zero at $w$ (as $x - w$ equals zero at $w$) and so $P(x)$ equals $z$ at $w$.
+It's worth noting that these primitives can be constructed from each other. If you can add and multiply, then you can evaluate: to prove that $P(w) = z$, you can construct $Q(x) = \frac{P(x) - z}{x - w}$, and the verifier can check if $Q(x) *(x - w) + z \stackrel{?}{=} P(x)$. This works because if such a polynomial $Q(x)$ _exists_, then $P(x) - z = Q(x)* (x - w)$, which means that $P(x) - z$ equals zero at $w$ (as $x - w$ equals zero at $w$) and so $P(x)$ equals $z$ at $w$.
 
 And if you can evaluate, you can do all kinds of checks. This is because there is a [mathematical theorem](https://en.wikipedia.org/wiki/Schwartz%E2%80%93Zippel_lemma) that says, approximately, that if some equation involving some polynomials holds true at a _randomly selected coordinate_, then it almost certainly holds true for the polynomials as a whole. So if all we have is a mechanism to prove evaluations, we can check eg. our equation $P(x + 2) - P(x + 1) - P(x) = Z(x) * H(x)$ using an interactive game:
 
 <center>
-<img src="../../../../images/snarks-files/SchwartzZippel.png" />
+<img src="../../../../images/snarks-files/SchwartzZippel.png" class="padded" />
 <br><br>
 </center>
 
@@ -158,7 +158,7 @@ Notice that $Q$ and $R$ both have degree $< \frac{n}{2}$. Because $S$ is a linea
 From here, we simply repeat the game with $S$, progressively "reducing" the polynomial we care about to a lower and lower degree, until it's at a sufficiently low degree that we can check it directly.
 
 <center>
-<img src="../../../../images/snarks-files/FRI.png" />
+<img src="../../../../images/snarks-files/FRI.png" class="padded" />
 <br><br>
 </center>
 
@@ -178,7 +178,7 @@ Also, you can check carefully that the total number and size of the objects in t
 
 To check equations between different polynomial commitments of this type (eg. check $A(x) + B(x) = C(x)$ given FRI commitments to $A$, $B$ and $C$), simply randomly select many indices, ask the prover for Merkle branches at each of those indices for each polynomial, and verify that the equation actually holds true at each of those positions.
 
-**The above description is a highly inefficient protocol; there is a whole host of algebraic tricks that can increase its efficiency** by a factor of something like a hundred, and you need these tricks if you want a protocol that is actually viable for, say, use inside a blockchain transaction. In particular, for example, $Q$ and $R$ are not actually necessary, because if you choose your evaluation points very cleverly, you can reconstruct the evaluations of $Q$ and $R$ that you need directly from evaluations of $P$. But the above description should be enough to convince you that a polynomial commitment is fundamentally possible. 
+**The above description is a highly inefficient protocol; there is a whole host of algebraic tricks that can increase its efficiency** by a factor of something like a hundred, and you need these tricks if you want a protocol that is actually viable for, say, use inside a blockchain transaction. In particular, for example, $Q$ and $R$ are not actually necessary, because if you choose your evaluation points very cleverly, you can reconstruct the evaluations of $Q$ and $R$ that you need directly from evaluations of $P$. But the above description should be enough to convince you that a polynomial commitment is fundamentally possible.
 
 ### Finite fields
 
@@ -188,7 +188,7 @@ We redefine all of our arithmetic operations as follows. We pick some prime "mod
 
 $x + y  \Rightarrow  (x + y)$ % $p$
 
-$x * y  \Rightarrow (x * y)$ % $p$
+$x *y  \Rightarrow (x* y)$ % $p$
 
 $x^y \Rightarrow (x^y)$ % $p$
 
@@ -208,7 +208,7 @@ More complex identities such as the distributive law also hold: $(2 + 4) \cdot 3
 Division is the hardest part; we can't use regular division because we want the values to always remain integers, and regular division often gives non-integer results (as in the case of $3/5$). We get around this problem using [Fermat's little theorem](https://en.wikipedia.org/wiki/Fermat%27s_little_theorem), which states that for any nonzero $x < p$, it holds that $x^{p-1}$ % $p = 1$. This implies that $x^{p-2}$ gives a number which, if multiplied by $x$ one more time, gives $1$, and so we can say that $x^{p-2}$ (which is an integer) equals $\frac{1}{x}$. A somewhat more complicated but faster way to evaluate this modular division operator is the [extended Euclidean algorithm](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm), implemented in python [here](https://github.com/ethereum/py_ecc/blob/b036cf5cb37e9b89622788ec714a7da9cdb2e635/py_ecc/secp256k1/secp256k1.py#L34).
 
 <center>
-<img src="../../../../images/snarks-files/clock.png" style="width:350px" /><br><br>
+<img src="../../../../images/snarks-files/clock.png" style="width:350px" class="padded" /><br><br>
 <small>Because of how the numbers "wrap around", modular arithmetic is sometimes called "clock math"</small>
 </center>
 <br>
@@ -217,7 +217,7 @@ With modular math we've created an entirely new system of arithmetic, and it's s
 
 ### What's a slightly more useful example of a computation being converted into a set of polynomial equations?
 
-Let's say we want to prove that, for some polynomial $P$, $0 \le P(n) < 2^{64}$, without revealing the exact value of $P(n)$. This is a common use case in blockchain transactions, where you want to prove that a transaction leaves a balance non-negative without revealing what that balance is. 
+Let's say we want to prove that, for some polynomial $P$, $0 \le P(n) < 2^{64}$, without revealing the exact value of $P(n)$. This is a common use case in blockchain transactions, where you want to prove that a transaction leaves a balance non-negative without revealing what that balance is.
 
 We can construct a proof for this with the following polynomial equations (assuming for simplicity $n = 64$):
 
@@ -225,10 +225,10 @@ We can construct a proof for this with the following polynomial equations (assum
 * $P(x+1) = P(x) * 2 + R(x)$ across the range $\{0...63\}$
 * $R(x) \in \{0,1\}$ across the range $\{0...63\}$
 
-The latter two statements can be restated as "pure" polynomial equations as follows (in this context $Z(x) = (x - 0) * (x - 1) * ... * (x - 63)$):
+The latter two statements can be restated as "pure" polynomial equations as follows (in this context $Z(x) = (x - 0) *(x - 1)* ... * (x - 63)$):
 
-* $P(x+1) - P(x) * 2 - R(x) = Z(x) * H_1(x)$
-* $R(x) * (1 - R(x)) = Z(x) * H_2(x)$ (notice the clever trick: $y * (1-y) = 0$ if and only if $y \in \{0, 1\}$)
+* $P(x+1) - P(x) *2 - R(x) = Z(x)* H_1(x)$
+* $R(x) *(1 - R(x)) = Z(x)* H_2(x)$ (notice the clever trick: $y * (1-y) = 0$ if and only if $y \in \{0, 1\}$)
 
 The idea is that successive evaluations of $P(i)$ build up the number bit-by-bit: if $P(4) = 13$, then the sequence of evaluations going up to that point would be: $\{0, 1, 3, 6, 13\}$. In binary, 1 is `1`, 3 is `11`, 6 is `110`, 13 is `1101`; notice how $P(x+1) = P(x) * 2 + R(x)$ keeps adding one bit to the end as long as $R(x)$ is zero or one. Any number within the range $0 \le x < 2^{64}$ can be built up over 64 steps in this way, any number outside that range cannot.
 

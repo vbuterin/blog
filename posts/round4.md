@@ -3,7 +3,6 @@
 [title]: <> (Review of Gitcoin Quadratic Funding Round 4)
 [pandoc]: <> (--mathjax)
 
-
 Round 4 of Gitcoin Grants quadratic funding has just completed, and here are the results:
 
 <center>
@@ -59,7 +58,7 @@ The particular story of @antiprosynth had what is in my opinion a happy ending: 
 Traditionally, public goods of the type that Gitcoin Grants quadratic funding is trying to support were selected and funded by governments. The motivation of @antiprosynth's tweets is "aggregating Ethereum-related news, fighting information asymmetry and fine-tuning/signaling a consistent narrative for Ethereum (and ETH)": essentially, fighting the good fight against anti-Ethereum misinformation by [bitcoin maximalists](https://blog.ethereum.org/2014/11/20/bitcoin-maximalism-currency-platform-network-effects/). And, lo and behold, governments too have a rich history of [sponsoring social media participants](https://en.wikipedia.org/wiki/State-sponsored_Internet_propaganda) to argue on their behalf. And it seems likely that most of these governments see themselves as "fighting the good fight against anti-[X] misinformation by [Y] {extremists, imperialists, totalitarians}", just as the Ethereum community feels a need to fight the good fight against maximalist trolls. From the inside view of each individual country (and in our case the Ethereum community) organized social media participation seems to be a clear public good (ignoring the possibility of blowback effects, which are real and important). But from the outside view of the entire world, it can be viewed as a zero-sum game.
 
 <center>
-<img src="../../../../images/round4-files/threelayer.png" />
+<img src="../../../../images/round4-files/threelayer.png" class="padded" />
 <br><br>
 </center>
 
@@ -86,7 +85,7 @@ There are two solutions to these problems. One is to modify the quadratic fundin
 
 The second solution is to use two separate mechanisms for identifying relative goodness of good projects and for screening out bad projects. For example, one could use a challenge mechanism followed by a majority ETH coin vote, or even at first just a centralized appointed board, to screen out bad projects, and then use quadratic funding as before to choose between good projects. This is less mathematically elegant, but it would solve the problem, and it would at the same time provide an opportunity to mix in a separate mechanism to ensure that chosen projects benefit Ethereum specifically.
 
-But even if we adopt the first solution, defining boundaries for the quadratic funding itself may also be a good idea. There is intellectual precedent for this. In Elinor Ostrom's [eight principles for governing the commons](https://www.onthecommons.org/magazine/elinor-ostroms-8-principles-managing-commmons), defining clear boundaries about who has the right to access the commons is the first one. Without clear boundaries, Ostrom writes, "local appropriators face the risk that any benefits they produce by their efforts will be reaped by others who have not contributed to those efforts." In the case of Gitcoin Grants quadratic funding, one possibility would be to set the maximum matching coefficient for any pair of users to be proportional to the geometric average of their ETH holdings, using that as a proxy for measuring membership in the Ethereum community (note that this avoids being plutocratic because 1000 users with 1 ETH each would have a maximum matching of $\approx k * 500,000$ ETH, whereas 2 users with 500 ETH each would only have a maximum matching of $k * 1,000$ ETH).
+But even if we adopt the first solution, defining boundaries for the quadratic funding itself may also be a good idea. There is intellectual precedent for this. In Elinor Ostrom's [eight principles for governing the commons](https://www.onthecommons.org/magazine/elinor-ostroms-8-principles-managing-commmons), defining clear boundaries about who has the right to access the commons is the first one. Without clear boundaries, Ostrom writes, "local appropriators face the risk that any benefits they produce by their efforts will be reaped by others who have not contributed to those efforts." In the case of Gitcoin Grants quadratic funding, one possibility would be to set the maximum matching coefficient for any pair of users to be proportional to the geometric average of their ETH holdings, using that as a proxy for measuring membership in the Ethereum community (note that this avoids being plutocratic because 1000 users with 1 ETH each would have a maximum matching of $\approx k *500,000$ ETH, whereas 2 users with 500 ETH each would only have a maximum matching of $k* 1,000$ ETH).
 
 ### Collusion
 

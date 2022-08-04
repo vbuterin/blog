@@ -7,14 +7,14 @@ I'm writing this sitting in Singapore, the city in which I've now spent nearly h
 
 2020 has been a strange year because of these events, but also others. As life "[away from keyboard (AFK)](https://gizmodo.com/pirate-bay-trial-watch-day-5-omg-is-this-happening-ir-5157197)" has gotten much more constrained and challenging, the internet has been supercharged, with consequences both good and bad. Politics around the world has gone in strange directions, and I am continually worried by the many political factions that are so easily abandoning their most basic principles because they seem to have decided that their (often mutually contradictory) personal causes are just too important. And yet at the same time, there are rays of hope coming from unusual corners, with [new](https://marginalrevolution.com/marginalrevolution/2020/11/is-the-great-stagnation-over.html) technological [discoveries](https://www.bloomberg.com/opinion/articles/2020-12-24/2020-in-review-maybe-it-wasn-t-quite-as-horrible-as-it-seemed?sref=htOHjx5Y) in [transportation](https://techcrunch.com/2020/05/30/spacex-makes-history-with-successful-first-human-space-launch/), [medicine](https://www.theguardian.com/business/2020/nov/27/biontech-covid-vaccine-is-a-triumph-of-innovation-and-immigration), [artificial intelligence](https://en.wikipedia.org/wiki/GPT-3) - and, of course, [blockchains](https://ethereum.org/en/eth2/) and [cryptography](https://twitter.com/VitalikButerin/status/1298886605428502529) - that could open up a new chapter for humanity finally coming to fruition.
 
-<table cellspacing="0" cellpadding="0" style="border:none">
-<tr style="border:none">
-<td style="border:none"><img src="../../../../images/endnotes-files/monkey1.png" style="width:400px" /></td>
-<td style="border:none"><img src="../../../../images/endnotes-files/rocket.png" style="width:400px"/></td>
+<table class="transparent centered">
+<tr>
+<td><img src="../../../../images/endnotes-files/monkey1.png" style="width:400px" /></td>
+<td><img src="../../../../images/endnotes-files/rocket.png" style="width:400px"/></td>
 </tr>
-<tr style="border:none; background-color: transparent">
-<td style="border:none"><i><center>Where we started</center></i></td>
-<td style="border:none"><i><center>Where we're going</center></i></td>
+<tr>
+<td><i><center>Where we started</center></i></td>
+<td><i><center>Where we're going</center></i></td>
 </tr>
 </table>
 
@@ -52,7 +52,7 @@ The disagreements within Bitcoin would soon turn into an all-out civil war. They
 The community split was chaotic, and one can see this in how the channels of communication were split up in the divorce: [/r/bitcoin](http://reddit.com/r/bitcoin) stayed under the control of supporters of Bitcoin (BTC). [/r/btc](http://reddit.com/r/btc) was controlled by supporters of Bitcoin Cash (BCH). [Bitcoin.org](https://bitcoin.org) was controlled by supporters of Bitcoin (BTC). [Bitcoin.com](https://bitcoin.com) on the other hand was controlled by supporters of Bitcoin Cash (BCH). Each side claimed themselves to be the true Bitcoin. The result looked remarkably similar to one of those civil wars that happens from time to time that results in a country splitting in half, the two halves calling themselves almost identical names that differ only in which subset of the words "democratic", "people's" and "republic" appears on each side. Neither side had the ability to destroy the other, and of course there was no higher authority to adjudicate the dispute.
 
 <br><center>
-<img src="../../../../images/endnotes-files/forks.png" />
+<img src="../../../../images/endnotes-files/forks.png" class="padded" />
 <br><br>
 <small><i>Major Bitcoin forks, as of 2020. Does not include Bitcoin Diamond, Bitcoin Rhodium, Bitcoin Private, or any of the other long list of Bitcoin forks that I would highly recommend you just ignore completely, except to sell (and perhaps you should sell some of the forks listed above too, eg. <a href="https://github.com/vbuterin/cult-of-craig">BSV is definitely a scam!</a>)</i></small>
 </center><br>
@@ -69,7 +69,7 @@ One of the key intellectual undercurrents of the 2000s era was the recognition o
 
 These differences are very meaningful and measurable. For one example, see [this Swiss study](https://www.econ.uzh.ch/static/wp/econwp353.pdf) on compensating differentials for immoral work - how much extra do employers have to pay to convince someone to do a job if that job is considered morally unsavory?
 
-![](../../../../images/endnotes-files/swisspaper.png)
+![](../../../../images/endnotes-files/swisspaper.png){.padded}
 
 As we can see, the effects are massive: if a job is widely considered immoral, you need to pay employees almost twice as much for them to be willing to do it. From personal experience, I would even argue that this understates the case: in many cases, top-quality workers would not be willing to work for a company that they think is bad for the world at almost any price. "Work" that is difficult to formalize (eg. word-of-mouth marketing) functions similarly: if people think a project is good, they will do it for free, if they do not, they will not do it at all. This is also likely why blockchain projects that raise a lot of money but are unscrupulous, or even just corporate-controlled profit-oriented "VC chains", tend to fail: even a billion dollars of capital cannot compete with a project _having a soul_.
 
@@ -83,11 +83,11 @@ One of the great debates of the 20th century is that between "Big Government" an
 
 Let us zoom into one specific example: the 1996 [Declaration of Independence of Cyberspace](https://www.eff.org/cyberspace-independence):
 
->  Governments of the Industrial World, you weary giants of flesh and steel, I come from Cyberspace, the new home of Mind. On behalf of the future, I ask you of the past to leave us alone. You are not welcome among us. You have no sovereignty where we gather.
+> Governments of the Industrial World, you weary giants of flesh and steel, I come from Cyberspace, the new home of Mind. On behalf of the future, I ask you of the past to leave us alone. You are not welcome among us. You have no sovereignty where we gather.
 
 And the similarly-spirited [Crypto-Anarchist Manifesto](https://groups.csail.mit.edu/mac/classes/6.805/articles/crypto/cypherpunks/may-crypto-manifesto.html):
 
->  Computer technology is on the verge of providing the ability for individuals and groups to communicate and interact with each other in a totally anonymous manner. Two persons may exchange messages, conduct business, and negotiate electronic contracts without ever knowing the True Name, or legal identity, of the other. Interactions over networks will be untraceable, via extensive re-routing of encrypted packets and tamper-proof boxes which implement cryptographic protocols with nearly perfect assurance against any tampering. Reputations will be of central importance, far more important in dealings than even the credit ratings of today. These developments will alter completely the nature of government regulation, the ability to tax and control economic interactions, the ability to keep information secret, and will even alter the nature of trust and reputation. 
+> Computer technology is on the verge of providing the ability for individuals and groups to communicate and interact with each other in a totally anonymous manner. Two persons may exchange messages, conduct business, and negotiate electronic contracts without ever knowing the True Name, or legal identity, of the other. Interactions over networks will be untraceable, via extensive re-routing of encrypted packets and tamper-proof boxes which implement cryptographic protocols with nearly perfect assurance against any tampering. Reputations will be of central importance, far more important in dealings than even the credit ratings of today. These developments will alter completely the nature of government regulation, the ability to tax and control economic interactions, the ability to keep information secret, and will even alter the nature of trust and reputation.
 
 How have these predictions fared? The answer is interesting: I would say that they succeeded in one part and failed in the other. What succeeded? We have interactions over networks, we have powerful cryptography that is difficult for even state actors to break, we even have powerful _cryptocurrency_, with smart contract capabilities that the thinkers of the 1990s mostly did not even anticipate, and we're increasingly moving toward anonymized reputation systems [with zero knowledge proofs](https://ethresear.ch/t/anonymous-reputation-risking-and-burning/3926). What failed? Well, the government did not go away. And what just proved to be totally unexpected? Perhaps the most interesting plot twist is that the two forces are, a few exceptions notwithstanding, by and large _not_ acting like mortal enemies, and there are even many people  within governments that are earnestly trying to find ways to be friendly to blockchains and cryptocurrency and new forms of cryptographic trust.
 
@@ -104,7 +104,7 @@ What we see in 2020 is this: Big Government is as powerful as ever, but Big Busi
 So we have a world where:
 
 * One-to-one interactions are less important, one-to-many and many-to-many interactions are more important.
-* The environment is much more _chaotic_, and difficult to model with clean and simple equations. Many-to-many interactions particularly follow strange rules that we still do not understand well. 
+* The environment is much more _chaotic_, and difficult to model with clean and simple equations. Many-to-many interactions particularly follow strange rules that we still do not understand well.
 * The environment is _dense_, and different categories of powerful actors are forced to live quite closely side by side with each other.
 
 In some ways, this is a world that is less convenient for someone like myself. I grew up with a form of economics that is focused on analyzing simpler physical objects and buying and selling, and am now forced to contend with a world where such analysis, while not irrelevant, is significantly less relevant than before. That said, transitions are always challenging. In fact, transitions are particularly challenging for those who think that they are not challenging because they think that the transition merely confirms what they believed all along. If you are still operating today precisely according to a script that was created in 2009, when the Great Financial Crisis was the most recent pivotal event on anyone's mind, then there are almost certainly important things that happened in the last decade that you are missing. An ideology that's finished is an ideology that's dead.

@@ -3,13 +3,12 @@
 [title]: <> (On Path Independence)
 [pandoc]: <> (--mathjax)
 
-
 Suppose that someone walks up to you and starts exclaiming to you that he thinks he has figured out how to create a source of unlimited free energy. His scheme looks as follows. First, you get a spaceship up to low Earth orbit. There, Earth's gravity is fairly high, and so the spaceship will start to accelerate heavily toward the earth. The spaceship puts itself into a trajectory so that it barely brushes past the Earth's atmosphere, and then keeps hurtling far into space. Further in space, the gravity is lower, and so the spaceship can go higher before it starts once again coming down. When it comes down, it takes a curved path toward the Earth, so as to maximize its time in low orbit, maximizing the acceleration it gets from the high gravity there, so that after it passes by the Earth it goes even higher. After it goes high enough, it flies through the Earth's atmosphere, slowing itself down but using the waste heat to power a thermal reactor. Then, it would go back to step one and keep going.
 
 Something like this:
 
 <center>
-<img src="../../../../images/marketmakers-files/indep_diag1.png" style="width:450px"></img>
+<img src="../../../../images/marketmakers-files/indep_diag1.png" style="width:450px" />
 </center><br>
 
 Now, if you know anything about Newtonian dynamics, chances are you'll immediately recognize that this scheme is total bollocks. But how do you know? You could make an appeal to symmetry, saying "look, for every slice of the orbital path where you say gravity gives you high acceleration, there's a corresponding slice of the orbital path where gravity gives you just as high deceleration, so I don't see where the net gains are coming from". But then, suppose the man presses you. "Ah," he says, "but in that slice where there is high acceleration your initial velocity is low, and so you spend a lot of time inside of it, whereas in the corresponding slice, your incoming velocity is high, and so you have less time to decelerate". How do you really, conclusively, prove him wrong?
@@ -17,22 +16,20 @@ Now, if you know anything about Newtonian dynamics, chances are you'll immediate
 One approach is to dig deeply into the math, calculate the integrals, and show that the supposed net gains are in fact exactly equal to zero. But there is also a simple approach: recognize that **energy is path-independent**. That is, when the spaceship moves from point $A$ to point $B$, where point $B$ is closer to the earth, its kinetic energy certainly goes up because its speed increases. But because total energy (kinetic plus potential) [is conserved](https://en.wikipedia.org/wiki/Conservation_of_energy), and potential energy is only dependent on the spaceship's _position_, and not how it got there, we know that regardless of what path from point $A$ to point $B$ the spaceship takes, once it gets to point $B$ _the total change in kinetic energy will be exactly the same_.
 
 <center>
-<img src="../../../../images/marketmakers-files/indep_diag2.png" style="width:350px"></img><br><br>
+<img src="../../../../images/marketmakers-files/indep_diag2.png" style="width:350px" /><br><br>
 <small>Different paths, same change in energy </small>
 </center>
 <br>
 Furthermore, we know that the kinetic energy gain from going _from point $A$ to point $A$_ is also independent of the path you take along the way: in all cases it's exactly zero.
-
----------------------
 <br>
 One [concern](https://steemit.com/cryptocurrency/@hms10/bancor-is-flawed) sometimes [cited](https://www.reddit.com/r/ethereum/comments/55m04x/lets_run_onchain_decentralized_exchanges_the_way/d8bw7iw/) against on-chain market makers (that is, fully automated on-chain mechanisms that act as always-available counterparties for people who wish to trade one type of token for another) is that they are invariably easy to exploit.
 
 As an example, let me quote a [recent post](http://hackingdistributed.com/2017/06/19/bancor-is-flawed/) discussing this issue in the context of Bancor:
 
-> The prices that Bancor offers for tokens have nothing to do with the actual market equilibrium. Bancor will always trail the market, and in doing so, will bleed its reserves. A simple thought experiment suffices to illustrate the problem.  
-> Suppose that market panic sets around X. Unfounded news about your system overtake social media. Let's suppose that people got convinced that your CEO has absconded to a remote island with no extradition treaty, that your CFO has been embezzling money, and your CTO was buying drugs from the darknet markets and shipping them to his work address to make a Scarface-like mound of white powder on his desk.  
-> Worse, let's suppose that you know these allegations to be false. They were spread by a troll army wielded by a company with no products, whose business plan is to block everyone's coin stream.  
-> Bancor would offer ever decreasing prices for X coins during a bank run, until it has no reserves left. You'd watch the market panic take hold and eat away your reserves. Recall that people are convinced that the true value of X is 0 in this scenario, and the Bancor formula is guaranteed to offer a price above that. So your entire reserve would be gone.  
+> The prices that Bancor offers for tokens have nothing to do with the actual market equilibrium. Bancor will always trail the market, and in doing so, will bleed its reserves. A simple thought experiment suffices to illustrate the problem.
+> Suppose that market panic sets around X. Unfounded news about your system overtake social media. Let's suppose that people got convinced that your CEO has absconded to a remote island with no extradition treaty, that your CFO has been embezzling money, and your CTO was buying drugs from the darknet markets and shipping them to his work address to make a Scarface-like mound of white powder on his desk.
+> Worse, let's suppose that you know these allegations to be false. They were spread by a troll army wielded by a company with no products, whose business plan is to block everyone's coin stream.
+> Bancor would offer ever decreasing prices for X coins during a bank run, until it has no reserves left. You'd watch the market panic take hold and eat away your reserves. Recall that people are convinced that the true value of X is 0 in this scenario, and the Bancor formula is guaranteed to offer a price above that. So your entire reserve would be gone.
 
 The post discusses many issues around the Bancor protocol, including details such as code quality, and I will not touch on any of those; instead, I will focus purely on the topic of on-chain market maker efficiency and exploitability, using Bancor (along with MKR) purely as examples and not seeing to make any judgements on the quality of either project as a whole.
 
@@ -57,8 +54,8 @@ The answers are: it gained 1 MKR, and lost 4.5 ETH. Notice that this result is t
 Why is this the case? The simplest way to see this is to see that if $p$ drops below 4 and then comes back up to 4, the sells on the way down are exactly counterbalanced by buys on the way up; each sell has a corresponding buy of the same magnitude at the exact same price. But we can also see this by viewing the market maker's core mechanism differently. Define the market maker as having a _single-dimensional_ internal state $p$, and having MKR and ETH balances defined by the following formulas:
 
 $mkr\_balance(p) = 10 - p$
-  
-$eth\_balance(p) = p^2/2$    
+
+$eth\_balance(p) = p^2/2$
 
 Anyone has the power to "edit" $p$ (though only to values between 0 and 10), but they can only do so by supplying the right amount of MKR or ETH, and getting the right amount of MKR and ETH back, so that the balances still match up; that is, so that the amount of MKR and ETH held by the market maker after the operation is the amount that they are supposed to hold according to the above formulas, with the new value for $p$ that was set. Any edit to $p$ that does not come with MKR and ETH transactions that make the balances match up automatically fails.
 
@@ -80,15 +77,15 @@ If you want to make a market maker for existing tokens without a price cap, my f
 
 $tokenA\_balance(p) = \sqrt{k\cdot p}$
 
-$tokenB\_balance(p) = \sqrt{k/p}$ 
+$tokenB\_balance(p) = \sqrt{k/p}$
 
 <center>
 <img src="../../../../images/marketmakers-files/indep_diag3.png" style="width:350px"></img><br>
 </center>
 <br>
-Where $p$ is the price of $tokenB$ denominated in $tokenA$. In general, you can make a path-independent market maker by defining any (monotonic) relation between $tokenA\_balance$ and $tokenB\_balance$ and calculating its derivative at any point to give the price. 
 
------------
+Where $p$ is the price of $tokenB$ denominated in $tokenA$. In general, you can make a path-independent market maker by defining any (monotonic) relation between $tokenA\_balance$ and $tokenB\_balance$ and calculating its derivative at any point to give the price.
+
 <br>
 The above only discusses the role of path independence in preventing one particular type of issue: that where an attacker somehow makes a series of transactions in the context of a series of price movements in order to repeatedly drain the market maker of money. With a path independent market maker, such "money pump" vulnerabilities are impossible. However, there certainly are _other_ kinds of inefficiencies that may exist. If the price of MKR drops from 5 ETH to 1 ETH, then the market maker used in the example above will have lost 28 ETH worth of value, whereas a balanced portfolio would only have lost 20 ETH. Where did that 8 ETH go?
 

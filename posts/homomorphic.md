@@ -3,19 +3,18 @@
 [title]: <> (Exploring Fully Homomorphic Encryption)
 [pandoc]: <> (--mathjax)
 
-
 _Special thanks to Karl Floersch and Dankrad Feist for review_
 
 Fully homomorphic encryption has for a long time been considered one of the holy grails of cryptography. The promise of fully homomorphic encryption (FHE) is powerful: it is a type of encryption that allows a third party to perform computations on encrypted data, and get an encrypted result that they can hand back to whoever has the decryption key for the original data, _without_ the third party being able to decrypt the data or the result themselves.
 
 <center>
-<img src="../../../../images/fhe/HomoEncrypt.png?1" /><br>
+<img src="../../../../images/fhe/HomoEncrypt.png?1" class="padded" /><br>
 </center>
 
 As a simple example, imagine that you have a set of emails, and you want to use a third party spam filter to check whether or not they are spam. The spam filter has a desire for _privacy of their algorithm_: either the spam filter provider wants to keep their source code closed, or the spam filter depends on a very large database that they do not want to reveal publicly as that would make attacking easier, or both. However, you care about the _privacy of your data_, and don't want to upload your unencrypted emails to a third party. So here's how you do it:
 
 <center>
-<img src="../../../../images/fhe/HomoEncrypt2.png" /><br>
+<img src="../../../../images/fhe/HomoEncrypt2.png" class="padded" /><br>
 </center>
 
 Fully homomorphic encryption has many applications, including in the blockchain space. One key example is that can be used to implement privacy-preserving light clients (the light client hands the server an encrypted index `i`, the server computes and returns `data[0] * (i = 0) + data[1] * (i = 1) + ... + data[n] * (i = n)`, where `data[i]` is the i'th piece of data in a block or state along with its Merkle branch and `(i = k)` is an expression that returns 1 if `i = k` and otherwise 0; the light client gets the data it needs and the server learns nothing about what the light client asked).
@@ -87,7 +86,7 @@ But there are two problems here: first, the size of the ciphertext itself grows 
 <img src="../../../../images/fhe/approx_gcd.png" ><br><br>
 </center>
 
-Had we instead used the "exact GCD problem", breaking the system would be easy: if you just had a set of expressions of the form $p * R_1 + m_1$, $p * R_2 + m_2$..., then you could use the [Euclidean algorithm](https://en.wikipedia.org/wiki/Euclidean_algorithm) to efficiently compute the greatest common divisor $p$. But if the ciphertexts are only _approximate_ multiples of $p$ with some "error", then extracting $p$ quickly becomes impractical, and so the scheme can be secure.
+Had we instead used the "exact GCD problem", breaking the system would be easy: if you just had a set of expressions of the form $p *R_1 + m_1$, $p* R_2 + m_2$..., then you could use the [Euclidean algorithm](https://en.wikipedia.org/wiki/Euclidean_algorithm) to efficiently compute the greatest common divisor $p$. But if the ciphertexts are only _approximate_ multiples of $p$ with some "error", then extracting $p$ quickly becomes impractical, and so the scheme can be secure.
 
 Unfortunately, the error introduces the inherent limitation that if you multiply the ciphertexts by each other enough times, the error eventually grows big enough that it exceeds $p$, and at that point the $mod\ p$ and $mod\ 2$ steps "interfere" with each other, making the data unextractable. This will be an inherent tradeoff in all of these homomorphic encryption schemes: extracting information from _approximate_ equations "with errors" is much harder than extracting information from exact equations, but any error you add quickly increases as you do computations on encrypted data, bounding the amount of computation that you can do before the error becomes overwhelming. And **this is why these schemes are only "somewhat" homomorphic**.
 
@@ -98,9 +97,8 @@ There are two classes of solution to this problem. First, in many somewhat homom
 Suppose that you have a ciphertext $ct$ that is an encryption of some $m$ under a key $p$, that has a lot of error. The idea is that we "refresh" the ciphertext by turning it into a new ciphertext of $m$ under another key $p_2$, where this process "clears out" the old error (though it will introduce a fixed amount of new error). The trick is quite clever. The holder of $p$ and $p_2$ provides a "bootstrapping key" that consists of an encryption of _the bits of $p$_ under the key $p_2$, as well as the public key for $p_2$. Whoever is doing computations on data encrypted under $p$ would then take the bits of the ciphertext $ct$, and individually encrypt these bits under $p_2$. They would then _homomorphically compute the decryption under $p$_ using these ciphertexts, and get out the single bit, which would be $m$ encrypted under $p_2$.
 
 <center>
-<img src="../../../../images/fhe/bootstrapping.png" /><br><br>
+<img src="../../../../images/fhe/bootstrapping.png" class="padded" /><br><br>
 </center>
-
 
 This is difficult to understand, so we can restate it as follows. The decryption procedure $dec(ct, p)$ _is itself a computation_, and so it _can itself be implemented as a circuit_ that takes as input the bits of $ct$ and the bits of $p$, and outputs the decrypted bit $m \in {0, 1}$. If someone has a ciphertext $ct$ encrypted under $p$, a public key for $p_2$, _and_ the bits of $p$ encrypted under $p_2$, then they can compute $dec(ct, p) = m$ "homomorphically", and get out $m$ encrypted under $p_2$. Notice that the decryption procedure itself washes away the old error; it just outputs 0 or 1. The decryption procedure is itself a circuit, which contains additions or multiplications, so it will introduce new error, but this new error _does not depend_ on the amount of error in the original encryption.
 
@@ -121,12 +119,12 @@ To move further, we will introduce a [different type of somewhat-homomorphic enc
 </table><small><i>The key and the ciphertext are both vectors, in this example of five elements each.</i></small><br><br>
 </center>
 
-In this example, we set the modulus $p = 103$. The dot product is `3 * 2 + 14 * 71 + 15 * 82 + 92 * 81 + 65 * 8 = 10202`, and $10202 = 99 * 103 + 5$. 5 itself is of course $2 * 2 + 1$, so the message is 1. Note that in practice, the first element of the key is often set to $1$; this makes it easier to generate ciphertexts for a particular value (see if you can figure out why).
+In this example, we set the modulus $p = 103$. The dot product is `3 * 2 + 14 * 71 + 15 * 82 + 92 * 81 + 65 * 8 = 10202`, and $10202 = 99 *103 + 5$. 5 itself is of course $2* 2 + 1$, so the message is 1. Note that in practice, the first element of the key is often set to $1$; this makes it easier to generate ciphertexts for a particular value (see if you can figure out why).
 
 The security of the scheme is based on an assumption known as "[learning with errors](https://en.wikipedia.org/wiki/Learning_with_errors)" (LWE) - or, in more jargony but also more understandable terms, the hardness of _solving systems of equations with errors_.
 
 <center>
-<a href="https://cims.nyu.edu/~regev/papers/lwesurvey.pdf"><img src="../../../../images/fhe/lwe.png" /></a><br>
+<a href="https://cims.nyu.edu/~regev/papers/lwesurvey.pdf"><img src="../../../../images/fhe/lwe.png" class="padded" /></a><br>
 </center><br>
 
 A ciphertext can itself be viewed as an equation: $k_1c_1 + .... + k_nc_n \approx 0$, where the key $k_1 ... k_n$ is the unknowns, the ciphertext $c_1 ... c_n$ is the coefficients, and the equality is only approximate because of both the message (0 or 1) and the error ($2e$ for some relatively small $e$). The LWE assumption ensures that even if you have access to many of these ciphertexts, you cannot recover $k$.
@@ -152,7 +150,7 @@ We solve this with a **relinearization** procedure. The holder of the private ke
 
 It's important to understand what we mean here by "noisy encryptions". Normally, this encryption scheme only allows encrypting $m \in \{0,1\}$, and an "encryption of $m$" is a vector $c$ such that $<c, k> = m+2e$ for some small error $e$. Here, we're "encrypting" arbitrary $m \in \{0,1, 2....p-1\}$. Note that the error means that you can't fully recover $m$ from $c$; your answer will be off by some multiple of 2. However, it turns out that, for this specific use case, this is fine.
 
-The relinearization key consists of a set of vectors which, when inner-producted (modulo $p$) with the key $k$, give values of the form $k_i * k_j * 2^d + 2e$ (mod $p$), one such vector for every possible triple $(i, j, d)$, where $i$ and $j$ are indices in the key and $d$ is an exponent where $2^d < p$ (note: if the key has length $n$, there would be $n^2 * log(p)$ values in the relinearization key; make sure you understand why before continuing).
+The relinearization key consists of a set of vectors which, when inner-producted (modulo $p$) with the key $k$, give values of the form $k_i *k_j* 2^d + 2e$ (mod $p$), one such vector for every possible triple $(i, j, d)$, where $i$ and $j$ are indices in the key and $d$ is an exponent where $2^d < p$ (note: if the key has length $n$, there would be $n^2 * log(p)$ values in the relinearization key; make sure you understand why before continuing).
 
 <center>
 <center>
@@ -161,9 +159,9 @@ The relinearization key consists of a set of vectors which, when inner-producted
 <small><i>Example assuming p = 15 and k has length 2. Formally, enc(x) here means "outputs x+2e if inner-producted with k".</i></small><br><br>
 </center>
 
-Now, let us take a step back and look again at our goal. We have a ciphertext which, if decrypted with $k \otimes k$, gives $m_1 * m_2$. We _want_ a ciphertext which, if decrypted with $k$, gives $m_1 * m_2$. We can do this with the relinearization key. Notice that the decryption equation $<ct_1 \otimes ct_2, k \otimes k>$ is just a big sum of terms of the form $(ct_{1_i} * ct_{2_j}) * k_p * k_q$.
+Now, let us take a step back and look again at our goal. We have a ciphertext which, if decrypted with $k \otimes k$, gives $m_1 *m_2$. We _want_ a ciphertext which, if decrypted with $k$, gives $m_1* m_2$. We can do this with the relinearization key. Notice that the decryption equation $<ct_1 \otimes ct_2, k \otimes k>$ is just a big sum of terms of the form $(ct_{1_i} * ct_{2_j}) *k_p* k_q$.
 
-And what do we have in our relinearization key? A bunch of elements of the form $2^d * k_p * k_q$, noisy-encrypted under $k$, for every possible combination of $p$ and $q$! Having all the powers of two in our relinearization key allows us to generate any $(ct_{1_i} * ct_{2_j}) * k_p * k_q$ by just adding up $\le log(p)$ powers of two (eg. 13 = 8 + 4 + 1) together for each $(p, q)$ pair.
+And what do we have in our relinearization key? A bunch of elements of the form $2^d *k_p* k_q$, noisy-encrypted under $k$, for every possible combination of $p$ and $q$! Having all the powers of two in our relinearization key allows us to generate any $(ct_{1_i} * ct_{2_j}) *k_p* k_q$ by just adding up $\le log(p)$ powers of two (eg. 13 = 8 + 4 + 1) together for each $(p, q)$ pair.
 
 For example, if $ct_1 = [1, 2]$ and $ct_2 = [3, 4]$, then $ct_1 \otimes ct_2 = [3, 4, 6, 8]$, and $enc(<ct_1 \otimes ct_2, k \otimes k>) = enc(3k_1k_1 + 4k_1k_2 + 6k_2k_1 + 8k_2k_2)$ could be computed via:
 
@@ -171,7 +169,7 @@ $$enc(k_1 * k_1) + enc(k_1 * k_1 * 2)  + enc(k_1 * k_2 * 4)  + $$
 
 $$enc(k_2 * k_1 * 2) + enc(k_2 * k_1 * 4)  + enc(k_2 * k_2 * 8) $$
 
-Note that each noisy-encryption in the relinearization key has some even error $2e$, and the equation $<ct_1 \otimes ct_2, k \otimes k>$ itself has some error: if $<ct_1, k> = 2e_1 + m_1$ and $<ct_2 + k> = 2e_2 + m_2$, then $<ct_1 \otimes ct_2, k \otimes k> =$ $<ct_1, k> * <ct_2 + k> =$ $2(2e_1e_2 + e_1m_2 + e_2m_1) + m_1m_2$. But this total error is still (relatively) small ($2e_1e_2 + e_1m_2 + e_2m_1$ plus $n^2 * log(p)$ fixed-size errors from the realinearization key), and the error is even, and so the result of this calculation still gives a value which, when inner-producted with $k$, gives $m_1 * m_2 + 2e'$ for some "combined error" $e'$.
+Note that each noisy-encryption in the relinearization key has some even error $2e$, and the equation $<ct_1 \otimes ct_2, k \otimes k>$ itself has some error: if $<ct_1, k> = 2e_1 + m_1$ and $<ct_2 + k> = 2e_2 + m_2$, then $<ct_1 \otimes ct_2, k \otimes k> =$ $<ct_1, k> *<ct_2 + k> =$ $2(2e_1e_2 + e_1m_2 + e_2m_1) + m_1m_2$. But this total error is still (relatively) small ($2e_1e_2 + e_1m_2 + e_2m_1$ plus $n^2* log(p)$ fixed-size errors from the realinearization key), and the error is even, and so the result of this calculation still gives a value which, when inner-producted with $k$, gives $m_1 * m_2 + 2e'$ for some "combined error" $e'$.
 
 The broader technique we used here is a common trick in homomorphic encryption: provide pieces of the key encrypted under the key itself (or a different key if you are pedantic about avoiding circular security assumptions), such that someone computing on the data can compute the decryption equation, but only in such a way that the output itself is still encrypted. It was used in bootstrapping above, and it's used here; it's best to make sure you mentally understand what's going on in both cases.
 
@@ -198,7 +196,7 @@ Now, here is something we can do to a ciphertext.
 
 Step 3 is the crucial one: it converts a ciphertext under modulus $p$ into a ciphertext under modulus $q$. The process just involves "scaling down" each element of $ct'$ by multiplying by $\frac{q}{p}$ and rounding down, eg. $floor(56 * \frac{15}{103}) = floor(8.15533..) = 8$.
 
-The idea is this: if $<ct', k> = m*\frac{p}{2} + e\ (mod\ p)$, then we can interpret this as $<ct', k> = p(z + \frac{m}{2}) + e$ for some integer $z$. Therefore, $<ct' * \frac{q}{p}, k> = q(z + \frac{m}{2}) + e*\frac{p}{q}$. Rounding adds error, but only a little bit (specifically, up to the size of the values in $k$, and we can make the values in $k$ small without sacrificing security). Therefore, we can say $<ct' * \frac{q}{p}, k> = m*\frac{q}{2} + e' + e_2\ (mod\ q)$, where $e' = e * \frac{q}{p}$, and $e_2$ is a small error from rounding.
+The idea is this: if $<ct', k> = m*\frac{p}{2} + e\ (mod\ p)$, then we can interpret this as $<ct', k> = p(z + \frac{m}{2}) + e$ for some integer $z$. Therefore, $<ct'* \frac{q}{p}, k> = q(z + \frac{m}{2}) + e*\frac{p}{q}$. Rounding adds error, but only a little bit (specifically, up to the size of the values in $k$, and we can make the values in $k$ small without sacrificing security). Therefore, we can say $<ct'* \frac{q}{p}, k> = m*\frac{q}{2} + e' + e_2\ (mod\ q)$, where $e' = e* \frac{q}{p}$, and $e_2$ is a small error from rounding.
 
 What have we accomplished? We turned a ciphertext with modulus $p$ and error $2e$ into a ciphertext with modulus $q$ and error $2(floor(e*\frac{p}{q}) + e_2)$, where the new error is _smaller_ than the original error.
 
@@ -208,13 +206,13 @@ Let's go through the above with an example. Suppose:
 * $k = [9]$
 * $p = 9999$ and $q = 113$
 
-$<ct, k> = 5612 * 9 = 50508 = 9999 * 5 + 2 * 256 + 1$, so $ct$ represents the bit 1, but the error is fairly large ($e = 256$).
+$<ct, k> = 5612 *9 = 50508 = 9999* 5 + 2 * 256 + 1$, so $ct$ represents the bit 1, but the error is fairly large ($e = 256$).
 
-Step 2: $ct' = \frac{ct}{2} = 2806$ (remember this is modular division; if $ct$ were instead $5613$, then we would have $\frac{ct}{2} = 7806$). Checking: $<ct', k> = 2806 * 9 = 25254 = 9999 * 2.5 + 256.5$
+Step 2: $ct' = \frac{ct}{2} = 2806$ (remember this is modular division; if $ct$ were instead $5613$, then we would have $\frac{ct}{2} = 7806$). Checking: $<ct', k> = 2806 *9 = 25254 = 9999* 2.5 + 256.5$
 
-Step 3: $ct'' = floor(2806 * \frac{113}{9999}) = floor(31.7109...) = 31$. Checking: $<ct'', k> = 279 = 113 * 2.5 - 3.5$
+Step 3: $ct'' = floor(2806 *\frac{113}{9999}) = floor(31.7109...) = 31$. Checking: $<ct'', k> = 279 = 113* 2.5 - 3.5$
 
-Step 4: $ct''' = 31 * 2 = 62$. Checking: $<ct''', k> = 558 = 113 * 5 - 2 * 4 + 1$
+Step 4: $ct''' = 31 *2 = 62$. Checking: $<ct''', k> = 558 = 113* 5 - 2 * 4 + 1$
 
 And so the bit $1$ is preserved through the transformation. The crazy thing about this procedure is: _none of it requires knowing $k$_. Now, an astute reader might notice: you reduced the _absolute_ size of the error (from 256 to 2), but the _relative_ size of the error remained unchanged, and even slightly increased: $\frac{256}{9999} \approx 2.5\%$ but $\frac{4}{113} \approx 3.5\%$. Given that it's the relative error that causes ciphertexts to break, what have we gained here?
 
@@ -234,14 +232,14 @@ The key mathematical idea here is that the _factor_ by which error increases in 
 
 ### Another technique: matrices
 
-Another technique (see [Gentry, Sahai, Waters (2013)](https://eprint.iacr.org/2013/340.pdf)) for fully homomorphic encryption involves matrices: instead of representing a ciphertext as $ct$ where $<ct, k> = 2e + m$, a ciphertext is a matrix, where $k * CT = k * m + e$ ($k$, the key, is still a vector). The idea here is that $k$ is a "secret near-eigenvector" - a secret vector which, if you multiply the matrix by it, returns something very close to either zero or the key itself.
+Another technique (see [Gentry, Sahai, Waters (2013)](https://eprint.iacr.org/2013/340.pdf)) for fully homomorphic encryption involves matrices: instead of representing a ciphertext as $ct$ where $<ct, k> = 2e + m$, a ciphertext is a matrix, where $k *CT = k* m + e$ ($k$, the key, is still a vector). The idea here is that $k$ is a "secret near-eigenvector" - a secret vector which, if you multiply the matrix by it, returns something very close to either zero or the key itself.
 
-The fact that addition works is easy: if $k * CT_1 = m_1 * k + e_1$ and $k * CT_2 = m_2 * k + e_2$, then $k * (CT_1 + CT_2) = (m_1 + m_2) * k + (e_1 + e_2)$. The fact that multiplication works is also easy:
+The fact that addition works is easy: if $k *CT_1 = m_1* k + e_1$ and $k *CT_2 = m_2* k + e_2$, then $k *(CT_1 + CT_2) = (m_1 + m_2)* k + (e_1 + e_2)$. The fact that multiplication works is also easy:
 
-$k * CT_1 * CT_2$
-$= (m_1 * k + e_1) * CT_2$
-$= m_1 * k * CT_2 + e_1 * CT_2$
-$= m_1 * m_2 * k + m_1 * e_2 + e_1 * CT_2$
+$k *CT_1* CT_2$
+$= (m_1 *k + e_1)* CT_2$
+$= m_1 *k* CT_2 + e_1 *CT_2$
+$= m_1* m_2 *k + m_1* e_2 + e_1 * CT_2$
 
 The first term is the "intended term"; the latter two terms are the "error". That said, notice that here error does blow up quadratically (see the $e_1 * CT_2$ term; the size of the error increases by the size of each ciphertext element, and the ciphertext elements also square in size), and you do need some clever tricks for avoiding this. Basically, this involves turning ciphertexts into matrices containing their constituent bits before multiplying, to avoid multiplying by anything higher than 1; if you want to see how this works in detail I recommend looking at my code: [https://github.com/vbuterin/research/blob/master/matrix_fhe/matrix_fhe.py#L121](https://github.com/vbuterin/research/blob/master/matrix_fhe/matrix_fhe.py#L121)
 

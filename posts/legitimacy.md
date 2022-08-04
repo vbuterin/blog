@@ -5,10 +5,10 @@
 
 _Special thanks to Karl Floersch, Aya Miyaguchi and Mr Silly for ideas, feedback and review._
 
-The Bitcoin and Ethereum blockchain ecosystems both spend far more on network security - the goal of proof of work mining - than they do on everything else combined. The Bitcoin blockchain has paid an average of about _$38 million per day_ in block rewards to miners since the start of the year, plus [about $5m/day in transaction fees](https://ycharts.com/indicators/bitcoin_total_transaction_fees_per_day). The Ethereum blockchain comes in second, at $19.5m/day in block rewards plus [$18m/day in tx fees](https://etherscan.io/chart/transactionfee). Meanwhile, the Ethereum Foundation's annual budget, paying for research, protocol development, grants and all sorts of other expenses, is a mere $30 million _per year_. Non-EF-sourced funding exists too, but it is at most only a few times larger. Bitcoin ecosystem expenditures on R&D are likely even lower. Bitcoin ecosystem R&D is largely funded by companies (with $250m total raised so far [according to this page](https://www.crunchbase.com/hub/bitcoin-companies-seed-funding)), and [this report](https://blog.bitmex.com/who-funds-bitcoin-development/) suggests about 57 employees; assuming fairly high salaries and many paid developers not being counted, that works out to about $20m per year. 
+The Bitcoin and Ethereum blockchain ecosystems both spend far more on network security - the goal of proof of work mining - than they do on everything else combined. The Bitcoin blockchain has paid an average of about _$38 million per day_ in block rewards to miners since the start of the year, plus [about $5m/day in transaction fees](https://ycharts.com/indicators/bitcoin_total_transaction_fees_per_day). The Ethereum blockchain comes in second, at $19.5m/day in block rewards plus [$18m/day in tx fees](https://etherscan.io/chart/transactionfee). Meanwhile, the Ethereum Foundation's annual budget, paying for research, protocol development, grants and all sorts of other expenses, is a mere $30 million _per year_. Non-EF-sourced funding exists too, but it is at most only a few times larger. Bitcoin ecosystem expenditures on R&D are likely even lower. Bitcoin ecosystem R&D is largely funded by companies (with $250m total raised so far [according to this page](https://www.crunchbase.com/hub/bitcoin-companies-seed-funding)), and [this report](https://blog.bitmex.com/who-funds-bitcoin-development/) suggests about 57 employees; assuming fairly high salaries and many paid developers not being counted, that works out to about $20m per year.
 
 <center>
-<img src="../../../../images/legitimacy-files/chart.png" /><br><br>
+<img src="../../../../images/legitimacy-files/chart.png" class="padded" /><br><br>
 </center>
 
 Clearly, this expenditure pattern _is a massive misallocation of resources_. The last 20% of network hashpower provides _vastly_ less value to the ecosystem than those same resources would if they had gone into research and core protocol development. So why not just.... cut the PoW budget by 20% and redirect the funds to those other things instead?
@@ -32,7 +32,7 @@ The lesson that we can learn from this situation is this: _Steem-the-company nev
 
 We can apply the same reasoning to many other structures in the blockchain space. Consider, for example, the [ENS](https://ens.domains) root multisig. The [root multisig is controlled](https://consensys.net/diligence/audits/2019/03/ens-permanent-registrar/) by seven prominent ENS and Ethereum community members. But what would happen if four of them were to come together and "upgrade" the registrar to one that transfers all the best domains to themselves? Within the context of ENS-the-smart-contract-system, they have the complete and unchallengeable ability to do this. But if they actually tried to abuse their technical ability in this way, what would happen is clear to anyone: they would be ostracized from the community, the remaining ENS community members would make a new ENS contract that restores the original domain owners, and every Ethereum application that uses ENS would repoint their UI to use the new one.
 
-This goes well beyond smart contract structures. Why is it that Elon Musk can sell an NFT of Elon Musk's tweet, but Jeff Bezos would have a much harder time doing the same? Elon and Jeff have the same level of ability to screenshot Elon's tweet and stick it into an NFT dapp, so what's the difference? To anyone who has even a basic intuitive understanding of human social psychology (or the [fake art scene](https://www.austinartistsmarket.com/famous-fakes-art-history/)), the answer is obvious: Elon selling Elon's tweet is _the real thing_, and Jeff doing the same is not. Once again, millions of dollars of value are being controlled and allocated, not by individuals or cryptographic keys, but by social conceptions of legitimacy. 
+This goes well beyond smart contract structures. Why is it that Elon Musk can sell an NFT of Elon Musk's tweet, but Jeff Bezos would have a much harder time doing the same? Elon and Jeff have the same level of ability to screenshot Elon's tweet and stick it into an NFT dapp, so what's the difference? To anyone who has even a basic intuitive understanding of human social psychology (or the [fake art scene](https://www.austinartistsmarket.com/famous-fakes-art-history/)), the answer is obvious: Elon selling Elon's tweet is _the real thing_, and Jeff doing the same is not. Once again, millions of dollars of value are being controlled and allocated, not by individuals or cryptographic keys, but by social conceptions of legitimacy.
 
 And, going even further out, legitimacy governs all sorts of social status games, [intellectual discourse](https://samoburja.com/intellectual-legitimacy/), language, property rights, political systems and national borders. Even blockchain consensus works the same way: the only difference between a soft fork that gets accepted by the community and a 51% censorship attack after which the community coordinates an [extra-protocol recovery fork](https://ethresear.ch/t/responding-to-51-attacks-in-casper-ffg/6363) to take out the attacker is legitimacy.
 
@@ -43,7 +43,7 @@ _See also: my earlier [post on blockchain governance](/general/2017/12/17/voting
 To understand the workings of legitimacy, we need to dig down into some game theory. There are many situations in life that demand **coordinated behavior**: if you act in a certain way alone, you are likely to get nowhere (or worse), but if everyone acts together a desired result can be achieved.
 
 <center><br>
-<img src="../../../../images/voting-files/coordinationgame.png" />
+<img src="../../../../images/voting-files/coordinationgame.png" class="padded" />
 <br><br>
 <i><small> An abstract coordination game. You benefit heavily from making the same move as everyone else. </small></i><br><br>
 </center>
@@ -85,9 +85,9 @@ There are two ways to respond to this fact. The first way is to be proud of thes
 
 <center>
 <br>
-<table><tr style="border:0px">
-<td style="border:0px"><a href="https://twitter.com/francispouliot_/status/1366465485546655744"><img src="../../../../images/legitimacy-files/bitcoin1.png" /></a></td>
-<td style="border:0px"><a href="https://blog.wasabiwallet.io/bitcoin-knots-donation/"><img src="../../../../images/legitimacy-files/bitcoin2.png" /></a></td>
+<table class="transparent"><tr>
+<td><a href="https://twitter.com/francispouliot_/status/1366465485546655744"><img src="../../../../images/legitimacy-files/bitcoin1.png" /></a></td>
+<td><a href="https://blog.wasabiwallet.io/bitcoin-knots-donation/"><img src="../../../../images/legitimacy-files/bitcoin2.png" /></a></td>
 </tr></table>
 <br>
 </center>

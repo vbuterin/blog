@@ -11,15 +11,27 @@ These are high promises. Can network states live up to them? Do network states a
 
 ## Table of contents
 
-* [What is a network state?](#what-is-a-network-state)
-* [So what kinds of network states could we build?](#so-what-kinds-of-network-states-could-we-build)
-* [What is Balaji’s megapolitical case for network states?](#what-is-balajis-megapolitical-case-for-network-states)
-* [Do you have to like Balaji's megapolitics to like network states?](#do-you-have-to-agree-with-balajis-megapolitics-to-like-network-states)
-* [What does cryptocurrency have to do with network states?](#what-does-cryptocurrency-have-to-do-with-network-states)
-* [What aspects of Balaji's vision do I like?](#what-aspects-of-balajis-vision-do-i-like)
-* [What aspects of Balaji's vision do I take issue with?](#what-aspects-of-balajis-vision-do-i-take-issue-with)
-* [Non-Balajian network states](#non-balajian-network-states)
-* [Is there a middle way?](#is-there-a-middle-way)
+- [Table of contents](#table-of-contents)
+- [What is a network state?](#what-is-a-network-state)
+- [So what kinds of network states could we build?](#so-what-kinds-of-network-states-could-we-build)
+- [What is Balaji's megapolitical case for network states?](#what-is-balajis-megapolitical-case-for-network-states)
+- [Do you have to agree with Balaji's megapolitics to like network states?](#do-you-have-to-agree-with-balajis-megapolitics-to-like-network-states)
+- [What does cryptocurrency have to do with network states?](#what-does-cryptocurrency-have-to-do-with-network-states)
+	- [The spiritual alignment](#the-spiritual-alignment)
+	- [The practical alignment](#the-practical-alignment)
+- [What aspects of Balaji's vision do I like?](#what-aspects-of-balajis-vision-do-i-like)
+	- [But what about this particular baizuo that's currently writing this review? Do network states actually interest me?](#but-what-about-this-particular-baizuo-thats-currently-writing-this-review-do-network-states-actually-interest-me)
+- [What aspects of Balaji's vision do I take issue with?](#what-aspects-of-balajis-vision-do-i-take-issue-with)
+	- [The "founder" thing](#the-founder-thing)
+	- [What about everyone who is not wealthy?](#what-about-everyone-who-is-not-wealthy)
+	- [Nowhere to run](#nowhere-to-run)
+	- [So what about those negative externalities?](#so-what-about-those-negative-externalities)
+- [Non-Balajian network states](#non-balajian-network-states)
+- [Is there a middle way?](#is-there-a-middle-way)
+	- [Founder to start is okay (though not the only way), but we really need a baked-in roadmap to exit-to-community](#founder-to-start-is-okay-though-not-the-only-way-but-we-really-need-a-baked-in-roadmap-to-exit-to-community)
+	- [Network states should be run by something that's not coin-driven governance](#network-states-should-be-run-by-something-thats-not-coin-driven-governance)
+	- [Network states commit to making themselves friendly through outside representation in governance](#network-states-commit-to-making-themselves-friendly-through-outside-representation-in-governance)
+	- [Conclusion](#conclusion)
 
 ## What is a network state?
 
@@ -37,8 +49,8 @@ Finally, Balaji expands on this conception of a Balajian network state in longer
 
 <center><br>
 
-![](../../../../images/networkstates/ns_in_one_image.svg)
-	
+![](../../../../images/networkstates/ns_in_one_image.svg){.padded}
+
 <small><i>And, of course, <a href="https://thenetworkstate.com/the-network-state-in-one-image">an image</a>.</i></small>
 
 </center><br>
@@ -51,7 +63,7 @@ The [commitment paradox of religious communes](https://journals.sagepub.com/doi/
 
 <center><br>
 
-![](../../../../images/networkstates/communes.png)
+![](../../../../images/networkstates/communes.png){.padded}
 
 </center><br>
 
@@ -72,7 +84,7 @@ Balaji's go-to example for lifestyle immersion is a network state organized arou
 > Next, let’s do an example which requires a network archipelago (with a physical footprint) but not a full network state (with diplomatic recognition). This is **Keto Kosher, the sugar-free society**.
 >
 > Start with a history of the horrible USDA Food Pyramid, the grain-heavy monstrosity that gave cover to the corporate sugarification of the globe and the obesity epidemic. ... Organize a community online that crowdfunds properties around the world, like apartment buildings and gyms, and perhaps eventually even culdesacs and small towns. You might take an extreme sugar teeotaler approach, literally banning processed foods and sugar at the border, thereby implementing a kind of "Keto Kosher".
-> 
+>
 > You can imagine variants of this startup society that are like "Carnivory Communities" or "Paleo People". These would be competing startup societies in the same broad area, iterations on a theme. If successful, such a society might not stop at sugar. It could get into setting cultural defaults for fitness and exercise. Or perhaps it could bulk purchase continuous glucose meters for all members, or orders of metformin.
 
 This, strictly speaking, does not require any diplomatic recognition or even political autonomy - though perhaps, in the longer-term future, such enclaves could negotiate for lower health insurance fees and medicare taxes for their members. What does require autonomy? Well, how about a free zone for medical innovation?
@@ -94,10 +106,10 @@ One of the curious features of the book that a reader will notice almost immedia
 
 Balaji's grand megapolitical theory is pretty out-there and fun in a bunch of ways. Near the beginning of the book, he entices readers with tidbits like... ok fine, I'll just quote:
 
-> * Germany [sponsored Vladimir Lenin](https://www.dw.com/en/how-germany-got-the-russian-revolution-off-the-ground/a-41195312), and bankers in New York [funded Leon Trotsky](https://www.timesofisrael.com/trotskys-day-out-how-a-visit-to-nyc-influenced-the-bolshevik-revolution/) to foment the Russian Revolution. Both Wall Street and propagandistic reporting from Americans like [John Reed](https://www.britannica.com/biography/John-Reed) aided Lenin and Trotsky in their revolution. Indeed, Reed was so useful to the Soviets — and so misleading as to the nature of the revolution — that he was [buried in the wall of the Kremlin.](https://www.pbs.org/wgbh/americanexperience/features/goldman-john-reed-1887-1920/) Surprise: the Russian Revolution wasn’t done wholly by Russians.
-> * The Ochs-Sulzberger family, which owns The New York Times Company, [owned
+> - Germany [sponsored Vladimir Lenin](https://www.dw.com/en/how-germany-got-the-russian-revolution-off-the-ground/a-41195312), and bankers in New York [funded Leon Trotsky](https://www.timesofisrael.com/trotskys-day-out-how-a-visit-to-nyc-influenced-the-bolshevik-revolution/) to foment the Russian Revolution. Both Wall Street and propagandistic reporting from Americans like [John Reed](https://www.britannica.com/biography/John-Reed) aided Lenin and Trotsky in their revolution. Indeed, Reed was so useful to the Soviets — and so misleading as to the nature of the revolution — that he was [buried in the wall of the Kremlin.](https://www.pbs.org/wgbh/americanexperience/features/goldman-john-reed-1887-1920/) Surprise: the Russian Revolution wasn’t done wholly by Russians.
+> - The Ochs-Sulzberger family, which owns The New York Times Company, [owned
 slaves](https://nypost.com/2020/07/18/the-family-that-owns-the-new-york-times-were-slaveholders-goodwin/) but didn’t report that fact in their [1619 coverage](https://www.politico.com/news/magazine/2020/03/06/1619-project-new-york-times-mistake-122248).
-> * New York Times correspondent [Walter Duranty](https://www.npr.org/2022/05/08/1097097620/new-york-times-pulitzer-ukraine-walter-duranty) won a [Pulitzer Prize](https://www.pulitzer.org/winners/walter-duranty) for helping the Soviet Union starve Ukraine into submission, 90 years before the Times
+> - New York Times correspondent [Walter Duranty](https://www.npr.org/2022/05/08/1097097620/new-york-times-pulitzer-ukraine-walter-duranty) won a [Pulitzer Prize](https://www.pulitzer.org/winners/walter-duranty) for helping the Soviet Union starve Ukraine into submission, 90 years before the Times
 decided to instead "[stand with Ukraine](https://www.nytimes.com/live/2022/02/24/world/russia-attacks-ukraine?smtyp=cur&smid=tw-nytimes#the-world-needs-to-hear-us-ukrainians-march-through-new-york-city-in-protest)".
 
 You can find a bunch more juicy examples in the chapter titled, appropriately, "[If the News is Fake, Imagine History](https://thenetworkstate.com/if-the-news-is-fake-imagine-history)". These examples seem haphazard, and indeed, to some extent they are so intentionally: the goal is first and foremost to shock the reader out of their existing world model so they can start downloading Balaji's own.
@@ -108,7 +120,7 @@ Next, we get Balaji's overview of [the political realignments in recent history]
 
 <center><br>
 
-![](../../../../images/networkstates/nytccpbtc.png)
+![](../../../../images/networkstates/nytccpbtc.png){.padded}
 
 </center><br>
 
@@ -120,8 +132,8 @@ This is Balajian megapolitics in a nutshell. It is not trying to justify network
 
 <center><br>
 
-![](../../../../images/networkstates/helical.png)
-	
+![](../../../../images/networkstates/helical.png){.padded}
+
 <small><i>Balaji's helical theory of history: yes, there are cycles, but there is also ongoing progress. Right now, we're at the part of the cycle where we need to help the sclerotic old order die, but also seed a new and better one.</i></small>
 
 </center><br>
@@ -134,14 +146,14 @@ I do think that you can support network states while disagreeing with some of Ba
 
 There are a few reasons why talking about the problem is important:
 
-* **To show that network states are the only way to protect freedom and capitalism, one must show why the US cannot.** If the US, or the "democratic liberal order", is just fine, then there is no need for alternatives; we should just double down on global coordination and rule of law. But if the US is in an irreversible decline, and its rivals are ascending, then things look quite different. Network states can "maintain liberal values in an illiberal world"; hegemony thinking that assumes "the good guys are in charge" cannot.
-* **Many of Balaji's intended readers are not in the US, and a world of network states would inherently be globally distributed - and that includes _lots_ of people who are suspicious of America**. Balaji himself is Indian, and has a large Indian fan base. Many people in India, and elsewhere, view the US not as a "guardian of the liberal world order", but as something much more hypocritical at best and sinister at worst. Balaji wants to make it clear that you do not have to be pro-American to be a liberal (or at least a Balaji-liberal).
-* **Many parts of US left-leaning media are increasingly hostile to both cryptocurrency and the tech sector**. Balaji expects that the "authoritarian left" parts of "team NYT" will be hostile to network states, and he explains this by pointing out that the media are not angels and their attacks are often self-interested.
+- **To show that network states are the only way to protect freedom and capitalism, one must show why the US cannot.** If the US, or the "democratic liberal order", is just fine, then there is no need for alternatives; we should just double down on global coordination and rule of law. But if the US is in an irreversible decline, and its rivals are ascending, then things look quite different. Network states can "maintain liberal values in an illiberal world"; hegemony thinking that assumes "the good guys are in charge" cannot.
+- **Many of Balaji's intended readers are not in the US, and a world of network states would inherently be globally distributed - and that includes _lots_ of people who are suspicious of America**. Balaji himself is Indian, and has a large Indian fan base. Many people in India, and elsewhere, view the US not as a "guardian of the liberal world order", but as something much more hypocritical at best and sinister at worst. Balaji wants to make it clear that you do not have to be pro-American to be a liberal (or at least a Balaji-liberal).
+- **Many parts of US left-leaning media are increasingly hostile to both cryptocurrency and the tech sector**. Balaji expects that the "authoritarian left" parts of "team NYT" will be hostile to network states, and he explains this by pointing out that the media are not angels and their attacks are often self-interested.
 
 But this is not the only way of looking at the broader picture. What if you _do_ believe in the importance of role of social justice values, the New York Times, or America? What if you value governance innovation, but have more moderate views on politics? Then, there are two ways you could look at the issue:
 
-* **Network states as a synergistic strategy, or at least as a backup**. Anything that happens in US politics in terms of improving _equality_, for example, only benefits the ~4% of the world's population that lives in the Untied States. The First Amendment does not apply outside US borders. The governance of many wealthy countries _is_ sclerotic, and we do need _some_ way to try more governance innovation. Network states could fill in the gaps. Countries like the United States could host network states that attract people from all over the world. Successful network states could even serve as a policy model for countries to adopt. Alternatively, _what if_ the Republicans win and secure a decades-long majority in 2024, or the United States breaks down? You want there to be an alternative.
-* **Exit to network states as a distraction, or even a threat**. If everyone's first instinct when faced with a large problem within their country is to exit to an enclave elsewhere, there will be no one left to protect and maintain the countries themselves. Global infrastructure that ultimately network states depend on will suffer.
+- **Network states as a synergistic strategy, or at least as a backup**. Anything that happens in US politics in terms of improving _equality_, for example, only benefits the ~4% of the world's population that lives in the Untied States. The First Amendment does not apply outside US borders. The governance of many wealthy countries _is_ sclerotic, and we do need _some_ way to try more governance innovation. Network states could fill in the gaps. Countries like the United States could host network states that attract people from all over the world. Successful network states could even serve as a policy model for countries to adopt. Alternatively, _what if_ the Republicans win and secure a decades-long majority in 2024, or the United States breaks down? You want there to be an alternative.
+- **Exit to network states as a distraction, or even a threat**. If everyone's first instinct when faced with a large problem within their country is to exit to an enclave elsewhere, there will be no one left to protect and maintain the countries themselves. Global infrastructure that ultimately network states depend on will suffer.
 
 Both perspectives are compatible with a lot of disagreement with Balajian megapolitics. Hence, to argue for or against Balajian network states, we will ultimately have to talk about network states. My own view is friendly to network states, though with a lot of caveats and different ideas about how network states could work.
 
@@ -159,10 +171,10 @@ Blockchain communities continue to stand for openness, freedom, censorship resis
 
 But spiritual alignment means little without practical use value for blockchains to go along with it. Balaji gives plenty of blockchain use cases. One of Balaji's favorite concepts is the idea of the blockchain as a "ledger of record": people can timestamp events on-chain, creating a global provable log of humanity's "microhistory". He continues with other examples:
 
-> * [Zero-knowledge](https://academy.binance.com/en/glossary/zero-knowledge-proofs) technology like [ZCash](https://z.cash/), [Ironfish](https://ironfish.network/), and [Tornado Cash](https://tornado.cash/) allow on-chain attestation of exactly what people want to make public and nothing more.
-> * Naming systems like the [Ethereum Name Service](https://ens.domains/) (ENS) and [Solana Name Service](https://naming.bonfida.org/) (SNS) attach identity to on-chain transactions.
-> * Incorporation systems allow the on-chain representation of corporate abstractions above the level of a mere transaction, like financial statements or even full programmable company-equivalents like DAOs.
-> * [Cryptocredentials](https://tim.blog/2021/03/25/balaji-srinivasan-transcript/#:~:text=So%20the%20question%20then,except%20it%E2%80%99s%20non%2Dtransferrable.), [Non-Fungible Tokens](https://linda.mirror.xyz/df649d61efb92c910464a4e74ae213c4cab150b9cbcc4b7fb6090fc77881a95d) (NFTs), [Non-Transferable Fungibles](http://archive.today/IAa0e) (NTFs), and [Soulbounds](https://vitalik.ca/general/2022/01/26/soulbound.html) allow the representation of non-financial data on chain, like diplomas or endorsements.
+> - [Zero-knowledge](https://academy.binance.com/en/glossary/zero-knowledge-proofs) technology like [ZCash](https://z.cash/), [Ironfish](https://ironfish.network/), and [Tornado Cash](https://tornado.cash/) allow on-chain attestation of exactly what people want to make public and nothing more.
+> - Naming systems like the [Ethereum Name Service](https://ens.domains/) (ENS) and [Solana Name Service](https://naming.bonfida.org/) (SNS) attach identity to on-chain transactions.
+> - Incorporation systems allow the on-chain representation of corporate abstractions above the level of a mere transaction, like financial statements or even full programmable company-equivalents like DAOs.
+> - [Cryptocredentials](https://tim.blog/2021/03/25/balaji-srinivasan-transcript/#:~:text=So%20the%20question%20then,except%20it%E2%80%99s%20non%2Dtransferrable.), [Non-Fungible Tokens](https://linda.mirror.xyz/df649d61efb92c910464a4e74ae213c4cab150b9cbcc4b7fb6090fc77881a95d) (NFTs), [Non-Transferable Fungibles](http://archive.today/IAa0e) (NTFs), and [Soulbounds](https://vitalik.ca/general/2022/01/26/soulbound.html) allow the representation of non-financial data on chain, like diplomas or endorsements.
 
 But how does this all relate to network states? I could go into specific examples in the vein of [crypto cities](https://vitalik.ca/general/2021/10/31/cities.html): issuing tokens, issuing [CityDAO](https://www.citydao.io/)-style citizen NFTs, combining blockchains with zero-knowledge cryptography to do [secure privacy-preserving voting](https://vitalik.ca/general/2021/05/25/voting2.html), and a lot more. Blockchains are [the Lego of crypto-finance](https://www.reddit.com/r/ethtrader/comments/ctu2ud/vitalik_called_ethereum_the_lego_of_cryptofinance/) and crypto-governance: they are a very effective tool for implementing transparent in-protocol rules to govern common resources, assets and incentives.
 
@@ -222,7 +234,7 @@ What is the answer? Honestly, I don't see one. One point in favor of network sta
 In the wake of Russia's invasion of Ukraine on Feb 24, Noah Smith wrote an [important post](https://noahpinion.substack.com/p/a-moment-of-clarity) on the moral clarity that the invasion should bring to our thought. A particularly striking section is titled "nowhere to run". Quoting:
 
 > But while exit works on a local level — if San Francisco is too dysfunctional, you can probably move to Austin or another tech town — it simply won’t work at the level of nations. In fact, it never really did — rich crypto guys who moved to countries like Singapore or territories like Puerto Rico still depended crucially on the infrastructure and institutions of highly functional states. But Russia is making it even clearer that this strategy is doomed, because eventually there is nowhere to run. Unlike in previous eras, the arm of the great powers is long enough to reach anywhere in the world.
-> 
+>
 > If the U.S. collapses, you can’t just move to Singapore, because in a few years you’ll be bowing to your new Chinese masters. If the U.S. collapses, you can’t just move to Estonia, because in a few years (months?) you’ll be bowing to your new Russian masters. And those masters will have extremely little incentive to allow you to remain a free individual with your personal fortune intact ... Thus it is very very important to every libertarian that the U.S. not collapse.
 
 One possible counter-argument is: sure, if Ukraine was full of people whose first instinct was exit, Ukraine would have collapsed. But if _Russia was also more exit-oriented_, everyone in Russia would have pulled out of the country within a week of the invasion. Putin would be left standing alone in the fields of the Luhansk oblast facing Zelensky a hundred meters away, and when Putin shouts his demand for surrender, Zelensky would reply: "you and what army"? (Zelensky would of course win a fair one-on-one fight)
@@ -244,7 +256,7 @@ Reading _The Network State_ reminded me of a different book that I read ten year
 We can see the differences most clearly by looking at de Ugarte's theory of formation. Since I've already spent a lot of time quoting Balaji, I'll give de Ugarte a fair hearing with a longer quote:
 
 > The very blogosphere is an ocean of identities and conversation in perpetual cross-breeding and change from among which the great social digestion periodically distils stable groups with their own contexts and specific knowledge.
-> 
+>
 > These conversational communities which crystallise, after a certain point in their development, play the main roles in what we call digital Zionism: they start to precipitate into reality, to generate mutual knowledge among their members, which makes them more identitarially important to them than the traditional imaginaries of the imagined communities to which they are supposed to belong (nation, class, congregation, etc.) as if it were a real community (group of friends, family, guild, etc.)
 >
 > Some of these conversational networks, identitarian and dense, start to generate their own economic metabolism, and with it a distinct demos – maybe several demoi – which takes the nurturing of the autonomy of the community itself as its own goal. These are what we call Neo-Venetianist networks. Born in the blogosphere, they are heirs to the hacker work ethic, and move in the conceptual world, which tends to the economic democracy which we spoke about in the first part of this book.

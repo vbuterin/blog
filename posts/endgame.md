@@ -15,8 +15,8 @@ Here is a plausible roadmap:
 * **Add secondary transaction channels to prevent censorship**. One way to do this is to allow secondary stakers to submit lists of transactions which the [next main block _must_ include](https://notes.ethereum.org/@vbuterin/pbs_censorship_resistance#Solution-2-can-we-still-use-proposers-%E2%80%9Chybrid-PBS%E2%80%9D-but-only-for-inclusion-of-last-resort).
 
 <center><br>
-    
-<img src="../../../../images/endgame/diag1.png" style="width:575px" />
+
+<img src="../../../../images/endgame/diag1.png" style="width:575px" class="padded" />
 
 </center><br>
 
@@ -28,8 +28,8 @@ Imagine that one particular rollup - whether Arbitrum, Optimism, Zksync, StarkNe
 
 <center><br>
 
-<img src="../../../../images/endgame/diag2.png" style="width:575px" />
-    
+<img src="../../../../images/endgame/diag2.png" style="width:575px" class="padded" />
+
 </center><br>
 
 **Once again, we get a world where, block _production_ is centralized, block _validation_ is trustless and highly decentralized, and censorship is still prevented**. Rollup block producers have to process a huge number of transactions, and so it is a difficult market to enter, but they have no way to push invalid blocks through. Block availability is secured by the underlying chain, and block validity is guaranteed by the rollup logic: if it's a ZK rollup, it's ensured by SNARKs, and an optimistic rollup is secure as long as there is one honest actor somewhere running a fraud prover node (they can be subsidized with [Gitcoin grants](https://gitcoin.co/grants/)). Furthermore, because users always have the option of submitting transactions through the on-chain secondary inclusion channel, rollup sequencers also cannot effectively censor.
@@ -45,7 +45,7 @@ It seems like we could have it all: decentralized validation, robust censorship 
 <img src="../../../../images/endgame/wgate.png" style="width:550px" /><br>
 
 _A cross-domain MEV opportunity discovered by [Western Gate](https://westerngate.xyz/)_
-    
+
 </center><br>
 
 Hence, in a multi-domain world, there are strong pressures toward the same people controlling block production on all domains. It may not happen, but there's a good chance that it will, and we have to be prepared for that possibility. What can we do about it? So far, the best that we know how to do is to use two techniques in combination:
@@ -56,11 +56,11 @@ Hence, in a multi-domain world, there are strong pressures toward the same peopl
 So what's the result? **Block _production_ is centralized, block _validation_ is trustless and highly decentralized, and censorship is still prevented**.
 
 <center><br>
-    
-![](../../../../images/endgame/diag3.png)
+
+![](../../../../images/endgame/diag3.png){.padded}
 
 _Three paths toward the same destination._
-    
+
 </center><br>
 
 ## So what does this mean?
@@ -75,7 +75,7 @@ But also, Ethereum researchers should think hard about what levels of decentrali
 
 <center><br>
 
-![](../../../../images/endgame/ethrollups.png)
+![](../../../../images/endgame/ethrollups.png){.padded}
 
 </center><br>
 

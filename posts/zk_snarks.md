@@ -3,7 +3,7 @@
 [title]: <> ([Mirror] Zk-SNARKs: Under the Hood)
 [pandoc]: <> (--mathjax)
 
-_This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6>https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6</a> _
+_This is a mirror of the post at <a href="<<https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6>><https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6>></a> _
 
 *This is the third part of a series of articles explaining how the technology behind zk-SNARKs works; the previous articles on [quadratic arithmetic programs](https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649) and [elliptic curve pairings](https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627) are required reading, and this article will assume knowledge of both concepts. Basic knowledge of what zk-SNARKs are and what they do is also assumed. See also [Christian Reitwiessner’s article here](https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell/) for another technical introduction.*
 
@@ -17,9 +17,9 @@ To start off, let us go into the key cryptographic assumption underlying the sec
 
 Basically, if you get a pair of points $P$ and $Q$, where $P \cdot k = Q$, and you get a point $C$, then it is not possible to come up with $C \cdot k$ unless $C$ is “derived” from $P$ in some way that you know. This may seem intuitively obvious, but this assumption actually cannot be derived from any other assumption (eg. discrete log hardness) that we usually use when proving security of elliptic curve-based protocols, and so zk-SNARKs do in fact rest on a somewhat shakier foundation than elliptic curve cryptography more generally — although it’s still sturdy enough that most cryptographers are okay with it.
 
-Now, let’s go into how this can be used. Supposed that a pair of points $(P, Q)$ falls from the sky, where $P \cdot k = Q$, but nobody knows what the value of $k$ is. Now, suppose that I come up with a pair of points $(R, S)$ where $R \cdot k = S$. Then, the KoE assumption implies that the only way I could have made that pair of points was by taking $P$ and $Q$, and multiplying both by some factor r *that I personally know*. Note also that thanks to the magic of elliptic curve pairings, checking that $R = k \cdot S$ *doesn’t actually require knowing $k$ * - instead, you can simply check whether or not $e(R, Q) = e(P, S)$.
+Now, let’s go into how this can be used. Supposed that a pair of points $(P, Q)$ falls from the sky, where $P \cdot k = Q$, but nobody knows what the value of $k$ is. Now, suppose that I come up with a pair of points $(R, S)$ where $R \cdot k = S$. Then, the KoE assumption implies that the only way I could have made that pair of points was by taking $P$ and $Q$, and multiplying both by some factor r *that I personally know*. Note also that thanks to the magic of elliptic curve pairings, checking that $R = k \cdot S$ *doesn’t actually require knowing $k$* - instead, you can simply check whether or not $e(R, Q) = e(P, S)$.
 
-Let’s do something more interesting. Suppose that we have ten pairs of points fall from the sky: $(P_1, Q_1), (P_2, Q_2)… (P_{10}, Q_{10})$. In all cases, $P_i \cdot k = Q_i$. Suppose that I then provide you with a pair of points $(R, S)$ where $R \cdot k = S$. What do you know now? *You know that $R$ is some linear combination $P_1 \cdot i_1 + P_2 \cdot i_2 + … + P_{10} \cdot i_{10}$, where I know the coefficients $i_1, i_2 … i_{10}$. *That is, the only way to arrive at such a pair of points $(R, S)$ is to take some multiples of $P_1, P_2 … P_{10}$ and add them together, and make the same calculation with $Q_1, Q_2 … Q_{10}$.
+Let’s do something more interesting. Suppose that we have ten pairs of points fall from the sky: $(P_1, Q_1), (P_2, Q_2)… (P_{10}, Q_{10})$. In all cases, $P_i \cdot k = Q_i$. Suppose that I then provide you with a pair of points $(R, S)$ where $R \cdot k = S$. What do you know now? *You know that $R$ is some linear combination $P_1 \cdot i_1 + P_2 \cdot i_2 + … + P_{10} \cdot i_{10}$, where I know the coefficients $i_1, i_2 … i_{10}$.*That is, the only way to arrive at such a pair of points $(R, S)$ is to take some multiples of $P_1, P_2 … P_{10}$ and add them together, and make the same calculation with $Q_1, Q_2 … Q_{10}$.
 
 Note that, given any specific set of $P_1…P_{10}$ points that you might want to check linear combinations for, you can’t actually create the accompanying $Q_1…Q_{10}$ points without knowing what $k$ is, and if you do know what $k$ is then you can create a pair $(R, S)$ where $R \cdot k = S$ for whatever $R$ you want, without bothering to create a linear combination. Hence, for this to work it’s absolutely imperative that whoever creates those points is trustworthy and actually deletes $k$ once they created the ten points. **This is where the concept of a “trusted setup” comes from**.
 
@@ -71,7 +71,7 @@ The next step is to make sure that all three linear combinations have the same c
 
 Finally, we need to prove that $A \cdot B - C = H \cdot Z$. We do this once again with a pairing check:
 
-$e(\pi _a, \pi _b) / e(\pi _c, G) ?= e(\pi _h, G \cdot Z(t))$
+$e(\pi _a, \pi_b) / e(\pi_c, G) ?= e(\pi_h, G \cdot Z(t))$
 
 Where $\pi _h= G \cdot H(t)$. If the connection between this equation and $A \cdot B - C = H \cdot Z$ does not make sense to you, go back and read the [article on pairings](https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627).
 
@@ -91,11 +91,11 @@ The encrypted `old_balance`, `tx_value` and `new_balance` should be specified pu
 
 Now, let’s step back a bit. First of all, here’s the verification algorithm in its entirety, courtesy of ben [Sasson, Tromer, Virza and Chiesa](https://eprint.iacr.org/2013/879.pdf):
 
-![](https://cdn-images-1.medium.com/max/2000/1*gOI0njM1tPSvmvZuIUe0MA.png)
+![](https://cdn-images-1.medium.com/max/2000/1*gOI0njM1tPSvmvZuIUe0MA.png){.padded}
 
 The first line deals with parametrization; essentially, you can think of its function as being to create a “custom verification key” *for the specific instance of the problem* where some of the arguments are specified. The second line is the linear combination check for $A, B$ and $C$; the third line is the check that the linear combinations have the same coefficients, and the fourth line is the product check $A \cdot B - C = H \cdot Z$.
 
-Altogether, the verification process is a few elliptic curve multiplications (one for each “public” input variable), and five pairing checks, one of which includes an additional pairing multiplication. The proof contains eight elliptic curve points: a pair of points each for $A(t), B(t)$ and $C(t)$, a point $\pi _k$ for $b \cdot (A(t) + B(t) + C(t))$, and a point $\pi _h$ for $H(t)$. Seven of these points are on the $F_p$ curve (32 bytes each, as you can compress the $y$ coordinate to a single bit), and in the Zcash implementation one point ($\pi _b$) is on the twisted curve in $F_{p^2}$ (64 bytes), so the total size of the proof is ~288 bytes.
+Altogether, the verification process is a few elliptic curve multiplications (one for each “public” input variable), and five pairing checks, one of which includes an additional pairing multiplication. The proof contains eight elliptic curve points: a pair of points each for $A(t), B(t)$ and $C(t)$, a point $\pi _k$ for $b \cdot (A(t) + B(t) + C(t))$, and a point $\pi_h$ for $H(t)$. Seven of these points are on the $F_p$ curve (32 bytes each, as you can compress the $y$ coordinate to a single bit), and in the Zcash implementation one point ($\pi_b$) is on the twisted curve in $F_{p^2}$ (64 bytes), so the total size of the proof is ~288 bytes.
 
 The two computationally hardest parts of creating a proof are:
 

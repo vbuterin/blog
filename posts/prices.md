@@ -31,7 +31,7 @@ In more recent times, ICOs have become less popular, but NFTs and NFT sales are 
 
 <center><br>
 
-<img src="../../../../images/prices/basefee_spike.png" style="width:700px" /><br>
+<img src="../../../../images/prices/basefee_spike.png" style="width:700px" class="padded" /><br>
 
 <small><i>And this isn't even the biggest one; some NFT sales have created gas price spikes as high as 2000 gwei.</i></small>
 

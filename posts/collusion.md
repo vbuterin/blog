@@ -3,7 +3,6 @@
 [title]: <> (On Collusion)
 [pandoc]: <> (--mathjax)
 
-
 _Special thanks to Glen Weyl, Phil Daian and Jinglan Wang for review_
 
 Over the last few years there has been an increasing interest in using deliberately engineered economic incentives and mechanism design to align behavior of participants in various contexts. In the blockchain space, mechanism design first and foremost provides the security for the blockchain itself, encouraging miners or proof of stake validators to participate honestly, but more recently it is being applied in [prediction markets](https://www.augur.net/), "[token curated registries](https://medium.com/@tokencuratedregistry/a-simple-overview-of-token-curated-registries-84e2b7b19a06)" and many other contexts. The nascent [RadicalXChange movement](https://radicalxchange.org/) has meanwhile spawned experimentation with [Harberger taxes](https://medium.com/@simondlr/this-artwork-is-always-on-sale-92a7d0c67f43), quadratic voting, [quadratic financing](https://medium.com/gitcoin/gitcoin-grants-50k-open-source-fund-e20e09dc2110) and more. More recently, there has also been growing interest in using token-based incentives to try to encourage quality posts in social media. However, as development of these systems moves closer from theory to practice, there are a number of challenges that need to be addressed, challenges that I would argue have not yet been adequately confronted.
@@ -100,7 +99,7 @@ Another possible example of futarchy is a governance system for a project with a
 
 <br>
 <center>
-<img src="https://ethresear.ch/uploads/default/original/2X/4/4236db5226633dcc00bb4924f55db33488707488.png" style="width:600px"/><br><br>
+<img src="https://ethresear.ch/uploads/default/original/2X/4/4236db5226633dcc00bb4924f55db33488707488.png" style="width:600px" class="padded" /><br><br>
 <small><i>A graphical description of one form of futarchy, creating two markets representing the two "possible future worlds" and picking the one with a more favorable price. Source <a href="https://ethresear.ch/uploads/default/original/2X/4/4236db5226633dcc00bb4924f55db33488707488.png">this post on ethresear.ch</a></i></small>
 </center>
 <br>
@@ -115,7 +114,7 @@ A similar challenge arises when the goal is not funding, but rather determining 
 
 <br>
 <center>
-<img src="../../../../images/collusion-files/cocacola.jpg" style="width:550px"/> 
+<img src="../../../../images/collusion-files/cocacola.jpg" style="width:550px"/>
 </center>
 <br>
 
@@ -129,7 +128,7 @@ Or perhaps this?
 
 Those who have been following recent politics "in the real world" might also point out a different kind of content that benefits highly centralized actors: social media manipulation by hostile governments. Ultimately, both centralized systems and decentralized systems are facing the same fundamental problem, which is that **the "marketplace of ideas" (and of public goods more generally) is very far from an "efficient market" in the sense that economists normally use the term**, and this leads to both underproduction of public goods even in "peacetime" but also vulnerability to active attacks. It's just a hard problem.
 
-This is also why coin-based voting systems (like Bihu's) have one major genuine advantage over identity-based systems (like the Gitcoin CLR or the /r/ethtrader donut experiment): at least there is no benefit to buying accounts en masse, because everything you do is proportional to how many coins you have, regardless of how many accounts the coins are split between. However, mechanisms that do not rely on any model of identity and only rely on coins fundamentally cannot solve the problem of concentrated interests outcompeting dispersed communities trying to support public goods; an identity-free mechanism that empowers distributed communities cannot avoid over-empowering centralized plutocrats pretending to be distributed communities. 
+This is also why coin-based voting systems (like Bihu's) have one major genuine advantage over identity-based systems (like the Gitcoin CLR or the /r/ethtrader donut experiment): at least there is no benefit to buying accounts en masse, because everything you do is proportional to how many coins you have, regardless of how many accounts the coins are split between. However, mechanisms that do not rely on any model of identity and only rely on coins fundamentally cannot solve the problem of concentrated interests outcompeting dispersed communities trying to support public goods; an identity-free mechanism that empowers distributed communities cannot avoid over-empowering centralized plutocrats pretending to be distributed communities.
 
 But it's not just identity issues that public goods games are vulnerable too; it's also bribes. To see why, consider again the example above, but where instead of the "fake community" being 10001 sockpuppets of the attacker, the attacker only has one identity, the account receiving funding, and the other 10000 accounts are real users - but users that receive a bribe of $0.01 each to take the action that would cause the attacker to gain an additional $1. As mentioned above, these bribes can be highly obfuscated, even through third-party custodial services that vote on a user's behalf in exchange for convenience, and in the case of "coin vote" designs an obfuscated bribe is even easier: one can do it by renting coins on the market and using them to participate in votes. Hence, while some kinds of games, particularly prediction market or security deposit based games, can be made collusion-safe and identity-free, generalized public goods funding seems to be a class of problem where collusion-safe and identity-free approaches unfortunately just cannot be made to work.
 

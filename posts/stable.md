@@ -29,7 +29,7 @@ In practice, (2) means that the targeting mechanism must be some kind of smart c
 
 <center><br>
 
-![](../../../../images/stable-files/stablecoin.drawio.png)
+![](../../../../images/stable-files/stablecoin.drawio.png){.padded}
 
 </center><br>
 
@@ -42,7 +42,7 @@ In this post I'm focusing on RAI rather than DAI because RAI better exemplifies 
 In RAI, there are two main categories of participants (there's also holders of FLX, the speculative token, but they play a less important role):
 
 * A **RAI holder** holds RAI, the stablecoin of the RAI system.
-* A **RAI lender** deposits some ETH into a smart contract object called a "**safe**". They can then withdraw RAI up to the value of $\frac{2}{3}$ of that ETH (eg. if 1 ETH = 100 RAI, then if you deposit 10 ETH you can withdraw up to $10 * 100 * \frac{2}{3} \approx 667$ RAI). A lender can recover the ETH in the same if they pay back their RAI debt.
+* A **RAI lender** deposits some ETH into a smart contract object called a "**safe**". They can then withdraw RAI up to the value of $\frac{2}{3}$ of that ETH (eg. if 1 ETH = 100 RAI, then if you deposit 10 ETH you can withdraw up to $10 *100* \frac{2}{3} \approx 667$ RAI). A lender can recover the ETH in the same if they pay back their RAI debt.
 
 There are two main reasons to become a RAI lender:
 
@@ -58,7 +58,7 @@ The other main mechanism to understand is **redemption rate adjustment**. In RAI
 
 <center><br>
 
-![](../../../../images/stable-files/rai.drawio.png)
+![](../../../../images/stable-files/rai.drawio.png){.padded}
 
 </center><br>
 
@@ -76,16 +76,16 @@ In Terra, the price of the volcoin (LUNA) comes from the expectation of fees fro
 
 **The system's collapse can even become a self-fulfilling prophecy**: if it seems like a collapse is likely, this reduces the expectation of future fees that is the basis of the value of the volcoin, pushing the volcoin's market cap down, making the system even more fragile and potentially triggering that very collapse - exactly as we saw happen with Terra in May.
 
-<center><br><table style="text-align:center"><tr style="border: 0px">
-	
-<td style="border: 0px"><small> LUNA price, May 8-12 </small></td>
-<td  style="border: 0px"><small> UST price, May 8-12 </small></td>
-	
-</tr><tr style="border: 0px"><td style="border: 0px">
+<center><br><table class="transparent centered"><tr>
+
+<td><small> LUNA price, May 8-12 </small></td>
+<td><small> UST price, May 8-12 </small></td>
+
+</tr><tr><td>
 
 ![](../../../../images/stable-files/lunachart.png)
-	
-</td><td  style="border: 0px">
+
+</td><td>
 
 ![](../../../../images/stable-files/ustchart.png)
 
@@ -114,7 +114,7 @@ _Safe wind-down: at every step, there's enough expected future revenue to justif
 _Unsafe wind-down: at some point, there's not enough expected future revenue to justify enough volcoin market cap to keep the stablecoin safe. Collapse is likely._
 
 </small></center><br>
-	
+
 ### Can RAI wind down?
 
 **RAI's security depends on an asset external to the RAI system (ETH), so RAI has a much easier time safely winding down**. If the decline in demand is unbalanced (so, either demand for holding drops faster or demand for lending drops faster), the redemption rate will adjust to equalize the two. The lenders are holding a leveraged position in ETH, not FLX, so there's no risk of a positive-feedback loop where reduced confidence in RAI causes demand for lending to also decrease.
@@ -129,11 +129,11 @@ Currently, stablecoins tend to be pegged to the US dollar. RAI stands out as a s
 
 As a thought experiment to evaluate sustainability, let's imagine a stablecoin with a particular index: a quantity of US dollars that grows by 20% per year. In math language, the index is $1.2^{(t - t_0)}$ USD, where $t$ is the current time in years and $t_0$ is the time when the system launched. An even more fun alternative is $1.04^{\frac{1}{2}*(t - t_0)^2}$ USD, so it starts off acting like a regular USD-denominated stablecoin, but the USD-denominated return rate keeps increasing by 4% every year.
 
-<center><table><tr  style="border: 0px"><td style="border: 0px">
+<center><table class="transparent"><tr>
 
 ![](../../../../images/stable-files/ponzi1.png)
-	
-</td><td  style="border: 0px">
+
+</td><td>
 
 ![](../../../../images/stable-files/ponzi2.png)
 

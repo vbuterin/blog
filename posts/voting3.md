@@ -28,7 +28,7 @@ It is worth stepping back and seeing the absurdity of the present situation. Dai
 
 Here is the situation in a chart:
 
-![](../../../../images/legitimacy-files/chart.png)
+![](../../../../images/legitimacy-files/chart.png){.padded}
 
 Within the Ethereum ecosystem, one can make a case that this disparity does not matter too much; tens of millions of dollars per year is "enough" to do the needed R&D and adding more funds [does not necessarily improve things](https://en.wikipedia.org/wiki/The_Mythical_Man-Month), and so the risks to the platform's [credible neutrality](https://nakamoto.com/credible-neutrality/) from instituting in-protocol developer funding exceed the benefits. But in many smaller ecosystems, both ecosystems within Ethereum and entirely separate blockchains like BCH and Zcash, the same debate is brewing, and at those smaller scales the imbalance makes a big difference.
 
@@ -36,7 +36,7 @@ Enter DAOs. A project that launches as a "pure" DAO from day 1 can achieve a com
 
 <br>
 
-![](../../../../images/voting3-files/issuance_types.png)
+![](../../../../images/voting3-files/issuance_types.png){.padded}
 
 <br>
 
@@ -84,7 +84,7 @@ The problems get much worse once determined attackers trying to subvert the syst
 
 <center><br>
 
-![](../../../../images/voting3-files/wrapper1.png)
+![](../../../../images/voting3-files/wrapper1.png){.padded}
 
 <br></center>
 
@@ -101,7 +101,7 @@ Suppose that an attacker makes a decision that corrupts the DAO to the attacker'
 
 <br></center>
 
-If $B > D * p$, you are inclined to accept the bribe, but as long as $B < 1000 * D * p$, accepting the bribe is _collectively_ harmful. So if $p < 1$ (usually, $p$ is far below $1$), there is an opportunity for an attacker to bribe users to adopt a net-negative decision, compensating each user far less than the harm they suffer.
+If $B > D *p$, you are inclined to accept the bribe, but as long as $B < 1000* D * p$, accepting the bribe is _collectively_ harmful. So if $p < 1$ (usually, $p$ is far below $1$), there is an opportunity for an attacker to bribe users to adopt a net-negative decision, compensating each user far less than the harm they suffer.
 
 One natural critique of voter bribing fears is: are voters _really_ going to be so immoral as to accept such obvious bribes? The average DAO token holder is an enthusiast, and it would be hard for them to feel good about so selfishly and blatantly selling out the project. But what this misses is that there are much more obfuscated ways to separate out profit sharing rights from governance rights, that don't require anything remotely as explicit as a wrapper contract.
 
@@ -109,7 +109,7 @@ The simplest example is borrowing from a defi lending platform (eg. [Compound](h
 
 <center><br>
 
-![](../../../../images/voting3-files/wrapper2.png)
+![](../../../../images/voting3-files/wrapper2.png){.padded}
 
 <br></center>
 
@@ -126,8 +126,6 @@ At present, many blockchains and DAOs with coin voting have so far managed to av
 <a href="https://twitter.com/MonetSupply/status/1415526055348031489?s=19"><img src="../../../../images/voting3-files/bribeattempt.jpg" style="width:600px"/></a>
 
 </br></center>
-
-
 
 But despite all of these important issues, there have been much fewer examples of outright voter bribing, including obfuscated forms such as using financial markets, that simple economic reasoning would suggest. The natural question to ask is: why haven't more outright attacks happened yet?
 
@@ -189,7 +187,7 @@ The most popular solution to these kinds of issues is [futarchy](https://blog.et
 
 <center><br>
 
-![](../../../../images/election-files/chartovertime.png)
+![](../../../../images/election-files/chartovertime.png){.padded}
 
 <br></center>
 

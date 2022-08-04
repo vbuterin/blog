@@ -3,7 +3,6 @@
 [title]: <> (Sidechains vs Plasma vs Sharding)
 [pandoc]: <> (--mathjax)
 
-
 _Special thanks to Jinglan Wang for review and feedback_
 
 One question that often comes up is: how exactly is sharding different from sidechains or Plasma? All three architectures seem to involve a hub-and-spoke architecture with a central "main chain" that serves as the consensus backbone of the system, and a set of "child" chains containing actual user-level transactions. Hashes from the child chains are usually periodically published into the main chain (sharded chains with no hub are theoretically possible but haven't been done so far; this article will not focus on them, but the arguments are similar). Given this fundamental similarity, why go with one approach over the others?
@@ -17,7 +16,7 @@ In non-sharded blockchains, this idea that the canonical chain (ie. the chain th
 If a chain structure does not have this tight-coupling property, then it is arguably not a layer-1 sharding scheme, but rather a layer-2 system sitting on top of a non-scalable layer-1 chain. Plasma is not a tightly-coupled system: an invalid Plasma block absolutely can have its header be committed into the main Ethereum chain, because the Ethereum base layer has no idea that it represents an invalid Plasma block, or even that it represents a Plasma block at all; all that it sees is a transaction containing a small piece of data. However, the consequences of a single Plasma chain failing are localized to within that Plasma chain.
 
 <center>
-<table border="1">
+<table>
 <tr><td><b>Sharding</b></td><td>Try really hard to ensure total validity/availability of every part of the system</td></tr>
 <tr><td><b>Plasma</b></td><td>Accept local faults but try to limit their consequences</td></tr>
 </table>
