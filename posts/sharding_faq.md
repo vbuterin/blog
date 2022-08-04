@@ -46,7 +46,7 @@ However, this poses a question: are there ways to create a new mechanism, where 
 - [Congealed gas? This sounds interesting for not just cross-shard operations, but also reliable intra-shard scheduling](#congealed-gas-this-sounds-interesting-for-not-just-cross-shard-operations-but-also-reliable-intra-shard-scheduling)
 - [Does guaranteed scheduling, both intra-shard and cross-shard, help against majority collusions trying to censor transactions?](#does-guaranteed-scheduling-both-intra-shard-and-cross-shard-help-against-majority-collusions-trying-to-censor-transactions)
 - [Could sharded blockchains do a better job of dealing with network partitions?](#could-sharded-blockchains-do-a-better-job-of-dealing-with-network-partitions)
-- [What are the unique challenges of pushing scaling past n = O(c\^2)?](#what-are-the-unique-challenges-of-pushing-scaling-past-n--oc2)
+- [What are the unique challenges of pushing scaling past n = O(c\^2)?](#what-are-the-unique-challenges-of-pushing-scaling-past-n--oc%5C%5E2)
 - [What about heterogeneous sharding?](#what-about-heterogeneous-sharding)
 - [Footnotes](#footnotes)
 
