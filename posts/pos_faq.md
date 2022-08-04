@@ -16,7 +16,7 @@
 - [Can we try to automate the social authentication to reduce the load on users?](#can-we-try-to-automate-the-social-authentication-to-reduce-the-load-on-users)
 - [Can one economically penalize censorship in proof of stake?](#can-one-economically-penalize-censorship-in-proof-of-stake)
 - [How does validator selection work, and what is stake grinding?](#how-does-validator-selection-work-and-what-is-stake-grinding)
-- [What would the equivalent of a 51% attack against Casper look like?](#what-would-the-equivalent-of-a-51-attack-against-casper-look-like)
+- [What would the equivalent of a 51% attack against Casper look like?](#what-would-the-equivalent-of-a-51%25-attack-against-casper-look-like)
 - [That sounds like a lot of reliance on out-of-band social coordination; is that not dangerous?](#that-sounds-like-a-lot-of-reliance-on-out-of-band-social-coordination-is-that-not-dangerous)
 - [Doesn't MC <= MR mean that all consensus algorithms with a given security level are equally efficient (or in other words, equally wasteful)?](#doesnt-mc--mr-mean-that-all-consensus-algorithms-with-a-given-security-level-are-equally-efficient-or-in-other-words-equally-wasteful)
 - [What about capital lockup costs?](#what-about-capital-lockup-costs)
