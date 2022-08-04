@@ -196,7 +196,7 @@ Now, here is something we can do to a ciphertext.
 
 Step 3 is the crucial one: it converts a ciphertext under modulus $p$ into a ciphertext under modulus $q$. The process just involves "scaling down" each element of $ct'$ by multiplying by $\frac{q}{p}$ and rounding down, eg. $floor(56 * \frac{15}{103}) = floor(8.15533..) = 8$.
 
-The idea is this: if $<ct', k> = m*\frac{p}{2} + e\ (mod\ p)$, then we can interpret this as $<ct', k> = p(z + \frac{m}{2}) + e$ for some integer $z$. Therefore, $<ct'* \frac{q}{p}, k> = q(z + \frac{m}{2}) + e*\frac{p}{q}$. Rounding adds error, but only a little bit (specifically, up to the size of the values in $k$, and we can make the values in $k$ small without sacrificing security). Therefore, we can say $<ct' * \frac{q}{p}, k> = m*\frac{q}{2} + e' + e_2\ (mod\ q)$, where $e' = e * \frac{q}{p}$, and $e_2$ is a small error from rounding.
+The idea is this: if $<ct', k> = m*\frac{p}{2} + e\ (mod\ p)$, then we can interpret this as $<ct', k> = p(z + \frac{m}{2}) + e$ for some integer $z$. Therefore, $<ct' * \frac{q}{p}, k> = q(z + \frac{m}{2}) + e*\frac{p}{q}$. Rounding adds error, but only a little bit (specifically, up to the size of the values in $k$, and we can make the values in $k$ small without sacrificing security). Therefore, we can say $<ct' * \frac{q}{p}, k> = m*\frac{q}{2} + e' + e_2\ (mod\ q)$, where $e' = e * \frac{q}{p}$, and $e_2$ is a small error from rounding.
 
 What have we accomplished? We turned a ciphertext with modulus $p$ and error $2e$ into a ciphertext with modulus $q$ and error $2(floor(e*\frac{p}{q}) + e_2)$, where the new error is _smaller_ than the original error.
 
