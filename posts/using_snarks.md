@@ -104,7 +104,7 @@ We'll start with a simple version: we use nullifiers. A user generates a nullifi
 
 Now, we'll move on to the more complex version. Instead of just making it easy to prove if someone used the same epoch twice, this next protocol will actually _reveal their private key_ in that case. Our core technique will rely on the "two points make a line" trick: if you reveal one point on a line, you've revealed little, but if you reveal two points on a line, you've revealed the whole line.
 
-For each epoch $e$, we take the line $L_e(x) = hash(k, e) *x + k$. The slope of the line is $hash(k, e)$, and the y-intercept is $k$; neither is known to the public. To make a _certificate_ for a message $m$, the sender provides $y = L_e(hash(m)) =$ $hash(k, e)* hash(m) + k$, along with a ZK-SNARK proving that $y$ was computed correctly.
+For each epoch $e$, we take the line $L_e(x) = hash(k, e) * x + k$. The slope of the line is $hash(k, e)$, and the y-intercept is $k$; neither is known to the public. To make a _certificate_ for a message $m$, the sender provides $y = L_e(hash(m)) =$ $hash(k, e) * hash(m) + k$, along with a ZK-SNARK proving that $y$ was computed correctly.
 
 <center><br>
 
@@ -125,7 +125,7 @@ To recap, the ZK-SNARK here is as follows:
   * Check that $privtoaddr(k)$ is in $\{A_1 ... A_n\}$
   * Check that $y = hash(k, e) * hash(m) + k$
 
-But what if someone uses a single epoch twice? That means they published two values $m_1$ and $m_2$ and the corresponding certificate values $y_1 = hash(k, e) *hash(m_1) + k$ and $y_2 = hash(k, e)* hash(m_2) + k$. We can use the two points to recover the line, and hence the y-intercept (which is the private key):
+But what if someone uses a single epoch twice? That means they published two values $m_1$ and $m_2$ and the corresponding certificate values $y_1 = hash(k, e) * hash(m_1) + k$ and $y_2 = hash(k, e) * hash(m_2) + k$. We can use the two points to recover the line, and hence the y-intercept (which is the private key):
 
 <center><br>
 

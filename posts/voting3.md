@@ -101,7 +101,7 @@ Suppose that an attacker makes a decision that corrupts the DAO to the attacker'
 
 <br></center>
 
-If $B > D *p$, you are inclined to accept the bribe, but as long as $B < 1000* D * p$, accepting the bribe is _collectively_ harmful. So if $p < 1$ (usually, $p$ is far below $1$), there is an opportunity for an attacker to bribe users to adopt a net-negative decision, compensating each user far less than the harm they suffer.
+If $B > D * p$, you are inclined to accept the bribe, but as long as $B < 1000 * D * p$, accepting the bribe is _collectively_ harmful. So if $p < 1$ (usually, $p$ is far below $1$), there is an opportunity for an attacker to bribe users to adopt a net-negative decision, compensating each user far less than the harm they suffer.
 
 One natural critique of voter bribing fears is: are voters _really_ going to be so immoral as to accept such obvious bribes? The average DAO token holder is an enthusiast, and it would be hard for them to feel good about so selfishly and blatantly selling out the project. But what this misses is that there are much more obfuscated ways to separate out profit sharing rights from governance rights, that don't require anything remotely as explicit as a wrapper contract.
 

@@ -146,25 +146,25 @@ Not everything that you have needs to be designed around cm<sup>3</sup> minimiza
 
 <center><br>
 
-<table class="transparent centered"><tr><td style="width:40%; vertical-align: top; padding: 25px">
+<table><tr style="border: 0px"><td style="width:40%; border: 0px; vertical-align: top; padding: 25px">
 
 ![](../../../../images/backpack/laptop_bag.png)
 
 _My laptop bag, bought in an outdoor market in Zambia._
 
-</td><td style="width:40%; vertical-align: top; padding: 25px">
+</td><td style="width:40%; border: 0px; vertical-align: top; padding: 25px">
 
 ![](../../../../images/backpack/unisocks.png)
 
 _[Unisocks](https://unisocks.exchange/)._
 
-</td></tr><tr><td style="vertical-align: top; padding: 25px">
+</td></tr><tr style="border: 0px"><td style="border: 0px; vertical-align: top; padding: 25px">
 
 ![](../../../../images/backpack/pants.png)
 
 _Sweatpants for indoor use, that are either fox-themed or Shiba Inu-themed depending on whom you ask._
 
-</td><td style="vertical-align: top; padding: 25px">
+</td><td style="border: 0px; vertical-align: top; padding: 25px">
 
 ![](../../../../images/backpack/gloves.png)
 

@@ -3,7 +3,7 @@
 [title]: <> (Notes on Blockchain Governance)
 [pandoc]: <> (--mathjax)
 
-<small><i>In which I argue that "tightly coupled" on-chain voting is overrated, the status quo of "informal governance" as practiced by Bitcoin, Bitcoin Cash, Ethereum, Zcash and similar systems is much less bad than commonly thought, that people who think that the purpose of blockchains is to completely expunge soft mushy human intuitions and feelings in favor of completely algorithmic governance (emphasis on "completely") are absolutely crazy, and loosely coupled voting as done by Carbonvotes and similar systems is underrated, as well as describe what framework should be used when thinking about blockchain governance in the first place.<br><br>See also: <a href="<<https://medium.com/@Vlad_Zamfir/against-on-chain-governance-a4ceacd040ca>>">https://medium.com/@Vlad_Zamfir/against-on-chain-governance-a4ceacd040ca</a></i></small>
+<small><i>In which I argue that "tightly coupled" on-chain voting is overrated, the status quo of "informal governance" as practiced by Bitcoin, Bitcoin Cash, Ethereum, Zcash and similar systems is much less bad than commonly thought, that people who think that the purpose of blockchains is to completely expunge soft mushy human intuitions and feelings in favor of completely algorithmic governance (emphasis on "completely") are absolutely crazy, and loosely coupled voting as done by Carbonvotes and similar systems is underrated, as well as describe what framework should be used when thinking about blockchain governance in the first place.<br><br>See also: <a href="https://medium.com/@Vlad_Zamfir/against-on-chain-governance-a4ceacd040ca">https://medium.com/@Vlad_Zamfir/against-on-chain-governance-a4ceacd040ca</a></i></small>
 
 One of the more interesting recent trends in blockchain governance is the resurgence of on-chain coin-holder voting as a multi-purpose decision mechanism. Votes by coin holders are sometimes used in order to decide who operates the super-nodes that run a network (eg. DPOS in EOS, NEO, Lisk and other systems), sometimes to vote on protocol paramters (eg. the Ethereum gas limit) and sometimes to vote on and directly implement protocol upgrades wholesale (eg. <a href="http://tezos.com/">Tezos</a>). In all of these cases, the votes are automatic - the protocol itself contains all of the logic needed to change the validator set or to update its own rules, and does this automatically in response to the result of votes.
 
@@ -71,9 +71,9 @@ The key questions of governance thus become:
 
 Ethereum also has a history with coin voting, including:
 
-* <strong>DAO proposal votes</strong>: <a href="<<https://daostats.github.io/proposals.html>>">https://daostats.github.io/proposals.html</a>
-* <strong>The DAO Carbonvote</strong>: <a href="<<http://v1.carbonvote.com/>>">http://v1.carbonvote.com/</a>
-* <strong>The EIP 186/649/669 Carbonvote</strong>: <a href="<<http://carbonvote.com/>>">http://carbonvote.com/</a>
+* <strong>DAO proposal votes</strong>: <a href="https://daostats.github.io/proposals.html">https://daostats.github.io/proposals.html</a>
+* <strong>The DAO Carbonvote</strong>: <a href="http://v1.carbonvote.com/">http://v1.carbonvote.com/</a>
+* <strong>The EIP 186/649/669 Carbonvote</strong>: <a href="http://carbonvote.com/">http://carbonvote.com/</a>
 
 <center>
 <img src="../../../../images/voting-files/vote2.png" style="height:340px" />
@@ -155,7 +155,7 @@ Another important objection to voting is that coin holders are only one class of
 </center>
 <br>
 
-And if you want to see a review of a project that seems to combine all of these disadvantages at the same time, see this: <a href="<<https://btcgeek.com/bitshares-trying-memorycoin-year-ago-disastrous-ends/>>">https://btcgeek.com/bitshares-trying-memorycoin-year-ago-disastrous-ends/</a>.
+And if you want to see a review of a project that seems to combine all of these disadvantages at the same time, see this: <a href="https://btcgeek.com/bitshares-trying-memorycoin-year-ago-disastrous-ends/">https://btcgeek.com/bitshares-trying-memorycoin-year-ago-disastrous-ends/</a>.
 
 This criticism applies to both tightly coupled and loosely coupled voting equally; however, loosely coupled voting is more amenable to compromises that mitigate its unrepresentativeness, and we will discuss this more later.
 

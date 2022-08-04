@@ -77,7 +77,7 @@ Checking the equation $A(x) + B(x) = C(x)$ with these polynomials checks all fou
 
 You can even check relationships between a large number of _adjacent evaluations of the same polynomial_ using a simple polynomial equation. This is slightly more advanced. Suppose that you want to check that, for a given polynomial $F$, $F(x+2) = F(x) + F(x+1)$ within the integer range $\{0, 1 ... 98\}$ (so if you _also_ check $F(0) = F(1) = 1$, then $F(100)$ would be the 100th [Fibonacci](https://en.wikipedia.org/wiki/Fibonacci_number) number).
 
-As polynomials, $F(x+2) - F(x+1) - F(x)$ would not be exactly zero, as it could give arbitrary answers _outside_ the range $x = \{0, 1 ... 98\}$. But we can do something clever. In general, there is a rule that if a polynomial $P$ is zero across some set $S=\{x_1, x_2 ... x_n\}$ then it can be expressed as $P(x) = Z(x) *H(x)$, where $Z(x) =$ $(x - x_1)* (x - x_2) *...* (x - x_n)$ and $H(x)$ is also a polynomial. In other words, **any polynomial that equals zero across some set is a (polynomial) multiple of the simplest (lowest-degree) polynomial that equals zero across that same set**.
+As polynomials, $F(x+2) - F(x+1) - F(x)$ would not be exactly zero, as it could give arbitrary answers _outside_ the range $x = \{0, 1 ... 98\}$. But we can do something clever. In general, there is a rule that if a polynomial $P$ is zero across some set $S=\{x_1, x_2 ... x_n\}$ then it can be expressed as $P(x) = Z(x) * H(x)$, where $Z(x) =$ $(x - x_1) * (x - x_2) * ... * (x - x_n)$ and $H(x)$ is also a polynomial. In other words, **any polynomial that equals zero across some set is a (polynomial) multiple of the simplest (lowest-degree) polynomial that equals zero across that same set**.
 
 Why is this the case? It is a nice corollary of polynomial long division: [the factor theorem](https://en.wikipedia.org/wiki/Factor_theorem). We know that, when dividing $P(x)$ by $Z(x)$, we will get a quotient $Q(x)$ and a remainer $R(x)$ which satisfy $P(x) = Z(x) * Q(x) + R(x)$, where the degree of the remainder $R(x)$ is strictly less than that of $Z(x)$. Since we know that $P$ is zero on all of $S$, it means that $R$ has to be zero on all of $S$ as well. So we can simply compute $R(x)$ via polynomial interpolation, since it's a polynomial of degree at most $n-1$ and we know $n$ values (the zeroes at $S$). Interpolating a polynomial with all zeroes gives the zero polynomial, thus $R(x) = 0$ and $H(x)= Q(x)$.
 
@@ -85,7 +85,7 @@ Going back to our example, if we have a polynomial $F$ that encodes Fibonacci nu
 
 $H(x) = \frac{F(x+2) - F(x+1) - F(x)}{Z(x)}$
 
-Where $Z(x) = (x - 0) *(x - 1)* ... * (x - 98)$.
+Where $Z(x) = (x - 0) * (x - 1) * ... * (x - 98)$.
 
 You can calculate $Z(x)$ yourself (ideally you would have it precomputed), check the equation, and if the check passes then $F(x)$ satisfies the condition!
 
@@ -103,7 +103,7 @@ Here are some common examples of things you can do with various polynomial commi
 * **Multiply them**: given $com(P)$, $com(Q)$ and $com(R)$ check if $P * Q = R$
 * **Evaluate at a point**: given $com(P)$, $w$, $z$ and a supplemental proof (or "witness") $Q$, verify that $P(w) = z$
 
-It's worth noting that these primitives can be constructed from each other. If you can add and multiply, then you can evaluate: to prove that $P(w) = z$, you can construct $Q(x) = \frac{P(x) - z}{x - w}$, and the verifier can check if $Q(x) *(x - w) + z \stackrel{?}{=} P(x)$. This works because if such a polynomial $Q(x)$ _exists_, then $P(x) - z = Q(x)* (x - w)$, which means that $P(x) - z$ equals zero at $w$ (as $x - w$ equals zero at $w$) and so $P(x)$ equals $z$ at $w$.
+It's worth noting that these primitives can be constructed from each other. If you can add and multiply, then you can evaluate: to prove that $P(w) = z$, you can construct $Q(x) = \frac{P(x) - z}{x - w}$, and the verifier can check if $Q(x) * (x - w) + z \stackrel{?}{=} P(x)$. This works because if such a polynomial $Q(x)$ _exists_, then $P(x) - z = Q(x) * (x - w)$, which means that $P(x) - z$ equals zero at $w$ (as $x - w$ equals zero at $w$) and so $P(x)$ equals $z$ at $w$.
 
 And if you can evaluate, you can do all kinds of checks. This is because there is a [mathematical theorem](https://en.wikipedia.org/wiki/Schwartz%E2%80%93Zippel_lemma) that says, approximately, that if some equation involving some polynomials holds true at a _randomly selected coordinate_, then it almost certainly holds true for the polynomials as a whole. So if all we have is a mechanism to prove evaluations, we can check eg. our equation $P(x + 2) - P(x + 1) - P(x) = Z(x) * H(x)$ using an interactive game:
 
@@ -188,7 +188,7 @@ We redefine all of our arithmetic operations as follows. We pick some prime "mod
 
 $x + y  \Rightarrow  (x + y)$ % $p$
 
-$x *y  \Rightarrow (x* y)$ % $p$
+$x * y  \Rightarrow (x * y)$ % $p$
 
 $x^y \Rightarrow (x^y)$ % $p$
 
@@ -225,10 +225,10 @@ We can construct a proof for this with the following polynomial equations (assum
 * $P(x+1) = P(x) * 2 + R(x)$ across the range $\{0...63\}$
 * $R(x) \in \{0,1\}$ across the range $\{0...63\}$
 
-The latter two statements can be restated as "pure" polynomial equations as follows (in this context $Z(x) = (x - 0) *(x - 1)* ... * (x - 63)$):
+The latter two statements can be restated as "pure" polynomial equations as follows (in this context $Z(x) = (x - 0) * (x - 1) * ... * (x - 63)$):
 
-* $P(x+1) - P(x) *2 - R(x) = Z(x)* H_1(x)$
-* $R(x) *(1 - R(x)) = Z(x)* H_2(x)$ (notice the clever trick: $y * (1-y) = 0$ if and only if $y \in \{0, 1\}$)
+* $P(x+1) - P(x) * 2 - R(x) = Z(x) * H_1(x)$
+* $R(x) * (1 - R(x)) = Z(x) * H_2(x)$ (notice the clever trick: $y * (1-y) = 0$ if and only if $y \in \{0, 1\}$)
 
 The idea is that successive evaluations of $P(i)$ build up the number bit-by-bit: if $P(4) = 13$, then the sequence of evaluations going up to that point would be: $\{0, 1, 3, 6, 13\}$. In binary, 1 is `1`, 3 is `11`, 6 is `110`, 13 is `1101`; notice how $P(x+1) = P(x) * 2 + R(x)$ keeps adding one bit to the end as long as $R(x)$ is zero or one. Any number within the range $0 \le x < 2^{64}$ can be built up over 64 steps in this way, any number outside that range cannot.
 

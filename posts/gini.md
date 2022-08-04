@@ -35,7 +35,7 @@ $\sigma = \frac{\sum_{i=1}^n x_i^2}{n} - (\frac{\sum_{i=1}^n x_i}{n})^2$
 
 And here's the Gini:
 
-$G = \frac{2 *\sum_{i=1}^n i*x_i}{n * \sum_{i=1}^n x_i} - \frac{n+1}{n}$
+$G = \frac{2 * \sum_{i=1}^n i*x_i}{n * \sum_{i=1}^n x_i} - \frac{n+1}{n}$
 
 It's actually quite tame, I promise!
 
@@ -117,7 +117,7 @@ $\frac{\sum_{i=1}^n x_i^2}{(\sum_{i=1}^n x_i)^2}$
 Or for you visual learners out there:
 
 <center>
-<img src="../../../../images/gini/herfindahl.png" class="padded"><br><br>
+<img src="../../../../images/gini/herfindahl.png" class="padded" /><br><br>
 <small><i>
 Herfindahl-Hirschman index: green area divided by total area.
 </i></small><br><br><br>

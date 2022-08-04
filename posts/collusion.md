@@ -114,7 +114,7 @@ A similar challenge arises when the goal is not funding, but rather determining 
 
 <br>
 <center>
-<img src="../../../../images/collusion-files/cocacola.jpg" style="width:550px"/>
+<img src="../../../../images/collusion-files/cocacola.jpg" style="width:550px" />
 </center>
 <br>
 
@@ -122,7 +122,7 @@ Or perhaps this?
 
 <br>
 <center>
-<img src="../../../../images/collusion-files/bitconnect.png" style="width:550px"/>
+<img src="../../../../images/collusion-files/bitconnect.png" style="width:550px" />
 </center>
 <br>
 
@@ -137,7 +137,7 @@ But it's not just identity issues that public goods games are vulnerable too; it
 The other alternative is attacking the identity problem head-on. As mentioned above, simply going up to higher-security centralized identity systems, like passports and other government IDs, will not work at scale; in a sufficiently incentivized context, they are very insecure and vulnerable to the issuing governments themselves! Rather, the kind of "identity" we are talking about here is some kind of robust multifactorial set of claims that an actor identified by some set of messages actually is a unique individual. A very early proto-model of this kind of networked identity is arguably social recovery in HTC's blockchain phone:
 
 <center>
-<img src="../../../../images/collusion-files/htcphone.jpg" style="width:300px"/>
+<img src="../../../../images/collusion-files/htcphone.jpg" style="width:300px" />
 </center>
 <br>
 

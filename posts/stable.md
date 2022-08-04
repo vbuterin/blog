@@ -42,7 +42,7 @@ In this post I'm focusing on RAI rather than DAI because RAI better exemplifies 
 In RAI, there are two main categories of participants (there's also holders of FLX, the speculative token, but they play a less important role):
 
 * A **RAI holder** holds RAI, the stablecoin of the RAI system.
-* A **RAI lender** deposits some ETH into a smart contract object called a "**safe**". They can then withdraw RAI up to the value of $\frac{2}{3}$ of that ETH (eg. if 1 ETH = 100 RAI, then if you deposit 10 ETH you can withdraw up to $10 *100* \frac{2}{3} \approx 667$ RAI). A lender can recover the ETH in the same if they pay back their RAI debt.
+* A **RAI lender** deposits some ETH into a smart contract object called a "**safe**". They can then withdraw RAI up to the value of $\frac{2}{3}$ of that ETH (eg. if 1 ETH = 100 RAI, then if you deposit 10 ETH you can withdraw up to $10 * 100 * \frac{2}{3} \approx 667$ RAI). A lender can recover the ETH in the same if they pay back their RAI debt.
 
 There are two main reasons to become a RAI lender:
 

@@ -157,7 +157,7 @@ Here's a chart for some other example use cases:
 | Privacy-preserving withdrawal (Optimistic rollup) | **296** (4 bytes index of root + 32  bytes nullifier + 4 bytes recipient + 256 bytes ZK-SNARK proof) | [~380,000](https://etherscan.io/tx/0x6e311f84655af72614966705584569b52d6e314f2d61b965db91db41fd01b1e1) | 77x |
 | Privacy-preserving withdrawal (ZK rollup) | **40** (4 bytes index of root + 32  bytes nullifier + 4 bytes recipient) | [~380,000](https://etherscan.io/tx/0x6e311f84655af72614966705584569b52d6e314f2d61b965db91db41fd01b1e1) | 570x |
 
-<small><i>Max scalability gain is calculated as (L1 gas cost) / (bytes in rollup _16)_ 12 million / 12.5 million.</i></small>
+<small><i>Max scalability gain is calculated as (L1 gas cost) / (bytes in rollup * 16) * 12 million / 12.5 million.</i></small>
 
 Now, it is worth keeping in mind that these figures are overly optimistic for a few reasons. Most importantly, a block would almost never just contain one batch, at the very least because there are and will be multiple rollups. Second, deposits and withdrawals will continue to exist. Third, _in the short term_ usage will be low, and so fixed costs will dominate. But even with these factors taken into account, scalability gains of over 100x are expected to be the norm.
 

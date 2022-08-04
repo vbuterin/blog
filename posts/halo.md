@@ -27,9 +27,9 @@ So how do these techniques work, and what can they do? That's exactly what this 
 
 Inner product arguments are a proof scheme that can work over many mathematical structures, but usually we focus on IPAs over [elliptic curve points](https://en.wikipedia.org/wiki/Elliptic_curve). IPAs can be made over simple elliptic curves, theoretically even Bitcoin and Ethereum's [secp256k1](https://en.bitcoin.it/wiki/Secp256k1) (though some special properties are preferred to make [FFTs](https://vitalik.ca/general/2019/05/12/fft.html) more efficient); no need for insanely complicated pairing schemes that despite having written an [explainer article](https://vitalik.ca/general/2017/01/14/exploring_ecp.html) and an [implementation](https://github.com/ethereum/py_ecc/blob/master/py_ecc/bls12_381/bls12_381_pairing.py) I can still barely understand myself.
 
-We'll start off with the commitment scheme, typically called **Pedersen vector commitments**. To be able to commit to degree $< n$ polynomials, we first publicly choose a set of base points, $G_0 ... G_{n-1}$. These points can be generated through a pseudo-random procedure that can be re-executed by anyone (eg. the x coordinate of $G_i$ can be $hash(i, j)$ for the lowest integer $j \ge 0$ that produces a valid point); this is_not_ a trusted setup as it does not rely on any specific party to introduce secret information.
+We'll start off with the commitment scheme, typically called **Pedersen vector commitments**. To be able to commit to degree $< n$ polynomials, we first publicly choose a set of base points, $G_0 ... G_{n-1}$. These points can be generated through a pseudo-random procedure that can be re-executed by anyone (eg. the x coordinate of $G_i$ can be $hash(i, j)$ for the lowest integer $j \ge 0$ that produces a valid point); this is _not_ a trusted setup as it does not rely on any specific party to introduce secret information.
 
-To commit to a polynomial $P(x) = \sum_i c_i x^i$, the prover computes $com(P) = \sum_i c_i G_i$. For example, $com(x^2 + 4)$ would equal $G_2 + 4 *G_0$ (remember, the $+$ and $*$ here are [elliptic curve addition](https://hackernoon.com/what-is-the-math-behind-elliptic-curve-cryptography-f61b25253da3) and multiplication). Cryptographers will also often add an extra $r \cdot H$ hiding parameter for privacy, but for simplicity of exposition we'll ignore privacy for now; in general, it's not that hard to add privacy into all of these schemes.
+To commit to a polynomial $P(x) = \sum_i c_i x^i$, the prover computes $com(P) = \sum_i c_i G_i$. For example, $com(x^2 + 4)$ would equal $G_2 + 4 * G_0$ (remember, the $+$ and $*$ here are [elliptic curve addition](https://hackernoon.com/what-is-the-math-behind-elliptic-curve-cryptography-f61b25253da3) and multiplication). Cryptographers will also often add an extra $r \cdot H$ hiding parameter for privacy, but for simplicity of exposition we'll ignore privacy for now; in general, it's not that hard to add privacy into all of these schemes.
 
 <center><br>
 
@@ -43,7 +43,7 @@ _Though it's not really mathematically accurate to think of elliptic curve point
 
 Now, let's get into how the proof works. **Our final goal will be a polynomial evaluation proof**: given some $z$, we want to make a proof that $P(z) = a$, where this proof can be verified by anyone who has the commitment $C = com(P)$. **But first, we'll focus on a simpler task: proving that $C$ is a _valid commitment to any polynomial at all_** - that is, proving that $C$ was constructed by taking a linear combination $\sum_i c_i G_i$ of the points $\{G_0 ... G_{n-1}\}$, without anything else mixed in.
 
-Of course, technically _any_ point is some multiple of $G_0$ and so it's theoretically a valid commitment of something, but what we care about is proving that the prover _knows_ some $\{c_0 ... c_{n-1}\}$ such that $\sum_i c_i G_i = C$. A commitment $C$ cannot commit to multiple distinct polynomials_that the prover knows about_, because if it could, that would imply that elliptic curves are broken.
+Of course, technically _any_ point is some multiple of $G_0$ and so it's theoretically a valid commitment of something, but what we care about is proving that the prover _knows_ some $\{c_0 ... c_{n-1}\}$ such that $\sum_i c_i G_i = C$. A commitment $C$ cannot commit to multiple distinct polynomials _that the prover knows about_, because if it could, that would imply that elliptic curves are broken.
 
 The prover _could_, of course, just provide $\{c_0 ... c_{n-1}\}$ directly and let the verifier check the commitment. But this takes too much space. So instead, we try to reduce the problem to a smaller problem of half the size. The prover provides two points, $L$ and $R$, representing the yellow and green areas in this diagram:
 
@@ -171,7 +171,7 @@ Expressed in math:
 
 * Let $P(z) = a$ be the previous statement that needs to be proven
 * The prover generates $G^*_0$
-* The prover proves the correctness of the new block plus the logarithmic work in the previous statements by generating a [PLONK proof](https://vitalik.ca/general/2019/09/22/plonk.html#putting-it-all-together): $Q_L *A + Q_R* B + Q_O *C + Q_M* A *B + Q_C = Z* H$
+* The prover proves the correctness of the new block plus the logarithmic work in the previous statements by generating a [PLONK proof](https://vitalik.ca/general/2019/09/22/plonk.html#putting-it-all-together): $Q_L * A + Q_R * B + Q_O * C + Q_M * A * B + Q_C = Z * H$
 * The prover chooses a random point $t$, and proves the evaluation of a linear combination of $\{G^*_0,\ Q_L,\ A,\ Q_R,\ B,\ Q_O,\ C,\ Q_M,\ Q_C,\ Z,\ H\}$ at $t$. We can then check the above equation, replacing each polynomial with its now-verified evaluation at $t$, to verify the PLONK proof.
 
 ### Incremental verification, more generally

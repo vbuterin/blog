@@ -13,7 +13,7 @@ Typically, attempts to collapse down political preferences into a few dimensions
 
 </td><td>
 
-![](../../../../images/bullveto/compass2.png)
+![](../../../../images/bullveto/compass2.png){.padded}
 
 </td></tr></table></center>
 

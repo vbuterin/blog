@@ -169,11 +169,11 @@ Suppose that you are a small participant, so your individual bets won't affect t
 
 The standard theory here relies on the [Kelly criterion](https://en.wikipedia.org/wiki/Kelly_criterion). Essentially, you should act to maximize the expected logarithm of your assets. In this case, we can solve the resulting equation. Suppose you invest portion $r$ of your money into buying A-token for $0.4. Your expected new log-wealth, from your point of view, would be:
 
-$0.5 *log((1-r) + \frac{r}{0.4}) + 0.5* log(1-r)$
+$0.5 * log((1-r) + \frac{r}{0.4}) + 0.5 * log(1-r)$
 
 The first term is the 50% chance (from your point of view) that the bet pays off, and the portion $r$ that you invest grows by 2.5x (as you bought dollars at 40 cents). The second term is the 50% chance that the bet does not pay off, and you lose the portion you bet. We can use calculus to find the $r$ that maximizes this; for the lazy, [here's WolframAlpha](https://www.wolframalpha.com/input/?i=maximize+0.5+*+log%28%281-r%29+%2B+%5Cfrac%7Br%7D%7B0.4%7D%29+%2B+0.5+*+log%281-r%29). The answer is $r = \frac{1}{6}$. If other people buy and the price for A on the market gets up to 47% (and B gets down to 48%), we can redo the calculation for the last trader who would flip the market over to make it correctly favor A:
 
-$0.5 *log((1-r) + \frac{r}{0.47}) + 0.5* log(1-r)$
+$0.5 * log((1-r) + \frac{r}{0.47}) + 0.5 * log(1-r)$
 
 Here, the expected-log-wealth-maximizing $r$ is a mere 0.0566. The conclusion is clear: when decisions are close and when there is a lot of noise, it turns out that it only makes sense to invest a small portion of your money in a market. And this is assuming rationality; most people invest _less_ into uncertain gambles than the Kelly criterion says they should. Capital costs stack on top even further. But if an attacker _really_ wants to force outcome B through because they want it to happen for personal reasons, they can simply put _all_ of their capital toward buying that token. All in all, the game can easily be lopsided more than 20:1 in favor of the attacker.
 

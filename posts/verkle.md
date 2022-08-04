@@ -15,7 +15,7 @@ In terms of the _structure_ of the tree (how the nodes in the tree are arranged 
 
 The location of a value in the tree is based on its key: in the diagram below, to get to the node with key `4cc`, you start at the root, then go down to the child at position `4`, then go down to the child at position `c` (remember: `c = 12` in hexadecimal), and then go down again to the child at position `c`. To get to the node with key `baaa`, you go to the position-`b` child of the root, and then the position-`a` child of _that_ node. The node at path `(b,a)` directly contains the node with key `baaa`, because there are no other keys in the tree starting with `ba`.
 
-<center><br><img src="../../../../images/verkle-files/verkle.png" class="padded"><br><br>
+<center><br><img src="../../../../images/verkle-files/verkle.png" class="padded" /><br><br>
 <small><i>The structure of nodes in a hexary (16 children per parent) Verkle tree, here filled with six (key, value) pairs.</i></small><br><br><br>
 </center>
 
@@ -25,7 +25,7 @@ The only real difference in the _structure_ of Verkle trees and Merkle Patricia 
 
 In a Merkle tree (including Merkle Patricia trees), the proof of a value consists of the entire set of _sister nodes_: the proof must contain all nodes in the tree that _share a parent_ with any of the nodes in the path going down to the node you are trying to prove. That may be a little complicated to understand, so here's a picture of a proof for the value in the `4ce` position. Sister nodes that must be included in the proof are highlighted in red.
 
-<center><br><img src="../../../../images/verkle-files/verkle2.png" class="padded"><br><br>
+<center><br><img src="../../../../images/verkle-files/verkle2.png" class="padded" /><br><br>
 <br><br>
 </center>
 
@@ -37,7 +37,7 @@ So what is this little extra that we need as a proof? To understand that, we fir
 
 A vector commitment scheme is a special type of hash function, hashing a list $h(z_1, z_2 ... z_n) \rightarrow C$. But vector commitments have the special property that for a commitment $C$ and a value $z_i$, it's possible to make a short proof that $C$ is the commitment to some list where the value at the i'th position is $z_i$. In a Verkle proof, this short proof replaces the function of the sister nodes in a Merkle Patricia proof, giving the verifier confidence that a child node really is the child at the given position of its parent node.
 
-<center><br><img src="../../../../images/verkle-files/verkle3.png class="padded"><br><br>
+<center><br><img src="../../../../images/verkle-files/verkle3.png class="padded" /><br><br>
 <small><i>No sister nodes required in a proof of a value in the tree; just the path itself plus a few short proofs to link each commitment in the path to the next.</i></small><br><br><br>
 </center>
 
@@ -45,7 +45,7 @@ In practice, we use a primitive even more powerful than a vector commitment, cal
 
 This scheme is already very powerful as it is: **if you use a KZG commitment and proof, the proof size is 96 bytes per intermediate node, nearly 3x more space-efficient than a simple Merkle proof** if we set width = 256. However, it turns out that we can increase space-efficiency even further.
 
-<center><br><img src="../../../../images/verkle-files/notfinalform.png"><br><br>
+<center><br><img src="../../../../images/verkle-files/notfinalform.png" /><br><br>
 </center><br>
 
 ## Merging the proofs
@@ -75,7 +75,7 @@ $A_i(X) - 9 = X^2 + X - 6$, and $\frac{X^2 + X - 6}{X - 2}$ gives a clean $X - 3
 
 The rest of the proof involves providing a polynomial commitment to $g(X)$ and then proving that the commitment is actually correct. Once again, see [Dankrad's more technical description](https://notes.ethereum.org/nrQqhVpQRi6acQckwm1Ryg#Proof) for the rest of the proof.
 
-<center><br><img src="../../../../images/verkle-files/verkle5.png" class="padded"><br><br>
+<center><br><img src="../../../../images/verkle-files/verkle5.png" class="padded" /><br><br>
 <small><i>One single proof proves an unlimited number of parent-child relationships.</i></small><br><br><br>
 </center>
 

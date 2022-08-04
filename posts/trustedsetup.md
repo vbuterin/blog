@@ -49,7 +49,7 @@ _A valid commitment to the polynomial $3x^3 + 8x^2 + 2x + 6$ under one set of ba
 
 If we want to make an IPA-based _proof_ for some statement (say, that this polynomial evaluated at $x = 10$ equals $3826$), the proof should pass with the first set of base points and fail with the second. Hence, whatever the proof verification procedure is cannot avoid somehow taking into account each and every one of the $S_i$ values, and so it unavoidably takes $O(N)$ time.
 
-**But with a trusted setup, there is a hidden mathematical relationship between the points**. It's guaranteed that $S_{i+1} = s * S_i$ with the same factor $s$ between any two adjacent points. If $[S_0, S_1 ... S_i ... S_{n-1}]$ is a valid setup, the "edited setup" $[S_0, S_1 ... (S_i * 2) ... S_{n-1}]$_cannot also be a valid setup_. **Hence, we don't need $O(n)$ computation; instead, we take advantage of this mathematical relationship to verify anything we need to verify in constant time.**
+**But with a trusted setup, there is a hidden mathematical relationship between the points**. It's guaranteed that $S_{i+1} = s * S_i$ with the same factor $s$ between any two adjacent points. If $[S_0, S_1 ... S_i ... S_{n-1}]$ is a valid setup, the "edited setup" $[S_0, S_1 ... (S_i * 2) ... S_{n-1}]$ _cannot also be a valid setup_. **Hence, we don't need $O(n)$ computation; instead, we take advantage of this mathematical relationship to verify anything we need to verify in constant time.**
 
 However, the mathematical relationship has to remain secret: if $s$ is known, then anyone could come up with a commitment that stands for many different polynomials: if $C$ commits to $P(x)$, it also commits to $\frac{P(x) * x}{s}$, or $P(x) - x + s$, or many other things. This would completely break all applications of polynomial commitments. **Hence, while some secret $s$ must have existed at one point to make possible the mathematical link between the $S_i$ values that enables efficient verification, the $s$ must also have been forgotten.**
 
@@ -83,11 +83,11 @@ $[G_1, G_1 * (st), G_1 * (st)^2 ... G_1 * (st)^{n_1-1}]$ &nbsp;
 
 $[G_2, G_2 * (st), G_2 * (st)^2 ... G_2 * (st)^{n_2-1}]$
 
-That is to say, you've created a valid setup with the secret $s *t$! You never give your $t$ to the previous participants, and the previous participants never give you their secrets that went into $s$. And as long as any one of the participants is honest and does not reveal their part of the secret, the combined secret does not get revealed. In particular, finite fields have the property that if you know know $s$ but not $t$, and $t$ is securely randomly generated, then you know _nothing_ about $s*t$!
+That is to say, you've created a valid setup with the secret $s * t$! You never give your $t$ to the previous participants, and the previous participants never give you their secrets that went into $s$. And as long as any one of the participants is honest and does not reveal their part of the secret, the combined secret does not get revealed. In particular, finite fields have the property that if you know know $s$ but not $t$, and $t$ is securely randomly generated, then you know _nothing_ about $s*t$!
 
 ## Verifying the setup
 
-To verify that each participant actually participated, each participant can provide a proof that consists of (i) the $G_1 *s$ point that they received and (ii) $G_2* t$, where $t$ is the secret that they introduce. The list of these proofs can be used to verify that the final setup combines together all the secrets (as opposed to, say, the last participant just forgetting the previous values and outputting a setup with just their own secret, which they keep so they can cheat in any protocols that use the setup).
+To verify that each participant actually participated, each participant can provide a proof that consists of (i) the $G_1 * s$ point that they received and (ii) $G_2 * t$, where $t$ is the secret that they introduce. The list of these proofs can be used to verify that the final setup combines together all the secrets (as opposed to, say, the last participant just forgetting the previous values and outputting a setup with just their own secret, which they keep so they can cheat in any protocols that use the setup).
 
 <center>
 

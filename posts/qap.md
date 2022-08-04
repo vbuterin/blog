@@ -3,7 +3,7 @@
 [title]: <> ([Mirror] Quadratic Arithmetic Programs: from Zero to Hero)
 [pandoc]: <> (--mathjax)
 
-_This is a mirror of the post at <a href="<<https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649>>">https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649</a> _
+_This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649</a>_
 
 There has been a lot of interest lately in the technology behind zk-SNARKs, and people are increasingly [trying to demystify](https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell/) something that many have come to call “moon math” due to its perceived sheer indecipherable complexity. zk-SNARKs are indeed quite challenging to grasp, especially due to the sheer number of moving parts that need to come together for the whole thing to work, but if we break the technology down piece by piece then comprehending it becomes simpler.
 

@@ -59,7 +59,7 @@ $$
 Q_{L}=1, Q_{R}=0, Q_{M}=0, Q_{O}=0, Q_{C}=-x
 $$
 
-You may have noticed that each end of a wire, as well as each wire in a set of wires that clearly must have the same value (eg. $x$), corresponds to a distinct variable; there's nothing so far forcing the output of one gate to be the same as the input of another gate (what we call "copy constraints"). PLONK does of course have a way of enforcing copy constraints, but we'll get to this later. So now we have a problem where a prover wants to prove that they have a bunch of $x_{a_i}, x_{b_i}$ and $x_{c_i}$ values that satisfy a bunch of equations that are of the same form. This is still a big problem, but unlike "find a satisfying input to this computer program" it's a very_structured_ big problem, and we have mathematical tools to "compress" it.
+You may have noticed that each end of a wire, as well as each wire in a set of wires that clearly must have the same value (eg. $x$), corresponds to a distinct variable; there's nothing so far forcing the output of one gate to be the same as the input of another gate (what we call "copy constraints"). PLONK does of course have a way of enforcing copy constraints, but we'll get to this later. So now we have a problem where a prover wants to prove that they have a bunch of $x_{a_i}, x_{b_i}$ and $x_{c_i}$ values that satisfy a bunch of equations that are of the same form. This is still a big problem, but unlike "find a satisfying input to this computer program" it's a very _structured_ big problem, and we have mathematical tools to "compress" it.
 
 ### From linear systems to polynomials
 
