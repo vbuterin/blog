@@ -31,7 +31,8 @@ Ethereum was not originally designed around ZK-friendliness, so there are _many_
 
 #### <span style="color:#880088">Who's building it?</span>
 
-The [ZK-EVM Community Edition]([https://github.com/privacy-scaling-explorations/zkevm-specs](https://github.com/privacy-scaling-explorations/zkevm-circuits) (bootstrapped by community contributors including [Privacy and Scaling Explorations](https://github.com/privacy-scaling-explorations/), the Scroll team and others) is a Tier 1 ZK-EVM.
+The [ZK-EVM Community Edition]([https://github.com/privacy-scaling-explorations/zkevm-specs](https://github.com/privacy-scaling-explorations/zkevm-circuits) (bootstrapped by community contributors including [Privacy and Scaling Explorations](https://github.com/privacy-scaling-explorations/), the Scroll team, [Taiko](https://github.com/taikochain
+) and others) is a Tier 1 ZK-EVM.
 
 ## Type 2 (fully EVM-equivalent)
 
