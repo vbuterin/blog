@@ -86,12 +86,36 @@ There is a key mathematical reason why dressing in layers is a good idea: it let
 
 <br>
 
-| Temperature (°C) | Clothing |
-| - | - |
-| <span style="font-size:250%; text-align: center">20°</span> | ![](../../../../images/backpack/tshirt.png){.transparent} |
-| <span style="font-size:250%; text-align: center">13°</span> | ![](../../../../images/backpack/tshirt.png){.transparent} + ![](../../../../images/backpack/sweater.png){.transparent} |
-| <span style="font-size:250%; text-align: center">7°</span> | ![](../../../../images/backpack/tshirt.png){.transparent} + ![](../../../../images/backpack/jacket.png){.transparent} |
-| <span style="font-size:250%; text-align: center">0°</span> | ![](../../../../images/backpack/tshirt.png){.transparent} + ![](../../../../images/backpack/sweater.png){.transparent} + ![](../../../../images/backpack/jacket.png){.transparent} |
+<table>
+<thead>
+	<tr>
+		<th>Temperature (°C)</th>
+		<th>Clothing</th>
+	</tr>
+</thead>
+<tbody>
+<tr><td><span style="font-size:250%; text-align: center">20°</span></td><td>
+
+![](../../../../images/backpack/tshirt.png){.transparent}
+
+</td></tr>
+<tr><td><span style="font-size:250%; text-align: center">13°</span></td><td>
+
+![](../../../../images/backpack/tshirt.png){.transparent} + ![](../../../../images/backpack/sweater.png){.transparent}
+
+</td></tr>
+<tr><td><span style="font-size:250%; text-align: center">7°</span></td><td>
+
+![](../../../../images/backpack/tshirt.png){.transparent} + ![](../../../../images/backpack/jacket.png){.transparent}
+
+</td></tr>
+<tr><td><span style="font-size:250%; text-align: center">0°</span></td><td>
+
+![](../../../../images/backpack/tshirt.png){.transparent} + ![](../../../../images/backpack/sweater.png){.transparent} + ![](../../../../images/backpack/jacket.png){.transparent}
+
+</td></tr>
+</tbody>
+</table>
 
 <br>
 
