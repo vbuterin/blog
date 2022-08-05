@@ -88,10 +88,10 @@ There is a key mathematical reason why dressing in layers is a good idea: it let
 
 <table>
 <thead>
-	<tr>
-		<th>Temperature (°C)</th>
-		<th>Clothing</th>
-	</tr>
+<tr>
+<th>Temperature (°C)</th>
+<th>Clothing</th>
+</tr>
 </thead>
 <tbody>
 <tr><td><span style="font-size:250%; text-align: center">20°</span></td><td>
