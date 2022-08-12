@@ -3,7 +3,6 @@
 [title]: <> (A Prehistory of the Ethereum Protocol)
 [pandoc]: <> (--mathjax)
 
-
 Although the ideas behind the current Ethereum protocol have largely been stable for two years, Ethereum did not emerge all at once, in its current conception and fully formed. Before the blockchain has launched, the protocol went through a number of significant evolutions and design decisions. The purpose of this article will be to go through the various evolutions that the protocol went through from start to launch; the countless work that was done on the implementations of the protocol such as Geth, cppethereum, pyethereum, and EthereumJ, as well as the history of applications and businesses in the Ethereum ecosystem, is deliberately out of scope.
 
 Also out of scope is the history of Casper and sharding research. While we can certainly make more blog posts talking about all of the various ideas Vlad, Gavin, myself and others came up with, and discarded, including "proof of proof of work", hub-and-spoke chains, "[hypercubes](https://blog.ethereum.org/2014/10/21/scalability-part-2-hypercubes)", [shadow chains](https://blog.ethereum.org/2014/09/17/scalability-part-1-building-top/) (arguably a precursor to [Plasma](http://plasma.io/)), [chain fibers](https://github.com/ethereum/wiki/wiki/Chain-Fibers-Redux), and [various iterations of Casper](https://blog.ethereum.org/2016/12/06/history-casper-chapter-1/), as well as Vlad's rapidly evolving thoughts on reasoning about incentives of actors in consensus protocols and properties thereof, this would also be far too complex a story to go through in one post, so we will leave it out for now.
@@ -12,7 +11,7 @@ Let us first begin with the very earliest version of what would eventually becom
 
 [https://web.archive.org/web/20150627031414/http://vbuterin.com/ultimatescripting.html](https://web.archive.org/web/20150627031414/http://vbuterin.com/ultimatescripting.html)
 
-![](../../../../images/prehistory-files/ultimatescripting.png)
+![](../../../../images/prehistory-files/ultimatescripting.png){.padded}
 
 Notice that this is very far from the later and more expansive vision of Ethereum: it specialized purely in what Mastercoin was trying to specialize in already, namely two-party contracts where parties A and B would both put in money, and then they would later get money out according to some formula specified in the contract (eg. a bet would say "if X happens then give all the money to A, otherwise give all the money to B"). The scripting language was not Turing-complete.
 
@@ -20,15 +19,13 @@ The Mastercoin team was impressed, but they were not interested in dropping ever
 
 [https://web.archive.org/web/20131219030753/http://vitalik.ca/ethereum.html](https://lh6.googleusercontent.com/soPo_aa2YSpV8DvGGZbGjAkZehtiqJEa8dPzOM4ZSZxAvZcAfNbnVqErQL1JlG8lcmgpQyXmb3cO9m21asJQKZZmTXGQsLOtvTgBTp_5LOxfdWRZpgh3pys7Os3GK5dFGCL6aIpd)
 
-![](../../../../images/prehistory-files/ethereumwhitepaper.png)
-
+![](../../../../images/prehistory-files/ethereumwhitepaper.png){.padded}
 
 Here you can see the results of a substantial rearchitecting, largely a result of a long walk through San Francisco I took in November once I realized that smart contracts could potentially be fully generalized. Instead of the scripting language being simply a way of describing the terms of relations between two parties, contracts were themselves fully-fledged accounts, and had the ability to hold, send and receive assets, and even maintain a permanent storage (back then, the permanent storage was called "memory", and the only temporary "memory" was the 256 registers). The language switched from being a stack-based machine to being a register-based one on my own volition; I had little argument for this other than that it seemed more sophisticated.
 
 Additionally, notice that there is now a built-in fee mechanism:
 
-![](../../../../images/prehistory-files/txfee.png)
-
+![](../../../../images/prehistory-files/txfee.png){.padded}
 
 At this point, ether literally was gas; after every single computational step, the balance of the contract that a transaction was calling would drop a little bit, and if the contract ran out of money execution would halt. Note that this "receiver pays" mechanism meant that the contract itself had to require the sender to pay the contract a fee, and immediately exit if this fee is not present; the protocol allocated an allowance of 16 free execution steps to allow contracts to reject non-fee-paying transactions.
 
@@ -39,7 +36,6 @@ At this point, ether literally was gas; after every single computational step, t
 This was the time when the Ethereum protocol was entirely my own creation. From here on, however, new participants started to join the fold. By far the most prominent on the protocol side was Gavin Wood, who reached out to me in an about.me message in December 2013:
 
 ![](../../../../images/prehistory-files/gavwoodmessage.png)
-
 
 Jeffrey Wilcke, lead developer of the Go client (back then called "ethereal") also reached out and started coding around the same time, though his contributions were much more on the side of client development rather than protocol research.
 
@@ -60,7 +56,6 @@ Gavin can also be largely credited for the subtle change in vision from viewing 
 
 ![](../../../../images/prehistory-files/web3suite.png)
 
-
 There were also changes made around the start of 2014 that were suggested by others. We ended up moving back to a stack-based architecture after the idea was suggested by Andrew Miller and others.
 
 ![](../../../../images/prehistory-files/amiller1.png)
@@ -68,18 +63,15 @@ There were also changes made around the start of 2014 that were suggested by oth
 
 Charles Hoskinson suggested the switch from Bitcoin's SHA256 to the newer SHA3 (or, more accurately, keccak256). Although there was some controversy for a while, discussions with Gavin, Andrew and others led to establishing that the size of values on the stack should be limited to 32 bytes; the other alternative being considered, unlimited-size integers, had the problem that it was too difficult to figure out how much gas to charge for additions, multiplications and other operations.
 
-
 <br>
 <hr />
 <br>
-
 
 The initial mining algorithm that we had in mind, back in January 2014, was a contraption called Dagger:
 
 [https://github.com/ethereum/wiki/blob/master/Dagger.md](https://github.com/ethereum/wiki/blob/master/Dagger.md)
 
 ![](../../../../images/prehistory-files/daggerspec.png)
-
 
 Dagger was named after the "directed acyclic graph" (DAG), the mathematical structure that is used in the algorithm. The idea is that every N blocks, a new DAG would be pseudorandomly generated from a seed, and the bottom layer of the DAG would be a collection of nodes that takes several gigabytes to store. However, generating any individual value in the DAG would require calculating only a few thousand entries. A "Dagger computation" involved getting some number of values in random positions in this bottom-level dataset and hashing them together. This meant that there was a fast way to make a Dagger calculation - already having the data in memory, and a slow, but not memory intensive way - regenerating each value from the DAG that you need to get from scratch.
 
@@ -94,8 +86,6 @@ The next algorithm was something called Random Circuit, described in this google
 Finally, we came full circle with an algorithm called "Dagger Hashimoto". "Dashimoto", as it was sometimes called in short, borrowed many ideas from [Hashimoto](https://pdfs.semanticscholar.org/3b23/7cc60c1b9650e260318d33bec471b8202d5e.pdf), a proof of work algorithm by Thaddeus Dryja that pioneered the notion of "I/O bound proof of work", where the dominant limiting factor in mining speed was not hashes per second, but rather megabytes per second of RAM access. However, it combined this with Dagger's notion of light-client-friendly DAG-generated datasets. After many rounds of tweaking by myself, Matthew, Tim and others, the ideas finally converged into the algorithm we now call [Ethash](https://github.com/ethereum/wiki/wiki/Ethash).
 
 ![](../../../../images/prehistory-files/hashimoto.png)
-
-
 
 <br>
 <hr />
@@ -119,15 +109,13 @@ Gavin was also a key initial voice in developing the idea of "[protocol abstract
 
 This was all implemented in PoC7; after PoC7, the protocol did not really change much, with the exception of minor, though in some cases important, details that would come out through security audits...
 
-
 <br>
 <hr />
 <br>
 
-
 In early 2015, came the pre-launch security audits organized by Jutta Steiner and others, which included both software code audits and academic audits. The software audits were primarily on the C++ and Go implementations, which were led by Gavin Wood and Jeffrey Wilcke, respectively, though there was also a smaller audit on my pyethereum implementation. Of the two academic audits, one was performed by Ittay Eyal (of "selfish mining" fame), and the other by Andrew Miller and others from Least Authority. The Eyal audit led to a minor protocol change: the total difficulty of a chain would not include uncles. The [Least Authority audit](https://leastauthority.com/blog/least_authority_performs_incentive_analysis_for_ethereum/) was more focused on smart contract and gas economics, as well as the Patricia tree. This audit led to several protocol changes. One small one is the use of sha3(addr) and sha3(key) as trie keys instead of the address and key directly; this would make it harder to perform a worst-case attack on the trie.
 
-![](../../../../images/prehistory-files/leastauthority.png)
+![](../../../../images/prehistory-files/leastauthority.png){.padded}
 
 <center>
 <small><i>And a warning that was perhaps a bit too far ahead of its time...</i></small>
@@ -137,7 +125,6 @@ In early 2015, came the pre-launch security audits organized by Jutta Steiner an
 Another significant thing that we discussed was the gas limit voting mechanism. At the time, we were already concerned by perceived lack of progress in the bitcoin block size debate, and wanted to have a more flexible design in Ethereum that could adjust over time as needed. But the challenge is: what is the optimal limit? My initial thought had been to make a dynamic limit, targeting $1.5 \cdot$ the long-term exponential moving average of the actual gas usage, so that in the long run on average blocks would be $\frac{2}{3}$ full. However, Andrew showed that this was exploitable in some ways - specifically, miners who wanted to raise the limit would simply include transactions in their own blocks that consume a very large amount of gas, but take very little time to process, and thereby always create full blocks at no cost to themselves. The security model was thus, at least in the upward direction, equivalent to simply having miners vote on the gas limit.
 
 We did not manage to come up with a gas limit strategy that was less likely to break, and so Andrew's recommended solution was to simply have miners vote on the gas limit explicitly, and have the default strategy for voting be the $1.5\cdot$ EMA rule. The reasoning was that we were still very far from knowing the right approach for setting maximum gas limits, and the risk of any specific approach failing seemed greater than the risk of miners abusing their voting power. Hence, we might as well simply let miners vote on the gas limit, and accept the risk that the limit will go too high or too low, in exchange for the benefit of flexibility, and the ability for miners to work together to very quickly adjust the limit upwards or downwards as needed.
-
 
 <br>
 <hr />
@@ -152,7 +139,3 @@ After a mini-hackathon between Gavin, Jeff and myself, PoC9 was launched in Marc
 Olympic ran for four months. In the first two months, many bugs were found in the various implementations, consensus failures happened, among other issues, but around June the network noticeably stabilized. In July a decision was made to make a code-freeze, followed by a release, and on July 30 the release took place.
 
 ![](../../../../images/prehistory-files/release.png)
-
-
-
-

@@ -7,13 +7,13 @@ Typically, attempts to collapse down political preferences into a few dimensions
 
 <center><br>
 
-<table><tr style="border-width:0px"><td style="border-width:0px">
+<table class="transparent"><tr><td>
 
-![](../../../../images/bullveto/compass1.png)
+![](../../../../images/bullveto/compass1.png){.padded}
 
-</td><td style="border-width:0px">
-    
-![](../../../../images/bullveto/compass2.png)
+</td><td>
+
+![](../../../../images/bullveto/compass2.png){.padded}
 
 </td></tr></table></center>
 
@@ -57,7 +57,7 @@ The case for vetocracy in these contexts is clear: it gives people a feeling of 
 
 ![](../../../../images/bullveto/siphonlife.png)
 
-_Vitalik Buterin, bulldozer victim_    
+_Vitalik Buterin, bulldozer victim_
 
 </center><br>
 

@@ -3,7 +3,6 @@
 [title]: <> ([Mirror] Exploring Elliptic Curve Pairings)
 [pandoc]: <> (--mathjax)
 
-
 _This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627</a>_
 
 **Trigger warning: math.**
@@ -79,7 +78,7 @@ Now, let’s talk about **extension fields**. You have probably already seen an 
 
 <br>
 <center>
-<img src="https://cdn-images-1.medium.com/max/2000/1*qDOPI299SKvZuzeNnik4JA.png" />
+<img src="https://cdn-images-1.medium.com/max/2000/1*qDOPI299SKvZuzeNnik4JA.png" class="padded" />
 </center>
 <br>
 
@@ -147,7 +146,7 @@ Where $a$, $b$ and $c$ are carefully chosen so that the line passes through poin
 
 <br>
 <center>
-<img src="https://cdn-images-1.medium.com/max/2000/1*alHa7VxwcLoJk4C_YU9Iog.png" />
+<img src="https://cdn-images-1.medium.com/max/2000/1*alHa7VxwcLoJk4C_YU9Iog.png" class="padded" />
 </center>
 <br>
 

@@ -20,7 +20,7 @@ But making a system that has these properties is _hard_. It took [years of resea
 
 <center><br><a href="https://arxiv.org/pdf/1710.09437.pdf">
 
-![](../../../../images/road/image1.png)
+![](../../../../images/road/image1.png){.padded}
 
 </a></center><br>
 
@@ -34,11 +34,11 @@ Proof of stake from the beginning would in my opinion have been a mistake; PoW w
 
 Ethereum sharding has been on a very consistent trajectory of becoming less and less complex since the ideas started being [worked on in 2014](https://blog.ethereum.org/2014/09/17/scalability-part-1-building-top/). First, we had complex sharding with built-in execution and cross-shard transactions. Then, we simplified the protocol by moving more responsibilities to the user (eg. in a cross-shard transaction, the user would have to separately pay for gas on both shards). Then, we switched to the [rollup-centric roadmap](https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698) where, from the protocol's point of view, shards are just blobs of data. Finally, with [danksharding](https://www.youtube.com/watch?v=e9oudTr5BE4), the shard fee markets are merged into one, and the final design just looks like a non-sharded chain but where some data availability sampling magic happens behind the scenes to make sharded verification happen.
 
-<br><table><tr>
+<br><table class="transparent centered"><tr>
 
 <td>
 <img src="../../../../images/road/sharding2015.png" style="width:330px" />
-	
+
 </td><td>
 
 <img src="../../../../images/road/sharding2022.png" style="width:330px" />
@@ -109,7 +109,7 @@ The current ETH supply is approximately represented by this [chart from Ethersca
 
 <center>
 
-![](../../../../images/road/supplychart.png)
+![](../../../../images/road/supplychart.png){.padded}
 
 </center>
 

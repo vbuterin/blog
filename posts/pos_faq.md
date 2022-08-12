@@ -72,11 +72,11 @@ Note that Ittay Eyal and Emin Gun Sirer's [selfish mining](https://bitcoinmagazi
 
 In many early (all chain-based) proof of stake algorithms, including Peercoin, there are only rewards for producing blocks, and no penalties. This has the unfortunate consequence that, in the case that there are multiple competing chains, it is in a validator's incentive to try to make blocks on top of every chain at once, just to be sure:
 
-![](https://raw.githubusercontent.com/vbuterin/diagrams/master/possec.png)
+![](https://raw.githubusercontent.com/vbuterin/diagrams/master/possec.png){.padded}
 
 In proof of work, doing so would require splitting one's computing power in half, and so would not be lucrative:
 
-![](https://github.com/vbuterin/diagrams/blob/master/powsec.png?raw=true)
+![](https://github.com/vbuterin/diagrams/blob/master/powsec.png?raw=true){.padded}
 
 The result is that if all actors are narrowly economically rational, then even if there are no attackers, a blockchain may never reach consensus. If there is an attacker, then the attacker need only overpower altruistic nodes (who would exclusively stake on the original chain), and not rational nodes (who would stake on both the original chain and the attacker's chain), in contrast to proof of work, where the attacker must overpower both altruists and rational nodes (or at least credibly threaten to: see [P + epsilon attacks](https://blog.ethereum.org/2015/01/28/p-epsilon-attack/)).
 
@@ -84,7 +84,7 @@ Some argue that stakeholders have an incentive to act correctly and only stake o
 
 This can be solved via two strategies. The first, described in broad terms under the name "Slasher" [here](https://blog.ethereum.org/2014/01/15/slasher-a-punitive-proof-of-stake-algorithm/) and developed further by Iddo Bentov [here](https://arxiv.org/pdf/1406.5694.pdf), involves penalizing validators if they simultaneously create blocks on multiple chains, by means of including proof of misbehavior (i.e. two conflicting signed block headers) into the blockchain as a later point in time at which point the malfeasant validator's deposit is deducted appropriately. This changes the incentive structure thus:
 
-![](https://github.com/vbuterin/diagrams/blob/master/slasher1sec.png?raw=true)
+![](https://github.com/vbuterin/diagrams/blob/master/slasher1sec.png?raw=true){.padded}
 
 Note that for this algorithm to work, the validator set needs to be determined well ahead of time. Otherwise, if a validator has 1% of the stake, then if there are two branches A and B then 0.99% of the time the validator will be eligible to stake only on A and not on B, 0.99% of the time the validator will be eligible to stake on B and not on A, and only 0.01% of the time will the validator will be eligible to stake on both. Hence, the validator can with 99% efficiency probabilistically double-stake: stake on A if possible, stake on B if possible, and only if the choice between both is open stake on the longer chain. This can only be avoided if the validator selection is the same for every block on both branches, which requires the validators to be selected at a time before the fork takes place.
 
@@ -92,7 +92,7 @@ This has its own flaws, including requiring nodes to be frequently online to get
 
 The second strategy is to simply punish validators for creating blocks on the _wrong_ chain. That is, if there are two competing chains, A and B, then if a validator creates a block on B, they get a reward of +R on B, but the block header can be included into A (in Casper this is called a "dunkle") and on A the validator suffers a penalty of -F (possibly F = R). This changes the economic calculation thus:
 
-![](https://github.com/vbuterin/diagrams/blob/master/slasher2sec.png?raw=true)
+![](https://github.com/vbuterin/diagrams/blob/master/slasher2sec.png?raw=true){.padded}
 
 The intuition here is that we can replicate the economics of proof of work inside of proof of stake. In proof of work, there is also a penalty for creating a block on the wrong chain, but this penalty is implicit in the external environment: miners have to spend extra electricity and obtain or rent extra hardware. Here, we simply make the penalties explicit. This mechanism has the disadvantage that it imposes slightly more risk on validators (although the effect should be smoothed out over time), but has the advantage that it does not require validators to be known ahead of time.
 
@@ -231,7 +231,7 @@ The above included a large amount of simplified modeling, however it serves to s
 
 Now, we can talk about the marginal/total distinction. In the case of capital lockup costs, this is very important. For example, consider a case where you have $100,000 of ether. You probably intend to hold a large portion of it for a long time; hence, locking up even $50,000 of the ether should be nearly free. Locking up $80,000 would be slightly more inconvenient, but $20,000 of breathing room still gives you a large space to maneuver. Locking up $90,000 is more problematic, $99,000 is very problematic, and locking up all $100,000 is absurd, as it means you would not even have a single bit of ether left to pay basic transaction fees. Hence, your marginal costs increase quickly. We can show the difference between this state of affairs and the state of affairs in proof of work as follows:
 
-![](https://blog.ethereum.org/wp-content/uploads/2014/07/liquidity.png)
+![](https://blog.ethereum.org/wp-content/uploads/2014/07/liquidity.png){.padded}
 
 Hence, the <i>total</i> cost of proof of stake is potentially much lower than the marginal cost of depositing 1 more ETH into the system multiplied by the amount of ether currently deposited.
 

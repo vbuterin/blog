@@ -33,10 +33,10 @@ To commit to a polynomial $P(x) = \sum_i c_i x^i$, the prover computes $com(P) =
 
 <center><br>
 
-![](../../../../images/halo/commitments1.png)
-    
+![](../../../../images/halo/commitments1.png){.padded}
+
 <small>
-    
+
 _Though it's not really mathematically accurate to think of elliptic curve points as being like real numbers that have sizes, area is nevertheless a good intuition for thinking about linear combinations of elliptic curve points like we use in these commitments. The blue area here is the value of the Pedersen commitment $C = \sum_i c_i G_i$ to the polynomial $P = \sum_i c_i x^i$._
 
 </small></center><br>
@@ -49,7 +49,7 @@ The prover _could_, of course, just provide $\{c_0 ... c_{n-1}\}$ directly and l
 
 <center><br>
 
-![](../../../../images/halo/commitments2.png)
+![](../../../../images/halo/commitments2.png){.padded}
 
 </center><br>
 
@@ -59,7 +59,7 @@ But there's a problem: if $C$ is incorrect in some way (eg. the prover added som
 
 <center><br>
 
-![](../../../../images/halo/commitments3.png)
+![](../../../../images/halo/commitments3.png){.padded}
 
 </center><br>
 
@@ -81,7 +81,7 @@ And then we repeat the process until we get down to one point:
 
 <center><br>
 
-![](../../../../images/halo/commitments4.png)
+![](../../../../images/halo/commitments4.png){.padded}
 
 </center><br>
 
@@ -106,7 +106,7 @@ We can make a Pedersen commitment using this extended base!
 
 <center><br>
 
-![](../../../../images/halo/commitments5.png)
+![](../../../../images/halo/commitments5.png){.padded}
 
 </center><br>
 
@@ -143,7 +143,7 @@ The above polynomial has degree $n - 1$, with $n$ nonzero coefficients. But its 
 
 <center><br>
 
-![](../../../../images/halo/proof_combining.png)
+![](../../../../images/halo/proof_combining.png){.padded}
 
 </center><br>
 
@@ -159,7 +159,7 @@ IPA-based proofs by themselves cannot do this, because a proof of a statement ta
 
 <center><br>
 
-![](../../../../images/halo/recursion.png)
+![](../../../../images/halo/recursion.png){.padded}
 
 </center><br>
 
@@ -199,7 +199,7 @@ In R1CS (see a more detailed description [here](https://vitalik.ca/general/2016/
 
 <center><br>
 
-<img src="../../../../images/halo/r1cs.png" style="width:450px" />
+<img src="../../../../images/halo/r1cs.png" style="width:450px" class="padded" />
 
 <br>
 
@@ -245,4 +245,3 @@ Hence, it's possible to make merging schemes for R1CS-based protocols too. Inter
 * No pairings or trusted setups required!
 
 The march toward faster and more efficient and safer ZK-SNARKs just keeps going...
-

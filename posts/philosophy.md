@@ -3,7 +3,6 @@
 [title]: <> (A Philosophy of Blockchain Validation)
 [pandoc]: <> ()
 
-
 See also:
 
 * [A Proof of Stake Design Philosophy](https://medium.com/@VitalikButerin/a-proof-of-stake-design-philosophy-506585978d51)
@@ -17,7 +16,7 @@ But how much validation do we actually need? Do we need a hundred independent va
 ## Why validate?
 
 <center>
-![](../../../../images/philosophy/badminer.png)
+![](../../../../images/philosophy/badminer.png){.padded}
 <br><br><small><i>A 51% attack pushing through an invalid block. We want the network to reject the chain!</i></small>
 </center><br>
 
@@ -33,11 +32,11 @@ Note that this reasoning is very different from a different line of reasoning th
 
 Here is one example of the "by definition" perspective [from Gavin Andresen](http://gavinandresen.ninja/a-definition-of-bitcoin):
 
-![](../../../../images/philosophy/definition_of_bitcoin.png)
+![](../../../../images/philosophy/definition_of_bitcoin.png){.padded}
 
 Here's another from [the Wasabi wallet](https://docs.wasabiwallet.io/using-wasabi/BitcoinFullNode.html#the-importance-of-running-a-full-node); this one comes even more directly from the perspective of explaining why full nodes are valuable:
 
-![](../../../../images/philosophy/wasabi.png)
+![](../../../../images/philosophy/wasabi.png){.padded}
 
 Notice two core components of this view:
 
@@ -48,7 +47,7 @@ However, I believe this "individualist" view to be very wrong. To see why, let u
 
 From your point of view, you still have your coins in a system that runs on rules that you accept. But so what? Other users will not accept your coins. Exchanges will not accept your coins. Public websites may show the price of the new coin as being some high value, but they're referring to the coins on the majority chain; _your_ coins are valueless. Cryptocurrencies and blockchains are fundamentally social constructs; without other people believing in them, they mean nothing.
 
-![](../../../../images/philosophy/lonely.png)
+![](../../../../images/philosophy/lonely.png){.padded}
 
 So what is the alternative view? The core idea is to look at blockchains as **[engineering security through coordination problems](https://vitalik.ca/general/2017/05/08/coordination_problems.html)**.
 
@@ -77,7 +76,7 @@ One natural advancement in this regard is **light clients with fraud proofs**. M
 A fraud proof in its simplest form works as follows. Typically, a single block in a blockchain only touches a small portion of the blockchain "state" (account balances, smart contract code....). If a fully verifying node processes a block and finds that it is invalid, they can generate a package (the fraud proof) containing the block along with just enough data from the blockchain state to process the block. They broadcast this package to light clients. Light clients can then take the package and use that data to verify the block themselves, even if they have no other data from the chain.
 
 <center>
-![](../../../../images/philosophy/fraudproof.png)
+![](../../../../images/philosophy/fraudproof.png){.padded}
 <br><i><small>A single block in a blockchain touches only a few accounts. A fraud proof would contain the data in those accounts along with Merkle proofs proving that that data is correct.</small></i>
 </center><br>
 
@@ -104,7 +103,7 @@ We can say that the attack did in fact default to chaos, though this was an acci
 But we could instead agree on a definition of the canonical chain that works differently: particularly, imagine a rule that once a client has accepted a block as part of the canonical chain, and that block has more than 100 descendants, the client will from then on never accept a chain that does not include that block. Alternatively, in a finality-bearing proof of stake setup (which eg. ethereum 2.0 is), imagine a rule that once a block is finalized it can never be reverted.
 
 <center>
-![](../../../../images/philosophy/finalizer.png)
+![](../../../../images/philosophy/finalizer.png){.padded}
 <br><br><small><i>5 block revert limit only for illustration purposes; in reality the limit could be something longer like 100-1000 blocks.</i></small>
 </center><br>
 

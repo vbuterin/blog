@@ -3,7 +3,7 @@
 [title]: <> ([Mirror] A Proof of Stake Design Philosophy)
 [pandoc]: <> (--mathjax)
 
-_This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/a-proof-of-stake-design-philosophy-506585978d51">https://medium.com/@VitalikButerin/a-proof-of-stake-design-philosophy-506585978d51</a> _
+_This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/a-proof-of-stake-design-philosophy-506585978d51">https://medium.com/@VitalikButerin/a-proof-of-stake-design-philosophy-506585978d51</a>_
 
 Systems like Ethereum (and Bitcoin, and NXT, and Bitshares, etc) are a fundamentally new class of cryptoeconomic organisms — decentralized, jurisdictionless entities that exist entirely in cyberspace, maintained by a combination of cryptography, economics and social consensus. They are kind of like BitTorrent, but they are also not like BitTorrent, as BitTorrent has no concept of state — a distinction that turns out to be crucially important. They are sometimes described as [decentralized autonomous corporations](https://letstalkbitcoin.com/is-bitcoin-overpaying-for-false-security), but they are also not quite corporations — you can’t hard fork Microsoft. They are kind of like open source software projects, but they are not quite that either — you can fork a blockchain, but not quite as easily as you can fork OpenOffice.
 

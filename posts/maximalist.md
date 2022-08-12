@@ -16,11 +16,11 @@ A blockchain is at its core a security technology - a technology that is fundame
 <center><br>
 
 ![](../../../../images/maximalist/shelob.jpg)
-	
+
 <small><i>
 
 _Source: [https://www.blackgate.com/2014/12/23/frodo-baggins-lady-galadriel-and-the-games-of-the-mighty/](https://www.blackgate.com/2014/12/23/frodo-baggins-lady-galadriel-and-the-games-of-the-mighty/)_
-	
+
 </i></small></center><br>
 
 Blockchains are being used every day by unbanked and underbanked people, by activists, by sex workers, by refugees, and by many other groups either who are uninteresting for profit-seeking centralized financial institutions to serve, or who have enemies that don't _want_ them to be served. They are used as a primary lifeline by many people to make their payments and store their savings.
@@ -43,7 +43,7 @@ Now, what do Bitcoin and Ethereum culture actually look like? Well, let's ask Ke
 <center><br><a href="https://twitter.com/_kevin_pham/status/927792297365848064">
 
 ![](../../../../images/maximalist/pham1.png)
-	
+
 </a></center><br>
 
 Don't believe this is representative? Well, let's ask Kevin Pham again:
@@ -58,12 +58,12 @@ Now, you might say, this is just Ethereum people having fun, and at the end of t
 
 <center><br>
 
-<table><tr><td style="width:50%">
-	
+<table class="transparent centered"><tr><td style="width:50%">
+
 <img src="../../../../images/maximalist/meetingchina.jpg" style="width:360px" />
-	
+
 <small><center><i>Vitalik hangs out with elite tech CEOs in Beijing, China.</i></center></small>
-			   
+
 </td><td>
 
 <img src="../../../../images/maximalist/meetingputin.jpg" style="width:360px" />
@@ -81,7 +81,7 @@ Now, you might say, this is just Ethereum people having fun, and at the end of t
 <img src="../../../../images/maximalist/meetingmacri.jpg" style="width:360px" />
 
 <small><center><i>Vitalik shakes hands with Argentinian former president Mauricio Macri.</i></center></small>
-	
+
 </center></td></tr><tr><td>
 
 <img src="../../../../images/maximalist/meetingschmidt.jpg" style="width:360px" />
@@ -89,11 +89,11 @@ Now, you might say, this is just Ethereum people having fun, and at the end of t
 <small><center><i>Vitalik gives a friendly hello to Eric Schmidt, former CEO of Google and advisor to US Department of Defense.</i></center></small>
 
 </td><td>
-	
+
 <img src="../../../../images/maximalist/meetingaudrey.jpg" style="width:360px" />
 
 <small><center><i>Vitalik has his first of many meetings with Audrey Tang, digital minister of Taiwan.</i></center></small>
-	
+
 </td></tr></table><small>
 
 </small></center><br>
@@ -139,7 +139,7 @@ This misconception is, of course, wrong. In fact, there are _plenty_ of ways to 
 
 <center><br>
 
-<img src="../../../../images/maximalist/bitcoinpaper.png" />
+<img src="../../../../images/maximalist/bitcoinpaper.png" class="padded" />
 
 <small><i>
 
@@ -165,13 +165,13 @@ One noisy proxy for the blockchain industry's slow replacement of philosophical 
 
 <center>
 
-<img src="../../../../images/maximalist/premine.png" />
+<img src="../../../../images/maximalist/premine.png" class="padded" />
 
 <i><small>
-	
-Source for insider allocations: [Messari](https://twitter.com/RyanWatkins_/status/1394283802009145348).	
 
-</small></i>	
+Source for insider allocations: [Messari](https://twitter.com/RyanWatkins_/status/1394283802009145348).
+
+</small></i>
 
 </center>
 
@@ -215,7 +215,7 @@ The Bitcoin community is good at this. Their most recent crusade is a [war again
 
 <center><br>
 
-<img src="../../../../images/maximalist/seedoils.jpg" />
+<img src="../../../../images/maximalist/seedoils.jpg" class="padded" />
 
 </center><br>
 

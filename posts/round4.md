@@ -3,7 +3,6 @@
 [title]: <> (Review of Gitcoin Quadratic Funding Round 4)
 [pandoc]: <> (--mathjax)
 
-
 Round 4 of Gitcoin Grants quadratic funding has just completed, and here are the results:
 
 <center>
@@ -59,7 +58,7 @@ The particular story of @antiprosynth had what is in my opinion a happy ending: 
 Traditionally, public goods of the type that Gitcoin Grants quadratic funding is trying to support were selected and funded by governments. The motivation of @antiprosynth's tweets is "aggregating Ethereum-related news, fighting information asymmetry and fine-tuning/signaling a consistent narrative for Ethereum (and ETH)": essentially, fighting the good fight against anti-Ethereum misinformation by [bitcoin maximalists](https://blog.ethereum.org/2014/11/20/bitcoin-maximalism-currency-platform-network-effects/). And, lo and behold, governments too have a rich history of [sponsoring social media participants](https://en.wikipedia.org/wiki/State-sponsored_Internet_propaganda) to argue on their behalf. And it seems likely that most of these governments see themselves as "fighting the good fight against anti-[X] misinformation by [Y] {extremists, imperialists, totalitarians}", just as the Ethereum community feels a need to fight the good fight against maximalist trolls. From the inside view of each individual country (and in our case the Ethereum community) organized social media participation seems to be a clear public good (ignoring the possibility of blowback effects, which are real and important). But from the outside view of the entire world, it can be viewed as a zero-sum game.
 
 <center>
-<img src="../../../../images/round4-files/threelayer.png" />
+<img src="../../../../images/round4-files/threelayer.png" class="padded" />
 <br><br>
 </center>
 

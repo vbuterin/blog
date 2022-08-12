@@ -37,7 +37,7 @@ Blockchain voting protocols get hacked all the time. Two years ago, a blockchain
 The hacks were pretty serious. Here is a table of the attack capabilities that [researchers analyzing Voatz](https://internetpolicy.mit.edu/wp-content/uploads/2020/02/SecurityAnalysisOfVoatz_Public.pdf) managed to uncover:
 
 <center><br>
-<img src="../../../../images/voting2-files/voatzpaper.png" style="width:650px" />
+<img src="../../../../images/voting2-files/voatzpaper.png" style="width:650px" class="padded" />
 </center><br><br>
 
 This by itself is not an argument against _ever_ using blockchain voting. But it is an argument that blockchain voting software should be designed more carefully, and scaled up slowly and incrementally over time.
@@ -60,7 +60,7 @@ The need for the first requirement is obvious: you want people to vote based on 
 The concept of cryptographically secured execution of social mechanisms was not invented by blockchain geeks, and indeed existed far before us. Outside the blockchain space, there is a 20-year-old tradition of cryptographers working on the secure electronic voting problem, and the good news is that there _have_ been solutions. An important paper that is cited by much of the literature of the last two decades is Juels, Catalano and Jakobsson's 2002 paper titled "[Coercion-Resistant Electronic Elections](https://eprint.iacr.org/2002/165.pdf)":
 
 <center><br>
-<img src="../../../../images/voting2-files/elections.png" style="width:650px" />
+<img src="../../../../images/voting2-files/elections.png" style="width:650px" class="padded" />
 <br><br><br>
 </center>
 
@@ -71,7 +71,7 @@ Encrypting votes provides privacy, and some additional infrastructure such as [m
 The second option is a technique where voters can make multiple votes where the second overrides the first. If a voter is bribed or coerced, they can make a vote for the briber/coercer's preferred candidate, but later send another vote to override the first.
 
 <center><br>
-<img src="../../../../images/voting2-files/tallyingscheme.png" style="width:650px" />
+<img src="../../../../images/voting2-files/tallyingscheme.png" style="width:650px" class="padded" />
 <br><br>
 <small><i>Giving voters the ability to make a later vote that can override an earlier vote is the key coercion-resistance mechanism of <a href="https://www.usenix.org/system/files/conference/jets15/jets_0302-achenbach.pdf">this protocol from 2015.</a></i></small><br><br>
 </center>
@@ -92,7 +92,7 @@ These more sophisticated voting systems are not _just_ using blockchains; they r
 
 The Ethereum ecosystem is currently experimenting with a [system called MACI](https://github.com/appliedZKP/maci) that combines together a blockchain, ZK-SNARKs and a single central actor that guarantees coercion resistance (but has no power to compromise any properties other than coercion resistance). MACI is not very technically difficult. Users participate by signing a message with their private key, encrypting the signed message to a public key published by a central server, and publishing the encrypted signed message to the blockchain. The server downloads the messages from the blockchain, decrypts them, processes them, and outputs the result along with a ZK-SNARK to ensure that they did the computation correctly.
 
-<br><center><img src="../../../../images/round9/maci2.png" style="width:500px"/></center><br><br>
+<br><center><img src="../../../../images/round9/maci2.png" style="width:500px" class="padded" /></center><br><br>
 
 Users cannot prove how they participated, because they have the ability to send a "key change" message to trick anyone trying to audit them: they can first send a key change message to change their key from A to B, and then send a "fake message" signed with A. The server would reject the message, but no one else would have any way of knowing that the key change message had ever been sent. There is a trust requirement on the server, though only for privacy and coercion resistance; the server cannot publish an incorrect result either by computing incorrectly or by censoring messages. In the long term, multi-party computation can be used to decentralize the server somewhat, strengthening the privacy and coercion resistance guarantees.
 
@@ -112,7 +112,7 @@ But now we get back to the second, deeper, critique of electronic voting of any 
 
 The [recent MIT paper](https://people.csail.mit.edu/rivest/pubs/PSNR20.pdf) criticizing blockchain voting includes this helpful table, depicting _any_ form of paperless voting as being fundamentally too difficult to secure:
 
-<br><center><img src="../../../../images/voting2-files/fourcategories.png" style="width:650px"/></center><br><br>
+<br><center><img src="../../../../images/voting2-files/fourcategories.png" style="width:650px" class="padded" /></center><br><br>
 
 The key property that the authors focus on is **software-independence**, which they define as "the property that an undetected change or error in a system’s software cannot cause an undetectable change in the election outcome". Basically, a bug in the code should not be able to accidentally make Prezzy McPresidentface the new president of the country (or, more realistically, a deliberately inserted bug should not be able to increase some candidate's share from 42% to 52%).
 
@@ -145,14 +145,14 @@ But these disasters obscure a greater truth: **_over the past twenty years, comp
 
 Finally, single applications, like cryptocurrency wallets and voting systems, are much simpler and have less room for error than an entire consumer operating system - even if you have to incorporate support for [quadratic voting](https://vitalik.ca/general/2019/12/07/quadratic.html), [sortition](https://en.wikipedia.org/wiki/Sortition), [quadratic sortition](https://ethresear.ch/t/quadratic-voting-with-sortition/6065) and whatever horrors the next generation's Glen Weyl invents in 2040. The benefit of tools like trusted hardware is their ability to _isolate_ the simple thing from the complex and possibly broken thing, and these tools are having some success.
 
-## So the risks might decrease over time. But what are the benefits? 
+## So the risks might decrease over time. But what are the benefits?
 
 These improvements in security technology point to a future where consumer hardware might be more trusted in the future than it is today. Investments made in this area in the last few years are likely to keep paying off over the next decade, and we could expect further significant improvements. But what are the benefits of making voting electronic (blockchain based or otherwise) that justify exploring this whole space?
 
 **My answer is simple: voting would become much more efficient, allowing us to do it much more often**. Currently, formal democratic input into organizations (governmental _or_ corporate) tends to be limited to a single vote once every 1-6 years. This effectively means that each voter is only putting less than one bit of input into the system each year. Perhaps in large part as a result of this, decentralized decision-making in our society is heavily bifurcated into two extremes: pure democracy and pure markets. Democracy is either very inefficient (corporate and government votes) or very insecure (social media likes/retweets). Markets are far more technologically efficient and are much more secure than social media, but their fundamental economic logic makes them a poor fit for many kinds of decision problems, particularly having to do with public goods.
 
 <center><br>
-<img src="../../../../images/voting2-files/triangle.png" /><br><br>
+<img src="../../../../images/voting2-files/triangle.png" class="padded" /><br><br>
 <i><small>Yes, I know it's yet another triangle, and I really really apologize for having to use it. But please bear with me just this once.... (ok fine, I'm sure I'll make even more triangles in the future; just suck it up and deal with it)</small></i>
 </center><br><br>
 

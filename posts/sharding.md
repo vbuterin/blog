@@ -8,7 +8,7 @@ _Special thanks to Dankrad Feist and Aditya Asgaonkar for review_
 Sharding is the future of Ethereum scalability, and it will be key to helping the ecosystem support many thousands of transactions per second and allowing large portions of the world to regularly use the platform at an affordable cost. However, it is also one of the more misunderstood concepts in the Ethereum ecosystem and in blockchain ecosystems more broadly. It refers to a very specific set of ideas with very specific properties, but it often gets conflated with techniques that have very different and often much weaker security properties. The purpose of this post will be to explain exactly what specific properties sharding provides, how it differs from other technologies that are _not_ sharding, and what sacrifices a sharded system has to make to achieve these properties.
 
 <center>
-<img src="../../../../images/sharding-files/beacon_chain.jpg" />
+<img src="../../../../images/sharding-files/beacon_chain.jpg" class="padded" />
 <i><small>One of the many depictions of a sharded version of Ethereum. Original diagram by Hsiao-wei Wang, design by Quantstamp.</small></i><br>
 </center>
 
@@ -16,7 +16,7 @@ Sharding is the future of Ethereum scalability, and it will be key to helping th
 
 The best way to describe sharding starts from the problem statement that shaped and inspired the solution: **the Scalability Trilemma**.
 
-<br><center><img src="../../../../images/sharding-files/trilemma.png" /></center><br>
+<br><center><img src="../../../../images/sharding-files/trilemma.png" class="padded" /></center><br>
 
 The scalability trilemma says that there are three properties that a blockchain try to have, and that, **if you stick to "simple" techniques, you can only get two of those three**. The three properties are:
 
@@ -46,7 +46,7 @@ The core idea is as follows. Suppose that you have a proof of stake chain with a
 
 Hence, what we do is we **randomly split up the work of doing the verification**. We randomly shuffle the validator list, and we assign the first 100 validators in the shuffled list to verify the first block, the second 100 validators in the shuffled list to verify the second block, etc. A randomly selected group of validators that gets assigned to verify a block (or perform some other task) is called a **committee**.
 
-<br><center><img src="../../../../images/sharding-files/committees.png" /></center><br><br>
+<br><center><img src="../../../../images/sharding-files/committees.png" class="padded" /></center><br><br>
 
 When a validator verifies a block, they publish a signature attesting to the fact that they did so. Everyone else, instead of verifying 100 entire blocks, now only verifies 10000 signatures - a much smaller amount of work, especially with [BLS signature aggregation](https://ethresear.ch/t/pragmatic-signature-aggregation-with-bls/2105). Instead of every block being broadcasted through the same P2P network, each block is broadcasted on a different sub-network, and nodes need only join the subnets corresponding to the blocks that they are responsible for (or are interested in for other reasons).
 
@@ -82,7 +82,7 @@ Validating a block in a blockchain involves both computation and data availabili
 
 Scalably validating computation is relatively easy; there are two families of techniques: **fraud proofs** and **ZK-SNARKs**.
 
-<br><center><img src="../../../../images/rollup-files/tree.png" /><br><br>
+<br><center><img src="../../../../images/rollup-files/tree.png" class="padded" /><br><br>
 <small><i>Fraud proofs are one way to verify computation scalably.</i></small><br><br>
 </center>
 
@@ -102,7 +102,7 @@ A fraud proof cannot be used to verify availability of data. Fraud proofs for _c
 This is expanded on in **[the fisherman's dilemma](https://github.com/ethereum/research/wiki/A-note-on-data-availability-and-erasure-coding)**:
 
 <center><br>
-<img src="../../../../images/sharding-files/fisherman_dilemma.png" />
+<img src="../../../../images/sharding-files/fisherman_dilemma.png" class="padded" />
 </center><br>
 
 The core idea is that the two "worlds", one where V1 is an evil publisher and V2 is an honest challenger and the other where V1 is an honest publisher and V2 is an evil challenger, are indistinguishable to anyone who was not trying to download that particular piece of data at the time. And of course, in a scalable decentralized blockchain, each individual node can only hope to download a small portion of the data, so only a small portion of nodes would see anything about what went on except for the mere fact that there was a disagreement.
@@ -122,7 +122,7 @@ The key is a technology called [**data availability sampling**](https://hackmd.i
 1. Use a tool called **erasure coding** to expand a piece of data with N chunks into a piece of data with 2N chunks such that _any N_ of those chunks can recover the entire data.
 2. To check for availability, instead of trying to download the _entire_ data, users simply **randomly select a constant number of positions in the block** (eg. 30 positions), and accept the block only when they have successfully found the chunks in the block at _all_ of their selected positions.
 
-<br><center><img src="../../../../images/sharding-files/sampling.png" /></center><br><br>
+<br><center><img src="../../../../images/sharding-files/sampling.png" class="padded" /></center><br><br>
 
 Erasure codes transform a "check for 100% availability" (every single piece of data is available) problem into a "check for 50% availability" (at least half of the pieces are available) problem. Random sampling solves the 50% availability problem. If less than 50% of the data is available, then at least one of the checks will almost certainly fail, and if at least 50% of the data is available then, while some nodes may fail to recognize a block as available, it takes only one honest node to run the erasure code reconstruction procedure to bring back the remaining 50% of the block. And so, instead of needing to download 1 MB to check the availability of a 1 MB block, you need only download a few kilobytes. This makes it feasible to run data availability checking on _every_ block. See [this post](https://hackmd.io/@vbuterin/sharding_proposal#Blob-publication-process) for how this checking can be efficiently implemented with peer-to-peer subnets.
 
@@ -134,8 +134,8 @@ Suppose that you have 100 blocks and you want to efficiently verify correctness 
 
 * Each client performs **data availability sampling** on each block, verifying that the data in each block is available, while downloading only a few kilobytes per block even if the block as a whole is a megabyte or larger in size. A client only accepts a block when all data of their availability challenges have been correctly responded to.
 * Now that we have verified data availability, it becomes easier to verify correctness. There are two techniques:
-    * We can use **fraud proofs**: a few participants with staked deposits can sign off on each block's correctness. Other nodes, called **challengers** (or **fishermen**) randomly check and attempt to fully process blocks. Because we already checked data availability, it will always be possible to download the data and fully process any particular block. If they find an invalid block, they post a **challenge** that everyone verifies. If the block turns out to be bad, then that block and all future blocks that depend on that need to be re-computed.
-    * We can use **ZK-SNARKs**. Each block would come with a ZK-SNARK proving correctness.
+  * We can use **fraud proofs**: a few participants with staked deposits can sign off on each block's correctness. Other nodes, called **challengers** (or **fishermen**) randomly check and attempt to fully process blocks. Because we already checked data availability, it will always be possible to download the data and fully process any particular block. If they find an invalid block, they post a **challenge** that everyone verifies. If the block turns out to be bad, then that block and all future blocks that depend on that need to be re-computed.
+  * We can use **ZK-SNARKs**. Each block would come with a ZK-SNARK proving correctness.
 * In either of the above cases, each client only needs to do a small amount of verification work per block, no matter how big the block is. In the case of fraud proofs, occasionally blocks will need to be fully verified on-chain, but this should be extremely rare because triggering even one challenge is very expensive.
 
 And that's all there is to it! In the case of Ethereum sharding, the near-term plan is to make sharded blocks **data-only**; that is, the shards are _purely_ a "data availability engine", and it's the job of **[layer-2 rollups](https://vitalik.ca/general/2021/01/05/rollup.html)** to use that secure data space, plus either fraud proofs or ZK-SNARKs, to implement high-throughput secure transaction processing capabilities. However, it's completely possible to create such a built-in system to add "native" high-throughput execution.
@@ -152,11 +152,11 @@ Sharding comes quite close. In a traditional blockchain:
 In a sharded blockchain with advanced security features:
 
 * **Invalid blocks cannot get through** because either:
-    * A fraud proof quickly catches them and informs the entire network of the block's incorrectness, and heavily penalizes the creator, or
-    * A ZK-SNARK proves correctness, and you cannot make a valid ZK-SNARK for an invalid block.
+  * A fraud proof quickly catches them and informs the entire network of the block's incorrectness, and heavily penalizes the creator, or
+  * A ZK-SNARK proves correctness, and you cannot make a valid ZK-SNARK for an invalid block.
 * **Unavailable blocks cannot get through** because:
-    * If less than 50% of a block's data is available, at least one data availability sample check will almost certainly fail for each client, causing the client to reject the block,
-    * If at least 50% of a block's data is available, then actually the entire block is available, because it takes only a single honest node to reconstruct the rest of the block.
+  * If less than 50% of a block's data is available, at least one data availability sample check will almost certainly fail for each client, causing the client to reject the block,
+  * If at least 50% of a block's data is available, then actually the entire block is available, because it takes only a single honest node to reconstruct the rest of the block.
 
 Traditional high-TPS chains without sharding do not have a way of providing these guarantees. Multichain ecosystems do not have a way of avoiding the problem of an attacker selecting one chain for attack and easily taking it over (the chains _could_ share security, but if this was done poorly it would turn into a de-facto traditional high-TPS chain with all its disadvantages, and if it was done well, it would just be a more complicated implementation of the above sharding techniques).
 

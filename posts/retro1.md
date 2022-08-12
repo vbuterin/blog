@@ -28,7 +28,7 @@ Much like the [Gitcoin quadratic funding](https://vitalik.ca/general/2021/04/02/
 
 First, let us see if there are any interesting takeaways that can be seen by looking at the results. But what do we compare the results to? The most natural point of comparison is the other major public goods funding experiment that we've had so far: the Gitcoin quadratic funding rounds (in this case, round 11).
 
-<center><br><table>
+<center><br><table class="transparent centered">
 
 <tr>
 <td><h3>Gitcoin round 11 (tech only)</h3></td>
@@ -139,7 +139,7 @@ Some kind of multi-level structure for nominations seems inevitable. There's pro
 
 <center><br>
 
-![](../../../../images/retro1/nominations.png)
+![](../../../../images/retro1/nominations.png){.padded}
 
 </center>
 
@@ -214,6 +214,6 @@ There are a number of ideas that could be introduced or experimented with in sub
 * **Add more discussion channels, and more ways for non-badge-holders to participate**. This could involve reforming how existing channels work, or it could involve adding new channels, or even specialized channels for specific categories of projects.
 * **Change the reward formula to increase variance**, from the current $\sum_i \sqrt x_i$ to the standard quadratic funding formula of $(\sum_i \sqrt x_i) ^2$.
 
-In the long term, if we want retro funding to be a sustainable institution, there is also the question of **how new badge holders are to be chosen** (and, in cases of malfeasance, **how badge holders could be removed**). Currently, the selection is centralized. In the future, we need some alternative. One possible idea for round 2 is to simply allow existing badge holders to vote in a few new badge holders. In the longer term, to prevent it from being an insular bureaucracy, perhaps one badge holder each round could be chosen by something with more open participation, like a proof-of-humanity vote? 
+In the long term, if we want retro funding to be a sustainable institution, there is also the question of **how new badge holders are to be chosen** (and, in cases of malfeasance, **how badge holders could be removed**). Currently, the selection is centralized. In the future, we need some alternative. One possible idea for round 2 is to simply allow existing badge holders to vote in a few new badge holders. In the longer term, to prevent it from being an insular bureaucracy, perhaps one badge holder each round could be chosen by something with more open participation, like a proof-of-humanity vote?
 
 In any case, retroactive public goods funding is still an exciting and new experiment in institutional innovation in multiple ways. It's an experiment in non-coin-driven decentralized governance, and it's an experiment in making things happen through retroactive, rather than proactive, incentives. To make the experiment fully work, a lot more innovation will need to happen both in the mechanism itself and in the ecosystem that needs to form around it. When will we see the first retro funding-focused angel investor? Whatever ends up happening, I'm looking forward to seeing how this experiment evolves in the rounds to come.

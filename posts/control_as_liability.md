@@ -3,7 +3,6 @@
 [title]: <> (Control as Liability)
 [pandoc]: <> ()
 
-
 The regulatory and legal environment around internet-based services and applications has changed considerably over the last decade. When large-scale social networking platforms first became popular in the 2000s, the general attitude toward mass data collection was essentially "why not?". This was the age of Mark Zuckerberg [saying the age of privacy is over](https://archive.nytimes.com/www.nytimes.com/external/readwriteweb/2010/01/10/10readwriteweb-facebooks-zuckerberg-says-the-age-of-privac-82963.html) and Eric Schmidt [arguing](https://www.eff.org/deeplinks/2009/12/google-ceo-eric-schmidt-dismisses-privacy), "If you have something that you don't want anyone to know, maybe you shouldn't be doing it in the first place." And it made personal sense for them to argue this: every bit of data you can get about others was a potential machine learning advantage for you, every single restriction a weakness, and if something happened to that data, the costs were relatively minor. Ten years later, things are very different.
 
 It is especially worth zooming in on a few particular trends.

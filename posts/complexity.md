@@ -11,7 +11,7 @@ One powerful intellectual tool that allows for more nuanced thinking about compl
 
 <center><br>
 
-![](../../../../images/complexity-files/encapsulated_systemic.png)
+![](../../../../images/complexity-files/encapsulated_systemic.png){.padded}
 
 </center><br>
 
@@ -35,8 +35,8 @@ Now, consider Schnorr signatures. Schnorr signatures rely only on basic [ellipti
 
 <center><br><a href="https://en.wikipedia.org/wiki/Schnorr_signature">
 
-![](../../../../images/complexity-files/schnorr_def.png)
-    
+![](../../../../images/complexity-files/schnorr_def.png){.padded}
+
 </a><br></center>
 
 So... which type of signature is "simpler"? It depends what you care about! BLS signatures have a huge amount of technical complexity, but the complexity is all buried within the definition of the $e$ function. If you treat the $e$ function as a black box, BLS signatures are actually really easy. Schnorr signatures, on the other hand, have less _total_ complexity, but they have more pieces that could interact with the outside world in tricky ways.
@@ -82,7 +82,7 @@ One example of the latter is Ethereum's current two-level state tree, which feat
 
 <center>
 
-<img src="../../../../images/complexity-files/2Ltree.png" style="width:550px" />
+<img src="../../../../images/complexity-files/2Ltree.png" style="width:550px" class="padded" />
 
 </center>
 

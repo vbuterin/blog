@@ -3,7 +3,6 @@
 [title]: <> (A Note on Metcalfe's Law, Externalities and Ecosystem Splits)
 [pandoc]: <> (--mathjax)
 
-
 Looks like it's blockchain split season [again](http://bitcoincash.org/). For background of various people discussing the topic, and whether such splits are good or bad:
 
 * Power laws and network effects (arguing the BTC/BCC split may destroy value due to network effect loss): [https://medium.com/crypto-fundamental/power-laws-and-network-effects-why-bitcoincash-is-not-a-free-lunch-5adb579972aa](https://medium.com/crypto-fundamental/power-laws-and-network-effects-why-bitcoincash-is-not-a-free-lunch-5adb579972aa)
@@ -40,8 +39,7 @@ Switching from A to B gives $N_a$ users a negative externality of one, so a tota
 
 Suppose $P_a$ is the sum of $p$ values of $N_a$ users, and $Q_b$ is the sum of $q$ values of $N_b$ users. The total negative externality is $P_a$ and the total positive externality is $Q_b$. Hence, switching from the smaller platform to the larger has positive social externalities if the two platforms have equal intrinsic quality to their users (ie. users of A intrinsically enjoy A as much as users of B intrinsically enjoy B, so $p$ and $q$ values are evenly distributed), but if it is the case that A is bigger but B is better, then there are positive externalities in switching to B.
 
-Furthermore, notice that if a user is making a switch from a larger A to a smaller B, then this itself is revealed-preference evidence that, for that user, and for all existing users of B, $\frac{q}{p} > 
-\frac{N_a}{N_b}$. However, if the split stays as a split, and does not proceed to become a full-scale migration, then that means that users of A hold different views, though this could be for two reasons: (i) they intrinsically dislike A but not by enough to justify the switch, (ii) they intrinsically like A more than B. This could arise because (a) A users have a higher opinion of A than B users, or (b) A users have a lower opinion of B than B users. In general, we see that moving from a system that makes its average user less happy to a system that makes its average user more happy has positive externalities, and in other situations it's difficult to say.
+Furthermore, notice that if a user is making a switch from a larger A to a smaller B, then this itself is revealed-preference evidence that, for that user, and for all existing users of B, $\frac{q}{p} > \frac{N_a}{N_b}$. However, if the split stays as a split, and does not proceed to become a full-scale migration, then that means that users of A hold different views, though this could be for two reasons: (i) they intrinsically dislike A but not by enough to justify the switch, (ii) they intrinsically like A more than B. This could arise because (a) A users have a higher opinion of A than B users, or (b) A users have a lower opinion of B than B users. In general, we see that moving from a system that makes its average user less happy to a system that makes its average user more happy has positive externalities, and in other situations it's difficult to say.
 
 #### Case 3
 

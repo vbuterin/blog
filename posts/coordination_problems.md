@@ -3,7 +3,6 @@
 [title]: <> (Engineering Security Through Coordination Problems)
 [pandoc]: <> ()
 
-
 Recently, there was a small spat between the Core and Unlimited factions of the Bitcoin community, a spat which represents perhaps the fiftieth time the same theme was debated, but which is nonetheless interesting because of how it highlights a very subtle philosophical point about how blockchains work.
 
 ViaBTC, a mining pool that favors Unlimited, [tweeted](https://i.redd.it/x9f7t3rhn4wy.png) "hashpower is law", a usual talking point for the Unlimited side, which believes that miners have, and should have, a very large role in the governance of Bitcoin, the usual argument for this being that miners are the one category of users that has a large and illiquid financial incentive in Bitcoin's success. Greg Maxwell (from the Core side) [replied](https://np.reddit.com/r/Bitcoin/comments/69t452/viabtc_comment_to_the_recent_segwit_pool/dh95hat/) that "Bitcoin's security works precisely because hash power is NOT law".
@@ -46,7 +45,7 @@ There are two levels of "light clients" that are generally possible in blockchai
 
 <br>
 <center>
-<img src="../../../../images/coordination-problems-files/ethblockchain_oneblock.png" width="400px"></img><br>
+<img src="../../../../images/coordination-problems-files/ethblockchain_oneblock.png" width="400px" class="padded" /><br>
 <small><i>Look, it's a Merkle tree!</i></small>
 </center>
 <br>

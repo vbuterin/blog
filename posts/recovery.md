@@ -54,7 +54,6 @@ If you lose your wallet but you have the mnemonic phrase, you can input the phra
 
 Mnemonic phrases are good for protecting against loss, but they do nothing against theft. Even worse, they add a _new_ vector for theft: if you have the standard hardware wallet + mnemonic backup combo, then someone stealing _either_ your hardware wallet + PIN _or_ your mnemonic backup can steal your funds. Furthermore, maintaining a mnemonic phrase and not accidentally throwing it away is itself a non-trivial mental effort.
 
-
 The problems with theft can be alleviated if you split the phrase in half and give half to your friend, but (i) almost no one actually promotes this, (ii) there are security issues, as if the phrase is short (128 bits) then a sophisticated and motivated attacker who steals one piece may be able to brute-force through all $2^{64}$ possible combinations to find the other, and (iii) it increases the mental overhead even further.
 
 ### So what do we need?
@@ -70,7 +69,7 @@ What we need is a wallet design which satisfies three key criteria:
 The best-in-class technology for solving these problems [back in 2013](https://bitcoinmagazine.com/articles/multisig-revolution-incomplete-1406578252) was multisig. You could have a wallet that has three keys, where any two of them are needed to send a transaction.
 
 <center>
-<img src="../../../../images/social-recovery-files/diag1.png" style="padding:15px"/>
+<img src="../../../../images/social-recovery-files/diag1.png" class="padded" />
 </center><br>
 
 This technology was originally developed within the Bitcoin ecosystem, but excellent multisig wallets (eg. see [Gnosis Safe](https://gnosis-safe.io/)) now exist for Ethereum too. Multisig wallets have been highly successful within organizations: the Ethereum Foundation uses a 4-of-7 multisig wallet to store [its funds](https://etherscan.io/address/0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae), as do many other orgs in the Ethereum ecosystem.
@@ -89,7 +88,7 @@ This gets us to my preferred method for securing a wallet: social recovery. A so
 The signing key has the ability to add or remove guardians, though only after a delay (often 1-3 days).
 
 <center>
-<img src="../../../../images/social-recovery-files/diag2.png" style="padding:15px"/>
+<img src="../../../../images/social-recovery-files/diag2.png" class="padded" />
 </center><br>
 
 Under all normal circumstances, the user can simply use their social recovery wallet like a regular wallet, signing messages with their signing key so that each transaction signed can fly off with a single confirmation click much like it would in a "traditional" wallet like Metamask.
@@ -147,7 +146,7 @@ The user experience in both cases is surprisingly smooth. There were two main ch
 
 ### Migration to Layer 2 (rollups) can solve the remaining challenges
 
-As mentioned above, **there are two key challenges: (i) the dependence on relayers to solve transactions, and (ii) high transaction fees**. The first challenge, dependence on relayers, is an increasingly common problem in Ethereum applications. The issue arises because there are two types of accounts in Ethereum: **externally owned accounts (EOAs)**, which are accounts controlled by a single private key, and **contracts**. In Ethereum, there is a rule that every transaction must start from an EOA; the original intention was that EOAs represent "users" and contracts represent "applications", and an application can only run if a user talks to the application. If we want wallets with more complex policies, like multisig and social recovery, we need to use contracts to represent users. But this poses a challenge: if your funds are in a contract, you need to have some _other_ account that has ETH that can pay to start each transaction, and it needs quite a lot of ETH just in case transaction fees get really high. 
+As mentioned above, **there are two key challenges: (i) the dependence on relayers to solve transactions, and (ii) high transaction fees**. The first challenge, dependence on relayers, is an increasingly common problem in Ethereum applications. The issue arises because there are two types of accounts in Ethereum: **externally owned accounts (EOAs)**, which are accounts controlled by a single private key, and **contracts**. In Ethereum, there is a rule that every transaction must start from an EOA; the original intention was that EOAs represent "users" and contracts represent "applications", and an application can only run if a user talks to the application. If we want wallets with more complex policies, like multisig and social recovery, we need to use contracts to represent users. But this poses a challenge: if your funds are in a contract, you need to have some _other_ account that has ETH that can pay to start each transaction, and it needs quite a lot of ETH just in case transaction fees get really high.
 
 Argent and Loopring get around this problem by personally running a "relayer". The relayer listens for off-chain digitally signed "messages" submitted by users, and wraps these messages in a transaction and publishes them to chain. But for the long run, this is a poor solution; it adds an extra point of centralization. If the relayer is down and a user really needs to send a transaction, they can always just send it from their own EOA, but it is nevertheless the case that a new tradeoff between centralization and inconvenience is introduced. There are efforts to solve this problem and get convenience without centralization; the main two categories revolve around either making a [generalized decentralized relayer network](https://docs.opengsn.org/learn/) or modifying the Ethereum protocol itself to [allow transactions to begin from contracts](https://our.status.im/account-abstraction-eip-2938/). But neither of these solutions solve transaction fees, and in fact, they make the problem worse due to smart contracts' inherently greater complexity.
 

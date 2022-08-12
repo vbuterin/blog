@@ -7,7 +7,7 @@ One of the major philosophical differences that I have noticed in how people app
 In mathematical terms, we can rephrase this as follows: do you expect the world that we are living in, and in particular the way that it responds to the actions that we take, to fundamentally be [**concave**](https://en.wikipedia.org/wiki/Concave_function) or [**convex**](https://en.wikipedia.org/wiki/Convex_function)?
 
 <br><center>
-<img src="../../../../images/convex-files/convex1.png" />
+<img src="../../../../images/convex-files/convex1.png" class="padded" />
 </center><br><br>
 
 Someone with a concave disposition might say things like this:
@@ -60,7 +60,7 @@ If you had to pick either the average of two proposed tax plans, or a coin-flip 
 
 Another point of complexity is that in the real world, policies are not just single-dimensional numbers. There are many ways to average between two different policies, or two different philosophies. One easy example to see this is: suppose that you and your friend want to live together, but you want to live in Toronto and your friend wants to live in New York. How would you compromise between these two options?
 
-Well, you could take the geographic compromise, and enjoy your peaceful existence at the arithmetic midpoint between the two lovely cities at.... 
+Well, you could take the geographic compromise, and enjoy your peaceful existence at the arithmetic midpoint between the two lovely cities at....
 
 <br><center><img src="../../../../images/convex-files/streetmap2.png" /><br><br>This Assembly of God church about 29km southwest of Ithaca, NY.
 </center><br><br>
@@ -71,8 +71,7 @@ The point is, when the options being presented to you are more complicated than 
 
 And this is to be expected: "convex" and "concave" are terms best suited to mathematical functions where the input and the output are both one-dimensional. The real world is high-dimensional - and as machine-learning researchers have [now well established](https://www.kdnuggets.com/2015/11/theoretical-deep-learning.html), in high-dimensional environments the most common setting that you can expect to find yourself in is not a universally convex or universally concave one, but rather a _saddle point_: a point where the local region is convex in some directions but concave in other directions.
 
-<br><center><img src="../../../../images/convex-files/saddlepoint.png"
- /><br><br>A saddle point. Convex left-to-right, concave forward-to-backward.
+<br><center><img src="../../../../images/convex-files/saddlepoint.png" class="padded" /><br><br>A saddle point. Convex left-to-right, concave forward-to-backward.
 </center><br><br>
 
 This is probably the best mathematical explanation for why both of these dispositions are to some extent necessary: the world is not entirely convex, but it is not entirely concave either. But the existence of _some_ concave path between any two distant positions A and B is very likely, and if you can find that path then you can often find a synthesis between the two positions that is better than both.

@@ -14,7 +14,7 @@ First of all, I should note that it’s relatively easy to see that the claim th
 
 Now let’s take a look at the most common argument used to claim that no such mapping can exist, namely Cantor’s diagonal argument. Here’s an [exposition from UC Denver](http://www.math.ucdenver.edu/~esulliva/Math3000/CantorDiag.pdf); it’s short so I’ll just screenshot the whole thing:
 
-![](https://cdn-images-1.medium.com/max/2000/1*4ByVTuO_nU-lKZo7NHDBWA.png)
+![](https://cdn-images-1.medium.com/max/2000/1*4ByVTuO_nU-lKZo7NHDBWA.png){.padded}
 
 Now, here’s the fundamental flaw in this argument: *decimal expansions of real numbers are not unique*. To provide a counterexample in the exact format that the “proof” requires, consider the set (numbers written in binary), with diagonal digits bolded:
 

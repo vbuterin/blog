@@ -23,7 +23,7 @@ At this point, it's worth pointing out that the "neoliberalism" being criticized
 > * **Intensified inequality**, in which the very top strata acquires and retains ever more wealth, the very bottom is literally turned out on the streets or into the growing urban and sub-urban slums of the world, while the middle strata works more hours for less pay, fewer benefits, less security...
 > * **Crass or unethical commercialization** of things and activities considered inappropriate for marketization. The claim is that marketization contributes to human exploitation or degradation, [...] limits or stratifies access to what ought to be broadly accessible and shared, [...] or because it enables something intrinsically horrific or severely denigrating to the planet.
 > * **Ever-growing intimacy of corporate and finance capital with the state**, and corporate domination of political decisions and economic policy
-> * **Economic havoc wreaked on the economy by the ascendance and liberty 
+> * **Economic havoc wreaked on the economy by the ascendance and liberty
 of finance capital**, especially the destabilizing effects of the inherent  bubbles and other dramatic fluctuations of financial markets.
 
 The bulk of Nathan's article follows along with analyses of how these issues affect DAOs and governance mechanisms within the crypto space specifically. Nathan focuses on three key problems:
@@ -41,7 +41,7 @@ I disagree with some, agree with others. I have always been suspicious of critic
 But at the same time, I am far from a [Walter Block-style defender](https://cdn.mises.org/Defending_the_Undefendable_2018.pdf) of _all_ locally-voluntary two-party commerce. I've written up my own viewpoints expressing similar concerns to parts of Wendy Brown's list in various articles:
 
 * [Multiple](https://vitalik.ca/general/2018/03/28/plutocracy.html) pieces [decrying](https://vitalik.ca/general/2019/04/03/collusion.html) the evils of vote buying, or even [financialized governance generally](https://vitalik.ca/general/2021/08/16/voting3.html)
-* The [importance](https://vitalik.ca/general/2019/12/07/quadratic.html) of [public goods funding](https://share.transistor.fm/s/0f9aa81e). 
+* The [importance](https://vitalik.ca/general/2019/12/07/quadratic.html) of [public goods funding](https://share.transistor.fm/s/0f9aa81e).
 * Failure modes in financial markets due to [subtle issues like capital efficiency](https://vitalik.ca/general/2021/02/18/election.html).
 
 So where does _my own_ opposition to mixing finance and governance come from? This is a complicated topic, and my conclusions are in large part a result of my own failure after years of attempts to _find_ a financialized governance mechanism that is economically stable. So here goes...
@@ -52,7 +52,7 @@ Out of the standard assumptions in what gets pejoratively called "spherical cow 
 
 <center>
 
-![](../../../../images/limits/spherical_cow.png)
+![](../../../../images/limits/spherical_cow.png){.padded}
 
 </center>
 
@@ -64,7 +64,7 @@ Economics, and economics-inspired philosophy, is great at describing the complex
 
 <center><br>
 
-![](../../../../images/round4-files/threelayer.png)
+![](../../../../images/round4-files/threelayer.png){.padded}
 
 <br><small><i>Going from two people to three introduces the possibility of harms from unbalanced coordination: it's not just "the individual versus the group", it's "the individual versus the group versus the world". </i></small><br><br>
 
@@ -119,7 +119,7 @@ Notably, Nathan's favored solutions do _not_ try to regulate coin voting. Instea
 
 > Rather than relying on direct token voting, as other protocols have done, The Graph uses a board-like mediating layer, the Graph Council, on which the protocol’s major stakeholder groups have representatives. In this case, the proposal had the potential to favor one group of stakeholders over others, and passing a decision through the Council requires multiple stakeholder groups to agree. At the same time, the Snapshot vote put pressure on the Council to implement the will of token-holders.
 
-In the case of 1Hive, the anti-financialization protections are described as being purely cultural: 
+In the case of 1Hive, the anti-financialization protections are described as being purely cultural:
 
 > According to a slogan that appears repeatedly in 1Hive discussions, "Come for the honey, stay for the bees." That is, although economics figures prominently as one first encounters and explores 1Hive, participants understand the community’s primary value as interpersonal, social, and non-economic.
 
@@ -165,13 +165,13 @@ In his conclusion, Nathan writes:
 
 > But the autonomy of cryptoeconomic systems from external regulation could make them even more vulnerable to runaway feedback loops, in which narrow incentives overpower the common good. The designers of these systems have shown an admirable capacity to devise cryptoeconomic mechanisms of many kinds. But for cryptoeconomics to achieve the institutional scope its advocates hope for, it needs to make space for less-economic forms of governance.
 
->  If cryptoeconomics needs a political layer, and is no longer self-sufficient, what good is cryptoeconomics? One answer might be that cryptoeconomics can be the basis for securing more democratic and values-centered governance, where incentives can reduce reliance on military or police power. Through mature designs that integrate with less-economic purposes, cryptoeconomics might transcend its initial limitations. Politics needs cryptoeconomics, too ... by integrating cryptoeconomics with democracy, both legacies seem poised to benefit.
+> If cryptoeconomics needs a political layer, and is no longer self-sufficient, what good is cryptoeconomics? One answer might be that cryptoeconomics can be the basis for securing more democratic and values-centered governance, where incentives can reduce reliance on military or police power. Through mature designs that integrate with less-economic purposes, cryptoeconomics might transcend its initial limitations. Politics needs cryptoeconomics, too ... by integrating cryptoeconomics with democracy, both legacies seem poised to benefit.
 
 I broadly agree with both conclusions. The language of collusion prevention can be helpful for understanding _why_ cryptoeconomic purism so severely constricts the design space. "Finance" is a category of patterns that emerge when systems do not attempt to prevent collusion. When a system does not prevent collusion, it cannot treat different individuals differently, or even different _numbers_ of individuals differently: whenever a "position" to exert influence exists, the owner of that position can just sell it to the highest bidder.
 
 <center>
 
-<img src="../../../../images/limits/gavels.png" style="width:600px" /><br><br>
+<img src="../../../../images/limits/gavels.png" style="width:600px" class="padded" /><br><br>
 
 _Gavels on Amazon. A world where these were NFTs that actually came with associated judging power may well be a fun one, but I would certainly not want to be a defendant!_
 

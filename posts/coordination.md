@@ -3,7 +3,6 @@
 [title]: <> (Coordination, Good and Bad)
 [pandoc]: <> (--mathjax)
 
-
 _Special thanks to Karl Floersch and Jinglan Wang for feedback and review_
 
 See also:
@@ -13,7 +12,7 @@ See also:
 * [Trust Models](https://vitalik.ca/general/2020/08/20/trust.html)
 * [The Meaning Of Decentralization](https://medium.com/@VitalikButerin/the-meaning-of-decentralization-a0c92b76a274)
 
-Coordination, the ability for large groups of actors to work together for their common interest, is one of the most powerful forces in the universe. It is the difference between a king comfortably ruling a country as an oppressive dictatorship, and the people coming together and overthrowing him. It is the difference between the global temperature going up [3-5'C](https://www.reuters.com/article/us-climate-change-un/global-temperatures-on-track-for-3-5-degree-rise-by-2100-u-n-idUSKCN1NY186) and the temperature going up by a much smaller amount if we work together to stop it. And it is the factor that makes companies, countries and any social organization larger than a few people possible at all. 
+Coordination, the ability for large groups of actors to work together for their common interest, is one of the most powerful forces in the universe. It is the difference between a king comfortably ruling a country as an oppressive dictatorship, and the people coming together and overthrowing him. It is the difference between the global temperature going up [3-5'C](https://www.reuters.com/article/us-climate-change-un/global-temperatures-on-track-for-3-5-degree-rise-by-2100-u-n-idUSKCN1NY186) and the temperature going up by a much smaller amount if we work together to stop it. And it is the factor that makes companies, countries and any social organization larger than a few people possible at all.
 
 Coordination can be improved in many ways: faster spread of information, better norms that identify what behaviors are classified as cheating along with more effective punishments, stronger and more powerful organizations, tools like smart contracts that allow interactions with reduced levels of trust, governance technologies (voting, shares, decision markets...), and much more. And indeed, we as a species are getting better at all of these things with each passing decade.
 
@@ -120,7 +119,7 @@ Forking is a powerful form of counter-coordination precisely because it introduc
 This all leads us to an interesting view of what it is that people building social systems _do_. One of the goals of building an effective social system is, in large part, determining _the structure of coordination_: which groups of people and in what configurations can come together to further their group goals, and which groups cannot?
 
 <center>
-<img src="../../../../images/coordination/structure.png" style="width:650px" />
+<img src="../../../../images/coordination/structure.png" style="width:650px" class="padded" />
 <br>
 <br>
 <i><small>Different coordination structures, different outcomes</small></i>

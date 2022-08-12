@@ -19,7 +19,7 @@ I decided to make an experiment on the blockchain that I helped to create: I bou
 
 <br>
 <center>
-<img src="../../../../images/election-files/neoliberal.png" />
+<img src="../../../../images/election-files/neoliberal.png" class="padded" />
 <br>
 </center>
 <br>
@@ -39,7 +39,7 @@ And this is where I [pushed back against ne0liberal in September](https://twitte
 
 <br>
 <center>
-<table><tr>
+<table class="transparent centered"><tr>
 <td>PredictIt</td><td>Augur</td>
 </tr><tr>
 <td><img src="../../../../images/election-files/predictit_prices.png" /></td>
@@ -52,7 +52,7 @@ The main response my Twitter friends gave to this was that blockchain-based mark
 
 ## The Election
 
-Then the election happened. After an initial scare where Trump at first won more seats than we expected, Biden turned out to be the eventual winner. Whether or not the election itself validated or refuted the efficiency of prediction markets is a topic that, as far as I can tell, is quite open to interpretation. On the one hand, by a standard [Bayes rule](https://arbital.com/p/bayes_rule_guide/) application, I should decrease my confidence of prediction markets, at least relative to Nate Silver. Prediction markets gave a 60% chance of Biden winning, Nate Silver gave a [90% chance of Biden winning](https://projects.fivethirtyeight.com/2020-election-forecast/). Since Biden in fact won, this is one piece of evidence that I live in a world where Nate gives the more correct answers. 
+Then the election happened. After an initial scare where Trump at first won more seats than we expected, Biden turned out to be the eventual winner. Whether or not the election itself validated or refuted the efficiency of prediction markets is a topic that, as far as I can tell, is quite open to interpretation. On the one hand, by a standard [Bayes rule](https://arbital.com/p/bayes_rule_guide/) application, I should decrease my confidence of prediction markets, at least relative to Nate Silver. Prediction markets gave a 60% chance of Biden winning, Nate Silver gave a [90% chance of Biden winning](https://projects.fivethirtyeight.com/2020-election-forecast/). Since Biden in fact won, this is one piece of evidence that I live in a world where Nate gives the more correct answers.
 
 But on the other hand, you can make a case that the prediction markets bettter estimated the _margin_ of victory. The median of Nate's probability distribution was somewhere around 370 of 538 electoral college votes going to Biden:
 
@@ -89,7 +89,7 @@ Recapping the above, here's the pipeline in diagram form:
 
 <br>
 <center>
-<img src="../../../../images/election-files/pipeline.png" />
+<img src="../../../../images/election-files/pipeline.png" class="padded" />
 </center><br><br>
 
 I did this many times; the slippage on Catnip meant that I could normally make trades only up to about $5,000 to $10,000 at a time without prices becoming too unfavorable (when I had skipped Foundry and bought NTRUMP with DAI directly, the limit was closer to $1,000). And after two months, I had accumulated over 367,000 NTRUMP.
@@ -119,7 +119,7 @@ Capital costs - the inconvenience and opportunity cost of locking up large amoun
 
 <br>
 <center>
-<img src="../../../../images/election-files/winnings.png" style="width:50%"/><br>
+<img src="../../../../images/election-files/winnings.png" style="width:50%" class="padded" /><br>
 </center><br><br>
 
 Now, the interest rates are looking less favorable. And if you add to that the possibility, however remote, that a smart contract hack, or a truly unprecedented political event, actually _will_ happen, it looks less favorable still.
@@ -193,7 +193,7 @@ Crypto is a young ecosystem. It is an ecosystem that is still quite disconnected
 
 <br>
 <center>
-<img src="../../../../images/election-files/chartovertime.png"/><br>
+<img src="../../../../images/election-files/chartovertime.png" class="padded" /><br>
 </center><br>
 
 Thus, there is a _selection pressure_ in favor of the type of people who make bets that turn out to be correct. After ten rounds of this, good predictors will have more capital to bet with, and bad predictors will have less capital to bet with. This does _not_ rely on anyone "getting wiser" or "learning their lesson" or any other assumption about humans' capacity to reason and learn. It is simply a result of selection dynamics that over time, participants that are good at making correct guesses will come to dominate the ecosystem.

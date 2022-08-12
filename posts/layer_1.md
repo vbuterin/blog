@@ -3,7 +3,6 @@
 [title]: <> (Layer 1 Should Be Innovative in the Short Term but Less in the Long Term)
 [pandoc]: <> ()
 
-
 **See update 2018-08-29**
 
 One of the key tradeoffs in blockchain design is whether to build more functionality into base-layer blockchains themselves ("layer 1"), or to build it into protocols that live on top of the blockchain, and can be created and modified without changing the blockchain itself ("layer 2"). The tradeoff has so far shown itself most in the scaling debates, with block size increases (and [sharding](https://github.com/ethereum/wiki/wiki/Sharding-FAQ)) on one side and layer-2 solutions like Plasma and channels on the other, and to some extent blockchain governance, with loss and theft recovery being solvable by either [the DAO fork](https://qz.com/730004/everything-you-need-to-know-about-the-ethereum-hard-fork/) or generalizations thereof such as [EIP 867](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-867.md), or by layer-2 solutions such as [Reversible Ether (RETH)](https://www.reddit.com/r/MakerDAO/comments/8fmks1/introducing_reversible_eth_reth_never_send_ether/). So which approach is ultimately better? Those who know me well, or have seen me [out myself as a dirty centrist](https://twitter.com/VitalikButerin/status/1032589339367231488), know that I will inevitably say "some of both". However, in the longer term, I do think that as blockchains become more and more mature, layer 1 will necessarily stabilize, and layer 2 will take on more and more of the burden of ongoing innovation and change.
@@ -17,7 +16,7 @@ To take an example from another sphere, consider Moxie Marlinspike's [defense of
 And:
 
 > Their retort was "that's dumb, how far would the internet have gotten without interoperable protocols defined by 3rd parties?"
-> I thought about it. We got to the first production version of IP, and have been trying for the past 20 years to switch to a second production version of IP with limited success. We got to HTTP version 1.1 in 1997, and have been stuck there until now. Likewise, SMTP, IRC, DNS, XMPP, are all similarly frozen in time circa the late 1990s. To answer his question, that's how far the internet got. It got to the late 90s.  
+> I thought about it. We got to the first production version of IP, and have been trying for the past 20 years to switch to a second production version of IP with limited success. We got to HTTP version 1.1 in 1997, and have been stuck there until now. Likewise, SMTP, IRC, DNS, XMPP, are all similarly frozen in time circa the late 1990s. To answer his question, that's how far the internet got. It got to the late 90s.
 > That has taken us pretty far, but it's undeniable that once you federate your protocol, it becomes very difficult to make changes. And right now, at the application level, things that stand still don't fare very well in a world where the ecosystem is moving ...
 > So long as federation means stasis while centralization means movement, federated protocols are going to have trouble existing in a software climate that demands movement as it does today.
 
@@ -39,7 +38,7 @@ So how do we create an environment where better schemes can be tested and deploy
 
 <br>
 <center>
-<img src="../../../../images/layer-1-files/Layer2.png" />
+<img src="../../../../images/layer-1-files/Layer2.png" class="padded" />
 </center><br><br>
 
 Note that anyone can create a layer 2 execution engine at any time, different users can use different execution engines, and one can switch from one execution engine to any other, or to the base protocol, fairly quickly. The base blockchain no longer has to worry about being an optimal smart contract processing engine; it need only be a data availability layer with execution rules that are quasi-Turing-complete so that any layer 2 bridge contract can be built on top, and that allow basic operations to carry state between shards (in fact, only ETH transfers being fungible across shards is sufficient, but it takes very little effort to also allow cross-shard calls, so we may as well support them), but does not require complexity beyond that. Note also that layer 2 execution engines can have different state management rules than layer 1, eg. not having storage rent; anything goes, as it's the responsibility of the users of that specific execution engine to make sure that it is sustainable, and if they fail to do so the consequences are contained to within the users of that particular execution engine.

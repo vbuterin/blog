@@ -10,8 +10,8 @@ The following is an interesting idea that I had two years ago that I personally 
 Suppose that you are a restaurant selling sandwiches, and you ordinarily sell sandwiches for $7.50. Why did you choose to sell them for $7.50, and not $7.75 or $7.25? It clearly can’t be the case that the cost of production is exactly $7.49999, as in that case you would be making no profit, and would not be able to cover fixed costs; hence, in most normal situations you would still be able to make _some_ profit if you sold at $7.25 or $7.75, though less. Why less at $7.25? Because the price is lower. Why less at $7.75? Because you get fewer customers. It just so happens that $7.50 is the point at which the balance between those two factors is optimal for you.
 
 <center>
-<img src="../../../../images/a-note-on-charity-files/pic1.png" style="width: 330px">
-<img src="../../../../images/a-note-on-charity-files/pic2.png" style="width: 330px; margin-left: 20px">
+<img src="../../../../images/a-note-on-charity-files/pic1.png" style="width: 330px" />
+<img src="../../../../images/a-note-on-charity-files/pic2.png" style="width: 330px; margin-left: 20px" class="padded" />
 </center>
 <br>
 
@@ -24,7 +24,7 @@ Also, the above example was one where marginal costs are high, and customers are
 So what is the point of all this? Well, suppose that our sandwich shop changes its policy: it sells sandwiches for $7.55 to the general public, but lowers the prices to $7.35 for people who volunteered in some charity that maintains some local park (say, this is 25% of the population). The store’s new profit is $\$6682.5 \cdot 0.25+\$6742.5 \cdot 0.75=\$6727.5$ (that’s a $22.5 loss), but the result is that you are now paying all 4500 of your customers 20 cents each to volunteer at that charity - an incentive size of $900 (if you just count the customers who actually do volunteer, $225). So the store loses a bit, but gets a huge amount of leverage, de-facto contributing at least $225 depending on how you measure it for a cost of only $22.5.
 
 <center>
-<img src="../../../../images/a-note-on-charity-files/pic3.png">
+<img src="../../../../images/a-note-on-charity-files/pic3.png" class="padded" />
 </center>
 <br>
 

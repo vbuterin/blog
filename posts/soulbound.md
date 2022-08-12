@@ -25,12 +25,12 @@ But what exactly are these NFTs signaling? Certainly, one part of the answer is 
 
 <center><br>
 
-<img src="../../../../images/soulbound/punks.png" style="width:600px" />
+<img src="../../../../images/soulbound/punks.png" style="width:600px" class="padded" />
 
 <small><i>
 
 CryptoPunks are now regularly being sold for many millions of dollars, and they are not even [the most expensive NFTs](https://decrypt.co/62898/most-expensive-nfts-ever-sold) out there. Image source [here](https://www.larvalabs.com/cryptopunks/topsales).
-    
+
 </i></small>
 
 </center><br>
@@ -42,11 +42,11 @@ Perhaps the best example of a project trying to do this is [POAP](https://poap.x
 <center><br>
 
 <img src="../../../../images/soulbound/poaps.png" style="width:500px" />
-    
+
 <small><i>
-    
+
 Part of [my own POAP collection](https://app.poap.xyz/scan/vitalik.eth), much of which came from the events that I attended over the years.
-    
+
 </i></small>
 
 </center><br>
@@ -73,13 +73,13 @@ POAP has made the technical decision to not block transferability of the POAPs t
 And indeed, there have been [quite](https://poap.gallery/event/14195) a few [cases](https://poap.gallery/event/6481) where POAPs have frequently been bought and sold when an economic rationale was there to do so. Adidas [recently released a POAP](https://twitter.com/adidasoriginals/status/1461057188529594375) for free to their fans that could give users priority access at a merchandise sale. What happened? Well, of course, many of the POAPs were quickly transferred to the highest bidder.
 
 <center><br>
-    
+
 [![](../../../../images/soulbound/adidas.png)](https://poap.gallery/event/14195)
-    
+
 <small><i>
 
 More transfers than items. And [not the only time](https://poap.gallery/event/6481).
-    
+
 </i></small>
 
 <br></center>

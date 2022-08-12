@@ -54,9 +54,9 @@ CityCoins.co is a project built on Stacks, a blockchain run by an unusual "proof
 <center><br>
 
 ![](../../../../images/cities/miamicoin.png)
-    
+
 _[MiamiCoin hackathon](https://www.citycoins.co/post/announcing-the-winners-of-miamicoin-makers-month) winner: a site that allows coworking spaces to give preferential offers to MiamiCoin holders._
-    
+
 </center>
 
 ### CityDAO
@@ -69,7 +69,7 @@ So far, the project is still in its early stages. The team is currently finalizi
 
 <a href="https://opensea.io/assets/0x495f947276749ce646f68ac8c248420045cb7b5e/23487195805935260354348650824724952235377320432154855752878351301067508033245">
 
-![](../../../../images/cities/citydao.png)
+![](../../../../images/cities/citydao.png){.padded}
 
 </a></center><br>
 
@@ -92,7 +92,7 @@ One simple idea that plenty of people, including government officials around the
 
 <center><br>
 
-![](../../../../images/cities/govcoin.png)
+![](../../../../images/cities/govcoin.png){.padded}
 
 </center><br>
 

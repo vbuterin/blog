@@ -3,7 +3,6 @@
 [title]: <> ([Mirror] Central Planning as Overfitting)
 [pandoc]: <> ()
 
-
 _This is a mirror of the post at https://radicalxchange.org/blog/posts/2018-11-26-4m9b8b/ written by myself and Glen Weyl_
 
 There is an intuition shared by many that "central planning" — command-and-control techniques for allocating resources in economies, and fine-grained knob-turning interventionism more generally — is undesirable. There's quite a lot to this, but it is often misapplied in a way that also leads it to go under-appreciated. In this post we try to clarify the appropriate scope of the intuition.

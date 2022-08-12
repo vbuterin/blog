@@ -18,7 +18,7 @@ There are two equivalent definitions of the Gini coefficient:
 **Area-above-curve definition**: draw the graph of a function, where $f(p)$ equals the share of total income earned by the lowest-earning portion of the population (eg. $f(0.1)$ is the share of total income earned by the lowest-earning 10%). The Gini coefficient is the area between that curve and the $y=x$ line, as a portion of the whole triangle:
 
 <center><br>
-<img src="../../../../images/gini/lorenz1.png" />
+<img src="../../../../images/gini/lorenz1.png" class="padded" />
 </center><br>
 
 **Average-difference definition**: the Gini coefficient is half the average difference of incomes between each all possible pairs of individuals, divided by the mean income.
@@ -26,7 +26,6 @@ There are two equivalent definitions of the Gini coefficient:
 For example, in the above example chart, the four incomes are `[1, 2, 4, 8]`, so the 16 possible differences are `[0, 1, 3, 7, 1, 0, 2, 6, 3, 2, 0, 4, 7, 6, 4, 0]`. Hence the average difference is 2.875 and the mean income is 3.75, so Gini = $\frac{2.875}{2 * 3.75} \approx 0.3833$.
 
 It turns out that the two are mathematically equivalent (proving this is an exercise to the reader)!
-
 
 ## What's wrong with the Gini coefficient?
 
@@ -50,7 +49,7 @@ To understand the difference between the two problems more clearly, let's look a
 Here are the Lorenz curves (fancy charts like we saw above) for both dystopias:
 
 <center><br>
-<img src="../../../../images/gini/lorenz2.png" />
+<img src="../../../../images/gini/lorenz2.png" class="padded" />
 </center><br>
 
 Clearly, neither of those two dystopias are good places to live. **But they are not-very-nice places to live in very different ways**. Dystopia A gives each resident a coin flip between unthinkably horrific mass starvation if they end up on the left half on the distribution and egalitarian harmony if they end up on the right half. If you're [Thanos](https://en.wikipedia.org/wiki/Thanos), you might actually like it! If you're not, it's worth avoiding with the strongest force. Dystopia B, on the other hand, is Brave New World-like: everyone has decently good lives (at least at the time when that snapshot of everyone's resources is taken), but at the high cost of an extremely undemocratic power structure where you'd better hope you have a good overlord. If you're [Curtis Yarvin](https://en.wikipedia.org/wiki/Curtis_Yarvin), you might actually like it! If you're not, it's very much worth avoiding too.
@@ -58,7 +57,7 @@ Clearly, neither of those two dystopias are good places to live. **But they are 
 These two problems are different enough that they're worth analyzing and measuring separately. And this difference is not just theoretical. Here is a chart showing share of total income earned by the bottom 20% (a decent proxy for avoiding dystopia A) versus share of total income earned by the top 1% (a decent proxy for being near dystopia B):
 
 <center>
-<img src="../../../../images/gini/top1_vs_bottom20.png" /><br>
+<img src="../../../../images/gini/top1_vs_bottom20.png" class="padded" /><br>
 <small><i>
 
 Sources: [https://data.worldbank.org/indicator/SI.DST.FRST.20](https://data.worldbank.org/indicator/SI.DST.FRST.20) (merging 2015 and 2016 data) and [http://hdr.undp.org/en/indicators/186106](http://hdr.undp.org/en/indicators/186106).
@@ -101,7 +100,7 @@ A typical resident of a geographic community spends most of their time and resou
 
 The average person with $15 in fiat currency is poor and is missing out on the ability to have a good life. The average person with $15 in cryptocurrency is a dabbler who opened up a wallet once for fun. Inequality in level of interest is a healthy thing; every community has its dabblers and its full-time hardcore fans with no life. So if a cryptocurrency has a very high Gini coefficient, but it turns out that much of this inequality comes from inequality in level of interest, then the number points to a much less scary reality than the headlines imply.
 
-Cryptocurrencies, even those that turn out to be highly plutocratic, will not turn any part of the world into anything close to dystopia A. But badly-distributed cryptocurrencies may well look like dystopia B, a problem compounded if [coin voting](https://vitalik.ca/general/2017/12/17/voting.html) governance [is used](https://vitalik.ca/general/2018/03/28/plutocracy.html) to make protocol decisions. Hence, to detect the problems that cryptocurrency communities worry about most, we want a metric that captures proximity to dystopia B more specifically. 
+Cryptocurrencies, even those that turn out to be highly plutocratic, will not turn any part of the world into anything close to dystopia A. But badly-distributed cryptocurrencies may well look like dystopia B, a problem compounded if [coin voting](https://vitalik.ca/general/2017/12/17/voting.html) governance [is used](https://vitalik.ca/general/2018/03/28/plutocracy.html) to make protocol decisions. Hence, to detect the problems that cryptocurrency communities worry about most, we want a metric that captures proximity to dystopia B more specifically.
 
 ## An alternative: measuring dystopia A problems and dystopia B problems separately
 
@@ -118,7 +117,7 @@ $\frac{\sum_{i=1}^n x_i^2}{(\sum_{i=1}^n x_i)^2}$
 Or for you visual learners out there:
 
 <center>
-<img src="../../../../images/gini/herfindahl.png" /><br><br>
+<img src="../../../../images/gini/herfindahl.png" class="padded" /><br><br>
 <small><i>
 Herfindahl-Hirschman index: green area divided by total area.
 </i></small><br><br><br>

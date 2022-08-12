@@ -62,7 +62,7 @@ The alternative, looking at github, reddit and twitter comments and votes to mea
 Quadratic funding falls perfectly in the middle: the need to contribute monetary value to vote ensures that the votes of those who _really_ care about the project count more than the votes of less-concerned outsiders, and the square-root function ensures that the votes of individual ultra-wealthy "whales" cannot beat out a poorer, but broader, coalition.
 
 <center>
-<img src="../../../../images/round6/quadraticpayments.png" style="width:600px" /><br><br><small><i>A diagram from my <a href="https://vitalik.ca/general/2019/12/07/quadratic.html">post on quadratic payments</a> showing how quadratic payments is "in the middle" between the extremes of voting-like systems and money-like systems, and avoids the worst flaws of both.</i></small>
+<img src="../../../../images/round6/quadraticpayments.png" style="width:600px" class="padded" /><br><br><small><i>A diagram from my <a href="https://vitalik.ca/general/2019/12/07/quadratic.html">post on quadratic payments</a> showing how quadratic payments is "in the middle" between the extremes of voting-like systems and money-like systems, and avoids the worst flaws of both.</i></small>
 </center><br>
 
 This raises the question: might it make sense to try to use explicit quadratic _voting_ (with the ability to vote "yes" or "no" to a proposal) as an additional signaling tool to determine community sentiment for ethereum protocol proposals?

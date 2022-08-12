@@ -37,8 +37,8 @@ Finally, Balaji expands on this conception of a Balajian network state in longer
 
 <center><br>
 
-![](../../../../images/networkstates/ns_in_one_image.svg)
-	
+![](../../../../images/networkstates/ns_in_one_image.svg){.padded}
+
 <small><i>And, of course, <a href="https://thenetworkstate.com/the-network-state-in-one-image">an image</a>.</i></small>
 
 </center><br>
@@ -51,7 +51,7 @@ The [commitment paradox of religious communes](https://journals.sagepub.com/doi/
 
 <center><br>
 
-![](../../../../images/networkstates/communes.png)
+![](../../../../images/networkstates/communes.png){.padded}
 
 </center><br>
 
@@ -72,7 +72,7 @@ Balaji's go-to example for lifestyle immersion is a network state organized arou
 > Next, let’s do an example which requires a network archipelago (with a physical footprint) but not a full network state (with diplomatic recognition). This is **Keto Kosher, the sugar-free society**.
 >
 > Start with a history of the horrible USDA Food Pyramid, the grain-heavy monstrosity that gave cover to the corporate sugarification of the globe and the obesity epidemic. ... Organize a community online that crowdfunds properties around the world, like apartment buildings and gyms, and perhaps eventually even culdesacs and small towns. You might take an extreme sugar teeotaler approach, literally banning processed foods and sugar at the border, thereby implementing a kind of "Keto Kosher".
-> 
+>
 > You can imagine variants of this startup society that are like "Carnivory Communities" or "Paleo People". These would be competing startup societies in the same broad area, iterations on a theme. If successful, such a society might not stop at sugar. It could get into setting cultural defaults for fitness and exercise. Or perhaps it could bulk purchase continuous glucose meters for all members, or orders of metformin.
 
 This, strictly speaking, does not require any diplomatic recognition or even political autonomy - though perhaps, in the longer-term future, such enclaves could negotiate for lower health insurance fees and medicare taxes for their members. What does require autonomy? Well, how about a free zone for medical innovation?
@@ -95,10 +95,8 @@ One of the curious features of the book that a reader will notice almost immedia
 Balaji's grand megapolitical theory is pretty out-there and fun in a bunch of ways. Near the beginning of the book, he entices readers with tidbits like... ok fine, I'll just quote:
 
 > * Germany sent <a href="https://www.dw.com/en/how-germany-got-the-russian-revolution-off-the-ground/a-41195312" target="_blank">Vladimir Lenin</a> into Russia, potentially as part of a <a href="https://www.nytimes.com/2017/06/19/opinion/was-lenin-a-german-agent.html" target="_blank">strategy</a> to destabilize their then-rival in war. Antony Sutton's books document how some <a href="https://www.amazon.com/Wall-Street-Bolshevik-Revolution-Capitalists/dp/190557035X" target="_blank">Wall Street</a> bankers apparently funded the Russian Revolution (and how other Wall Street bankers <a href="https://www.amazon.com/dp/B07N9M85GX" target="_blank">funded the Nazis</a> years later). Leon Trotsky spent <a href="https://www.amazon.com/dp/B01I8S7EX6/ref=dp-kindle-redirect?_encoding=UTF8&amp;btkr=1" target="_blank">time in New York</a> prior to the revolution, and propagandistic reporting from Americans like <a href="https://www.britannica.com/biography/John-Reed" target="_blank">John Reed</a> aided Lenin and Trotsky in their revolution. Indeed, Reed was so useful to the Soviets — and so misleading as to the nature of the revolution — that he was <a href="https://www.rferl.org/a/the-american-journalist-buried-at-the-walls-of-the-kremlin/30896862.html" target="_blank">buried at the base of the Kremlin Wall</a>. Surprise: the Russian Revolution wasn't done wholly by Russians, but had significant foreign involvement from Germans and Americans.
-> * The Ochs-Sulzberger family, which owns The New York Times Company, [owned
-slaves](https://nypost.com/2020/07/18/the-family-that-owns-the-new-york-times-were-slaveholders-goodwin/) but didn’t report that fact in their [1619 coverage](https://www.politico.com/news/magazine/2020/03/06/1619-project-new-york-times-mistake-122248).
+> * The Ochs-Sulzberger family, which owns The New York Times Company, [owned slaves](https://nypost.com/2020/07/18/the-family-that-owns-the-new-york-times-were-slaveholders-goodwin/) but didn’t report that fact in their [1619 coverage](https://www.politico.com/news/magazine/2020/03/06/1619-project-new-york-times-mistake-122248).
 > * New York Times correspondent [Walter Duranty](https://www.npr.org/2022/05/08/1097097620/new-york-times-pulitzer-ukraine-walter-duranty) won a [Pulitzer Prize](https://www.pulitzer.org/winners/walter-duranty) for helping the Soviet Union starve Ukraine into submission, 90 years before the Times
-decided to instead "[stand with Ukraine](https://www.nytimes.com/live/2022/02/24/world/russia-attacks-ukraine?smtyp=cur&smid=tw-nytimes#the-world-needs-to-hear-us-ukrainians-march-through-new-york-city-in-protest)".
 
 You can find a bunch more juicy examples in the chapter titled, appropriately, "[If the News is Fake, Imagine History](https://thenetworkstate.com/if-the-news-is-fake-imagine-history)". These examples seem haphazard, and indeed, to some extent they are so intentionally: the goal is first and foremost to shock the reader out of their existing world model so they can start downloading Balaji's own.
 
@@ -108,7 +106,7 @@ Next, we get Balaji's overview of [the political realignments in recent history]
 
 <center><br>
 
-![](../../../../images/networkstates/nytccpbtc.png)
+![](../../../../images/networkstates/nytccpbtc.png){.padded}
 
 </center><br>
 
@@ -120,8 +118,8 @@ This is Balajian megapolitics in a nutshell. It is not trying to justify network
 
 <center><br>
 
-![](../../../../images/networkstates/helical.png)
-	
+![](../../../../images/networkstates/helical.png){.padded}
+
 <small><i>Balaji's helical theory of history: yes, there are cycles, but there is also ongoing progress. Right now, we're at the part of the cycle where we need to help the sclerotic old order die, but also seed a new and better one.</i></small>
 
 </center><br>
@@ -222,7 +220,7 @@ What is the answer? Honestly, I don't see one. One point in favor of network sta
 In the wake of Russia's invasion of Ukraine on Feb 24, Noah Smith wrote an [important post](https://noahpinion.substack.com/p/a-moment-of-clarity) on the moral clarity that the invasion should bring to our thought. A particularly striking section is titled "nowhere to run". Quoting:
 
 > But while exit works on a local level — if San Francisco is too dysfunctional, you can probably move to Austin or another tech town — it simply won’t work at the level of nations. In fact, it never really did — rich crypto guys who moved to countries like Singapore or territories like Puerto Rico still depended crucially on the infrastructure and institutions of highly functional states. But Russia is making it even clearer that this strategy is doomed, because eventually there is nowhere to run. Unlike in previous eras, the arm of the great powers is long enough to reach anywhere in the world.
-> 
+>
 > If the U.S. collapses, you can’t just move to Singapore, because in a few years you’ll be bowing to your new Chinese masters. If the U.S. collapses, you can’t just move to Estonia, because in a few years (months?) you’ll be bowing to your new Russian masters. And those masters will have extremely little incentive to allow you to remain a free individual with your personal fortune intact ... Thus it is very very important to every libertarian that the U.S. not collapse.
 
 One possible counter-argument is: sure, if Ukraine was full of people whose first instinct was exit, Ukraine would have collapsed. But if _Russia was also more exit-oriented_, everyone in Russia would have pulled out of the country within a week of the invasion. Putin would be left standing alone in the fields of the Luhansk oblast facing Zelensky a hundred meters away, and when Putin shouts his demand for surrender, Zelensky would reply: "you and what army"? (Zelensky would of course win a fair one-on-one fight)
@@ -244,7 +242,7 @@ Reading _The Network State_ reminded me of a different book that I read ten year
 We can see the differences most clearly by looking at de Ugarte's theory of formation. Since I've already spent a lot of time quoting Balaji, I'll give de Ugarte a fair hearing with a longer quote:
 
 > The very blogosphere is an ocean of identities and conversation in perpetual cross-breeding and change from among which the great social digestion periodically distils stable groups with their own contexts and specific knowledge.
-> 
+>
 > These conversational communities which crystallise, after a certain point in their development, play the main roles in what we call digital Zionism: they start to precipitate into reality, to generate mutual knowledge among their members, which makes them more identitarially important to them than the traditional imaginaries of the imagined communities to which they are supposed to belong (nation, class, congregation, etc.) as if it were a real community (group of friends, family, guild, etc.)
 >
 > Some of these conversational networks, identitarian and dense, start to generate their own economic metabolism, and with it a distinct demos – maybe several demoi – which takes the nurturing of the autonomy of the community itself as its own goal. These are what we call Neo-Venetianist networks. Born in the blogosphere, they are heirs to the hacker work ethic, and move in the conceptual world, which tends to the economic democracy which we spoke about in the first part of this book.

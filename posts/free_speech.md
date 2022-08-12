@@ -3,7 +3,6 @@
 [title]: <> (On Free Speech)
 [pandoc]: <> ()
 
-
 _"A statement may be both true and dangerous. The previous sentence is such a statement." - David Friedman_
 
 Freedom of speech is a topic that many internet communities have struggled with over the last two decades. Cryptocurrency and blockchain communities, a major part of their raison d'etre being censorship resistance, are especially poised to value free speech very highly, and yet, over the last few years, the extremely rapid growth of these communities and the very high financial and social stakes involved have repeatedly tested the application and the limits of the concept. In this post, I aim to disentangle some of the contradictions, and make a case what the norm of "free speech" really stands for.
@@ -55,7 +54,7 @@ About a year ago at Deconomy I publicly shouted down Craig Wright, [a scammer cl
 
 Of course, Craig Wright's partisans replied back with.... [accusations of censorship](https://coingeek.com/samson-mow-vitalik-buterin-exposed/):
 
-<br><center><img src="../../../../images/free-speech-files/craigwright.png" /></center><br>
+<br><center><img src="../../../../images/free-speech-files/craigwright.png" class="padded" /></center><br>
 
 Did I try to "silence" Craig Wright? I would argue, no. One could argue that this is because "Deconomy is not a public space", but I think the much better argument is that a conference is fundamentally different from an internet forum. An internet forum can actually try to be a fully neutral medium for discussion where anything goes; a conference, on the other hand, is by its very nature a highly curated list of presentations, allocating a limited number of speaking slots and actively channeling a large amount of attention to those lucky enough to get a chance to speak. A conference is an editorial act by the organizers, saying "here are some ideas and views that we think people really should be exposed to and hear". Every conference "censors" almost every viewpoint because there's not enough space to give them all a chance to speak, and this is inherent to the format; so raising an objection to a conference's judgement in making its selections is absolutely a legitimate act.
 

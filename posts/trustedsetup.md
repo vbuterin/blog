@@ -11,7 +11,7 @@ Many cryptographic protocols, especially in the areas of [data availability samp
 
 <center>
 
-![](../../../../images/trustedsetup/setup1.png)
+![](../../../../images/trustedsetup/setup1.png){.padded}
 
 </center>
 
@@ -39,12 +39,12 @@ However, any IPA-based proofs take $O(N)$ time to verify, and there's an unavoid
 
 <center>
 
-![](../../../../images/trustedsetup/ipa_bases.png)
+![](../../../../images/trustedsetup/ipa_bases.png){.padded}
 
 <small>
-    
+
 _A valid commitment to the polynomial $3x^3 + 8x^2 + 2x + 6$ under one set of base points is a valid commitment to $3x^3 + 4x^2 + 2x + 6$ under a different set of base points._
-    
+
 </small></center>
 
 If we want to make an IPA-based _proof_ for some statement (say, that this polynomial evaluated at $x = 10$ equals $3826$), the proof should pass with the first set of base points and fail with the second. Hence, whatever the proof verification procedure is cannot avoid somehow taking into account each and every one of the $S_i$ values, and so it unavoidably takes $O(N)$ time.
@@ -61,7 +61,7 @@ The solution to this is multi-participant trusted setups, where by "multi" we me
 
 <center>
 
-![](../../../../images/trustedsetup/multiparticipants.png)
+![](../../../../images/trustedsetup/multiparticipants.png){.padded}
 
 </center>
 
@@ -91,12 +91,12 @@ To verify that each participant actually participated, each participant can prov
 
 <center>
 
-![](../../../../images/trustedsetup/verifying.png)
+![](../../../../images/trustedsetup/verifying.png){.padded}
 
 <small>
-    
+
 _$s_1$ is the first participant's secret, $s_2$ is the second participant's secret, etc. The pairing check at each step proves that the setup at each step actually came from a combination of the setup at the previous step and a new secret known by the participant at that step._
-    
+
 </small></center>
 
 Each participant should reveal their proof on some publicly verifiable medium (eg. personal website, transaction from their .eth address, Twitter). Note that this mechanism does _not_ prevent someone from claiming to have participated at some index where someone else has (assuming that other person has revealed their proof), but it's generally considered that this does not matter: if someone is willing to lie about having participated, they would also be willing to lie about having deleted their secret. As long as at least one of the people who publicly claim to have participated is honest, the setup is secure.

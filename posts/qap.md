@@ -3,14 +3,13 @@
 [title]: <> ([Mirror] Quadratic Arithmetic Programs: from Zero to Hero)
 [pandoc]: <> (--mathjax)
 
-
-_This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649</a> _
+_This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649</a>_
 
 There has been a lot of interest lately in the technology behind zk-SNARKs, and people are increasingly [trying to demystify](https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell/) something that many have come to call “moon math” due to its perceived sheer indecipherable complexity. zk-SNARKs are indeed quite challenging to grasp, especially due to the sheer number of moving parts that need to come together for the whole thing to work, but if we break the technology down piece by piece then comprehending it becomes simpler.
 
 The purpose of this post is not to serve as a full introduction to zk-SNARKs; it assumes as background knowledge that (i) you know what zk-SNARKs are and what they do, and (ii) know enough math to be able to reason about things like polynomials (if the statement $P(x) + Q(x) = (P + Q)(x)$ , where $P$ and $Q$ are polynomials, seems natural and obvious to you, then you’re at the right level). Rather, the post digs deeper into the machinery behind the technology, and tries to explain as well as possible the first half of the pipeline, as drawn by zk-SNARK researcher Eran Tromer here:
 
-![](https://cdn-images-1.medium.com/max/2000/1*YD-ckgBfmmmRBCyVlhp8YQ.png)
+![](https://cdn-images-1.medium.com/max/2000/1*YD-ckgBfmmmRBCyVlhp8YQ.png){.padded}
 
 The steps here can be broken up into two halves. First, zk-SNARKs cannot be applied to any computational problem directly; rather, you have to convert the problem into the right “form” for the problem to operate on. The form is called a “quadratic arithmetic program” (QAP), and transforming the code of a function into one of these is itself highly nontrivial. Along with the process for converting the code of a function into a QAP is another process that can be run alongside so that if you have an input to the code you can create a corresponding solution (sometimes called “witness” to the QAP). After this, there is another fairly intricate process for creating the actual “zero knowledge proof” for this witness, and a separate process for verifying a proof that someone else passes along to you, but these are details that are out of scope for this post.
 
@@ -45,7 +44,7 @@ Now, we convert this into something called a rank-1 constraint system (R1CS). An
 
 <br>
 <center>
-<img src="https://cdn-images-1.medium.com/max/2000/1*wp6bmXoPEU_zZHzJFRq6IQ.png" />
+<img src="https://cdn-images-1.medium.com/max/2000/1*wp6bmXoPEU_zZHzJFRq6IQ.png" class="padded" />
 </center>
 <br>
 
@@ -221,7 +220,7 @@ Now what’s the point of this crazy transformation? The answer is that instead 
 
 <br>
 <center>
-<img src="https://cdn-images-1.medium.com/max/2000/1*QD2EfVsbNguEXrjKJwNVMg.png" />
+<img src="https://cdn-images-1.medium.com/max/2000/1*QD2EfVsbNguEXrjKJwNVMg.png" class="padded" />
 </center>
 <br>
 

@@ -3,19 +3,18 @@
 [title]: <> (Exploring Fully Homomorphic Encryption)
 [pandoc]: <> (--mathjax)
 
-
 _Special thanks to Karl Floersch and Dankrad Feist for review_
 
 Fully homomorphic encryption has for a long time been considered one of the holy grails of cryptography. The promise of fully homomorphic encryption (FHE) is powerful: it is a type of encryption that allows a third party to perform computations on encrypted data, and get an encrypted result that they can hand back to whoever has the decryption key for the original data, _without_ the third party being able to decrypt the data or the result themselves.
 
 <center>
-<img src="../../../../images/fhe/HomoEncrypt.png?1" /><br>
+<img src="../../../../images/fhe/HomoEncrypt.png?1" class="padded" /><br>
 </center>
 
 As a simple example, imagine that you have a set of emails, and you want to use a third party spam filter to check whether or not they are spam. The spam filter has a desire for _privacy of their algorithm_: either the spam filter provider wants to keep their source code closed, or the spam filter depends on a very large database that they do not want to reveal publicly as that would make attacking easier, or both. However, you care about the _privacy of your data_, and don't want to upload your unencrypted emails to a third party. So here's how you do it:
 
 <center>
-<img src="../../../../images/fhe/HomoEncrypt2.png" /><br>
+<img src="../../../../images/fhe/HomoEncrypt2.png" class="padded" /><br>
 </center>
 
 Fully homomorphic encryption has many applications, including in the blockchain space. One key example is that can be used to implement privacy-preserving light clients (the light client hands the server an encrypted index `i`, the server computes and returns `data[0] * (i = 0) + data[1] * (i = 1) + ... + data[n] * (i = n)`, where `data[i]` is the i'th piece of data in a block or state along with its Merkle branch and `(i = k)` is an expression that returns 1 if `i = k` and otherwise 0; the light client gets the data it needs and the server learns nothing about what the light client asked).
@@ -98,9 +97,8 @@ There are two classes of solution to this problem. First, in many somewhat homom
 Suppose that you have a ciphertext $ct$ that is an encryption of some $m$ under a key $p$, that has a lot of error. The idea is that we "refresh" the ciphertext by turning it into a new ciphertext of $m$ under another key $p_2$, where this process "clears out" the old error (though it will introduce a fixed amount of new error). The trick is quite clever. The holder of $p$ and $p_2$ provides a "bootstrapping key" that consists of an encryption of _the bits of $p$_ under the key $p_2$, as well as the public key for $p_2$. Whoever is doing computations on data encrypted under $p$ would then take the bits of the ciphertext $ct$, and individually encrypt these bits under $p_2$. They would then _homomorphically compute the decryption under $p$_ using these ciphertexts, and get out the single bit, which would be $m$ encrypted under $p_2$.
 
 <center>
-<img src="../../../../images/fhe/bootstrapping.png" /><br><br>
+<img src="../../../../images/fhe/bootstrapping.png" class="padded" /><br><br>
 </center>
-
 
 This is difficult to understand, so we can restate it as follows. The decryption procedure $dec(ct, p)$ _is itself a computation_, and so it _can itself be implemented as a circuit_ that takes as input the bits of $ct$ and the bits of $p$, and outputs the decrypted bit $m \in {0, 1}$. If someone has a ciphertext $ct$ encrypted under $p$, a public key for $p_2$, _and_ the bits of $p$ encrypted under $p_2$, then they can compute $dec(ct, p) = m$ "homomorphically", and get out $m$ encrypted under $p_2$. Notice that the decryption procedure itself washes away the old error; it just outputs 0 or 1. The decryption procedure is itself a circuit, which contains additions or multiplications, so it will introduce new error, but this new error _does not depend_ on the amount of error in the original encryption.
 
@@ -126,7 +124,7 @@ In this example, we set the modulus $p = 103$. The dot product is `3 * 2 + 14 * 
 The security of the scheme is based on an assumption known as "[learning with errors](https://en.wikipedia.org/wiki/Learning_with_errors)" (LWE) - or, in more jargony but also more understandable terms, the hardness of _solving systems of equations with errors_.
 
 <center>
-<a href="https://cims.nyu.edu/~regev/papers/lwesurvey.pdf"><img src="../../../../images/fhe/lwe.png" /></a><br>
+<a href="https://cims.nyu.edu/~regev/papers/lwesurvey.pdf"><img src="../../../../images/fhe/lwe.png" class="padded" /></a><br>
 </center><br>
 
 A ciphertext can itself be viewed as an equation: $k_1c_1 + .... + k_nc_n \approx 0$, where the key $k_1 ... k_n$ is the unknowns, the ciphertext $c_1 ... c_n$ is the coefficients, and the equality is only approximate because of both the message (0 or 1) and the error ($2e$ for some relatively small $e$). The LWE assumption ensures that even if you have access to many of these ciphertexts, you cannot recover $k$.

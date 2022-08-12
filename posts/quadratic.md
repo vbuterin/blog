@@ -3,7 +3,6 @@
 [title]: <> (Quadratic Payments: A Primer)
 [pandoc]: <> (--mathjax)
 
-
 _Special thanks to Karl Floersch and Jinglan Wang for feedback_
 
 If you follow applied mechanism design or decentralized governance at all, you may have recently heard one of a few buzzwords: [quadratic voting](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2003531), [quadratic funding](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3243656) and [quadratic attention purchase](https://kortina.nyc/essays/speech-is-free-distribution-is-not-a-tax-on-the-purchase-of-human-attention-and-political-power/). These ideas have been gaining popularity rapidly over the last few years, and small-scale tests have already been deployed: the [Taiwanese presidential hackathon](https://presidential-hackathon.taiwan.gov.tw/en/) used quadratic voting to vote on winning projects, Gitcoin Grants [used quadratic funding](https://vitalik.ca/general/2019/10/24/gitcoin.html) to fund public goods in the Ethereum ecosystem, and the Colorado Democratic party [also experimented with](https://www.wired.com/story/colorado-quadratic-voting-experiment) quadratic voting to determine their party platform.
@@ -14,7 +13,7 @@ To the proponents of these voting schemes, this is not just another slight impro
 
 To understand what is going on, let us first consider an existing social technology: money, and property rights - the invisible social technology that generally hides behind money. Money and private property are extremely powerful social technologies, for all the reasons classical economists have been stating for over a hundred years. If Bob is producing apples, and Alice wants to buy apples, we can economically model the interaction between the two, and the results _seem to make sense_:
 
-<center><img src="../../../../images/qv-files/Market1.png" /></center><br><br>
+<center><img src="../../../../images/qv-files/Market1.png" class="padded" /></center><br><br>
 
 Alice keeps buying apples until the marginal value of the next apple to her is less than the cost of producing it, which is pretty much exactly the optimal thing that could happen. This is all formalized in results such as the "[fundamental theorems of welfare economics](https://en.wikipedia.org/wiki/Fundamental_theorems_of_welfare_economics)". Now, those of you who have learned some economics may be screaming, but what about [imperfect competition](https://en.wikipedia.org/wiki/Imperfect_competition)? [Asymmetric information](https://en.wikipedia.org/wiki/Information_asymmetry)? [Economic inequality](https://en.wikipedia.org/wiki/Economic_inequality)? [Public goods](https://en.wikipedia.org/wiki/Public_good)? [Externalities](https://en.wikipedia.org/wiki/Externality)? Many activities in the real world, including those that are key to the progress of human civilization, benefit (or harm) many people in complicated ways. These activities and the consequences that arise from them often cannot be neatly decomposed into sequences of distinct trades between two parties.
 
@@ -30,13 +29,13 @@ First of all, let's see what happens if we just put up a plain old regular marke
 
 Phrased less mathematically, either you value the article enough (and/or are rich enough) to pay, and if that's the case it's in your interest to keep paying (and influencing) quite a lot, or you don't value the article enough and you contribute nothing. Hence, the only blog articles that get published would be articles where some single person is willing to [basically pay for it themselves](https://en.wikipedia.org/wiki/Patronage) (in my experiment in 2011, this prediction was experimentally verified: in [most](https://bitcointalk.org/index.php?topic=23934.msg306437#msg306437) [rounds](https://bitcointalk.org/index.php?topic=28681.msg360909#msg360909), over half of the total contribution came from a single donor).
 
-<center><img src="../../../../images/qv-files/Market8.png" /></center><br><br>
+<center><img src="../../../../images/qv-files/Market8.png" class="padded" /></center><br><br>
 
 Note that _this reasoning applies for any kind of mechanism that involves "buying influence" over matters of public concern_. This includes paying for public goods, shareholder voting in corporations, public advertising, bribing politicians, and much more. The little guy has too little influence (not quite zero, because in the real world things like altruism exist) and the big guy has too much. If you had an intuition that markets work great for buying apples, but money is corrupting in "the public sphere", this is basically a simplified mathematical model that shows why.
 
 We can also consider a different mechanism: one-person-one-vote. Let's say you can either vote that I deserve a reward for writing this article, or you can vote that I don't, and my reward is proportional to the number of votes in my favor. We can interpret this as follows: your first "contribution" costs only a small amount of effort, so you'll support an article if you care about it enough, but after that point there is no more room to contribute further; your second contribution "costs" infinity.
 
-<center><img src="../../../../images/qv-files/Market9.png" /></center><br><br>
+<center><img src="../../../../images/qv-files/Market9.png" class="padded" /></center><br><br>
 
 Now, you might notice that neither of the graphs above look quite right. The first graph over-privileges people who _care a lot_ (or are wealthy), the second graph over-privileges people who _care only a little_, which is also a problem. The single sheep's desire to live is more important than the two wolves' desire to have a tasty dinner.
 
@@ -46,7 +45,7 @@ So how do we match these two up? The answer is clever: _your n'th unit of influe
 
 Let's draw this as a graph:
 
-<center><img src="../../../../images/qv-files/Market10.png" /></center><br><br>
+<center><img src="../../../../images/qv-files/Market10.png" class="padded" /></center><br><br>
 
 Now let's look at all three beside each other:
 
@@ -58,8 +57,7 @@ Notice that only quadratic voting has this nice property that the amount of infl
 
 Now, you might ask, where does the _quadratic_ come from? Well, the _marginal_ cost of the n'th vote is $n (or $0.01 * n), but the _total_ cost of n votes is $\approx \frac{n^2}{2}$. You can view this geometrically as follows:
 
-<center><img src="../../../../images/qv-files/qv_triangle.png" /></center><br><br>
-
+<center><img src="../../../../images/qv-files/qv_triangle.png" class="padded" /></center><br><br>
 
 The total cost is the area of a triangle, and you probably learned in math class that area is base * height / 2. And since here base and height are proportionate, that basically means that total cost is proportional to number of votes squared - hence, "quadratic". But honestly it's easier to think "your n'th unit of influence costs $n".
 
@@ -75,7 +73,7 @@ This seems like a perfect target for quadratic voting. The goal is that option A
 
 <br>
 <center>
-<img src="../../../../images/qv-files/Market7.png?2e" /><br><br>
+<img src="../../../../images/qv-files/Market7.png?2e" class="padded" /><br><br>
 <i><small>Note that in the voting case, we're deciding two options, so different people will favor A over B or B over A; hence, unlike the graphs we saw earlier that start from zero, here voting and preference can both be positive or negative (which option is considered positive and which is negative doesn't matter; the math works out the same way)</small></i>
 </center>
 <br>
@@ -103,7 +101,7 @@ $$(\sum_{i=1}^n \sqrt{c_i})^2$$
 
 If that sounds complicated, here it is graphically:
 
-<center><img src="../../../../images/qv-files/quadratic_funding.png" /></center><br><br>
+<center><img src="../../../../images/qv-files/quadratic_funding.png" class="padded" /></center><br><br>
 
 In any case where there is more than one contributor, the computed payment is greater than the raw sum of contributions; the difference comes out of a central subsidy pool (eg. if ten people each donate $1, then the sum-of-square-roots is $10, and the square of that is $100, so the subsidy is $90). Note that if the subsidy pool is not big enough to make the full required payment to every project, we can just divide the subsidies proportionately by whatever constant makes the totals add up to the subsidy pool's budget; **you can prove that this solves the tragedy-of-the-commons problem as well as you can with that subsidy budget**.
 
@@ -159,7 +157,7 @@ Another challenge is that quadratic payments, being a payment-based mechanism, c
 
 A third challenge is the "[rational ignorance](https://en.wikipedia.org/wiki/Rational_ignorance)" and "[rational irrationality](https://en.wikipedia.org/wiki/Rational_irrationality)" problems, which is that decentralized public decisions have the weakness that any single individual has very little effect on the outcome, and so little motivation to make sure they are supporting the decision that is best for the long term; instead, pressures such as tribal affiliation may dominate. There are many strands of philosophy that emphasize the ability of large crowds to be very wrong despite (or because of!) their size, and quadratic payments in any form do little to address this.
 
-Quadratic payments do better at mitigating this problem than one-person-one-vote systems, and these problems can be expected to be less severe for medium-scale public goods than for large decisions that affect many millions of people, so it may not be a large challenge at first, but it's certainly an issue worth confronting. One approach is [combining quadratic voting with elements of sortition](https://ethresear.ch/t/quadratic-voting-with-sortition/6065). Another, potentially more long-term durable, approach is to combine quadratic voting with another economic technology that is much more specifically targeted toward rewarding the "correct contrarianism" that can dispel mass delusions: [prediction markets](https://en.wikipedia.org/wiki/Prediction_market). A simple example would be a system where quadratic funding is done _retrospectively_, so people vote on which public goods were valuable some time ago (eg. even 2 years), and projects are funded up-front by selling shares of the results of these deferred votes; by buying shares people would be both funding the projects and betting on which project would be viewed as successful in 2 years' time. There is a large design space to experiment with here. 
+Quadratic payments do better at mitigating this problem than one-person-one-vote systems, and these problems can be expected to be less severe for medium-scale public goods than for large decisions that affect many millions of people, so it may not be a large challenge at first, but it's certainly an issue worth confronting. One approach is [combining quadratic voting with elements of sortition](https://ethresear.ch/t/quadratic-voting-with-sortition/6065). Another, potentially more long-term durable, approach is to combine quadratic voting with another economic technology that is much more specifically targeted toward rewarding the "correct contrarianism" that can dispel mass delusions: [prediction markets](https://en.wikipedia.org/wiki/Prediction_market). A simple example would be a system where quadratic funding is done _retrospectively_, so people vote on which public goods were valuable some time ago (eg. even 2 years), and projects are funded up-front by selling shares of the results of these deferred votes; by buying shares people would be both funding the projects and betting on which project would be viewed as successful in 2 years' time. There is a large design space to experiment with here.
 
 ### Conclusion
 

@@ -14,7 +14,7 @@ This guide is focused on my own experiences; plenty of other people have made th
 <center><br>
 
 ![](../../../../images/backpack/backpack.png)
-	
+
 _The backpack, with the various sub-bags laid out separately. Yes, this all fits in the backpack, and without that much effort to pack and unpack._
 
 </center><br>
@@ -40,7 +40,7 @@ And this:
 <center><br>
 
 ![](../../../../images/backpack/charger.png)
-	
+
 <small><i>Charger for mobile phone and laptop (can charge both at the same time)! About 5x5x2.5 cm. Buy [here](https://us.anker.com/collections/series7/products/a2666?variant=41530603602070&ref=seriesBuy).</i></small>
 
 </center><br>
@@ -86,12 +86,36 @@ There is a key mathematical reason why dressing in layers is a good idea: it let
 
 <br>
 
-| Temperature (°C) | Clothing |
-| - | - |
-| <span style="font-size:250%; text-align: center">20°</span> | ![](../../../../images/backpack/tshirt.png) |
-| <span style="font-size:250%; text-align: center">13°</span> | ![](../../../../images/backpack/tshirt.png) + ![](../../../../images/backpack/sweater.png) |
-| <span style="font-size:250%; text-align: center">7°</span> | ![](../../../../images/backpack/tshirt.png) + ![](../../../../images/backpack/jacket.png) |
-| <span style="font-size:250%; text-align: center">0°</span> | ![](../../../../images/backpack/tshirt.png) + ![](../../../../images/backpack/sweater.png) + ![](../../../../images/backpack/jacket.png) |
+<table>
+<thead>
+<tr>
+<th>Temperature (°C)</th>
+<th>Clothing</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><span style="font-size:250%; text-align: center">20°</span></td><td>
+
+![](../../../../images/backpack/tshirt.png){.transparent}
+
+</td></tr>
+<tr><td><span style="font-size:250%; text-align: center">13°</span></td><td>
+
+![](../../../../images/backpack/tshirt.png){.transparent} + ![](../../../../images/backpack/sweater.png){.transparent}
+
+</td></tr>
+<tr><td><span style="font-size:250%; text-align: center">7°</span></td><td>
+
+![](../../../../images/backpack/tshirt.png){.transparent} + ![](../../../../images/backpack/jacket.png){.transparent}
+
+</td></tr>
+<tr><td><span style="font-size:250%; text-align: center">0°</span></td><td>
+
+![](../../../../images/backpack/tshirt.png){.transparent} + ![](../../../../images/backpack/sweater.png){.transparent} + ![](../../../../images/backpack/jacket.png){.transparent}
+
+</td></tr>
+</tbody>
+</table>
 
 <br>
 
@@ -146,25 +170,25 @@ Not everything that you have needs to be designed around cm<sup>3</sup> minimiza
 
 <center><br>
 
-<table><tr style="border: 0px"><td style="width:40%; border: 0px; vertical-align: top; padding: 25px">
+<table class="transparent centered"><tr><td style="width:40%; vertical-align: top; padding: 25px">
 
 ![](../../../../images/backpack/laptop_bag.png)
 
 _My laptop bag, bought in an outdoor market in Zambia._
 
-</td><td style="width:40%; border: 0px; vertical-align: top; padding: 25px">
+</td><td style="width:40%; vertical-align: top; padding: 25px">
 
 ![](../../../../images/backpack/unisocks.png)
 
 _[Unisocks](https://unisocks.exchange/)._
 
-</td></tr><tr style="border: 0px"><td style="border: 0px; vertical-align: top; padding: 25px">
+</td></tr><tr><td style="vertical-align: top; padding: 25px">
 
 ![](../../../../images/backpack/pants.png)
 
 _Sweatpants for indoor use, that are either fox-themed or Shiba Inu-themed depending on whom you ask._
 
-</td><td style="border: 0px; vertical-align: top; padding: 25px">
+</td><td style="vertical-align: top; padding: 25px">
 
 ![](../../../../images/backpack/gloves.png)
 

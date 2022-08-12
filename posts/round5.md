@@ -3,7 +3,6 @@
 [title]: <> (Gitcoin Grants Round 5 Retrospective)
 [pandoc]: <> (--mathjax)
 
-
 _Special thanks to Kevin Owocki and Frank Chen for help and review_
 
 Round 5 of Gitcoin Grants has just finished, with $250,000 of matching split between tech, media, and the new (non-Ethereum-centric) category of "public health". In general, it seems like the mechanism and the community are settling down into a regular rhythm. People know what it means to contribute, people know what to expect, and the results emerge in a relatively predictable pattern - even if which specific grants get the most funds is not so easy to predict.
@@ -20,7 +19,7 @@ So let's go straight into the analysis. One important property worth looking at 
 On the media side, we do see some balance between stability and dynamism:
 
 <center>
-<img src="../../../../images/round5/media_scatter.png?1" />
+<img src="../../../../images/round5/media_scatter.png?1" class="padded" />
 </center><br>
 
 Week in Ethereum had the highest total amount received in both [the previous round](https://vitalik.ca/general/2020/01/28/round4.html) and the current round. EthHub and Bankless are also near the top in both the current round and the previous round. On the other hand, Antiprosynthesis, the (beloved? notorious? famous?) Twitter info-warrior, has decreased from $13,813 to $5,350, while [Chris Blec's YouTube channel](https://gitcoin.co/grants/174/defi-educational-videos-by-chris-blec) has _increased_ from $5,851 to $12,803. So some churn, but also some continuity between rounds.
@@ -28,7 +27,7 @@ Week in Ethereum had the highest total amount received in both [the previous rou
 On the tech side, we see much more churn in the winners, with a less clear relationship between income last round and income this round:
 
 <center>
-<img src="../../../../images/round5/tech_scatter.png?1" />
+<img src="../../../../images/round5/tech_scatter.png?1" class="padded" />
 </center><br>
 
 Last round, the winner was Tornado Cash, claiming $30,783; this round, they are down to $8,154. This round, the three roughly-even winners are [Samczsun](https://gitcoin.co/grants/444/white-hat-hacking) ($4,631 contributions + $15,704 match = $20,335 total), [Arboreum](https://gitcoin.co/grants/618/arboreum) ($16,084 contributions + $9,046 match = $25,128 total) and [1inch.exchange](https://gitcoin.co/grants/246/1split) ($58,566 contributions + $7,893 match = $66,459 total), in the latter case the bulk coming from one contribution:
@@ -67,13 +66,13 @@ However, a very similar effect also is the cause behind the market failure preve
 
 We simplify the model as follows. An individual has two choices: contribute $10 in the current round, or contribute $5 in the current round and $5 in the next round. If the matchings in the two rounds were equal, then the latter option would actually be more favorable: because the matching is proportional to the square root of the donation size, the former might give you eg. a $200 match now, but the latter would give you $141 in the current round + $141 in the next round = $282. But if you see a large mass of people contributing in the current round, and you expect much fewer people to contribute in the second round, then the choice is not $200 versus $141 + $141, it might be $200 versus $141 + $5. And so you're better off joining the current round's frenzy. We can mathematically analyze the equilibrium:
 
-<center><img src="../../../../images/round5/split.png" /></center><br>
+<center><img src="../../../../images/round5/split.png" class="padded" /></center><br>
 
 So there is a substantial region within which the bad equilibrium of everyone concentrating is sticky: if more than about 3/4 of contributors are expected to concentrate, it seems in your interest to also concentrate. A mathematically astute reader may note that there is [always some intermediate strategy](../../../../images/round5/split2.png) that involves splitting but at a ratio different from 50/50, which you can prove performs better than either full concentrating _or_ the even split, but here we get back to hypothesis (3) above: the UI doesn't offer such a complex menu of choices, it just offers the choice of a one-time contribution or a recurring contribution, so people pick one or the other.
 
 How might we fix this? One option is to add a bit of continuity to matching ratios: when computing pairwise matches, match against not just the current round's contributors but, say, 1/3 of the previous round's contributors as well:
 
-<center><img src="../../../../images/round5/QF3.png" /></center><br>
+<center><img src="../../../../images/round5/QF3.png" class="padded" /></center><br>
 
 This makes some philosophical sense: the objective of quadratic funding is to subsidize contributions to projects that are detected to be public goods because multiple people have contributed to them, and contributions in the previous round are certainly also evidence of a project's value, so why not reuse those? So here, moving away from everyone-starts-from-zero toward this partial carryover of matching ratios would mitigate the round concentration effect - but, of course, it would exacerbate the risk of entrenchment. Hence, some experimentation and balance may be in order. A broader philosophical question is, is there really a deep inherent tradeoff between risk of entrenchment and stability of income, or is there some way we could get both?
 

@@ -44,7 +44,7 @@ def mimc(inp, steps, round_constants):
 We choose MIMC (see [paper](https://eprint.iacr.org/2016/492.pdf)) as the example because it is both (i) simple to understand and (ii) interesting enough to be useful in real life. The function can be viewed visually as follows:
 
 <center>
-<img src="../../../../images/starks-part-3-files/MIMC.png" /><br>
+<img src="../../../../images/starks-part-3-files/MIMC.png" class="padded" /><br>
 <br>
 <small><i>Note: in many discussions of MIMC, you will typically see XOR used instead of +; this is because MIMC is typically done over binary fields, where addition _is_ XOR; here we are doing it over prime fields.</i></small>
 </center><br>
@@ -54,7 +54,7 @@ In our example, the round constants will be a relatively small list (eg. 64 item
 MIMC with a very large number of rounds, as we're doing here, is useful as a _verifiable delay function_ - a function which is difficult to compute, and particularly non-parallelizable to compute, but relatively easy to verify. MIMC by itself achieves this property to some extent because MIMC _can_ be computed "backward" (recovering the "input" from its corresponding "output"), but computing it backward takes about 100 times longer to compute than the forward direction (and neither direction can be significantly sped up by parallelization). So you can think of computing the function in the backward direction as being the act of "computing" the non-parallelizable proof of work, and computing the function in the forward direction as being the process of "verifying" it.
 
 <center>
-<img src="../../../../images/starks-part-3-files/MIMC2.png" /><br>
+<img src="../../../../images/starks-part-3-files/MIMC2.png" class="padded" /><br>
 <br>
 <small><i>$x \rightarrow x^{(2p-1)/3}$ gives the inverse of $x \rightarrow x^3$; this is true because of <a href="https://en.wikipedia.org/wiki/Fermat%27s_little_theorem">Fermat's Little Theorem</a>, a theorem that despite its supposed littleness is arguably much more important to mathematics than Fermat's more famous "Last Theorem".</i></small>
 </center><br>
@@ -103,7 +103,7 @@ def inv(self, a):
 The above algorithm is relatively expensive; fortunately, for the special case where we need to do many modular inverses, there's a simple mathematical trick that allows us to compute many inverses, called [Montgomery batch inversion](https://books.google.com/books?id=kGu4lTznRdgC&pg=PA54&lpg=PA54&dq=montgomery+batch+inversion&source=bl&ots=tPJcPPOrCe&sig=Z3p_6YYwYloRU-f1K-nnv2D8lGw&hl=en&sa=X&ved=0ahUKEwjO8sumgJjcAhUDd6wKHWGNA9cQ6AEIRDAE#v=onepage&q=montgomery%20batch%20inversion&f=false):
 
 <center>
-<img src="../../../../images/starks-part-3-files/MultiInv.png" /><br>
+<img src="../../../../images/starks-part-3-files/MultiInv.png" class="padded" /><br>
 <br>
 <small><i>Using Montgomery batch inversion to compute modular inverses. Inputs purple, outputs green, multiplication gates black; the red square is the <b>only</b> modular inversion.</i></small>
 </center><br>
@@ -242,7 +242,7 @@ You can try running it on a few inputs yourself and check that it gives results 
 A Fourier transform takes as input `[x[0] .... x[n-1]]`, and its goal is to output `x[0] + x[1] + ... + x[n-1]` as the first element, `x[0] + x[1] * 2 + ... + x[n-1] * w**(n-1)` as the second element, etc etc; a fast Fourier transform accomplishes this by splitting the data in half, doing an FFT on both halves, and then gluing the result back together.
 
 <center>
-<img src="../../../../images/starks-part-3-files/radix2fft.png" /><br><br>
+<img src="../../../../images/starks-part-3-files/radix2fft.png" class="padded" /><br><br>
 <small><i>A diagram of how information flows through the FFT computation. Notice how the FFT consists of a "gluing" step followed by two copies of the FFT on two halves of the data, and so on recursively until you're down to one element.</i></small>
 </center><br>
 
@@ -269,7 +269,7 @@ xs = get_power_cycle(root_of_unity, modulus)
 
 column = []
 for i in range(len(xs)//4):
-    x_poly = f.lagrange_interp_4( 
+    x_poly = f.lagrange_interp_4(
         [xs[i+len(xs)*j//4] for j in range(4)],
         [values[i+len(values)*j//4] for j in range(4)],
     )
@@ -279,7 +279,7 @@ for i in range(len(xs)//4):
 This packs a lot into a few lines of code. The broad idea is to re-interpret the polynomial $P(x)$ as a polynomial $Q(x, y)$, where $P(x) = Q(x, x^4)$. If $P$ has degree $< N$, then $P'(y) = Q(special\_x, y)$ will have degree $< \frac{N}{4}$. Since we don't want to take the effort to actually compute $Q$ in coefficient form (that would take a still-relatively-nasty-and-expensive FFT!), we instead use another trick. For any given value of $x^{4}$, there are 4 corresponding values of $x$: $x$, $modulus - x$, and $x$ multiplied by the two modular square roots of $-1$. So we already have four values of $Q(?, x^4)$, which we can use to interpolate the polynomial $R(x) = Q(x, x^4)$, and from there calculate $R(special\_x) = Q(special\_x, x^4) = P'(x^4)$. There are $\frac{N}{4}$ possible values of $x^{4}$, and this lets us easily calculate all of them.
 
 <center>
-<img src="../../../../images/starks-part-3-files/fri7.png" style="width:550px"/><br><br>
+<img src="../../../../images/starks-part-3-files/fri7.png" style="width:550px" class="padded" /><br><br>
 <small><i>A diagram from part 2; it helps to keep this in mind when understanding what's going on here</i></small>
 </center><br>
 

@@ -49,14 +49,14 @@ There is a smart contract on-chain which maintains a **state root**: the Merkle 
 
 <br>
 <center>
-<img src="../../../../images/rollup-files/diag1.png" />
+<img src="../../../../images/rollup-files/diag1.png" class="padded" />
 </center><br>
 
 Anyone can publish a **batch**, a collection of transactions in a highly compressed form together with the previous state root and the new state root (the Merkle root _after_ processing the transactions). The contract checks that the previous state root in the batch matches its current state root; if it does, it switches the state root to the new state root.
 
 <br>
 <center>
-<img src="../../../../images/rollup-files/diag2.png" />
+<img src="../../../../images/rollup-files/diag2.png" class="padded" />
 </center><br>
 
 To support depositing and withdrawing, we add the ability to have transactions whose input or output is "outside" the rollup state. If a batch has inputs from the outside, the transaction submitting the batch needs to also transfer these assets to the rollup contract. If a batch has outputs to the outside, then upon processing the batch the smart contract initiates those withdrawals.
@@ -81,7 +81,7 @@ There are complex tradeoffs between the two flavors of rollups:
 | Per-transaction on-chain gas costs | Higher | **Lower** (if data in a transaction is only used to verify, and not to cause state changes, then this data can be left out, whereas in an optimistic rollup it would need to be published in case it needs to be checked in a fraud proof)|
 | Off-chain computation costs | **Lower** (though there is more need for many full nodes to redo the computation) | Higher (ZK-SNARK proving especially for general-purpose computation can be expensive, potentially many thousands of times more expensive than running the computation directly) |
 
-In general, my own view is that in the short term, optimistic rollups are likely to win out for general-purpose EVM computation and ZK rollups are likely to win out for simple payments, exchange and other application-specific use cases, but in the medium to long term ZK rollups will win out in all use cases as ZK-SNARK technology improves. 
+In general, my own view is that in the short term, optimistic rollups are likely to win out for general-purpose EVM computation and ZK rollups are likely to win out for simple payments, exchange and other application-specific use cases, but in the medium to long term ZK rollups will win out in all use cases as ZK-SNARK technology improves.
 
 ### Anatomy of a fraud proof
 
@@ -89,7 +89,7 @@ The security of an optimistic rollup depends on the idea that if someone publish
 
 <br>
 <center>
-<img src="../../../../images/rollup-files/tree.png" />
+<img src="../../../../images/rollup-files/tree.png" class="padded" />
 </center><br>
 
 A fraud proof claiming that a batch was invalid would contain the data in green: the batch itself (which could be checked against a hash stored on chain) and the parts of the Merkle tree needed to prove just the specific accounts that were read and/or modified by the batch. The nodes in the tree in yellow can be reconstructed from the nodes in green and so do not need to be provided. This data is sufficient to execute the batch and compute the post-state root (note that this is exactly the same as how [stateless clients](https://ethresear.ch/t/the-stateless-client-concept/172) verify individual blocks). If the computed post-state root and the provided post-state root in the batch are not the same, then the batch is fraudulent.
@@ -114,11 +114,11 @@ A simple Ethereum transaction (to send ETH) takes ~110 bytes. An ETH transfer on
 Part of this is simply superior encoding: Ethereum's RLP wastes 1 byte per value on the length of each value. But there are also some very clever compression tricks that are going on:
 
 * **Nonce**: the purpose of this parameter is to prevent replays. If the current nonce of an account is 5, the next transaction from that account must have nonce 5, but once the transaction is processed the nonce in the account will be incremented to 6 so the transaction cannot be processed again. In the rollup, we can omit the nonce entirely, because we just recover the nonce from the pre-state; if someone tries replaying a transaction with an earlier nonce, the signature would fail to verify, as the signature would be checked against data that contains the new higher nonce.
-*  **Gasprice**: we can allow users to pay with a fixed range of gasprices, eg. a choice of 16 consecutive powers of two. Alternatively, we could just have a fixed fee level in each batch, or even move gas payment outside the rollup protocol entirely and have transactors pay batch creators for inclusion through a channel.
-*  **Gas**: we could similarly restrict the total gas to a choice of consecutive powers of two. Alternatively, we could just have a gas limit only at the batch level.
-*  **To**: we can replace the 20-byte address with an _index_ (eg. if an address is the 4527th address added to the tree, we just use the index 4527 to refer to it. We would add a subtree to the state to store the mapping of indices to addresses).
-*  **Value**: we can store value in scientific notation. In most cases, transfers only need 1-3 significant digits.
-*  **Signature**: we can use [BLS aggregate signatures](https://ethresear.ch/t/pragmatic-signature-aggregation-with-bls/2105), which allows many signatures to be aggregated into a single ~32-96 byte (depending on protocol) signature. This signature can then be checked against the entire set of messages and senders in a batch all at once. The ~0.5 in the table represents the fact that there is a limit on how many signatures can be combined in an aggregate that can be verified in a single block, and so large batches would need one signature per ~100 transactions.
+* **Gasprice**: we can allow users to pay with a fixed range of gasprices, eg. a choice of 16 consecutive powers of two. Alternatively, we could just have a fixed fee level in each batch, or even move gas payment outside the rollup protocol entirely and have transactors pay batch creators for inclusion through a channel.
+* **Gas**: we could similarly restrict the total gas to a choice of consecutive powers of two. Alternatively, we could just have a gas limit only at the batch level.
+* **To**: we can replace the 20-byte address with an _index_ (eg. if an address is the 4527th address added to the tree, we just use the index 4527 to refer to it. We would add a subtree to the state to store the mapping of indices to addresses).
+* **Value**: we can store value in scientific notation. In most cases, transfers only need 1-3 significant digits.
+* **Signature**: we can use [BLS aggregate signatures](https://ethresear.ch/t/pragmatic-signature-aggregation-with-bls/2105), which allows many signatures to be aggregated into a single ~32-96 byte (depending on protocol) signature. This signature can then be checked against the entire set of messages and senders in a batch all at once. The ~0.5 in the table represents the fact that there is a limit on how many signatures can be combined in an aggregate that can be verified in a single block, and so large batches would need one signature per ~100 transactions.
 
 One important compression trick that is specific to ZK rollups is that if a part of a transaction is only used for verification, and is not relevant to computing the state update, then that part can be left off-chain. This cannot be done in an optimistic rollup because that data would still need to be included on-chain in case it needs to be later checked in a fraud proof, whereas in a ZK rollup the SNARK proving correctness of the batch already proves that any data needed for verification was provided. An important example of this is privacy-preserving rollups: in an optimistic rollup the ~500 byte ZK-SNARK used for privacy in each transaction needs to go on chain, whereas in a ZK rollup the ZK-SNARK covering the entire batch already leaves no doubt that the "inner" ZK-SNARKs are valid.
 

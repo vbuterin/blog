@@ -16,7 +16,7 @@ If a validator $i$ receives some message $v : i[1] : ... : i[k]$, where $i[1] ..
 At time $T + (N-1) \cdot D$, nodes stop listening. At this point, there is a guarantee that honest nodes have all "validly seen" the same set of values.
 
 <center>
-<img src="../../../..../../../../images/99-fault-tolerant-files/Lamport.png" /><br><br>
+<img src="../../../..../../../../images/99-fault-tolerant-files/Lamport.png" class="padded" /><br><br>
 <i><small>Node 1 (red) is malicious, and nodes 0 and 2 (grey) are honest. At the start, the two honest nodes make their proposals $y$ and $x$, and the attacker proposes both $w$ and $z$ late. $w$ reaches node 0 on time but not node 2, and $z$ reaches neither node on time. At time $T + D$, nodes 0 and 2 rebroadcast all values they've seen that they have not yet broadcasted, but add their signatures on ($x$ and $w$ for node 0, $y$ for node 2). Both honest nodes saw ${x, y, w}$.</small></i>
 </center>
 <br>
@@ -33,14 +33,14 @@ Notice that the algorithm uses the act of adding one's own signature as a kind o
 In the case where one node is honest, can we guarantee that passive _observers_ (ie. non-consensus-participating nodes that care about knowing the outcome) can also see the outcome, even if we require them to be watching the process the whole time? With the scheme as written, there's a problem. Suppose that a commander and some subset of $k$ (malicious) validators produce a message $v : i[1] : .... : i[k]$, and broadcast it directly to some "victims" just before time $T + k \cdot D$. The victims see the message as being "on time", but when they rebroadcast it, it only reaches all honest consensus-participating nodes after $T + k \cdot D$, and so all honest consensus-participating nodes reject it.
 
 <center>
-<img src="../../../..../../../../images/99-fault-tolerant-files/Lamport2.png" />
+<img src="../../../..../../../../images/99-fault-tolerant-files/Lamport2.png" class="padded" />
 </center>
 <br>
 
 But we can plug this hole. We require $D$ to be a bound on _two times_ network latency plus clock disparity. We then put a different timeout on observers: an observer accepts $v : i[1] : .... : i[k]$ before time $T + (k - 0.5) \cdot D$. Now, suppose an observer sees a message an accepts it. They will be able to broadcast it to an honest node before time $T + k \cdot D$, and the honest node will issue the message with their signature attached, which will reach all other observers before time $T + (k + 0.5) \cdot D$, the timeout for messages with $k+1$ signatures.
 
 <center>
-<img src="../../../..../../../../images/99-fault-tolerant-files/Lamport3.png" />
+<img src="../../../..../../../../images/99-fault-tolerant-files/Lamport3.png" class="padded" />
 </center>
 <br>
 

@@ -64,8 +64,8 @@ The third is “merge mining”, a technique where there are many chains, but al
 
 The trilemma claims that blockchain systems can only at most have two of the following three properties:
 
-- **Decentralization** (defined as the system being able to run in a scenario where each participant only has access to O(c) resources, i.e. a regular laptop or small VPS)   
-- **Scalability** (defined as being able to process O(n) \> O(c) transactions)    
+- **Decentralization** (defined as the system being able to run in a scenario where each participant only has access to O(c) resources, i.e. a regular laptop or small VPS)
+- **Scalability** (defined as being able to process O(n) \> O(c) transactions)
 - **Security** (defined as being secure against attackers with up to O(n) resources)
 
 In the rest of this document, we’ll continue using **c** to refer to the size of computational resources (including computation, bandwidth and storage) available to each node, and **n** to refer to the size of the ecosystem in some abstract sense; we assume that transaction load, state size, and the market cap of a cryptocurrency are all proportional to **n**. The key challenge of scalability is finding a way to achieve all three at the base layer.
@@ -93,16 +93,16 @@ Note that there is one design that states that: "Given a malicious operator (the
 Sharding is different to state channels and Plasma in that periodically notaries are pseudo-randomly assigned to vote on the validity of collations (analogous to blocks, but without an EVM state transition function in phase 1), then these collations are accepted into the main chain after the votes are verified by a committee on the main chain, via a sharding manager contract on the main chain. In phase 5 (see the [roadmap](https://github.com/ethereum/wiki/wiki/Sharding-roadmap) for details), shards are tightly coupled to the main chain, so that if any shard or the main chain is invalid, the whole network is invalid. There are other differences between each mechanism, but at a high level, Plasma, state channels and Truebit are off-chain for an indefinite interval, connect to the main chain at the smart contract, layer 2 level, while they can draw back into and open up from the main chain, whereas shards are regularly linked to the main chain via consensus in-protocol.
 
 See also [these tweets from Vlad](https://twitter.com/VladZamfir/status/1001447804219346945).
- 
+
 # State size, history, cryptoeconomics, oh my! Define some of these terms before we move further!
 
--   **State**: a set of information that represents the "current state" of a system; determining whether or not a transaction is valid, as well as the effect of a transaction, should in the simplest model depend only on state. Examples of state data include the UTXO set in bitcoin, balances + nonces + code + storage in ethereum, and domain name registry entries in Namecoin. 
--    **History**: an ordered list of all transactions that have taken place since genesis. In a simple model, the present state should be a deterministic function of the genesis state and the history. 
--  **Transaction**: an object that goes into the history. In practice, a transaction represents an operation that some user wants to make, and is cryptographically signed. In some systems transactions are called **blobs**, to emphasize the fact that in these systems these objects may contain arbitrary data and may not in all cases represent an attempt to perform some operation in the protocol.  
-- **State transition function**: a function that takes a state, applies a transaction and outputs a new state. The computation involved may involve adding and subtracting balances from accounts specified by the transaction, verifying digital signatures and running contract code. 
--   **Merkle tree**: a cryptographic hash tree structure that can store a very large amount of data, where authenticating each individual piece of data only takes O(log(n)) space and time. See [here](https://easythereentropy.wordpress.com/2014/06/04/understanding-the-ethereum-trie) for details. In Ethereum, the transaction set of each block, as well as the state, is kept in a Merkle tree, where the roots of the trees are committed to in a block. 
-- **Receipt**: an object that represents an effect of a transaction that is not directly stored in the state, but which is still stored in a Merkle tree and committed to in a block header or in a special location in the state so that its existence can later be efficiently proven even to a node that does not have all of the data. Logs in Ethereum are receipts; in sharded models, receipts are used to facilitate asynchronous cross-shard communication. 
-- **Light client**: a way of interacting with a blockchain that only requires a very small amount (we’ll say O(1), though O(log(c)) may also be accurate in some cases) of computational resources, keeping track of only the block headers of the chain by default and acquiring any needed information about transactions, state or receipts by asking for and verifying Merkle proofs of the relevant data on an as-needed basis. 
+- **State**: a set of information that represents the "current state" of a system; determining whether or not a transaction is valid, as well as the effect of a transaction, should in the simplest model depend only on state. Examples of state data include the UTXO set in bitcoin, balances + nonces + code + storage in ethereum, and domain name registry entries in Namecoin.
+- **History**: an ordered list of all transactions that have taken place since genesis. In a simple model, the present state should be a deterministic function of the genesis state and the history.
+- **Transaction**: an object that goes into the history. In practice, a transaction represents an operation that some user wants to make, and is cryptographically signed. In some systems transactions are called **blobs**, to emphasize the fact that in these systems these objects may contain arbitrary data and may not in all cases represent an attempt to perform some operation in the protocol.
+- **State transition function**: a function that takes a state, applies a transaction and outputs a new state. The computation involved may involve adding and subtracting balances from accounts specified by the transaction, verifying digital signatures and running contract code.
+- **Merkle tree**: a cryptographic hash tree structure that can store a very large amount of data, where authenticating each individual piece of data only takes O(log(n)) space and time. See [here](https://easythereentropy.wordpress.com/2014/06/04/understanding-the-ethereum-trie) for details. In Ethereum, the transaction set of each block, as well as the state, is kept in a Merkle tree, where the roots of the trees are committed to in a block.
+- **Receipt**: an object that represents an effect of a transaction that is not directly stored in the state, but which is still stored in a Merkle tree and committed to in a block header or in a special location in the state so that its existence can later be efficiently proven even to a node that does not have all of the data. Logs in Ethereum are receipts; in sharded models, receipts are used to facilitate asynchronous cross-shard communication.
+- **Light client**: a way of interacting with a blockchain that only requires a very small amount (we’ll say O(1), though O(log(c)) may also be accurate in some cases) of computational resources, keeping track of only the block headers of the chain by default and acquiring any needed information about transactions, state or receipts by asking for and verifying Merkle proofs of the relevant data on an as-needed basis.
 - **State root**: the root hash of the Merkle tree representing the state<sup>[5](#ftnt_ref5)</sup>
 
 <center><img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image02.png" width="450"></img><br> <small><i>The Ethereum 1.0 state tree, and how the state root fits into the block structure</i></small></center>
@@ -166,8 +166,8 @@ The result is that even though only a few nodes are verifying and creating block
 
 Hence, at least in the honest / uncoordinated majority setting, we have:
 
--   **Decentralization** (each node stores only O(c) data, as it’s a light client in O(c) shards and so stores O(1) \* O(c) = O(c) data worth of block headers, as well as O(c) data corresponding to the recent history of one or several shards that it is assigned to at the present time) 
--  **Scalability** (with O(c) shards, each shard having O(c) capacity, the maximum capacity is n = O(c\^2)) 
+- **Decentralization** (each node stores only O(c) data, as it’s a light client in O(c) shards and so stores O(1) \* O(c) = O(c) data worth of block headers, as well as O(c) data corresponding to the recent history of one or several shards that it is assigned to at the present time)
+- **Scalability** (with O(c) shards, each shard having O(c) capacity, the maximum capacity is n = O(c\^2))
 - **Security** (attackers need to control at least ~33% of the entire O(n)-sized validator pool in order to stand a chance of taking over the network).
 
 In the bribing attacker model (or in the "very very adaptive adversary" model), things are not so easy, but we will get to this later. Note that because of the imperfections of sampling, the security threshold does decrease from 50% to ~30-40%, but this is still a surprisingly low loss of security for what may be a 100-1000x gain in scalability with no loss of decentralization.
@@ -179,13 +179,14 @@ In proof of stake, it is easy. There already is an “active validator set” th
 In proof of work, it is more difficult, as with “direct” proof of work schemes one cannot prevent miners from applying their work to a given shard. It may be possible to use [proof-of-file-access forms](https://www.microsoft.com/en-us/research/publication/permacoin-repurposing-bitcoin-work-for-data-preservation/) of proof of work to lock individual miners to individual shards, but it is hard to ensure that miners cannot quickly download or generate data that can be used for other shards and thus circumvent such a mechanism. The best known approach is through a technique invented by Dominic Williams called “puzzle towers”, where miners first perform proof of work on a common chain, which then inducts them into a proof of stake-style validator pool, and the validator pool is then sampled just as in the proof-of-stake case.
 
 One possible intermediate route might look as follows. Miners can spend a large (O(c)-sized) amount of work to create a new “cryptographic identity”. The precise value of the proof of work solution then chooses which shard they have to make their next block on. They can then spend an O(1)-sized amount of work to create a block on that shard, and the value of that proof of work solution determines which shard they can work on next, and so on<sup>[8](#ftnt_ref8)</sup>. Note that all of these approaches make proof of work “stateful” in some way; the necessity of this is fundamental.
+
 # How is the randomness for random sampling generated?
 
 First of all, it is important to note that even if random number generation is heavily exploitable, this is not a fatal flaw for the protocol; rather, it simply means that there is a medium to high centralization incentive. The reason is that because the randomness is picking fairly large samples, it is difficult to bias the randomness by more than a certain amount.
 
 The simplest way to show this is through the [binomial distribution](https://en.wikipedia.org/wiki/Binomial_distribution), as described above; if one wishes to avoid a sample of size N being more than 50% corrupted by an attacker, and an attacker has p% of the global stake pool, the chance of the attacker being able to get such a majority during one round is:
 
-<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image00.gif"></img>
+<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image00.gif" class="padded" />
 
 Here’s a table for what this probability would look like in practice for various values of N and p:
 
@@ -201,8 +202,8 @@ However, this kind of logic assumes that one single round of re-rolling the dice
 
 Another form of random number generation that is not exploitable by minority coalitions is the deterministic threshold signature approach most researched and advocated by Dominic Williams. The strategy here is to use a [deterministic threshold signature](https://eprint.iacr.org/2002/081.pdf) to generate the random seed from which samples are selected. Deterministic threshold signatures have the property that the value is guaranteed to be the same regardless of which of a given set of participants provides their data to the algorithm, provided that at least ⅔ of participants do participate honestly. This approach is more obviously not economically exploitable and fully resistant to all forms of stake-grinding, but it has several weaknesses:
 
--   **It relies on more complex cryptography** (specifically, elliptic curves and pairings). Other approaches rely on nothing but the random-oracle assumption for common hash algorithms. 
--   **It fails when many validators are offline**. A desired goal for public blockchains is to be able to survive very large portions of the network simultaneously disappearing, as long as a majority of the remaining nodes is honest; deterministic threshold signature schemes at this point cannot provide this property.
+- **It relies on more complex cryptography** (specifically, elliptic curves and pairings). Other approaches rely on nothing but the random-oracle assumption for common hash algorithms.
+- **It fails when many validators are offline**. A desired goal for public blockchains is to be able to survive very large portions of the network simultaneously disappearing, as long as a majority of the remaining nodes is honest; deterministic threshold signature schemes at this point cannot provide this property.
 - **It’s not secure in a bribing attacker or coordinated majority model** where more than 67% of validators are colluding. The other approaches described in the proof of stake FAQ above still make it expensive to manipulate the randomness, as data from all validators is mixed into the seed and making any manipulation requires either universal collusion or excluding other validators outright.
 
 One might argue that the deterministic threshold signature approach works better in consistency-favoring contexts and other approaches work better in availability-favoring contexts.
@@ -223,7 +224,7 @@ See also: https://ethresear.ch/t/the-stateless-client-concept/172
 
 The techniques here tend to involve requiring users to store state data and provide Merkle proofs along with every transaction that they send. A transaction would be sent along with a Merkle proof-of-correct-execution (or "witness"), and this proof would allow a node that only has the state root to calculate the new state root. This proof-of-correct-execution would consist of the subset of objects in the trie that would need to be traversed to access and verify the state information that the transaction must verify; because Merkle proofs are O(log(n)) sized, the proof for a transaction that accesses a constant number of objects would also be O(log(n)) sized.
 
-<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image03.png" width="450"></img><br> <small><i>The subset of objects in a Merkle tree that would need to be provided in a Merkle proof of a transaction that accesses several state objects</i></small>
+<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image03.png" width="450" class="padded" /><br> <small><i>The subset of objects in a Merkle tree that would need to be provided in a Merkle proof of a transaction that accesses several state objects</i></small>
 
 Implementing this scheme in its pure form has two flaws. First, it introduces O(log(n)) overhead (~10-30x in practice), although one could argue that this O(log(n)) overhead is not as bad as it seems because it ensures that the validator can always simply keep state data in memory and thus it never needs to deal with the overhead of accessing the hard drive<sup>[9](#ftnt_ref9)</sup>. Second, it can easily be applied if the addresses that are accessed by a transaction are static, but is more difficult to apply if the addresses in question are dynamic - that is, if the transaction execution has code of the form `read(f(read(x)))` where the address of some state read depends on the execution result of some other state read. In this case, the address that the transaction sender thinks the transaction will be reading at the time that they send the transaction may well differ from the address that is actually read when the transaction is included in a block, and so the Merkle proof may be insufficient<sup>[10](#ftnt_ref10)</sup>.
 
@@ -252,7 +253,7 @@ This typically involves breaking up each transaction into a "debit" and a "credi
 3. Send a transaction on shard N which includes the Merkle proof of the receipt from (1). This transaction also checks in the state of shard N to make sure that this receipt is "unspent"; if it is, then it increases the balance of B by 100 coins, and saves in the state that the receipt is spent.
 4. Optionally, the transaction in (3) also saves a receipt, which can then be used to perform further actions on shard M that are contingent on the original operation succeeding.
 
-<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image01.png" width="400"></img>
+<img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image01.png" width="400" class="padded" />
 
 In more complex forms of sharding, transactions may in some cases have effects that spread out across several shards and may also synchronously ask for data from the state of multiple shards.
 
@@ -264,7 +265,7 @@ With asynchronous messages only, the simplest solution is to first reserve the t
 
 With cross-shard synchronous transactions, the problem is easier, but the challenge of creating a sharding solution capable of making cross-shard atomic synchronous transactions is itself decidedly nontrivial; see Vlad Zamfir's [presentation which talks about merge blocks](https://www.youtube.com/watch?v=GNGbd_RbrzE).
 
-Another solution involves making contracts themselves movable across shards; see the proposed [cross-shard locking scheme](https://ethresear.ch/t/cross-shard-locking-scheme-1/1269) as well as [this proposal](https://ethresear.ch/t/cross-shard-contract-yanking/1450) where contracts can be "yanked" from one shard to another, allowing two contracts that normally reside on different shards to be temporarily moved to the same shard at which point a synchronous operation between them can happen.  
+Another solution involves making contracts themselves movable across shards; see the proposed [cross-shard locking scheme](https://ethresear.ch/t/cross-shard-locking-scheme-1/1269) as well as [this proposal](https://ethresear.ch/t/cross-shard-contract-yanking/1450) where contracts can be "yanked" from one shard to another, allowing two contracts that normally reside on different shards to be temporarily moved to the same shard at which point a synchronous operation between them can happen.
 
 # What are the concerns about sharding through random sampling in a bribing attacker or coordinated choice model?
 
@@ -302,10 +303,10 @@ Imagine if Donald Trump realized that people travel between New York and London 
 
 # What are some advantages and disadvantages of this?
 
--   Developers no longer need to think about shards
--   There’s the possibility for shards to adjust manually to changes in gas prices, rather than relying on market mechanics to increase gas prices in some shards more than others
--   There is no longer a notion of reliable co-placement: if two contracts are put into the same shard so that they can interact with each other, shard changes may well end up separating them
--   More protocol complexity
+- Developers no longer need to think about shards
+- There’s the possibility for shards to adjust manually to changes in gas prices, rather than relying on market mechanics to increase gas prices in some shards more than others
+- There is no longer a notion of reliable co-placement: if two contracts are put into the same shard so that they can interact with each other, shard changes may well end up separating them
+- More protocol complexity
 
 The co-placement problem can be mitigated by introducing a notion of “sequential domains”, where contracts may specify that they exist in the same sequential domain, in which case synchronous communication between them will always be possible. In this model a shard can be viewed as a set of sequential domains that are validated together, and where sequential domains can be rebalanced between shards if the protocol determines that it is efficient to do so.
 
@@ -313,9 +314,9 @@ The co-placement problem can be mitigated by introducing a notion of “sequenti
 
 The process becomes much easier if you view the transaction history as being already settled, and are simply trying to calculate the state transition function. There are several approaches; one fairly simple approach can be described as follows:
 
--   A transaction may specify a set of shards that it can operate in
--   In order for the transaction to be effective, it must be included at the same block height in all of these shards.
--   Transactions within a block must be put in order of their hash (this ensures a canonical order of execution)
+- A transaction may specify a set of shards that it can operate in
+- In order for the transaction to be effective, it must be included at the same block height in all of these shards.
+- Transactions within a block must be put in order of their hash (this ensures a canonical order of execution)
 
 A client on shard X, if it sees a transaction with shards (X, Y), requests a Merkle proof from shard Y verifying (i) the presence of that transaction on shard Y, and (ii) what the pre-state on shard Y is for those bits of data that the transaction will need to access. It then executes the transaction and commits to the execution result. Note that this process may be highly inefficient if there are many transactions with many different “block pairings” in each block; for this reason, it may be optimal to simply require blocks to specify sister shards, and then calculation can be done more efficiently at a per-block level. This is the basis for how such a scheme could work; one could imagine more complex designs. However, when making a new design, it’s always important to make sure that low-cost denial of service attacks cannot arbitrarily slow state calculation down.
 
@@ -329,9 +330,9 @@ The overhead that this scheme would introduce has arguably not been sufficiently
 
 One of the challenges in sharding is that when a call is made, there is by default no hard protocol-provided guarantee that any asynchronous operations created by that call will be made within any particular timeframe, or even made at all; rather, it is up to some party to send a transaction in the destination shard triggering the receipt. This is okay for many applications, but in some cases it may be problematic for several reasons:
 
--   There may be no single party that is clearly incentivized to trigger a given receipt. If the sending of a transaction benefits many parties, then there could be **tragedy-of-the-commons effects** where the parties try to wait longer until someone else sends the transaction (i.e. play "chicken"), or simply decide that sending the transaction is not worth the transaction fees for them individually.
+- There may be no single party that is clearly incentivized to trigger a given receipt. If the sending of a transaction benefits many parties, then there could be **tragedy-of-the-commons effects** where the parties try to wait longer until someone else sends the transaction (i.e. play "chicken"), or simply decide that sending the transaction is not worth the transaction fees for them individually.
 - **Gas prices across shards may be volatile**, and in some cases performing the first half of an operation compels the user to “follow through” on it, but the user may have to end up following through at a much higher gas price. This may be exacerbated by DoS attacks and related forms of **griefing**.
--  Some applications rely on there being an upper bound on the “latency” of cross-shard messages (e.g. the train-and-hotel example). Lacking hard guarantees, such applications would have to have **inefficiently large safety margins**.
+- Some applications rely on there being an upper bound on the “latency” of cross-shard messages (e.g. the train-and-hotel example). Lacking hard guarantees, such applications would have to have **inefficiently large safety margins**.
 
 One could try to come up with a system where asynchronous messages made in some shard automatically trigger effects in their destination shard after some number of blocks. However, this requires every client on each shard to actively inspect all other shards in the process of calculating the state transition function, which is arguably a source of inefficiency. The best known compromise approach is this: when a receipt from shard A at height `height_a` is included in shard B at height `height_b`, if the difference in block heights exceeds `MAX_HEIGHT`, then all validators in shard B that created blocks from `height_a + MAX_HEIGHT + 1` to `height_b - 1` are penalized, and this penalty increases exponentially. A portion of these penalties is given to the validator that finally includes the block as a reward. This keeps the state transition function simple, while still strongly incentivizing the correct behavior.
 
