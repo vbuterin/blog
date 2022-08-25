@@ -1,4 +1,4 @@
-*特別感謝 PSE, Polygon Hermez, Zksync, Scroll, Matter Labs and Starkware 團隊協助討論和審查*
+*特別感謝 PSE, Polygon Hermez, Zksync, Scroll, Matter Labs and Starkware 團隊參與討論和校稿*
 
 近來各家 ZK-EVM 紛紛登場。[Polygon](https://blog.polygon.technology/the-future-is-now-for-ethereum-scaling-introducing-polygon-zkevm/) 的 ZK-EVM 以開源的方式釋出，[ZKSync](https://blog.matter-labs.io/100-days-to-mainnet-6f230893bd73?gi=1bc4e1596b2d) 公佈了 ZKSync 2.0 的規劃，相對晚進場的 [Scroll](https://scroll.mirror.xyz/XQyXDgyxoefag6hcBgGJFz8qrb10rmSU-zUBvY3Q9_A) 也推出了他們的 ZK-EVM。正在開發 ZK-EVM 的，還有 [PSE](https://github.com/privacy-scaling-explorations/zkevm-circuits), [Nicholas Liochon 等人](https://ethresear.ch/t/a-zk-evm-specification/11549)，以及 Starkware 正在開發的 [alpha compiler](https://medium.com/starkware/starknet-alpha-2-4aa116f0ecfc) (能把 EVM 編譯成 Starkware 所開發的 [Cairo](https://starkware.co/cairo/))，族繁不及備載。
 
@@ -92,6 +92,6 @@ Scroll 和 Polygon，雖然它們預期會在未來改善相容性，但目前�
 - 假設以太坊本身變得更零知識友善，原本是第 2 類或第 3 類開始的ZK-EVM，就會變成第 1 類。
 - 如果在第 1 類或第 2 類 ZK-EVM 預編譯元件（precompiles），這樣就能使其變成第 3 類 ZK-EVM。這些預編譯元件的驗證效率很高，是由一種 ZK-SNARK 友善的語言撰寫而成。這樣開發者就能在以太坊的相容性和速度之間能作選擇。它屬於第 3 類，因為它犧牲了完美以太坊等價性，但是從實用性的角度來看，它比起第 1 類或第 2 類有更多好處。主要的缺失在於某些開發者工具不支援 ZK-EVM 客製化的預編譯，雖然這可以被改善：透過開發者手動指定設定檔，開發者工具可以支援將預編譯元件轉換回同等功能的 EVM 程式碼，這樣就能適用於所有環境。
 
-我個人的希望，是隨著時間，ZK-EVM 技術的進步，以及以太坊本身對 ZK-SNARK 的設計更友善之後，所有的ZK-EVM能漸漸發展為第 1 類。在這樣的未來，我們會有好幾個能夠同時作為 ZK rollup 以及驗證以太鏈本身的 ZK-EVM。理論上，沒有必要將以太坊標準化為只能供一種ZK-EVM使用的L1。要有不同的客戶端使用不同的證明方式，我們才能收穫冗餘實作（code redundancy）的好處。
+我個人的希望，是隨著時間，ZK-EVM 技術的進步，以及以太坊本身對 ZK-SNARK 的設計更友善之後，所有的ZK-EVM能漸漸發展為第 1 類。在這樣的未來，我們會有好幾個能夠同時作為 ZK rollup 以及驗證以太鏈本身的 ZK-EVM。理論上，沒有必要將以太坊標準化為只能供一種 ZK-EVM 使用的 L1。要有不同的客戶端使用不同的證明方式，我們才能收穫冗餘實作（code redundancy）的好處。
 
 然而，要花一些時間，才會抵達這樣的未來。在這條路上，將會看到很多擴展以太坊、以太坊 ZK-rollups 技術的日新月異。
