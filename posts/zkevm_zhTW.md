@@ -1,8 +1,13 @@
-*特別感謝 PSE, Polygon Hermez, Zksync, Scroll, Matter Labs and Starkware 團隊參與討論和校稿*
+[category]: <> (General,Blockchains,中文)
+[date]: <> (2022/08/29)
+[title]: <> (不同類型的 ZK-EVM)
+[pandoc]: <> ()
 
-近來各家 ZK-EVM 紛紛登場。[Polygon](https://blog.polygon.technology/the-future-is-now-for-ethereum-scaling-introducing-polygon-zkevm/) 的 ZK-EVM 以開源的方式釋出，[ZKSync](https://blog.matter-labs.io/100-days-to-mainnet-6f230893bd73?gi=1bc4e1596b2d) 公佈了 ZKSync 2.0 的規劃，相對晚進場的 [Scroll](https://scroll.mirror.xyz/XQyXDgyxoefag6hcBgGJFz8qrb10rmSU-zUBvY3Q9_A) 也推出了他們的 ZK-EVM。正在開發 ZK-EVM 的，還有 [PSE](https://github.com/privacy-scaling-explorations/zkevm-circuits), [Nicholas Liochon 等人](https://ethresear.ch/t/a-zk-evm-specification/11549)，以及 Starkware 正在開發的 [alpha 版本編譯器](https://medium.com/starkware/starknet-alpha-2-4aa116f0ecfc) (能把 EVM 編譯成 Starkware 所開發的 [Cairo](https://starkware.co/cairo/))，族繁不及備載。
+*特別感謝 PSE, Polygon Hermez, Zksync, Scroll, Matter Labs and Starkware 團隊參與討論和協助校稿*
 
-上述專案有一個共同的目標：利用 [ZK-SNARK](https://vitalik.ca/general/2021/01/26/snarks.html) 進行密碼學證明，驗證以太坊生態（Ethereum-like）交易的執行。這樣更好驗證以太坊 L1 鏈上的交易與狀態，也建立（接近）與以太等價且擴展性更好的 [ZK-rollups](https://vitalik.ca/general/2021/01/05/rollup.html)。但這幾個專案之間的些微的差異，反映在實用性和速度之間的取捨。本文試著提出分類不同EVM的方法，並說明其中的利弊得失。
+近來各家 ZK-EVM 紛紛登場。[Polygon](https://blog.polygon.technology/the-future-is-now-for-ethereum-scaling-introducing-polygon-zkevm/) 的 ZK-EVM 以開源的方式釋出，[ZKSync](https://blog.matter-labs.io/100-days-to-mainnet-6f230893bd73?gi=1bc4e1596b2d) 公佈了 ZKSync 2.0 的規劃，相對晚進場的 [Scroll](https://scroll.mirror.xyz/XQyXDgyxoefag6hcBgGJFz8qrb10rmSU-zUBvY3Q9_A) 也推出了他們的 ZK-EVM。正在開發 ZK-EVM 的，還有 [PSE](https://github.com/privacy-scaling-explorations/zkevm-circuits), [Nicholas Liochon 等人](https://ethresear.ch/t/a-zk-evm-specification/11549)，以及 Starkware 正在開發的 [alpha compiler](https://medium.com/starkware/starknet-alpha-2-4aa116f0ecfc) (能把 EVM 編譯成 Starkware 所開發的 [Cairo](https://starkware.co/cairo/))，族繁不及備載。
+
+上述專案有一個共同的目標：利用 [ZK-SNARK](https://vitalik.ca/general/2021/01/26/snarks.html) 進行密碼學證明，驗證以太坊生態（Ethereum-like）交易的執行。這樣更好驗證以太坊 L1 鏈上的交易與狀態，也建立（接近）與以太等價且擴展性更好的 [ZK-rollups](https://vitalik.ca/general/2021/01/05/rollup.html)。但這幾個專案之間的些微的差異，反映在實用性和速度之間的取捨。本文試著提出分類不同 EVM 的方法，並說明其中的利弊得失。
 
 ## 懶人包（以圖表呈現）
 ![zkevm](https://user-images.githubusercontent.com/85469891/186605516-b6e9a19a-895d-4e36-b7b9-729bb2b198d0.png)
@@ -65,8 +70,8 @@ Scroll 和 Polygon，雖然它們預期會在未來改善相容性，但目前�
 ## 第 4 類（等價高階語言（high-level-language equivalent））
 第 4 類把（例如：[Solidity](https://docs.soliditylang.org/en/v0.8.15/)、[Vyper](https://vyper.readthedocs.io/en/stable/)，或其他這兩種語言都會編譯成為的中間語言）然後把*高階語言*編譯成其他有特別設計過、對 ZK-SNARK 友善的語言。
 
-### 優點：非常快速的證明時間
-可以省掉*很多*麻煩，因為避免了對 EVM 不同的階段作零知識證明，而且從高階語言程式碼開始就能這麼作。
+### 優點：證明者所需運算時間非常短
+只要從高階語言就有利用零知識證明，而非等到執行階段的各個步驟，才開始用在 EVM 上，就可以省掉*很多*麻煩。
 
 我雖然只用了一句話描述這個優點（但下面列出那麼多相容性的缺點），但我並不是要說第 4 類沒什麼優點。這是個非常大的優點！直接從高階語言編譯真的可以大幅降低成本，也因為參與證明的門檻變低，所以更去中心化。
 
@@ -90,8 +95,8 @@ Scroll 和 Polygon，雖然它們預期會在未來改善相容性，但目前�
 - ZK-EVM 也可以先當第 2 類，然後之後提供在以太坊完全等效的環境中，或是證明速度更快、改動過的狀態樹，變成第 2 和第 1 類的綜合體。Scroll 正在考慮用這個策略發展。
 - 原本是第 4 類的系統，也可以慢慢加上處理 EVM opcode 的能力（雖然開發者仍然被鼓勵直接從高階語言編譯，以節省手續費和改善證明者運算所需時間）。
 - 假設以太坊本身變得更零知識友善，原本是第 2 類或第 3 類開始的ZK-EVM，就會變成第 1 類。
-- 如果在第 1 類或第 2 類 ZK-EVM 預編譯元件（precompiles），這樣就能使其變成第 3 類 ZK-EVM。這些預編譯元件的驗證效率很高，是由一種 ZK-SNARK 友善的語言撰寫而成。這樣開發者就能在以太坊的相容性和速度之間能作選擇。它屬於第 3 類，因為它犧牲了完美以太坊等價性，但是從實用性的角度來看，它比起第 1 類或第 2 類有更多好處。主要的缺失在於某些開發者工具不支援 ZK-EVM 客製化的預編譯，雖然這可以被改善：透過開發者手動指定設定檔，開發者工具可以支援將預編譯元件轉換回同等功能的 EVM 程式碼，這樣就能適用於所有環境。
+- 如果在第 1 類或第 2 類 ZK-EVM 預編譯元件（precompiles），這樣就能使其變成第 3 類 ZK-EVM。這些預編譯元件的驗證效率很高，是由一種 ZK-SNARK 友善的語言撰寫而成。這樣開發者就能在以太坊的相容性和速度之間能作選擇。這種 ZK-EVM 屬於第 3 類，因為它犧牲了完美以太坊等價性，但是從實用性的角度來看，它比起第 1 類或第 2 類有更多好處。主要的缺失在於某些開發者工具不支援 ZK-EVM 客製化的預編譯，然而，這可以被改善：透過開發者手動指定設定檔，開發者工具可以支援將預編譯元件轉換回同等功能的 EVM 程式碼，這樣就能適用於所有環境。
 
-我個人的希望，是隨著時間，ZK-EVM 技術的進步，以及以太坊本身對 ZK-SNARK 的設計更友善之後，所有的 ZK-EVM 能漸漸發展為第 1 類。在這樣的未來，我們會有好幾個能夠同時作為 ZK rollup 以及驗證以太鏈本身的 ZK-EVM。理論上，沒有必要將以太坊標準化為只能供一種 ZK-EVM 使用的 L1。要有不同的客戶端使用不同的證明方式，我們才能收穫冗餘實作（code redundancy）的好處。
+我個人的希望，是隨著時間，ZK-EVM 技術的進步，以及以太坊本身對 ZK-SNARK 的設計更友善之後，所有的ZK-EVM能漸漸發展為第 1 類。在這樣的未來，我們會有好幾個能夠同時作為 ZK-rollup 以及驗證以太鏈本身的 ZK-EVM。理論上，沒有必要將以太坊標準化為只能供一種 ZK-EVM 使用的 L1。要有不同的客戶端使用不同的證明方式，我們才能收穫冗餘實作（code redundancy）的好處。
 
 然而，要花一些時間，才會抵達這樣的未來。在這條路上，將會看到很多擴展以太坊、以太坊 ZK-rollups 技術的日新月異。
