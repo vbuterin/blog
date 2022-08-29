@@ -1,4 +1,4 @@
-[category]: <> (General,Blockchains,中文)
+[category]: <> (中文)
 [date]: <> (2022/08/29)
 [title]: <> (不同類型的 ZK-EVM)
 [pandoc]: <> ()
