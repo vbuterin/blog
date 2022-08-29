@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="A Note On Charity Through Marginal Price Discrimination" />
@@ -67,7 +113,7 @@ MathJax = {
 <p>The following is an interesting idea that I had two years ago that I personally believe has promise and could be easily implemented in the context of a blockchain ecosystem, though if desired it could certainly also be implemented with more traditional technologies (blockchains would help get the scheme network effects by putting the core logic on a more neutral platform).</p>
 <p>Suppose that you are a restaurant selling sandwiches, and you ordinarily sell sandwiches for $7.50. Why did you choose to sell them for $7.50, and not $7.75 or $7.25? It clearly can't be the case that the cost of production is exactly $7.49999, as in that case you would be making no profit, and would not be able to cover fixed costs; hence, in most normal situations you would still be able to make <em>some</em> profit if you sold at $7.25 or $7.75, though less. Why less at $7.25? Because the price is lower. Why less at $7.75? Because you get fewer customers. It just so happens that $7.50 is the point at which the balance between those two factors is optimal for you.</p>
 <center>
-<img src="../../../../images/a-note-on-charity-files/pic1.png" style="width: 330px"> <img src="../../../../images/a-note-on-charity-files/pic2.png" style="width: 330px; margin-left: 20px">
+<img src="../../../../images/a-note-on-charity-files/pic1.png" style="width: 330px" /> <img src="../../../../images/a-note-on-charity-files/pic2.png" style="width: 330px; margin-left: 20px" class="padded" />
 </center>
 <p><br></p>
 <p>Notice one consequence of this: if you make a <em>slight</em> distortion to the optimal price, then even compared to the magnitude of the distortion the losses that you face are minimal. If you raise prices by 1%, from $7.50 to $7.575, then your profit declines from $6750 to $6733.12 - a tiny 0.25% reduction. And that's <em>profit</em> - if you had instead donated 1% of the price of each sandwich, it would have reduced your profit by 5%. The smaller the distortion the more favorable the ratio: raising prices by 0.2% only cuts your profits down by 0.01%.</p>
@@ -75,7 +121,7 @@ MathJax = {
 <p>Also, the above example was one where marginal costs are high, and customers are picky about prices - in the above model, charging $9 would have netted you no customers at all. In a situation where <a href="http://www.thezeromarginalcostsociety.com/">marginal costs are much lower</a>, and customers are less price-sensitive, the losses from raising or lowering prices would be even lower.</p>
 <p>So what is the point of all this? Well, suppose that our sandwich shop changes its policy: it sells sandwiches for $7.55 to the general public, but lowers the prices to $7.35 for people who volunteered in some charity that maintains some local park (say, this is 25% of the population). The store's new profit is <span class="math inline">\(\$6682.5 \cdot 0.25+\$6742.5 \cdot 0.75=\$6727.5\)</span> (that's a $22.5 loss), but the result is that you are now paying all 4500 of your customers 20 cents each to volunteer at that charity - an incentive size of $900 (if you just count the customers who actually do volunteer, $225). So the store loses a bit, but gets a huge amount of leverage, de-facto contributing at least $225 depending on how you measure it for a cost of only $22.5.</p>
 <center>
-<img src="../../../../images/a-note-on-charity-files/pic3.png">
+<img src="../../../../images/a-note-on-charity-files/pic3.png" class="padded" />
 </center>
 <p><br></p>
 <p>Now, what we can start to do is build up an ecosystem of "stickers", which are non-transferable digital "tokens" that organizations hand out to people who they think are contributing to worthy causes. Tokens could be organized by category (eg. poverty relief, science research, environmental, local community projects, open source software development, writing good blogs), and merchants would be free to charge marginally lower prices to holders of the tokens that represent whatever causes they personally approve of.</p>

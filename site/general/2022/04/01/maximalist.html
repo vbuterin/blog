@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="In Defense of Bitcoin Maximalism" />
@@ -103,7 +149,7 @@ MathJax = {
 <p>Now, you might say, this is just Ethereum people having fun, and at the end of the day they understand what they have to do and what they are dealing with. But do they? Let's look at the kinds of people that Vitalik Buterin, the founder of Ethereum, hangs out with:</p>
 <center>
 <p><br></p>
-<table>
+<table class="transparent centered">
 <tr>
 <td style="width:50%">
 <p><img src="../../../../images/maximalist/meetingchina.jpg" style="width:360px" /></p>
@@ -192,7 +238,7 @@ MathJax = {
 <p>This misconception is, of course, wrong. In fact, there are <em>plenty</em> of ways to add rich statefulness into Bitcoin; search for the word "<a href="https://bitcoinops.org/en/topics/covenants/">covenants</a>" in Bitcoin chat archives to see many proposals being discussed. And many of these proposals are surprisingly simple. The reason why covenants have not been added is <em>not</em> that Bitcoin developers see the value in rich statefulness but find even a little bit more protocol complexity intolerable. Rather, it's because Bitcoin developers are <a href="https://bitcoinops.org/en/newsletters/2022/03/09/#limiting-script-language-expressiveness">worried about the risks</a> of the <a href="https://vitalik.ca/general/2022/02/28/complexity.html">systemic complexity</a> that rich statefulness being possible would introduce into the ecosystem!</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/maximalist/bitcoinpaper.png" /></p>
+<p><img src="../../../../images/maximalist/bitcoinpaper.png" class="padded" /></p>
 <p><small><i></p>
 <p>A recent <a href="https://arxiv.org/pdf/2006.16714.pdf">paper by Bitcoin researchers</a> describes some ways to introduce covenants to add some degree of rich statefulness to Bitcoin.</p>
 <p></i></small><br></p>
@@ -205,7 +251,7 @@ MathJax = {
 <p>Once the technology proves itself enough, however, the normies come in - an event that in internet culture is often called <a href="https://en.wikipedia.org/wiki/Eternal_September">Eternal September</a>. And these are not just regular kindly normies who want to feel part of something exciting, but <em>business</em> normies, wearing <em>suits</em>, who start scouring the ecosystem wolf-eyed for ways to make money - with armies of venture capitalists just as eager to make their own money supporting them from the sidelines. In the extreme cases, outright <em>grifters</em> come in, creating blockchains with no redeeming social or technical value which are basically borderline scams. But the reality is that the line from "altruistic idealist" and "grifter" is really a spectrum. And the longer an ecosystem keeps going, the harder it is for any new project on the altruistic side of the spectrum to get going.</p>
 <p>One noisy proxy for the blockchain industry's slow replacement of philosophical and idealistic values with short-term profit-seeking values is the larger and larger size of premines: the allocations that developers of a cryptocurrency give to themselves.</p>
 <center>
-<p><img src="../../../../images/maximalist/premine.png" /></p>
+<p><img src="../../../../images/maximalist/premine.png" class="padded" /></p>
 <p><i><small></p>
 <p>Source for insider allocations: <a href="https://twitter.com/RyanWatkins_/status/1394283802009145348">Messari</a>.</p>
 <p></small></i></p>
@@ -239,7 +285,7 @@ MathJax = {
 <p>The Bitcoin community is good at this. Their most recent crusade is a <a href="https://www.vice.com/en/article/v7djay/the-newest-bitcoin-diet-trend-is-hating-seed-oils">war against seed oils</a>, oils derived from vegetable seeds <a href="https://www.healthline.com/nutrition/are-vegetable-and-seed-oils-bad">high in omega-6</a> fatty acids that are <a href="https://scholar.google.com/scholar?q=omega+6+health">harmful</a> to human health.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/maximalist/seedoils.jpg" /></p>
+<p><img src="../../../../images/maximalist/seedoils.jpg" class="padded" /></p>
 </center>
 <p><br></p>
 <p>This Bitcoiner crusade gets treated skeptically when <a href="https://www.vice.com/en/article/v7djay/the-newest-bitcoin-diet-trend-is-hating-seed-oils">reviewed in the media</a>, but the media treats the topic <a href="https://techcrunch.com/2022/02/02/zero-acre-biotech-fermentation-alternative-to-wasteful-unhealthy-vegetable-oils/">much more favorably</a> when "respectable" tech firms are tackling it. The crusade helps to remind Bitcoiners that the mainstream media is fundamentally tribal and hypocritical, and so the media's <a href="https://www.pymnts.com/cryptocurrency/2022/from-the-us-and-eu-to-russia-crypto-money-laundering-is-under-attack/">shrill attempts</a> to <a href="https://www.coindesk.com/policy/2022/03/22/crypto-implicated-in-child-porn-terrorism-french-official-says-calling-for-end-to-online-anynomity/">slander</a> cryptocurrency as being primarily for money laundering and terrorism should be treated with the same level of scorn.</p>

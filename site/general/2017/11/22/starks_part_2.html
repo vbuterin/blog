@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="STARKs, Part II: Thank Goodness It's FRI-day" />
@@ -67,7 +113,7 @@ MathJax = {
 <p>In the last part of this series, we talked about how you can make some pretty interesting succinct proofs of computation, such as proving that you have computed the millionth Fibonacci number, using a technique involving polynomial composition and division. However, it rested on one critical ingredient: the ability to prove that at least the great majority of a given large set of points are on the same low-degree polynomial. This problem, called "low-degree testing", is perhaps the single most complex part of the protocol.</p>
 <p>We'll start off by once again re-stating the problem. Suppose that you have a set of points, and you claim that they are all on the same polynomial, with degree less than <span class="math inline">\(D\)</span> (ie. <span class="math inline">\(deg &lt; 2\)</span> means they're on the same line, <span class="math inline">\(deg &lt; 3\)</span> means they're on the same line or parabola, etc). You want to create a succinct probabilistic proof that this is actually true.</p>
 <center>
-<img src="../../../../images/starks-part-2-files/fri1.png" style="width:500px" /><br><br> <small>Left: points all on the same <span class="math inline">\(deg &lt; 3\)</span> polynomial. Right: points not on the same <span class="math inline">\(deg &lt; 3\)</span> polynomial</small>
+<img src="../../../../images/starks-part-2-files/fri1.png" style="width:500px" class="padded" /><br><br> <small>Left: points all on the same <span class="math inline">\(deg &lt; 3\)</span> polynomial. Right: points not on the same <span class="math inline">\(deg &lt; 3\)</span> polynomial</small>
 </center>
 <p><br> If you want to verify that the points are <em>all</em> on the same degree <span class="math inline">\(&lt; D\)</span> polynomial, you would have to actually check every point, as if you fail to check even one point there is always some chance that that point will not be on the polynomial even if all the others are. But what you <em>can</em> do is <em>probabilistically check</em> that at least <em>some fraction</em> (eg. 90%) of all the points are on the same polynomial.</p>
 <center>
@@ -78,7 +124,7 @@ MathJax = {
 <p>Clearly, <span class="math inline">\(D\)</span> points is <strong>not</strong> enough. <span class="math inline">\(D\)</span> points are exactly what you need to uniquely define a degree <span class="math inline">\(&lt; D\)</span> polynomial, so <em>any</em> set of points that you receive will correspond to <em>some</em> degree <span class="math inline">\(&lt; D\)</span> polynomial. As we see in the figure above, however, <span class="math inline">\(D+1\)</span> points or more <em>do</em> give some indication.</p>
 <p>The algorithm to check if a given set of values is on the same degree <span class="math inline">\(&lt; D\)</span> polynomial with <span class="math inline">\(D+1\)</span> queries is not too complex. First, select a random subset of <span class="math inline">\(D\)</span> points, and use something like Lagrange interpolation (search for "Lagrange interpolation" <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">here</a> for a more detailed description) to recover the unique degree <span class="math inline">\(&lt; D\)</span> polynomial that passes through all of them. Then, randomly sample one more point, and check that it is on the same polynomial.</p>
 <center>
-<img src="../../../../images/starks-part-2-files/fri2.png" style="width:420px" /><br>
+<img src="../../../../images/starks-part-2-files/fri2.png" style="width:420px" class="padded" /><br>
 </center>
 <p><br></p>
 <p>Note that this is only a proximity test, because there's always the possibility that most points are on the same low-degree polynomial, but a few are not, and the <span class="math inline">\(D+1\)</span> sample missed those points entirely. However, we can derive the result that if less than 90% of the points are on the same degree <span class="math inline">\(&lt; D\)</span> polynomial, then the test will fail with high probability. Specifically, if you make <span class="math inline">\(D+k\)</span> queries, and if at least some portion <span class="math inline">\(p\)</span> of the points are not on the same polynomial as the rest of the points, then the test will only pass with probability <span class="math inline">\((1 - p)^k\)</span>.</p>
@@ -89,7 +135,7 @@ MathJax = {
 <p>In the first stage of the proof, the prover commits to (ie. makes a Merkle tree of) the evaluation of <span class="math inline">\(g(x, y)\)</span> over the <em>entire</em> square <span class="math inline">\([1 ... N] x \{x^{1000}: 1 \leq x \leq N\}\)</span> - that is, all 1 billion <span class="math inline">\(x\)</span> coordinates for the columns, and all 1 billion corresponding <em>thousandth powers</em> for the <span class="math inline">\(y\)</span> coordinates of the rows. The diagonal of the square represents the values of <span class="math inline">\(g(x, y)\)</span> that are of the form <span class="math inline">\(g(x, x^{1000})\)</span>, and thus correspond to values of <span class="math inline">\(f(x)\)</span>.</p>
 <p>The verifier then randomly picks perhaps a few dozen rows and columns (possibly using <a href="https://en.wikipedia.org/wiki/Fiat%E2%80%93Shamir_heuristic">the Merkle root of the square as a source of pseudorandomness</a> if we want a non-interactive proof), and for each row or column that it picks the verifier asks for a sample of, say, 1010 points on the row and column, making sure in each case that one of the points demanded is on the diagonal. The prover must reply back with those points, along with Merkle branches proving that they are part of the original data committed to by the prover. The verifier checks that the Merkle branches match up, and that the points that the prover provides actually do correspond to a degree-1000 polynomial.</p>
 <center>
-<img src="../../../../images/starks-part-2-files/fri3.png" style="width:450px" />
+<img src="../../../../images/starks-part-2-files/fri3.png" style="width:450px" class="padded" />
 </center>
 <p><br></p>
 <p>This gives the verifier a statistical proof that (i) most rows are populated mostly by points on degree <span class="math inline">\(&lt; 1000\)</span> polynomials, (ii) most columns are populated mostly by points on degree <span class="math inline">\(&lt; 1000\)</span> polynomials, and (iii) the diagonal line is mostly on these polynomials. This thus convinces the verifier that most points on the diagonal actually do correspond to a degree <span class="math inline">\(&lt; 1,000,000\)</span> polynomial.</p>
@@ -111,13 +157,13 @@ MathJax = {
 </ul>
 <p>More complex identities such as the distributive law also hold: <span class="math inline">\((2 + 4) \cdot 3\)</span> and <span class="math inline">\(2 \cdot 3 + 4 \cdot 3\)</span> both evaluate to <span class="math inline">\(4\)</span>. Even formulas like <span class="math inline">\((a^2 - b^2)\)</span> = <span class="math inline">\((a - b) \cdot (a + b)\)</span> are still true in this new kind of arithmetic. Division is the hardest part; we can't use regular division because we want the values to always remain integers, and regular division often gives non-integer results (as in the case of <span class="math inline">\(3/5\)</span>). The funny <span class="math inline">\(p-2\)</span> exponent in the division formula above is a consequence of getting around this problem using <a href="https://en.wikipedia.org/wiki/Fermat%27s_little_theorem">Fermat's little theorem</a>, which states that for any nonzero <span class="math inline">\(x &lt; p\)</span>, it holds that <span class="math inline">\(x^{p-1}\)</span> % <span class="math inline">\(p = 1\)</span>. This implies that <span class="math inline">\(x^{p-2}\)</span> gives a number which, if multiplied by <span class="math inline">\(x\)</span> one more time, gives <span class="math inline">\(1\)</span>, and so we can say that <span class="math inline">\(x^{p-2}\)</span> (which is an integer) equals <span class="math inline">\(\frac{1}{x}\)</span>. A somewhat more complicated but faster way to evaluate this modular division operator is the <a href="https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm">extended Euclidean algorithm</a>, implemented in python <a href="https://github.com/ethereum/py_ecc/blob/b036cf5cb37e9b89622788ec714a7da9cdb2e635/py_ecc/secp256k1/secp256k1.py#L34">here</a>.</p>
 <center>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Clock_group.svg/560px-Clock_group.svg.png" style="width:350px" /><br><br> <small>Because of how the numbers "wrap around", modular arithmetic is sometimes called "clock math"</small>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Clock_group.svg/560px-Clock_group.svg.png" style="width:350px" class="padded" /><br><br> <small>Because of how the numbers "wrap around", modular arithmetic is sometimes called "clock math"</small>
 </center>
 <p><br></p>
 <p>With modular math we've created an entirely new system of arithmetic, and because it's self-consistent in all the same ways traditional arithmetic is self-consistent we can talk about all of the same kinds of structures over this field, including polynomials, that we talk about in "regular math". Cryptographers love working in modular math (or, more generally, "finite fields") because there is a bound on the size of a number that can arise as a result of any modular math calculation - no matter what you do, the values will not "escape" the set <span class="math inline">\(\{0, 1, 2 ... p-1\}\)</span>.</p>
 <p>Fermat's little theorem also has another interesting consequence. If <span class="math inline">\(p-1\)</span> is a multiple of some number <span class="math inline">\(k\)</span>, then the function <span class="math inline">\(x \rightarrow x^k\)</span> has a small "image" - that is, the function can only give <span class="math inline">\(\frac{p-1}{k} + 1\)</span> possible results. For example, <span class="math inline">\(x \rightarrow x^2\)</span> with <span class="math inline">\(p=17\)</span> has only 9 possible results.</p>
 <center>
-<img src="../../../../images/starks-part-2-files/fri4.png" style="width:350px" /><br>
+<img src="../../../../images/starks-part-2-files/fri4.png" style="width:350px" class="padded" /><br>
 </center>
 <p><br></p>
 <p>With higher exponents the results are more striking: for example, <span class="math inline">\(x \rightarrow x^8\)</span> with <span class="math inline">\(p=17\)</span> has only 3 possible results. And of course, <span class="math inline">\(x \rightarrow x^{16}\)</span> with <span class="math inline">\(p=17\)</span> has only 2 possible results: for <span class="math inline">\(0\)</span> it returns <span class="math inline">\(0\)</span>, and for everything else it returns <span class="math inline">\(1\)</span>.</p>
@@ -126,12 +172,12 @@ MathJax = {
 <p>Specifically, we will work with <span class="math inline">\(p =\)</span> 1,000,005,001. We pick this modulus because (i) it's greater than 1 billion, and we need it to be at least 1 billion so we can check 1 billion points, (ii) it's prime, and (iii) <span class="math inline">\(p-1\)</span> is an even multiple of 1000. The exponentiation <span class="math inline">\(x^{1000}\)</span> will have an image of size 1,000,006 - that is, the exponentiation can only give 1,000,006 possible results.</p>
 <p>This means that the "diagonal" (<span class="math inline">\(x\)</span>, <span class="math inline">\(x^{1000}\)</span>) now becomes a diagonal with a wraparound; as <span class="math inline">\(x^{1000}\)</span> can only take on 1,000,006 possible values, we only need 1,000,006 rows. And so, the full evaluation of <span class="math inline">\(g(x, x^{1000})\)</span> now has only ~<span class="math inline">\(10^{15}\)</span> elements.</p>
 <center>
-<img src="../../../../images/starks-part-2-files/fri5.png" style="width:500px" />
+<img src="../../../../images/starks-part-2-files/fri5.png" style="width:500px" class="padded" />
 </center>
 <p><br></p>
 <p>As it turns out, we can go further: we can have the prover only commit to the evaluation of <span class="math inline">\(g\)</span> on a single column. The key trick is that the original data itself already contains 1000 points that are on any given row, so we can simply sample those, derive the degree <span class="math inline">\(&lt; 1000\)</span> polynomial that they are on, and then check that the corresponding point on the column is on the same polynomial. We then check that the column itself is <span class="math inline">\(a &lt; 1000\)</span> polynomial.</p>
 <center>
-<img src="../../../../images/starks-part-2-files/fri6.png" style="width:550px" />
+<img src="../../../../images/starks-part-2-files/fri6.png" style="width:550px" class="padded" />
 </center>
 <p><br></p>
 <p>The verifier complexity is still sublinear, but the prover complexity has now decreased to <span class="math inline">\(10^9\)</span>, making it linear in the number of queries (though it's still superlinear in practice because of polynomial evaluation overhead).</p>
@@ -140,7 +186,7 @@ MathJax = {
 <p>If the original polynomial has degree <span class="math inline">\(&lt; n\)</span>, then the rows have degree <span class="math inline">\(&lt; 2\)</span> (ie. the rows are straight lines), and the column has degree <span class="math inline">\(&lt; \frac{n}{2}\)</span>. Hence, what we now have is a linear-time process for converting a problem of proving proximity to a polynomial of degree <span class="math inline">\(&lt; n\)</span> into a problem of proving proximity to a polynomial of degree <span class="math inline">\(&lt; \frac{n}{2}\)</span>. Furthermore, the number of points that need to be committed to, and thus the prover's computational complexity, goes down by a factor of 2 each time (Eli Ben-Sasson likes to compare this aspect of FRI to <a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">fast fourier transforms</a>, with the key difference that unlike with FFTs, each step of recursion only introduces one new sub-problem instead of branching out into two). Hence, we can simply keep using the protocol on the column created in the previous round of the protocol, until the column becomes so small that we can simply check it directly; the total complexity is something like <span class="math inline">\(n + \frac{n}{2} + \frac{n}{4} + ... \approx 2n\)</span>.</p>
 <br>
 <center>
-<img src="../../../../images/starks-part-2-files/fri7.png" style="width:500px" />
+<img src="../../../../images/starks-part-2-files/fri7.png" style="width:500px" class="padded" />
 </center>
 <p><br></p>
 <p>In reality, the protocol will need to be repeated several times, because there is still a significant probability that an attacker will cheat <em>one</em> round of the protocol. However, even still the proofs are not too large; the verification complexity is logarithmic in the degree, though it goes up to <span class="math inline">\(\log ^{2}n\)</span> if you count the size of the Merkle proofs.</p>

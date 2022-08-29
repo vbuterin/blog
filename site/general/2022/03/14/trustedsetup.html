@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="How do trusted setups work?" />
@@ -67,7 +113,7 @@ MathJax = {
 <p><em>Special thanks to Justin Drake, Dankrad Feist and Chih-Cheng Liang for feedback and review.</em></p>
 <p>Many cryptographic protocols, especially in the areas of <a href="https://hackmd.io/@vbuterin/sharding_proposal">data availability sampling</a> and <a href="https://vitalik.ca/general/2021/01/26/snarks.html">ZK-SNARKs</a> depend on trusted setups. <strong>A trusted setup ceremony is a procedure that is done once to generate a piece of data that must then be used every time some cryptographic protocol is run</strong>. Generating this data requires some secret information; the "trust" comes from the fact that some person or some group of people has to generate these secrets, use them to generate the data, and then publish the data and forget the secrets. But once the data is generated, and the secrets are forgotten, no further participation from the creators of the ceremony is required.</p>
 <center>
-<p><img src="../../../../images/trustedsetup/setup1.png" /></p>
+<p><img src="../../../../images/trustedsetup/setup1.png" class="padded" /></p>
 </center>
 <p>There are many types of trusted setups. The earliest instance of a trusted setup being used in a major protocol is the <a href="https://spectrum.ieee.org/the-crazy-security-behind-the-birth-of-zcash">original Zcash ceremony</a> in 2016. This ceremony was very complex, and required many rounds of communication, so it could only have six participants. Everyone using Zcash at that point was effectively trusting that at least one of the six participants was honest. More modern protocols usually use the <strong>powers-of-tau</strong> setup, which has a <a href="https://vitalik.ca/general/2020/08/20/trust.html">1-of-N trust model</a> with <span class="math inline">\(N\)</span> typically in the hundreds. That is to say, <strong>hundreds of people participate in generating the data together, and only one of them needs to be honest and not publish their secret for the final output to be secure. Well-executed setups like this are often considered "close enough to trustless" in practice</strong>.</p>
 <p>This article will explain how the KZG setup works, why it works, and the future of trusted setup protocols. Anyone proficient in code should also feel free to follow along this code implementation: <a href="https://github.com/ethereum/research/blob/master/trusted_setup/trusted_setup.py">https://github.com/ethereum/research/blob/master/trusted_setup/trusted_setup.py</a>.</p>
@@ -81,7 +127,7 @@ MathJax = {
 <p>It's worth understanding what is philosophically going on here, and why the trusted setup is providing value. A polynomial commitment is committing to a piece of size-<span class="math inline">\(N\)</span> data with a size <span class="math inline">\(O(1)\)</span> object (a single elliptic curve point). We <em>could</em> do this with a plain Pedersen commitment: just set the <span class="math inline">\(S_i\)</span> values to be <span class="math inline">\(N\)</span> random elliptic curve points that have no known relationship with each other, and commit to polynomials with <span class="math inline">\(\sum_i c_i S_i\)</span> as before. And in fact, this is exactly what <a href="https://vitalik.ca/general/2021/11/05/halo.html">IPA evaluation proofs</a> do.</p>
 <p>However, any IPA-based proofs take <span class="math inline">\(O(N)\)</span> time to verify, and there's an unavoidable reason why: a commitment to a polynomial <span class="math inline">\(P(x)\)</span> using the base points <span class="math inline">\([S_0, S_1 ... S_i ... S_{n-1}]\)</span> would commit to a different polynomial if we use the base points <span class="math inline">\([S_0, S_1 ... (S_i * 2) ... S_{n-1}]\)</span>.</p>
 <center>
-<p><img src="../../../../images/trustedsetup/ipa_bases.png" /></p>
+<p><img src="../../../../images/trustedsetup/ipa_bases.png" class="padded" /></p>
 <p><small></p>
 <p><em>A valid commitment to the polynomial <span class="math inline">\(3x^3 + 8x^2 + 2x + 6\)</span> under one set of base points is a valid commitment to <span class="math inline">\(3x^3 + 4x^2 + 2x + 6\)</span> under a different set of base points.</em></p>
 </small>
@@ -93,7 +139,7 @@ MathJax = {
 <p>It's easy to see how one participant can generate a setup: just pick a random <span class="math inline">\(s\)</span>, and generate the elliptic curve points using that <span class="math inline">\(s\)</span>. But a single-participant trusted setup is insecure: you have to trust one specific person!</p>
 <p>The solution to this is multi-participant trusted setups, where by "multi" we mean <em>a lot</em> of participants: over 100 is normal, and for smaller setups it's possible to get over 1000. Here is how a multi-participant powers-of-tau setup works.</p>
 <center>
-<p><img src="../../../../images/trustedsetup/multiparticipants.png" /></p>
+<p><img src="../../../../images/trustedsetup/multiparticipants.png" class="padded" /></p>
 </center>
 <p>Take an existing setup (note that you don't know <span class="math inline">\(s\)</span>, you just know the points):</p>
 <p><span class="math inline">\([G_1, G_1 * s, G_1 * s^2 ... G_1 * s^{n_1-1}]\)</span>  </p>
@@ -108,7 +154,7 @@ MathJax = {
 <h2 id="verifying-the-setup">Verifying the setup</h2>
 <p>To verify that each participant actually participated, each participant can provide a proof that consists of (i) the <span class="math inline">\(G_1 * s\)</span> point that they received and (ii) <span class="math inline">\(G_2 * t\)</span>, where <span class="math inline">\(t\)</span> is the secret that they introduce. The list of these proofs can be used to verify that the final setup combines together all the secrets (as opposed to, say, the last participant just forgetting the previous values and outputting a setup with just their own secret, which they keep so they can cheat in any protocols that use the setup).</p>
 <center>
-<p><img src="../../../../images/trustedsetup/verifying.png" /></p>
+<p><img src="../../../../images/trustedsetup/verifying.png" class="padded" /></p>
 <p><small></p>
 <p><em><span class="math inline">\(s_1\)</span> is the first participant's secret, <span class="math inline">\(s_2\)</span> is the second participant's secret, etc. The pairing check at each step proves that the setup at each step actually came from a combination of the setup at the previous step and a new secret known by the participant at that step.</em></p>
 </small>

@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Exploring Fully Homomorphic Encryption" />
@@ -66,11 +112,11 @@ MathJax = {
 <p><em>Special thanks to Karl Floersch and Dankrad Feist for review</em></p>
 <p>Fully homomorphic encryption has for a long time been considered one of the holy grails of cryptography. The promise of fully homomorphic encryption (FHE) is powerful: it is a type of encryption that allows a third party to perform computations on encrypted data, and get an encrypted result that they can hand back to whoever has the decryption key for the original data, <em>without</em> the third party being able to decrypt the data or the result themselves.</p>
 <center>
-<img src="../../../../images/fhe/HomoEncrypt.png?1" /><br>
+<img src="../../../../images/fhe/HomoEncrypt.png?1" class="padded" /><br>
 </center>
 <p>As a simple example, imagine that you have a set of emails, and you want to use a third party spam filter to check whether or not they are spam. The spam filter has a desire for <em>privacy of their algorithm</em>: either the spam filter provider wants to keep their source code closed, or the spam filter depends on a very large database that they do not want to reveal publicly as that would make attacking easier, or both. However, you care about the <em>privacy of your data</em>, and don't want to upload your unencrypted emails to a third party. So here's how you do it:</p>
 <center>
-<img src="../../../../images/fhe/HomoEncrypt2.png" /><br>
+<img src="../../../../images/fhe/HomoEncrypt2.png" class="padded" /><br>
 </center>
 <p>Fully homomorphic encryption has many applications, including in the blockchain space. One key example is that can be used to implement privacy-preserving light clients (the light client hands the server an encrypted index <code>i</code>, the server computes and returns <code>data[0] * (i = 0) + data[1] * (i = 1) + ... + data[n] * (i = n)</code>, where <code>data[i]</code> is the i'th piece of data in a block or state along with its Merkle branch and <code>(i = k)</code> is an expression that returns 1 if <code>i = k</code> and otherwise 0; the light client gets the data it needs and the server learns nothing about what the light client asked).</p>
 <p>It can also be used for:</p>
@@ -118,7 +164,7 @@ MathJax = {
 <p>There are two classes of solution to this problem. First, in many somewhat homomorphic encryption schemes, there are clever tricks to make multiplication only increase the error by a constant factor (eg. 1000x) instead of squaring it. Increasing the error by 1000x still sounds by a lot, but keep in mind that if <span class="math inline">\(p\)</span> (or its equivalent in other schemes) is a 300-digit number, that means that you can multiply numbers by each other 100 times, which is enough to compute a very wide class of computations. Second, there is Craig Gentry's technique of "bootstrapping".</p>
 <p>Suppose that you have a ciphertext <span class="math inline">\(ct\)</span> that is an encryption of some <span class="math inline">\(m\)</span> under a key <span class="math inline">\(p\)</span>, that has a lot of error. The idea is that we "refresh" the ciphertext by turning it into a new ciphertext of <span class="math inline">\(m\)</span> under another key <span class="math inline">\(p_2\)</span>, where this process "clears out" the old error (though it will introduce a fixed amount of new error). The trick is quite clever. The holder of <span class="math inline">\(p\)</span> and <span class="math inline">\(p_2\)</span> provides a "bootstrapping key" that consists of an encryption of <em>the bits of <span class="math inline">\(p\)</span></em> under the key <span class="math inline">\(p_2\)</span>, as well as the public key for <span class="math inline">\(p_2\)</span>. Whoever is doing computations on data encrypted under <span class="math inline">\(p\)</span> would then take the bits of the ciphertext <span class="math inline">\(ct\)</span>, and individually encrypt these bits under <span class="math inline">\(p_2\)</span>. They would then <em>homomorphically compute the decryption under <span class="math inline">\(p\)</span></em> using these ciphertexts, and get out the single bit, which would be <span class="math inline">\(m\)</span> encrypted under <span class="math inline">\(p_2\)</span>.</p>
 <center>
-<img src="../../../../images/fhe/bootstrapping.png" /><br><br>
+<img src="../../../../images/fhe/bootstrapping.png" class="padded" /><br><br>
 </center>
 <p>This is difficult to understand, so we can restate it as follows. The decryption procedure <span class="math inline">\(dec(ct, p)\)</span> <em>is itself a computation</em>, and so it <em>can itself be implemented as a circuit</em> that takes as input the bits of <span class="math inline">\(ct\)</span> and the bits of <span class="math inline">\(p\)</span>, and outputs the decrypted bit <span class="math inline">\(m \in {0, 1}\)</span>. If someone has a ciphertext <span class="math inline">\(ct\)</span> encrypted under <span class="math inline">\(p\)</span>, a public key for <span class="math inline">\(p_2\)</span>, <em>and</em> the bits of <span class="math inline">\(p\)</span> encrypted under <span class="math inline">\(p_2\)</span>, then they can compute <span class="math inline">\(dec(ct, p) = m\)</span> "homomorphically", and get out <span class="math inline">\(m\)</span> encrypted under <span class="math inline">\(p_2\)</span>. Notice that the decryption procedure itself washes away the old error; it just outputs 0 or 1. The decryption procedure is itself a circuit, which contains additions or multiplications, so it will introduce new error, but this new error <em>does not depend</em> on the amount of error in the original encryption.</p>
 <p><small>(Note that we can avoid having a distinct new key <span class="math inline">\(p_2\)</span> (and if you want to bootstrap multiple times, also a <span class="math inline">\(p_3\)</span>, <span class="math inline">\(p_4\)</span>...) by just setting <span class="math inline">\(p_2 = p\)</span>. However, this introduces a new assumption, usually called "circular security"; it <a href="https://link.springer.com/content/pdf/10.1007%2F978-3-642-36594-2_32.pdf">becomes more difficult</a> to formally prove security if you do this, though many cryptographers think it's fine and circular security poses no significant risk in practice)</small></p>
@@ -174,7 +220,7 @@ MathJax = {
 <p>In this example, we set the modulus <span class="math inline">\(p = 103\)</span>. The dot product is <code>3 * 2 + 14 * 71 + 15 * 82 + 92 * 81 + 65 * 8 = 10202</code>, and <span class="math inline">\(10202 = 99 * 103 + 5\)</span>. 5 itself is of course <span class="math inline">\(2 * 2 + 1\)</span>, so the message is 1. Note that in practice, the first element of the key is often set to <span class="math inline">\(1\)</span>; this makes it easier to generate ciphertexts for a particular value (see if you can figure out why).</p>
 <p>The security of the scheme is based on an assumption known as "<a href="https://en.wikipedia.org/wiki/Learning_with_errors">learning with errors</a>" (LWE) - or, in more jargony but also more understandable terms, the hardness of <em>solving systems of equations with errors</em>.</p>
 <center>
-<a href="https://cims.nyu.edu/~regev/papers/lwesurvey.pdf"><img src="../../../../images/fhe/lwe.png" /></a><br>
+<a href="https://cims.nyu.edu/~regev/papers/lwesurvey.pdf"><img src="../../../../images/fhe/lwe.png" class="padded" /></a><br>
 </center>
 <p><br></p>
 <p>A ciphertext can itself be viewed as an equation: <span class="math inline">\(k_1c_1 + .... + k_nc_n \approx 0\)</span>, where the key <span class="math inline">\(k_1 ... k_n\)</span> is the unknowns, the ciphertext <span class="math inline">\(c_1 ... c_n\)</span> is the coefficients, and the equality is only approximate because of both the message (0 or 1) and the error (<span class="math inline">\(2e\)</span> for some relatively small <span class="math inline">\(e\)</span>). The LWE assumption ensures that even if you have access to many of these ciphertexts, you cannot recover <span class="math inline">\(k\)</span>.</p>

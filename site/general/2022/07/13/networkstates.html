@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="What do I think about network states?" />
@@ -91,7 +137,7 @@ MathJax = {
 <p>Finally, Balaji expands on this conception of a Balajian network state in longer-form, first in <a href="https://thenetworkstate.com/the-network-state-in-one-thousand-words">"a thousand words"</a> (apparently, Balajian network states use <a href="https://en.wikipedia.org/wiki/Octal">base 8</a>, as the actual word count is exactly <span class="math inline">\(512 = 8^3\)</span>) and then <a href="https://thenetworkstate.com/the-network-state-in-one-essay">an essay</a>, and at the very end of the book <a href="https://thenetworkstate.com/on-network-states">a whole chapter</a>.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/networkstates/ns_in_one_image.svg" /></p>
+<p><img src="../../../../images/networkstates/ns_in_one_image.svg" class="padded" /></p>
 <p><small><i>And, of course, <a href="https://thenetworkstate.com/the-network-state-in-one-image">an image</a>.</i></small></p>
 </center>
 <p><br></p>
@@ -102,7 +148,7 @@ MathJax = {
 <p>The <a href="https://journals.sagepub.com/doi/10.1177/1069397103037002003">commitment paradox of religious communes</a> is key here: counterintuitively, it's the religious communes that <em>demand the most</em> of their members that are the most long-lasting.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/networkstates/communes.png" /></p>
+<p><img src="../../../../images/networkstates/communes.png" class="padded" /></p>
 </center>
 <p><br></p>
 <p>This is where Balajism explicitly diverges from the more traditional neoliberal-capitalist ideal of the defanged, apolitical and passion-free consumerist <a href="https://www.the-american-interest.com/2019/05/03/the-last-man-and-the-future-of-history/">"last man"</a>. Unlike the strawman libertarian, Balaji does not believe that everything can "merely be a consumer product". Rather, he stresses greatly the importance of social norms for cohesion, and a literally religious attachment to the values that make a particular network state distinct from the world outside. As Balaji says <a href="https://www.ivoox.com/en/balaji-srinivasan-and-the-8216-network-state-8217-audios-mp3_rf_89496974_1.html">in this podcast</a> at 18:20, most current libertarian attempts at micronations are like "Zionism without Judaism", and this is a key part of why they fail.</p>
@@ -134,7 +180,7 @@ MathJax = {
 <ul>
 <li>Germany sent <a href="https://www.dw.com/en/how-germany-got-the-russian-revolution-off-the-ground/a-41195312" target="_blank">Vladimir Lenin</a> into Russia, potentially as part of a <a href="https://www.nytimes.com/2017/06/19/opinion/was-lenin-a-german-agent.html" target="_blank">strategy</a> to destabilize their then-rival in war. Antony Sutton's books document how some <a href="https://www.amazon.com/Wall-Street-Bolshevik-Revolution-Capitalists/dp/190557035X" target="_blank">Wall Street</a> bankers apparently funded the Russian Revolution (and how other Wall Street bankers <a href="https://www.amazon.com/dp/B07N9M85GX" target="_blank">funded the Nazis</a> years later). Leon Trotsky spent <a href="https://www.amazon.com/dp/B01I8S7EX6/ref=dp-kindle-redirect?_encoding=UTF8&amp;btkr=1" target="_blank">time in New York</a> prior to the revolution, and propagandistic reporting from Americans like <a href="https://www.britannica.com/biography/John-Reed" target="_blank">John Reed</a> aided Lenin and Trotsky in their revolution. Indeed, Reed was so useful to the Soviets — and so misleading as to the nature of the revolution — that he was <a href="https://www.rferl.org/a/the-american-journalist-buried-at-the-walls-of-the-kremlin/30896862.html" target="_blank">buried at the base of the Kremlin Wall</a>. Surprise: the Russian Revolution wasn't done wholly by Russians, but had significant foreign involvement from Germans and Americans.</li>
 <li>The Ochs-Sulzberger family, which owns The New York Times Company, <a href="https://nypost.com/2020/07/18/the-family-that-owns-the-new-york-times-were-slaveholders-goodwin/">owned slaves</a> but didn't report that fact in their <a href="https://www.politico.com/news/magazine/2020/03/06/1619-project-new-york-times-mistake-122248">1619 coverage</a>.</li>
-<li>New York Times correspondent <a href="https://www.npr.org/2022/05/08/1097097620/new-york-times-pulitzer-ukraine-walter-duranty">Walter Duranty</a> won a <a href="https://www.pulitzer.org/winners/walter-duranty">Pulitzer Prize</a> for helping the Soviet Union starve Ukraine into submission, 90 years before the Times decided to instead "<a href="https://www.nytimes.com/live/2022/02/24/world/russia-attacks-ukraine?smtyp=cur&amp;smid=tw-nytimes#the-world-needs-to-hear-us-ukrainians-march-through-new-york-city-in-protest">stand with Ukraine</a>".</li>
+<li>New York Times correspondent <a href="https://www.npr.org/2022/05/08/1097097620/new-york-times-pulitzer-ukraine-walter-duranty">Walter Duranty</a> won a <a href="https://www.pulitzer.org/winners/walter-duranty">Pulitzer Prize</a> for helping the Soviet Union starve Ukraine into submission, 90 years before the Times</li>
 </ul>
 </blockquote>
 <p>You can find a bunch more juicy examples in the chapter titled, appropriately, "<a href="https://thenetworkstate.com/if-the-news-is-fake-imagine-history">If the News is Fake, Imagine History</a>". These examples seem haphazard, and indeed, to some extent they are so intentionally: the goal is first and foremost to shock the reader out of their existing world model so they can start downloading Balaji's own.</p>
@@ -142,7 +188,7 @@ MathJax = {
 <p>Next, we get Balaji's overview of <a href="https://thenetworkstate.com/left-is-the-new-right-is-the-new-left">the political realignments in recent history</a>, and finally we get to his core model of politics in the present day: <a href="https://thenetworkstate.com/nyt-ccp-btc">NYT, CCP, BTC</a>.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/networkstates/nytccpbtc.png" /></p>
+<p><img src="../../../../images/networkstates/nytccpbtc.png" class="padded" /></p>
 </center>
 <p><br></p>
 <p>Team NYT basically runs the US, and its total lack of competence means that the US is collapsing. Team BTC (meaning, both actual Bitcoin maximalists and US rightists in general) has some positive values, but their outright hostility to collective action and order means that they are incapable of building anything. Team CCP can build, but they are building a dystopian surveillance state that much of the world would not want to live in. And all three teams are waaay too nationalist: they view things from the perspective of their own country, and ignore or exploit everyone else. Even when the teams are internationalist in theory, their specific ways of interpreting their values make them unpalatable outside of a small part of the world.</p>
@@ -150,7 +196,7 @@ MathJax = {
 <p>This is Balajian megapolitics in a nutshell. It is not trying to justify network states using some abstract theory (eg. some Dunbar's number or concentrated-incentive argument that the optimal size of a political body is actually in the low tens of thousands). Rather, it is an argument that situates network states as a response to the particular political situation of the world at its current place and time.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/networkstates/helical.png" /></p>
+<p><img src="../../../../images/networkstates/helical.png" class="padded" /></p>
 <p><small><i>Balaji's helical theory of history: yes, there are cycles, but there is also ongoing progress. Right now, we're at the part of the cycle where we need to help the sclerotic old order die, but also seed a new and better one.</i></small></p>
 </center>
 <p><br></p>

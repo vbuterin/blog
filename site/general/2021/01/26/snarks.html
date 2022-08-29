@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="An approximate introduction to how zk-SNARKs are possible" />
@@ -80,7 +126,7 @@ MathJax = {
 <p>Such a procedure could even be turned into a non-interactive proof using the <strong>Fiat-Shamir heuristic</strong>: the prover computes a Merkle root of the computation, uses the Merkle root to pseudorandomly choose 500 indices, and provides the 500 corresponding Merkle branches of the data. The key idea is that the prover does not know which branches they will need to reveal until they have already "committed to" the data. If a malicious prover tries to fudge the data after learning which indices are going to be checked, that would change the Merkle root, which would result in a new set of random indices, which would require fudging the data again... trapping the malicious prover in an endless cycle.</p>
 <p>But unfortunately there is a fatal flaw in naively applying random sampling to spot-check a computation in this way: computation is inherently <em>fragile</em>. If a malicious prover flips one bit somewhere in the middle of a computation, they can make it give a completely different result, and a random sampling verifier would almost never find out.</p>
 <center>
-<img src="../../../../images/snarks-files/randomsample.png" /> <br><br> <i><small>It only takes one deliberately inserted error, that a random check would almost never catch, to make a computation give a completely incorrect result.</small></i>
+<img src="../../../../images/snarks-files/randomsample.png" class="padded" /> <br><br> <i><small>It only takes one deliberately inserted error, that a random check would almost never catch, to make a computation give a completely incorrect result.</small></i>
 </center>
 <p><br></p>
 <p>If tasked with the problem of coming up with a zk-SNARK protocol, many people would make their way to this point and then get stuck and give up. How can a verifier possibly check every single piece of the computation, without looking at each piece of the computation individually? But it turns out that there is a clever solution.</p>
@@ -136,7 +182,7 @@ MathJax = {
 <p>It's worth noting that these primitives can be constructed from each other. If you can add and multiply, then you can evaluate: to prove that <span class="math inline">\(P(w) = z\)</span>, you can construct <span class="math inline">\(Q(x) = \frac{P(x) - z}{x - w}\)</span>, and the verifier can check if <span class="math inline">\(Q(x) * (x - w) + z \stackrel{?}{=} P(x)\)</span>. This works because if such a polynomial <span class="math inline">\(Q(x)\)</span> <em>exists</em>, then <span class="math inline">\(P(x) - z = Q(x) * (x - w)\)</span>, which means that <span class="math inline">\(P(x) - z\)</span> equals zero at <span class="math inline">\(w\)</span> (as <span class="math inline">\(x - w\)</span> equals zero at <span class="math inline">\(w\)</span>) and so <span class="math inline">\(P(x)\)</span> equals <span class="math inline">\(z\)</span> at <span class="math inline">\(w\)</span>.</p>
 <p>And if you can evaluate, you can do all kinds of checks. This is because there is a <a href="https://en.wikipedia.org/wiki/Schwartz%E2%80%93Zippel_lemma">mathematical theorem</a> that says, approximately, that if some equation involving some polynomials holds true at a <em>randomly selected coordinate</em>, then it almost certainly holds true for the polynomials as a whole. So if all we have is a mechanism to prove evaluations, we can check eg. our equation <span class="math inline">\(P(x + 2) - P(x + 1) - P(x) = Z(x) * H(x)\)</span> using an interactive game:</p>
 <center>
-<img src="../../../../images/snarks-files/SchwartzZippel.png" /> <br><br>
+<img src="../../../../images/snarks-files/SchwartzZippel.png" class="padded" /> <br><br>
 </center>
 <p>As I alluded to earlier, we can make this <em>non-interactive</em> using the <strong>Fiat-Shamir heuristic</strong>: the prover can compute <code>r</code> themselves by setting <code>r = hash(com(P), com(H))</code> (where <code>hash</code> is any cryptographic hash function; it does not need any special properties). The prover cannot "cheat" by picking <code>P</code> and <code>H</code> that "fit" at that particular <code>r</code> but not elsewhere, because they do not know <code>r</code> at the time that they are picking <code>P</code> and <code>H</code>!</p>
 <h3 id="a-quick-recap-so-far">A quick recap so far</h3>
@@ -171,7 +217,7 @@ MathJax = {
 <p>Notice that <span class="math inline">\(Q\)</span> and <span class="math inline">\(R\)</span> both have degree <span class="math inline">\(&lt; \frac{n}{2}\)</span>. Because <span class="math inline">\(S\)</span> is a linear combination of <span class="math inline">\(Q\)</span> and <span class="math inline">\(R\)</span>, <span class="math inline">\(S\)</span> <em>also</em> has degree <span class="math inline">\(&lt; \frac{n}{2}\)</span>. And this works in reverse: if we can prove <span class="math inline">\(S\)</span> has degree <span class="math inline">\(&lt; \frac{n}{2}\)</span>, then the fact that it's a randomly chosen combination prevents the prover from choosing malicious <span class="math inline">\(Q\)</span> and <span class="math inline">\(R\)</span> with hidden high-degree coefficients that "cancel out", so <span class="math inline">\(Q\)</span> and <span class="math inline">\(R\)</span> must both be degree <span class="math inline">\(&lt; \frac{n}{2}\)</span>, and because <span class="math inline">\(P(x) = Q(x^2) + x * R(x^2)\)</span>, we know that <span class="math inline">\(P\)</span> must have degree <span class="math inline">\(&lt; n\)</span>.</p>
 <p>From here, we simply repeat the game with <span class="math inline">\(S\)</span>, progressively "reducing" the polynomial we care about to a lower and lower degree, until it's at a sufficiently low degree that we can check it directly.</p>
 <center>
-<img src="../../../../images/snarks-files/FRI.png" /> <br><br>
+<img src="../../../../images/snarks-files/FRI.png" class="padded" /> <br><br>
 </center>
 <p>As in the previous examples, "Bob" here is an abstraction, useful for cryptographers to mentally reason about the protocol. In reality, Alice is generating the entire proof herself, and to prevent her from cheating we use Fiat-Shamir: we choose each randomly samples coordinate or <code>r</code> value based on the hash of the data generated in the proof up until that point.</p>
 <p>A full "FRI commitment" to <span class="math inline">\(P\)</span> (in this simplified protocol) would consist of:</p>
@@ -204,7 +250,7 @@ MathJax = {
 <p>More complex identities such as the distributive law also hold: <span class="math inline">\((2 + 4) \cdot 3\)</span> and <span class="math inline">\(2 \cdot 3 + 4 \cdot 3\)</span> both evaluate to <span class="math inline">\(4\)</span>. Even formulas like <span class="math inline">\((a^2 - b^2)\)</span> = <span class="math inline">\((a - b) \cdot (a + b)\)</span> are still true in this new kind of arithmetic.</p>
 <p>Division is the hardest part; we can't use regular division because we want the values to always remain integers, and regular division often gives non-integer results (as in the case of <span class="math inline">\(3/5\)</span>). We get around this problem using <a href="https://en.wikipedia.org/wiki/Fermat%27s_little_theorem">Fermat's little theorem</a>, which states that for any nonzero <span class="math inline">\(x &lt; p\)</span>, it holds that <span class="math inline">\(x^{p-1}\)</span> % <span class="math inline">\(p = 1\)</span>. This implies that <span class="math inline">\(x^{p-2}\)</span> gives a number which, if multiplied by <span class="math inline">\(x\)</span> one more time, gives <span class="math inline">\(1\)</span>, and so we can say that <span class="math inline">\(x^{p-2}\)</span> (which is an integer) equals <span class="math inline">\(\frac{1}{x}\)</span>. A somewhat more complicated but faster way to evaluate this modular division operator is the <a href="https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm">extended Euclidean algorithm</a>, implemented in python <a href="https://github.com/ethereum/py_ecc/blob/b036cf5cb37e9b89622788ec714a7da9cdb2e635/py_ecc/secp256k1/secp256k1.py#L34">here</a>.</p>
 <center>
-<img src="../../../../images/snarks-files/clock.png" style="width:350px" /><br><br> <small>Because of how the numbers "wrap around", modular arithmetic is sometimes called "clock math"</small>
+<img src="../../../../images/snarks-files/clock.png" style="width:350px" class="padded" /><br><br> <small>Because of how the numbers "wrap around", modular arithmetic is sometimes called "clock math"</small>
 </center>
 <p><br></p>
 <p>With modular math we've created an entirely new system of arithmetic, and it's self-consistent in all the same ways traditional arithmetic is self-consistent. Hence, we can talk about all of the same kinds of structures over this field, including polynomials, that we talk about in "regular math". Cryptographers love working in modular math (or, more generally, "finite fields") because there is a bound on the size of a number that can arise as a result of any modular math calculation - no matter what you do, the values will not "escape" the set <span class="math inline">\(\{0, 1, 2 ... p-1\}\)</span>. Even evaluating a degree-1-million polynomial in a finite field will never give an answer outside that set.</p>

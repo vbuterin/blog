@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="[Mirror] Exploring Elliptic Curve Pairings" />
@@ -103,7 +149,7 @@ MathJax = {
 <p>Now, let's talk about <strong>extension fields</strong>. You have probably already seen an extension field before; the most common example that you encounter in math textbooks is the field of complex numbers, where the field of real numbers is "extended" with the additional element <span class="math inline">\(\sqrt{-1} = i\)</span>. Basically, extension fields work by taking an existing field, then "inventing" a new element and defining the relationship between that element and existing elements (in this case, <span class="math inline">\(i^2 + 1 = 0\)</span>), making sure that this equation does not hold true for any number that is in the original field, and looking at the set of all linear combinations of elements of the original field and the new element that you have just created.</p>
 <br>
 <center>
-<img src="https://cdn-images-1.medium.com/max/2000/1*qDOPI299SKvZuzeNnik4JA.png" />
+<img src="https://cdn-images-1.medium.com/max/2000/1*qDOPI299SKvZuzeNnik4JA.png" class="padded" />
 </center>
 <p><br></p>
 <p>We can do extensions of prime fields too; for example, we can extend the prime field <span class="math inline">\(\bmod 7\)</span> that we described above with <span class="math inline">\(i\)</span>, and then we can do:</p>
@@ -147,7 +193,7 @@ MathJax = {
 <p>Where <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> and <span class="math inline">\(c\)</span> are carefully chosen so that the line passes through points <span class="math inline">\(P\)</span> and <span class="math inline">\(Q\)</span>. Because of how elliptic curve addition works (see the diagram at the top), this also means that it passes through <span class="math inline">\(-P-Q\)</span>. And it goes up to infinity dependent on both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, so the divisor becomes <span class="math inline">\([P]+ [Q] + [-P-Q] - 3 \cdot [O]\)</span>.</p>
 <br>
 <center>
-<img src="https://cdn-images-1.medium.com/max/2000/1*alHa7VxwcLoJk4C_YU9Iog.png" />
+<img src="https://cdn-images-1.medium.com/max/2000/1*alHa7VxwcLoJk4C_YU9Iog.png" class="padded" />
 </center>
 <p><br></p>
 <p>We know that every "rational function" (ie. a function defined only using a finite number of <span class="math inline">\(+, -, \cdot\)</span> and <span class="math inline">\(/\)</span> operations on the coordinates of the point) uniquely corresponds to some divisor, up to multiplication by a constant (ie. if two functions <span class="math inline">\(F\)</span> and <span class="math inline">\(G\)</span> have the same divisor, then <span class="math inline">\(F = G \cdot k\)</span> for some constant <span class="math inline">\(k\)</span>).</p>

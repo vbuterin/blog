@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="[Mirror] Zk-SNARKs: Under the Hood" />
@@ -63,7 +109,7 @@ MathJax = {
 <br> <br> <br>
 <title> [Mirror] Zk-SNARKs: Under the Hood </title>
 
-<p><em>This is a mirror of the post at &lt;a href="https://medium.com/<span class="citation" data-cites="VitalikButerin/zk-snarks-under-the-hood-b33151a013f6&gt;https://medium.com">@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6&gt;https://medium.com</span>/<span class="citation" data-cites="VitalikButerin/zk-snarks-under-the-hood-b33151a013f6">@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6</span></a> </em></p>
+<p><em>This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6">https://medium.com/<span class="citation" data-cites="VitalikButerin/zk-snarks-under-the-hood-b33151a013f6">@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6</span></a></em></p>
 <p><em>This is the third part of a series of articles explaining how the technology behind zk-SNARKs works; the previous articles on <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">quadratic arithmetic programs</a> and <a href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">elliptic curve pairings</a> are required reading, and this article will assume knowledge of both concepts. Basic knowledge of what zk-SNARKs are and what they do is also assumed. See also <a href="https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell/">Christian Reitwiessner's article here</a> for another technical introduction.</em></p>
 <p>In the previous articles, we introduced the quadratic arithmetic program, a way of representing any computational problem with a polynomial equation that is much more amenable to various forms of mathematical trickery. We also introduced elliptic curve pairings, which allow a very limited form of one-way homomorphic encryption that lets you do equality checking. Now, we are going to start from where we left off, and use elliptic curve pairings, together with a few other mathematical tricks, in order to allow a prover to prove that they know a solution for a particular QAP without revealing anything else about the actual solution.</p>
 <p>This article will focus on the <a href="https://eprint.iacr.org/2013/279.pdf">Pinocchio protocol</a> by Parno, Gentry, Howell and Raykova from 2013 (often called PGHR13); there are a few variations on the basic mechanism, so a zk-SNARK scheme implemented in practice may work slightly differently, but the basic principles will in general remain the same.</p>
@@ -115,7 +161,7 @@ MathJax = {
 </ol>
 <p>The encrypted <code>old_balance</code>, <code>tx_value</code> and <code>new_balance</code> should be specified publicly, as those are the specific values that we are looking to verify at that particular time; only the decryption key should be hidden. Some slight modifications to the protocol are needed to create a "custom verification key" that corresponds to some specific restriction on the inputs.</p>
 <p>Now, let's step back a bit. First of all, here's the verification algorithm in its entirety, courtesy of ben <a href="https://eprint.iacr.org/2013/879.pdf">Sasson, Tromer, Virza and Chiesa</a>:</p>
-<p><img src="https://cdn-images-1.medium.com/max/2000/1*gOI0njM1tPSvmvZuIUe0MA.png" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*gOI0njM1tPSvmvZuIUe0MA.png" class="padded" /></p>
 <p>The first line deals with parametrization; essentially, you can think of its function as being to create a "custom verification key" <em>for the specific instance of the problem</em> where some of the arguments are specified. The second line is the linear combination check for <span class="math inline">\(A, B\)</span> and <span class="math inline">\(C\)</span>; the third line is the check that the linear combinations have the same coefficients, and the fourth line is the product check <span class="math inline">\(A \cdot B - C = H \cdot Z\)</span>.</p>
 <p>Altogether, the verification process is a few elliptic curve multiplications (one for each "public" input variable), and five pairing checks, one of which includes an additional pairing multiplication. The proof contains eight elliptic curve points: a pair of points each for <span class="math inline">\(A(t), B(t)\)</span> and <span class="math inline">\(C(t)\)</span>, a point <span class="math inline">\(\pi _k\)</span> for <span class="math inline">\(b \cdot (A(t) + B(t) + C(t))\)</span>, and a point <span class="math inline">\(\pi _h\)</span> for <span class="math inline">\(H(t)\)</span>. Seven of these points are on the <span class="math inline">\(F_p\)</span> curve (32 bytes each, as you can compress the <span class="math inline">\(y\)</span> coordinate to a single bit), and in the Zcash implementation one point (<span class="math inline">\(\pi _b\)</span>) is on the twisted curve in <span class="math inline">\(F_{p^2}\)</span> (64 bytes), so the total size of the proof is ~288 bytes.</p>
 <p>The two computationally hardest parts of creating a proof are:</p>

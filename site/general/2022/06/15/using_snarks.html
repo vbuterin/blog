@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Some ways to use ZK-SNARKs for privacy" />
@@ -71,7 +117,7 @@ MathJax = {
 <p>Suppose that you have a public input <span class="math inline">\(x\)</span>, a private input <span class="math inline">\(w\)</span>, and a (public) function <span class="math inline">\(f(x, w) \rightarrow \{True, False\}\)</span> that performs some kind of verification on the inputs. With a ZK-SNARK, you can prove that you know an <span class="math inline">\(w\)</span> such that <span class="math inline">\(f(x, w) = True\)</span> for some given <span class="math inline">\(f\)</span> and <span class="math inline">\(x\)</span>, without revealing what <span class="math inline">\(w\)</span> is. Additionally, the verifier can verify the proof much faster it would take for them to compute <span class="math inline">\(f(x, w)\)</span> themselves, even if they know <span class="math inline">\(w\)</span>.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/using_snarks/definition.png" /></p>
+<p><img src="../../../../images/using_snarks/definition.png" class="padded" /></p>
 </center>
 <p><br></p>
 <p>This gives the ZK-SNARK its two properties: <strong>privacy</strong> and <strong>scalability</strong>. As mentioned above, in this post our examples will focus on privacy.</p>
@@ -96,7 +142,7 @@ MathJax = {
 <p>We can solve this by instead passing in as a public input an on-chain Merkle root containing <em>all</em> profiles (this could just be the state root). We add another private input, a Merkle proof <span class="math inline">\(M\)</span> proving that the prover's account <span class="math inline">\(A\)</span> is in the relevant part of the tree.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/using_snarks/merkle_tree.png" /></p>
+<p><img src="../../../../images/using_snarks/merkle_tree.png" class="padded" /></p>
 </center>
 <p><br></p>
 <p><em>Advanced readers: A very new and more efficient alternative to Merkle proofs for ZK-proving membership is <a href="https://eprint.iacr.org/2022/621">Caulk</a>. In the future, some of these use cases may migrate to Caulk-like schemes.</em></p>
@@ -105,7 +151,7 @@ MathJax = {
 <p>Here's how we solve this. Anyone who has a coin has a private secret <span class="math inline">\(s\)</span>. They locally compute the "leaf" <span class="math inline">\(L = hash(s, 1)\)</span>, which gets published on-chain and becomes part of the state, and <span class="math inline">\(N = hash(s, 2)\)</span>, which we call the <em>nullifier</em>. The state gets stored in a Merkle tree.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/using_snarks/coin.png" /></p>
+<p><img src="../../../../images/using_snarks/coin.png" class="padded" /></p>
 </center>
 <p><br></p>
 <p>To spend a coin, the sender must make a ZK-SNARK where:</p>
@@ -136,7 +182,7 @@ MathJax = {
 <p>For each epoch <span class="math inline">\(e\)</span>, we take the line <span class="math inline">\(L_e(x) = hash(k, e) * x + k\)</span>. The slope of the line is <span class="math inline">\(hash(k, e)\)</span>, and the y-intercept is <span class="math inline">\(k\)</span>; neither is known to the public. To make a <em>certificate</em> for a message <span class="math inline">\(m\)</span>, the sender provides <span class="math inline">\(y = L_e(hash(m)) =\)</span> <span class="math inline">\(hash(k, e) * hash(m) + k\)</span>, along with a ZK-SNARK proving that <span class="math inline">\(y\)</span> was computed correctly.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/using_snarks/line.png" /></p>
+<p><img src="../../../../images/using_snarks/line.png" class="padded" /></p>
 </center>
 <p><br></p>
 <p>To recap, the ZK-SNARK here is as follows:</p>
@@ -205,7 +251,7 @@ MathJax = {
 <p>Suppose that a post uses a root <span class="math inline">\(R\)</span> and stores <span class="math inline">\(\{N, \bar{h}, \bar{u}\}\)</span>. In the proof, it links to a previous post, with stored data <span class="math inline">\(\{N_{prev}, \bar{h}_{prev}, \bar{u}_{prev}\}\)</span>. The post's proof is also required to walk over all the reputation entries that have been published between <span class="math inline">\(h_{prev}\)</span> and <span class="math inline">\(h\)</span>. For each nullifier <span class="math inline">\(N\)</span>, the verification function would decrypt <span class="math inline">\(N\)</span> using the user's key <span class="math inline">\(k\)</span>, and if the decryption outputs a valid index it would apply the reputation update. If the sum of all reputation updates is <span class="math inline">\(\delta\)</span>, the proof would finally check <span class="math inline">\(u = u_{prev} + \delta\)</span>.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/using_snarks/0chan.png" /></p>
+<p><img src="../../../../images/using_snarks/0chan.png" class="padded" /></p>
 </center>
 <p><br></p>
 <p>If we want a "three strikes and you're out" rule, the ZK-SNARK would also check <span class="math inline">\(u &gt; -3\)</span>. If we want a rule where a post can get a special "high-reputation poster" flag if the poster has <span class="math inline">\(\ge 100\)</span> rep, we can accommodate that by adding "is <span class="math inline">\(u \ge 100\)</span>?" as a public input. Many kinds of such rules can be accommodated.</p>

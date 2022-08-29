@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="On Nathan Schneider on the limits of cryptoeconomics" />
@@ -102,14 +148,14 @@ MathJax = {
 <h2 id="finance-is-the-absence-of-collusion-prevention">Finance is the absence of collusion prevention</h2>
 <p>Out of the standard assumptions in what gets pejoratively called "spherical cow economics", people normally tend to focus on the unrealistic nature of <em>perfect information</em> and <em>perfect rationality</em>. But the unrealistic assumption that is hidden in the list that strikes me as even more misleading is <em>individual choice</em>: the idea that each agent is separately making their own decisions, no agent has a positive or negative stake in another agent's outcomes, and there are no "side games"; the only thing that sees each agent's decisions is the black box that we call "the mechanism".</p>
 <center>
-<p><img src="../../../../images/limits/spherical_cow.png" /></p>
+<p><img src="../../../../images/limits/spherical_cow.png" class="padded" /></p>
 </center>
 <p>This assumption is often used to bootstrap complex contraptions such as <a href="https://en.wikipedia.org/wiki/Vickrey%E2%80%93Clarke%E2%80%93Groves_mechanism">the VCG mechanism</a>, whose theoretical optimality is based on beautiful arguments that because the price each player pays only depends on <em>other players' bids</em>, each player has no incentive to make a bid that does not reflect their true value in order to manipulate the price. A beautiful argument in theory, but it breaks down completely once you introduce the possibility that even two of the players are either allies or adversaries outside the mechanism.</p>
 <p>Economics, and economics-inspired philosophy, is great at describing the complexities that arise when the number of players "playing the game" increases from one to two (see the tale of Crusoe and Friday in Murray Rothbard's <a href="https://mises.org/library/crusoe-social-philosophy">The Ethics of Liberty</a> for one example). But what this philosophical tradition completely misses is that going up to <em>three</em> players adds an even further layer of complexity. In an interaction between two people, the two can ignore each other, fight or trade. In an interaction between three people, there exists a new strategy: any two of the three can communicate and band together to gang up on the third. Three is the smallest denominator where it's possible to talk about a 51%+ attack that has someone outside the clique to be a victim.</p>
 <p><strong>When there's only two people, more coordination can only be good. But once there's three people, the wrong kind of coordination <a href="https://vitalik.ca/general/2020/09/11/coordination.html">can be harmful</a>, and techniques to <em>prevent</em> harmful coordination (<a href="https://vitalik.ca/general/2017/05/08/coordination_problems.html">including decentralization itself</a>) can become very valuable. And it's this management of coordination that is the essence of "politics".</strong></p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/round4-files/threelayer.png" /></p>
+<p><img src="../../../../images/round4-files/threelayer.png" class="padded" /></p>
 <p><br><small><i>Going from two people to three introduces the possibility of harms from unbalanced coordination: it's not just "the individual versus the group", it's "the individual versus the group versus the world". </i></small><br><br></p>
 </center>
 <p>Now, we can understand try to use this framework to understand the pitfalls of "finance". <strong>Finance can be viewed as a set of patterns that naturally emerge in many kinds of systems that do not attempt to prevent collusion.</strong> Any system which <em>claims</em> to be non-finance, but does not actually make an effort to prevent collusion, will eventually acquire the characteristics of finance, if not something worse. To see why this is the case, compare two point systems we are all familiar with: money, and Twitter likes. Both kinds of points are valuable for extrinsic reasons, both have inevitably become status symbols, and both are number games where people spend a lot of time optimizing to try to get a higher score. And yet, they behave very differently. So what's the fundamental difference between the two?</p>
@@ -189,7 +235,7 @@ MathJax = {
 </blockquote>
 <p>I broadly agree with both conclusions. The language of collusion prevention can be helpful for understanding <em>why</em> cryptoeconomic purism so severely constricts the design space. "Finance" is a category of patterns that emerge when systems do not attempt to prevent collusion. When a system does not prevent collusion, it cannot treat different individuals differently, or even different <em>numbers</em> of individuals differently: whenever a "position" to exert influence exists, the owner of that position can just sell it to the highest bidder.</p>
 <center>
-<p><img src="../../../../images/limits/gavels.png" style="width:600px" /><br><br></p>
+<p><img src="../../../../images/limits/gavels.png" style="width:600px" class="padded" /><br><br></p>
 <p><em>Gavels on Amazon. A world where these were NFTs that actually came with associated judging power may well be a fun one, but I would certainly not want to be a defendant!</em></p>
 </center>
 <p><br></p>

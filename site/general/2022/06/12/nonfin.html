@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Where to use a blockchain in non-financial applications?" />
@@ -92,7 +138,7 @@ MathJax = {
 <p>From the point of view of someone coming in later who just receives these two messages, they see that A is no longer used, but they don't know whether "replace A with B" or "replace A with C" has higher priority.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/nonfin/keychange.png" /></p>
+<p><img src="../../../../images/nonfin/keychange.png" class="padded" /></p>
 </center>
 <p><br></p>
 <p>This is equivalent to the famous <a href="https://en.wikipedia.org/wiki/Double-spending">double-spend problem</a> in designing decentralized currencies, except instead of the goal being to prevent a previous owner of a coin from being able to send it again, here the goal is to prevent the previous key controlling an account from being able to change the key. <strong>Just like creating a decentralized currency, doing account management in a decentralized way requires something like a blockchain</strong>. A blockchain can timestamp the key change messages, providing common knowledge over whether B or C came first.</p>
@@ -122,7 +168,7 @@ MathJax = {
 <p>An even more effective usecase is many-at-a-time issuance: if an artists wants to issue N copies of a "limited-edition" NFT, they could publish on-chain a <em>single</em> hash containing the Merkle root of the NFTs that they are issuing. The single issuance prevents them from issuing more after the fact, and you can publish the number (eg. 100) signifying the quantity limit along with the Merkle root, signifying that only the leftmost 100 Merkle branches are valid.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/nonfin/merkle.png" /> <small><i></p>
+<p><img src="../../../../images/nonfin/merkle.png" class="padded" /> <small><i></p>
 <p>By publishing a single Merkle root and max count on-chain, you can commit issue a limited quantity of attestations. In this example, there are only five possible valid Merkle branches that could satisfy the proof check. Astute readers may notice a conceptual similarity to <a href="https://ethereum.org/en/developers/docs/scaling/plasma/">Plasma chains</a>.</p>
 <p></i></small></p>
 </center>
@@ -138,12 +184,12 @@ MathJax = {
 <p>One key goal of the <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4105763">Decentralized Society paper</a> is the idea that it should be possible to <em>make calculations</em> over the graph of attestations. A really important one is <strong>measuring decentralization</strong> and diversity. For example, many people <a href="https://twitter.com/VitalikButerin/status/1264948490834247681">seem</a> to <a href="https://twitter.com/VitalikButerin/status/1265252184813420544">agree</a> that an ideal voting mechanism would somehow keep diversity in mind, giving greater weight to projects that are supported not just by the largest number of <em>coins</em> or even <em>humans</em>, but by the largest number of <em>truly distinct perspectives</em>.</p>
 <center>
 <p><br></p>
-<table>
-<tr style="border:none">
-<td style="border:none">
+<table class="transparent">
+<tr>
+<td>
 <p><img src="../../../../images/nonfin/tweet1.png" /></p>
 </td>
-<td style="border:none">
+<td>
 <p><img src="../../../../images/nonfin/tweet2.png" /></p>
 </td>
 </tr>

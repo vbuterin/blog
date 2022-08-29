@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Fast Fourier Transforms" />
@@ -80,7 +126,7 @@ The original <a href="https://en.wikipedia.org/wiki/Fourier_transform">Fourier t
 </p>
 <p>
 <center>
-<table>
+<table class="transparent">
 <tr>
 <td>
 <img src="../../../../images/fft-files/elephant1.png" /><br> <img src="../../../../images/fft-files/elephant3.png" />
@@ -150,7 +196,7 @@ Note that the "glue" in the second procedure has runtime <span class="math inlin
 </p>
 <p>
 <center>
-<img src="../../../../images/fft-files/sorting.png" /><br>
+<img src="../../../../images/fft-files/sorting.png" class="padded" /><br>
 </center>
 <br>
 </p>
@@ -281,7 +327,7 @@ The multiplication result contains an <span class="math inline">\(x^5\)</span> t
     1 0 1 1 0 1
   -   1 1 0 0 1    [(x⁴ + x + 1) shifted right by one to reflect being multipled by x]
    ------------
-    1 1 0 1 0 0 
+    1 1 0 1 0 0
 </pre>
 <p>
 And we get the result, <span class="math inline">\([1, 1, 0, 1]\)</span> (or <span class="math inline">\(x^3 + x + 1\)</span>).
@@ -302,7 +348,7 @@ But if you want to use binary fields for erasure coding, and do so efficiently, 
 The reason we needed the domain to have the "structure" of a multiplicative group with <span class="math inline">\(2^n\)</span> elements before is that we needed to reduce the size of the domain by a factor of two by squaring each number in it: the domain <span class="math inline">\([1, 85, 148, 111, 336, 252, 189, 226]\)</span> gets reduced to <span class="math inline">\([1, 148, 336, 189]\)</span> because <span class="math inline">\(1\)</span> is the square of both <span class="math inline">\(1\)</span> and <span class="math inline">\(336\)</span>, <span class="math inline">\(148\)</span> is the square of both <span class="math inline">\(85\)</span> and <span class="math inline">\(252\)</span>, and so forth. But what if in a binary field there's a different way to halve the size of a domain? It turns out that there is: given a domain containing <span class="math inline">\(2^k\)</span> values, including zero (technically the domain must be a <em><a href="https://en.wikipedia.org/wiki/Linear_subspace">subspace</a></em>), we can construct a half-sized new domain <span class="math inline">\(D&#39;\)</span> by taking <span class="math inline">\(x \cdot (x+k)\)</span> for <span class="math inline">\(x\)</span> in <span class="math inline">\(D\)</span> using some specific <span class="math inline">\(k\)</span> in <span class="math inline">\(D\)</span>. Because the original domain is a subspace, since <span class="math inline">\(k\)</span> is in the domain, any <span class="math inline">\(x\)</span> in the domain has a corresponding <span class="math inline">\(x+k\)</span> also in the domain, and the function <span class="math inline">\(f(x) = x \cdot (x+k)\)</span> returns the same value for <span class="math inline">\(x\)</span> and <span class="math inline">\(x+k\)</span> so we get the same kind of two-to-one correspondence that squaring gives us.
 </p>
 <center>
-<table border="1" cellpadding="10">
+<table cellpadding="10">
 <tr>
 <td>
 <span class="math inline">\(x\)</span>

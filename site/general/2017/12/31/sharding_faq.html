@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Sharding FAQ" />
@@ -116,10 +162,8 @@ MathJax = {
 <h1 id="this-sounds-like-theres-some-kind-of-scalability-trilemma-at-play.-what-is-this-trilemma-and-can-we-break-through-it">This sounds like there's some kind of scalability trilemma at play. What is this trilemma and can we break through it?</h1>
 <p>The trilemma claims that blockchain systems can only at most have two of the following three properties:</p>
 <ul>
-<li><strong>Decentralization</strong> (defined as the system being able to run in a scenario where each participant only has access to O(c) resources, i.e. a regular laptop or small VPS)<br />
-</li>
-<li><strong>Scalability</strong> (defined as being able to process O(n) &gt; O(c) transactions)<br />
-</li>
+<li><strong>Decentralization</strong> (defined as the system being able to run in a scenario where each participant only has access to O(c) resources, i.e. a regular laptop or small VPS)</li>
+<li><strong>Scalability</strong> (defined as being able to process O(n) &gt; O(c) transactions)</li>
 <li><strong>Security</strong> (defined as being secure against attackers with up to O(n) resources)</li>
 </ul>
 <p>In the rest of this document, we'll continue using <strong>c</strong> to refer to the size of computational resources (including computation, bandwidth and storage) available to each node, and <strong>n</strong> to refer to the size of the ecosystem in some abstract sense; we assume that transaction load, state size, and the market cap of a cryptocurrency are all proportional to <strong>n</strong>. The key challenge of scalability is finding a way to achieve all three at the base layer.</p>
@@ -139,8 +183,7 @@ MathJax = {
 <ul>
 <li><strong>State</strong>: a set of information that represents the "current state" of a system; determining whether or not a transaction is valid, as well as the effect of a transaction, should in the simplest model depend only on state. Examples of state data include the UTXO set in bitcoin, balances + nonces + code + storage in ethereum, and domain name registry entries in Namecoin.</li>
 <li><strong>History</strong>: an ordered list of all transactions that have taken place since genesis. In a simple model, the present state should be a deterministic function of the genesis state and the history.</li>
-<li><strong>Transaction</strong>: an object that goes into the history. In practice, a transaction represents an operation that some user wants to make, and is cryptographically signed. In some systems transactions are called <strong>blobs</strong>, to emphasize the fact that in these systems these objects may contain arbitrary data and may not in all cases represent an attempt to perform some operation in the protocol.<br />
-</li>
+<li><strong>Transaction</strong>: an object that goes into the history. In practice, a transaction represents an operation that some user wants to make, and is cryptographically signed. In some systems transactions are called <strong>blobs</strong>, to emphasize the fact that in these systems these objects may contain arbitrary data and may not in all cases represent an attempt to perform some operation in the protocol.</li>
 <li><strong>State transition function</strong>: a function that takes a state, applies a transaction and outputs a new state. The computation involved may involve adding and subtracting balances from accounts specified by the transaction, verifying digital signatures and running contract code.</li>
 <li><strong>Merkle tree</strong>: a cryptographic hash tree structure that can store a very large amount of data, where authenticating each individual piece of data only takes O(log(n)) space and time. See <a href="https://easythereentropy.wordpress.com/2014/06/04/understanding-the-ethereum-trie">here</a> for details. In Ethereum, the transaction set of each block, as well as the state, is kept in a Merkle tree, where the roots of the trees are committed to in a block.</li>
 <li><strong>Receipt</strong>: an object that represents an effect of a transaction that is not directly stored in the state, but which is still stored in a Merkle tree and committed to in a block header or in a special location in the state so that its existence can later be efficiently proven even to a node that does not have all of the data. Logs in Ethereum are receipts; in sharded models, receipts are used to facilitate asynchronous cross-shard communication.</li>
@@ -200,10 +243,11 @@ MathJax = {
 <h1 id="how-do-you-actually-do-this-sampling-in-proof-of-work-and-in-proof-of-stake">How do you actually do this sampling in proof of work, and in proof of stake?</h1>
 <p>In proof of stake, it is easy. There already is an "active validator set" that is kept track of in the state, and one can simply sample from this set directly. Either an in-protocol algorithm runs and chooses 150 validators for each shard, or each validator independently runs an algorithm that uses a common source of randomness to (provably) determine which shard they are at any given time. Note that it is very important that the sampling assignment is "compulsory"; validators do not have a choice of what shard they go into. If validators could choose, then attackers with small total stake could concentrate their stake onto one shard and attack it, thereby eliminating the system's security.</p>
 <p>In proof of work, it is more difficult, as with "direct" proof of work schemes one cannot prevent miners from applying their work to a given shard. It may be possible to use <a href="https://www.microsoft.com/en-us/research/publication/permacoin-repurposing-bitcoin-work-for-data-preservation/">proof-of-file-access forms</a> of proof of work to lock individual miners to individual shards, but it is hard to ensure that miners cannot quickly download or generate data that can be used for other shards and thus circumvent such a mechanism. The best known approach is through a technique invented by Dominic Williams called "puzzle towers", where miners first perform proof of work on a common chain, which then inducts them into a proof of stake-style validator pool, and the validator pool is then sampled just as in the proof-of-stake case.</p>
-<p>One possible intermediate route might look as follows. Miners can spend a large (O(c)-sized) amount of work to create a new "cryptographic identity". The precise value of the proof of work solution then chooses which shard they have to make their next block on. They can then spend an O(1)-sized amount of work to create a block on that shard, and the value of that proof of work solution determines which shard they can work on next, and so on<sup><a href="#ftnt_ref8">8</a></sup>. Note that all of these approaches make proof of work "stateful" in some way; the necessity of this is fundamental. # How is the randomness for random sampling generated?</p>
+<p>One possible intermediate route might look as follows. Miners can spend a large (O(c)-sized) amount of work to create a new "cryptographic identity". The precise value of the proof of work solution then chooses which shard they have to make their next block on. They can then spend an O(1)-sized amount of work to create a block on that shard, and the value of that proof of work solution determines which shard they can work on next, and so on<sup><a href="#ftnt_ref8">8</a></sup>. Note that all of these approaches make proof of work "stateful" in some way; the necessity of this is fundamental.</p>
+<h1 id="how-is-the-randomness-for-random-sampling-generated">How is the randomness for random sampling generated?</h1>
 <p>First of all, it is important to note that even if random number generation is heavily exploitable, this is not a fatal flaw for the protocol; rather, it simply means that there is a medium to high centralization incentive. The reason is that because the randomness is picking fairly large samples, it is difficult to bias the randomness by more than a certain amount.</p>
 <p>The simplest way to show this is through the <a href="https://en.wikipedia.org/wiki/Binomial_distribution">binomial distribution</a>, as described above; if one wishes to avoid a sample of size N being more than 50% corrupted by an attacker, and an attacker has p% of the global stake pool, the chance of the attacker being able to get such a majority during one round is:</p>
-<p><img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image00.gif"></img></p>
+<p><img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image00.gif" class="padded" /></p>
 <p>Here's a table for what this probability would look like in practice for various values of N and p:</p>
 <table>
 <tr>
@@ -311,7 +355,7 @@ p = 0.2
 <h1 id="can-we-force-more-of-the-state-to-be-held-user-side-so-that-transactions-can-be-validated-without-requiring-validators-to-hold-all-state-data">Can we force more of the state to be held user-side so that transactions can be validated without requiring validators to hold all state data?</h1>
 <p>See also: https://ethresear.ch/t/the-stateless-client-concept/172</p>
 <p>The techniques here tend to involve requiring users to store state data and provide Merkle proofs along with every transaction that they send. A transaction would be sent along with a Merkle proof-of-correct-execution (or "witness"), and this proof would allow a node that only has the state root to calculate the new state root. This proof-of-correct-execution would consist of the subset of objects in the trie that would need to be traversed to access and verify the state information that the transaction must verify; because Merkle proofs are O(log(n)) sized, the proof for a transaction that accesses a constant number of objects would also be O(log(n)) sized.</p>
-<p><img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image03.png" width="450"></img><br> <small><i>The subset of objects in a Merkle tree that would need to be provided in a Merkle proof of a transaction that accesses several state objects</i></small></p>
+<p><img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image03.png" width="450" class="padded" /><br> <small><i>The subset of objects in a Merkle tree that would need to be provided in a Merkle proof of a transaction that accesses several state objects</i></small></p>
 <p>Implementing this scheme in its pure form has two flaws. First, it introduces O(log(n)) overhead (~10-30x in practice), although one could argue that this O(log(n)) overhead is not as bad as it seems because it ensures that the validator can always simply keep state data in memory and thus it never needs to deal with the overhead of accessing the hard drive<sup><a href="#ftnt_ref9">9</a></sup>. Second, it can easily be applied if the addresses that are accessed by a transaction are static, but is more difficult to apply if the addresses in question are dynamic - that is, if the transaction execution has code of the form <code>read(f(read(x)))</code> where the address of some state read depends on the execution result of some other state read. In this case, the address that the transaction sender thinks the transaction will be reading at the time that they send the transaction may well differ from the address that is actually read when the transaction is included in a block, and so the Merkle proof may be insufficient<sup><a href="#ftnt_ref10">10</a></sup>.</p>
 <p>This can be solved with access lists (think: a list of accounts and subsets of storage tries), which specify statically what data transactions can access, so when a miner receives a transaction with a witness they can determine that the witness contains all of the data the transaction could possibly access or modify. However, this harms censorship resistance, making attacks similar in form to the <a href="http://hackingdistributed.com/2016/07/05/eth-is-more-resilient-to-censorship/">attempted DAO soft fork</a> possible.</p>
 <h1 id="can-we-split-data-and-execution-so-that-we-get-the-security-from-rapid-shuffling-data-validation-without-the-overhead-of-shuffling-the-nodes-that-perform-state-execution">Can we split data and execution so that we get the security from rapid shuffling data validation without the overhead of shuffling the nodes that perform state execution?</h1>
@@ -329,7 +373,7 @@ p = 0.2
 <li>Send a transaction on shard N which includes the Merkle proof of the receipt from (1). This transaction also checks in the state of shard N to make sure that this receipt is "unspent"; if it is, then it increases the balance of B by 100 coins, and saves in the state that the receipt is spent.</li>
 <li>Optionally, the transaction in (3) also saves a receipt, which can then be used to perform further actions on shard M that are contingent on the original operation succeeding.</li>
 </ol>
-<p><img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image01.png" width="400"></img></p>
+<p><img src="https://github.com/vbuterin/diagrams/raw/master/scalability_faq/image01.png" width="400" class="padded" /></p>
 <p>In more complex forms of sharding, transactions may in some cases have effects that spread out across several shards and may also synchronously ask for data from the state of multiple shards.</p>
 <h1 id="what-is-the-train-and-hotel-problem">What is the train-and-hotel problem?</h1>
 <p>The following example is courtesy of Andrew Miller. Suppose that a user wants to purchase a train ticket and reserve a hotel, and wants to make sure that the operation is atomic - either both reservations succeed or neither do. If the train ticket and hotel booking applications are on the same shard, this is easy: create a transaction that attempts to make both reservations, and throws an exception and reverts everything unless both reservations succeed. If the two are on different shards, however, this is not so easy; even without cryptoeconomic / decentralization concerns, this is essentially the problem of <a href="https://en.wikipedia.org/wiki/Atomicity_(database_systems)">atomic database transactions</a>.</p>

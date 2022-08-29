@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Endnotes on 2020: Crypto and Beyond" />
@@ -65,24 +111,24 @@ MathJax = {
 
 <p>I'm writing this sitting in Singapore, the city in which I've now spent nearly half a year of uninterrupted time - an unremarkable duration for many, but for myself the longest I've stayed in any one place for nearly a decade. After months of fighting what may perhaps even be humanity's first boss-level enemy since 1945, the city itself is close to normal, though the world as a whole and its 7.8 billion inhabitants, normally so close by, continue to be so far away. Many other parts of the world have done less well and suffered more, though there is now a light at the end of the tunnel, as hopefully <a href="https://ourworldindata.org/covid-vaccinations">rapid deployment of vaccines</a> will help humanity as a whole overcome this great challenge.</p>
 <p>2020 has been a strange year because of these events, but also others. As life "<a href="https://gizmodo.com/pirate-bay-trial-watch-day-5-omg-is-this-happening-ir-5157197">away from keyboard (AFK)</a>" has gotten much more constrained and challenging, the internet has been supercharged, with consequences both good and bad. Politics around the world has gone in strange directions, and I am continually worried by the many political factions that are so easily abandoning their most basic principles because they seem to have decided that their (often mutually contradictory) personal causes are just too important. And yet at the same time, there are rays of hope coming from unusual corners, with <a href="https://marginalrevolution.com/marginalrevolution/2020/11/is-the-great-stagnation-over.html">new</a> technological <a href="https://www.bloomberg.com/opinion/articles/2020-12-24/2020-in-review-maybe-it-wasn-t-quite-as-horrible-as-it-seemed?sref=htOHjx5Y">discoveries</a> in <a href="https://techcrunch.com/2020/05/30/spacex-makes-history-with-successful-first-human-space-launch/">transportation</a>, <a href="https://www.theguardian.com/business/2020/nov/27/biontech-covid-vaccine-is-a-triumph-of-innovation-and-immigration">medicine</a>, <a href="https://en.wikipedia.org/wiki/GPT-3">artificial intelligence</a> - and, of course, <a href="https://ethereum.org/en/eth2/">blockchains</a> and <a href="https://twitter.com/VitalikButerin/status/1298886605428502529">cryptography</a> - that could open up a new chapter for humanity finally coming to fruition.</p>
-<table cellspacing="0" cellpadding="0" style="border:none">
-<tr style="border:none">
-<td style="border:none">
+<table class="transparent centered">
+<tr>
+<td>
 <img src="../../../../images/endnotes-files/monkey1.png" style="width:400px" />
 </td>
-<td style="border:none">
+<td>
 <img src="../../../../images/endnotes-files/rocket.png" style="width:400px"/>
 </td>
 </tr>
-<tr style="border:none; background-color: transparent">
-<td style="border:none">
+<tr>
+<td>
 <i>
 <center>
 Where we started
 </center>
 </i>
 </td>
-<td style="border:none">
+<td>
 <i>
 <center>
 Where we're going
@@ -110,7 +156,7 @@ Where we're going
 <p>The community split was chaotic, and one can see this in how the channels of communication were split up in the divorce: <a href="http://reddit.com/r/bitcoin">/r/bitcoin</a> stayed under the control of supporters of Bitcoin (BTC). <a href="http://reddit.com/r/btc">/r/btc</a> was controlled by supporters of Bitcoin Cash (BCH). <a href="https://bitcoin.org">Bitcoin.org</a> was controlled by supporters of Bitcoin (BTC). <a href="https://bitcoin.com">Bitcoin.com</a> on the other hand was controlled by supporters of Bitcoin Cash (BCH). Each side claimed themselves to be the true Bitcoin. The result looked remarkably similar to one of those civil wars that happens from time to time that results in a country splitting in half, the two halves calling themselves almost identical names that differ only in which subset of the words "democratic", "people's" and "republic" appears on each side. Neither side had the ability to destroy the other, and of course there was no higher authority to adjudicate the dispute.</p>
 <br>
 <center>
-<img src="../../../../images/endnotes-files/forks.png" /> <br><br> <small><i>Major Bitcoin forks, as of 2020. Does not include Bitcoin Diamond, Bitcoin Rhodium, Bitcoin Private, or any of the other long list of Bitcoin forks that I would highly recommend you just ignore completely, except to sell (and perhaps you should sell some of the forks listed above too, eg. <a href="https://github.com/vbuterin/cult-of-craig">BSV is definitely a scam!</a>)</i></small>
+<img src="../../../../images/endnotes-files/forks.png" class="padded" /> <br><br> <small><i>Major Bitcoin forks, as of 2020. Does not include Bitcoin Diamond, Bitcoin Rhodium, Bitcoin Private, or any of the other long list of Bitcoin forks that I would highly recommend you just ignore completely, except to sell (and perhaps you should sell some of the forks listed above too, eg. <a href="https://github.com/vbuterin/cult-of-craig">BSV is definitely a scam!</a>)</i></small>
 </center>
 <p><br></p>
 <p><strong>Around the same time, Ethereum had its own chaotic split</strong>, in the form of <a href="https://qz.com/730004/everything-you-need-to-know-about-the-ethereum-hard-fork/">the DAO fork</a>, a highly controversial resolution to a theft in which over $50 million was stolen from the first major smart contract application on Ethereum. Just like in the Bitcoin case, there was first a civil war - though only lasting four weeks - and then a chain split, followed by an online war between the two now-separate chains, Ethereum (ETH) and Ethereum Classic (ETC). The naming split was as fun as in Bitcoin: the Ethereum Foundation held <a href="https://twitter.com/ethereumproject">ethereumproject on Twitter</a> but Ethereum Classic supporters held <a href="https://github.com/ethereumproject">ethereumproject on Github</a>.</p>
@@ -119,7 +165,7 @@ Where we're going
 <h2 id="what-motivates-us-anyway">What motivates us anyway?</h2>
 <p>One of the key intellectual undercurrents of the 2000s era was the recognition of the importance of non-monetary motivations. People are motivated not just by earning as much money as possible in the work and extracting enjoyment from their money in their family lives; even at work we are motivated by social status, honor, altruism, reciprocity, a feeling of contribution, different social conceptions of what is good and valuable, and much more.</p>
 <p>These differences are very meaningful and measurable. For one example, see <a href="https://www.econ.uzh.ch/static/wp/econwp353.pdf">this Swiss study</a> on compensating differentials for immoral work - how much extra do employers have to pay to convince someone to do a job if that job is considered morally unsavory?</p>
-<p><img src="../../../../images/endnotes-files/swisspaper.png" /></p>
+<p><img src="../../../../images/endnotes-files/swisspaper.png" class="padded" /></p>
 <p>As we can see, the effects are massive: if a job is widely considered immoral, you need to pay employees almost twice as much for them to be willing to do it. From personal experience, I would even argue that this understates the case: in many cases, top-quality workers would not be willing to work for a company that they think is bad for the world at almost any price. "Work" that is difficult to formalize (eg. word-of-mouth marketing) functions similarly: if people think a project is good, they will do it for free, if they do not, they will not do it at all. This is also likely why blockchain projects that raise a lot of money but are unscrupulous, or even just corporate-controlled profit-oriented "VC chains", tend to fail: even a billion dollars of capital cannot compete with a project <em>having a soul</em>.</p>
 <p>That said, it is possible to be overly idealistic about this fact, in several ways. First of all, <strong>while this decentralized, non-market, non-governmental subsidy toward projects that are socially considered to be good is massive, likely amounting to tens of trillions of dollars per year globally, its effect is not infinite</strong>. If a developer has a choice between earning $30,000 per year by being "ideologically pure", and making a $30 million ICO by sticking a needless token into their project, they <em>will</em> do the latter. Second, idealistic motivations are <em>uneven</em> in what they motivate. Rick Falkvinge's <a href="https://www.amazon.com/Swarmwise-Tactical-Manual-Changing-World/dp/1463533152">Swarmwise</a> played up the possibility of decentralized non-market organization in part by pointing to political activism as a key example. And this is true, political activism does not require getting paid. But longer and more grueling tasks, even something as simple as <a href="https://www.quora.com/Why-does-open-source-software-usually-have-poor-UI-and-UX-design-What-can-be-done-to-improve-this">making good user interfaces</a>, are not so easily intrinsically motivated. And so if you rely on intrinsic motivation too much, you get projects where some tasks are overdone and other tasks are done poorly, or even ignored entirely. And third, perceptions of what people find intrinsically attractive to work on may change, and may even be manipulated.</p>
 <p>One important conclusion for me from this is the importance of culture (and that oh-so-important word that crypto influencers have unfortunately ruined for me, <em>"narrative"</em>). If a project having a high moral standing is equivalent to that project having twice as much money, or even more, then culture and narrative are extremely powerful forces that command the equivalent of tens of trillions of dollars of value. And this does not even begin to cover the role of such concepts in shaping our perceptions of legitimacy and coordination. And so anything that influences the culture can have a great impact on the world and on people's financial interests, and we're going to see more and more sophisticated efforts from all kinds of actors to do so systematically and deliberately. This is the darker conclusion of the importance of non-monetary social motivations - they create the battlefield for the permanent and final frontier of war, the war that is fortunately not usually deadly but unfortunately impossible to create peace treaties for because of how inextricably subjective it is to determine what even counts as a battle: the culture war.</p>

@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Quadratic Payments: A Primer" />
@@ -69,7 +115,7 @@ MathJax = {
 <h3 id="private-goods-private-markets">Private goods, private markets...</h3>
 <p>To understand what is going on, let us first consider an existing social technology: money, and property rights - the invisible social technology that generally hides behind money. Money and private property are extremely powerful social technologies, for all the reasons classical economists have been stating for over a hundred years. If Bob is producing apples, and Alice wants to buy apples, we can economically model the interaction between the two, and the results <em>seem to make sense</em>:</p>
 <center>
-<img src="../../../../images/qv-files/Market1.png" />
+<img src="../../../../images/qv-files/Market1.png" class="padded" />
 </center>
 <p><br><br></p>
 <p>Alice keeps buying apples until the marginal value of the next apple to her is less than the cost of producing it, which is pretty much exactly the optimal thing that could happen. This is all formalized in results such as the "<a href="https://en.wikipedia.org/wiki/Fundamental_theorems_of_welfare_economics">fundamental theorems of welfare economics</a>". Now, those of you who have learned some economics may be screaming, but what about <a href="https://en.wikipedia.org/wiki/Imperfect_competition">imperfect competition</a>? <a href="https://en.wikipedia.org/wiki/Information_asymmetry">Asymmetric information</a>? <a href="https://en.wikipedia.org/wiki/Economic_inequality">Economic inequality</a>? <a href="https://en.wikipedia.org/wiki/Public_good">Public goods</a>? <a href="https://en.wikipedia.org/wiki/Externality">Externalities</a>? Many activities in the real world, including those that are key to the progress of human civilization, benefit (or harm) many people in complicated ways. These activities and the consequences that arise from them often cannot be neatly decomposed into sequences of distinct trades between two parties.</p>
@@ -80,13 +126,13 @@ MathJax = {
 <p>First of all, let's see what happens if we just put up a plain old regular market: I offer to write an article as long as at least $1000 of money gets donated to me (fun fact: <a href="https://bitcointalk.org/index.php?topic=28681.msg360909#msg360909">I literally did this back in 2011</a>). Every dollar donated increases the probability that the goal will be reached and the article will be published; let us call this "marginal probability" <code>p</code>. At a cost of $<code>k</code>, you can increase the probability that the article will be published by <code>k * p</code> (though eventually the gains will decrease as the probability approaches 100%). Let's say to you personally, the article being published is worth $<code>V</code>. Would you donate? Well, donating a dollar increases the probability it will be published by <code>p</code>, and so gives you an expected $<code>p * V</code> of value. If <code>p * V &gt; 1</code>, you donate, and quite a lot, and if <code>p * V &lt; 1</code> you don't donate at all.</p>
 <p>Phrased less mathematically, either you value the article enough (and/or are rich enough) to pay, and if that's the case it's in your interest to keep paying (and influencing) quite a lot, or you don't value the article enough and you contribute nothing. Hence, the only blog articles that get published would be articles where some single person is willing to <a href="https://en.wikipedia.org/wiki/Patronage">basically pay for it themselves</a> (in my experiment in 2011, this prediction was experimentally verified: in <a href="https://bitcointalk.org/index.php?topic=23934.msg306437#msg306437">most</a> <a href="https://bitcointalk.org/index.php?topic=28681.msg360909#msg360909">rounds</a>, over half of the total contribution came from a single donor).</p>
 <center>
-<img src="../../../../images/qv-files/Market8.png" />
+<img src="../../../../images/qv-files/Market8.png" class="padded" />
 </center>
 <p><br><br></p>
 <p>Note that <em>this reasoning applies for any kind of mechanism that involves "buying influence" over matters of public concern</em>. This includes paying for public goods, shareholder voting in corporations, public advertising, bribing politicians, and much more. The little guy has too little influence (not quite zero, because in the real world things like altruism exist) and the big guy has too much. If you had an intuition that markets work great for buying apples, but money is corrupting in "the public sphere", this is basically a simplified mathematical model that shows why.</p>
 <p>We can also consider a different mechanism: one-person-one-vote. Let's say you can either vote that I deserve a reward for writing this article, or you can vote that I don't, and my reward is proportional to the number of votes in my favor. We can interpret this as follows: your first "contribution" costs only a small amount of effort, so you'll support an article if you care about it enough, but after that point there is no more room to contribute further; your second contribution "costs" infinity.</p>
 <center>
-<img src="../../../../images/qv-files/Market9.png" />
+<img src="../../../../images/qv-files/Market9.png" class="padded" />
 </center>
 <p><br><br></p>
 <p>Now, you might notice that neither of the graphs above look quite right. The first graph over-privileges people who <em>care a lot</em> (or are wealthy), the second graph over-privileges people who <em>care only a little</em>, which is also a problem. The single sheep's desire to live is more important than the two wolves' desire to have a tasty dinner.</p>
@@ -94,7 +140,7 @@ MathJax = {
 <p>So how do we match these two up? The answer is clever: <em>your n'th unit of influence costs you $n</em> . That is, for example, you could buy your first vote for $0.01, but then your second would cost $0.02, your third $0.03, and so forth. Suppose you were Alice in the example above; in such a system she would keep buying units of influence until the cost of the next one got to $1, so she would buy 100 units. Bob would similarly buy until the cost got to $0.5, so he would buy 50 units. Alice's 2x higher valuation turned into 2x more units of influence purchased.</p>
 <p>Let's draw this as a graph:</p>
 <center>
-<img src="../../../../images/qv-files/Market10.png" />
+<img src="../../../../images/qv-files/Market10.png" class="padded" />
 </center>
 <p><br><br></p>
 <p>Now let's look at all three beside each other:</p>
@@ -117,7 +163,7 @@ MathJax = {
 <p>Notice that only quadratic voting has this nice property that the amount of influence you purchase is proportional to how much you care; the other two mechanisms either over-privilege concentrated interests or over-privilege diffuse interests.</p>
 <p>Now, you might ask, where does the <em>quadratic</em> come from? Well, the <em>marginal</em> cost of the n'th vote is $n (or $0.01 * n), but the <em>total</em> cost of n votes is <span class="math inline">\(\approx \frac{n^2}{2}\)</span>. You can view this geometrically as follows:</p>
 <center>
-<img src="../../../../images/qv-files/qv_triangle.png" />
+<img src="../../../../images/qv-files/qv_triangle.png" class="padded" />
 </center>
 <p><br><br></p>
 <p>The total cost is the area of a triangle, and you probably learned in math class that area is base * height / 2. And since here base and height are proportionate, that basically means that total cost is proportional to number of votes squared - hence, "quadratic". But honestly it's easier to think "your n'th unit of influence costs $n".</p>
@@ -128,7 +174,7 @@ MathJax = {
 <p>This seems like a perfect target for quadratic voting. The goal is that option A gets chosen if in total people like A more, and option B gets chosen if in total people like B more. With simple voting ("one person one vote"), the distinction between stronger vs weaker preferences gets ignored, so on issues where one side is of very high value to a few people and the other side is of low value to more people, simple voting is likely to give wrong answers. With a private-goods market mechanism where people can buy as many votes as they want at the same price per vote, the individual with the strongest preference (or the wealthiest) carries everything. Quadratic voting, where you can make n votes in either direction at a cost of n<sup>2</sup>, is right in the middle between these two extremes, and creates the perfect balance.</p>
 <br>
 <center>
-<img src="../../../../images/qv-files/Market7.png?2e" /><br><br> <i><small>Note that in the voting case, we're deciding two options, so different people will favor A over B or B over A; hence, unlike the graphs we saw earlier that start from zero, here voting and preference can both be positive or negative (which option is considered positive and which is negative doesn't matter; the math works out the same way)</small></i>
+<img src="../../../../images/qv-files/Market7.png?2e" class="padded" /><br><br> <i><small>Note that in the voting case, we're deciding two options, so different people will favor A over B or B over A; hence, unlike the graphs we saw earlier that start from zero, here voting and preference can both be positive or negative (which option is considered positive and which is negative doesn't matter; the math works out the same way)</small></i>
 </center>
 <p><br> <br></p>
 <p>As shown above, because the n'th vote has a cost of <code>n</code>, the number of votes you make is proportional to how much you value one unit of influence over the decision (the value of the decision multiplied by the probability that one vote will tip the result), and hence proportional to how much you care about A being chosen over B or vice versa. Hence, we once again have this nice clean "preference adding" effect.</p>
@@ -148,7 +194,7 @@ MathJax = {
 <p><span class="math display">\[(\sum_{i=1}^n \sqrt{c_i})^2\]</span></p>
 <p>If that sounds complicated, here it is graphically:</p>
 <center>
-<img src="../../../../images/qv-files/quadratic_funding.png" />
+<img src="../../../../images/qv-files/quadratic_funding.png" class="padded" />
 </center>
 <p><br><br></p>
 <p>In any case where there is more than one contributor, the computed payment is greater than the raw sum of contributions; the difference comes out of a central subsidy pool (eg. if ten people each donate $1, then the sum-of-square-roots is $10, and the square of that is $100, so the subsidy is $90). Note that if the subsidy pool is not big enough to make the full required payment to every project, we can just divide the subsidies proportionately by whatever constant makes the totals add up to the subsidy pool's budget; <strong>you can prove that this solves the tragedy-of-the-commons problem as well as you can with that subsidy budget</strong>.</p>

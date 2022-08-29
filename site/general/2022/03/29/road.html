@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="The roads not taken" />
@@ -76,7 +122,7 @@ MathJax = {
 <p>But making a system that has these properties is <em>hard</em>. It took <a href="https://twitter.com/vitalikbuterin/status/1029900695925706753">years of research</a>, years of <a href="https://github.com/ethereum/research/tree/master/casper4">failed</a> <a href="https://github.com/ethereum/casper/blob/master/casper/contracts/simple_casper.v.py">experiments</a>, and generally took a huge amount of effort. And the final output was pretty complex.</p>
 <center>
 <p><br><a href="https://arxiv.org/pdf/1710.09437.pdf"></p>
-<p><img src="../../../../images/road/image1.png" /></p>
+<p><img src="../../../../images/road/image1.png" class="padded" /></p>
 </a>
 </center>
 <p><br></p>
@@ -86,7 +132,7 @@ MathJax = {
 <h2 id="the-de-complexification-of-sharding">The de-complexification of sharding</h2>
 <p>Ethereum sharding has been on a very consistent trajectory of becoming less and less complex since the ideas started being <a href="https://blog.ethereum.org/2014/09/17/scalability-part-1-building-top/">worked on in 2014</a>. First, we had complex sharding with built-in execution and cross-shard transactions. Then, we simplified the protocol by moving more responsibilities to the user (eg. in a cross-shard transaction, the user would have to separately pay for gas on both shards). Then, we switched to the <a href="https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698">rollup-centric roadmap</a> where, from the protocol's point of view, shards are just blobs of data. Finally, with <a href="https://www.youtube.com/watch?v=e9oudTr5BE4">danksharding</a>, the shard fee markets are merged into one, and the final design just looks like a non-sharded chain but where some data availability sampling magic happens behind the scenes to make sharded verification happen.</p>
 <br>
-<table>
+<table class="transparent centered">
 <tr>
 <td>
 <p><img src="../../../../images/road/sharding2015.png" style="width:330px" /></p>
@@ -152,7 +198,7 @@ MathJax = {
 <h2 id="should-the-eth-supply-have-been-distributed-differently">Should the ETH supply have been distributed differently?</h2>
 <p>The current ETH supply is approximately represented by this <a href="https://etherscan.io/stat/supply">chart from Etherscan</a>:</p>
 <center>
-<p><img src="../../../../images/road/supplychart.png" /></p>
+<p><img src="../../../../images/road/supplychart.png" class="padded" /></p>
 </center>
 <p>About half of the ETH that exists today was sold in an open public <a href="https://blog.ethereum.org/2014/07/22/launching-the-ether-sale/">ether sale</a>, where anyone could send BTC to a standardized bitcoin address, and the initial ETH supply distribution was computed by an <a href="https://github.com/ethereum/genesis_block_generator/blob/master/mk_genesis_block.py">open-source script</a> that scans the Bitcoin blockchain for transactions going to that address. Most of the remainder was mined. The slice at the bottom, the 12M ETH marked "other", was the "premine" - a piece distributed between the Ethereum Foundation and ~100 early contributors to the Ethereum protocol.</p>
 <p>There are two main criticisms of this process:</p>

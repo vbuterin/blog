@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Moving beyond coin voting governance" />
@@ -64,7 +110,7 @@ MathJax = {
 <title> Moving beyond coin voting governance </title>
 
 <p><em>Special thanks to Karl Floersch, Dan Robinson and Tina Zhen for feedback and review. See also <a href="https://vitalik.ca/general/2017/12/17/voting.html">Notes on Blockchain Governance</a>, <a href="https://vitalik.ca/general/2018/03/28/plutocracy.html">Governance, Part 2: Plutocracy Is Still Bad</a>, <a href="https://vitalik.ca/general/2019/04/03/collusion.html">On Collusion</a> and <a href="https://vitalik.ca/general/2020/09/11/coordination.html">Coordination, Good and Bad</a> for earlier thinking on similar topics.</em></p>
-<p>One of the important trends in the blockchain space over the past year is the transition from focusing on <strong>decentralized finance (DeFi)</strong> to also thinking about <strong>decentralized governance (DeGov)</strong>. While the year 2020 is <a href="https://consensys.net/blog/news/2019-was-the-year-of-defi-and-why-2020-will-be-too/">often</a> widely, and with much justification, <a href="https://harrisonglobal.capital/2020/08/21/2020-has-been-the-year-of-defi-heres-how-it-has-given-cryptocurrencies-a-new-lease-of-life/">hailed</a> as <a href="https://bravenewcoin.com/insights/2020-the-year-of-defi">a year of DeFi</a>, over the year since then the growing complexity and capability of DeFi projects that make up this trend has led to growing interest in decentralized governance to handle that complexity. There are examples inside of Ethereum: <a href="https://gov.yearn.finance/">YFI</a>, <a href="https://medium.com/compound-finance/compound-governance-5531f524cf68">Compound</a>, <a href="https://blog.synthetix.io/transition-to-decentralised-governance/">Synthetix</a>, <a href="https://www.coindesk.com/uniswap-token">UNI</a>, <a href="https://gitcoin.co/blog/introducing-gtc-gitcoins-governance-token/">Gitcoin</a> and others have all launched, or even <em>started with</em>, some kind of DAO. But it's also true outside of Ethereum, with arguments over <a href="https://medium.com/@jiangzhuoer/infrastructure-funding-plan-for-bitcoin-cash-131fdcd2412e">infrastructure</a> <a href="https://medium.com/bitcoin-abc/ifp-questions-and-answers-94b76dae2503">funding</a> <a href="https://www.bitcoinabc.org/2020-02-15-miner-fund/">proposals</a> in Bitcoin Cash, <a href="https://news.bitcoin.com/zcash-to-distribute-20-of-mining-rewards/">infrastructure funding votes in Zcash</a>, and much more.</p>
+<p>One of the important trends in the blockchain space over the past year is the transition from focusing on <strong>decentralized finance (DeFi)</strong> to also thinking about <strong>decentralized governance (DeGov)</strong>. While the 2020 is <a href="https://consensys.net/blog/news/2019-was-the-year-of-defi-and-why-2020-will-be-too/">often</a> widely, and with much justification, <a href="https://harrisonglobal.capital/2020/08/21/2020-has-been-the-year-of-defi-heres-how-it-has-given-cryptocurrencies-a-new-lease-of-life/">hailed</a> as <a href="https://bravenewcoin.com/insights/2020-the-year-of-defi">a year of DeFi</a>, over the year since then the growing complexity and capability of DeFi projects that make up this trend has led to growing interest in decentralized governance to handle that complexity. There are examples inside of Ethereum: <a href="https://gov.yearn.finance/">YFI</a>, <a href="https://medium.com/compound-finance/compound-governance-5531f524cf68">Compound</a>, <a href="https://blog.synthetix.io/transition-to-decentralised-governance/">Synthetix</a>, <a href="https://www.coindesk.com/uniswap-token">UNI</a>, <a href="https://gitcoin.co/blog/introducing-gtc-gitcoins-governance-token/">Gitcoin</a> and others have all launched, or even <em>started with</em>, some kind of DAO. But it's also true outside of Ethereum, with arguments over <a href="https://medium.com/@jiangzhuoer/infrastructure-funding-plan-for-bitcoin-cash-131fdcd2412e">infrastructure</a> <a href="https://medium.com/bitcoin-abc/ifp-questions-and-answers-94b76dae2503">funding</a> <a href="https://www.bitcoinabc.org/2020-02-15-miner-fund/">proposals</a> in Bitcoin Cash, <a href="https://news.bitcoin.com/zcash-to-distribute-20-of-mining-rewards/">infrastructure funding votes in Zcash</a>, and much more.</p>
 <p>The rising popularity of formalized decentralized governance of some form is undeniable, and there are important reasons why people are interested in it. But it is also important to keep in mind the risks of such schemes, as the recent <a href="https://decrypt.co/38050/steem-steemit-tron-justin-sun-cryptocurrency-war">hostile takeover of Steem</a> and subsequent mass exodus to Hive makes clear. I would further argue that these trends are unavoidable. <strong>Decentralized governance in some contexts is both necessary and dangerous</strong>, for reasons that I will get into in this post. How can we get the benefits of DeGov while minimizing the risks? I will argue for one key part of the answer: <strong>we need to move beyond coin voting as it exists in its present form</strong>.</p>
 <h2 id="degov-is-necessary">DeGov is necessary</h2>
 <p>Ever since the <a href="https://www.eff.org/cyberspace-independence">Declaration of Independence of Cyberspace</a> in 1996, there has been a key unresolved contradiction in what can be called cypherpunk ideology. On the one hand, cypherpunk values are all about using cryptography to minimize coercion, and maximize the efficiency and reach of the main non-coercive coordination mechanism available at the time: private property and markets. On the other hand, the economic logic of private property and markets is optimized for activities that <a href="https://vitalik.ca/general/2019/12/07/quadratic.html#private-goods-private-markets">can be "decomposed"</a> into repeated one-to-one interactions, and the infosphere, where art, documentation, science and code are produced and consumed through irreducibly one-to-many interactions, is the exact opposite of that.</p>
@@ -78,11 +124,11 @@ MathJax = {
 <h3 id="the-need-for-degov-for-funding-public-goods">The need for DeGov for funding public goods</h3>
 <p>It is worth stepping back and seeing the absurdity of the present situation. Daily mining issuance rewards from Ethereum are about 13500 ETH, or about $40m, <a href="https://etherscan.io/chart/blockreward">per day</a>. <a href="https://etherscan.io/chart/transactionfee">Transaction fees</a> are similarly high; the <a href="https://etherscan.io/chart/transactionfee">non-EIP-1559-burned portion</a> continues to be around 1,500 ETH (~$4.5m) per day. So there are many billions of dollars per year going to fund network security. Now, what is the budget of the Ethereum Foundation? About $30-60 million per year. There are non-EF actors (eg. Consensys) contributing to development, but they are not much larger. The situation in Bitcoin is similar, with perhaps even less funding going into non-security public goods.</p>
 <p>Here is the situation in a chart:</p>
-<p><img src="../../../../images/legitimacy-files/chart.png" /></p>
+<p><img src="../../../../images/legitimacy-files/chart.png" class="padded" /></p>
 <p>Within the Ethereum ecosystem, one can make a case that this disparity does not matter too much; tens of millions of dollars per year is "enough" to do the needed R&amp;D and adding more funds <a href="https://en.wikipedia.org/wiki/The_Mythical_Man-Month">does not necessarily improve things</a>, and so the risks to the platform's <a href="https://nakamoto.com/credible-neutrality/">credible neutrality</a> from instituting in-protocol developer funding exceed the benefits. But in many smaller ecosystems, both ecosystems within Ethereum and entirely separate blockchains like BCH and Zcash, the same debate is brewing, and at those smaller scales the imbalance makes a big difference.</p>
 <p>Enter DAOs. A project that launches as a "pure" DAO from day 1 can achieve a combination of two properties that were previously impossible to combine: (i) sufficiency of developer funding, and (ii) credible neutrality of funding (the much-coveted "fair launch"). Instead of developer funding coming from a hardcoded list of receiving addresses, the decisions can be made by the DAO itself.</p>
 <p><br></p>
-<p><img src="../../../../images/voting3-files/issuance_types.png" /></p>
+<p><img src="../../../../images/voting3-files/issuance_types.png" class="padded" /></p>
 <p><br></p>
 <p>Of course, it's difficult to make a launch perfectly fair, and unfairness from information asymmetry can often be worse than unfairness from explicit premines (was Bitcoin <em>really</em> a fair launch considering how few people had a chance to even hear about it by the time 1/4 of the supply had already been handed out by the end of 2010?). But even still, in-protocol compensation for non-security public goods from day one seems like a potentially significant step forward toward getting sufficient and more credibly neutral developer funding.</p>
 <h3 id="the-need-for-degov-for-protocol-maintenance-and-upgrades">The need for DeGov for protocol maintenance and upgrades</h3>
@@ -114,7 +160,7 @@ MathJax = {
 <p>The problems get much worse once determined attackers trying to subvert the system enter the picture. The fundamental vulnerability of coin voting is simple to understand. <strong>A token in a protocol with coin voting is a bundle of two rights that are combined into a single asset: (i) some kind of economic interest in the protocol's revenue and (ii) the right to participate in governance. This combination is deliberate: the goal is to align power and responsibility. But in fact, these two rights are very easy to unbundle from each other</strong>. Imagine a simple wrapper contract that has these rules: if you deposit 1 XYZ into the contract, you get back 1 WXYZ. That WXYZ can be converted back into an XYZ at any time, plus in addition it accrues dividends. Where do the dividends come from? Well, while the XYZ coins are inside the wrapper contract, it's the wrapper contract that has the ability to use them however it wants in governance (making proposals, voting on proposals, etc). The wrapper contract simply auctions off this right every day, and distributes the profits among the original depositors.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/voting3-files/wrapper1.png" /></p>
+<p><img src="../../../../images/voting3-files/wrapper1.png" class="padded" /></p>
 <br>
 </center>
 <p>As an XYZ holder, is it in your interest to deposit your coins into the contract? If you are a very large holder, it might not be; you like the dividends, but you are scared of what a misaligned actor might do with the governance power you are selling them. But if you are a smaller holder, then it very much is. If the governance power auctioned by the wrapper contract gets bought up by an attacker, you personally only suffer a small fraction of the cost of the bad governance decisions that your token is contributing to, but you personally gain the full benefit of the dividend from the governance rights auction. This situation is a classic tragedy of the commons.</p>
@@ -149,7 +195,7 @@ MathJax = {
 <p>The simplest example is borrowing from a defi lending platform (eg. <a href="https://compound.finance/">Compound</a>). Someone who already holds ETH can lock up their ETH in a CDP ("collateralized debt position") in one of these platforms, and once they do that the CDP contract allows them to borrow an amount of XYZ up to eg. half the value of the ETH that they put in. They can then do whatever they want with this XYZ. To recover their ETH, they would eventually need to pay back the XYZ that they borrowed, plus interest.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/voting3-files/wrapper2.png" /></p>
+<p><img src="../../../../images/voting3-files/wrapper2.png" class="padded" /></p>
 <br>
 </center>
 <p>Note that throughout this process, <em>the borrower has no financial exposure to XYZ</em>. That is, if they use their XYZ to vote for a governance decision that destroys the value of XYZ, they do not lose a penny as a result. The XYZ they are holding is XYZ that they have to eventually pay back into the CDP regardless, so they do not care if its value goes up or down. <strong>And so we have achieved unbundling: the borrower has governance power without economic interest, and the lender has economic interest without governance power</strong>.</p>
@@ -161,7 +207,7 @@ MathJax = {
 <p><a href="https://twitter.com/MonetSupply/status/1415526055348031489?s=19"><img src="../../../../images/voting3-files/bribeattempt.jpg" style="width:600px"/></a></p>
 </br>
 </center>
-<p>But despite all of these important issues, there have been much fewer examples of outright voter bribing, including obfuscated forms such as using financial markets, than simple economic reasoning would suggest. The natural question to ask is: why haven't more outright attacks happened yet?</p>
+<p>But despite all of these important issues, there have been much fewer examples of outright voter bribing, including obfuscated forms such as using financial markets, that simple economic reasoning would suggest. The natural question to ask is: why haven't more outright attacks happened yet?</p>
 <p>My answer is that the "why not yet" relies on three contingent factors that are true today, but are likely to get less true over time:</p>
 <ol type="1">
 <li><strong>Community spirit</strong> from having a tightly-knit community, where everyone feels a sense of camaraderie in a common tribe and mission..</li>
@@ -172,7 +218,7 @@ MathJax = {
 <h2 id="solution-1-limited-governance">Solution 1: limited governance</h2>
 <p>One possible mitigation to the above issues, and one that is to varying extents being tried already, is to put limits on what coin-driven governance can do. There are a few ways to do this:</p>
 <ul>
-<li><strong>Use on-chain governance only for applications, not base layers</strong>: Ethereum does this already, as the protocol itself is governed through off-chain governance, while DAOs and other apps on top of this are sometimes (but not always) governed through on-chain governance.</li>
+<li><strong>Use on-chain governance only for applications, not base layers</strong>: Ethereum does this already, as the protocol itself is governed through off-chain governance, while DAOs and other apps on top of this are sometimes (but not always) governed through on-chain governance</li>
 <li><strong>Limit governance to fixed parameter choices</strong>: Uniswap does this, as it only allows governance to affect (i) token distribution and (ii) a 0.05% fee in the Uniswap exchange. Another great example is <a href="https://docs.reflexer.finance/ungovernance/governance-minimization-guide">RAI's "un-governance" roadmap</a>, where governance has control over fewer and fewer features over time.</li>
 <li><strong>Add time delays</strong>: a governance decision made at time T only takes effect at eg. T + 90 days. This allows users and applications that consider the decision unacceptable to move to another application (possibly a fork). Compound <a href="https://compound.finance/docs/governance">has a time delay mechanism</a> in its governance, but in principle the delay can (and eventually should) be much longer.</li>
 <li><strong>Be more fork-friendly</strong>: make it easier for users to quickly coordinate on and execute a fork. This makes the payoff of capturing governance smaller.</li>
@@ -203,7 +249,7 @@ MathJax = {
 <p>The most popular solution to these kinds of issues is <a href="https://blog.ethereum.org/2014/08/21/introduction-futarchy/">futarchy</a>, introduced by Robin Hanson in the early 2000s. Votes become bets: to vote in favor of a proposal, you make a bet that the proposal will lead to a good outcome, and to vote against the proposal, you make a bet that the proposal will lead to a poor outcome. Futarchy introduces individual responsibility for obvious reasons: if you make good bets, you get more coins, and if you make bad bets you lose your coins.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/election-files/chartovertime.png" /></p>
+<p><img src="../../../../images/election-files/chartovertime.png" class="padded" /></p>
 <br>
 </center>
 <p>"Pure" futarchy has proven difficult to introduce, because in practice objective functions are very difficult to define (it's not just coin price that people want!), but various hybrid forms of futarchy may well work. Examples of hybrid futarchy include:</p>
@@ -216,10 +262,10 @@ MathJax = {
 <h2 id="hybrid-solutions">Hybrid solutions</h2>
 <p>There are also solutions that combine elements of the above techniques. Some possible examples:</p>
 <ul>
-<li><strong>Time delays plus elected-specialist governance</strong>: this is one possible solution to the ancient conundrum of how to make a crypto-collateralized stablecoin whose locked funds can exceed the value of the profit-taking token without risking governance capture. The stable coin uses a price oracle constructed from the median of values submitted by N (eg. N = 13) elected providers. Coin voting chooses the providers, but it can only cycle out one provider each week. If users notice that coin voting is bringing in untrustworthy price providers, they have N/2 weeks before the stablecoin breaks to switch to a different one.</li>
+<li><strong>Time delays plus elected-specialist governance</strong>: this is one possible solution to the ancient conundrum of how to make an crypto-collateralized stablecoin whose locked funds can exceed the value of the profit-taking token without risking governance capture. The stable coin uses a price oracle constructed from the median of values submitted by N (eg. N = 13) elected providers. Coin voting chooses the providers, but it can only cycle out one provider each week. If users notice that coin voting is bringing in untrustworthy price providers, they have N/2 weeks before the stablecoin breaks to switch to a different one.</li>
 <li><strong>Futarchy + anti-collusion = reputation</strong>: Users vote with "reputation", a token that cannot be transferred. Users gain more reputation if their decisions lead to desired results, and lose reputation if their decisions lead to undesired results. See <a href="https://medium.com/daostack/reputation-vs-tokens-6d7642c7a538">here</a> for an article advocating for a reputation-based scheme.</li>
 <li><strong>Loosely-coupled (advisory) coin votes</strong>: a coin vote does not directly implement a proposed change, instead it simply exists to make its outcome public, to build <a href="https://vitalik.ca/general/2021/03/23/legitimacy.html">legitimacy</a> for off-chain governance to implement that change. This can provide the benefits of coin votes, with fewer risks, as the legitimacy of a coin vote drops off automatically if evidence emerges that the coin vote was bribed or otherwise manipulated.</li>
 </ul>
 <p>But these are all only a few possible examples. There is much more that can be done in researching and developing non-coin-driven governance algorithms. <strong>The most important thing that can be done today is moving away from the idea that coin voting is the only legitimate form of governance decentralization</strong>. Coin voting is attractive because it <em>feels</em> credibly neutral: anyone can go and get some units of the governance token on Uniswap. In practice, however, <strong>coin voting may well only appear secure today precisely because of the imperfections in its neutrality</strong> (namely, large portions of the supply staying in the hands of a tightly-coordinated clique of insiders).</p>
 <p>We should stay very wary of the idea that current forms of coin voting are "safe defaults". There is still much that remains to be seen about how they function under conditions of more economic stress and mature ecosystems and financial markets, and the time is now to start simultaneously experimenting with alternatives.</p>
- </div>
+ </div> 

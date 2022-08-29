@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Why sharding is great: demystifying the technical properties" />
@@ -66,13 +112,13 @@ MathJax = {
 <p><em>Special thanks to Dankrad Feist and Aditya Asgaonkar for review</em></p>
 <p>Sharding is the future of Ethereum scalability, and it will be key to helping the ecosystem support many thousands of transactions per second and allowing large portions of the world to regularly use the platform at an affordable cost. However, it is also one of the more misunderstood concepts in the Ethereum ecosystem and in blockchain ecosystems more broadly. It refers to a very specific set of ideas with very specific properties, but it often gets conflated with techniques that have very different and often much weaker security properties. The purpose of this post will be to explain exactly what specific properties sharding provides, how it differs from other technologies that are <em>not</em> sharding, and what sacrifices a sharded system has to make to achieve these properties.</p>
 <center>
-<img src="../../../../images/sharding-files/beacon_chain.jpg" /> <i><small>One of the many depictions of a sharded version of Ethereum. Original diagram by Hsiao-wei Wang, design by Quantstamp.</small></i><br>
+<img src="../../../../images/sharding-files/beacon_chain.jpg" class="padded" /> <i><small>One of the many depictions of a sharded version of Ethereum. Original diagram by Hsiao-wei Wang, design by Quantstamp.</small></i><br>
 </center>
 <h2 id="the-scalability-trilemma">The Scalability Trilemma</h2>
 <p>The best way to describe sharding starts from the problem statement that shaped and inspired the solution: <strong>the Scalability Trilemma</strong>.</p>
 <br>
 <center>
-<img src="../../../../images/sharding-files/trilemma.png" />
+<img src="../../../../images/sharding-files/trilemma.png" class="padded" />
 </center>
 <p><br></p>
 <p>The scalability trilemma says that there are three properties that a blockchain try to have, and that, <strong>if you stick to "simple" techniques, you can only get two of those three</strong>. The three properties are:</p>
@@ -100,7 +146,7 @@ MathJax = {
 <p>Hence, what we do is we <strong>randomly split up the work of doing the verification</strong>. We randomly shuffle the validator list, and we assign the first 100 validators in the shuffled list to verify the first block, the second 100 validators in the shuffled list to verify the second block, etc. A randomly selected group of validators that gets assigned to verify a block (or perform some other task) is called a <strong>committee</strong>.</p>
 <br>
 <center>
-<img src="../../../../images/sharding-files/committees.png" />
+<img src="../../../../images/sharding-files/committees.png" class="padded" />
 </center>
 <p><br><br></p>
 <p>When a validator verifies a block, they publish a signature attesting to the fact that they did so. Everyone else, instead of verifying 100 entire blocks, now only verifies 10000 signatures - a much smaller amount of work, especially with <a href="https://ethresear.ch/t/pragmatic-signature-aggregation-with-bls/2105">BLS signature aggregation</a>. Instead of every block being broadcasted through the same P2P network, each block is broadcasted on a different sub-network, and nodes need only join the subnets corresponding to the blocks that they are responsible for (or are interested in for other reasons).</p>
@@ -127,7 +173,7 @@ MathJax = {
 <p>Scalably validating computation is relatively easy; there are two families of techniques: <strong>fraud proofs</strong> and <strong>ZK-SNARKs</strong>.</p>
 <br>
 <center>
-<img src="../../../../images/rollup-files/tree.png" /><br><br> <small><i>Fraud proofs are one way to verify computation scalably.</i></small><br><br>
+<img src="../../../../images/rollup-files/tree.png" class="padded" /><br><br> <small><i>Fraud proofs are one way to verify computation scalably.</i></small><br><br>
 </center>
 <p>The two technologies can be described simply as follows:</p>
 <ul>
@@ -140,7 +186,7 @@ MathJax = {
 <p>A fraud proof cannot be used to verify availability of data. Fraud proofs for <em>computation</em> rely on the fact that the inputs to the computation are published on-chain the moment the original claim is submitted, and so if someone challenges, the challenge execution is happening in the exact same "environment" that the original execution was happening. In the case of checking data availability, you cannot do this, because the problem is precisely the fact that there is too much data to check to publish it on chain. Hence, a fraud proof scheme for data availability runs into a key problem: someone could claim "data X is available" without publishing it, wait to get challenged, and only <em>then</em> publish data X and make the challenger appear to the rest of the network to be incorrect.</p>
 <p>This is expanded on in <strong><a href="https://github.com/ethereum/research/wiki/A-note-on-data-availability-and-erasure-coding">the fisherman's dilemma</a></strong>:</p>
 <center>
-<br> <img src="../../../../images/sharding-files/fisherman_dilemma.png" />
+<br> <img src="../../../../images/sharding-files/fisherman_dilemma.png" class="padded" />
 </center>
 <p><br></p>
 <p>The core idea is that the two "worlds", one where V1 is an evil publisher and V2 is an honest challenger and the other where V1 is an honest publisher and V2 is an evil challenger, are indistinguishable to anyone who was not trying to download that particular piece of data at the time. And of course, in a scalable decentralized blockchain, each individual node can only hope to download a small portion of the data, so only a small portion of nodes would see anything about what went on except for the mere fact that there was a disagreement.</p>
@@ -156,7 +202,7 @@ MathJax = {
 </ol>
 <br>
 <center>
-<img src="../../../../images/sharding-files/sampling.png" />
+<img src="../../../../images/sharding-files/sampling.png" class="padded" />
 </center>
 <p><br><br></p>
 <p>Erasure codes transform a "check for 100% availability" (every single piece of data is available) problem into a "check for 50% availability" (at least half of the pieces are available) problem. Random sampling solves the 50% availability problem. If less than 50% of the data is available, then at least one of the checks will almost certainly fail, and if at least 50% of the data is available then, while some nodes may fail to recognize a block as available, it takes only one honest node to run the erasure code reconstruction procedure to bring back the remaining 50% of the block. And so, instead of needing to download 1 MB to check the availability of a 1 MB block, you need only download a few kilobytes. This makes it feasible to run data availability checking on <em>every</em> block. See <a href="https://hackmd.io/@vbuterin/sharding_proposal#Blob-publication-process">this post</a> for how this checking can be efficiently implemented with peer-to-peer subnets.</p>

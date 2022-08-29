@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Christmas Special" />
@@ -82,11 +128,11 @@ MathJax = {
 <p>The game is substantially simpler and more "tractable" than full-on chess, and it's an interesting exercise in showing how in <a href="https://en.wikipedia.org/wiki/Flatland">lower-dimensional spaces</a> defense becomes much easier than offense. Note that the relative value of different pieces may change here, and new kinds of endings become possible (eg. you can checkmate with just a bishop).</p>
 <h3 id="dimensional-tic-tac-toe">3 dimensional tic tac toe</h3>
 <center>
-<br> <img src="../../../../images/christmas-files/tic4.png" /> <br><br>
+<br> <img src="../../../../images/christmas-files/tic4.png" class="padded" /> <br><br>
 </center>
 <p>The goal here is to get 4 in a straight line, where the line can go in any direction, along an axis or diagonal, including between planes. For example in this configuration X wins:</p>
 <center>
-<br> <img src="../../../../images/christmas-files/tic4_2.png" /> <br><br>
+<br> <img src="../../../../images/christmas-files/tic4_2.png" class="padded" /> <br><br>
 </center>
 <p>It's considerably harder than <a href="https://www.quora.com/Is-there-a-way-to-never-lose-at-Tic-Tac-Toe">traditional 2D tic tac toe</a>, and hopefully much more fun!</p>
 <h3 id="modular-tic-tac-toe">Modular tic-tac-toe</h3>
@@ -102,15 +148,15 @@ MathJax = {
 <p>Mathematically, the board can be interpreted as a 2-dimensional vector space over <a href="https://en.wikipedia.org/wiki/Modular_arithmetic">integers modulo 4</a>, and the goal being to fill in a line that passes through four points over this space. Note that there exists at least one line passing through any two points.</p>
 <h3 id="tic-tac-toe-over-the-4-element-binary-field">Tic tac toe over the 4-element binary field</h3>
 <center>
-<br> <img src="../../../../images/christmas-files/tic4_5.png" /> <br><br>
+<br> <img src="../../../../images/christmas-files/tic4_5.png" class="padded" /> <br><br>
 </center>
 <p>Here, we have the same concept as above, except we use an even spookier mathematical structure, the <a href="https://en.wikipedia.org/wiki/Finite_field#Field_with_four_elements">4-element field</a> of polynomials over <span class="math inline">\(Z_2\)</span> modulo <span class="math inline">\(x^2 + x + 1\)</span>. This structure has pretty much no reasonable geometric interpretation, so I'll just give you the addition and multiplication tables:</p>
 <center>
-<br> <img src="../../../../images/christmas-files/tic4_6.png" /> <br><br>
+<br> <img src="../../../../images/christmas-files/tic4_6.png" class="padded" /> <br><br>
 </center>
 <p>OK fine, here are all possible lines, excluding the horizontal and the vertical lines (which are also admissible) for brevity:</p>
 <center>
-<br> <img src="../../../../images/christmas-files/tic4_7.png" style="width: 450px" /> <br><br>
+<br> <img src="../../../../images/christmas-files/tic4_7.png" style="width: 450px" class="padded" /> <br><br>
 </center>
 <p>The lack of geometric interpretation does make the game harder to play; you pretty much have to memorize the twenty winning combinations, though note that they are <em>basically</em> rotations and reflections of the same four basic shapes (axial line, diagonal line, diagonal line starting in the middle, that weird thing that doesn't look like a line).</p>
 <h3 id="now-play-1.77-dimensional-connect-four.-i-dare-you.">Now play 1.77 dimensional connect four. I dare you.</h3>

@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Endgame" />
@@ -74,7 +120,7 @@ MathJax = {
 </ul>
 <center>
 <p><br></p>
-<p><img src="../../../../images/endgame/diag1.png" style="width:575px" /></p>
+<p><img src="../../../../images/endgame/diag1.png" style="width:575px" class="padded" /></p>
 </center>
 <p><br></p>
 <p>What do we get after all of this is done? <strong>We get a chain where block <em>production</em> is still centralized, but block <em>validation</em> is trustless and highly decentralized, and specialized anti-censorship magic prevents the block producers from censoring.</strong> It's somewhat aesthetically ugly, but it does provide the basic guarantees that we are looking for: even if every single one of the primary stakers (the block producers) is intent on attacking or censoring, the worst that they could do is all go offline entirely, at which point the chain stops accepting transactions until the community pools their resources and sets up <em>one</em> primary-staker node that is honest.</p>
@@ -82,7 +128,7 @@ MathJax = {
 <p>Imagine that one particular rollup - whether Arbitrum, Optimism, Zksync, StarkNet or something completely new - does a really good job of engineering their node implementation, to the point where it really can do 10,000 transactions per second if given powerful enough hardware. The techniques for doing this are in-principle well-known, and implementations were made by <a href="https://medium.com/eosio/eosio-dawn-3-0-now-available-49a3b99242d7">Dan Larimer</a> and others many years ago: split up execution into one CPU thread running the unparallelizable but cheap business logic and a huge number of other threads running the expensive but highly parallelizable cryptography. Imagine also that Ethereum <a href="https://hackmd.io/@vbuterin/das">implements sharding with data availability sampling</a>, and has the space to store that rollup's on-chain data between its 64 shards. As a result, everyone migrates to this rollup. What would that world look like?</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/endgame/diag2.png" style="width:575px" /></p>
+<p><img src="../../../../images/endgame/diag2.png" style="width:575px" class="padded" /></p>
 </center>
 <p><br></p>
 <p><strong>Once again, we get a world where, block <em>production</em> is centralized, block <em>validation</em> is trustless and highly decentralized, and censorship is still prevented</strong>. Rollup block producers have to process a huge number of transactions, and so it is a difficult market to enter, but they have no way to push invalid blocks through. Block availability is secured by the underlying chain, and block validity is guaranteed by the rollup logic: if it's a ZK rollup, it's ensured by SNARKs, and an optimistic rollup is secure as long as there is one honest actor somewhere running a fraud prover node (they can be subsidized with <a href="https://gitcoin.co/grants/">Gitcoin grants</a>). Furthermore, because users always have the option of submitting transactions through the on-chain secondary inclusion channel, rollup sequencers also cannot effectively censor.</p>
@@ -103,7 +149,7 @@ MathJax = {
 <p>So what's the result? <strong>Block <em>production</em> is centralized, block <em>validation</em> is trustless and highly decentralized, and censorship is still prevented</strong>.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/endgame/diag3.png" /></p>
+<p><img src="../../../../images/endgame/diag3.png" class="padded" /></p>
 <p><em>Three paths toward the same destination.</em></p>
 </center>
 <p><br></p>
@@ -114,7 +160,7 @@ MathJax = {
 <p>But also, Ethereum researchers should think hard about what levels of decentralization in block production are actually achievable. It may not be worth it to add complicated plumbing to make highly decentralized block production easy if cross-domain MEV (or even cross-shard MEV from one rollup taking up multiple shards) make it unsustainable regardless.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/endgame/ethrollups.png" /></p>
+<p><img src="../../../../images/endgame/ethrollups.png" class="padded" /></p>
 </center>
 <p><br></p>
 <p><strong>What does this mean for big block chains?</strong> There is a path for them to turn into something trustless and censorship resistant, and we'll soon find out if their core developers and communities actually value censorship resistance and decentralization enough for them to do it!</p>

@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Understanding PLONK" />
@@ -68,7 +114,7 @@ MathJax = {
 <p>The first improvement is that while PLONK still requires a trusted setup procedure similar to that needed for the <a href="https://minezcash.com/zcash-trusted-setup/">SNARKs in Zcash</a>, it is a "universal and updateable" trusted setup. This means two things: first, instead of there being one separate trusted setup for every program you want to prove things about, there is one single trusted setup for the whole scheme after which you can use the scheme with any program (up to some maximum size chosen when making the setup). Second, there is a way for multiple parties to participate in the trusted setup such that it is secure as long as any one of them is honest, and this multi-party procedure is fully sequential: first one person participates, then the second, then the third... The full set of participants does not even need to be known ahead of time; new participants could just add themselves to the end. This makes it easy for the trusted setup to have a large number of participants, making it quite safe in practice.</p>
 <p>The second improvement is that the "fancy cryptography" it relies on is one single standardized component, called a "polynomial commitment". PLONK uses "Kate commitments", based on a trusted setup and elliptic curve pairings, but you can instead swap it out with other schemes, such as <a href="https://vitalik.ca/general/2017/11/22/starks_part_2.html">FRI</a> (which would <a href="https://eprint.iacr.org/2019/1020">turn PLONK into a kind of STARK</a>) or DARK (based on hidden-order groups). This means the scheme is theoretically compatible with any (achievable) tradeoff between proof size and security assumptions.</p>
 <center>
-<img src="../../../../images/plonk-files/Tradeoffs.png" />
+<img src="../../../../images/plonk-files/Tradeoffs.png" class="padded" />
 </center>
 <p><br></p>
 <p>What this means is that use cases that require different tradeoffs between proof size and security assumptions (or developers that have different ideological positions about this question) can still share the bulk of the same tooling for "arithmetization" - the process for converting a program into a set of polynomial equations that the polynpomial commitments are then used to check. If this kind of scheme becomes widely adopted, we can thus expect rapid progress in improving shared arithmetization techniques.</p>
@@ -76,12 +122,12 @@ MathJax = {
 <p>Let us start with an explanation of how PLONK works, in a somewhat abstracted format that focuses on polynomial equations without immediately explaining how those equations are verified. A key ingredient in PLONK, as is the case in the <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">QAPs used in SNARKs</a>, is a procedure for converting a problem of the form "give me a value <span class="math inline">\(X\)</span> such that a specific program <span class="math inline">\(P\)</span> that I give you, when evaluated with <span class="math inline">\(X\)</span> as an input, gives some specific result <span class="math inline">\(Y\)</span>" into the problem "give me a set of values that satisfies a set of math equations". The program <span class="math inline">\(P\)</span> can represent many things; for example the problem could be "give me a solution to this sudoku", which you would encode by setting <span class="math inline">\(P\)</span> to be a sudoku verifier plus some initial values encoded and setting <span class="math inline">\(Y\)</span> to <span class="math inline">\(1\)</span> (ie. "yes, this solution is correct"), and a satisfying input <span class="math inline">\(X\)</span> would be a valid solution to the sudoku. This is done by representing <span class="math inline">\(P\)</span> as a circuit with logic gates for addition and multiplication, and converting it into a system of equations where the variables are the values on all the wires and there is one equation per gate (eg. <span class="math inline">\(x_6 = x_4 \cdot x_7\)</span> for multiplication, <span class="math inline">\(x_8 = x_5 + x_9\)</span> for addition).</p>
 <p>Here is an example of the problem of finding <span class="math inline">\(x\)</span> such that <span class="math inline">\(P(x) = x^3 + x + 5 = 35\)</span> (hint: <span title="Though other solutions also exist over fields where -31 has a square root; since SNARKs are done over prime fields this is something to watch out for!"><span class="math inline">\(x = 3\)</span></span>):</p>
 <center>
-<img src="../../../../images/plonk-files/Circuit.png" />
+<img src="../../../../images/plonk-files/Circuit.png" class="padded" />
 </center>
 <p><br></p>
 <p>We can label the gates and wires as follows:</p>
 <center>
-<img src="../../../../images/plonk-files/Circuit2.png" />
+<img src="../../../../images/plonk-files/Circuit2.png" class="padded" />
 </center>
 <p><br></p>
 <p>On the gates and wires, we have two types of constraints: <strong>gate constraints</strong> (equations between wires attached to the same gate, eg. <span class="math inline">\(a_1 \cdot b_1 = c_1\)</span>) and <strong>copy constraints</strong> (claims about equality of different wires anywhere in the circuit, eg. <span class="math inline">\(a_0 = a_1 = b_1 = b_2 = a_3\)</span> or <span class="math inline">\(c_0 = a_1\)</span>). We will need to create a structured system of equations, which will ultimately reduce to a very small number of polynomial equations, to represent both.</p>

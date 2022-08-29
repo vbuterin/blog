@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Halo and more: exploring incremental verification and SNARKs without pairings" />
@@ -112,7 +158,7 @@ MathJax = {
 <p>To commit to a polynomial <span class="math inline">\(P(x) = \sum_i c_i x^i\)</span>, the prover computes <span class="math inline">\(com(P) = \sum_i c_i G_i\)</span>. For example, <span class="math inline">\(com(x^2 + 4)\)</span> would equal <span class="math inline">\(G_2 + 4 * G_0\)</span> (remember, the <span class="math inline">\(+\)</span> and <span class="math inline">\(*\)</span> here are <a href="https://hackernoon.com/what-is-the-math-behind-elliptic-curve-cryptography-f61b25253da3">elliptic curve addition</a> and multiplication). Cryptographers will also often add an extra <span class="math inline">\(r \cdot H\)</span> hiding parameter for privacy, but for simplicity of exposition we'll ignore privacy for now; in general, it's not that hard to add privacy into all of these schemes.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/halo/commitments1.png" /></p>
+<p><img src="../../../../images/halo/commitments1.png" class="padded" /></p>
 <p><small></p>
 <p><em>Though it's not really mathematically accurate to think of elliptic curve points as being like real numbers that have sizes, area is nevertheless a good intuition for thinking about linear combinations of elliptic curve points like we use in these commitments. The blue area here is the value of the Pedersen commitment <span class="math inline">\(C = \sum_i c_i G_i\)</span> to the polynomial <span class="math inline">\(P = \sum_i c_i x^i\)</span>.</em></p>
 </small>
@@ -123,14 +169,14 @@ MathJax = {
 <p>The prover <em>could</em>, of course, just provide <span class="math inline">\(\{c_0 ... c_{n-1}\}\)</span> directly and let the verifier check the commitment. But this takes too much space. So instead, we try to reduce the problem to a smaller problem of half the size. The prover provides two points, <span class="math inline">\(L\)</span> and <span class="math inline">\(R\)</span>, representing the yellow and green areas in this diagram:</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/halo/commitments2.png" /></p>
+<p><img src="../../../../images/halo/commitments2.png" class="padded" /></p>
 </center>
 <p><br></p>
 <p>You may be able to see where this is going: if you add <span class="math inline">\(C + L + R\)</span> together (remember: <span class="math inline">\(C\)</span> was the original commitment, so the blue area), the new combined point can be expressed as a sum of <em>four</em> squares instead of eight. And so now, the prover could finish by providing only four sums, the widths of each of the new squares. Repeat this protocol two more times, and we're down to a single full square, which the prover can prove by sending a single value representing its width.</p>
 <p>But there's a problem: if <span class="math inline">\(C\)</span> is incorrect in some way (eg. the prover added some extra point <span class="math inline">\(H\)</span> into it), then the prover could just subtract <span class="math inline">\(H\)</span> from <span class="math inline">\(L\)</span> or <span class="math inline">\(R\)</span> to compensate for it. We plug this hole by randomly scaling our points after the prover provides <span class="math inline">\(L\)</span> and <span class="math inline">\(R\)</span>:</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/halo/commitments3.png" /></p>
+<p><img src="../../../../images/halo/commitments3.png" class="padded" /></p>
 </center>
 <p><br></p>
 <p>Choose a random factor <span class="math inline">\(\alpha\)</span> (typically, we set <span class="math inline">\(\alpha\)</span> to be the hash of all data added to the proof so far, including the <span class="math inline">\(L\)</span> and <span class="math inline">\(R\)</span>, to ensure the verifier can also compute <span class="math inline">\(\alpha\)</span>). Every even <span class="math inline">\(G_i\)</span> point gets scaled by <span class="math inline">\(\alpha\)</span>, every odd <span class="math inline">\(G_i\)</span> point gets scaled <em>down</em> by the same factor. Every odd coefficient gets scaled up by <span class="math inline">\(\alpha\)</span> (notice the flip), and every even coefficient gets scaled down by <span class="math inline">\(\alpha\)</span>. Now, notice that:</p>
@@ -149,7 +195,7 @@ MathJax = {
 <p>And then we repeat the process until we get down to one point:</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/halo/commitments4.png" /></p>
+<p><img src="../../../../images/halo/commitments4.png" class="padded" /></p>
 </center>
 <p><br></p>
 <p>Finally, we have a size-1 problem: prove that the final modified <span class="math inline">\(C^*\)</span> (in this diagram it's <span class="math inline">\(C&#39;&#39;&#39;\)</span> because we had to do three iterations, but it's <span class="math inline">\(log(n)\)</span> iterations generally) equals the final modified <span class="math inline">\(G^*_0\)</span> and <span class="math inline">\(c^*_0\)</span>. Here, the prover just provides <span class="math inline">\(c^*_0\)</span> in the clear, and the verifier checks <span class="math inline">\(c^*_0 G^*_0 = C^*\)</span>. Computing <span class="math inline">\(c^*_0\)</span> required being able to compute a linear combination of <span class="math inline">\(\{c_0 ... c_{n-1}\}\)</span> that was not known ahead of time, so providing it and verifying it convinces the verifier that the prover actually does know all the coefficients that go into the commitment. This concludes the proof.</p>
@@ -167,7 +213,7 @@ MathJax = {
 <p>We can make a Pedersen commitment using this extended base!</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/halo/commitments5.png" /></p>
+<p><img src="../../../../images/halo/commitments5.png" class="padded" /></p>
 </center>
 <p><br></p>
 <p>Now, here's a puzzle. Suppose <span class="math inline">\(P(x) = \sum_i c_i x^i\)</span>, where <span class="math inline">\(P(z) = a\)</span>, would have a commitment <span class="math inline">\(C = \sum_i c_i G_i\)</span> if we were to use the regular elliptic curve points we used before as a base. If we use the pairs <span class="math inline">\((G_i, z^i)\)</span> as a base instead, the commitment would be <span class="math inline">\((C, y)\)</span> for some <span class="math inline">\(y\)</span>. What must be the value of <span class="math inline">\(y\)</span>?</p>
@@ -193,7 +239,7 @@ MathJax = {
 </ul>
 <center>
 <p><br></p>
-<p><img src="../../../../images/halo/proof_combining.png" /></p>
+<p><img src="../../../../images/halo/proof_combining.png" class="padded" /></p>
 </center>
 <p><br></p>
 <p>The verifier still needs to do a bunch of extra steps, but all of those steps take either <span class="math inline">\(O(1)\)</span> or <span class="math inline">\(O(log(n))\)</span> work: evaluate <span class="math inline">\(e_1 = K_1(t)\)</span> and <span class="math inline">\(e_2 = K_2(t)\)</span>, calculate the <span class="math inline">\(\alpha_i\)</span> coefficients of both <span class="math inline">\(K_i\)</span> polynomials in the first place, do the elliptic curve addition <span class="math inline">\(com(L) = D_1 + rD_2\)</span>. But this all takes vastly less than linear time, so all in all we still benefit: the verifier only needs to do the linear-time step of computing a <span class="math inline">\(G^*_0\)</span> point themselves once.</p>
@@ -203,7 +249,7 @@ MathJax = {
 <p>IPA-based proofs by themselves cannot do this, because a proof of a statement takes longer to verify than checking the statement itself, so a proof of a proof will take even longer to verify than both proofs separately. But proof merging can do it!</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/halo/recursion.png" /></p>
+<p><img src="../../../../images/halo/recursion.png" class="padded" /></p>
 </center>
 <p><br></p>
 <p>Essentially, we use the usual "recursive SNARK" technique to verify the proofs, except the "proof of a proof" part is only proving the logarithmic part of the work. We add an extra chain of aggregate proofs, using a trick similar to the proof merging scheme above, to handle the linear part of the work. To verify the whole chain, the verifier need only verify one linear-time proof at the very tip of the chain.</p>
@@ -267,7 +313,7 @@ MathJax = {
 <p>In R1CS (see a more detailed description <a href="https://vitalik.ca/general/2016/12/10/qap.html">here</a>), an instance of the game consists of three matrices <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span>, and a solution is a vector <span class="math inline">\(Z\)</span> such that <span class="math inline">\((A \cdot Z) \circ (B \cdot Z) = C \cdot Z\)</span> (the problem is often in practice restricted further by requiring the prover to make part of <span class="math inline">\(Z\)</span> public and requiring the last entry of <span class="math inline">\(Z\)</span> to be 1).</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/halo/r1cs.png" style="width:450px" /></p>
+<p><img src="../../../../images/halo/r1cs.png" style="width:450px" class="padded" /></p>
 <p><br></p>
 <p><em>An R1CS instance with a single constraint (so <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span> have width 1), with a satisfying <span class="math inline">\(Z\)</span> vector, though notice that here the <span class="math inline">\(Z\)</span> appears on the left and has 1 in the top position instead of the bottom.</em></p>
 </center>

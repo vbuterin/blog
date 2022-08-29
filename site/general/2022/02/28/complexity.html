@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Encapsulated vs systemic complexity in protocol design" />
@@ -68,7 +114,7 @@ MathJax = {
 <p>One powerful intellectual tool that allows for more nuanced thinking about complexity is to draw a distinction between what we will call <strong>encapsulated complexity</strong> and <strong>systemic complexity</strong>.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/complexity-files/encapsulated_systemic.png" /></p>
+<p><img src="../../../../images/complexity-files/encapsulated_systemic.png" class="padded" /></p>
 </center>
 <p><br></p>
 <p>Encapsulated complexity occurs when there is a system with sub-systems that are internally complex, but that present a simple "interface" to the outside. Systemic complexity occurs when the different parts of a system can't even be cleanly separated, and have complex interactions with each other.</p>
@@ -82,7 +128,7 @@ MathJax = {
 <p>Now, consider Schnorr signatures. Schnorr signatures rely only on basic <a href="https://blog.cloudflare.com/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography/">elliptic curves</a>. But the signing and verification logic is somewhat more complex:</p>
 <center>
 <p><br><a href="https://en.wikipedia.org/wiki/Schnorr_signature"></p>
-<p><img src="../../../../images/complexity-files/schnorr_def.png" /></p>
+<p><img src="../../../../images/complexity-files/schnorr_def.png" class="padded" /></p>
 </a><br>
 </center>
 <p>So... which type of signature is "simpler"? It depends what you care about! BLS signatures have a huge amount of technical complexity, but the complexity is all buried within the definition of the <span class="math inline">\(e\)</span> function. If you treat the <span class="math inline">\(e\)</span> function as a black box, BLS signatures are actually really easy. Schnorr signatures, on the other hand, have less <em>total</em> complexity, but they have more pieces that could interact with the outside world in tricky ways.</p>
@@ -117,7 +163,7 @@ MathJax = {
 <p>However, there are limits to this approach of preferring encapsulated complexity. Software bugs can occur in any piece of code, and as it gets bigger the probability of a bug approaches 1. Sometimes, when you need to interact with a sub-system in an unexpected and new way, <strong>complexity that was originally encapsulated can become systemic</strong>.</p>
 <p>One example of the latter is Ethereum's current two-level state tree, which features a tree of account objects, where each account object in turn has its own storage tree.</p>
 <center>
-<p><img src="../../../../images/complexity-files/2Ltree.png" style="width:550px" /></p>
+<p><img src="../../../../images/complexity-files/2Ltree.png" style="width:550px" class="padded" /></p>
 </center>
 <p>This tree structure is complex, but at the beginning the complexity seemed to be well-encapsulated: the rest of the protocol interacts with the tree as a key/value store that you can read and write to, so we don't have to worry about how the tree is structured.</p>
 <p>Later, however, the complexity turned out to have systemic effects: the ability of accounts to have arbitrarily large storage trees meant that there was no way to reliably expect a particular slice of the state (eg. "all accounts starting with 0x1234") to have a predictable size. This makes it harder to split up the state into pieces, complicating the design of syncing protocols and attempts to <a href="https://www.portal.network/#/">distribute the storage process</a>. <strong>Why did encapsulated complexity become systemic? Because the interface changed.</strong> The fix? The current <a href="https://notes.ethereum.org/@vbuterin/verkle_tree_eip">proposal to move to Verkle trees</a> also includes a move to a well-balanced single-layer design for the tree,</p>

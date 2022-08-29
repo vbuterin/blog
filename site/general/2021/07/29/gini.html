@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Against overuse of the Gini coefficient" />
@@ -71,7 +117,7 @@ MathJax = {
 <p>There are two equivalent definitions of the Gini coefficient:</p>
 <p><strong>Area-above-curve definition</strong>: draw the graph of a function, where <span class="math inline">\(f(p)\)</span> equals the share of total income earned by the lowest-earning portion of the population (eg. <span class="math inline">\(f(0.1)\)</span> is the share of total income earned by the lowest-earning 10%). The Gini coefficient is the area between that curve and the <span class="math inline">\(y=x\)</span> line, as a portion of the whole triangle:</p>
 <center>
-<br> <img src="../../../../images/gini/lorenz1.png" />
+<br> <img src="../../../../images/gini/lorenz1.png" class="padded" />
 </center>
 <p><br></p>
 <p><strong>Average-difference definition</strong>: the Gini coefficient is half the average difference of incomes between each all possible pairs of individuals, divided by the mean income.</p>
@@ -91,13 +137,13 @@ MathJax = {
 </ul>
 <p>Here are the Lorenz curves (fancy charts like we saw above) for both dystopias:</p>
 <center>
-<br> <img src="../../../../images/gini/lorenz2.png" />
+<br> <img src="../../../../images/gini/lorenz2.png" class="padded" />
 </center>
 <p><br></p>
 <p>Clearly, neither of those two dystopias are good places to live. <strong>But they are not-very-nice places to live in very different ways</strong>. Dystopia A gives each resident a coin flip between unthinkably horrific mass starvation if they end up on the left half on the distribution and egalitarian harmony if they end up on the right half. If you're <a href="https://en.wikipedia.org/wiki/Thanos">Thanos</a>, you might actually like it! If you're not, it's worth avoiding with the strongest force. Dystopia B, on the other hand, is Brave New World-like: everyone has decently good lives (at least at the time when that snapshot of everyone's resources is taken), but at the high cost of an extremely undemocratic power structure where you'd better hope you have a good overlord. If you're <a href="https://en.wikipedia.org/wiki/Curtis_Yarvin">Curtis Yarvin</a>, you might actually like it! If you're not, it's very much worth avoiding too.</p>
 <p>These two problems are different enough that they're worth analyzing and measuring separately. And this difference is not just theoretical. Here is a chart showing share of total income earned by the bottom 20% (a decent proxy for avoiding dystopia A) versus share of total income earned by the top 1% (a decent proxy for being near dystopia B):</p>
 <center>
-<p><img src="../../../../images/gini/top1_vs_bottom20.png" /><br> <small><i></p>
+<p><img src="../../../../images/gini/top1_vs_bottom20.png" class="padded" /><br> <small><i></p>
 Sources: <a href="https://data.worldbank.org/indicator/SI.DST.FRST.20">https://data.worldbank.org/indicator/SI.DST.FRST.20</a> (merging 2015 and 2016 data) and <a href="http://hdr.undp.org/en/indicators/186106">http://hdr.undp.org/en/indicators/186106</a>. </i></small><br>
 </center>
 <p><br></p>
@@ -133,7 +179,7 @@ Share of coins explicitly allocated to specific insiders in a cryptocurrency's i
 <p><span class="math inline">\(\frac{\sum_{i=1}^n x_i^2}{(\sum_{i=1}^n x_i)^2}\)</span></p>
 <p>Or for you visual learners out there:</p>
 <center>
-<img src="../../../../images/gini/herfindahl.png" /><br><br> <small><i> Herfindahl-Hirschman index: green area divided by total area. </i></small><br><br><br>
+<img src="../../../../images/gini/herfindahl.png" class="padded" /><br><br> <small><i> Herfindahl-Hirschman index: green area divided by total area. </i></small><br><br><br>
 </center>
 <p>There are other alternatives to this; the <a href="https://en.wikipedia.org/wiki/Theil_index">Theil T index</a> has some similar properties though also some differences. A simpler-and-dumber alternative is the Nakamoto coefficient: the minimum number of participants needed to add up to more than 50% of the total. Note that all three of these concentration indices focus heavily on what happens near the top (and deliberately so): a large number of dabblers with a small quantity of resources contributes little or nothing to the index, while the act of two top participants merging can make a very big change to the index.</p>
 <p>For cryptocurrency communities, where concentration of resources is one of the biggest risks to the system but where someone only having 0.00013 coins is not any kind of evidence that they're actually starving, adopting indices like this is the obvious approach. But even for countries, it's probably worth talking about, and measuring, concentration of power and suffering from lack of resources more separately.</p>

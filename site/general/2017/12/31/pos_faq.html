@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Proof of Stake FAQ" />
@@ -116,17 +162,17 @@ MathJax = {
 <p>Note that Ittay Eyal and Emin Gun Sirer's <a href="https://bitcoinmagazine.com/articles/selfish-mining-a-25-attack-against-the-bitcoin-network-1383578440">selfish mining</a> discovery, which places 25% and 33% bounds on the incentive compatibility of Bitcoin mining depending on the network model (i.e. mining is only incentive compatible if collusions larger than 25% or 33% are impossible) has NOTHING to do with results from traditional consensus algorithm research, which does not touch incentive compatibility.</p>
 <h3 id="what-is-the-nothing-at-stake-problem-and-how-can-it-be-fixed">What is the "nothing at stake" problem and how can it be fixed?</h3>
 <p>In many early (all chain-based) proof of stake algorithms, including Peercoin, there are only rewards for producing blocks, and no penalties. This has the unfortunate consequence that, in the case that there are multiple competing chains, it is in a validator's incentive to try to make blocks on top of every chain at once, just to be sure:</p>
-<p><img src="https://raw.githubusercontent.com/vbuterin/diagrams/master/possec.png" /></p>
+<p><img src="https://raw.githubusercontent.com/vbuterin/diagrams/master/possec.png" class="padded" /></p>
 <p>In proof of work, doing so would require splitting one's computing power in half, and so would not be lucrative:</p>
-<p><img src="https://github.com/vbuterin/diagrams/blob/master/powsec.png?raw=true" /></p>
+<p><img src="https://github.com/vbuterin/diagrams/blob/master/powsec.png?raw=true" class="padded" /></p>
 <p>The result is that if all actors are narrowly economically rational, then even if there are no attackers, a blockchain may never reach consensus. If there is an attacker, then the attacker need only overpower altruistic nodes (who would exclusively stake on the original chain), and not rational nodes (who would stake on both the original chain and the attacker's chain), in contrast to proof of work, where the attacker must overpower both altruists and rational nodes (or at least credibly threaten to: see <a href="https://blog.ethereum.org/2015/01/28/p-epsilon-attack/">P + epsilon attacks</a>).</p>
 <p>Some argue that stakeholders have an incentive to act correctly and only stake on the longest chain in order to "preserve the value of their investment", however this ignores that this incentive suffers from <a href="https://en.wikipedia.org/wiki/Tragedy_of_the_commons">tragedy of the commons</a> problems: each individual stakeholder might only have a 1% chance of being "pivotal" (i.e. being in a situation where if they participate in an attack then it succeeds and if they do not participate it fails), and so the bribe needed to convince them personally to join an attack would be only 1% of the size of their deposit; hence, the required combined bribe would be only 0.5-1% of the total sum of all deposits. Additionally, this argument implies that any zero-chance-of-failure situation is not a stable equilibrium, as if the chance of failure is zero then everyone has a 0% chance of being pivotal.</p>
 <p>This can be solved via two strategies. The first, described in broad terms under the name "Slasher" <a href="https://blog.ethereum.org/2014/01/15/slasher-a-punitive-proof-of-stake-algorithm/">here</a> and developed further by Iddo Bentov <a href="https://arxiv.org/pdf/1406.5694.pdf">here</a>, involves penalizing validators if they simultaneously create blocks on multiple chains, by means of including proof of misbehavior (i.e. two conflicting signed block headers) into the blockchain as a later point in time at which point the malfeasant validator's deposit is deducted appropriately. This changes the incentive structure thus:</p>
-<p><img src="https://github.com/vbuterin/diagrams/blob/master/slasher1sec.png?raw=true" /></p>
+<p><img src="https://github.com/vbuterin/diagrams/blob/master/slasher1sec.png?raw=true" class="padded" /></p>
 <p>Note that for this algorithm to work, the validator set needs to be determined well ahead of time. Otherwise, if a validator has 1% of the stake, then if there are two branches A and B then 0.99% of the time the validator will be eligible to stake only on A and not on B, 0.99% of the time the validator will be eligible to stake on B and not on A, and only 0.01% of the time will the validator will be eligible to stake on both. Hence, the validator can with 99% efficiency probabilistically double-stake: stake on A if possible, stake on B if possible, and only if the choice between both is open stake on the longer chain. This can only be avoided if the validator selection is the same for every block on both branches, which requires the validators to be selected at a time before the fork takes place.</p>
 <p>This has its own flaws, including requiring nodes to be frequently online to get a secure view of the blockchain, and opening up medium-range validator collusion risks (i.e. situations where, for example, 25 out of 30 consecutive validators get together and agree ahead of time to implement a 51% attack on the previous 19 blocks), but if these risks are deemed acceptable then it works well.</p>
 <p>The second strategy is to simply punish validators for creating blocks on the <em>wrong</em> chain. That is, if there are two competing chains, A and B, then if a validator creates a block on B, they get a reward of +R on B, but the block header can be included into A (in Casper this is called a "dunkle") and on A the validator suffers a penalty of -F (possibly F = R). This changes the economic calculation thus:</p>
-<p><img src="https://github.com/vbuterin/diagrams/blob/master/slasher2sec.png?raw=true" /></p>
+<p><img src="https://github.com/vbuterin/diagrams/blob/master/slasher2sec.png?raw=true" class="padded" /></p>
 <p>The intuition here is that we can replicate the economics of proof of work inside of proof of stake. In proof of work, there is also a penalty for creating a block on the wrong chain, but this penalty is implicit in the external environment: miners have to spend extra electricity and obtain or rent extra hardware. Here, we simply make the penalties explicit. This mechanism has the disadvantage that it imposes slightly more risk on validators (although the effect should be smoothed out over time), but has the advantage that it does not require validators to be known ahead of time.</p>
 <h3 id="that-shows-how-chain-based-algorithms-solve-nothing-at-stake.-now-how-do-bft-style-proof-of-stake-algorithms-work">That shows how chain-based algorithms solve nothing-at-stake. Now how do BFT-style proof of stake algorithms work?</h3>
 <p>BFT-style (partially synchronous) proof of stake algorithms allow validators to "vote" on blocks by sending one or more types of signed messages, and specify two kinds of rules:</p>
@@ -225,7 +271,7 @@ MathJax = {
 </ol>
 <p>The above included a large amount of simplified modeling, however it serves to show how multiple factors stack up heavily in favor of PoS in such a way that PoS gets <em>more</em> bang for its buck in terms of security. The meta-argument for why this <a href="http://lesswrong.com/lw/kpj/multiple_factor_explanations_should_not_appear/">perhaps suspiciously multifactorial argument</a> leans so heavily in favor of PoS is simple: in PoW, we are working directly with the laws of physics. In PoS, we are able to design the protocol in such a way that it has the precise properties that we want - in short, we can <em>optimize the laws of physics in our favor</em>. The "hidden trapdoor" that gives us (3) is the change in the security model, specifically the introduction of weak subjectivity.</p>
 <p>Now, we can talk about the marginal/total distinction. In the case of capital lockup costs, this is very important. For example, consider a case where you have $100,000 of ether. You probably intend to hold a large portion of it for a long time; hence, locking up even $50,000 of the ether should be nearly free. Locking up $80,000 would be slightly more inconvenient, but $20,000 of breathing room still gives you a large space to maneuver. Locking up $90,000 is more problematic, $99,000 is very problematic, and locking up all $100,000 is absurd, as it means you would not even have a single bit of ether left to pay basic transaction fees. Hence, your marginal costs increase quickly. We can show the difference between this state of affairs and the state of affairs in proof of work as follows:</p>
-<p><img src="https://blog.ethereum.org/wp-content/uploads/2014/07/liquidity.png" /></p>
+<p><img src="https://blog.ethereum.org/wp-content/uploads/2014/07/liquidity.png" class="padded" /></p>
 <p>Hence, the <i>total</i> cost of proof of stake is potentially much lower than the marginal cost of depositing 1 more ETH into the system multiplied by the amount of ether currently deposited.</p>
 <p>Note that this component of the argument unfortunately does not fully translate into reduction of the "safe level of issuance". It does help us because it shows that we can get substantial proof of stake participation even if we keep issuance very low; however, it also means that a large portion of the gains will simply be borne by validators as economic surplus.</p>
 <h3 id="will-exchanges-in-proof-of-stake-pose-a-similar-centralization-risk-to-pools-in-proof-of-work">Will exchanges in proof of stake pose a similar centralization risk to pools in proof of work?</h3>

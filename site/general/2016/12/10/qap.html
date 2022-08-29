@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
 <link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
 
 <script type="text/x-mathjax-config">
@@ -50,6 +51,51 @@ MathJax = {
 
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="[Mirror] Quadratic Arithmetic Programs: from Zero to Hero" />
@@ -63,10 +109,10 @@ MathJax = {
 <br> <br> <br>
 <title> [Mirror] Quadratic Arithmetic Programs: from Zero to Hero </title>
 
-<p><em>This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">https://medium.com/<span class="citation" data-cites="VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649</span></a> </em></p>
+<p><em>This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">https://medium.com/<span class="citation" data-cites="VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649</span></a></em></p>
 <p>There has been a lot of interest lately in the technology behind zk-SNARKs, and people are increasingly <a href="https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell/">trying to demystify</a> something that many have come to call "moon math" due to its perceived sheer indecipherable complexity. zk-SNARKs are indeed quite challenging to grasp, especially due to the sheer number of moving parts that need to come together for the whole thing to work, but if we break the technology down piece by piece then comprehending it becomes simpler.</p>
 <p>The purpose of this post is not to serve as a full introduction to zk-SNARKs; it assumes as background knowledge that (i) you know what zk-SNARKs are and what they do, and (ii) know enough math to be able to reason about things like polynomials (if the statement <span class="math inline">\(P(x) + Q(x) = (P + Q)(x)\)</span> , where <span class="math inline">\(P\)</span> and <span class="math inline">\(Q\)</span> are polynomials, seems natural and obvious to you, then you're at the right level). Rather, the post digs deeper into the machinery behind the technology, and tries to explain as well as possible the first half of the pipeline, as drawn by zk-SNARK researcher Eran Tromer here:</p>
-<p><img src="https://cdn-images-1.medium.com/max/2000/1*YD-ckgBfmmmRBCyVlhp8YQ.png" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*YD-ckgBfmmmRBCyVlhp8YQ.png" class="padded" /></p>
 <p>The steps here can be broken up into two halves. First, zk-SNARKs cannot be applied to any computational problem directly; rather, you have to convert the problem into the right "form" for the problem to operate on. The form is called a "quadratic arithmetic program" (QAP), and transforming the code of a function into one of these is itself highly nontrivial. Along with the process for converting the code of a function into a QAP is another process that can be run alongside so that if you have an input to the code you can create a corresponding solution (sometimes called "witness" to the QAP). After this, there is another fairly intricate process for creating the actual "zero knowledge proof" for this witness, and a separate process for verifying a proof that someone else passes along to you, but these are details that are out of scope for this post.</p>
 <p>The example that we will choose is a simple one: proving that you know the solution to a cubic equation: <span class="math inline">\(x^3 + x + 5 = 35\)</span> (hint: the answer is <span class="math inline">\(3\)</span>). This problem is simple enough that the resulting QAP will not be so large as to be intimidating, but nontrivial enough that you can see all of the machinery come into play.</p>
 <p>Let us write out our function as follows:</p>
@@ -87,7 +133,7 @@ sym_2 = y + x
 <p>Now, we convert this into something called a rank-1 constraint system (R1CS). An R1CS is a sequence of groups of three vectors (<span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, <span class="math inline">\(c\)</span>), and the solution to an R1CS is a vector <span class="math inline">\(s\)</span>, where <span class="math inline">\(s\)</span> must satisfy the equation <span class="math inline">\(s . a \cdot s . b - s . c = 0\)</span>, where <span class="math inline">\(.\)</span> represents the dot product - in simpler terms, if we "zip together" <span class="math inline">\(a\)</span> and <span class="math inline">\(s\)</span>, multiplying the two values in the same positions, and then take the sum of these products, then do the same to <span class="math inline">\(b\)</span> and <span class="math inline">\(s\)</span> and then <span class="math inline">\(c\)</span> and <span class="math inline">\(s\)</span>, then the third result equals the product of the first two results. For example, this is a satisfied R1CS:</p>
 <br>
 <center>
-<img src="https://cdn-images-1.medium.com/max/2000/1*wp6bmXoPEU_zZHzJFRq6IQ.png" />
+<img src="https://cdn-images-1.medium.com/max/2000/1*wp6bmXoPEU_zZHzJFRq6IQ.png" class="padded" />
 </center>
 <p><br></p>
 <p>But instead of having just one constraint, we are going to have many constraints: one for each logic gate. There is a standard way of converting a logic gate into a <span class="math inline">\((a, b, c)\)</span> triple depending on what the operation is (<span class="math inline">\(+\)</span>, <span class="math inline">\(-\)</span>, <span class="math inline">\(\cdot\)</span> or <span class="math inline">\(/\)</span>) and whether the arguments are variables or numbers. The length of each vector is equal to the total number of variables in the system, including a dummy variable ~one at the first index representing the number <span class="math inline">\(1\)</span>, the input variables, a dummy variable ~out representing the output, and then all of the intermediate variables (<span class="math inline">\(sym_1\)</span> and <span class="math inline">\(sym_2\)</span> above); the vectors are generally going to be very sparse, only filling in the slots corresponding to the variables that are affected by some particular logic gate.</p>
@@ -217,7 +263,7 @@ C results at x=1
 <p>Now what's the point of this crazy transformation? The answer is that instead of checking the constraints in the R1CS individually, we can now check <em>all of the constraints at the same time</em> by doing the dot product check <em>on the polynomials</em>.</p>
 <br>
 <center>
-<img src="https://cdn-images-1.medium.com/max/2000/1*QD2EfVsbNguEXrjKJwNVMg.png" />
+<img src="https://cdn-images-1.medium.com/max/2000/1*QD2EfVsbNguEXrjKJwNVMg.png" class="padded" />
 </center>
 <p><br></p>
 <p>Because in this case the dot product check is a series of additions and multiplications of polynomials, the result is itself going to be a polynomial. If the resulting polynomial, evaluated at every <span class="math inline">\(x\)</span> coordinate that we used above to represent a logic gate, is equal to zero, then that means that all of the checks pass; if the resulting polynomial evaluated at at least one of the <span class="math inline">\(x\)</span> coordinate representing a logic gate gives a nonzero value, then that means that the values going into and out of that logic gate are inconsistent (ie. the gate is <span class="math inline">\(y = x \cdot sym_1\)</span> but the provided values might be <span class="math inline">\(x = 2,sym_1 = 2\)</span> and <span class="math inline">\(y = 5\)</span>).</p>
