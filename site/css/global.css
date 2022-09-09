@@ -1,0 +1,210 @@
+/*
+  Light Mode Color Scheme
+*/
+:root {
+  --color-anchor: #337ab7;
+  --color-bg: #fff;
+  --color-blockquote-text: #777;
+  --color-code-bg: #f7f7f7;
+  --color-code-text: #333;
+  --color-divider: #cdcdcd;
+  --color-heading: #333;
+  --color-table-border: #c2c2c2;
+  --color-table-row-even: #f0f0f0;
+  --color-table-row-header: #e8e6e6;
+  --color-table-row-odd: #fbfbfb;
+  --color-toggle-accent: #c3a554;
+  --color-text: #333;
+}
+
+/*
+  Dark Mode Color Scheme
+*/
+html.dark {
+  --color-anchor: #77e1cd;
+  --color-bg: #1c1c1c;
+  --color-blockquote-text: #c0bcbc;
+  --color-code-bg: #313030;
+  --color-code-text: #fefefe;
+  --color-divider: #8b8b8b;
+  --color-heading: #dfdfdf;
+  --color-table-border: #767676;
+  --color-table-row-even: #181818;
+  --color-table-row-header: #000;
+  --color-table-row-odd: #333333;
+  --color-toggle-accent: #a076ce;
+  --color-text: #fafafa;
+}
+
+/*
+  Apply colors to general doc selectors
+*/
+html, body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+/*
+  Typography & doc elements
+*/
+#doc h1, #doc h2, #doc h3, #doc h4, #doc h5, #doc h6 {
+  color: var(--color-heading);
+  border-color: var(--color-divider);
+}
+
+#doc, #doc div, #doc span, #doc p, #doc li, #doc th, #doc td, #doc dd, #doc dl {
+  color: var(--color-text);
+}
+
+#doc a:link, #doc a:visited, #doc a:active, #doc a:checked {
+  color: var(--color-anchor);
+}
+
+#doc hr {
+  background-color: var(--color-divider);
+}
+
+#doc blockquote, .markdown-body blockquote,
+#doc blockquote *, .markdown-body blockquote * {
+  border-color: var(--color-divider);
+  color: var(--color-blockquote-text);
+}
+
+/*
+  Code blocks and formatted text
+*/
+.markdown-body code, .markdown-body code *,
+#doc pre, #doc code, #doc pre code,
+#doc pre *, #doc code *, #doc pre code * {
+  background-color: var(--color-code-bg);
+  color: var(--color-code-text);
+}
+
+/*
+  Images
+  - Optional: add 'transparent' class to remove the border & background
+    - The image will inherit the light/dark mode background color
+    - Useful to preserve transparent background images/icons
+  - Optional: add 'padded' class to give extra padding to an image
+    - Very useful for graphs and charts
+  - Optional: add 'invert' class to the image for dark mode inversion
+    - Used to completely invert the colors of an image while in dark mode
+*/
+#doc img {
+  border: none;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+#doc img.transparent {
+  background-color: transparent;
+  border: none;
+}
+
+#doc img.padded {
+  padding: 12px;
+}
+
+html.dark #doc img.invert {
+  filter: invert(1)
+}
+
+/*
+  Tables
+  - Normal tables are striped styled
+  - Optional: add 'transparent' class to create an invisible table, remove borders, striping and background
+    - Useful for when using tables for grid layouts
+  - Optional: add 'centered' class to center align all the text within the table
+*/
+#doc table thead tr, #doc table tr.header {
+  background-color: var(--color-table-row-header);
+}
+
+#doc table tbody tr, #doc table tr.odd {
+  background-color: var(--color-table-row-odd);
+}
+
+#doc table tbody tr:nth-child(2n), #doc table tr.even {
+  background-color: var(--color-table-row-even);
+}
+
+#doc table th, #doc table td {
+  border-color: var(--color-table-border);
+}
+
+#doc table.transparent,
+#doc table.transparent th,
+#doc table.transparent td,
+#doc table.transparent thead tr, #doc table.borderless tr.header,
+#doc table.transparent tbody tr, #doc table.borderless  tr.odd,
+#doc table.transparent tbody tr:nth-child(2n), #doc table.borderless tr.even {
+  border: none;
+  background-color: transparent;
+}
+
+#doc table.centered,
+#doc table.centered th,
+#doc table.centered td {
+  text-align: center;
+}
+
+/*
+  Color Scheme Toggle Switch
+  - Styled checkbox with slight animation when toggling
+*/
+#color-mode-switch {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#color-mode-switch > span {
+  font-size: 30px;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+#color-mode-switch svg {
+  width: 24px;
+  height: 24px;
+  margin: 0 4px;
+}
+
+#color-mode-switch input[type=checkbox] {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+
+#color-mode-switch label {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 42px;
+  height: 21px;
+  border-radius: 30px;
+  background: var(--color-toggle-accent);
+  display: block;
+  position: relative;
+  margin: 0;
+}
+
+#color-mode-switch label:after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 15px;
+  height: 15px;
+  background: #fff;
+  border-radius: 90px;
+  transition: 0.3s;
+}
+
+#color-mode-switch input:checked + label:after {
+  left: calc(100% - 3px);
+  transform: translateX(-100%);
+}
+
+#color-mode-switch label:active:after {
+  width: 30px;
+}

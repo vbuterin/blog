@@ -1,0 +1,251 @@
+
+
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
+
+
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Should there be demand-based recurring fees on ENS domains?">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="../../../../scripts/tex-svg.js">
+</script>
+
+<style>
+</style>
+
+<div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
+
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Should there be demand-based recurring fees on ENS domains?" />
+<meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
+
+
+<br>
+<h1 style="margin-bottom:7px"> Should there be demand-based recurring fees on ENS domains? </h1>
+<small style="float:left; color: #888"> 2022 Sep 09 </small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
+<br> <br> <br>
+<title> Should there be demand-based recurring fees on ENS domains? </title>
+
+<p><em>Special thanks to Lars Doucet, Glen Weyl and Nick Johnson for discussion and feedback on various topics.</em></p>
+<p>ENS domains today are cheap. Very cheap. The cost to register and maintain a five-letter domain name is only <a href="https://docs.ens.domains/frequently-asked-questions#what-does-it-cost-to-register-a-.eth-domain">$5 per year</a>. This sounds reasonable from the perspective of one person trying to register a single domain, but it looks very different when you look at the situation globally: when ENS was younger, someone could have registered all 8938 five-letter words in the <a href="https://raw.githubusercontent.com/redbo/scrabble/master/dictionary.txt">Scrabble wordlist</a> (which includes exotic stuff like "BURRS", "FLUYT" and "ZORIL") and pre-paid their ownership for a hundred years, all for the price of <a href="https://www.motortrend.com/features/how-much-is-a-lamborghini/">two lambos</a>. And in fact, many people did: today, almost all of those five-letter words are already taken, many by squatters waiting for someone to buy the domain from them at a much higher price. A random scrape of OpenSea shows that about 40% of all these domains are for sale or have been sold on that platform alone.</p>
+<p>The question worth asking is: is this really the best way to allocate domains? By selling off these domains so cheaply, ENS DAO is almost certainly gathering far less revenue than it could, which limits its ability to act to improve the ecosystem. The status quo is also bad for fairness: being able to buy up all the domains cheaply was great for people in 2017, is okay in 2022, but the consequences may severely handicap the system in 2050. And given that buying a five-letter-word domain in practice costs anywhere from 0.1 to <a href="https://opensea.io/assets?search%5Bquery%5D=ideas.eth">500 ETH</a>, the notionally cheap registration prices are not actually providing cost savings to users. In fact, there are <a href="https://en.wikipedia.org/wiki/Myerson%E2%80%93Satterthwaite_theorem">deep</a> economic <a href="https://chicagounbound.uchicago.edu/cgi/viewcontent.cgi?article=12668&amp;context=journal_articles">reasons</a> to believe that reliance on secondary markets makes domains <em>more</em> expensive than a well-designed in-protocol mechanism.</p>
+<p>Could we allocate ongoing ownership of domains in a better way? Is there a way to raise more revenue for ENS DAO, do a <em>better</em> job of ensuring domains go to those who can make best use of them, and at the same time preserve the credible neutrality and the accessible very strong guarantees of long-term ownership that make ENS valuable?</p>
+<h2 id="problem-1-there-is-a-fundamental-tradeoff-between-strength-of-property-rights-and-fairness">Problem 1: there is a fundamental tradeoff between strength of property rights and fairness</h2>
+<p>Suppose that there are <span class="math inline">\(N\)</span> "high-value names" (eg. five-letter words in the Scrabble dictionary, but could be any similar category). Suppose that each year, users grab up <span class="math inline">\(k\)</span> names, and some portion <span class="math inline">\(p\)</span> of them get grabbed by someone who's irrationally stubborn and not willing to give them up (<span class="math inline">\(p\)</span> could be really low, it just needs to be greater than zero). Then, after <span class="math inline">\(\frac{N}{k * p}\)</span> years, no one will be able to get a high-value name again.</p>
+<p>This is a two-line mathematical theorem, and it feels too simple to be saying anything important. But it actually gets at a crucial truth: time-unlimited allocation of a finite resource is incompatible with fairness across long time horizons. This is true for land; it's the reason why there have been <a href="https://www.britannica.com/topic/land-reform/History-of-land-reform">so many land reforms throughout history</a>, and it's a big part of why many <a href="https://gameofrent.com/">advocate for land taxes today</a>. It's also true for domains, though the problem in the traditional domain space has been temporarily alleviated by a "forced dilution" of early .com holders in the form of a mass introduction of .io, .me, .network and many other domains. ENS <a href="https://docs.ens.domains/frequently-asked-questions#can-i-register-a-tld-of-my-own-in-the-ens">has soft-committed</a> to not add new TLDs to avoid polluting the global namespace and rupturing its chances of eventual integration with mainstream DNS, so such a dilution is not an option.</p>
+<p>Fortunately, ENS charges not just a one-time fee to register a domain, but also a recurring annual fee to maintain it. Not all decentralized domain name systems had the foresight to implement this; Unstoppable Domains did not, and even goes so far as to proudly advertise its preference for short-term consumer appeal over long-term sustainability ("<a href="https://unstoppabledomains.com/">No renewal fees ever</a>!"). The recurring fees in ENS and traditional DNS are a healthy mitigation to the worst excesses of a truly unlimited pay-once-own-forever model: at the very least, the recurring fees mean that no one will be able to accidentally lock down a domain forever through forgetfulness or carelessness. But it may not be enough. It's still possible to spend $500 to lock down an ENS domain for an entire century, and there are certainly some types of domains that are in high enough demand that this is vastly underpriced.</p>
+<h2 id="problem-2-speculators-do-not-actually-create-efficient-markets">Problem 2: speculators do not actually create efficient markets</h2>
+<p>Once we admit that a first-come-first-serve model with low fixed fees has these problems, a common counterargument is to say: yes, many of the names will get bought up by speculators, but speculation is natural and good. It is a free market mechanism, where speculators who actually want to maximize their profit are motivated to resell the domain in such a way that it goes to whoever can make the best use of the domain, and their outsized returns are just compensation for this service.</p>
+<p>But as it turns out, there has been academic research on this topic, and it is not actually true that profit-maximizing auctioneers maximize social welfare! Quoting <a href="https://pubsonline.informs.org/doi/abs/10.1287/moor.6.1.58">Myerson 1981</a>:</p>
+<blockquote>
+<p>By announcing a reservation price of 50, the seller risks a probability <span class="math inline">\((1 / 2^n)\)</span> of keeping the object even though some bidder is willing to pay more than <span class="math inline">\(t_0\)</span> for it; but the seller also increases his expected revenue, because he can command a higher price when the object is sold.</p>
+<p>Thus the optimal auction may not be ex-post efficient. To see more clearly why this can happen, consider the example in the above paragraph, for the case when <span class="math inline">\(n = 1\)</span> ... Ex post efficiency would require that the bidder must always get the object, as long as his value estimate is positive. But then the bidder would never admit to more than an infinitesimal value estimate, since any positive bid would win the object ... In fact the seller's optimal policy is to refuse to sell the object for less than 50.</p>
+</blockquote>
+<p>Translated into diagram form:</p>
+<center>
+<p><img src="../../../../images/ens/sellprobability.png" /></p>
+</center>
+<p>Maximizing revenue for the seller almost always requires accepting some probability of never selling the domain at all, leaving it unused outright. One important nuance in the argument is that seller-revenue-maximizing auctions are at their most inefficient when there is one possible buyer (or at least, one buyer with a valuation far above the others), and the inefficiency decreases quickly once there are many competing potential buyers. But for a large class of domains, the first category is precisely the situation they are in. Domains that are simply some person, project or company's name, for example, have one natural buyer: that person or project. And so if a speculator buys up such a name, they will of course set the price high, accepting a large chance of never coming to a deal to maximize their revenue in the case where a deal does arise.</p>
+<p>Hence, we cannot say that speculators grabbing a large portion of domain allocation revenues is merely just compensation for them ensuring that the market is efficient. On the contrary, speculators can easily make the market <em>worse</em> than a well-designed mechanism in the protocol that encourages domains to be directly available for sale at fair prices.</p>
+<h2 id="one-cheer-for-stricter-property-rights-stability-of-domain-ownership-has-positive-externalities">One cheer for stricter property rights: stability of domain ownership has positive externalities</h2>
+<p>The monopoly problems of overly-strict property rights on non-fungible assets have been known for a long time. Resolving this issue in a market-based way was the original goal of <a href="https://chicagounbound.uchicago.edu/cgi/viewcontent.cgi?article=12668&amp;context=journal_articles">Harberger taxes</a>: require the owner of each covered asset to set a price at which they are willing to sell it to anyone else, and charge an annual fee based on that price. For example, one could charge 0.5% of the sale price every year. Holders would be incentivized to leave the asset available for purchase at prices that are reasonable, "lazy" holders who refuse to sell would lose money every year, and hoarding assets without using them would in many cases become economically infeasible outright.</p>
+<p>But the risk of being forced to sell something at any time can have large economic and psychological costs, and it's for this reason that advocates of Harberger taxes generally focus on industrial property applications where the market participants are sophisticated. Where do domains fall on the spectrum? Let us consider the costs of a business getting "relocated", in three separate cases: a data center, a restaurant, and an ENS name.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Data center</th>
+<th>Restaurant</th>
+<th>ENS name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Confusion from people expecting old location</strong></td>
+<td>An employee comes to the old location, and unexpectedly finds it closed.</td>
+<td>An employee or a customer comes to the old location, and unexpectedly finds it closed.</td>
+<td>Someone sends a big chunk of money to the wrong address.</td>
+</tr>
+<tr class="even">
+<td><strong>Loss of location-specific long-term investment</strong></td>
+<td>Low</td>
+<td>The restaurant will probably lose many long-term customers for whom the new location is too far away</td>
+<td>The owner spent years building a brand around the old name that cannot easily carry over.</td>
+</tr>
+</tbody>
+</table>
+<p>As it turns out, domains do not hold up very well. Domain name owners are often not sophisticated, the costs of switching domain names are often high, and negative externalities of a name-change gone wrong can be large. The highest-value owner of <code>coinbase.eth</code> may not be Coinbase; it could just as easily be a scammer who would grab up the domain and then immediately make a fake charity or ICO claiming it's run by Coinbase and ask people to send that address their money. <strong>For these reasons, Harberger taxing domains is not a great idea</strong>.</p>
+<h2 id="alternative-solution-1-demand-based-recurring-pricing">Alternative solution 1: demand-based recurring pricing</h2>
+<p>Maintaining ownership over an ENS domain today requires paying a recurring fee. For most domains, this is a simple and very low $5 per year. The only exceptions are four-letter domains ($160 per year) and three-letter domains ($640 per year). But what if instead, we make the fee somehow depend on the actual level of market demand for the domain?</p>
+<p>This would not be a Harberger-like scheme where you have to make the domain <em>available for immediate sale</em> at a particular price. Rather, the initiative in the price-setting procedure would fall on the bidders. Anyone could bid on a particular domain, and if they keep an open bid for a sufficiently long period of time (eg. 4 weeks), the domain's valuation rises to that level. The annual fee on the domain would be proportional to the valuation (eg. it might be set to 0.5% of the valuation). If there are no bids, the fee might decay at a constant rate.</p>
+<center>
+<p><img src="../../../../images/ens/feedecay.png" /></p>
+</center>
+<p>When a bidder sends their bid amount into a smart contract to place a bid, the owner has two options: they could either accept the bid, or they could reject, though they may have to start paying a higher price. If a bidder bids a value higher than the actual value of the domain, the owner could sell to them, costing the bidder a huge amount of money.</p>
+<p><strong>This property is important, because it means that "griefing" domain holders is risky and expensive, and may even end up benefiting the victim</strong>. If you own a domain, and a powerful actor wants to harass or censor you, they could try to make a very high bid for that domain to greatly increase your annual fee. But if they do this, you could simply sell to them and collect the massive payout.</p>
+<p>This already provides much more stability and is more noob-friendly than a Harberger tax. Domain owners don't need to constantly worry whether or not they're setting prices too low. Rather, they can simply sit back and pay the annual fee, and if someone offers to bid they can take 4 weeks to make a decision and either sell the domain or continue holding it and accept the higher fee. But even this probably does not provide quite enough stability. To go even further, we need a compromise on the compromise.</p>
+<h2 id="alternative-solution-2-capped-demand-based-recurring-pricing">Alternative solution 2: capped demand-based recurring pricing</h2>
+<p>We can modify the above scheme to offer even stronger guarantees to domain-name holders. Specifically, we can try to offer the following property:</p>
+<blockquote>
+<p><strong>Strong time-bound ownership guarantee</strong>: for any fixed number of years, it's always possible to compute a fixed amount of money that you can pre-pay to unconditionally guarantee ownership for <em>at least</em> that number of years.</p>
+</blockquote>
+<p>In math language, there must be some function <span class="math inline">\(y = f(n)\)</span> such that if you pay <span class="math inline">\(y\)</span> dollars (or ETH), you get a hard guarantee that you will be able to hold on to the domain for at least <span class="math inline">\(n\)</span> years, no matter what happens. <span class="math inline">\(f\)</span> <em>may</em> also depend on other factors, such as what happened to the domain previously, as long as those factors are known at the time the transaction to register or extend a domain is made. Note that the <em>maximum annual fee</em> after <span class="math inline">\(n\)</span> years would be the derivative <span class="math inline">\(f&#39;(n)\)</span>.</p>
+<p>The new price after a bid would be capped at the implied maximum annual fee. For example, if <span class="math inline">\(f(n) = \frac{1}{2}n^2\)</span>, so <span class="math inline">\(f&#39;(n) = n\)</span>, and you get a bid of $5 after 7 years, the annual fee would rise to $5, but if you get a bid of $10 after 7 years, the annual fee would only rise to $7. If no bids that raise the fee to the max are made for some length of time (eg. a full year), <span class="math inline">\(n\)</span> resets. If a bid is made and rejected, <span class="math inline">\(n\)</span> resets.</p>
+<p>And of course, we have a highly subjective criterion that <span class="math inline">\(f(n)\)</span> must be "reasonable". We can create compromise proposals by trying different shapes for <span class="math inline">\(f\)</span>:</p>
+<p><br></p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th><span class="math inline">\(f(n)\)</span> (<span class="math inline">\(p_0\)</span> = price of last sale or last rejected bid, or $1 if most recent event is a reset)</th>
+<th>In plain English</th>
+<th>Total cost to guarantee holding for &gt;= 10 years</th>
+<th>Total cost to guarantee holding for &gt;= 100 years</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Exponential fee growth</td>
+<td><span class="math inline">\(f(n) = \int_0^n p_0 * 1.1^n\)</span></td>
+<td>The fee can grow by a maximum of 10% per year (with compounding).</td>
+<td>$836</td>
+<td>$7.22m</td>
+</tr>
+<tr class="even">
+<td>Linear fee growth</td>
+<td><span class="math inline">\(f(n) = p_0 * n + \frac{15}{2}n^2\)</span></td>
+<td>The annual fee can grow by a maximum of $15 per year.</td>
+<td>$1250</td>
+<td>$80k</td>
+</tr>
+<tr class="odd">
+<td>Capped annual fee</td>
+<td><span class="math inline">\(f(n) = 640 * n\)</span></td>
+<td>The annual fee cannot exceed $640 per year. That is, a domain in high demand can start to cost as much as a three-letter domain, but not more.</td>
+<td>$6400</td>
+<td>$64k</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>Or in chart form:</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/ens/feepaths.png" /></p>
+</center>
+<p><br></p>
+<p>Note that the amounts in the table are only the <em>theoretical maximums needed to guarantee</em> holding a domain for that number of years. In practice, almost no domains would have bidders willing to bid very high amounts, and so holders of almost all domains would end up paying much less than the maximum.</p>
+<p><strong>One fascinating property of the "capped annual fee" approach is that there are versions of it that are strictly <em>more favorable</em> to existing domain-name holders than the status quo</strong>. In particular, we could imagine a system where a domain that gets no bids does not have to pay <em>any</em> annual fee, and a bid could increase the annual fee to a maximum of $5 per year.</p>
+<p>Demand from external bids clearly provides <em>some</em> signal about how valuable a domain is (and therefore, to what extent an owner is excluding others by maintaining control over it). Hence, <strong>regardless of your views on what level of fees should be required to maintain a domain, I would argue that you should find <em>some</em> parameter choice for demand-based fees appealing</strong>.</p>
+<p>I will still make my case for why some <em>superlinear</em> <span class="math inline">\(f(n)\)</span>, a max annual fee that goes up over time, is a good idea. First, paying more for longer-term security is a common feature throughout the economy. Fixed-rate mortgages usually have <a href="https://www.ratehub.ca/variable-or-fixed-mortgage">higher interest rates</a> than variable-rate mortgages. You can <em>get</em> higher interest by providing deposits that are locked up for longer periods of time; this is compensation the bank pays <em>you</em> for providing longer-term security <em>to the bank</em>. Similarly, longer-term government bonds typically have <a href="https://en.wikipedia.org/wiki/Yield_curve">higher yields</a>. Second, the annual fee should be able to <em>eventually</em> adjust to whatever the market value of the domain is; we just don't want that to happen too quickly.</p>
+<p>Superlinear <span class="math inline">\(f(n)\)</span> values still make hard guarantees of ownership reasonably accessible over pretty long timescales: with the linear-fee-growth formula <span class="math inline">\(f(n) = p_0 * n + \frac{15}{2}n^2\)</span>, for only $6000 ($120 per year) you could ensure ownership of the domain for 25 years, and you would almost certainly pay much less. The ideal of "register and forget" for censorship-resistant services would still be very much available.</p>
+<h2 id="from-here-to-there">From here to there</h2>
+<p>Weakening property norms, and increasing fees, is psychologically very unappealing to many people. This is true even when these fees make clear economic sense, and even when you can redirect fee revenue into a UBI and mathematically show that the majority of people would economically net-benefit from your proposal. Cities have a hard time <a href="https://www.thecity.nyc/transportation/2022/6/8/23160590/hochul-congestion-pricing-slow-drive">adding congestion pricing</a>, even when it's painfully clear that the only two choices are paying congestion fees in dollars and paying congestion fees in wasted time <a href="https://www.iomcworld.org/proceedings/traffic-congestion-and-long-driving-hours-impact-on-stress-emotional-and-physical-health-among-drivers-in-sharjah-49396.html">and weakened mental health</a> driving in painfully slow traffic. <a href="https://gameofrent.com/">Land value taxes</a>, despite being in many ways <a href="https://www.strongtowns.org/journal/2019/3/8/if-the-land-tax-is-such-a-good-idea-why-isnt-it-being-implemented">one of the most effective and least harmful taxes</a> out there, have a hard time getting adopted. Unstoppable Domains's loud and proud advertisement of "no renewal fees ever" is in my view very short-sighted, but it's clearly at least somewhat <em>effective</em>. So how could I possibly think that we have any chance of adding fees and conditions to domain name ownership?</p>
+<p>The crypto space is not going to solve deep challenges in human political psychology that humanity has failed at <a href="http://bastiat.org/en/twisatwins.html">for centuries</a>. But we do not have to. I see two possible answers that <em>do</em> have some realistic hope for success:</p>
+<ol type="1">
+<li><p><strong>Democratic legitimacy: come up with a compromise proposal that really is a sufficient compromise that it makes enough people happy</strong>, and perhaps even makes some existing domain name holders (not just <em>potential</em> domain name holders) <em>better off</em> than they are today.</p>
+<p>For example, we could implement demand-based annual fees with a fee cap of $640 per year for domains up to eight letters long, and $5 per year for longer domains, and let domain holders pay nothing if no one makes a bid. Many average users would <em>save</em> money under such a proposal.</p></li>
+<li><p><strong>Market legitimacy: avoid the need to get legitimacy to overturn people's expectations in the existing system by instead creating a new system</strong> (or sub-system).</p>
+<p>In traditional DNS, this could be done just by creating a new TLD that would be as convenient as existing TLDs. In ENS, there is a stated desire to stick to <code>.eth</code> only to avoid conflicting with the existing domain name system. And using existing subdomains doesn't quite work: <code>foo.bar.eth</code> is much less nice than <code>foo.eth</code>. One possible middle route is for the ENS DAO to hand off <em>single-letter</em> domain names solely to projects that run some other kind of credibly-neutral marketplace for their subdomains, as long as they hand over at least 50% of the revenue to the ENS DAO.</p>
+<p>For example, perhaps <code>x.eth</code> could use one of my proposed pricing schemes for its subdomains, and <code>t.eth</code> could implement a mechanism where ENS DAO has the right to forcibly transfer subdomains for anti-fraud and trademark reasons. <code>foo.x.eth</code> <em>just barely</em> looks good enough to be sort-of a substitute for <code>foo.eth</code>; it will have to do.</p></li>
+</ol>
+<p>If making changes to ENS domain pricing itself are off the table, then the market-based approach of explicitly encouraging marketplaces with different rules in subdomains should be strongly considered.</p>
+<p>To me, the crypto space is not just about coins, and I admit my attraction to ENS does not center around some notion of <em>unconditional and infinitely strict</em> property-like ownership over domains. Rather, my interest in the space lies more on <a href="https://nakamoto.com/credible-neutrality/">credible neutrality</a>, and property rights that are strongly protected particularly against politically motivated censorship and arbitrary and targeted interference by powerful actors. That said, a high degree of guarantee of ownership is nevertheless very important for a domain name system to be able to function.</p>
+<p>The hybrid proposals I suggest above are my attempt at preserving total credible neutrality, continuing to provide a high degree of ownership guarantee, but at the same time increasing the cost of domain squatting, raising more revenue for the ENS DAO to be able to work on important public goods, and <em>improving</em> the chances that people who do not have the domain they want already will be able to get one.</p>
+ </div> 
