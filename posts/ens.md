@@ -120,7 +120,7 @@ The crypto space is not going to solve deep challenges in human political psycho
 
 1. **Democratic legitimacy: come up with a compromise proposal that really is a sufficient compromise that it makes enough people happy**, and perhaps even makes some existing domain name holders (not just _potential_ domain name holders) _better off_ than they are today.
 	
-	For example, we could implement demand-based annual fees with a fee cap of $640 per year for domains up to eight letters long, and $5 per year for longer domains, and let domain holders pay nothing if no one makes a bid. Many average users would _save_ money under such a proposal.
+	For example, we could implement demand-based annual fees (eg. setting the annual fee to 0.5% of the highest bid) with a fee cap of $640 per year for domains up to eight letters long, and $5 per year for longer domains, and let domain holders pay nothing if no one makes a bid. Many average users would _save_ money under such a proposal.
 
 2. **Market legitimacy: avoid the need to get legitimacy to overturn people's expectations in the existing system by instead creating a new system** (or sub-system).
 	
