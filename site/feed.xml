@@ -344,18 +344,18 @@
 
 
 <item>
-<title>Why Proof of Stake (Nov 2020)</title>
-<link>https://vitalik.ca/general/2020/11/06/pos2020.html</link>
-<guid>https://vitalik.ca/general/2020/11/06/pos2020.html</guid>
+<title>為什麼權益證明棒棒的（2020 年十一月）</title>
+<link>https://vitalik.ca/general/2020/11/06/pos2020_zhTW.html</link>
+<guid>https://vitalik.ca/general/2020/11/06/pos2020_zhTW.html</guid>
 <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
 
 <item>
-<title>為什麼權益證明棒棒的（2020 年十一月）</title>
-<link>https://vitalik.ca/general/2020/11/06/pos2020_zhTW.html</link>
-<guid>https://vitalik.ca/general/2020/11/06/pos2020_zhTW.html</guid>
+<title>Why Proof of Stake (Nov 2020)</title>
+<link>https://vitalik.ca/general/2020/11/06/pos2020.html</link>
+<guid>https://vitalik.ca/general/2020/11/06/pos2020.html</guid>
 <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -821,18 +821,9 @@
 
 
 <item>
-<title>Über Kollusion</title>
-<link>https://vitalik.ca/general/2000/01/01/On_Collusion_DE.html</link>
-<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_DE.html</guid>
-<pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
-<description></description>
-</item>
-
-
-<item>
-<title>Situazioni di collusione</title>
-<link>https://vitalik.ca/general/2000/01/01/On_Collusion_IT.html</link>
-<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_IT.html</guid>
+<title>Na colusão</title>
+<link>https://vitalik.ca/general/2000/01/01/On_Collusion_Portuguese.html</link>
+<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_Portuguese.html</guid>
 <pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -848,9 +839,18 @@
 
 
 <item>
-<title>Na colusão</title>
-<link>https://vitalik.ca/general/2000/01/01/On_Collusion_Portuguese.html</link>
-<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_Portuguese.html</guid>
+<title>Über Kollusion</title>
+<link>https://vitalik.ca/general/2000/01/01/On_Collusion_DE.html</link>
+<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_DE.html</guid>
+<pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Situazioni di collusione</title>
+<link>https://vitalik.ca/general/2000/01/01/On_Collusion_IT.html</link>
+<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_IT.html</guid>
 <pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
 <description></description>
 </item>
