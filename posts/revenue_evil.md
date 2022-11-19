@@ -3,6 +3,8 @@
 [title]: <> (The Revenue-Evil Curve: a different way to think about prioritizing public goods funding)
 [pandoc]: <> (--mathjax)
 
+_Special thanks to Karl Floersch, Hasu and Tina Zhen for feedback and review._
+
 Public goods are an incredibly important topic in any large-scale ecosystem, but they are also one that is often surprisingly tricky to define. There is an economist definition of public goods - [goods that are non-excludable and non-rivalrous](https://en.wikipedia.org/wiki/Public_good_(economics)), two technical terms that taken together mean that it's difficult to provide them through private property and market-based means. There is a layman's definition of public good: "anything that is good for the public". And there is a democracy enthusiast's definition of public good, which includes connotations of public participation in decision-making.
 
 But more importantly, when the abstract category of non-excludable non-rivalrous public goods interacts with the real world, in almost any specific case there are all kinds of subtle edge cases that need to be treated differently. A park is a public good. But what if you add a $5 entrance fee? What if you fund it by auctioning off the right to have a statue of the winner in the park's central square? What if it's maintained by a semi-altruistic billionaire that enjoys the park for personal use, and designs the park around their personal use, but still leaves it open for anyone to visit?
