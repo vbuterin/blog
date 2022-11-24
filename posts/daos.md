@@ -96,7 +96,7 @@ All three cases have an unavoidable need for "governance", and pretty robust gov
 
 Algorithmic stablecoins depend on oracles. In order for an on-chain smart contract to know whether to target the value of DAI to 0.005 ETH or 0.0005 ETH, it needs some mechanism to learn the (external-to-the-chain) piece of information of what the ETH/USD price is. And in fact, this "oracle" is the primary place at which an algorithmic stablecoin can be attacked.
 
-This leads to a security conundrum: an algorithmic stablecoin cannot safely hold more collateral, and therefore cannot issue more units, than the market cap of its speculative token (eg. MKR, FLX...), because if it does, then it becomes profitable to buy up half the speculative token sipply, use those tokens to control the oracle, and steal funds from users by feeding bad oracle values and liquidating them.
+This leads to a security conundrum: an algorithmic stablecoin cannot safely hold more collateral, and therefore cannot issue more units, than the market cap of its speculative token (eg. MKR, FLX...), because if it does, then it becomes profitable to buy up half the speculative token supply, use those tokens to control the oracle, and steal funds from users by feeding bad oracle values and liquidating them.
 
 Here is a possible alternative design for a stablecoin oracle: [add a layer of indirection](https://ethresear.ch/t/a-not-quite-cryptoeconomic-decentralized-oracle/6453). Quoting the ethresear.ch post:
 
