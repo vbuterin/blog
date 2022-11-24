@@ -94,7 +94,7 @@ $4i \cdot (2 + i) = 3 + i$
 
 That last result may be a bit hard to figure out; what happened there was that we first decompose the product into $4i \cdot 2 + 4i \cdot i$, which gives $8i - 4$, and then because we are working in $\bmod 7$ math that becomes $i + 3$. To divide, we do:
 
-$a / b:  (a \cdot b^{(p^{2-2})})$ % $p$
+$a / b:  (a \cdot b^{(p^2-2)})$ % $p$
 
 Note that the exponent for Fermat’s little theorem is now $p^2$ instead of $p$, though once again if we want to be more efficient we can also instead extend the Extended Euclidean Algorithm to do the job. Note that $x^{p^2 - 1} = 1$ for any $x$ in this field, so we call $p^2 - 1$ the “order of the multiplicative group in the field”.
 
