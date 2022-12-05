@@ -3,6 +3,8 @@
 [title]: <> (What in the Ethereum application ecosystem excites me)
 [pandoc]: <> (--mathjax)
 
+_Special thanks to Matt Huang, Santi Siri and Tina Zhen for feedback and review_
+
 Ten, five, or even two years ago, my opinions on what Ethereum and blockchains can do for the world were very abstract. "This is a general-purpose technology, like C++", I would say; of course, it has specific properties like decentralization, openness and censorship resistance, but beyond that it's just too early to say which specific applications are going to make the most sense.
 
 Today's world is no longer that world. Today, enough time has passed that there are few ideas that are completely unexplored: if something succeeds, it will _probably_ be some version of something that has already been discussed in blogs and forums and conferences on multiple occasions. We've also come closer to identifying fundamental limits of the space. Many DAOs have had a fair chance with an enthusiastic audience willing to participate in them despite the inconveniences and fees, and many have underperformed. Industrial supply-chain applications [have not gone anywhere](https://www.theregister.com/2022/11/30/ibm_and_maersk_tradelens_shutdown/). Decentralized Amazon on the blockchain has not happened. But it's also a world where we have seen genuine and growing adoption of a few key applications that are meeting people's real needs - and those are the applications that we need to focus on.
