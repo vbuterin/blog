@@ -113,7 +113,7 @@ A design like this could be accomplished with a combination of zero knowledge pr
 
 ## Interoperability with other blockchain applications
 
-This is an easy one: some things should be on-chain to better interoperate with other on-chain applications. Proof of humanity being an on-chain NFT makes it easier projects to automatically airdrop or give governance rights to accounts that have proof of humanity profiles. Oracle data being on-chain makes it easier for defi projects to read. In all of these cases, the blockchain does not remove the need for trust, though it can house structures like DAOs that manage the trust. But the main value that being on-chain provides is simply _being in the same place as the stuff that you're interacting with, which needs a blockchain for other reasons_.
+This is an easy one: some things should be on-chain to better interoperate with other on-chain applications. Proof of humanity being an on-chain NFT makes it easier for projects to automatically airdrop or give governance rights to accounts that have proof of humanity profiles. Oracle data being on-chain makes it easier for defi projects to read. In all of these cases, the blockchain does not remove the need for trust, though it can house structures like DAOs that manage the trust. But the main value that being on-chain provides is simply _being in the same place as the stuff that you're interacting with, which needs a blockchain for other reasons_.
 
 Sure, you _could_ run an oracle off-chain and require the data to be imported only when it needs to be read, but in many cases that would actually be _more_ expensive, and needlessly impose complexity and costs on developers.
 
