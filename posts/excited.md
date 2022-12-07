@@ -107,7 +107,7 @@ For a long time, I have been bullish on _blockchain identity_ but bearish on _bl
 
 And this is exactly what has happened since then. The [Sign In With Ethereum (SIWE)](https://login.xyz/) standard allows users to log into (traditional) websites in much the same way that you can use Google or Facebook accounts to log into websites today. This is actually useful: it allows you to interact with a site without giving Google or Facebook access to your private information or the ability to take over or lock you out of your account. Techniques like [social recovery](https://vitalik.ca/general/2021/01/11/recovery.html) could give users account recovery options in case they forget their password that are _much better_ than what centralized corporations offer today. SIWE is supported by many applications today, including [Blockscan chat](https://chat.blockscan.com/), the end-to-end-encrypted email and notes service [Skiff](https://app.skiff.com/), and various blockchain-based alternative social media projects.
 
-ENS lets users have usernames: I have `vitalik.eth`. [Proof of Humanity](https://proofofhumanity.eth.limo/) and other proof-of-personhood systems let users prove that they are unique humans, which is useful in many applications including airdrops and governance. [POAP](https://poap.xyz/) (the "proof of attendance protocol", pronounced [either "pope" or "poe-app"](https://twitter.com/vitalikbuterin/status/1534555001326080001) depending on whether you're a brave contrarian or a sheep) is a general-purpose protocol for issuing tokens that represent attestations: have you completed an educational course? Have you attended an event? Have you met a particular person? POAPs could be used both as an ingredient in a proof-of-personhood protocol and as a way to try to determine whether or not someone is a member of a particular community (valuable for governance or airdrops).
+ENS lets users have usernames: I have `vitalik.eth`. Proof of Humanity and other proof-of-personhood systems let users prove that they are unique humans, which is useful in many applications including airdrops and governance. [POAP](https://poap.xyz/) (the "proof of attendance protocol", pronounced [either "pope" or "poe-app"](https://twitter.com/vitalikbuterin/status/1534555001326080001) depending on whether you're a brave contrarian or a sheep) is a general-purpose protocol for issuing tokens that represent attestations: have you completed an educational course? Have you attended an event? Have you met a particular person? POAPs could be used both as an ingredient in a proof-of-personhood protocol and as a way to try to determine whether or not someone is a member of a particular community (valuable for governance or airdrops).
 
 <center><br>
 
@@ -238,7 +238,7 @@ If the robustness and interoperability arguments did _not_ apply, then it probab
 
 There are plenty of other examples of this kind of argument applying, both for DAOs that people increasingly rely on for their day-to-day lives, and for "meta-DAOs" that provide services to _other_ DAOs:
 
-* [Proof of humanity](https://ethresear.ch/t/pairwise-coordination-subsidies-a-new-quadratic-funding-design/5553)
+* Proof of humanity
 * [Kleros](https://kleros.io/)
 * [Chainlink](https://chain.link/)
 * Stablecoins
