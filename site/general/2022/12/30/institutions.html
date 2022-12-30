@@ -1,0 +1,277 @@
+
+
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
+
+
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="What even is an institution?">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="../../../../scripts/tex-svg.js">
+</script>
+
+<style>
+</style>
+
+<div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
+
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="What even is an institution?" />
+<meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
+
+
+<br>
+<h1 style="margin-bottom:7px"> What even is an institution? </h1>
+<small style="float:left; color: #888"> 2022 Dec 30 </small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
+<br> <br> <br>
+<title> What even is an institution? </title>
+
+<p><em>Special thanks to Dennis Pourteaux and Tina Zhen for discussion that led to this post.</em></p>
+<p>A recent alternative political compass proposed by Dennis Pourteaux proposes that the most important political divide of our present time is not liberty vs authoritarianism or left vs right, <a href="https://pourteaux.substack.com/p/institutional-alignment">but rather how we think about "institutions"</a>. Are the institutions that society runs on today good or bad, and is the solution to work incrementally to improve them, replace them with radically different institutions, or do away with institutions altogether?</p>
+<br>
+<center>
+<img src="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F1b7ab13d-2733-4de9-a9f0-50e2ecfdcfed_1024x924.png" style="width:450px" />
+</center>
+<p><br></p>
+<p>This, however, raises a really important question: <strong>what even is an "institution" anyway?</strong></p>
+<p>The word "institution" in political discourse brings to mind things like national governments, the New York Times, universities and <em>maybe</em> the local public library. But the word also gets used to describe other kinds of things. The phrase "the institution of marriage" is common in English-language discourse, and gets <a href="https://www.google.com/search?q=%22the+institution+of+marriage%22">over two million search results</a> on Google. If you ask Google point-blank, "is family an institution", it answers yes.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/institutions/google_answer.png" /></p>
+</center>
+<p><br></p>
+<p>ChatGPT agrees:</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/institutions/chatgpt_answer.png" /></p>
+</center>
+<p><br></p>
+<p>If we take ChatGPT's definition that "a social institution is a pattern of behaviors and norms that exist within a society and are thought to be essential to its functioning" seriously, then the New York Times is not an institution - no one argues that it's literally essential, and many people consider it to be actively harmful! And on the other side, we can think of examples of things that <em>maybe are institutions</em> that Pourteaux's "anti-institutionalists" would approve of!</p>
+<ul>
+<li>Twitter</li>
+<li>The Bitcoin or Ethereum blockchains</li>
+<li>The English language</li>
+<li>Substack</li>
+<li>Markets</li>
+<li>Standards organizations dealing with international shipping</li>
+</ul>
+<p>This leads us to two related, but also somewhat separate, questions:</p>
+<ol type="1">
+<li><strong>What is <em>really</em> the dividing line that makes some things "institutions" in people's eyes and others not?</strong></li>
+<li><strong>What kind of world do people who consider themselves anti-institutionalists actually want to see? And what <em>should</em> an anti-institutionalist in today's world be doing?</strong></li>
+</ol>
+<h2 id="a-survey-experiment">A survey experiment</h2>
+<p>Over the past week, I made a <a href="https://cryptodon.lol/@vbuterin/109570542347764470">series</a> of <a href="https://cryptodon.lol/@vbuterin/109576148299374533">polls</a> on Mastodon where I provided many examples of different objects, practices and social structures, and asked: is this an institution or not? In some cases, I made different spins on the same concept to see the effects of changing some specific variables. There were some fascinating results.</p>
+<p>Here are a few examples:</p>
+<p><br> <img src="../../../../images/institutions/m1.png" style="height:320px; padding-right: 20px; padding-bottom: 20px" /> <img src="../../../../images/institutions/m2.png" style="height:320px; padding-bottom: 20px" /> <br><br></p>
+<p>And:</p>
+<p><br> <img src="../../../../images/institutions/m3.png" style="height:320px; padding-right: 20px; padding-bottom: 20px" /> <img src="../../../../images/institutions/m4.png" style="height:320px; padding-right: 20px; padding-bottom: 20px" /> <img src="../../../../images/institutions/m5.png" style="height:320px; padding-right: 20px; padding-bottom: 20px" /> <br><br></p>
+<p>And:</p>
+<p><br> <img src="../../../../images/institutions/m6.png" style="height:320px; padding-right: 20px; padding-bottom: 20px" /> <img src="../../../../images/institutions/m7.png" style="height:320px; padding-right: 20px; padding-bottom: 20px" /> <br><br></p>
+<p>And, of course:</p>
+<p><br> <img src="../../../../images/institutions/m8.png" style="height:250px; padding-right: 20px; padding-bottom: 20px" /> <img src="../../../../images/institutions/m9.png" style="height:250px; padding-right: 20px; padding-bottom: 20px" /> <img src="../../../../images/institutions/mx.png" style="height:250px; padding-right: 20px; padding-bottom: 20px" /> <br><br></p>
+<p>There's more fun ones: <a href="https://cryptodon.lol/@vbuterin/109570543708271381">NYT</a> vs <a href="https://cryptodon.lol/@vbuterin/109570629589076709">Russia Today</a> vs <a href="https://cryptodon.lol/@vbuterin/109570548373455136">Bitcoin Magazine</a>, the <a href="https://cryptodon.lol/@vbuterin/109576276734493858">solar system</a> vs <a href="https://cryptodon.lol/@vbuterin/109576290616996040">what if we started re-engineering it</a>, <a href="https://cryptodon.lol/@vbuterin/109576149554493641">prediction markets</a>, various <a href="https://cryptodon.lol/@vbuterin/109570587677425299">social</a> <a href="https://cryptodon.lol/@vbuterin/109570583709002906">customs</a>, and a lot more.</p>
+<p>Here, we can already start to see some common factors. Marriage is more institution-y than romantic relationships, likely because of its official stamp of recognition, and more mainstream relationship styles are more institution-y than less mainstream styles (a pattern that repeats itself when comparing NYT vs Russia Today vs Bitcoin Magazine). Systems with clearly visible human beings making decisions are more institution-y than more impersonal algorithmic structures, even if their outputs are ultimately entirely a function of human-provided inputs.</p>
+<p>To try to elucidate things further, I decided to do a more systematic analysis.</p>
+<h2 id="what-are-some-common-factors">What are some common factors?</h2>
+<p>Robin Hanson <a href="https://www.overcomingbias.com/2022/12/elites-must-rule.html">recently made a post</a> in which he argued that:</p>
+<blockquote>
+<p>At least on prestigious topics, most people want relevant institutions to take the following ideal form:</p>
+<p><strong>Masses recognize elites, who oversee experts, who pick details.</strong></p>
+</blockquote>
+<p>This seemed to me to be an important and valuable insight, though in a somewhat different direction: yes, that is the style of institution that people find familiar and are not <em>weirded out by</em> (as they might when they see many of the "alternative institutions" that Hanson <a href="https://mason.gmu.edu/~rhanson/altinst.html">likes to propose</a>), but it's also exactly the style of institutions that anti-institutionalists tend to most strongly rail against! Mark Zuckerberg's very institution-y <a href="https://transparency.fb.com/oversight/creation-of-oversight-board/">oversight board</a> certainly followed the "masses recognize elites who oversee experts" template fairly well, but it did not really make a lot of people happy.</p>
+<p>I decided to give this theory of institution-ness, along with some other theories, a test. I identified seven properties that seemed to me possible important characteristics of institutions, with the goal of identifying which ones are most strongly correlated to people thinking of something as being an institution:</p>
+<ul>
+<li>Does it have a "<strong>masses recognize elites</strong>" pattern?</li>
+<li>Does it have a "<strong>elites oversee experts</strong>" pattern?</li>
+<li>Is it <strong>mainstream</strong>?</li>
+<li>Is it <a href="https://medium.com/@VitalikButerin/the-meaning-of-decentralization-a0c92b76a274"><strong>logically centralized</strong></a>?</li>
+<li>Does it involve <strong>interaction between people</strong>? (eg. intermittent fasting doesn't, as everyone just chooses whether or not to do it separately, but a government does)</li>
+<li>Does it have a specific <strong><em>structure</em></strong> that has a lot of <strong>intentional design</strong> behind it? (eg. corporations do, friendship doesn't)</li>
+<li>Does it have <strong><em>roles</em></strong> that take on a life <strong>independent of the individuals</strong> that fill them? (eg. democratically elected governments do, after all they even call the leader "Mr. President", but a podcast which is named after its sole host does not at all)</li>
+</ul>
+<p>I went through the list and personally graded the 35 maybe-institutions from my polls on these categories. For example, Tesla got:</p>
+<ul>
+<li><strong>25% on "masses recognize elites"</strong> (because it's run by Elon Musk, who does in practice have a lot of recognition and support as a celebrity, but this isn't a deeply intrinsic feature of Tesla, Elon won't get kicked out of Tesla if he loses legitimacy, etc)</li>
+<li><strong>100% on "elites oversee experts"</strong> (all large corporations follow this pattern)</li>
+<li><strong>75% on "is mainstream"</strong> (almost everyone knows about it, lots of people have them, but it's not <em>quite</em> a New York Times-level household name)</li>
+<li><strong>100% on "logical centralization"</strong> (most things get 100% on this score; as a counterexample, "dating sites" get 50% because there are many dating sites and "intermittent fasting" gets 0%)</li>
+<li><strong>100% on "involves interaction between people"</strong> (Tesla produces products that it sells to people, and it hires employees, has investors, etc)</li>
+<li><strong>75% on "intentional structure"</strong> (Tesla definitely has a deep structure with shareholders, directors, management, etc, but that structure isn't really part of its <em>identity</em> in the way that, say, proof of stake consensus is for Ethereum or voting and congress are for a government)</li>
+<li><strong>50% for "roles independent of individuals"</strong> (while roles in companies are generally interchangeable, Tesla does get large gains from being part of the Elon-verse specifically)</li>
+</ul>
+<p>The full data is <a href="https://vitalik.ca/files/misc_files/institution_analysis.ods">here</a>. I know that many people will have many disagreements over various individual rankings I make, and readers could probably convince me that a few of my scores are wrong; I am mainly hoping that I've included a sufficient number of diverse maybe-instiutions in the list that individual disagreement or errors get roughly averaged out.</p>
+<p>Here's the table of correlations:</p>
+<br>
+<table>
+<tr>
+<td>
+Masses recognize elites
+</td>
+<td>
+0.491442156943094
+</td>
+</tr>
+<tr>
+<td>
+Elites oversee experts
+</td>
+<td>
+0.697483431580409
+</td>
+</tr>
+<tr>
+<td>
+Is mainstream
+</td>
+<td>
+0.477135770662517
+</td>
+</tr>
+<tr>
+<td>
+Logical centralization
+</td>
+<td>
+0.406758324754985
+</td>
+</tr>
+<tr>
+<td>
+Interaction between people
+</td>
+<td>
+0.570201749796132
+</td>
+</tr>
+<tr>
+<td>
+Intelligently designed structure
+</td>
+<td>
+0.365640100778201
+</td>
+</tr>
+<tr>
+<td>
+Roles independent of individuals
+</td>
+<td>
+0.199412937985826
+</td>
+</tr>
+</table>
+<p><br></p>
+<p>But as it turns out, the correlations are misleading. "Interaction between people" turns out to be an almost unquestionably <em>necessary</em> property for something to have to be an institution. The correlation of 0.57 <em>kind of</em> shows it, but it understates the strength of the relationship:</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/institutions/correl1.png" /></p>
+</center>
+<p><br></p>
+<p>Literally <em>every</em> thing that I labeled as clearly involving interaction had a higher percentage of people considering it an institution than <em>every</em> thing I labeled as not involving interaction. The single dot in the center is my hypothetical example of an island where people with odd-numbered birthdays are not allowed to eat meat before 12:00; I didn't want to give it 100% because the not-meat-eating is a private activity, but the question still strongly implies some social or other pressure to follow the rule so it's also not really 0%. This is a place where <a href="https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient">Spearman's coefficient</a> outperforms Pearson's, but rather than spurting out exotic numbers I'd rather just show the charts. Here are the other six:</p>
+<p><br> <img src="../../../../images/institutions/correl2.png" style="width: 340px; padding-right: 20px; padding-bottom: 20px" /> <img src="../../../../images/institutions/correl3.png" style="width: 340px; padding-right: 20px; padding-bottom: 20px" /> <img src="../../../../images/institutions/correl4.png" style="width: 340px; padding-right: 20px; padding-bottom: 20px" /> <img src="../../../../images/institutions/correl5.png" style="width: 340px; padding-right: 20px; padding-bottom: 20px" /> <img src="../../../../images/institutions/correl6.png" style="width: 340px; padding-right: 20px; padding-bottom: 20px" /> <img src="../../../../images/institutions/correl7.png" style="width: 340px; padding-right: 20px; padding-bottom: 20px" /> <br><br></p>
+<p>The most surprising finding for me is that <strong>"roles independent of individuals" is by far the weakest correlation</strong>. Twitter run by a democracy is the most institution-y of all, but Twitter run by a pay-to-govern scheme is as institution-y as Twitter that's just run by Elon directly. Roles being independent of individuals adds a guarantee of stability, but roles being independent of individuals <em>in the wrong way</em> feels too unfamiliar, or casual, or otherwise not institution-like. Dating sites are more independent of individuals than professional matchmaking agencies, and yet it's the matchmaking agencies that are seen as more institution-like. Attempts at highly role-driven and mechanistic credibly-neutral media, (eg. <a href="https://cryptodon.lol/@vbuterin/109576172987142068">this contraption</a>, which I actually think would be really cool) just feel <em>alien</em> - perhaps in a bad way, but also perhaps in a good way, if you find the institutions of today frustrating and you're open-minded about possible alternatives.</p>
+<p>Correlations with "masses recognize elites" and "elites oversee experts" were high; higher for the second than the first, though perhaps Hanson and I had different meanings in mind for "recognize". The "intentional structure" chart has an empty bottom-right corner but a full top-left corner, suggesting that <strong>intentional structure is necessary but not sufficient for something to be an institution</strong>.</p>
+<p><strong>That said, my main conclusion is probably that the term "institution" is a big mess</strong>. Rather than the term "institution" referring to a single coherent cluster of concepts (as eg. <a href="https://slatestarcodex.com/2017/03/16/book-review-seeing-like-a-state/">"high modernism" does</a>), the term seems to have a number of <em>different</em> definitions at play:</p>
+<ol type="1">
+<li>A structure that fits the familiar pattern of "masses recognize elites who oversee experts"</li>
+<li>Any intentionally designed large-scale structure that mediates human interaction (including things like financial markets, social media platforms and dating sites)</li>
+<li>Widely spread and standardized social customs in general</li>
+</ol>
+<p>I suspect that anti-institutionalists focus their suspicion on (1), and especially instances of (1) that have been captured by the wrong tribe. <strong>Whether a structure is personalistic or role-driven does not seem to be very important to anti-institutionalists</strong>: both personalities ("<a href="https://brief.bismarckanalysis.com/p/the-strategy-of-klaus-schwabs-world">Klaus Schwab</a>") and bureaucracies ("woke academics") are equally capable of coming from the wrong tribe. Anti-institutionalists generally do not oppose (3), and indeed in many cases want to see (3) replace (1) as much as possible.</p>
+<p><strong>Support for (2) probably maps closely to Pourteaux's "techno-optimist" vs "techno-minimalist" distinction</strong>. Techno-minimalists don't see things like Twitter, Substack, Bitcoin, Ethereum, etc as part of the solution, though there are "Bitcoin minimalists" who see the Bitcoin blockchain as a narrow exception and otherwise want to see a world where things like family decide more of the outcomes. "Techno-optimist anti-institutionalists" are specifically engaged in a political project of either trying to replace (1) with the right kind of (2), or trying to reform (1) by introducing more elements of the right kind of (2).</p>
+<h2 id="which-way-forward-for-anti-institutionalists-or-institutional-reformers">Which way forward for anti-institutionalists or institutional reformers?</h2>
+<p>It would be wrong to ascribe too much intentional strategy to anti-institutionalists: anti-institutionalism is a movement that is much more united in what is against than in support of any specific particular alternative. But what <em>is</em> possible is to recognize this pattern, and ask the question of which paths forward make sense for anti-institutionalists.</p>
+<p>From a language point of view, <strong>even using the word "institution" at all seems more likely to confuse than enlighten at this point</strong>. There is a crucial difference between (i) a desire to replace structures that contain enshrined elite roles with structures that don't, (ii) a preference for small-scale and informal structures over large-scale and formal ones, (iii) a desire to simply swap the current elites out for new elites, and (iv) a kind of social libertinist position that individuals should be driven by their own whims and not by incentives created by other people. The word "institution" obscures that divide, and probably focuses too much attention on what is being torn down rather than what is to be built up in its place.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/institutions/whichway.png" /></p>
+<p><small><i>Different anti-institutionalists have different goals in mind. Sure, the person on Twitter delivering that powerful incisive criticism of the New York Times agrees with you on how society <strong>should not</strong> be run, but are you sure they'll be your ally when it comes time to decide how society <strong>should</strong> be run?</i></small></p>
+</center>
+<p><br></p>
+<p>The challenge with avoiding structures entirely is clear: prisoner's dilemmas exist and we need incentives. The challenge with small-scale and informal structures is often clear: economies of scale and gains from standardization - though sometimes there are other benefits from informal approaches that are worth losing those gains. The challenge with simply swapping the elites is clear: it has no path to socially scale into a cross-tribal consensus. If the goal is not to enshrine a new set of elites forever, but for elites to permanently be high-churn (cf. Balaji's <a href="https://thenetworkstate.com/founding-vs-inheriting">founder vs inheritor</a> dichotomy), that is more credibly neutral, but then it starts getting closer to the territory of avoiding <em>enshrined elites</em> in general.</p>
+<p>Creating formal structures without enshrined elites is fascinating, not least because it's under-explored: there's a strong case that institutions with enshrined elite roles might be an unfortunate historical necessity from when communication was more constrained, but modern information technology (including the internet and also newer spookier stuff like zero-knowledge cryptography, blockchains and DAOs) could rapidly expand our available options. That said, as Hanson points out, this path has its own fair share of challenges too.</p>
+ </div> 
