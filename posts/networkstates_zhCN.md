@@ -1,11 +1,7 @@
-[category]: <> (General,Philosophy)
+[category]: <> (中文)
 [date]: <> (2022/07/13)
-[title]: <> (What do I think about network states?)
+[title]: <> (「网络国家」之我见)
 [pandoc]: <> (--mathjax)
-
-#  「网络国家」之我见
-
-*Read in English：[https://vitalik.ca/general/2022/07/13/networkstates.html](https://vitalik.ca/general/2022/07/13/networkstates.html)*
 
 7 月 4 日，巴拉吉-斯里尼瓦山（Balaji Srinivasan）发表了人们 [期待已久的新书](https://thenetworkstate.com/)，描绘他心目中对「**网络国家**」的愿景：社区纷纷围绕着各自的愿景组织运作起来，起初是各类线上俱乐部，但随着不断树立起越来越大的影响力，最终大到足以寻求政治自治，甚至谋求外交承认。
 
