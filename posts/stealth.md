@@ -72,7 +72,7 @@ Suppose that someone sends you an NFT. Mindful of your privacy, they send it to 
 
 ![](../../../../images/stealth/meme.png)
 
-<small><i>Inserting memes of 2017-era (or older) crypto scam figures is an important technique that writers can use to signal erudition and respectableness, because it shows that they have been around for a long time and have refined tastes, and are not easily swayed by current-thing scam figures like SBF.</i></small>
+<small><i>Inserting memes of 2017-era (or older) crypto scams is an important technique that writers can use to signal erudition and respectableness, because it shows that they have been around for a long time and have refined tastes, and are not easily swayed by current-thing scam figures like SBF.</i></small>
 
 </center><br>
 
