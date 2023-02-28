@@ -3,6 +3,8 @@
 [title]: <> (「网络国家」之我见)
 [pandoc]: <> (--mathjax)
 
+_感谢 [付航](https://twitter.com/fulihang2009) 翻译，[Roy](https://twitter.com/MroyBB) 和 [Zik](https://twitter.com/muziknozik) 审阅_
+
 7 月 4 日，巴拉吉-斯里尼瓦山（Balaji Srinivasan）发表了人们 [期待已久的新书](https://thenetworkstate.com/)，描绘他心目中对「**网络国家**」的愿景：社区纷纷围绕着各自的愿景组织运作起来，起初是各类线上俱乐部，但随着不断树立起越来越大的影响力，最终大到足以寻求政治自治，甚至谋求外交承认。
 
 网络国家可以视为一种尝试，它试图成为自由意志主义思想体系的继承者：巴拉吉本人屡次夸赞《[主权个人](https://www.amazon.com/Sovereign-Individual-Mastering-Transition-Information/dp/0684832720)》一书（参见我的小 [读后感](https://twitter.com/vitalikbuterin/status/1244353457034854400)），认为它是重要的读物和灵感源泉。但同时，他也与该书的思想在一些主要方面存在分野，集中体现在他在新作中对社会关系中非个人主义和非货币层面的许多论述，比如关于道德准则和社区。网络国家还可以看成是另一种尝试，即：为加密领域勾勒出可能更为宏大的政治叙事。与其在互联网的角落里画地为牢，与广阔的世界脱节，区块链更可以在组织大部分人类社会的新途径中，发挥核心的作用。
