@@ -24,7 +24,7 @@ _感谢 [付航](https://twitter.com/fulihang2009) 翻译，[Roy](https://twitte
 - [有没有中间道路？](#is-there-a-middle-way)
 
 
-## <div id='what-is-a-network-state'>什么是网络国家？</div>
+<h2 id='what-is-a-network-state'>什么是网络国家？</h2>
 
 巴拉吉给出了几个简短的定义，帮助人们理解什么是网络国家。首先，他用一句话定义：
 
@@ -70,7 +70,7 @@ _感谢 [付航](https://twitter.com/fulihang2009) 翻译，[Roy](https://twitte
 
 **巴拉吉在《网络国家》中的观点，我姑且做出这样的阐释：我们的确需要那些不仅由经济利益，也由道德力量绑定在一起的政治团体，虽然如此，我们却不必将自己束缚在现今任何特定的政治团体上，它们已经漏洞百出，而且越来越无法代表民众的价值观。我们能够、而且应该，创造出新的更好的集体，而巴拉吉的 [七步走方略](https://thenetworkstate.com/the-network-state-in-one-thousand-words) 给出了实现方法。**
 
-## <div id='so-what-kinds-of-network-states-could-we-build'>我们能建设什么样的网络国家？</div>
+<h2 id='so-what-kinds-of-network-states-could-we-build'>我们能建设什么样的网络国家？</h2>
 
 巴拉吉提出了关于网络国家的一些设想，我将其精简为两个主要方向：沉浸型的生活方式，和倡导科技的监管创新。
 
@@ -96,7 +96,7 @@ _感谢 [付航](https://twitter.com/fulihang2009) 翻译，[Roy](https://twitte
 
 所有这些案例的共性就在于，它体现了拥有一个物理区域的价值。至少要有几公顷的土地，让你那个网络国家的独特规则得以实施。当然，你个人可以坚持只在健康的餐厅吃饭，并且去每家餐厅前都认真做攻略。但，如果能划出一袭土地，在这一方地面上，无论去哪儿都能保证你个人的标准得到满足，事情就*简单多了*。当然，你可以游说当地政府收紧健康和安全法规。但如果这样做，你就得冒着和完全不同偏好的人们发生摩擦的风险，并且存在 [将贫困人群排挤出经济系统](https://podcasts.apple.com/ee/podcast/the-truth-about-food-trucks-ft-kyle-sweetland/id1390384827?i=1000557605438) 的风险。一个网络国家则提供了一条温和的路线。
 
-## <div id='what-is-balajis-megapolitical-case-for-network-states'>巴拉吉式网络国家的大政治观是什么？</div>
+<h2 id='what-is-balajis-megapolitical-case-for-network-states'>巴拉吉式网络国家的大政治观是什么？</h2>
 
 这本书有一个引人好奇的特点。读者几乎立即会意识到，它有时像是两本书的结合：有时是一本关于网络国家概念的书，有时则展现出巴拉吉本人宏大的政治观理论。
 
@@ -123,7 +123,7 @@ _感谢 [付航](https://twitter.com/fulihang2009) 翻译，[Roy](https://twitte
 
 ![https://vitalik.ca/images/networkstates/helical.png](https://vitalik.ca/images/networkstates/helical.png)
 
-## <div id='do-you-have-to-agree-with-balajis-megapolitics-to-like-network-states'>要接受网络国家就不得不同意巴拉吉的大政治观吗？</div>
+<h2 id='do-you-have-to-agree-with-balajis-megapolitics-to-like-network-states'>要接受网络国家就不得不同意巴拉吉的大政治观吗？</h2>
 
 许多读者会觉得巴拉吉的大政治观中有很多方面令人心生疑窦。如果你认为保护弱势群体的「觉醒运动」很重要，也许就不会欣赏那种轻慢的态度，认为它只不过是职业精英权力欲的掩饰。如果小弱国家所面临的困境常让你牵挂，比如正在遭受强邻威胁，向外界绝望求助的乌克兰，那么巴拉吉所谓「各国重新武装起来自我防卫，反而可能最好」的 [托词](https://thenetworkstate.com/people-of-god-people-of-the-state-people-of-the-network) 就不能让你信服。
 
@@ -142,7 +142,7 @@ _感谢 [付航](https://twitter.com/fulihang2009) 翻译，[Roy](https://twitte
 
 上述两种视角与很多对巴拉吉式大政治观的异议可以并存。因此，无论支持还是反对巴拉吉式的网络国家，我们终究还是不得不讨论网络国家这个理念。尽管不乏谨慎，而且在网络国家如何运作方面的想法不同，但我个人对它的看法是友善的。
 
-## <div id='what-does-cryptocurrency-have-to-do-with-network-states'>加密货币与网络国家有何关系？</div>
+<h2 id='what-does-cryptocurrency-have-to-do-with-network-states'>加密货币与网络国家有何关系？</h2>
 
 在两个方面它们双方存在着一致性：精神层面，「比特币已成为科技的旗帜」；实践层面，是指网络国家具体运用区块链和加密代币的方式。总的来说，我同意这两种观点——虽然我认为巴拉吉的书可以将它们更鲜明的表达出来。
 
@@ -163,7 +163,7 @@ _感谢 [付航](https://twitter.com/fulihang2009) 翻译，[Roy](https://twitte
 
 但我们也需要考虑得更深一层。**区块链和网络国家有一个共性，他们都试图「创造一个新的根」。**一家公司则不是一个根：如果内部发生纠纷，它最终要通过国家的法院系统来解决。另一方面，区块链和网络国家正在试图成为新的底层根系。它并不要求你有那些绝对的「没人能拿我怎么着」的主权式理想，这类的理想大概只有那五个拥有高度自足的国民经济和/或者拥有核武器的国家才能实现。个体的区块链参与者在国家监管面前当然是脆弱的，而网络国家的飞地更有甚之。但区块链至少*尝试着*成为非国家层面的最终纠纷裁决者（要么通过智能合约的逻辑，要么通过自由分叉）。它是唯一这么做的体系，这让它成为网络国家理想的基础设施。
 
-## <div id='what-aspects-of-balajis-vision-do-i-like'>我喜欢巴拉吉愿景的哪些方面？</div>
+<h2 id='what-aspects-of-balajis-vision-do-i-like'>我喜欢巴拉吉愿景的哪些方面？</h2>
 
 无可避免地，信奉[「私产至上」](https://mises.org/library/new-liberty-libertarian-manifesto)的自由意志主义者遭遇到了一些重大问题，比如在公共物品资助方面表现出的无能为力。有鉴于此，二十一世纪任何成功倡导自由的计划，都不得不成为一个混合体，即，至少包含一个用来解决起码 80% 此类问题的大妥协式方案，而将剩下的问题留给独立个体的积极行动。它可以是某些对抗经济权力和财富集中问题的严格措施（例如，每年对所有物品征收 [哈伯格税](https://chicagounbound.uchicago.edu/cgi/viewcontent.cgi?article=12668&context=journal_articles)），可以是 85% 的 [乔治主义土地税](https://astralcodexten.substack.com/p/does-georgism-work-is-land-really)，也可以是全民基本收入（UBI），还可以强制规模足够大的公司采用内部民主制，或者其他任何提议。不是所有的都能成，但你需要一些激进的东西才能有起码的胜算。
 
@@ -187,7 +187,7 @@ _感谢 [付航](https://twitter.com/fulihang2009) 翻译，[Roy](https://twitte
 
 第三方面当然牵涉到更复杂的道德问题：无论在你看来，陷入瘫痪或正缓慢滑向事实上威权制的全球政府是更大的问题，还是有个什么人发明了邪恶的科技，将我们通通毁灭更危险。我基本上算是第一阵营的；我所担忧的前景，是 [西方和中国都变成某种低增长的保守主义](https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkLnBvZGJlYW4uY29tL3BhbGxhZGl1bW1hZy9mZWVkLnhtbA/episode/cGFsbGFkaXVtbWFnLnBvZGJlYW4uY29tL2RmODEzZmE1LTJlNmMtM2VjMC1hNmVhLWJjMjc0N2MyMmM4Nw?hl=en-ES&ved=2ahUKEwirxaiY5O34AhUNQhoKHbVeB14QjrkEegQIAxAF&ep=6)；我*热衷*于看到主权国家之间的协调不善限制了一些事情的执行力度，比如全球版权保护法；我还担忧，未来的监控技术，将导致全球陷入一种高度自我强化的、无法摆脱的可怕的政治均势。但在一些特定的领域（咳咳，[怀有敌意的人工智能的风险](https://www.lesswrong.com/posts/uMQ3cqWDPHhjtiesc/agi-ruin-a-list-of-lethalities)）我是敬而远之的…...但到这里我们算是进入了我反馈的第二部分。
 
-## <div id='what-aspects-of-balajis-vision-do-i-take-issue-with'>巴拉吉的构想里哪些是我持保留态度的？</div>
+<h2 id='what-aspects-of-balajis-vision-do-i-take-issue-with'>巴拉吉的构想里哪些是我持保留态度的？</h2>
 
 我最担心的有四个方面：
 
@@ -220,7 +220,7 @@ _感谢 [付航](https://twitter.com/fulihang2009) 翻译，[Roy](https://twitte
 在俄罗斯 2 月 24 日刚入侵乌克兰的时候，诺亚-史密斯（Noah Smith）写了一篇重要博文，阐述了这场入侵应该给我们的思想带来道德反省，其中题为「无处可逃」一章尤其令人震撼。引用如下：
 
 > 虽然「退出」在本地层面有用——如果旧金山运转失衡，你可以搬到奥斯汀或者其他科技城——但在国家层面，这根本行不通，事实上也历来如此——有钱的币圈人搬到比如新加坡这样的国家，或波多黎各这样的地区，但仍然高度依赖于功能强大的政府提供的基础设施和机构。但俄罗斯正在使人们更加清楚地认识到，这种战略注定要失败，因为归根到底，我们无处可逃。跟以往的时代不同，如今大国的长臂管辖，可以触及全世界任何一个角落。
-
+>
 > 如果美国崩溃，你不能只是搬到新加坡，因为过不了几年，你就得向你的中国新主人屈膝。如果美国崩溃，你也不能只是搬到爱沙尼亚，因为过不了几年（几个月？），你就得向你的俄罗斯新主人屈膝。而这些新主人，将不会有丝毫兴趣保证你的个体自由和财产安全……所以对于自由意志主义者来说，美国不崩溃**非常非常**重要。
 
 我们有可能面对这样的反驳：确实，如果所有乌克兰人的第一反应都是「退出」，乌克兰早就崩溃了。但如果俄罗斯也更倾向于「退出」，所有俄罗斯人就会在入侵的一周内全都撤离。普京将孤零零地站在卢甘斯克（Luhansk）的荒野里，独自面对一百米外的泽连斯基，普京高喊着让泽连斯基投降，泽连斯基回道：「就凭你？你的伙计们在哪儿？」（泽连斯基当然可以在公平的一对一搏斗中胜出）。
@@ -235,7 +235,7 @@ _感谢 [付航](https://twitter.com/fulihang2009) 翻译，[Roy](https://twitte
 
 自卫技术当然很好，而且可能是价值受到低估的资助领域。但想仅仅靠这个解决问题并不现实，比如要 [禁止屠宰机器人](https://futureoflife.org/2021/12/13/special-newsletter-slaughterbots-sequel/)，跨国合作是必需的。所以，我们确定需要的是这样一个世界：即使网络国家比今天的主题社区（intentional community）拥有更多的主权，这个主权也不应该是绝对的。
 
-## <div id='non-balajian-network-states'>非巴拉吉式的网络国家</div>
+<h2 id='non-balajian-network-states'>非巴拉吉式的网络国家</h2>
 
 阅读《网络国家》让我想起了十年前读过的另一本书：大卫-德-乌加特（David de Ugarte）的《族群：二十一世纪的经济民主》（[Phyles: Economic Democracy in the Twenty First Century](http://wiki.p2pfoundation.net/Phyles)）。乌加特讨论了与围绕价值观建立的跨国社区类似的设想，但它有更重的左翼倾向：他假想这些社区将会是民主的，受到 2000 年初的网络社区和十九、二十世纪的合作社及工作场所民主的多重启发。
 
@@ -257,7 +257,7 @@ _感谢 [付航](https://twitter.com/fulihang2009) 翻译，[Roy](https://twitte
 
 当然，我看到一个直接的挑战，就是这种结构所固有的激励问题。一种对族群（Phyles）和网络国家（The Network State）可能并不公平的总结是：「网络国家」试图用 2010 年代的区块链技术作为模型来构想如何重新组织人类社会，而「族群」试图采用的模型是 2000 年代的开源软件社区和博客。开源有激励不足的缺陷，而区块链有过度激励和过分集中激励的问题，但这意味着某种中间道路或许是可能的。
 
-## <div id='is-there-a-middle-way'>有没有中间道路？</div>
+<h2 id='is-there-a-middle-way'>有没有中间道路？</h2>
 
 到目前为止，我的判断是网络国家非常出色，但这还远不是一个可行的大妥协方案（Big Compromise Idea），可以填补所有的漏洞，建设起我和我的大部分读者们期待见到的属于二十一世纪的世界。最终，我确实觉得，我们需要引进更多的民主和大规模协同导向的某种大妥协方案，来让网络国家真正取得成功。
 
