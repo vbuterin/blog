@@ -119,4 +119,4 @@ _特别感谢 Karl Floersch、Hasu 和 Tina Zhen 对本篇内容的反馈与评�
 
 -----------
 
-<a id="footnote1" /><small> \* 我没有接受<a href="https://athleticgreens.com/en">Athletic Greens</a>的赞助费用。但播客主持人 Lex Fridman 接受了。以及，我也没有接受 Lex Fridman 的赞助费用。但也许有人接受了。反正管她呢，只要我们能继续为播客提供资金，让人们能免费收听，又不至于太烦，那一切就都很好了，对吧？</small>
+<a id="footnote1" /><small> \* 我没有接受<a href="https://athleticgreens.com/en">Athletic Greens</a>的赞助费用。但播客主持人 Lex Fridman 接受了。以及，我也没有接受 Lex Fridman 的赞助费用。但也许有人接受了。反正管他呢，只要我们能继续为播客提供资金，让人们能免费收听，又不至于太烦，那一切就都很好了，对吧？</small>
