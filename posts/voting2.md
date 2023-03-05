@@ -50,7 +50,7 @@ Blockchains provide two key properties: **correct execution** and **censorship r
 
 Both of these properties are very important for voting: you want the output of the vote to actually be the result of counting up the number of votes for each candidate and selecting the candidate with the most votes, and you definitely want anyone who is eligible to vote to be able to vote, even if some powerful actor is trying to block them. **But voting also requires some crucial properties that blockchains _do not_ provide**:
 
-* **Privacy**: you should not be able to tell which candidate some specific voted for, or even if they voted at all
+* **Privacy**: you should not be able to tell which candidate someone specific voted for, or even if they voted at all
 * **Coercion resistance**: you should not be able to _prove_ to someone else how you voted, _even if you want to_
 
 The need for the first requirement is obvious: you want people to vote based on their personal feelings, and not how people around them or their employer or the police or random thugs on the street will feel about their choice. The second requirement is needed to prevent vote selling: if you can prove how you voted, selling your vote becomes very easy. Provability of votes would also enable forms of coercion where the coercer demands to see some kind of proof of voting for their preferred candidate. Most people, even those aware of the first requirement, do not think about the second requirement. But the second requirement is also necessary, and it's quite technically nontrivial to provide it. **Needless to say, the average "blockchain voting system" that you see in the wild does not even try to provide the second property, and usually fails at providing the first**.
