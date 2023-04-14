@@ -1,0 +1,199 @@
+
+
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
+
+
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="收入-邪恶曲线：思考“公共物品融资优先”的另一种方式">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="../../../../scripts/tex-svg.js">
+</script>
+
+<style>
+</style>
+
+<div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
+
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="收入-邪恶曲线：思考“公共物品融资优先”的另一种方式" />
+<meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
+
+
+<br>
+<h1 style="margin-bottom:7px"> 收入-邪恶曲线：思考“公共物品融资优先”的另一种方式 </h1>
+<small style="float:left; color: #888"> 2022 Oct 28 </small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
+<br> <br> <br>
+<title> 收入-邪恶曲线：思考“公共物品融资优先”的另一种方式 </title>
+
+<p><em>译者：<a href="https://twitter.com/DDragonHorn">龙犄角</a> &amp; 审阅：<a href="https://twitter.com/carolwang007">Carol</a> @ <a href="https://twitter.com/GreenpillCN">GreenPill CN</a></em></p>
+<p><em>原文：<a href="https://vitalik.ca/general/2022/10/28/revenue_evil.html">https://vitalik.ca/general/2022/10/28/revenue_evil.html</a></em></p>
+<p><em>特别感谢 Karl Floersch、Hasu 和 Tina Zhen 对本篇内容的反馈与评论。</em></p>
+<p>在任何大规模的生态中，公共物品都是无比重要的主题。但同时，"公共物品"也令人惊讶地难以定义。经济学家对"公共物品"是这样定义的：公共物品是那些<a href="https://en.wikipedia.org/wiki/Public_good_(economics)">非排他也非竞争性的物品</a>。"非排他"和"非竞争"两个经济学专业术语合在一起的表述，意味着从私人财产和市场的角度来提供公共物品是十分困难的。门外汉们对于"公共物品"也有一个定义："一切对公共有益处的事物都是公共物品"。同时，民主人士对"公共物品"也提出了一个定义，为之添加了公众参与决策的含义。</p>
+<p>然而，更重要的是，当抽象的非排他性非竞争性公共物品在与真实的世界互动时，几乎每一个具体的例子都包含无数微妙的边缘案例，需要因地制宜、具体案例具体分析。例如，一座公园是一个公共物品。但假如你对每个进入公园的人都收取 5 美金的门票钱呢？要是你通过拍卖在公园中心广场上树立价高者雕像的权力来为其募资呢？再或者这座公园是由一名半利他主义的亿万富丰出资建造、修葺、维护的，她享受这座公园作为她的个人用途、她将这座公园设计成自己喜欢的模样，但同时又允许任何路过的人踏进公园小坐一会儿、抑或和友人并肩散步谈天呢？</p>
+<p>这篇内容将尝试为落在"私人-公共"这条光谱上的"混合"物品进行分析提供另一个角度，也就是****收入-邪恶曲线****。我们抛出这样一个问题：不同方式的货币化项目的权衡是什么，以及通过增加外部补贴来消除货币化的压力可以做多少好事？这远不同于一个普世的框架：它假定在一个单一的"社区"中存在"混合经济"环境，有一个商业市场和一个中央资助者的补贴。但它仍旧能够在"如何在如今的加密社区、加密国家和许多其他现实世界背景下为公共产品提供资金"这方面教会我们很多道理。</p>
+<h2 id="传统框架排他性和竞争性">传统框架：排他性和竞争性</h2>
+<p>让我们先从这里理解这个问题开始：通常的经济学家是如何看待一个项目是否属于私人物品或是公共物品的？考虑下面的例子：</p>
+<ul>
+<li>Alice 持有 1000 以太，想要在市场上抛售。</li>
+<li>Bob 经营一家航空公司，出售航班机票。</li>
+<li>Charlie 建了一座桥，并通过收取过路费来支付这座桥的修建费用。</li>
+<li>David 制作并发布了一档播客。</li>
+<li>Eve 制作并出了一首歌。</li>
+<li>Fred 发明了一种新的、更好的加密算法，用于进行零知识证明。</li>
+</ul>
+<p>接下来，我们将这些案例放进一个有两条坐标轴的图表：</p>
+<ul>
+<li><strong>竞争性</strong>：一个人享受了美好事物的时候，她会在多大程度上降低另一个人享受美好事物的能力？</li>
+<li><strong>排他性</strong>：阻止特定的人——例如那些不付钱的人——享受美好的事物，有多难？</li>
+</ul>
+<p>一张类似的图表大概长这样：</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/revenue_evil/excludable_rivalrous_zhCN.png" /></p>
+</center>
+<p><br></p>
+<ul>
+<li>艾莉丝持有的以太是完全排他的（她对"谁可以得到她的以太有完全的掌控和选择权），而加密货币是竞争性的（如果一个人拥有一个特定的硬币，其他人就不会拥有同样的硬币）。</li>
+<li>鲍勃的飞机票是具有排他性的，但有一点没那么具有竞争性：很可能飞机没有满座。</li>
+<li>查理的桥比起鲍勃的飞机票更少了一点排他性，因为增加一道关卡来验证缴费情况需要额外的工作（所以查理可以排他，但对他和过路的人来说都是昂贵的），且桥的竞争性取决于道路是否拥堵。</li>
+<li>戴卫的播客和尹芙的歌不具有竞争性：一个人听播客或者那首歌并不妨碍另一个人做同样的事情。它们倒有一点排他性，因为戴卫和尹芙可以做一个付费墙，不过人们同样可以绕过付费墙。</li>
+<li>最后，福拉德发明的加密算法接近于完全没有排他性：算法需要开源，人们才会信任它。如果福拉德试图为算法申请专利，目标用户群（热爱开源的加密用户）很可能拒绝使用该算法，甚至为此取消他的资格。</li>
+</ul>
+<p>以上都是很好也很重要的分析。排他性告诉我们你是否能够通过收费作为一种商业模式来资助这个项目，而竞争性则告诉我们排他性是否是一种悲剧性的浪费。或者说，这是否只是有关物品的一个不可避免的属性，即如果一个人得到了它，另一个人就得不到。但如果我们仔细地思考其中的一些例子，尤其是数字相关的例子，我们可以发现，这其中忽略了一个非常重要的问题：<strong>除了排他性之外，还有很多商业模式可供选择，这些商业模式也有取舍。</strong></p>
+<p>思考这样一个特殊的案例：戴卫的播客和尹芙的歌。在现实中，大量的播客是基本或完全免费发布的，但歌曲更多是以许可和版权限制为门槛。要知道个中原因，我们只需要明白这些播客是如何得到资助的：赞助。播客主持人通常寻找几个赞助人，并在每一集播客的开始或中间简短地为赞助人打一打广告。但赞助歌曲更难：你不能在唱一首缱绻的情歌时突兀地中途停下来并开始讲起 <a href="https://vitalik.ca/general/2022/10/28/revenue_evil.html#footnote1">Athletic Greens*</a> 如何如何棒呆。因为，你可拉倒吧，<em>气氛都让你给搅合没了啊兄弟</em>！</p>
+<p>我们是否能够越过仅仅考虑排他性，去更广泛地讨论货币化和不同货币化策略的危害呢？实际上，我们的确可以，而这也恰恰是收入/邪恶曲线的用处。</p>
+<h2 id="收入-邪恶曲线的定义">收入-邪恶曲线的定义</h2>
+<p>一件产品的收入-邪恶曲线是一条二维曲线，能够画出以下问题的答案：</p>
+<blockquote>
+<p><strong>该产品的创造者要对她们的潜在用户和更广泛的社区造成多大的伤害，才能赚取 N 美金的收入来支付产品的建设费用？</strong></p>
+</blockquote>
+<p>在这里用"邪恶"这个词并不是说任何数量的邪恶都不被接受，也不是说如果你不能保证不作恶，你就根本不应该去资助项目。许多项目为了确保可持续的资金，做出了艰难的取舍，伤害了她们的客户和社区，而且往往项目存在的价值大大超过了这些伤害。但尽管如此，我们的目标是强调<strong>许多货币化计划有其悲剧性的一面，而公共物品融资可以提供价值，给现有项目一个财政缓冲，使她们能够避免这种牺牲</strong>。</p>
+<p>下图是先前 6 个例子的收入-邪恶曲线的粗略绘制：</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/revenue_evil/revenue_evil_zhCN.png" /></p>
+</center>
+<p><br></p>
+<ul>
+<li>对于 Alice 来说，以市场价格出售她的以太实际上是她能做的最有同情心的事情。如果她卖得更便宜，她几乎一定会造成链上 gas 战争、交易员 HFT 战争或其他类似的价值破坏性金融冲突，因为每个人都想最快地得到她的币。而高于市场价格出售甚至不足以成为一种选择：没有人会买。</li>
+<li>对于 Bob 来说，社会最优的售价是所有机票都能卖完的最高价格。如果 Bob 以低于这个价格的票价出售机票，那么票很快就会卖完，一些真正需要这些机票的人根本无法买到座位（定价过低可能会给穷人带来一些相反的好处，但也<a href="https://vitalik.ca/general/2021/08/22/prices.html">远远不是实现这一目标的最有效方式</a>）。Bob 也可以高于市场价格出售，并有可能赚取更高的利润，但代价是卖出更少的座位，而且（从上帝的角度来看）不必要地把人排除在外了。</li>
+<li>如果 Charlie 的桥和通往该桥的道路不拥堵，收取任何费用都是一种负担，并不必要地将司机排除在外。如果它们是拥堵的，低收费有助于减少拥堵，而高收费则不必要地将人们排除在外。</li>
+<li>David 的播客可以通过增加赞助商的广告而在一定程度上实现货币化，同时也不会对听众造成很大伤害。如果货币化的压力增加，David 将不得不采用越来越多的广告形式，而真正的收入最大化将需要对播客进行付费墙屏蔽，这对潜在的听众来说是一种高成本。</li>
+<li>Eve 的处境和 David 差不多，但低伤害的选择较少（也许是卖 NFT？） 。特别是在卖歌的情况下，付费墙很可能需要积极参与版权执法和起诉侵权者的法律机制，这带来了进一步的伤害。</li>
+<li>Fred 的货币化选择甚至更少。他可以为它申请专利，或者有可能采取一些怪异的举动，例如拍卖选择参数的权利，让那些喜欢特定价值的硬件制造商来竞标。但所有的选择都是高成本的。</li>
+</ul>
+<p>从这里我们可以看到，在收入-邪恶曲线上实际有许多种"邪恶"。</p>
+<ul>
+<li>传统的<a href="https://en.wikipedia.org/wiki/Deadweight_loss"><strong>排他性经济损失</strong></a>：如果一个产品的价格高于边际成本，本可以进行的互利交易就不会发生。</li>
+<li><strong>竞争条件</strong>：拥挤、短缺和因为产品太便宜而产生的其他成本。</li>
+<li><strong>"污染"产品</strong>，使其对赞助商有吸引力，但对听众有一定程度的伤害（伤害或大或小）。</li>
+<li><strong>通过法律系统从事攻击性行动</strong>，这增加了每个人的恐惧和花钱请律师的需要，并产生各种难以预测的次生寒蝉效应。这种情况在专利方面尤为严重。</li>
+<li>在用户、社区，甚至是从事项目本身的人高度重视的<strong>原则上做出牺牲</strong>。</li>
+</ul>
+<p>在许多案例中，这种邪恶非常依赖于背景。在加密领域和更广泛的软件领域，专利权既极为有害，又具有意识形态上的攻击性，但在制造实物商品的行业中，这种情况较少：在有形商品行业中，大多数人在现实中能够创造出某种专利的衍生作品，她们的规模和组织程度足以谈判获得许可，而资本成本意味着对货币化的需求要高得多，因此保持纯粹性就更难。广告多么有害取决于广告商和受众：如果播客主持人<em>非常</em>了解她的听众，广告甚至可以是有帮助的！是否存在"排他"的可能性甚至取决于产权。</p>
+<p>但通过笼统地谈论"为赚取收入而作恶"这个话题，我们获得了将这些情况相互比较的能力。</p>
+<h2 id="收入-邪恶曲线在如何确定融资的优先次序上告诉了我们什么">收入-邪恶曲线在如何确定融资的优先次序上告诉了我们什么？</h2>
+<p>现在，回到我们为什么关心什么是公共物品、什么不是公共物品的关键问题：融资的优先次序。如果我们有一个有限的资本池，专门用于帮助一个社区的繁荣，我们应该把资金用于哪些方面？收入-邪恶曲线图为我们提供了回答这个问题的一个简单的起点：<strong>将资金投向那些收入-邪恶曲线斜率最大的项目</strong>。</p>
+<p>我们应该把重点放在那些通过减少货币化的压力，每 1 美金的补贴都能最大幅度地减少不幸的项目所需的罪恶的项目上。这样我们就得到了如下的大致排名：</p>
+<ul>
+<li>最优先的是 <strong>"纯粹的"公共物品</strong>，因为往往根本没有任何方法可以将其货币化，或者即使有，试图货币化的经济或道德成本也非常高。</li>
+<li>第二个优先事项是 <strong>"自然而然"公共但可盈利的物品</strong>，通过稍加调整就可以通过商业渠道获得资金，如歌曲或对播客的赞助。</li>
+<li>第三优先考虑的是<strong>非商品类私人物品</strong>，在这些物品中，社会福利已经通过收费得到优化，但利润率很高，或者更普遍的是存在"污染"产品以增加收入的机会。例如，通过保持伴随的软件闭源或拒绝使用标准，补贴可以用来推动这些项目在边际上做出更亲社会的选择。</li>
+</ul>
+<p>需要注意的是，排他性和竞争性框架通常会得出类似的答案：首先关注非排他性和非竞争性的物品，其次关注具有排他性但非竞争性的物品，最后关注具有排他性和部分竞争性的物品——而既具有排他性又具有竞争性的物品永远不会被关注（如果你有剩余的资本，最好直接作为 UBI 发放）。收入/邪恶曲线与排他性和竞争性之间有一个粗略的近似映射：排他性越高意味着收入/邪恶曲线的斜率越低，而竞争性则告诉我们收入/邪恶曲线的底部是零还是非零。但收入/邪恶曲线是一个更普遍的工具，它允许我们谈论货币化战略的权衡，远远超出了排他。</p>
+<p>这个框架如何用于分析决策的一个实例是 Wikimedia 捐款。我个人从未向 Wikimedia 捐款，因为我一直认为她们能够也应该不依靠有限的公益资金来资助自己，只需增加一些广告。而这对她们的用户体验和中立性来说只是一个很小的代价。然而，维基百科的管理员不同意；她们甚至有一个维基页面列出了她们<a href="https://en.wikipedia.org/wiki/Wikipedia:Funding_Wikipedia_through_advertisements">不同意的论据</a>。</p>
+<p>我们可以把这种分歧理解为对收入-邪恶曲线的争议：我认为 Wikimedia 的收入-邪恶曲线的斜率很低（"广告并不那么糟糕"），因此她们对我的慈善资金来说是低优先级的；其他一些人认为她们的收入-邪恶曲线的斜率很高，因此她们的慈善资金对 Wikimedia 是高度优先的。</p>
+<h2 id="收入-邪恶曲线是一个智力工具而不是一个好的直接机制">收入-邪恶曲线是一个智力工具，而「不是」一个好的直接机制</h2>
+<p>从这个想法中得出的一个重要结论是，我们不应该尝试直接使用收入-邪恶曲线作为确定单个项目优先次序的方法。由于<strong>监测方面的限制</strong>，我们在这方面的能力受到了严重制约。</p>
+<p>如果这个框架被广泛使用，项目就会有动力去虚报她们的收入-邪恶曲线。任何收取通行费的人都有动力想出巧妙的论据，试图说明如果通行费能降低 20%，世界就会好得多，但由于她们的预算严重不足，没有补贴她们就无法降低通行费。项目将有动力在短期内更加邪恶，以吸引补贴，帮助她们变得不那么邪恶。</p>
+<p>由于这些原因，最好的办法可能是不把该框架作为直接分配决策的方式，而是确定哪些类型的项目应优先获得资金的一般原则。例如，该框架可以成为确定如何对整个行业或整个类别的物品进行优先排序的有效方式。它可以帮助你回答这样的问题：如果一家公司正在生产一种公共物品，或者在设计一种不完全是公共物品的物品的过程中做出了有利于社会但经济成本很高的选择，她们是否应该为此获得补贴？但即使是这样，最好也是把收入-邪恶曲线当作一种心理工具，而不是试图精确地测量它们，并利用它们来作出单独的决定。</p>
+<h2 id="结论">结论</h2>
+<p>排他性和竞争性对一个物品来说是重要的维度，对其货币化的能力，以及对回答"通过一些公共资金获得资助，可以避免多少伤害"的问题，具有真正重要的影响。但是，特别是一旦更复杂的项目进场，这两个维度很快就开始变得不足以决定资金的优先次序。大多数的物品都不是纯粹的公共物品：它们是处于中间的一些混合体，在许多方面，它们或多或少都是公共的，且不容易映射到"排他"。</p>
+<p>观察一个项目的收入-邪恶曲线给了我们另一种衡量真正重要的统计数据的方法：减轻一个项目 1 美金的货币化压力，可以避免多少伤害？有时，缓解货币化压力的收益是决定性的：就是没有办法通过商业渠道来资助某些种类的东西，直到你能找到一个从它们中受益的单一用户，足以单方面资助它们。其他时候，商业资金的选择是存在的，但有着有害的副作用。有时这些影响较小，有时较大。有时，个人项目的一小部分在亲社会的选择和增加货币化之间有明显的权衡。还有一些时候，项目只是自己筹资，没有必要对其进行补贴——或者，至少不确定性和隐藏的信息使得创建一个利大于弊的补贴时间表太难。按照从最大收益到最小收益的顺序排列资金的优先次序总是更好的；而你能走多远取决于你有多少资金。</p>
+<hr />
+<p><a id="footnote1" /><small> * 我没有接受<a href="https://athleticgreens.com/en">Athletic Greens</a>的赞助费用。但播客主持人 Lex Fridman 接受了。以及，我也没有接受 Lex Fridman 的赞助费用。但也许有人接受了。反正管他呢，只要我们能继续为播客提供资金，让人们能免费收听，又不至于太烦，那一切就都很好了，对吧？</small></p>
+ </div> 
