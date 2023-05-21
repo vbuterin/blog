@@ -1,0 +1,176 @@
+
+
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
+
+
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Don't overload Ethereum's consensus">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="../../../../scripts/tex-svg.js">
+</script>
+
+<style>
+</style>
+
+<div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
+
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Don't overload Ethereum's consensus" />
+<meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
+
+
+<br>
+<h1 style="margin-bottom:7px"> Don't overload Ethereum's consensus </h1>
+<small style="float:left; color: #888"> 2023 May 21 </small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
+<br> <br> <br>
+<title> Don't overload Ethereum's consensus </title>
+
+<p><em>Special thanks to Karl Floersch and Justin Drake for feedback and review</em></p>
+<p>The Ethereum network's consensus is one of the most highly secured cryptoeconomic systems out there. <a href="https://beaconcha.in/">18 million ETH</a> (~$34 billion) worth of validators finalize a block every 6.4 minutes, running <a href="https://clientdiversity.org/">many different implementations of the protocol</a> for redundancy. And if the <em>cryptoeconomic</em> consensus fails, whether due to a bug or an intentional 51% attack, a vast community of many thousands of developers and many more users are watching carefully to make sure the chain recovers correctly. Once the chain recovers, protocol rules ensure that attackers will likely be heavily penalized.</p>
+<p>Over the years there have been a number of ideas, usually at the thought experiment stage, to also use the Ethereum validator set, and perhaps even the Ethereum social consensus, <em>for other purposes</em>:</p>
+<ul>
+<li><strong>The ultimate oracle</strong>: <a href="https://forum.gnosis.io/t/the-ultimate-oracle/61">a proposal</a> where users can vote on what facts are true by sending ETH, with a <a href="https://blog.ethereum.org/2014/03/28/schellingcoin-a-minimal-trust-universal-data-feed">SchellingCoin</a> mechanism: everyone who sent ETH to vote for the majority answer gets a proportional share of all the ETH sent to vote for the minority answer. The description continues: "So in principle this is an symmetric game. What breaks the symmetry is that a) the truth is the natural point to coordinate on and more importantly b) the people betting on the truth can make a credible thread of forking Ethereum if they loose."</li>
+<li><strong>Re-staking</strong>: a set of techniques, used by many protocols including <a href="https://www.eigenlayer.xyz/">EigenLayer</a>, where Ethereum stakers can simultaneously use their stake as a deposit in another protocol. In some cases, if they misbehave according to the other protocol's rules, their deposit also gets slashed. In other cases, there are no in-protocol incentives and stake is simply used to vote.</li>
+<li><strong>L1-driven recovery of L2 projects</strong>: it has been proposed on many occasions that if an L2 has a bug, the L1 could fork to recover it. One recent example is <a href="../../../../images/dont_overload/l1rec.png">this (since-deleted) suggestion by an Optimism contributor</a>, though it's worth noting that (to their credit) neither Optimism nor any other L2 team I've talked to actually endorses L1-driven recovery.</li>
+</ul>
+<p><strong>The purpose of this post will be to explain in detail the argument why, in my view, <em>a certain subset</em> of these techniques brings high systemic risks to the ecosystem and should be discouraged and resisted.</strong></p>
+<p>These proposals are generally made in a well-intentioned way, and so the goal is not to focus on individuals or projects; rather, the goal is to focus on techniques. The general rule of thumb that this post will attempt to defend is as follows: <strong>dual-use of validator staked ETH, while it has some risks, is fundamentally fine, but attempting to "recruit" Ethereum social consensus for your application's own purposes is not.</strong></p>
+<h2 id="examples-of-the-distinction-between-re-using-validators-low-risk-and-overloading-social-consensus-high-risk">Examples of the distinction between re-using validators (low-risk) and overloading social consensus (high-risk)</h2>
+<ul>
+<li>Alice creates a web3 social network where if you cryptographically prove that you control the key of an active Ethereum validator, you automatically gain "verified" status. <b style="color:#008800">Low-risk</b>.</li>
+<li>Bob cryptographically proves that he controls the key of ten active Ethereum validators as a way of proving that he has enough wealth to satisfy some legal requirement. <b style="color:#008800">Low-risk</b>.</li>
+<li>Charlie claims to have disproven the <a href="https://en.wikipedia.org/wiki/Twin_prime">twin primes conjecture</a>, and claims to know the largest <code>p</code> such that <code>p</code> and <code>p+2</code> are both prime. He changes his staking withdrawal address to a smart contract where anyone can submit a claimed counterexample <code>q &gt; p</code>, along with a SNARK proving that <code>q</code> and <code>q+2</code> are both prime. If someone makes a valid claim, then Bob's validator is forcibly exited, and the submitter gets whatever of Bob's ETH is left. <b style="color:#008800">Low-risk</b>.</li>
+<li>Dogecoin decides to switch to proof of stake, and to increase the size of its security pool it allows Ethereum stakers to "dual-stake" and simultaneously join its validator set. To do so, Ethereum stakers would have to change their staking withdrawal address to a smart contract where anyone can submit a proof that they violated the <em>Dogecoin staking rules</em>. If someone does submit such a proof, then the staker's validator is forcibly exited, and whatever of their ETH is left is used to buy-and-burn DOGE. <b style="color:#008800">Low-risk</b>.</li>
+<li><a href="https://e.cash/">eCash</a> does the same as Dogecoin, but the project leaders further announce: if the majority of participating ETH validators collude to censor <em>eCash transactions</em>, they expect that the Ethereum community will hard-fork to delete those validators. They argue that it will be in Ethereum's interest to do so as those validators are proven to be malicious and unreliable. <b style="color:#ff0000">High-risk</b>.</li>
+<li>Fred creates an ETH/USD price oracle, which functions by allowing Ethereum validators to participate and vote. There are no incentives. <b style="color:#008800">Low-risk</b>.</li>
+<li>George creates an ETH/USD price oracle, which functions by allowing ETH holders to participate and vote. To protect against laziness and creeping bribes, they add an incentive mechanism where the participants that give an answer within 1% of the median answer get 1% of the ETH of any participants that gave an answer further than 1% from the median. When asked "what if someone <a href="https://blog.ethereum.org/2015/01/28/p-epsilon-attack">credibly offers to bribe all the participants</a>, everyone starts submitting the wrong answer, and so honest people get 10 million of their ETH taken away?", George replies: then Ethereum will have to fork out the bad participants' money. <b style="color:#ff0000">High-risk</b>.
+<ul>
+<li>George conspicuously stays away from making replies. <b style="color:#ff8800">Medium-high risk</b> (as the project could create incentives to attempt such a fork, and hence the expectation that it will be attmpted, even without formal encouragement)</li>
+<li>George replies: "then the attacker wins, and we'll give up on using this oracle". <b style="color:#668800">Medium-low risk</b> (not quite "low" only because the mechanism does create a large set of actors who in a 51% attack might be incentivized to indepently advocate for a fork to protect their deposits)</li>
+</ul></li>
+<li>Hermione creates a successful layer 2, and argues that because her layer 2 is the largest, it is inherently the most secure, because if there is a bug that causes funds to be stolen, the losses will be so large that the community will have no choice but to fork to recover the users' funds. <b style="color:#ff0000">High-risk</b>.</li>
+</ul>
+<p>If you're designing a protocol where, even if everything completely breaks, the losses are kept contained to the validators and users who opted in to participating in and using your protocol, this is low-risk. If, on the other hand, you have the intent to rope in the broader Ethereum ecosystem social consensus to fork or reorg to solve your problems, this is high-risk, and I argue that we should strongly resist all attempts to create such expectations.</p>
+<p>A middle ground is situations that start off in the low-risk category but give their participants incentives to slide into the higher-risk category; <a href="https://blog.ethereum.org/2014/03/28/schellingcoin-a-minimal-trust-universal-data-feed">SchellingCoin-style techniques</a>, especially mechanisms with heavy penalties for deviating from the majority, are a major example.</p>
+<h2 id="so-whats-so-wrong-with-stretching-ethereum-consensus-anyway">So what's so wrong with stretching Ethereum consensus, anyway?</h2>
+<p>It is the year 2025. Frustrated with the existing options, a group has decided to make a new ETH/USD price oracle, which works by allowing validators to vote on the price every hour. If a validator votes, they would be unconditionally rewarded with a portion of fees from the system. But soon participants became lazy: they connected to centralized APIs, and when those APIs got cyber-attacked, they either dropped out or started reporting false values. To solve this, incentives were introduced: the oracle also votes retrospectively on the price one week ago, and if your (real time <em>or</em> retrospective) vote is more than 1% away from the median retrospective vote, you are heavily penalized, with the penalty going to those who voted "correctly".</p>
+<p>Within a year, over 90% of validators are participating. Someone asked: what if Lido bands together with a few other large stakers to 51% attack the vote, forcing through a fake ETH/USD price value, extracting heavy penalties from everyone who does not participate in the attack? The oracle's proponents, at this point heavily invested in the scheme, reply: well if that happens, Ethereum will surely fork to kick the bad guys out.</p>
+<p>At first, the scheme is limited to ETH/USD, and it appears resilient and stable. But over the years, other indices get added: ETH/EUR, ETH/CNY, and eventually rates for all countries in the <a href="https://en.wikipedia.org/wiki/G20">G20</a>.</p>
+<p>But in 2034, things start to go wrong. Brazil has an unexpectedly severe political crisis, leading to a disputed election. One political party ends up in control of the capital and 75% of the country, but another party ends up in control of some northern areas. Major Western media argue that the northern party is clearly the legitimate winner because it acted legally and the southern party acted illegally (and by the way are fascist). Indian and Chinese official sources, and Elon Musk, argue that the southern party has actual control of most of the country, and the international community should not try to be a world police and should instead accept the outcome.</p>
+<p>By this point, Brazil has a CBDC, which splits into two forks: the (northern) BRL-N, and the (southern) BRL-S. When voting in the oracle, 60% of Ethereum stakers provide the ETH/BRL-S rate. Major community leaders and businesses decry the stakers' craven capitulation to fascism, and propose to fork the chain to only include the "good stakers" providing the ETH/BRL-N rate, and drain the other stakers' balances to near-zero. Within their social media bubble, they believe that they will clearly win. However, once the fork hits, the BRL-S side proves unexpectedly strong. What they expected to be a landslide instead proves to be pretty much a 50-50 community split.</p>
+<p>At this point, the two sides are in their two separate universes with their two chains, with no practical way of coming back together. Ethereum, a global permissionless platform created in part to be a refuge from nations and geopolitics, instead ends up cleaved in half by any one of the twenty G20 member states having an unexpectedly severe internal issue.</p>
+<h2 id="thats-a-nice-scifi-story-you-got-there.-could-even-make-a-good-movie.-but-what-can-we-actually-learn-from-it">That's a nice scifi story you got there. Could even make a good movie. But what can we actually learn from it?</h2>
+<p>A blockchain's "purity", in the sense of it being a purely mathematical construct that attempts to come to consensus only on purely mathematical things, is a huge advantage. As soon as a blockchain tries to "hook in" to the outside world, the outside world's conflicts start to impact on the blockchain too. Given a sufficiently extreme political event - in fact, not <em>that</em> extreme a political event, given that the above story was basically a pastiche of events that have actually happened in various major (&gt;25m population) countries all within the past decade - even something as benign as a currency oracle could tear the community apart.</p>
+<p>Here are a few more possible scenarios:</p>
+<ul>
+<li>One of the currencies that the oracle tracks (which could even be USD) simply hyperinflates, and markets break down to the point that at some points in time there is no clear specific market price.</li>
+<li>If Ethereum adds a price oracle to <em>another cryptocurrency</em>, then a controversial split like in the story above is not hypothetical: it's something that has already happened, including in the histories of both <a href="https://www.investopedia.com/news/all-about-bitcoin-cash-hard-fork">Bitcoin</a> and <a href="https://en.wikipedia.org/wiki/Ethereum_Classic">Ethereum itself</a>.</li>
+<li>If strict capital controls become operational, then <em>which</em> price to report as the legitimate market price between two currencies becomes a political question.</li>
+</ul>
+<p>But more importantly, I'd argue that there is a Schelling fence at play: once a blockchain <em>starts</em> incorporating real-world price indices as a layer-1 protocol feature, it could easily succumb to interpreting more and more real-world information. Introducing layer-1 price indices also expands the blockchain's legal attack surface: instead of being <em>just</em> a neutral technical platform, it becomes much more explicitly a financial tool.</p>
+<h2 id="what-about-risks-from-examples-other-than-price-indices">What about risks from examples other than price indices?</h2>
+<p><em>Any</em> expansion of the "duties" of Ethereum's consensus increases the costs, complexities and risks of running a validator. Validators become required to take on the human effort of paying attention and running and updating additional software to make sure that they are acting correctly according to whatever other protocols are being introduced. Other communities gain the ability to externalize their dispute resolution needs onto the Ethereum community. Validators and the Ethereum community as a whole become forced to make far more decisions, each of which has some risk of causing a community split. Even if there is no split, the desire to avoid such pressure creates additional incentives to externalize the decisions to centralized entities through stake-pooling.</p>
+<p>The possibility of a split would also greatly strengthen perverse too-big-to-fail mechanics. There are so many layer-2 and application-layer projects on Ethereum that it would be impractical for Ethereum social consensus to be willing to fork to solve <em>all</em> of their problems. Hence, larger projects would inevitably get a larger chance of getting a bailout than smaller ones. This would in turn lead to larger projects getting a moat: would you rather have your coins on Arbitrum or Optimism, where if something goes wrong Ethereum will fork to save the day, or on <a href="https://taiko.xyz/">Taiko</a>, where because it's smaller (and non-Western, hence less socially connected to core dev circles), an L1-backed rescue is much less likely?</p>
+<h2 id="but-bugs-are-a-risk-and-we-need-better-oracles.-so-what-should-we-do">But bugs are a risk, and we need better oracles. So what should we do?</h2>
+<p>The best solutions to these problems are, in my view, case-by-case, because the various problems are inherently so different from each other. Some solutions include:</p>
+<ul>
+<li><strong>Price oracles</strong>: either <a href="https://ethresear.ch/t/a-not-quite-cryptoeconomic-decentralized-oracle/6453">not-quite-cryptoeconomic decentralized oracles</a>, or validator-voting-based oracles that <strong>explicitly commit to their emergency recovery strategies being something other than appealing to L1 consensus</strong> for recovery (or some combination of both). For example, a price oracle could count on a trust assumption that voting participants get corrupted slowly, and so users would have early warning of an attack and could exit any systems that depend on the oracle. Such an oracle could intentionally give its reward only after a long delay, so that if that instance of the protocol falls into disuse (eg. because the oracle fails and the community forks toward another version), the participants do not get the reward.</li>
+<li><strong>More complex truth oracles</strong> reporting on facts more subjective than price: some kind of decentralized court system built on a <a href="https://vitalik.ca/general/2022/09/20/daos.html">not-quite-cryptoeconomic DAO</a>.</li>
+<li><strong>Layer 2 protocols</strong>:
+<ul>
+<li>In the short term, rely on partial training wheels (what this post calls <a href="https://ethereum-magicians.org/t/proposed-milestones-for-rollups-taking-off-training-wheels/11571">stage 1</a>)</li>
+<li>In the medium term, rely on <a href="https://www.youtube.com/watch?v=6hfVzCWT6YI">multiple proving systems</a>. Trusted hardware (eg. SGX) could be included here; I strongly anti-endorse SGX-like systems as a <em>sole</em> guarantor of security, but as a member of a 2-of-3 system they could be valuable.</li>
+<li>In the longer term, hopefully complex functionalities such as "EVM validation" will themselves eventually be enshrined in the protocol</li>
+</ul></li>
+<li><strong>Cross-chain bridges</strong>: similar logic as oracles, but also, try to minimize how much you rely on bridges at all: hold assets on the chain where they originate and use atomic swap protocols to move value between different chains.</li>
+<li><strong>Using the Ethereum validator set to secure other chains</strong>: one reason why the (safer) Dogecoin approach in the <a href="#examples-of-the-distinction-between-re-using-validators-low-risk-and-overloading-social-consensus-high-risk">list of examples above</a> might be insufficient is that while it does protect against 51% <em>finality-reversion</em> attacks, it does not protect against 51% <em>censorship</em> attacks. However, if you are already relying on Ethereum validators, then one possible direction to take is to move away from trying to manage an independent chain entirely, and become a <a href="https://ethereum.org/en/developers/docs/scaling/validium/">validium</a> with proofs anchored into Ethereum. If a chain does this, its protection against finality-reversion attacks becomes as strong as Ethereum's, and it becomes secure against censorship up to 99% attacks (as opposed to 49%).</li>
+</ul>
+<h2 id="conclusions">Conclusions</h2>
+<p>Blockchain communities' social consensus is a fragile thing. It's necessary - because upgrades happen, bugs happen, and 51% attacks are always a possibility - but because it has such a high risk of causing chain splits, in mature communities it should be used sparingly. There is a natural urge to try to extend the blockchain's core with more and more functionality, because the blockchain's core has the largest economic weight and the largest community watching it, but each such extention makes the core itself more fragile.</p>
+<p>We should be wary of application-layer projects taking actions that risk increasing the "scope" of blockchain consensus to anything other than verifying the core Ethereum protocol rules. It is natural for application-layer projects to attempt such a strategy, and indeed such ideas are often simply conceived without appreciation of the risks, but its result can easily become very misaligned with the goals of the community as a whole. Such a process has no limiting principle, and could easily lead to a blockchain community having more and more "mandates" over time, pushing it into an uncomfortable choice between a high yearly risk of splitting and some kind of de-facto formalized bureaucracy that has ultimate control of the chain.</p>
+<p>We should instead preserve the chain's minimalism, support uses of re-staking that do not look like slippery slopes to extending the role of Ethereum consensus, and help developers find alternate strategies to achieve their security goals.</p>
+ </div> 
