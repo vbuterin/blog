@@ -182,12 +182,12 @@ MathJax = {
 </ul>
 <center>
 <p><br></p>
-<p><img src="../../../../images/three_transitions/zk_keystore.png" /></p>
+<p><img src="../../../../images/three_transitions/proofs.png" /></p>
 </center>
 <p><br></p>
 <p>If we want to avoid making one proof per transaction, we can implement a lighter scheme that only requires a cross-L2 proof for recovery. <em>Spending</em> from an account would depend on a spending key whose corresponding pubkey is stored within that account, but <em>recovery</em> would require a transaction that copies over the current <code>spending_pubkey</code> in the keystore. Funds in counterfactual addresses are safe even if your old keys are not: "activating" a counterfactual address to turn it into a working contract would require making a cross-L2 proof to copy over the current <code>spending_pubkey</code>. <a href="https://forum.safe.global/t/how-can-a-safe-hold-asset-on-multiple-chains/2242">This thread on the Safe forums</a> describes how a similar architecture might work.</p>
-<p>**To add <em>privacy</em> to such a scheme, then we just encrypt the pointer, and we do all of our proving inside ZK-SNARKs:</p>
-<p><img src="https://hackmd.io/_uploads/HkbRxiD83.png" /></p>
+<p><strong>To add <em>privacy</em> to such a scheme, then we just encrypt the pointer, and we do all of our proving inside ZK-SNARKs</strong>:</p>
+<p><img src="../../../../images/three_transitions/zk_keystore.png" /></p>
 <p>With more work (eg. using <a href="https://notes.ethereum.org/@vbuterin/non_index_revealing_proof">this work</a> as a starting point), we could also strip out most of the complexity of ZK-SNARKs and make a more bare-bones KZG-based scheme.</p>
 <p>These schemes can get complex. On the plus side, there are many potential synergies between them. For example, the concept of "keystore contracts" could also be a solution to the challenge of "addresses" mentioned in the previous section: if we want users to have persistent addresses, that do not change every time the user updates a key, we could put stealth meta-addresses, encryption keys, and other information into the keystore contract, and use the address of the keystore contract as a user's "address".</p>
 <h2 id="lots-of-secondary-infrastructure-needs-to-update">Lots of secondary infrastructure needs to update</h2>

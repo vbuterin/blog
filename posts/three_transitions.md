@@ -104,15 +104,15 @@ The proof could be implemented in a few ways:
 
 <center><br>
 
-![](../../../../images/three_transitions/zk_keystore.png)
+![](../../../../images/three_transitions/proofs.png)
 
 </center><br>
 
 If we want to avoid making one proof per transaction, we can implement a lighter scheme that only requires a cross-L2 proof for recovery. _Spending_ from an account would depend on a spending key whose corresponding pubkey is stored within that account, but _recovery_ would require a transaction that copies over the current `spending_pubkey` in the keystore. Funds in counterfactual addresses are safe even if your old keys are not: "activating" a counterfactual address to turn it into a working contract would require making a cross-L2 proof to copy over the current `spending_pubkey`. [This thread on the Safe forums](https://forum.safe.global/t/how-can-a-safe-hold-asset-on-multiple-chains/2242) describes how a similar architecture might work.
 
-**To add _privacy_ to such a scheme, then we just encrypt the pointer, and we do all of our proving inside ZK-SNARKs:
+**To add _privacy_ to such a scheme, then we just encrypt the pointer, and we do all of our proving inside ZK-SNARKs**:
 
-![](https://hackmd.io/_uploads/HkbRxiD83.png)
+![](../../../../images/three_transitions/zk_keystore.png)
 
 With more work (eg. using [this work](https://notes.ethereum.org/@vbuterin/non_index_revealing_proof) as a starting point), we could also strip out most of the complexity of ZK-SNARKs and make a more bare-bones KZG-based scheme.
 
