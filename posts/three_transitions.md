@@ -50,7 +50,7 @@ As we've seen, **each of the three transitions weaken the "one user ~= one addre
 
 ## The three transitions and on-chain payments (and identity)
 
-I have coins on Scroll, and I want to pay for coffee (if the "I" is literal, referring to me the writer of this article, then "coffee" is of course a metonymy for "green tea"). You are selling me the coffee, but you are only set up to receive coins on Taiko. Wat do?
+I have coins on Scroll, and I want to pay for coffee (if the "I" is literally me, the writer of this article, then "coffee" is of course a metonymy for "green tea"). You are selling me the coffee, but you are only set up to receive coins on Taiko. Wat do?
 
 There are basically two solutions:
 
