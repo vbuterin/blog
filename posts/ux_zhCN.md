@@ -3,15 +3,15 @@
 [title]: <> (我在加密世界的一些个人体验)
 [pandoc]: <> (--mathjax)
 
-_译者：wonder@[GreenPill CN](https://twitter.com/GreenpillCN)_
+_译者：wonder @ [GreenPill CN](https://twitter.com/GreenpillCN)_
 
-_原文：[https://vitalik.ca/general/2022/10/28/revenue_evil.html](https://vitalik.ca/general/2022/10/28/revenue_evil.html)_
+_原文：[Some personal user experiences](https://vitalik.ca/general/2023/02/28/ux.html)_
 
 # 我在加密世界的一些个人体验
 
 **2013 年**，我去了[旧金山互联网档案馆](https://archive.org/about/contact.php)旁边的一家寿司店，因为我听说它接受比特币支付，我想去试试。在结账的时候，我要求用 BTC 进行支付，我扫描了二维码，然后点击了「发送」。令我惊讶的是，交易并没有成功；看起来交易已经发送出去，但餐厅并没有收到这笔交易。我又试了一次，还是没有成功。我很快就发现了问题所在，原因在于当时我的网络信号不好。我不得不向附近的互联网档案馆走 50 多米，接入了它的 WiFi，才终于将这笔交易发送出去。
 
-**经验教训**：互联网不是 100% 可靠的，用户互联网比商家互联网更不可靠。线下支付系统需要具备一些能让客户直接将交易数据传输给商家的功能（例如 NFC、客户出示二维码等等），如果这是广播交易的最佳方式。
+**经验教训**：互联网不是 100% 可靠的，用户互联网比商家互联网更不可靠。线下支付系统需要具备一些能让客户直接将交易数据传输给商家的功能（例如 NFC、客户出示二维码等等），假如这是传输的最佳方式的话。
 
 **2021 年**，在阿根廷的一家咖啡店，我尝试使用加密货币为自己和朋友支付茶水费。店主表示，他们本不接受加密货币支付，只是因为他认出了我。他向我展示了他在加密货币交易所拥有的一个账户，所以我提议用 ETH 进行支付（在拉丁美洲使用加密货币交易所账户作为钱包是一种标准的面对面支付方式）。不凑巧的是，第一笔 0.003 ETH 的交易没有被接收成功，可能是因为它低于交易所 0.01 ETH 的最低存款额要求。于是我又发送了 0.007 ETH，很快，两笔交易都得到了确认。(我并不介意多付 3 倍的钱，就当作是小费吧）。
 
@@ -23,7 +23,15 @@ _原文：[https://vitalik.ca/general/2022/10/28/revenue_evil.html](https://vita
 
 **还有很多次**，发送交易和区块接收交易之间存在延迟，并且这种延迟是不可预测的。有时，一笔交易会在几秒钟内被接收，但更多时候一笔交易需要几分钟甚至几小时才被接收。最近，[EIP-1559](https://notes.ethereum.org/@vbuterin/eip-1559-faq) 大大优化了这一点，确保大多数交易被接收到下一个区块中，最近的合并通过稳定区块时间进一步改善了这种情况。
 
-![Yinhong (William) Zhao 和 Kartik Nayak 制作的报告](https://vitalik.ca/images/ux/diagram.png)
+<center>
+
+![](https://vitalik.ca/images/ux/diagram.png)
+
+<small>
+
+_[Yinhong (William) Zhao 和 Kartik Nayak 制作的报告](https://decentralizedthoughts.github.io/2022-03-10-eip1559/)_
+
+</small></center><br>
 
 **但是**，异常值仍然存在。如果同时有许多人正在发送交易，那么基础 gas 费就会飙升，你就会面临基础 gas 费过高和交易不被接收的风险。更糟糕的是，钱包的用户界面对这种情况的提示也不够到位，既没有显眼的红色闪烁警报，也没有清晰的提醒告知用户应该做什么来解决这个问题。即使你是专家，知道在这种情况下，可以通过提高 gas 费并发布一个数据相同的新交易来「加速」交易，但往往找不到可操作的按钮在哪里。
 
