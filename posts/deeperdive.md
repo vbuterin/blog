@@ -3,7 +3,7 @@
 [title]: <> (Deeper dive on cross-L2 reading for wallets and other use cases)
 [pandoc]: <> ()
 
-_Special thanks to Yoav Weiss, Dan Finlay, and the Arbitrum, Optimism, Polygon, Scroll and SoulWallet teams for feedback and review._
+_Special thanks to Yoav Weiss, Dan Finlay, Martin Koppelmann, and the Arbitrum, Optimism, Polygon, Scroll and SoulWallet teams for feedback and review._
 
 In [this post on the Three Transitions](https://vitalik.ca/general/2023/06/09/three_transitions.html), I outlined some key reasons why it's valuable to start thinking explicitly about L1 + cross-L2 support, wallet security, and privacy as necessary basic features of the ecosystem stack, rather than building each of these things as addons that can be designed separately by individual wallets.
 
@@ -270,9 +270,9 @@ _Blocks of the L2 chain can have dependencies on not just previous L2 blocks, bu
 
 ## How much connection to Ethereum does another chain need to hold wallets whose keystores are rooted on Ethereum or an L2?
 
-Surprisingly, not that much. It actually does not even need to be a proper L2: if it's an L3, or a validium, then it's okay to hold wallets there, as long as you hold keystores either on L1 or on a proper L2 rollup. The thing that you _do_ need is for the chain to have direct access to Ethereum state roots, and **a technical and social commitment to be willing to reorg if Ethereum reorgs, and hard fork if Ethereum hard forks**.
+Surprisingly, not that much. It actually does not even need to be a rollup: if it's an L3, or a validium, then it's okay to hold wallets there, as long as you hold keystores either on L1 or on a ZK rollup. The thing that you _do_ need is for the chain to have direct access to Ethereum state roots, and **a technical and social commitment to be willing to reorg if Ethereum reorgs, and hard fork if Ethereum hard forks**.
 
-One interesting research problem is identifying to what extent it is possible for a chain to have this form of connection to _multiple_ other chains (eg. Ethereum and Zcash). Doing it naively is possible - your chain would have to reorg if Ethereum _or_ Zcash reorg (and hard fork if Ethereum _or_ Zcash hard fork), but then your community has double the technical and political dependencies (or more if you tie your chain to many other chains). Schemes based on [ZK bridges](https://zkvalidator.com/exploring-zk-bridges/) are not robust to 51% attacks or hard forks. There may be more clever solutions.
+One interesting research problem is identifying to what extent it is possible for a chain to have this form of connection to _multiple_ other chains (eg. Ethereum and Zcash). Doing it naively is possible: your chain could agree to reorg if Ethereum _or_ Zcash reorg (and hard fork if Ethereum _or_ Zcash hard fork), but then your node operators and your community more generally have double the technical and political dependencies. Hence such a technique could be used to connect to a few other chains, but at increasing cost. Schemes based on [ZK bridges](https://zkvalidator.com/exploring-zk-bridges/) have attractive technical properties, but they have the key weakness that they are not robust to 51% attacks or hard forks. There may be more clever solutions.
 
 ## Preserving privacy
 

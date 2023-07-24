@@ -1,0 +1,11 @@
+--2023-07-24 08:52:10--  https://pbs.twimg.com/media/FzuC66WWcA0I9LJ?format=jpg
+Resolving pbs.twimg.com (pbs.twimg.com)... 192.229.233.50, 2606:2800:134:fa2:1627:1fe:edb:1665
+Connecting to pbs.twimg.com (pbs.twimg.com)|192.229.233.50|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 218048 (213K) [image/jpeg]
+Saving to: ‘orb_portugal.png’
+
+orb_portugal.png      0%[                    ]       0  --.-KB/s               orb_portugal.png     93%[=================>  ] 198.97K   824KB/s               orb_portugal.png    100%[===================>] 212.94K   882KB/s    in 0.2s    
+
+2023-07-24 08:52:11 (882 KB/s) - ‘orb_portugal.png’ saved [218048/218048]
+
