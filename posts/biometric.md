@@ -204,7 +204,7 @@ This depends on what kind of coercion we are talking about. Possible forms of co
 
 * Governments scanning people's eyes (or faces, or...) at border control and other routine government checkpoints, and using this to register (and frequently re-register) their citizens
 * Governments banning Orbs within the country to prevent people from independently re-registering
-* Individuals buying IDs and then threatening to harm they if they detect that their ID has been invalidated due to re-registration
+* Individuals buying IDs and then threatening to harm the seller if they detect that the ID has been invalidated due to re-registration
 * (Possibly government-run) applications requiring people to "sign in" by signing with their public key directly, letting them see the corresponding biometric scan, and hence the link between the user's current ID and any future IDs they get from re-registering. A common fear is that this makes it too easy to create "permanent records" that stick with a person for their entire life.
 
 <center><br>
