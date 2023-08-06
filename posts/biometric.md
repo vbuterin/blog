@@ -150,9 +150,9 @@ There are three:
 
 Any proof-of-personhood system must contend with (1), perhaps with the exception of systems where the set of "accepted" IDs is completely subjective. If a system uses incentives denominated in outside assets (eg. ETH, USDC, DAI), then it cannot be fully subjective, and so governance risks become unavoidable.
 
-(2) is a much bigger risk for Worldcoin than for Proof of Humanity (or BrightID), because Worldcoin depends on specialized hardware and other systems do not.
+[2] is a much bigger risk for Worldcoin than for Proof of Humanity (or BrightID), because Worldcoin depends on specialized hardware and other systems do not.
 
-(3) is a risk particularly in "[logically centralized](https://medium.com/@VitalikButerin/the-meaning-of-decentralization-a0c92b76a274)" systems where there is a single system doing the verification, unless all of the algorithms are open-source and we have an assurance that they are actually running the code that they claim they are. For systems that rely purely on users verifying other users (like Proof of Humanity), it is not a risk.
+[3] is a risk particularly in "[logically centralized](https://medium.com/@VitalikButerin/the-meaning-of-decentralization-a0c92b76a274)" systems where there is a single system doing the verification, unless all of the algorithms are open-source and we have an assurance that they are actually running the code that they claim they are. For systems that rely purely on users verifying other users (like Proof of Humanity), it is not a risk.
 
 ### How does Worldcoin address hardware centralization issues?
 
@@ -180,7 +180,7 @@ In addition to issues specific to Worldcoin, there are concerns that affect proo
 3. **Phone hacking**: if a person's phone gets hacked, the hacker can steal the key that controls their World ID.
 4. **Government coercion to steal IDs**: a government could force their citizens to get verified while showing a QR code belonging to the government. In this way, a malicious government could gain access to millions of IDs. In a biometric system, this could even be done covertly: governments could use obfuscated Orbs to extract World IDs from everyone entering their country at the passport control booth.
 
-(1) is specific to biometric proof-of-personhood systems. (2) and (3) are common to both biometric and non-biometric designs. (4) is also common to both, though the techniques that are required would be quite different in both cases; in this section I will focus on the issues in the biometric case.
+[1] is specific to biometric proof-of-personhood systems. [2] and [3] are common to both biometric and non-biometric designs. [4] is also common to both, though the techniques that are required would be quite different in both cases; in this section I will focus on the issues in the biometric case.
 
 These are pretty serious weaknesses. Some already have been addressed in existing protocols, others can be addressed with future improvements, and still others seem to be fundamental limitations.
 
