@@ -111,7 +111,7 @@ Blue: percent of bits that differ between two scans of the same person's iris. O
 
 These iris hashes leak only a small amount of data. If an adversary can forcibly (or secretly) scan your iris, then they can compute your iris hash themselves, and check it against the database of iris hashes to see whether or not you participated in the system. This ability to check whether or not someone signed up is necessary for the system itself to prevent people from signing up multiple times, but there's always the possibility that it will somehow be abused. Additionally, there is the possibility that the iris hashes leak some amount of medical data (sex, ethnicity, perhaps medical conditions), but this leak is far smaller than what could be captured by pretty much any other mass data-gathering system in use today (eg. even street cameras). On the whole, to me the privacy of storing iris hashes seems sufficient.
 
-If others disagree with this judgement and decide that they to design a system with even more privacy, there are two ways to do so:
+If others disagree with this judgement and decide that they want to design a system with even more privacy, there are two ways to do so:
 
 1. If the iris hashing algorithm can be improved to make the difference between two scans of the same person much lower (eg. reliably under 10% bit flips), then instead of storing full iris hashes, the system can store a smaller number of error correction bits for iris hashes (see: [fuzzy extractors](https://en.wikipedia.org/wiki/Fuzzy_extractor)). If the difference between two scans is under 10%, then the number of bits that needs to be published would be at least 5x less.
 2. If we want to go further, we could store the iris hash database inside a [multi-party computation (MPC)](https://en.wikipedia.org/wiki/Secure_multi-party_computation) system which could only be accessed by Orbs (with a rate limit), making the data unaccessible entirely, but at the cost of significant protocol complexity and social complexity in governing the set of MPC participants. This would have the benefit that users would not be able to prove a link between two different World IDs that they had at different times even if they wanted to.
@@ -204,7 +204,7 @@ This depends on what kind of coercion we are talking about. Possible forms of co
 
 * Governments scanning people's eyes (or faces, or...) at border control and other routine government checkpoints, and using this to register (and frequently re-register) their citizens
 * Governments banning Orbs within the country to prevent people from independently re-registering
-* Individuals buying IDs and then threatening to harm they if they detect that their ID has been invalidated due to re-registration
+* Individuals buying IDs and then threatening to harm the seller if they detect that the ID has been invalidated due to re-registration
 * (Possibly government-run) applications requiring people to "sign in" by signing with their public key directly, letting them see the corresponding biometric scan, and hence the link between the user's current ID and any future IDs they get from re-registering. A common fear is that this makes it too easy to create "permanent records" that stick with a person for their entire life.
 
 <center><br>
