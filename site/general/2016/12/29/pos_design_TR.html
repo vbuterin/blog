@@ -1,0 +1,133 @@
+
+
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
+
+
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="[Mirror] Bir Proof of Stake Tasarım Felsefesi">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="../../../../scripts/tex-svg.js">
+</script>
+
+<style>
+</style>
+
+<div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
+
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="[Mirror] Bir Proof of Stake Tasarım Felsefesi" />
+<meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
+
+
+<br>
+<h1 style="margin-bottom:7px"> [Mirror] Bir Proof of Stake Tasarım Felsefesi </h1>
+<small style="float:left; color: #888"> 2016 Dec 29 </small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
+<br> <br> <br>
+<title> [Mirror] Bir Proof of Stake Tasarım Felsefesi </title>
+
+<p><em>Bu, <a href="https://medium.com/@VitalikButerin/a-proof-of-stake-design-philosophy-506585978d51">https://medium.com/<span class="citation" data-cites="VitalikButerin/a-proof-of-stake-design-philosophy-506585978d51">@VitalikButerin/a-proof-of-stake-design-philosophy-506585978d51</span></a> adresindeki yazının bir aynası(kopyası)dır.</em></p>
+<p>Ethereum gibi sistemler (ve Bitcoin, NXT, Bitshares vb.), temel olarak yeni bir kriptoekonomik organizma sınıfıdır - merkeziyetsiz, yargı alanı olmayan, tamamen siber uzayda var olan ve kriptografi, ekonomi ve toplumsal fikir birliği (konsensüs) kombinasyonuyla sürdürülen varlıklardır. BitTorrent gibi görünebilirler, ancak BitTorrent'un state (durum) kavramı yoktur - son derece önemli olduğu ortaya çıkan bir ayrım. Bazen <a href="https://letstalkbitcoin.com/is-bitcoin-overpaying-for-false-security">merkeziyetsiz otonom şirketler</a> olarak tanımlanır, ancak tam anlamıyla şirket de değillerdir - Microsoft'u hard forklayamazsınız. Açık kaynak yazılım projelerine benzeyebilir, ancak tam olarak da öyle değillerdir - bir blok zincirini forklayabilirsiniz, ancak OpenOffice'i forklamak kadar kolay değildir.</p>
+<p>Bu kriptoekonomik ağlar birçok farklı aromayla gelir - ASIC-based PoW, GPU-based PoW, naive PoS, delegated PoS, umarım yakında Casper PoS - ve her biri kaçınılmaz olarak kendi temel felsefesiyle birlikte gelir. İyi bilinen bir örnek, proof of work'ün maksimalist vizyonudur, burada "doğru" blok zinciri, madencilerin yaratmak için en büyük miktarda ekonomik sermayeyi harcadığı zincir olarak tanımlanır. Başlangıçta yalnızca bir protokol içi fork choice kuralı olan bu mekanizma, birçok durumda kutsal bir dogma olarak yüceltilmiştir - hash algoritmasını değiştiren protokol hard fork'ları karşısında bile fikrin saf halini ciddi şekilde savunmaya çalışan birinin bir örneği için <a href="https://twitter.com/vitalikbuterin/status/687050458301657088">Chris DeRose ile benim aramdaki bu Twitter tartışmasına</a> bakın. Bitshares'in <a href="https://bitshares.org/technology/delegated-proof-of-stake-consensus/">delegated proof of stake'i</a> başka bir tutarlı felsefeyi sunuyor, burada her şey yine tek bir temel ilke üzerinden akıyor, ancak çok daha da basit bir şekilde ifade edilebilir: <a href="http://docs.bitshares.org/bitshares/dpos.html">hissedarlar oy kullanır</a>.</p>
+<p>Bu felsefelerin her biri; Nakamoto konsensüsü, sosyal konsensüs, hissedar oyları konsensüsü, kendi sonuçlarına götürür ve kendi terimleriyle bakıldığında oldukça anlamlı olan bir değerler sistemine yol açar - ancak birbirleriyle karşılaştırıldıklarında kesinlikle eleştirilebilirler. Casper konsensüsünün de felsefi bir temeli var, ancak bu şimdiye kadar açık bir şekilde makaleye alınmamıştır.</p>
+<p>Ben, Vlad, Dominic, Jae ve diğerleri, proof of stake protokollerinin neden var olduğu ve nasıl tasarlandığı konusunda kendi görüşlerimize sahibiz, ancak burada kişisel olarak nereden geldiğimi açıklamayı amaçlıyorum.</p>
+<p>Gözlemlerimi ve ardından direkt sonuçları listeleyeceğim.</p>
+<p><br></p>
+<ul>
+<li><p>Kriptografi, 21. yüzyılda gerçekten özeldir çünkü <strong>kriptografi, düşmanca çatışmalarda büyük ölçüde savunanın lehine olmaya devam ettiği çok az alandan biridir</strong>. Kaleleri yok etmek inşa etmekten çok daha kolaydır, adalar savunulabilir ancak yine de saldırılabilir, ancak ortalama bir kişinin ECC anahtarları devlet düzeyindeki aktörlere bile direnecek kadar güvenlidir. Cypherpunk felsefesi, temel olarak, bireyin özerkliğini daha iyi koruyan bir dünya yaratmak için bu değerli asimetriden yararlanmakla ilgilidir ve kriptoekonomi bir dereceye kadar bunun bir uzantısıdır, ancak bu sefer sadece özel iletilerin bütünlüğü ve gizliliği değil, karmaşık koordinasyon ve işbirliği sistemlerinin güvenliği ve canlılığını koruması gerekir. <strong>Kendilerini cypherpunk ruhunun ideolojik mirasçıları olarak gören sistemler, bu temel özelliği korumalı ve sistemi yok etmeleri veya bozmaları, sistemi kullanıp sürdürmekten çok daha pahalı olmalıdır.</strong></p></li>
+<li><p>"Cypherpunk ruhu" sadece idealizmle ilgili değildir; Savunması saldırmaktan daha kolay olan sistemler yapmak da aslında sağlam mühendisliktir.</p></li>
+<li><p><strong>Orta ila uzun zaman ölçeklerinde, insanlar fikir birliğinde (konsensüs) oldukça iyidir</strong>. Bir düşman sınırsız hash gücüne erişimi olsa ve herhangi bir büyük blokzincirine %51 saldırısı gerçekleştirerek tarihin son ayını geri alsa bile, topluluğu bu zincirin doğru olan olduğuna ikna etmek, ana zincirin hash gücünü aşmaktan çok daha zor. Blok explorerları, topluluktaki her güvenilir üyeyi, New York Times'ı, archive.org'u ve internetteki diğer birçok kaynağı yıkmaları gerekecektir; genel olarak, bilgi teknolojisinin yoğun olduğu 21. yüzyılda yeni saldırı zincirinin asıl zincir olduğunu dünyaya ikna etmek, ABD'nin Ay'a inişinin gerçekleşmediğini dünyaya ikna etmek kadar zordur. <strong>Bu sosyal dikkate almalar, blokzinciri topluluğunun kabul edip etmemesine bakılmaksızın, herhangi bir blok zincirini uzun vadede koruyan şeydir</strong> (<a href="https://www.reddit.com/r/bitcoinxt/comments/41pbmf/maxwell_considers_changing_the_pow_algorithm_in/">dikkate alın,</a> Bitcoin Core sosyal katmanın önemini <a href="https://www.reddit.com/r/Bitcoin/comments/3fg0jw/could_a_cartel_of_pool_operators_collude_to/ctoat0d/">kabul ediyor</a>).</p></li>
+<li><p>Ancak tek başına sosyal konsensüs ile korunan bir blokzinciri, çok verimsiz ve yavaş olacaktır ve bitmeyen anlaşmazlıkların gerçekleşmesi daha kolay olacaktır (tüm zorluklara rağmen, <a href="http://www.npr.org/sections/money/2011/02/15/131934618/the-island-of-stone-money">böyle bir şey yaşandı</a>); dolayısıyla <strong>ekonomik konsensüs, kısa vadede canlılık ve güvenlik özelliklerinin korunmasında son derece önemli bir rol oynuyor</strong>.</p></li>
+<li><p>Proof of Work güvenliği sadece blok ödüllerinden geliyor (Dominic Williams'ın deyimiyle, <a href="https://twitter.com/dominic_w/status/648330685963370496">üç E'den ikisi eksik</a>), madencilerin teşviki yalnızca gelecekteki blok ödüllerini kaybetme riskiyle geliyor. Bu nedenle, <strong>proof of work mantıksal olarak büyük ödüllerle var olmasına teşvik edilen büyük güç üzerine dayanır</strong>. PoW'da saldırılardan kurtulmak çok zordur: İlk kez gerçekleştiğinde PoW'i değiştirmek için bir hard fork yapabilir ve saldırganın ASIC'lerini işe yaramaz hale getirebilirsiniz, ancak ikinci kez bu seçeneğiniz olmaz ve saldırgan tekrar tekrar saldırabilir. Bu nedenle, madencilik ağı o kadar büyük olmalıdır ki saldırılar düşünülemez hale gelmelidir. X'ten daha küçük saldırganlar, ağın her gün sürekli olarak X harcamasıyla ortaya çıkmaktan (saldırmaktan) vazgeçirilir. <strong>Ben bu mantığı reddediyorum çünkü (i) <a href="http://digiconomist.net/beci">ağaçları öldürüyor</a> ve (ii) cypherpunk ruhunu tanımayı başaramıyor - saldırı maliyeti ve savunma maliyeti 1:1 oranında, bu yüzden herhangi bir savunma avantajı yok</strong>.</p></li>
+<li><p><strong>Proof of stake, güvenliği ödüllere dayanmak yerine cezalara dayandırarak bu simetriyi kırar</strong>. Doğrulayıcılar (Validator) para ("mevduat") riske eder, sermayelerini kitlemeleri ve node'larını sürdürmeleri ve private key'lerinin güvenliğini sağlamak için önlemler almaları karşılığında bir miktar ödül alır, ancak işlemleri geri alma maliyetinin büyük bir kısmı, bu süre zarfında aldıkları ödüllerden yüzlerce veya binlerce kat daha büyük olan cezalardan kaynaklanır. <strong>Bu nedenle Proof of stake'in tek cümlelik felsefesi, "güvenlik yanan enerjiden gelir" değil, "güvenlik, ekonomik kayba dayalı değer koymaktan gelir" şeklindedir</strong>. Kötü niyetli node'lar, takasın X$ değerinde protokol içi cezalar ödemesini sağlamak için suç ortağı olmadıkça, tutarsız herhangi bir blok veya durum için eşit bir sonlandırma düzeyi elde etmenin mümkün olmadığını kanıtlayabilirseniz, belirli bir blok veya durum X$ güvenliğine sahiptir.</p></li>
+<li><p>Teorik olarak, Çoğunluktaki doğrulayıcıların(validator) gizli anlaşmaları bir PoS zincirini devralabilir ve kötü niyetli davranmaya başlayabilir. Ancak, (i) akıllıca bir protokol tasarımıyla, bu tür manipülasyonlar ile ek kar elde etme yetenekleri mümkün olduğunca sınırlanabilir ve daha da önemlisi (ii) eğer yeni doğrulayıcıların katılmasını engellemeye çalışırlar veya %51 saldırısı gerçekleştirirlerse, topluluk basitçe bir hard fork koordine ederek söz konusu kötü niyetli doğrulayıcıların mevduatlarını silme yetisine sahiptir. <strong>Başarılı bir saldırı 50 milyon dolara mal olabilir, ancak sonuçlarının temizlenmesi süreci, <a href="https://blog.ethereum.org/2016/11/25/security-alert-11242016-consensus-bug-geth-v1-4-19-v1-5-2/">2016.11.25'teki geth/parity konsensüs hatasından</a> <em>çok daha külfetli</em> olmayacaktır</strong>. İki gün sonra, blokzinciri ve topluluk eski haline dönerken, saldırganlar 50 milyon dolar daha fakir ve topluluğun geri kalanı muhtemelen daha zengin çünkü saldırı, müteakip arz sıkışıklığı nedeniyle tokenin değerinin <em>yükselmesine</em> neden oldu. <em>İşte</em> size saldırı/savunma asimetrisi.</p></li>
+<li><p>Yukarıdaki ifade, plansız hard fork'ların düzenli bir şekilde meydana geleceği anlamına gelmemelidir. İstenirse, proof of stake'teki <em>bir tane</em> 51% saldırısının maliyeti, proof of work'te <em>kalıcı</em> 51% saldırısı yapmakla aynı derecede yüksek olabilir ve saldırının yüksek maliyeti ve etkisizliği, pratikte neredeyse hiç denemeye kalkışılmamasını sağlar.</p></li>
+<li><p><strong>Ekonomi her şey değildir.</strong> Bireysel aktörler, protokol dışı nedenlerle davranabilirler, hacklenebilirler, kaçırılabilirler veya sadece bir gün sarhoş olup blokzincirini mahvetmeye ve maliyetini umursamamaya karar verebilirler. Ayrıca, olumlu yönden baktığımızda, <strong>bireylerin ahlaki sınırlamaları ve iletişim eksiklikleri, bir saldırının maliyetini nominal protokol tanımlı değer kaybı seviyesinden çok daha yüksek seviyelere çıkaracaktır</strong>. Bu, güvenemeyeceğimiz bir avantaj, ancak aynı zamanda gereksiz yere görmezden gelmememiz gereken bir avantajdır.</p></li>
+<li><p><strong>Bu nedenle, en iyi protokoller, çeşitli modeller ve varsayımlar altında iyi çalışan protokollerdir </strong>- koordine edilmiş seçimlerle ekonomik rasyonellik, bireysel seçimlerle ekonomik rasyonellik, basit hata toleransı, Bizans hata toleransı (ideal olarak hem uyarlamalı hem de uyarlamasız saldırgan varyantları), <a href="https://www.amazon.ca/Honest-Truth-About-Dishonesty-Everyone-Especially/dp/0062183613">Ariely/Kahneman'dan esinlenmiş davranışsal ekonomik modeller</a> ("hepimiz biraz hile yaparız") ve mümkünse gerçekçi ve mantıklı düşünülebilen diğer herhangi bir model. <strong>Her iki savunma katmanına da sahip olmak önemlidir: merkezi kartellerin anti-sosyal davranmasını engellemek için ekonomik teşvikler, en başta kartellerin oluşmasını engellemek için anti-merkeziyetçi teşvikler.</strong></p></li>
+<li><p><strong>Olabildiğince hızlı çalışan konsensüs protokollerinin riskleri vardır ve eğer varsa çok dikkatli bir şekilde yaklaşılmalıdır</strong>, çünkü çok hızlı olma <em>olasılığı</em> bunu yapmaya yönelik <em>teşviklere</em> bağlıysa, bu kombinasyon <strong>ağ düzeyinde çok yüksek ve sistemik risk oluşturan bir merkezileşme</strong> seviyesini ödüllendirir (örneğin, tüm doğrulayıcıların aynı hosting sağlayıcısından çalışması). Doğrulayıcıların bir mesajı ne kadar hızlı gönderdiğini çok fazla umursamayan konsensüs protokolleri, bunu kabul edilebilir uzun bir zaman aralığı içinde yaptıkları sürece (örneğin, 4-8 saniye gibi, çünkü Ethereum'daki gecikme süresinin genellikle ~500ms-1s olduğunu gözlemledik) böyle endişeler taşımaz. Mümkün olan bir orta nokta, çok hızlı çalışabilen ancak Ethereum'un amca(uncle) mekanizmasına benzer mekanikler taşıyan, bir node'un ağ bağlantısının kolayca ulaşılabilecek bir noktanın ötesine geçmesi durumunda marjinal ödülün oldukça düşük olduğunu sağlayan, protokoller oluşturmaktır.</p></li>
+</ul>
+<p>Buradan itibaren, elbette birçok detay ve detaylarda farklı yollar var, ancak yukarıdakiler en azından benim Casper versiyonumun dayandığı temel prensipleridir. Buradan itibaren, rekabet eden değerler arasında tercihleri tartışabiliriz. ETH'e yıllık %1 oranında bir arz oranı verelim ve düzeltici bir hard fork için 50 milyon dolar maliyet alalım mı, yoksa yıllık %0 oranında bir arz oranı verelim ve düzeltici bir hard fork için 5 milyon dolar maliyet alalım mı? Ekonomik model altında bir protokolün güvenliğini artırmak için hata tolere edilebilirlik modeli altında güvenliğini azaltma değiş tokuşunu ne zaman yaparız? Tahmin edilebilir bir güvenlik seviyesine mi yoksa tahmin edilebilir bir arz seviyesine mi daha çok önem veriyoruz? Bu soruların hepsi başka bir post'un konusu ve bu değerler arasındaki farklı değiş tokuşları <em>uygulamanın</em> çeşitli yolları, daha da fazla post'un konusu. Ama onlara da geleceğiz :)</p>
+ </div> 
