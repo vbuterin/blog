@@ -123,7 +123,7 @@ Theoretically, it should be possible to massage the EVM gas cost system until th
 
 Fully functional ERC-4337 wallets are _big_. [This implementation](https://github.com/etherspot/etherspot-prime-contracts/tree/master/src/wallet), compiled and put on chain, [takes up ~12,800 bytes](https://etherscan.io/address/0xfB32cef50CfB0A0F9f6d37A05828b2F56EfdfE20#code). Of course, you can deploy that big piece of code once, and use `DELEGATECALL` to allow each individual wallet to call into it, but that code still needs to be accessed in each block that uses it. Under the [Verkle tree gas costs EIP](https://notes.ethereum.org/@vbuterin/verkle_tree_eip), 12,800 bytes would make up 413 chunks, and accessing those chunks would require paying 2x `WITNESS_BRANCH_COST` (3,800 gas total) and 413x `WITNESS_CHUNK_COST` (82,600 gas total). And this does not even begin to mention the ERC-4337 entry-point itself, with [23,689 bytes onchain](https://etherscan.io/address/0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789#code) in version 0.6.0 (under the Verkle tree EIP rules, ~158,700 gas to load).
 
-This leads to a problem: the gas costs of actually accessing this code would have to be split among transactions somehow. The current approach that ERC-4337 uses is not great: the first transaction in a bundle eats up one-time storage/code reading costs, making it much more expensive than the rest of the transactins. Enshrinement in-protocol would allow these commonly-shared libraries to simply be part of the protocol, accessible to all with no fees.
+This leads to a problem: the gas costs of actually accessing this code would have to be split among transactions somehow. The current approach that ERC-4337 uses is not great: the first transaction in a bundle eats up one-time storage/code reading costs, making it much more expensive than the rest of the transactions. Enshrinement in-protocol would allow these commonly-shared libraries to simply be part of the protocol, accessible to all with no fees.
 
 ## What can we learn from this example about when to enshrine things more generally?
 
@@ -193,7 +193,7 @@ However, MEV-Boost carries a trust assumption in a new category of actor, called
 
 When a user sends a transaction, that transaction becomes immediately public and visible to all, even before it gets included on chain. This makes users of many applications vulnerable to economic attacks such as frontrunning: if a user makes a large trade on eg. Uniswap, an attacker could put in a transaction right before them, increasing the price at which they buy, and collecting an arbitrage profit.
 
-Recently, there has been a number of projects specializing in creating "private mempols" (or "encrypted mempools"), which keep users' transactions encrypted until the moment they get irreversibly accepted into a block.
+Recently, there has been a number of projects specializing in creating "private mempools" (or "encrypted mempools"), which keep users' transactions encrypted until the moment they get irreversibly accepted into a block.
 
 The problem is, however, that schemes like this require a particular kind of encryption: to prevent users from flooding the system and frontrunning the decryption process _itself_, the encryption must auto-decrypt once the transaction actually does get irreversibly accepted.
 
@@ -273,6 +273,6 @@ We can extend our diagram from earlier in the post as follows:
 
 </center><br>
 
-Sometimes, it may even make sense to _de-enshrine_ a few things. De-enshrining little-used precompiles is one example. Account abstraction as a whole, as mentioned earlier, is also a significant form of de-enshrinement. If we want to support backwards-compatibility for existing users, then the mechanism may actually be surprisingly similar to that for de-enshrining precompiles: one of the proposals is [EIP-5003](https://eips.ethereum.org/EIPS/eip-5003), which would allow EOAs to convert their account in-plce into a contract that has the same (or better) functionality.
+Sometimes, it may even make sense to _de-enshrine_ a few things. De-enshrining little-used precompiles is one example. Account abstraction as a whole, as mentioned earlier, is also a significant form of de-enshrinement. If we want to support backwards-compatibility for existing users, then the mechanism may actually be surprisingly similar to that for de-enshrining precompiles: one of the proposals is [EIP-5003](https://eips.ethereum.org/EIPS/eip-5003), which would allow EOAs to convert their account in-place into a contract that has the same (or better) functionality.
 
 What features should be brought into the protocol and what features should be left to other layers of the ecosystem is a complicated tradeoff, and we should expect the tradeoff to continue to evolve over time as our understanding of users' needs and our suite of available ideas and technologies continues to improve.
