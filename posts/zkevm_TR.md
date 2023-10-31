@@ -1,4 +1,4 @@
-﻿[category]: <> (Türkçe)
+[category]: <> (Türkçe)
 [date]: <> (2022/08/04)
 [title]: <> (Farklı ZK-EVM Türleri)
 [pandoc]: <> ()

@@ -1,0 +1,254 @@
+
+
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
+
+
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Different types of layer 2s">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="../../../../scripts/tex-svg.js">
+</script>
+
+<style>
+</style>
+
+<div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
+
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Different types of layer 2s" />
+<meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
+
+
+<br>
+<h1 style="margin-bottom:7px"> Different types of layer 2s </h1>
+<small style="float:left; color: #888"> 2023 Oct 31 </small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
+<br> <br> <br>
+<title> Different types of layer 2s </title>
+
+<p><em>Special thanks to Karl Floersch for feedback and review</em></p>
+<p>The Ethereum layer 2 ecosystem has been expanding rapidly over the last year. The ZK-EVM rollup ecosystem, traditionally featuring <a href="https://www.starknet.io/en">StarkNet</a>, <a href="https://arbitrum.io/">Arbitrum</a>, <a href="https://optimism.io">Optimism</a>, and <a href="https://scroll.io/">Scroll</a>, has been progressing quickly, making great strides on improving their security; the <a href="https://l2beat.com/scaling/summary">L2beat page</a> does a good job of summarizing the state of each project. Additionally, we have seen teams building sidechains also starting to build rollups (<a href="https://polygon.technology/">Polygon</a>), layer 1 projects seeking to move toward being validiums (<a href="https://celo.org/">Celo</a>), and totally new efforts (<a href="https://linea.build/">Linea</a>, <a href="https://www.risczero.com/news/zeth-release">Zeth</a>...).</p>
+<p>One of the inevitable consequences of this is that we are seeing a trend of layer 2 projects becoming more heterogeneous. I expect this trend to continue, for a few key reasons:</p>
+<ul>
+<li><strong>Some projects that are currently independent layer 1s are seeking to come closer to the Ethereum ecosystem</strong>, and possibly become layer 2s. These projects will likely want a step-by-step transition. Transitioning all at once now would cause a decrease in usability, as the technology is not yet ready to put everything on a rollup. Transitioning all at once later risks sacrificing momentum and being too late to be meaningful.</li>
+<li><strong>Some centralized projects want to give their users more security assurances, and are exploring blockchain-based routes for doing so</strong>. In many cases, these are the projects that would have explored "permissioned consortium chains" in a previous era. Realistically, they probably only need a "halfway-house" level of decentralization. Additionally, their often very high level of throughput makes them unsuitable even for rollups, at least in the short term.</li>
+<li><strong>Non-financial applications, like games or social media, want to be <em>decentralized</em> but need only a halfway-house level of <em>security</em></strong>. In the social media case, this realistically involves treating different parts of the app differently: rare and high-value activity like username registration and account recovery should be done on a rollup, but frequent and low-value activity like posts and votes need less security. If a chain failure causes your post to disappear, that's an acceptable cost. If a chain failure causes you to lose your account, that is a much bigger problem.</li>
+</ul>
+<p>A big theme is that while applications and <strong>users that are on the Ethereum layer 1 today</strong> will be fine paying smaller but still visible rollup fees in the short term, <strong>users from the non-blockchain world</strong> will not: it's easier to justify paying $0.10 if you were paying $1 before than if you were paying $0 before. This applies both to applications that are centralized today, and to smaller layer 1s, which do typically have very low fees while their userbase remains small.</p>
+<p>A natural question that emerges is: which of these complicated tradeoffs between rollups, validiums and other systems makes sense for a given application?</p>
+<h2 id="rollups-vs-validiums-vs-disconnected-systems">Rollups vs validiums vs disconnected systems</h2>
+<p>The first dimension of security vs scale that we will explore can be described as follows: <strong>if you have an asset that is issued on L1, then deposited into the L2, then transferred to you, what level of guarantee do you have that you will be able to take the asset back to the L1?</strong></p>
+<p>There is also a parallel question: what is the technology choice that is resulting in that level of guarantee, and what are the tradeoffs of that technology choice?</p>
+<p>We can describe this simply using a chart:</p>
+<p><br></p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>System type</th>
+<th>Technology properties</th>
+<th>Security guarantees</th>
+<th>Costs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Rollup</strong></td>
+<td>Computation proven via fraud proofs or ZK-SNARKs, data stored on L1</td>
+<td>You can always bring the asset back to L1</td>
+<td>L1 data availability + SNARK-proving or redundant execution to catch errors</td>
+</tr>
+<tr class="even">
+<td><strong>Validium</strong></td>
+<td>Computation proven via ZK-SNARKs (can't use fraud proofs), data stored on a server or other separate system</td>
+<td>Data availability failure can cause assets to be <em>lost</em>, but not <em>stolen</em></td>
+<td>SNARK-proving</td>
+</tr>
+<tr class="odd">
+<td><strong>Disconnected</strong></td>
+<td>A separate chain (or server)</td>
+<td>Trust one or a small group of people not to steal your funds or lose the keys</td>
+<td>Very cheap</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>It's worth mentioning that <strong>this is a simplified schema, and there are lots of intermediate options</strong>. For example:</p>
+<ul>
+<li><strong>Between rollup and validium</strong>: a validium where anyone could make an on-chain payment to cover the cost of transaction fees, at which point the operator would be forced to provide some data onto the chain or else lose a deposit.</li>
+<li><strong>Between plasma and validium</strong>: a <a href="https://arxiv.org/abs/1911.12095">Plasma system</a> offers rollup-like security guarantees with off-chain data availability, but it supports only a limited number of applications. A system <em>could</em> offer a full EVM, and offer Plasma-level guarantees to users that do not use those more complicated applications, and validium-level guarantees to users that do.</li>
+</ul>
+<p>These intermediate options can be viewed as being on a spectrum between a rollup and a validium. But what motivates applications to choose a particular point on that spectrum, and not some point further left or further right? Here, there are two major factors:</p>
+<ol type="1">
+<li><strong>The cost of Ethereum's native data availability, which will decrease over time as technology improves</strong>. Ethereum's next hard fork, <a href="https://consensys.io/blog/ethereum-dencun-upgrade-explained-part-1">Dencun</a>, introduces <a href="https://www.eip4844.com/">EIP-4844</a> (aka "proto-danksharding"), which provides ~32 kB/sec of onchain data availability. Over the next few years, this is expected to increase in stages as <a href="https://hackmd.io/@vbuterin/sharding_proposal">full danksharding</a> is rolled out, eventually targeting around ~1.3 MB/sec of data availability. At the same time, <a href="https://twitter.com/VitalikButerin/status/1554983955182809088">improvements in data compression</a> will let us do more with the same amount of data.</li>
+<li><strong>The application's own needs: how much would users suffer from high fees, versus from something in the application going wrong?</strong> Financial applications would lose more from application failures; games and social media involve lots of activity per user, and relatively low-value activity, so a different security tradeoff makes sense for them.</li>
+</ol>
+<p>Approximately, this tradeoff looks something like this:</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/l2types/rollup_vs_validium.png" /></p>
+</center>
+<p><br></p>
+<p>Another type of partial guarantee worth mentioning is <strong>pre-confirmations</strong>. Pre-confirmations are messages signed by some set of participants in a rollup or validium that say "we attest that these transactions are included in this order, and the post-state root is this". These participants may well sign a pre-confirmation that does not match some later reality, but if they do, a deposit gets burned. This is useful for low-value applications like consumer payments, while higher-value applications like multimillion-dollar financial transfers will likely wait for a "regular" confirmation backed by the system's full security.</p>
+<p><strong>Pre-confirmations can be viewed as another example of a hybrid system</strong>, similar to the "plasma / validium hybrid" mentioned above, but this time hybridizing between a rollup (or validium) that has full security but high latency, and a system with a much lower security level that has low latency. Applications that need lower latency get lower security, but can live in the same ecosystem as applications that are okay with higher latency in exchange for maximum security.</p>
+<h2 id="trustlessly-reading-ethereum">Trustlessly <em>reading</em> Ethereum</h2>
+<p>Another less-thought-about, but still highly important, form of connection has to do with <strong>a system's ability to <em>read</em> the Ethereum blockchain</strong>. Particularly, this includes <strong>being able to revert if Ethereum reverts</strong>. To see why this is valuable, consider the following situation:</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/l2types/ethreverts.png" /></p>
+</center>
+<p><br></p>
+<p>Suppose that, as shown in the diagram, the Ethereum chain reverts. This could be a temporary hiccup within an epoch, while the chain has not finalized, or it could be an <a href="https://eth2book.info/capella/part2/incentives/inactivity/">inactivity leak</a> period where the chain is not finalizing for an extended duration because too many validators are offline.</p>
+<p>The worst-case scenario that can arise from this is as follows. Suppose that the first block from the top chain reads some data from the leftmost block on the Ethereum chain. For example, someone on Ethereum deposits 100 ETH into the top chain. Then, Ethereum reverts. However, the top chain does not revert. As a result, future blocks of the top chain correctly follow new blocks from the newly correct Ethereum chain, but <em>the consequences of the now-erroneous older link</em> (namely, the 100 ETH deposit) are still part of the top chain. This exploit could allow printing money, turning the bridged ETH on the top chain into a fractional reserve.</p>
+<p>There are two ways to solve this problem:</p>
+<ol type="1">
+<li><strong>The top chain could only read <em>finalized</em> blocks of Ethereum</strong>, so it would never need to revert.</li>
+<li><strong>The top chain could revert if Ethereum reverts</strong>. Both prevent this issue. The former is easier to implement, but may cause a loss of functionality for an extended duration if Ethereum enters an inactivity leak period. The latter is harder to implement, but ensures the best possible functionality at all times.</li>
+</ol>
+<p>Note that (1) does have one edge case. If a 51% attack on Ethereum creates two new incompatible blocks that both appear finalized at the same time, then the top chain may well lock on to the wrong one (ie. the one that Ethereum social consensus does not eventually favor), and would have to revert to switch to the right one. Arguably, there is no need to write code to handle this case ahead of time; it could simply be handled by hard-forking the top chain.</p>
+<p>The ability of a chain to trustlessly read Ethereum is valuable for two reasons:</p>
+<ol type="1">
+<li>It reduces security issues involved in bridging tokens issued on Ethereum (or other L2s) to that chain</li>
+<li>It allows account abstraction wallets that use the <a href="https://vitalik.ca/general/2023/06/20/deeperdive.html">shared keystore architecture</a> to hold assets on that chain securely.</li>
+</ol>
+<ol type="1">
+<li>is important, though arguably this need is already widely recognized. (2) is important too, because it means that you can have a wallet that allows easy key changes and that holds assets across a large number of different chains.</li>
+</ol>
+<h2 id="does-having-a-bridge-make-you-a-validium">Does having a bridge make you a validium?</h2>
+<p>Suppose that the top chain starts out as a separate chain, and then someone puts onto Ethereum a bridge contract. A bridge contract is simply a contract that accepts block headers of the top chain, verifies that any header submitted to it comes with a valid certificate showing that it was accepted by the top chain's consensus, and adds that header to a list. Applications can build on top of this to implement functionality such as depositing and withdrawing tokens. Once such a bridge is in place, does that provide <em>any</em> of the asset security guarantees we mentioned earlier?</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/l2types/bridge.png" /></p>
+</center>
+<p><br></p>
+<p>So far, not yet! For two reasons:</p>
+<ol type="1">
+<li>We're validating that the blocks were <em>signed</em>, but not that the state transitions are correct. Hence, if you have an asset issued on Ethereum deposited to the top chain, and the top chain's validators go rogue, they can sign an invalid state transition that steals those assets.</li>
+<li>The top chain still has no way to <em>read</em> Ethereum. Hence, you can't even deposit Ethereum-native assets onto the top chain without relying on some other (possibly insecure) third-party bridge.</li>
+</ol>
+<p>Now, let's make the bridge a <strong>validating bridge</strong>: it checks not just consensus, but also a ZK-SNARK proving that the state of any new block was computed correctly.</p>
+<p>Once this is done, the top chain's validators can no longer steal your funds. They <em>can</em> publish a block with unavailable data, preventing everyone from withdrawing, but they cannot steal (except by trying to extract a ransom for users in exchange for revealing the data that allows them to withdraw). This is the same security model as a validium.</p>
+<p>However, we still have not solved the second problem: the top chain cannot read Ethereum.</p>
+<p>To do that, we need to do one of two things:</p>
+<ol type="1">
+<li>Put a bridge contract validating finalized Ethereum blocks inside the top chain.</li>
+<li>Have each block in the top chain contain a hash of a recent Ethereum block, and have a fork choice rule that enforces the hash linkings. That is, a top chain block that links to an Ethereum block that is not in the canonical chain is itself non-canonical, and if a top chain block links to an Ethereum block that was at first canonical, but then becomes non-canonical, the top chain block must also become non-canonical.</li>
+</ol>
+<center>
+<p><br></p>
+<p><img src="../../../../images/l2types/bridge2.png" /></p>
+<p><em>The purple links can be either hash links or a bridge contract that verifies Ethereum's consensus.</em></p>
+</center>
+<p><br></p>
+<p>Is this enough? As it turns out, still no, because of a few small edge cases:</p>
+<ol type="1">
+<li>What happens if Ethereum gets 51% attacked?</li>
+<li>How do you handle Ethereum hard fork upgrades?</li>
+<li>How do you handle hard fork upgrades <em>of your chain</em>?</li>
+</ol>
+<p>A 51% attack on Ethereum would have similar consequences to a 51% attack on the top chain, but in reverse. A hard fork of Ethereum risks making the bridge of Ethereum inside the top chain no longer valid. <strong>A social commitment to revert if Ethereum reverts a finalized block, and to hard-fork if Ethereum hard-forks, is the cleanest way to resolve this</strong>. Such a commitment may well never need to be actually executed on: you could have a governance gadget on the top chain activate if it sees proof of a possible attack or hard fork, and only hard-fork the top chain if the governance gadget fails.</p>
+<p>The only viable answer to (3) is, unfortunately, to have some form of governance gadget on Ethereum that can make the bridge contract on Ethereum aware of hard-fork upgrades of the top chain.</p>
+<p><strong>Summary</strong>: two-way validating bridges are <em>almost</em> enough to make a chain a validium. The main remaining ingredient is a social commitment that if something exceptional happens in Ethereum that makes the bridge no longer work, the other chain will hard-fork in response.</p>
+<h2 id="conclusions">Conclusions</h2>
+<p>There are two key dimensions to "connectedness to Ethereum":</p>
+<ol type="1">
+<li>Security of withdrawing to Ethereum</li>
+<li>Security of reading Ethereum</li>
+</ol>
+<p>These are both important, and have different considerations. There is a spectrum in both cases:</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/l2types/4d.png" /></p>
+</center>
+<p><br></p>
+<p>Notice that both dimensions each have two distinct ways of measuring them (so really there's four dimensions?): <strong>security of withdrawing</strong> can be measured by (i) security level, and (ii) what percent of users or use cases benefit from the highest security level, and <strong>security of reading</strong> can be measured by (i) how quickly the chain can read Ethereum's blocks, particularly finalized blocks vs any blocks, and (ii) the strength of the chain's social commitment to handle edge cases such as 51% attacks and hard forks.</p>
+<p>There is value in projects in many regions of this design space. For some applications, high security and tight connectedness are important. For others, something looser is acceptable in exhcnage for greater scalability. In many cases, starting with something looser today, and moving to a tighter coupling over the next decade as technology improves, may well be optimal.</p>
+ </div> 
