@@ -71,7 +71,7 @@ There are two ways to implement this:
 
 ## What does a cross-chain proof look like?
 
-To show the full complexity, we'll explore the most difficult case: where the keystore is on one L2, and the wallet is on a different L2. If either the keystore on the wallet is on L1, then only half of this design is needed.
+To show the full complexity, we'll explore the most difficult case: where the keystore is on one L2, and the wallet is on a different L2. If either the keystore or the wallet is on L1, then only half of this design is needed.
 
 <center><br>
     
