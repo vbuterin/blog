@@ -134,7 +134,7 @@ We can think of the greater Ethereum-verse (or "web3") as creating an _independe
 
 <center><br>
 
-| <center>Traditional stack</center> | <center>Decentralized stack</center> |
+| Traditional stack | Decentralized stack |
 | - | - |
 | Banking system | ETH, stablecoins, L2s for payments, DEXes (note: still need banks for loans) |
 | Receipts | Links to transactions on block explorers |
