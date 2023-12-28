@@ -1,0 +1,299 @@
+
+
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
+
+
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Make Ethereum Cypherpunk Again">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="../../../../scripts/tex-svg.js">
+</script>
+
+<style>
+</style>
+
+<div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
+
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Make Ethereum Cypherpunk Again" />
+<meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
+
+
+<br>
+<h1 style="margin-bottom:7px"> Make Ethereum Cypherpunk Again </h1>
+<small style="float:left; color: #888"> 2023 Dec 28 </small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
+<br> <br> <br>
+<title> Make Ethereum Cypherpunk Again </title>
+
+<p><em>Special thanks to Paul Dylan-Ennis for feedback and review.</em></p>
+<p>One of my favorite memories from ten years ago was taking a pilgrimage to a part of Berlin that was called the <a href="https://www.youtube.com/watch?v=Yj87B17TERc">Bitcoin Kiez</a>: a region in Kreuzberg where there were around a dozen shops within a few hundred meters of each other that were all accepting Bitcoin for payments. The centerpiece of this community was <a href="http://web.archive.org/web/20130820132935/http://www.room77.de/">Room 77</a>, a restaurant and bar run by Joerg Platzer. In addition to simply accepting Bitcoin, it also served as a community center, and all kinds of open source developers, political activists of various affiliations, and other characters would frequently come by.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/cypherpunk/room77.png" /></p>
+<p><em>Room 77, 2013. Source: <a href="https://bitcoinmagazine.com/culture/bitcoin-group-therapy-in-berlin-tomorrow-1375454827">my article from 2013 on Bitcoin Magazine</a>.</em></p>
+</center>
+<p><br></p>
+<p>A similar memory from two months earlier was PorcFest (that's "porc" as in "porcupine" as in "don't tread on me"), a libertarian gathering in the forests of northern New Hampshire, where the main way to get food was from small popup restaurants with names like "Revolution Coffee" and "Seditious Soups, Salads and Smoothies", which of course accepted Bitcoin. Here too, discussing the deeper political meaning of Bitcoin, and <em>using it</em> in daily life, happened together side by side.</p>
+<p>The reason why I bring these memories up is that they remind me of a deeper vision underlying crypto: we are not here to just create isolated tools and games, but rather build holistically toward a more free and open society and economy, where the different parts - technological, social and economic - fit into each other.</p>
+<p>The early vision of "web3" was also a vision of this type, going in a similarly idealistic but somewhat different direction. The term "web3" was originally coined by Ethereum cofounder Gavin Wood, and it refers to a different way of thinking about what Ethereum is: rather than seeing it, as I initially did, as "Bitcoin plus smart contracts", Gavin thought about it more broadly as one of a set of technologies that could together form the base layer of a <em>more open internet stack</em>.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/cypherpunk/woodweb3.png" /></p>
+<p><em>A diagram that Gavin Wood used in many of his early presentations.</em></p>
+</center>
+<p><br></p>
+<p>When the free open source software movement began in the 1980s and 1990s, the software was simple: it ran on your computer and read and wrote to files that stayed on your computer. But today, most of our important work is <em>collaborative</em>, often on a large scale. And so today, even if the underlying <em>code</em> of an application is open and free, your <em>data</em> gets routed through a centralized server run by a corporation that could arbitrarily read your data, change the rules on you or deplatform you at any time. And so if we want to extend the <em>spirit</em> of open source software to the world of today, we need programs to have access to a <em>shared hard drive</em> to store things that multiple people need to modify and access. And what is Ethereum, together with sister technologies like peer-to-peer messaging (then Whisper, now <a href="https://waku.org/">Waku</a>) and decentralized file storage (then just Swarm, now also <a href="https://ipfs.tech/">IPFS</a>)? A public decentralized shared hard drive. This is the original vision from which the now-ubiquitous term "web3" was born.</p>
+<p>Unfortunately, since 2017 or so, these visions have faded somewhat into the background. Few talk about consumer crypto payments, the only non-financial application that is actually being used at a large scale on-chain is ENS, and there is a large ideological rift where significant parts of the non-blockchain decentralization community see the crypto world as a distraction, and not as a kindred spirit and a powerful ally. In many countries, people <em>do</em> use cryptocurrency to send and save money, but they often do this through centralized means: either through internal transfers on centralized exchange accounts, or by trading USDT on Tron.</p>
+<center>
+<br>
+<div>
+<p><img src="../../../../images/cypherpunk/sun.png" /></p>
+</div>
+<p><br></p>
+<p><em>Background: the humble Tron founder and decentralization pioneer Justin Sun bravely leading forth the coolest and most decentralized crypto ecosystem in the global world.</em></p>
+</center>
+<p><br></p>
+<p>Having lived through that era, <strong>the number one culprit that I would blame as the root cause of this shift is the rise in transaction fees</strong>. When the cost of writing to the chain is $0.001, or even $0.1, you could imagine people making all kinds of applications that use blockchains in various ways, including non-financial ways. But when transaction fees go to over $100, as they have during the peak of the bull markets, there is exactly one audience that remains willing to play - and in fact, because coin prices are going up and they're getting richer, becomes <em>even more willing</em> to play: degen gamblers. Degen gamblers can be okay in moderate doses, and I have talked to plenty of people at events who were motivated to join crypto for the money but stayed for the ideals. But when they are the <em>largest</em> group using the chain on a large scale, this adjusts the public perception and the crypto space's internal culture, and leads to many of the other negatives that we have seen play out over the last few years.</p>
+<p><strong>Now, fast forward to 2023</strong>. On both the core challenge of scaling, and on various "side quests" of crucial importance to building a cypherpunk future actually viable, we actually have a lot of positive news to show:</p>
+<ul>
+<li><strong>Rollups</strong> are <a href="https://l2beat.com/">starting to actually exist</a>.</li>
+<li>Following a temporary lull after the regulatory crackdowns on Tornado Cash, <strong>second-generation privacy solutions</strong> such as <a href="https://www.railway.xyz/">Railway</a> and <a href="https://app.nocturne.xyz">Nocturne</a> are seeing the (<a href="https://www.youtube.com/watch?v=BerscJiALiE">moon</a>) light.</li>
+<li><strong>Account abstraction</strong> is <a href="https://erc4337.com/">starting to take off</a>.</li>
+<li><strong>Light clients</strong>, forgotten for a long time, are <a href="https://github.com/a16z/helios">starting to actually exist</a>.</li>
+<li><strong>Zero knowledge proofs</strong>, a technology which we thought was decades away, are now here, are <a href="https://kndrck.co/posts/practical_guide_build_zk_dapps/">increasingly developer-friendly</a>, and are on the cusp of being usable for consumer applications.</li>
+</ul>
+<p>These two things: the growing awareness that unchecked centralization and over-financialization cannot be what "crypto is about", and the key technologies mentioned above that are finally coming to fruition, together present us with an opportunity to take things in a different direction. Namely, to make at least a part of the Ethereum ecosystem <strong>actually be the permissionless, decentralized, censorship resistant, open source ecosystem that we originally came to build</strong>.</p>
+<h2 id="what-are-some-of-these-values">What are some of these values?</h2>
+<p>Many of these values are shared not just by many in the Ethereum community, but also by other blockchain communities, and even non-blockchain decentralization communities, though each community has its own unique combination of these values and how much each one is emphasized.</p>
+<ul>
+<li><strong>Open global participation</strong>: anyone in the world should be able to participate as a user, observer or developer, on a maximally equal footing. Participation should be <strong>permissionless</strong>.</li>
+<li><strong>Decentralization</strong>: minimize the dependence of an application on any one single actor. In particular, <strong>an application should continue working even if its core developers disappear forever</strong>.</li>
+<li><strong>Censorship resistance</strong>: centralized actors should not have the power to interfere with any given user's or application's ability to operate. Concerns around bad actors should be addressed at higher layers of the stack.</li>
+<li><strong>Auditability</strong>: anyone should be able to validate an application's logic and its ongoing operation (eg. by running a full node) to make sure that it is operating according to the rules that its developers claim it is.</li>
+<li><strong>Credible neutrality</strong>: base-layer infrastructure <a href="https://nakamoto.com/credible-neutrality/">should be neutral</a>, and in such a way that anyone can see that it is neutral even if they do not already trust the developers.</li>
+<li><strong>Building tools, not empires</strong>. Empires try to capture and trap the user inside a walled garden; tools do their task but otherwise interoperate with a wider open ecosystem.</li>
+<li><strong>Cooperative mindset</strong>: even while competing, projects within the ecosystem cooperate on shared software libraries, research, security, community building and other areas that are commonly valuable to them. Projects <strong>try to be positive-sum, both with each other and with the wider world</strong>.</li>
+</ul>
+<p>It is very possible to build things within the crypto ecosystem that do not follow these values. One can build a system that one calls a "layer 2", but which is actually a highly centralized system secured by a multisig, with no plans to ever switch to something more secure. One can build an account abstraction system that tries to be "simpler" than <a href="https://eips.ethereum.org/EIPS/eip-4337">ERC-4337</a>, but at the cost of introducing trust assumptions that end up removing the possibility of a public mempool and make it much harder for new builders to join. One could build an NFT ecosystem where the contents of the NFT are needlessly stored on centralized websites, making it needlessly more fragile than if those compoents are stored on IPFS. One could build a staking interface that needlessly funnels users toward the already-largest staking pool.</p>
+<p>Resisting these pressures is hard, but if we do not do so, then we risk losing the unique value of the crypto ecosystem, and recreating a clone of the existing web2 ecosystem with extra inefficiencies and extra steps.</p>
+<h2 id="it-takes-a-sewer-to-make-a-ninja-turtle">It takes a sewer to make a ninja turtle</h2>
+<center>
+<p><br></p>
+<p><img src="../../../../images/cypherpunk/ninja1.png" /></p>
+</center>
+<p><br></p>
+<p>The crypto space is in many ways an unforgiving environment. A 2021 article by Dan Robinson and Georgios Konstantiopoulos expresses this vividly in the context of MEV, arguing that <a href="https://www.paradigm.xyz/2020/08/ethereum-is-a-dark-forest">Ethereum is a dark forest</a> where on-chain traders are constantly vulnerable to getting exploited by front-running bots, those bots <em>themselves</em> are vulnerable to getting counter-exploited by other bots, etc. This is also true in other ways: smart contracts regularly get hacked, users' wallets <a href="https://bitcoinmagazine.com/culture/bitcoin-self-defense-part-i-wallet-protection-1368758841">regularly get hacked</a>, centralized exchanges fail <a href="https://www.wired.com/2014/03/bitcoin-exchange/">even</a> more <a href="https://www.investopedia.com/what-went-wrong-with-ftx-6828447">spectacularly</a>, etc.</p>
+<p>This is a big challenge for users of the space, but it also presents an opportunity: it means that we have a space to actually experiment with, incubate and receive rapid live feedback on all kinds of security technologies to address these challenges. We have seen successful responses to challenges in various contexts already:</p>
+<p><br></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Problem</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Centralized exchages getting hacked</td>
+<td>Use DEXes plus stablecoins, so centralized entities only need to be trusted to handle fiat</td>
+</tr>
+<tr class="even">
+<td>Individual private keys are not secure</td>
+<td>Smart contract wallets: multisig, <a href="https://vitalik.eth.limo/general/2021/01/11/recovery.html">social recovery</a>, etc</td>
+</tr>
+<tr class="odd">
+<td>Users getting tricked into signing transactions that drain their money</td>
+<td>Wallets <a href="https://twitter.com/Rabby_io/status/1735294301297430639">like Rabby</a> showing their users results of transaction simulation</td>
+</tr>
+<tr class="even">
+<td>Users getting sandwich-attacked by MEV players</td>
+<td><a href="https://swap.cow.fi">Cowswap</a>, <a href="https://docs.flashbots.net/flashbots-protect/overview">Flashbots Protect</a>, <a href="https://mevblocker.io/">MEV Blocker</a>...</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>Everyone wants the internet to be safe. Some attempt to make the internet safe by pushing approaches that force reliance on a single particular actor, whether a corporation or a government, that can act as a centralized anchor of safety and truth. But these approaches sacrifice openness and freedom, and contribute to the tragedy that is the growing <a href="https://www.internetsociety.org/blog/2022/03/what-is-the-splinternet-and-why-you-should-be-paying-attention/">"splinternet"</a>. People in the crypto space highly value openness and freedom. The level of risks and the high financial stakes involved mean that the crypto space cannot ignore safety, but various ideological and structural reasons ensure that centralized approaches for achieving safety are not available to it. At the same time, the crypto space is at the frontier of very powerful technologies like zero knowledge proofs, formal verification, hardware-based key security and on-chain social graphs. These facts together mean that, <strong>for crypto, the open way to improving security is the only way</strong>.</p>
+<p>All of this is to say, <strong>the crypto world is a perfect testbed environment to take its open and decentralized approach to security and actually apply it in a realistic high-stakes environment, and mature it to the point where parts of it can then be applied in the broader world</strong>. This is one of my visions for how the idealistic parts of the crypto world and the chaotic parts of the crypto world, and then the crypto world as a whole and the broader mainstream, can turn their differences into a symbiosis rather than a constant and ongoing tension.</p>
+<h2 id="ethereum-as-part-of-a-broader-technological-vision">Ethereum as part of a broader technological vision</h2>
+<p>In 2014, Gavin Wood introduced Ethereum as one of a suite of tools that can be built, the other two being Whisper (decentralized messaging) and Swarm (decentralized storage). The former was heavily emphasized, but with the turn toward financialization around 2017 the latter were unfortunately given much less love and attention. That said, Whisper continues to exist <a href="https://waku.org/">as Waku</a>, and is being actively used by projects like the <a href="https://our.status.im/peer-to-peer-messaging-where-whisper-falls-short-and-waku-picks-up/">decentralized messenger Status</a>. Swarm <a href="https://www.ethswarm.org/">continues to be developed</a>, and now we also have <a href="https://ipfs.tech/">IPFS</a>, which is used to host and serve this blog.</p>
+<p>In the last couple of years, with the rise of decentralized social media (<a href="https://www.lens.xyz/">Lens</a>, <a href="https://www.farcaster.xyz/">Farcaster</a>, etc), we have an opportunity to revisit some of these tools. In addition, we also have another very powerful new tool to add to the trifecta: <strong><a href="https://vitalik.eth.limo/general/2021/01/26/snarks.html">zero knowledge proofs</a></strong>. These technologies are most widely adopted as ways of improving Ethereum's scalability, as <a href="https://vitalik.eth.limo/general/2021/01/05/rollup.html">ZK rollups</a>, but they are also very <a href="https://vitalik.eth.limo/general/2022/06/15/using_snarks.html">useful for privacy</a>. In particular, <strong>the <em>programmability</em> of zero knowlege proofs means that we can get past the false binary of "anonymous but risky" vs "KYC'd therefore safe", and <em>get privacy and many kinds of authentication and verification at the same time</em></strong>.</p>
+<p>An example of this in 2023 was <a href="https://zupass.org/">Zupass</a>. Zupass is a zero-knowledge-proof-based system that was incubated at <a href="https://www.palladiummag.com/2023/10/06/why-i-built-zuzalu/">Zuzalu</a>, which was used both for in-person authentication to events, and for online authentication to the polling system <a href="https://zupoll.org/">Zupoll</a>, the Twitter-lookalike <a href="https://zuca.st/">Zucast</a> and others. The key feature of Zupass was this: <strong>you can prove that you are a resident of Zuzalu, without revealing <em>which</em> member of Zuzalu you are.</strong> Furthermore, each Zuzalu resident could only have one randomly-generated cryptographic identity for each application instance (eg. a poll) that they were signing into. Zupass was highly successful, and was applied later in the year to do ticketing at <a href="https://devconnect.org/">Devconnect</a>.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/cypherpunk/devcowork.png" style="width: 50%" /><br></p>
+<p><em>A zero-knowledge proof proving that I, as an Ethereum Foundation employee, have access to the Devconnect coworking space.</em></p>
+</center>
+<p><br></p>
+<p>The most <em>practical</em> use of Zupass so far has probably been the polling. All kinds of polls have been made, some on politically controversial or highly personal topics where people feel a strong need to preserve their privacy, using Zupass as an <a href="https://vitalik.eth.limo/general/2021/05/25/voting2.html">anonymous voting</a> platform.</p>
+<p>Here, we can start to see the contours of what an Ethereum-y cypherpunk world would look like, at least on a pure technical level. We can be holding our assets in ETH and ERC20 tokens, as well as all kinds of NFTs, and use privacy systems based on <a href="https://vitalik.eth.limo/general/2023/01/20/stealth.html">stealth addresses</a> and <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4563364">Privacy Pools</a> technology to preserve our privacy while at the same time locking out known bad actors' ability to benefit from the same anonymity set. Whether within our DAOs, or to help decide on changes to the Ethereum protocol, or for any other objective, we can use zero-knowledge voting systems, which can use <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4105763">all kinds of credentials</a> to help identify who has standing to vote and who does not: in addition to <a href="https://vitalik.eth.limo/general/2017/12/17/voting.html">voting-with-tokens as done in 2017</a>, we can have anonymous polls of people who have made sufficient contributions to the ecosystem, people who have attended enough events, or <a href="https://vitalik.eth.limo/general/2023/07/24/biometric.html">one-vote-per-person</a>.</p>
+<p>In-person and online payments can happen with ultra-cheap transactions on L2s, which take advantage of <a href="https://www.eip4844.com/">data availability space</a> (or <a href="https://vitalik.eth.limo/general/2023/11/14/neoplasma.html">off-chain data secured with Plasma</a>) together with <a href="https://twitter.com/VitalikButerin/status/1554983955182809088">data compression</a> to give their users ultra-high scalability. Payments from one rollup to another can happen with decentralized protocols like <a href="https://uniswap.org/whitepaper-uniswapx.pdf">UniswapX</a>. Decentralized social media projects can use various storage layers to store activity such as posts, retweets and likes, and use <a href="https://ens.domains/">ENS</a> (cheap on L2 <a href="https://docs.ens.domains/dapp-developer-guide/ens-l2-offchain">with CCIP</a>) for usernames. We can have seamless integration between on-chain tokens, and off-chain attestations held personally and ZK-proven through systems like Zupass.</p>
+<p>Mechanisms like <a href="https://vitalik.eth.limo/general/2019/12/07/quadratic.html">quadratic voting</a>, <a href="https://vitalik.eth.limo/general/2023/08/16/communitynotes.html">cross-tribal consensus finding</a> and <a href="https://polymarket.com/">prediction markets</a> can be used to help organizations and communities govern themselves and stay informed, and blockchain and ZK-proof-based identities can make these systems secure against both centralized censorship from the inside and coordinated manipulation from the outside. Sophisticated wallets can protect people as they participate in dapps, and user interfaces can be published to IPFS and accessed as <code>.eth</code> domains, with hashes of the HTML, javascript and all software dependencies updated directly on-chain through a DAO. Smart contract wallets, born to help people not lose tens of millions of dollars of their cryptocurrency, would expand to guard people's "identity roots", creating a system that is <em>even more</em> secure than centralized identity providers like "sign in with Google".</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/cypherpunk/soulrecover.png" /></p>
+<p><em>Soul Wallet recovery interface. I personally am at the point of being more willing to trust my funds and identity to systems like this than to centralized web2 recovery already.</em></p>
+</center>
+<p><br></p>
+<p>We can think of the greater Ethereum-verse (or "web3") as creating an <em>independent tech protocol stack</em>, that is competing with the traditional centralized protocol stack at all levels. Many people will mix-and-match both, and there are often clever ways to match both: with <a href="https://github.com/zkemail">ZKEmail</a>, you can even make an email address be one of the guardians of your social recovery wallet! But there are also many synergies from using the different parts of the decentralized stack together, especially if they are designed to better integrate with each other.</p>
+<center>
+<p><br></p>
+|
+<center>
+Traditional stack
+</center>
+|
+<center>
+Decentralized stack
+</center>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>Banking system</td>
+<td>ETH, stablecoins, L2s for payments, DEXes (note: still need banks for loans)</td>
+</tr>
+<tr class="even">
+<td>Receipts</td>
+<td>Links to transactions on block explorers</td>
+</tr>
+<tr class="odd">
+<td>Corporations</td>
+<td>DAOs</td>
+</tr>
+<tr class="even">
+<td>DNS (<code>.com</code>, <code>.io</code>, etc)</td>
+<td><a href="https://ens.domains">ENS</a> (<code>.eth</code>)</td>
+</tr>
+<tr class="odd">
+<td>Regular email</td>
+<td>Encrypted email (eg. <a href="https://skiff.com/">Skiff</a>)</td>
+</tr>
+<tr class="even">
+<td>Regular messaging (eg. Telegram)</td>
+<td>Decentralized messaging (eg. <a href="https://status.app/">Status</a>)</td>
+</tr>
+<tr class="odd">
+<td>Sign in with Google, Twitter, Wechat</td>
+<td><a href="https://login.xyz/">Sign in with Ethereum</a>, Zupass, Attestations via <a href="https://attest.sh/">EAS</a>, POAPs, Zu-Stamps... + <a href="https://vitalik.eth.limo/general/2021/01/11/recovery.html">social recovery</a></td>
+</tr>
+<tr class="even">
+<td>Publishing blogs on Medium, etc</td>
+<td>Publishing self-hosted blogs on IPFS (eg. using <a href="https://app.fleek.co/">Fleek</a>)</td>
+</tr>
+<tr class="odd">
+<td>Twitter, Facebook</td>
+<td><a href="https://www.lens.xyz/">Lens</a>, <a href="https://www.farcaster.xyz/">Farcaster</a>...</td>
+</tr>
+<tr class="even">
+<td>Limit bad actors through all-seeing big brother</td>
+<td>Constrain bad actors through zero knowledge proofs</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p><br></p>
+<p>One of the benefits of thinking about it as a stack is that this fits well with Ethereum's pluralist ethos. Bitcoin is trying to solve one problem, or at most two or three. Ethereum, on the other hand, has lots of sub-communities with lots of different focuses. There is no single dominant narrative. The goal of the stack is to enable this pluralism, but at the same time strive for growing interoperability across this plurality.</p>
+<h2 id="the-social-layer">The social layer</h2>
+<p>It's easy to say "these people doing X are a corrupting influence and bad, these people doing Y are the real deal". But this is a lazy response. To truly succeed, we need not only a vision for a technical stack, but also the <em>social</em> parts of the stack that make the technical stack possible to build in the first place.</p>
+<p>The advantage of the Ethereum community, in principle, is that we take incentives seriously. PGP wanted to put cryptographic keys into everyone's hands so we can actually do signed and encrypted email for decades, it largely failed, but then we got cryptocurrency and suddenly millions of people have keys publicly associated to them, and we can start using those keys for other purposes - including going full circle back to encrypted email and messaging. Non-blockchain decentralization projects are often chronically underfunded, blockchain-based projects get a 50-million dollar series B round. It is not from the benevolence of the staker that we get people to put in their ETH to protect the Ethereum network, but rather from their regard to their own self-interest - and we get <a href="https://time.com/6212184/justin-drake-ethereum-merge/">$20 billion in economic security</a> as a result.</p>
+<p>At the same time, incentives are not enough. Defi projects often start humble, cooperative and maximally open source, but sometimes begin to abandon these ideals as they grow in size. We can incentivize stakers to come and participate with very high uptime, but is much more difficult to incentivize stakers to be decentralized. It may not be doable using purely in-protocol means at all. Lots of critical pieces of the "decentralized stack" described above do not have viable business models. The Ethereum protocol's governance itself is notably non-financialized - and this has made it much more robust than <a href="https://vitalik.eth.limo/general/2018/03/28/plutocracy.html">other ecosystems whose governance <em>is</em> more financialized</a>. This is why it's valuable for Ethereum to have a strong social layer, which vigorously enforces its values in those places where pure incentives can't - but without creating a notion of "Ethereum alignment" that turns into a new form of political correctness.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/cypherpunk/ninja2.png" /></p>
+</center>
+<p><br></p>
+<p>There is a balance between these two sides to be made, though the right term is not so much <em>balance</em> as it is <em>integration</em>. There are plenty of people whose first introduction to the crypto space is the desire to get rich, but who then get acquainted with the ecosystem and become avid believers in the quest to build a more open and decentralized world.</p>
+<p>How do we actually make this integration happen? This is the key question, and I suspect the answer lies not in one magic bullet, but in a collection of techniques that will be arrived at iteratively. The Ethereum ecosystem is already more successful than most in encouraging a cooperative mentality between layer 2 projects purely through social means. Large-scale public goods funding, especially <a href="https://grants.gitcoin.co/">Gitcoin Grants</a> and <a href="https://community.optimism.io/docs/governance/retropgf-3/">Optimism's RetroPGF rounds</a>, is also extremely helpful, because it creates an alternative revenue channel for developers that don't see any conventional business models that do not require <a href="https://vitalik.eth.limo/general/2022/10/28/revenue_evil.html">sacrificing on their values</a>. But even these tools are still in their infancy, and there is a long way to go to both improve these particular tools, and to identify and grow <em>other</em> tools that might be a better fit for specific problems.</p>
+<p>This is where I see the unique value proposition of Ethereum's social layer. There is a unique <a href="https://vitalik.eth.limo/general/2020/11/08/concave.html">halfway-house mix</a> of valuing incentives, but also not getting consumed by them. There is a unqiue mix of valuing a warm and cohesive community, but at the same time remembering that what feels "warm and cohesive" from the inside can easily feel "oppressive and exclusive" from the outside, and valuing hard norms of neutrality, open source and censorship resistance as a way of guarding against the risks of going too far in being community-driven. If this mix can be made to work well, it will in turn be in the best possible position to realize its vision on the economic and technical level.</p>
+ </div> 
