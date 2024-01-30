@@ -172,7 +172,7 @@ Eliezer Yudkowsky在他的優秀著作[《Inadequate Equilibria》](https://equi
 
 ### 參與者更好 技術也更好
 
-第二，預測市場本身會有進步。使用者界面已經有了很大的改進，並將繼續進一步完善。MakerDAO->Foundry->Catnip現在雖然很複雜，但會被被抽象為單一交易。區塊鏈的擴容技術也會進步，降低參與者的手續費（內建AMM的[ZK-rollup Loopring](https://vitalik.ca/general/2021/01/05/rollup.html)已經在Ethereum主網上線，理論上可以在上面跑一個預測市場）。
+第二，預測市場本身會有進步。使用者界面已經有了很大的改進，並將繼續進一步完善。MakerDAO->Foundry->Catnip現在雖然很複雜，但會被被抽象為單一交易。區塊鏈的擴容技術也會進步，降低參與者的手續費（內建AMM的[ZK-rollup Loopring](../../../2021/01/05/rollup.html)已經在Ethereum主網上線，理論上可以在上面跑一個預測市場）。
 
 第三，我們看到了預測市場正常運行，這樣的例子會讓參與者比較不害怕。使用者會看到，就算在非常有爭議的情況下Augur預言機還是能給出正確的結果（這次有兩輪爭議，但No的那一方還是乾淨利落的贏了）。來自加密貨幣領域之外的人，看到這樣的成功的例子，也會更願意參與其中。也許連Nate Silver自己都可能弄來一些DAI，並在2022年以後使用Augur、Omen、Polymarket和其他市場來增加自己的收入。
 

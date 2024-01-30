@@ -109,58 +109,385 @@ MathJax = {
 <br> <br> <br>
 <title> [Mirror] Central Planning as Overfitting </title>
 
-<p><em>This is a mirror of the post at https://radicalxchange.org/blog/posts/2018-11-26-4m9b8b/ written by myself and Glen Weyl</em></p>
-<p>There is an intuition shared by many that "central planning" — command-and-control techniques for allocating resources in economies, and fine-grained knob-turning interventionism more generally — is undesirable. There's quite a lot to this, but it is often misapplied in a way that also leads it to go under-appreciated. In this post we try to clarify the appropriate scope of the intuition.</p>
+<p><em>This is a mirror of the post at
+https://radicalxchange.org/blog/posts/2018-11-26-4m9b8b/ written by
+myself and Glen Weyl</em></p>
+<p>There is an intuition shared by many that "central planning" —
+command-and-control techniques for allocating resources in economies,
+and fine-grained knob-turning interventionism more generally — is
+undesirable. There's quite a lot to this, but it is often misapplied in
+a way that also leads it to go under-appreciated. In this post we try to
+clarify the appropriate scope of the intuition.</p>
 <p>Some recent examples of the intuition being misapplied are:</p>
 <ul>
-<li>People arguing that relatively simple entitlement programs like Social Security are burdensome government intervention, while elaborate and often discretionary tax breaks conditional on specific behaviors are a good step towards less government.</li>
-<li>People arguing that block size limits in cryptocurrencies, which impose a hard cap on the number of transactions that each block can contain, are a form of central planning, but who do not argue against other centrally planned parameters, eg. the targeted ten minute (or whatever) average time interval between blocks.</li>
-<li>People arguing that a lack of block size limits <a href="https://medium.com/@rextar4444/the-block-chain-keynesian-why-pushing-to-scale-bitcoin-to-be-a-coffee-money-is-keynesian-central-c5bdf32a5e4d">constitutes central planning</a> (!!)</li>
-<li>People arguing that <a href="http://reddit.com/r/Monero/comments/9pck22/the_marvel_of_bulletproofs_is_the_small_tx_size/">fixed transaction fees constitute central planning</a>, but variable transaction fees that arise out of an equilibrium itself created by a fixed block size limit do not.</li>
-<li>We were recently at a discussion in policy circles in Washington, where one of us was arguing for a scheme based on <a href="https://medium.com/@simondlr/what-is-harberger-tax-where-does-the-blockchain-fit-in-1329046922c6">Harberger taxes</a> for spectrum licenses, debating against someone defending more conventional perpetual monopoly licenses on spectrum aggregated at large levels that would tend to create a few national cellular carriers. The latter side argued that the Harberger tax scheme constituted unacceptable bureaucratic interventionism, but seemed to believe that permanent government-issued monopoly privileges are a property right as natural as apples falling from a tree.</li>
+<li>People arguing that relatively simple entitlement programs like
+Social Security are burdensome government intervention, while elaborate
+and often discretionary tax breaks conditional on specific behaviors are
+a good step towards less government.</li>
+<li>People arguing that block size limits in cryptocurrencies, which
+impose a hard cap on the number of transactions that each block can
+contain, are a form of central planning, but who do not argue against
+other centrally planned parameters, eg. the targeted ten minute (or
+whatever) average time interval between blocks.</li>
+<li>People arguing that a lack of block size limits <a
+href="https://medium.com/@rextar4444/the-block-chain-keynesian-why-pushing-to-scale-bitcoin-to-be-a-coffee-money-is-keynesian-central-c5bdf32a5e4d">constitutes
+central planning</a> (!!)</li>
+<li>People arguing that <a
+href="http://reddit.com/r/Monero/comments/9pck22/the_marvel_of_bulletproofs_is_the_small_tx_size/">fixed
+transaction fees constitute central planning</a>, but variable
+transaction fees that arise out of an equilibrium itself created by a
+fixed block size limit do not.</li>
+<li>We were recently at a discussion in policy circles in Washington,
+where one of us was arguing for a scheme based on <a
+href="https://medium.com/@simondlr/what-is-harberger-tax-where-does-the-blockchain-fit-in-1329046922c6">Harberger
+taxes</a> for spectrum licenses, debating against someone defending more
+conventional perpetual monopoly licenses on spectrum aggregated at large
+levels that would tend to create a few national cellular carriers. The
+latter side argued that the Harberger tax scheme constituted
+unacceptable bureaucratic interventionism, but seemed to believe that
+permanent government-issued monopoly privileges are a property right as
+natural as apples falling from a tree.</li>
 </ul>
-<p>While we do not entirely dismiss this last example, for reasons we will return to later, it does seem overplayed. Similarly and conversely, we see many examples where, in the name of defending or promoting "markets" (or at least "economic rationality") many professional economists advocate schemes that seem much more to us like central planning than the systems they seek to replace:</p>
+<p>While we do not entirely dismiss this last example, for reasons we
+will return to later, it does seem overplayed. Similarly and conversely,
+we see many examples where, in the name of defending or promoting
+"markets" (or at least "economic rationality") many professional
+economists advocate schemes that seem much more to us like central
+planning than the systems they seek to replace:</p>
 <ul>
-<li>The most systematic example of this is the literature on "<a href="https://en.wikipedia.org/wiki/Mechanism_design">optimal mechanism design</a>," which began with the already extremely complicated and fragile <a href="https://en.wikipedia.org/wiki/Vickrey%E2%80%93Clarke%E2%80%93Groves_mechanism">Vickrey-Clarke-Groves mechanism</a> and has only gotten more byzantine from there. While Vickrey's motivation for these ideas was to discover relatively simple rules that would correct the flaws of standard capitalism, <a href="https://www.cs.princeton.edu/courses/archive/spr09/cos444/papers/vickrey61.pdf">he acknowledged</a> in his paper that the design was highly complex in its direct application and urged future researchers to find simplifications. Instead of following this counsel, <a href="https://onlinelibrary.wiley.com/doi/abs/10.3982/ECTA6995">many scholars</a> have proposed, for example, schemes that rely on a central authority being able to specify an infinite dimensional set of prior beliefs. These schemes, we submit, constitute "central planning" in precisely the sense we should be concerned with.</li>
-<li>Furthermore, these designs are not just matters of theory, but in practice many applied mechanism designers have created systems with similar properties. The recent United States Spectrum Incentive auctions (designed by a few prominent economists and computer scientists) centralized the enforcement of potential conflicts between transmission rights using an extremely <a href="http://www.pnas.org/content/114/28/7202.short">elaborate and opaque computational engine</a>, rather than allowing conflicts to be resolved through (for example) common law liability lawsuits as other interference between property claims and land uses are. A recent design for the allocation of courses to students at the University of Pennsylvania designed by a similar team requires students to express their preferences over courses on a novel numerical scale, allowing them only narrow language for expressing complementarities and substitutability between courses and then uses a state-of-the-art optimization engine to allocate courses. Auction systems designed by economists and computer scientists at large technology companies, like Facebook and Google, are even richer and less transparent, and <a href="https://www.dropbox.com/s/cc219w090xr365i/known%20unknowns%20search%20talk.pptx?dl=0">have created substantial backlash</a>, inspiring a whole industry of firms that help advertisers optimize their bidding in elaborate ways against these systems.</li>
-<li>This problem does not merely arise in mechanism design, however. In the fields of industrial organization (the basis of much antitrust economics) and the field of macroeconomics (the basis of much monetary policy), extremely elaborate models with hundreds of parameters are empirically estimated and used to simulate the effects of mergers or changes in monetary policy. These models are usually difficult to explain even to experts in the field, much less democratically-elected politicians, judges or, god forbid, voters. And yet the confidence we have in these models, the empirical evidence validating their accuracy, etc. is almost nothing. Nonetheless, economists consistently promote such methods as "the state of the art" and they are generally viewed positively by defenders of the "market economy".</li>
+<li>The most systematic example of this is the literature on "<a
+href="https://en.wikipedia.org/wiki/Mechanism_design">optimal mechanism
+design</a>," which began with the already extremely complicated and
+fragile <a
+href="https://en.wikipedia.org/wiki/Vickrey%E2%80%93Clarke%E2%80%93Groves_mechanism">Vickrey-Clarke-Groves
+mechanism</a> and has only gotten more byzantine from there. While
+Vickrey's motivation for these ideas was to discover relatively simple
+rules that would correct the flaws of standard capitalism, <a
+href="https://www.cs.princeton.edu/courses/archive/spr09/cos444/papers/vickrey61.pdf">he
+acknowledged</a> in his paper that the design was highly complex in its
+direct application and urged future researchers to find simplifications.
+Instead of following this counsel, <a
+href="https://onlinelibrary.wiley.com/doi/abs/10.3982/ECTA6995">many
+scholars</a> have proposed, for example, schemes that rely on a central
+authority being able to specify an infinite dimensional set of prior
+beliefs. These schemes, we submit, constitute "central planning" in
+precisely the sense we should be concerned with.</li>
+<li>Furthermore, these designs are not just matters of theory, but in
+practice many applied mechanism designers have created systems with
+similar properties. The recent United States Spectrum Incentive auctions
+(designed by a few prominent economists and computer scientists)
+centralized the enforcement of potential conflicts between transmission
+rights using an extremely <a
+href="http://www.pnas.org/content/114/28/7202.short">elaborate and
+opaque computational engine</a>, rather than allowing conflicts to be
+resolved through (for example) common law liability lawsuits as other
+interference between property claims and land uses are. A recent design
+for the allocation of courses to students at the University of
+Pennsylvania designed by a similar team requires students to express
+their preferences over courses on a novel numerical scale, allowing them
+only narrow language for expressing complementarities and
+substitutability between courses and then uses a state-of-the-art
+optimization engine to allocate courses. Auction systems designed by
+economists and computer scientists at large technology companies, like
+Facebook and Google, are even richer and less transparent, and <a
+href="https://www.dropbox.com/s/cc219w090xr365i/known%20unknowns%20search%20talk.pptx?dl=0">have
+created substantial backlash</a>, inspiring a whole industry of firms
+that help advertisers optimize their bidding in elaborate ways against
+these systems.</li>
+<li>This problem does not merely arise in mechanism design, however. In
+the fields of industrial organization (the basis of much antitrust
+economics) and the field of macroeconomics (the basis of much monetary
+policy), extremely elaborate models with hundreds of parameters are
+empirically estimated and used to simulate the effects of mergers or
+changes in monetary policy. These models are usually difficult to
+explain even to experts in the field, much less democratically-elected
+politicians, judges or, god forbid, voters. And yet the confidence we
+have in these models, the empirical evidence validating their accuracy,
+etc. is almost nothing. Nonetheless, economists consistently promote
+such methods as "the state of the art" and they are generally viewed
+positively by defenders of the "market economy".</li>
 </ul>
-<p>To understand why we think the concept of "intervention" is being misapplied here, we need to understand two different ways of measuring the extent to which some scheme is "interventionist". The first approach is to try to measure the absolute magnitude of distortion relative to some imagined state of nature (anarcho-primitivism, or a blockchain with no block size limits, or...). However, this approach clearly fails to capture the intuitions of why central planning is undesirable. For example, property rights in the physical world are a large intervention into almost every person's behavior, considerably limiting the actions that we can take every day. Many of these restrictions are actually of quite recent historical provenance (beginning with agriculture, and mostly in the West and not the East or Middle East). However, opponents of central planning often tend to be the strongest proponents of property rights!</p>
-<p>We can shed some light on this puzzle by looking at another way of measuring the "central-planny-ness" of some social structure: in short, measure the number of knobs. Property rights actually score quite well here: every piece of property is allocated to some person or legal entity, they can use it as they wish, and no one else can touch it without their permission. There are choices to make around the edges (eg. <a href="https://en.wikipedia.org/wiki/Adverse_possession">adverse possession rights</a>), but generally there isn't too much room for changing the scheme around (though note that privatization schemes, ie. transitions from something other than property rights to property rights like the auctions we discussed above, have very many knobs, and so there we can see more risks). Command-and-control regulations with ten thousand clauses (or market designs that specify elaborate probabilistic objects, or optimization protocols, etc.), or attempts to <a href="https://github.com/bitcoin/bitcoin/pull/3737">limit use of specific features of the blockchain</a> to drive out specific categories of users, are much less desirable, as such strategies leave many more choices to central planners. A block size limit and a fixed transaction fee (or carbon taxes and a cap-and-trade scheme) have the exact same level of "central-planny-ness" to them: one variable (either quantity or price) is fixed in the protocol, and the other variable is left to the market.</p>
-<p>Here are some key underlying reasons why we believe that simple social systems with fewer knobs are so desirable:</p>
+<p>To understand why we think the concept of "intervention" is being
+misapplied here, we need to understand two different ways of measuring
+the extent to which some scheme is "interventionist". The first approach
+is to try to measure the absolute magnitude of distortion relative to
+some imagined state of nature (anarcho-primitivism, or a blockchain with
+no block size limits, or...). However, this approach clearly fails to
+capture the intuitions of why central planning is undesirable. For
+example, property rights in the physical world are a large intervention
+into almost every person's behavior, considerably limiting the actions
+that we can take every day. Many of these restrictions are actually of
+quite recent historical provenance (beginning with agriculture, and
+mostly in the West and not the East or Middle East). However, opponents
+of central planning often tend to be the strongest proponents of
+property rights!</p>
+<p>We can shed some light on this puzzle by looking at another way of
+measuring the "central-planny-ness" of some social structure: in short,
+measure the number of knobs. Property rights actually score quite well
+here: every piece of property is allocated to some person or legal
+entity, they can use it as they wish, and no one else can touch it
+without their permission. There are choices to make around the edges
+(eg. <a href="https://en.wikipedia.org/wiki/Adverse_possession">adverse
+possession rights</a>), but generally there isn't too much room for
+changing the scheme around (though note that privatization schemes, ie.
+transitions from something other than property rights to property rights
+like the auctions we discussed above, have very many knobs, and so there
+we can see more risks). Command-and-control regulations with ten
+thousand clauses (or market designs that specify elaborate probabilistic
+objects, or optimization protocols, etc.), or attempts to <a
+href="https://github.com/bitcoin/bitcoin/pull/3737">limit use of
+specific features of the blockchain</a> to drive out specific categories
+of users, are much less desirable, as such strategies leave many more
+choices to central planners. A block size limit and a fixed transaction
+fee (or carbon taxes and a cap-and-trade scheme) have the exact same
+level of "central-planny-ness" to them: one variable (either quantity or
+price) is fixed in the protocol, and the other variable is left to the
+market.</p>
+<p>Here are some key underlying reasons why we believe that simple
+social systems with fewer knobs are so desirable:</p>
 <ul>
-<li>They have <strong>fewer moving parts that can fail</strong> or otherwise have unexpected effects.</li>
-<li>They are <strong>less likely to overfit</strong>. If a social system is too complex, there are many parameters to set and relatively few experiences to draw from when setting the parameters, making it more likely that the parameters will be set to overfit to one context, and generalize poorly to other places or to future times. <a href="https://www.washingtonpost.com/news/volokh-conspiracy/wp/2014/10/13/f-a-hayek-and-the-pretense-of-knowledge"><strong>We know little</strong></a>, and we should not design systems that demand us to know a lot.</li>
-<li>They are <strong>more resistant to corruption</strong>. If a social system is simpler, it is more difficult (not impossible, but still more difficult) to set parameters in ways that encode attempts to privilege or anti-privilege specific individuals, factions or communities. This is not only good because it leads to fairness, it is also good because it leads to less zero-sum conflict.</li>
-<li>They can <strong>more easily achieve legitimacy</strong>. Because simpler systems are easier to understand, and easier for people to understand that a given implementation is not unfairly privileging special interests, it is easier to create common knowledge that the system is fair, creating a stronger sense of trust. Legitimacy is perhaps the central virtue of social institutions, as it sustains cooperation and coordination, enables the possibility of democracy (how can you democratically participate and endorse a system you do not understand?) and allows for a bottoms-up, rather than top-down, creation of a such a system, ensuring it can be implemented without much coercion or violence.</li>
+<li>They have <strong>fewer moving parts that can fail</strong> or
+otherwise have unexpected effects.</li>
+<li>They are <strong>less likely to overfit</strong>. If a social system
+is too complex, there are many parameters to set and relatively few
+experiences to draw from when setting the parameters, making it more
+likely that the parameters will be set to overfit to one context, and
+generalize poorly to other places or to future times. <a
+href="https://www.washingtonpost.com/news/volokh-conspiracy/wp/2014/10/13/f-a-hayek-and-the-pretense-of-knowledge"><strong>We
+know little</strong></a>, and we should not design systems that demand
+us to know a lot.</li>
+<li>They are <strong>more resistant to corruption</strong>. If a social
+system is simpler, it is more difficult (not impossible, but still more
+difficult) to set parameters in ways that encode attempts to privilege
+or anti-privilege specific individuals, factions or communities. This is
+not only good because it leads to fairness, it is also good because it
+leads to less zero-sum conflict.</li>
+<li>They can <strong>more easily achieve legitimacy</strong>. Because
+simpler systems are easier to understand, and easier for people to
+understand that a given implementation is not unfairly privileging
+special interests, it is easier to create common knowledge that the
+system is fair, creating a stronger sense of trust. Legitimacy is
+perhaps the central virtue of social institutions, as it sustains
+cooperation and coordination, enables the possibility of democracy (how
+can you democratically participate and endorse a system you do not
+understand?) and allows for a bottoms-up, rather than top-down, creation
+of a such a system, ensuring it can be implemented without much coercion
+or violence.</li>
 </ul>
-<p>These effects are not always achieved (for example, even if a system has very few knobs, it's often the case that there exists a knob that can be turned to privilege well-connected and wealthy people as a class over everyone else), but the simpler a system is, the more likely the effects are to be achieved.</p>
-<p>While avoiding over-complexity and overfit in personal decision-making is also important, avoiding these issues in large-scale social systems is even more important, because of the inevitable possibility of powerful forces attempting to manipulate knobs for the benefit of special interests, and the need to achieve common knowledge that the system has not been greatly corrupted, to the point where the fairness of the system is obvious even to unsophisticated observers.</p>
-<p>This is not to condemn all forms or uses of complexity in social systems. Most science and the inner workings of many technical systems are likely to be opaque to the public but this does not mean science or technology is useless in social life; far from it. However, these systems, to gain legitimacy, usually show that they can reliably achieve some goal, which is transparent and verifiable. Planes land safely and on time, computational systems seem to deliver calculations that are correct, etc. It is by this process of verification, rather than by the transparency of the system per se, that such systems gain their legitimacy. However, for many social systems, truly large-scale, repeatable tests are difficult if not impossible. As such, simplicity is usually critical to legitimacy.</p>
-<h2 id="different-notions-of-simplicity">Different Notions of Simplicity</h2>
-<p>However, there is one class of social systems that seem to be desirable, and that intellectual advocates of minimizing central planning tend to agree are desirable, that don't quite fit the simple "few knobs" characterization that we made above. For example, consider common law. <a href="https://en.wikipedia.org/wiki/Common_law">Common law</a> is built up over thousands of precedents, and contains a large number of concepts (eg. see this list under "property law", itself only a part of common law; have you heard of "quicquid plantatur solo, solo cedit" before?). However, proponents of private property are very frequently proponents of common law. So what gives?</p>
-<p>Here, we need to make a distinction between redundant complexity, or many knobs that really all serve a relatively small number of similar goals, and optimizing complexity, in the extreme one knob per problem that the system has encountered. In computational complexity theory, we typically talk about <a href="https://en.wikipedia.org/wiki/Kolmogorov_complexity">Kolmogorov complexity</a>, but there are other notions of complexity that are also useful here, particularly <a href="https://en.wikipedia.org/wiki/VC_dimension">VC dimension</a> - roughly, the size of the largest set of situations for which we can turn the knobs in a particular way to achieve any particular set of outcomes. Many successful machine learning techniques, such as <a href="https://en.wikipedia.org/wiki/Support_vector_machine">Support Vector Machines</a> and <a href="https://en.wikipedia.org/wiki/Boosting_(machine_learning)">Boosting</a>, are quite complex, both in the formal Kolmogorov sense and in terms of the outcomes they produce, but can be proven to have low VC dimension.</p>
-<p>VC dimension does a nice job capturing some of the arguments for simplicity mentioned above more explicitly, for example:</p>
+<p>These effects are not always achieved (for example, even if a system
+has very few knobs, it's often the case that there exists a knob that
+can be turned to privilege well-connected and wealthy people as a class
+over everyone else), but the simpler a system is, the more likely the
+effects are to be achieved.</p>
+<p>While avoiding over-complexity and overfit in personal
+decision-making is also important, avoiding these issues in large-scale
+social systems is even more important, because of the inevitable
+possibility of powerful forces attempting to manipulate knobs for the
+benefit of special interests, and the need to achieve common knowledge
+that the system has not been greatly corrupted, to the point where the
+fairness of the system is obvious even to unsophisticated observers.</p>
+<p>This is not to condemn all forms or uses of complexity in social
+systems. Most science and the inner workings of many technical systems
+are likely to be opaque to the public but this does not mean science or
+technology is useless in social life; far from it. However, these
+systems, to gain legitimacy, usually show that they can reliably achieve
+some goal, which is transparent and verifiable. Planes land safely and
+on time, computational systems seem to deliver calculations that are
+correct, etc. It is by this process of verification, rather than by the
+transparency of the system per se, that such systems gain their
+legitimacy. However, for many social systems, truly large-scale,
+repeatable tests are difficult if not impossible. As such, simplicity is
+usually critical to legitimacy.</p>
+<h2 id="different-notions-of-simplicity">Different Notions of
+Simplicity</h2>
+<p>However, there is one class of social systems that seem to be
+desirable, and that intellectual advocates of minimizing central
+planning tend to agree are desirable, that don't quite fit the simple
+"few knobs" characterization that we made above. For example, consider
+common law. <a href="https://en.wikipedia.org/wiki/Common_law">Common
+law</a> is built up over thousands of precedents, and contains a large
+number of concepts (eg. see this list under "property law", itself only
+a part of common law; have you heard of "quicquid plantatur solo, solo
+cedit" before?). However, proponents of private property are very
+frequently proponents of common law. So what gives?</p>
+<p>Here, we need to make a distinction between redundant complexity, or
+many knobs that really all serve a relatively small number of similar
+goals, and optimizing complexity, in the extreme one knob per problem
+that the system has encountered. In computational complexity theory, we
+typically talk about <a
+href="https://en.wikipedia.org/wiki/Kolmogorov_complexity">Kolmogorov
+complexity</a>, but there are other notions of complexity that are also
+useful here, particularly <a
+href="https://en.wikipedia.org/wiki/VC_dimension">VC dimension</a> -
+roughly, the size of the largest set of situations for which we can turn
+the knobs in a particular way to achieve any particular set of outcomes.
+Many successful machine learning techniques, such as <a
+href="https://en.wikipedia.org/wiki/Support_vector_machine">Support
+Vector Machines</a> and <a
+href="https://en.wikipedia.org/wiki/Boosting_(machine_learning)">Boosting</a>,
+are quite complex, both in the formal Kolmogorov sense and in terms of
+the outcomes they produce, but can be proven to have low VC
+dimension.</p>
+<p>VC dimension does a nice job capturing some of the arguments for
+simplicity mentioned above more explicitly, for example:</p>
 <ul>
-<li>A system with low VC dimension may have some moving parts that fail, but if it does, its different constituent parts can correct for each other. By construction, it has built in resilience through redundancy</li>
-<li>Low VC dimension is literally a measure of resistance to overfit.</li>
-<li>Low VC dimension leads to resistance to corruption, because if VC dimension is low, a corrupt or self-interested party in control of some knobs will not as easily be able to achieve some particular outcome that they desire. In particular, this agent will be "checked and balanced" by other parts of the system that redundantly achieve the originally desired ends.</li>
-<li>They can achieve legitimacy because people can randomly check a few parts and verify in detail that those parts work in ways that are reasonable, and assume that the rest of the system works in a similar way. An example of this was the ratification of the United States Constitution which, while quite elaborate, was primarily elaborate in the redundancy with which it applied the principle of checks and balances of power. Thus most citizens only read one or a few of <a href="https://en.wikipedia.org/wiki/The_Federalist_Papers">The Federalist Papers</a> that explained and defended the Constitution, and yet got a reasonable sense for what was going on.</li>
+<li>A system with low VC dimension may have some moving parts that fail,
+but if it does, its different constituent parts can correct for each
+other. By construction, it has built in resilience through
+redundancy</li>
+<li>Low VC dimension is literally a measure of resistance to
+overfit.</li>
+<li>Low VC dimension leads to resistance to corruption, because if VC
+dimension is low, a corrupt or self-interested party in control of some
+knobs will not as easily be able to achieve some particular outcome that
+they desire. In particular, this agent will be "checked and balanced" by
+other parts of the system that redundantly achieve the originally
+desired ends.</li>
+<li>They can achieve legitimacy because people can randomly check a few
+parts and verify in detail that those parts work in ways that are
+reasonable, and assume that the rest of the system works in a similar
+way. An example of this was the ratification of the United States
+Constitution which, while quite elaborate, was primarily elaborate in
+the redundancy with which it applied the principle of checks and
+balances of power. Thus most citizens only read one or a few of <a
+href="https://en.wikipedia.org/wiki/The_Federalist_Papers">The
+Federalist Papers</a> that explained and defended the Constitution, and
+yet got a reasonable sense for what was going on.</li>
 </ul>
-<p>This is not as clean and convenient as a system with low Kolmogorov complexity, but still much better than a system with high complexity where the complexity is "optimizing" (for an example of this in the blockchain context, see <a href="https://vitalik.ca/general/2017/12/17/voting.html">Vitalik's opposition and alternative to on-chain governance</a>). The primary disadvantage we see in Kolmogorov complex but VC simple designs is for new social institutions, where it may be hard to persuade the public that these are VC simple. VC simplicity is usually easier as a basis for legitimacy when an institutions has clearly been built up without any clear design over a long period of time or by a large committee of people with conflicting interests (as with the United States Constitution). Thus when offering innovations we tend to focus more on Kolmogorov simplicity and hope many redundant each Kolmogorov-simple elements will add up to a VC-simple system. However, we may just not have the imagination to think of how VC simplicity might be effectively explained.</p>
-<p>There are forms of the "avoid central planning" intuition that are misunderstandings and ultimately counterproductive. For example, try to automatically seize upon designs that seem at first glance to "look like a market", because not all markets are created equal. For example, one of us has argued for using <a href="https://ethresear.ch/t/first-and-second-price-auctions-and-improved-transaction-fee-markets/2410">fixed prices in certain settings to reduce uncertainty</a>, and the other has (for similar information sharing reasons) argued for auctions that are a synthesis of standard descending price Dutch and ascending price English auctions (Channel auctions). That said, it is also equally a large error to throw the intuition away entirely. Rather, it is a valuable and important insight that can easily is central to the methodology we have been recently trying to develop. Simplicity to Whom? Or Why Humanities Matter</p>
-<p>However, the academic critics of this type of work are not simply confused. There is a reasonable basis for unease with discussions of "simplicity" because they inevitably contain a degree of subjectivity. What is "simple" to describe or appears to have few knobs in one language for describing it is devilishly complex in another, and vice versa. A few examples should help illuminate the point:</p>
+<p>This is not as clean and convenient as a system with low Kolmogorov
+complexity, but still much better than a system with high complexity
+where the complexity is "optimizing" (for an example of this in the
+blockchain context, see <a
+href="../../../2017/12/17/voting.html">Vitalik's opposition and
+alternative to on-chain governance</a>). The primary disadvantage we see
+in Kolmogorov complex but VC simple designs is for new social
+institutions, where it may be hard to persuade the public that these are
+VC simple. VC simplicity is usually easier as a basis for legitimacy
+when an institutions has clearly been built up without any clear design
+over a long period of time or by a large committee of people with
+conflicting interests (as with the United States Constitution). Thus
+when offering innovations we tend to focus more on Kolmogorov simplicity
+and hope many redundant each Kolmogorov-simple elements will add up to a
+VC-simple system. However, we may just not have the imagination to think
+of how VC simplicity might be effectively explained.</p>
+<p>There are forms of the "avoid central planning" intuition that are
+misunderstandings and ultimately counterproductive. For example, try to
+automatically seize upon designs that seem at first glance to "look like
+a market", because not all markets are created equal. For example, one
+of us has argued for using <a
+href="https://ethresear.ch/t/first-and-second-price-auctions-and-improved-transaction-fee-markets/2410">fixed
+prices in certain settings to reduce uncertainty</a>, and the other has
+(for similar information sharing reasons) argued for auctions that are a
+synthesis of standard descending price Dutch and ascending price English
+auctions (Channel auctions). That said, it is also equally a large error
+to throw the intuition away entirely. Rather, it is a valuable and
+important insight that can easily is central to the methodology we have
+been recently trying to develop. Simplicity to Whom? Or Why Humanities
+Matter</p>
+<p>However, the academic critics of this type of work are not simply
+confused. There is a reasonable basis for unease with discussions of
+"simplicity" because they inevitably contain a degree of subjectivity.
+What is "simple" to describe or appears to have few knobs in one
+language for describing it is devilishly complex in another, and vice
+versa. A few examples should help illuminate the point:</p>
 <ul>
-<li>We have repeatedly referred to "knobs", which are roughly real valued parameters. But real-valued parameters can encode an arbitrary amount of complexity. For example, I could claim my system has only one knob, it is just that slight changes in the 1000th decimal place of the setting of that knob end up determining incredibly important properties of the system. This may seem cheap, but more broadly it is the case that non-linear mappings between systems can make one system seem "simple" and another "complex" and in general there is just no way to say which is right.</li>
-<li>Many think of the <a href="https://en.wikipedia.org/wiki/Elections_in_the_United_States#Levels_of_election">electoral system of the United States</a> as "simple", and yet, if one reflects on it or tries to explain it to a foreigner, it is almost impossible to describe. It is familiar, not simple, and we just have given a label to it ("the American system") that lets us refer to it in a few words. Systems like Quadratic Voting, or <a href="https://ballotpedia.org/Ranked-choice_voting_(RCV)">ranked choice voting</a>, are often described as complex, but this seems to have more to do with lack of familiarity than complexity.</li>
-<li>Many scientific concepts, such as the "light cone", are the simplest thing possible once one understands special relativity and yet are utterly foreign and bizarre without having wrapped one's hands around this theory.</li>
+<li>We have repeatedly referred to "knobs", which are roughly real
+valued parameters. But real-valued parameters can encode an arbitrary
+amount of complexity. For example, I could claim my system has only one
+knob, it is just that slight changes in the 1000th decimal place of the
+setting of that knob end up determining incredibly important properties
+of the system. This may seem cheap, but more broadly it is the case that
+non-linear mappings between systems can make one system seem "simple"
+and another "complex" and in general there is just no way to say which
+is right.</li>
+<li>Many think of the <a
+href="https://en.wikipedia.org/wiki/Elections_in_the_United_States#Levels_of_election">electoral
+system of the United States</a> as "simple", and yet, if one reflects on
+it or tries to explain it to a foreigner, it is almost impossible to
+describe. It is familiar, not simple, and we just have given a label to
+it ("the American system") that lets us refer to it in a few words.
+Systems like Quadratic Voting, or <a
+href="https://ballotpedia.org/Ranked-choice_voting_(RCV)">ranked choice
+voting</a>, are often described as complex, but this seems to have more
+to do with lack of familiarity than complexity.</li>
+<li>Many scientific concepts, such as the "light cone", are the simplest
+thing possible once one understands special relativity and yet are
+utterly foreign and bizarre without having wrapped one's hands around
+this theory.</li>
 </ul>
-<p>Even <a href="https://en.wikipedia.org/wiki/Kolmogorov_complexity">Kolmogorov complexity</a> (length of the shortest computer program that encodes some given system) is relative to some programming language. Now, to some extent, VC dimension offers a solution: it says that a class of systems is simple if it is not too flexible. But consider what happens when you try to apply this; to do so, let's return to our example upfront about Harberger taxes v. perpetual licenses for spectrum.</p>
-<p>Harberger taxes strike us as quite simple: there is a single tax rate (and the theory even says this is tied down by the rate at which assets turnover, at least if we want to maximally favor allocative efficiency) and the system can be described in a sentence or two. It seems pretty clear that such a system could not be contorted to achieve arbitrary ends. However, an opponent could claim that we chose the Harberger tax from an array of millions of possible mechanisms of a similar class to achieve a specific objective, and it just sounds simple (as with our examples of "deceptive" simplicity above).</p>
-<p>To counter this argument, we would respond that the Harberger tax, or very similar ideas, have been repeatedly discovered or used (to some success) throughout human history, <a href="https://theweek.com/articles/703720/genius-way-ancient-greeks-taxed-citizens">beginning with the Greeks</a>, and that we do not propose this system simply for spectrum licenses but in a wide range of contexts. The chances that in all these contexts we are cherry-picking the system to "fit" that setting seems low. We would submit to the critic to judge whether it is really plausible that all these historical circumstances and these wide range of applications just "happen" to coincide.</p>
-<p>Focusing on familiarity (ie. conservatism), rather than simplicity in some abstract mathematical sense, also carries many of the benefits of simplicity as we described above; after all, familiarity is simplicity, if the language we are using to describe ideas includes references to our shared historical experience. Familiar mechanisms also have the benefit that we have more knowledge of how similar ideas historically worked in practice. So why not just be conservative, and favor perpetual property licenses strongly over Harberger taxes?</p>
-<p>There are three flaws in that logic, it seems to us. First, to the extent it is applied, it should be applied uniformly to all innovation, not merely to new social institutions. Technologies like the internet have contributed greatly to human progress, but have also led to significant social upheavals; this is not a reason to stop trying to advance our technologies and systems for communication, and it is not a reason to stop trying to advance our social technologies for allocating scarce resources.</p>
-<p>Second, the benefits of innovation are real, and social institutions stand to benefit from growing human intellectual progress as much as everything else. The theoretical case for Harberger taxes providing efficiency benefits is strong, and there is great social value in doing small and medium-scale experiments to try ideas like them out. Investing in experiments today increases what we know, and so increases the scope of what can be done "conservatively" tomorrow.</p>
-<p>Third, and most importantly, the cultural context in which you as a decision maker have grown up today is far from the only culture that has existed on earth. Even at present, Singapore, China, Taiwan and Scandinavia have had significant success with quite different property regimes than the United States. Video game developers and internet protocol designers have had to solve incentive problems of a similar character to what we see today in the blockchain space and have come up with many kinds of solutions, and throughout history, we have seen a wide variety of social systems used for different purposes, with a wide range of resulting outcomes. By learning about the different ways in which societies have lived, understood what is natural and imagined their politics, we can gain the benefits of learning from historical experience and yet at the same time open ourselves to a much broader space of possible ideas to work with.</p>
-<p>This is why we believe that balance and collaboration between different modes of learning and understanding, both the mathematical one of economists and computer scientists, and the historical experiences studied by historians, anthropologists, political scientists, etc is critical to avoid the mix of and often veering between extreme conservatism and dangerous utopianism that has become characteristic of much intellectual discourse in e.g. the economics community, the "rationalist" community, and in <a href="http://www.truthcoin.info/blog/against-the-hard-fork/">many</a> <a href="https://vitalik.ca/general/2018/03/28/plutocracy.html">cases</a> blockchain protocol design.</p>
+<p>Even <a
+href="https://en.wikipedia.org/wiki/Kolmogorov_complexity">Kolmogorov
+complexity</a> (length of the shortest computer program that encodes
+some given system) is relative to some programming language. Now, to
+some extent, VC dimension offers a solution: it says that a class of
+systems is simple if it is not too flexible. But consider what happens
+when you try to apply this; to do so, let's return to our example
+upfront about Harberger taxes v. perpetual licenses for spectrum.</p>
+<p>Harberger taxes strike us as quite simple: there is a single tax rate
+(and the theory even says this is tied down by the rate at which assets
+turnover, at least if we want to maximally favor allocative efficiency)
+and the system can be described in a sentence or two. It seems pretty
+clear that such a system could not be contorted to achieve arbitrary
+ends. However, an opponent could claim that we chose the Harberger tax
+from an array of millions of possible mechanisms of a similar class to
+achieve a specific objective, and it just sounds simple (as with our
+examples of "deceptive" simplicity above).</p>
+<p>To counter this argument, we would respond that the Harberger tax, or
+very similar ideas, have been repeatedly discovered or used (to some
+success) throughout human history, <a
+href="https://theweek.com/articles/703720/genius-way-ancient-greeks-taxed-citizens">beginning
+with the Greeks</a>, and that we do not propose this system simply for
+spectrum licenses but in a wide range of contexts. The chances that in
+all these contexts we are cherry-picking the system to "fit" that
+setting seems low. We would submit to the critic to judge whether it is
+really plausible that all these historical circumstances and these wide
+range of applications just "happen" to coincide.</p>
+<p>Focusing on familiarity (ie. conservatism), rather than simplicity in
+some abstract mathematical sense, also carries many of the benefits of
+simplicity as we described above; after all, familiarity is simplicity,
+if the language we are using to describe ideas includes references to
+our shared historical experience. Familiar mechanisms also have the
+benefit that we have more knowledge of how similar ideas historically
+worked in practice. So why not just be conservative, and favor perpetual
+property licenses strongly over Harberger taxes?</p>
+<p>There are three flaws in that logic, it seems to us. First, to the
+extent it is applied, it should be applied uniformly to all innovation,
+not merely to new social institutions. Technologies like the internet
+have contributed greatly to human progress, but have also led to
+significant social upheavals; this is not a reason to stop trying to
+advance our technologies and systems for communication, and it is not a
+reason to stop trying to advance our social technologies for allocating
+scarce resources.</p>
+<p>Second, the benefits of innovation are real, and social institutions
+stand to benefit from growing human intellectual progress as much as
+everything else. The theoretical case for Harberger taxes providing
+efficiency benefits is strong, and there is great social value in doing
+small and medium-scale experiments to try ideas like them out. Investing
+in experiments today increases what we know, and so increases the scope
+of what can be done "conservatively" tomorrow.</p>
+<p>Third, and most importantly, the cultural context in which you as a
+decision maker have grown up today is far from the only culture that has
+existed on earth. Even at present, Singapore, China, Taiwan and
+Scandinavia have had significant success with quite different property
+regimes than the United States. Video game developers and internet
+protocol designers have had to solve incentive problems of a similar
+character to what we see today in the blockchain space and have come up
+with many kinds of solutions, and throughout history, we have seen a
+wide variety of social systems used for different purposes, with a wide
+range of resulting outcomes. By learning about the different ways in
+which societies have lived, understood what is natural and imagined
+their politics, we can gain the benefits of learning from historical
+experience and yet at the same time open ourselves to a much broader
+space of possible ideas to work with.</p>
+<p>This is why we believe that balance and collaboration between
+different modes of learning and understanding, both the mathematical one
+of economists and computer scientists, and the historical experiences
+studied by historians, anthropologists, political scientists, etc is
+critical to avoid the mix of and often veering between extreme
+conservatism and dangerous utopianism that has become characteristic of
+much intellectual discourse in e.g. the economics community, the
+"rationalist" community, and in <a
+href="http://www.truthcoin.info/blog/against-the-hard-fork/">many</a> <a
+href="../../../2018/03/28/plutocracy.html">cases</a> blockchain protocol
+design.</p>
  </div> 

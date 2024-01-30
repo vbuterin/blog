@@ -173,15 +173,6 @@
 
 
 <item>
-<title>我在加密世界的一些个人体验</title>
-<link>https://vitalik.ca/general/2022/10/28/ux_zhCN.html</link>
-<guid>https://vitalik.ca/general/2022/10/28/ux_zhCN.html</guid>
-<pubDate>Fri, 28 Oct 2022 00:00:00 +0000</pubDate>
-<description></description>
-</item>
-
-
-<item>
 <title>收入-邪恶曲线：思考“公共物品融资优先”的另一种方式</title>
 <link>https://vitalik.ca/general/2022/10/28/revenue_evil_zhCN.html</link>
 <guid>https://vitalik.ca/general/2022/10/28/revenue_evil_zhCN.html</guid>
@@ -194,6 +185,15 @@
 <title>The Revenue-Evil Curve: a different way to think about prioritizing public goods funding</title>
 <link>https://vitalik.ca/general/2022/10/28/revenue_evil.html</link>
 <guid>https://vitalik.ca/general/2022/10/28/revenue_evil.html</guid>
+<pubDate>Fri, 28 Oct 2022 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>我在加密世界的一些个人体验</title>
+<link>https://vitalik.ca/general/2022/10/28/ux_zhCN.html</link>
+<guid>https://vitalik.ca/general/2022/10/28/ux_zhCN.html</guid>
 <pubDate>Fri, 28 Oct 2022 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -254,18 +254,18 @@
 
 
 <item>
-<title>「网络国家」之我见</title>
-<link>https://vitalik.ca/general/2022/07/13/networkstates_zhCN.html</link>
-<guid>https://vitalik.ca/general/2022/07/13/networkstates_zhCN.html</guid>
+<title>What do I think about network states?</title>
+<link>https://vitalik.ca/general/2022/07/13/networkstates.html</link>
+<guid>https://vitalik.ca/general/2022/07/13/networkstates.html</guid>
 <pubDate>Wed, 13 Jul 2022 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
 
 <item>
-<title>What do I think about network states?</title>
-<link>https://vitalik.ca/general/2022/07/13/networkstates.html</link>
-<guid>https://vitalik.ca/general/2022/07/13/networkstates.html</guid>
+<title>「网络国家」之我见</title>
+<link>https://vitalik.ca/general/2022/07/13/networkstates_zhCN.html</link>
+<guid>https://vitalik.ca/general/2022/07/13/networkstates_zhCN.html</guid>
 <pubDate>Wed, 13 Jul 2022 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -524,18 +524,18 @@
 
 
 <item>
-<title>An Incomplete Guide to Rollups</title>
-<link>https://vitalik.ca/general/2021/01/05/rollup.html</link>
-<guid>https://vitalik.ca/general/2021/01/05/rollup.html</guid>
+<title>La Guía Incompleta de los Rollups</title>
+<link>https://vitalik.ca/general/2021/01/05/rollup_ES.html</link>
+<guid>https://vitalik.ca/general/2021/01/05/rollup_ES.html</guid>
 <pubDate>Tue, 05 Jan 2021 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
 
 <item>
-<title>La Guía Incompleta de los Rollups</title>
-<link>https://vitalik.ca/general/2021/01/05/rollup_ES.html</link>
-<guid>https://vitalik.ca/general/2021/01/05/rollup_ES.html</guid>
+<title>An Incomplete Guide to Rollups</title>
+<link>https://vitalik.ca/general/2021/01/05/rollup.html</link>
+<guid>https://vitalik.ca/general/2021/01/05/rollup.html</guid>
 <pubDate>Tue, 05 Jan 2021 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -578,18 +578,18 @@
 
 
 <item>
-<title> 7ème tour des subventions Gitcoin - Rétrospective </title>
-<link>https://vitalik.ca/general/2020/10/18/round7_FR.html</link>
-<guid>https://vitalik.ca/general/2020/10/18/round7_FR.html</guid>
+<title>Gitcoin Grants Round 7 Retrospective</title>
+<link>https://vitalik.ca/general/2020/10/18/round7.html</link>
+<guid>https://vitalik.ca/general/2020/10/18/round7.html</guid>
 <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
 
 <item>
-<title>Gitcoin Grants Round 7 Retrospective</title>
-<link>https://vitalik.ca/general/2020/10/18/round7.html</link>
-<guid>https://vitalik.ca/general/2020/10/18/round7.html</guid>
+<title> 7ème tour des subventions Gitcoin - Rétrospective </title>
+<link>https://vitalik.ca/general/2020/10/18/round7_FR.html</link>
+<guid>https://vitalik.ca/general/2020/10/18/round7_FR.html</guid>
 <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -1055,6 +1055,15 @@
 
 
 <item>
+<title>Situazioni di collusione</title>
+<link>https://vitalik.ca/general/2000/01/01/On_Collusion_IT.html</link>
+<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_IT.html</guid>
+<pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
 <title>Über Kollusion</title>
 <link>https://vitalik.ca/general/2000/01/01/On_Collusion_DE.html</link>
 <guid>https://vitalik.ca/general/2000/01/01/On_Collusion_DE.html</guid>
@@ -1067,15 +1076,6 @@
 <title>Zmowa</title>
 <link>https://vitalik.ca/general/2000/01/01/On_Collusion_Polish.html</link>
 <guid>https://vitalik.ca/general/2000/01/01/On_Collusion_Polish.html</guid>
-<pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
-<description></description>
-</item>
-
-
-<item>
-<title>Situazioni di collusione</title>
-<link>https://vitalik.ca/general/2000/01/01/On_Collusion_IT.html</link>
-<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_IT.html</guid>
 <pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
 <description></description>
 </item>

@@ -22,7 +22,7 @@ And finally, here are the results in an easy-to-read chart form:
 
 </center><br>
 
-Much like the [Gitcoin quadratic funding](https://vitalik.ca/general/2021/04/02/round9.html) rounds and the [MolochDAO](https://www.molochdao.com/) grants, this is yet another instance of the Ethereum ecosystem establishing itself as a key player in the innovative public goods funding mechanism design space. But what can we learn from this experiment?
+Much like the [Gitcoin quadratic funding](../../../2021/04/02/round9.html) rounds and the [MolochDAO](https://www.molochdao.com/) grants, this is yet another instance of the Ethereum ecosystem establishing itself as a key player in the innovative public goods funding mechanism design space. But what can we learn from this experiment?
 
 ## Analyzing the results
 

@@ -7,7 +7,7 @@ _Special thanks to Balaji Srinivasan, and Coinbase, Kraken and Binance staff for
 
 Every time a major centralized exchange blows up, a common question that comes up is whether or not we can use cryptographic techniques to solve the problem. Rather than relying solely on "fiat" methods like government licenses, auditors and examining the corporate governance and the backgrounds of the individuals running the exchange, exchanges could create cryptographic _proofs_ that show that the funds they hold on-chain are enough to cover their liabilities to their users.
 
-Even more ambitiously, an exchange could build a system where it can't withdraw a depositor's funds at all without their consent. Potentially, we could explore the entire spectrum between the "don't be evil" aspiring-good-guy CEX and the "can't be evil", but for-now inefficient and privacy-leaking, on-chain DEX. This post will get into the history of attempts to move exchanges one or two steps closer to trustlessness, the limitations of these techniques, and some newer and more powerful ideas that rely on [ZK-SNARKs](https://vitalik.ca/general/2021/01/26/snarks.html) and other advanced technologies.
+Even more ambitiously, an exchange could build a system where it can't withdraw a depositor's funds at all without their consent. Potentially, we could explore the entire spectrum between the "don't be evil" aspiring-good-guy CEX and the "can't be evil", but for-now inefficient and privacy-leaking, on-chain DEX. This post will get into the history of attempts to move exchanges one or two steps closer to trustlessness, the limitations of these techniques, and some newer and more powerful ideas that rely on [ZK-SNARKs](../../../2021/01/26/snarks.html) and other advanced technologies.
 
 ## Balance lists and Merkle trees: old-school proof-of-solvency
 
@@ -127,7 +127,7 @@ $I(z^{16*x + 15}) = I(z^{16*x-1}) + I(z^{16*x+14}) - \frac{the\ declared\ total}
 	
 The first values of a valid setting for $I(x)$ would be `0 0 0 0` `0 0 0 0` `0 0 1 2` `5 10 20 -165` `0 0 0 0` `0 0 0 0` `0 1 3 6` `12 25 50 -300` ...
 
-See [here](https://vitalik.ca/general/2021/01/26/snarks.html#comparing-a-polynomial-to-itself) and [here](https://vitalik.ca/general/2021/01/26/snarks.html#whats-a-slightly-more-useful-example-of-a-computation-being-converted-into-a-set-of-polynomial-equations) in [my post on ZK-SNARKs](https://vitalik.ca/general/2021/01/26/snarks.html) for further explanation of how to convert equations like these into a polynomial check and then into a ZK-SNARK. This isn't an optimal protocol, but it does show how these days these kinds of cryptographic proofs are not that spooky!
+See [here](../../../2021/01/26/snarks.html#comparing-a-polynomial-to-itself) and [here](../../../2021/01/26/snarks.html#whats-a-slightly-more-useful-example-of-a-computation-being-converted-into-a-set-of-polynomial-equations) in [my post on ZK-SNARKs](../../../2021/01/26/snarks.html) for further explanation of how to convert equations like these into a polynomial check and then into a ZK-SNARK. This isn't an optimal protocol, but it does show how these days these kinds of cryptographic proofs are not that spooky!
 
 With only a few extra equations, constraint systems like this can be adapted to more complex settings. For example, in a leverage trading system, an individual users having negative balances is acceptable but only if they have enough other assets to cover the funds with some collateralization margin. A SNARK could be used to prove this more complicated constraint, reassuring users that the exchange is not risking their funds by [secretly exempting other users](https://decrypt.co/114941/god-mode-sbf-alameda-secret-exemptions-ftx-liquidation) from the rules.
 
@@ -190,7 +190,7 @@ But it's worth getting to the fundamental issue with the right half of this desi
 
 Exchanges can solve this problem: first e-mail recovery, and if even that fails, more complicated forms of recovery through KYC. But to be able to solve such problems, the exchange needs to actually have control over the coins. In order to have the ability to recover user accounts' funds for good reasons, exchanges need to have power that could also be used to steal user accounts' funds for bad reasons. This is an unavoidable tradeoff.
 
-The ideal long-term solution is to rely on self-custody, in a future where users have easy access to technologies such as [multisig and social recovery wallets](https://vitalik.ca/general/2021/01/11/recovery.html) to help deal with emergency situations. But _in the short term_, there are two clear alternatives that have clearly distinct costs and benefits:
+The ideal long-term solution is to rely on self-custody, in a future where users have easy access to technologies such as [multisig and social recovery wallets](../../../2021/01/11/recovery.html) to help deal with emergency situations. But _in the short term_, there are two clear alternatives that have clearly distinct costs and benefits:
 
 <br>
 

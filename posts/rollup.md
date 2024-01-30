@@ -68,7 +68,7 @@ And that's it! Except for one major detail: **how to do know that the post-state
 The two types of rollups are:
 
 1. **Optimistic rollups**, which use **fraud proofs**: the rollup contract keeps track of its entire history of state roots and the hash of each batch. If anyone discovers that one batch had an incorrect post-state root, they can publish a proof to chain, proving that the batch was computed incorrectly. The contract verifies the proof, and reverts that batch and all batches after it.
-2. **ZK rollups**, which use **validity proofs**: every batch includes a cryptographic proof called a ZK-SNARK (eg. using the [PLONK](https://vitalik.ca/general/2019/09/22/plonk.html) protocol), which proves that the post-state root is the correct result of executing the batch. No matter how large the computation, the proof can be very quickly verified on-chain.
+2. **ZK rollups**, which use **validity proofs**: every batch includes a cryptographic proof called a ZK-SNARK (eg. using the [PLONK](../../../2019/09/22/plonk.html) protocol), which proves that the post-state root is the correct result of executing the batch. No matter how large the computation, the proof can be very quickly verified on-chain.
 
 There are complex tradeoffs between the two flavors of rollups:
 

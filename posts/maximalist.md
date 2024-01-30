@@ -30,7 +30,7 @@ And to that end, public blockchains sacrifice _a lot_ for security:
 * Blockchains require each transaction to be independently verified thousands of times to be accepted.
 * Unlike centralized systems that confirm transactions in a few hundred milliseconds, blockchains require users to wait anywhere from 10 seconds to 10 minutes to get a confirmation.
 * Blockchains require users to be fully in charge of authenticating themselves: if you lose your key, you lose your coins.
-* Blockchains sacrifice privacy, requiring [even crazier and more expensive technology](https://vitalik.ca/general/2021/01/26/snarks.html) to get that privacy back.
+* Blockchains sacrifice privacy, requiring [even crazier and more expensive technology](../../../2021/01/26/snarks.html) to get that privacy back.
 
 **What are all of these sacrifices for? To create a system that can survive in an unfriendly world, and actually do the job of being "a light in dark places, when all other lights go out".**
 
@@ -135,7 +135,7 @@ Thus, we can see the two sides pretty clearly: team "blockchain", privileged peo
 
 A common misconception about why Bitcoin does not support "richly stateful" smart contracts goes as follows. Bitcoin really really values being simple, and particularly having low technical complexity, to reduce the chance that something will go wrong. As a result, it doesn't want to add the more complicated features and opcodes that are necessary to be able to support more complicated smart contracts in Ethereum.
 
-This misconception is, of course, wrong. In fact, there are _plenty_ of ways to add rich statefulness into Bitcoin; search for the word "[covenants](https://bitcoinops.org/en/topics/covenants/)" in Bitcoin chat archives to see many proposals being discussed. And many of these proposals are surprisingly simple. The reason why covenants have not been added is _not_ that Bitcoin developers see the value in rich statefulness but find even a little bit more protocol complexity intolerable. Rather, it's because Bitcoin developers are [worried about the risks](https://bitcoinops.org/en/newsletters/2022/03/09/#limiting-script-language-expressiveness) of the [systemic complexity](https://vitalik.ca/general/2022/02/28/complexity.html) that rich statefulness being possible would introduce into the ecosystem!
+This misconception is, of course, wrong. In fact, there are _plenty_ of ways to add rich statefulness into Bitcoin; search for the word "[covenants](https://bitcoinops.org/en/topics/covenants/)" in Bitcoin chat archives to see many proposals being discussed. And many of these proposals are surprisingly simple. The reason why covenants have not been added is _not_ that Bitcoin developers see the value in rich statefulness but find even a little bit more protocol complexity intolerable. Rather, it's because Bitcoin developers are [worried about the risks](https://bitcoinops.org/en/newsletters/2022/03/09/#limiting-script-language-expressiveness) of the [systemic complexity](../../../2022/02/28/complexity.html) that rich statefulness being possible would introduce into the ecosystem!
 
 <center><br>
 

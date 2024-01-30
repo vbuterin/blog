@@ -40,7 +40,7 @@ Y, yendo aún más lejos, la legitimidad gobierna todo tipo de juegos de estatus
 
 ## Entonces, ¿qué es la legitimidad?
 
-_Ver también: mi anterior [publicación sobre la gobernanza de blockchain](https://vitalik.ca/general/2017/12/17/voting.html)._
+_Ver también: mi anterior [publicación sobre la gobernanza de blockchain](../../../2017/12/17/voting.html)._
 
 
 Para comprender el funcionamiento de la legitimidad, necesitamos profundizar en alguna teoría de juegos.Hay muchas situaciones en la vida que exigen un **comportamiento coordinado**: si actúa de cierta manera solo, es probable que no llegue a ninguna parte (o algo peor), pero si todos actúan juntos, se puede lograr el resultado deseado.
@@ -128,7 +128,7 @@ Afortunadamente, ¡ya tenemos la semilla de esa alternativa! El ecosistema de ap
 <br>
 </center><br><br>
 
-Gitcoin Grants ya ha alcanzado un alto nivel de legitimidad: su mecanismo de financiación de bienes públicos, [la financiación cuadrática](https://vitalik.ca/general/2019/12/07/quadratic.html), ha demostrado ser [credibilidad neutral](https://nakamoto.com/credible-neutrality/) y eficaz para reflejar las prioridades y valores de la comunidad y tapar los huecos que dejan los mecanismos de financiación existentes. A veces, los principales beneficiarios de contrapartida de Gitcoin Grants incluso los utilizan como inspiración para las subvenciones por parte de otras entidades otorgantes de subvenciones más centralizadas. La propia Fundación Ethereum ha desempeñado un papel clave en el apoyo de esta experimentación y diversidad, incubando esfuerzos como Gitcoin Grants, junto con MolochDAO y otros, que luego obtienen un apoyo de la comunidad más amplia.
+Gitcoin Grants ya ha alcanzado un alto nivel de legitimidad: su mecanismo de financiación de bienes públicos, [la financiación cuadrática](../../../2019/12/07/quadratic.html), ha demostrado ser [credibilidad neutral](https://nakamoto.com/credible-neutrality/) y eficaz para reflejar las prioridades y valores de la comunidad y tapar los huecos que dejan los mecanismos de financiación existentes. A veces, los principales beneficiarios de contrapartida de Gitcoin Grants incluso los utilizan como inspiración para las subvenciones por parte de otras entidades otorgantes de subvenciones más centralizadas. La propia Fundación Ethereum ha desempeñado un papel clave en el apoyo de esta experimentación y diversidad, incubando esfuerzos como Gitcoin Grants, junto con MolochDAO y otros, que luego obtienen un apoyo de la comunidad más amplia.
 
 Podemos fortalecer aún más este incipiente ecosistema de financiamiento de bienes públicos tomando el modelo de Bitshares y haciendo una modificación: en lugar de brindar el apoyo comunitario más fuerte a los proyectos que asignaron tokens a una pequeña oligarquía que compró PTS o AGS en 2013, **apoyamos proyectos que aportan una pequeña parte de su tesoro a los bienes públicos que los hacen posibles y al ecosistema del que dependen**. Y, lo que es más importante, podemos negar estos beneficios a los proyectos que bifurcan un proyecto existente y no devuelven valor al ecosistema en general.
 
@@ -167,7 +167,7 @@ Definitivamente hay más ideas, pero esta es un área que ciertamente merece una
 
 ## En resumen
 
-* El concepto de **legitimidad (aceptación de orden superior) es muy poderoso**. La legitimidad aparece en cualquier contexto donde haya **[coordinación](https://vitalik.ca/general/2020/09/11/coordination.html)**, y especialmente en internet, la coordinación está en todas partes.
+* El concepto de **legitimidad (aceptación de orden superior) es muy poderoso**. La legitimidad aparece en cualquier contexto donde haya **[coordinación](../../../2020/09/11/coordination.html)**, y especialmente en internet, la coordinación está en todas partes.
 * Hay diferentes formas en las que la legitimidad llega a ser: **la fuerza bruta, la continuidad, la equidad, el proceso, el desempeño** y **la participación** están entre las más importantes.
 *La criptomoneda es poderosa porque nos permite reunir grandes fondos de capital por voluntad económica colectiva, y estos fondos de capital, al principio, no están controlados por ninguna persona. Más bien, **estos fondos de capital están _controlados directamente por conceptos de legitimidad_**.
 * Es demasiado arriesgado comenzar a financiar bienes públicos imprimiendo tokens en la capa base. Afortunadamente, sin embargo, Ethereum tiene un **ecosistema de capas de aplicaciones** muy rico, donde tenemos mucha más flexibilidad. Esto se debe en parte a que existe la oportunidad no solo de influir en los proyectos existentes, sino también de dar forma a otros nuevos que surgirán en el futuro.

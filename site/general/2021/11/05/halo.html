@@ -109,8 +109,31 @@ MathJax = {
 <br> <br> <br>
 <title> Halo and more: exploring incremental verification and SNARKs without pairings </title>
 
-<p><em>Special thanks to Justin Drake and Sean Bowe for wonderfully pedantic and thoughtful feedback and review, and to Pratyush Mishra for discussion that contributed to the original IPA exposition.</em></p>
-<p>Readers who have been <a href="https://vitalik.ca/general/2019/09/22/plonk.html">following</a> the <a href="https://vitalik.ca/general/2017/02/01/zk_snarks.html">ZK-SNARK</a> space <a href="https://vitalik.ca/general/2017/11/09/starks_part_1.html">closely</a> should by now be familiar with the high level of how ZK-SNARKs work. ZK-SNARKs are based on checking equations where the elements going into the equations are mathematical abstractions like <a href="https://vitalik.ca/general/2021/01/26/snarks.html">polynomials</a> (or in <a href="https://vitalik.ca/general/2016/12/10/qap.html">rank-1 constraint systems</a> matrices and vectors) that can hold a lot of data. There are three major families of cryptographic technologies that allow us to represent these abstractions succinctly: Merkle trees (for <a href="https://vitalik.ca/general/2017/11/09/starks_part_1.html">FRI</a>), regular elliptic curves (for <a href="https://twitter.com/VitalikButerin/status/1371844878968176647">inner product arguments (IPAs)</a>), and elliptic curves with pairings and trusted setups (for <a href="https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html">KZG commitments</a>). These three technologies lead to the three types of proofs: FRI leads to STARKs, KZG commitments lead to "regular" SNARKs, and IPA-based schemes lead to bulletproofs. These three technologies have very distinct tradeoffs:</p>
+<p><em>Special thanks to Justin Drake and Sean Bowe for wonderfully
+pedantic and thoughtful feedback and review, and to Pratyush Mishra for
+discussion that contributed to the original IPA exposition.</em></p>
+<p>Readers who have been <a
+href="../../../2019/09/22/plonk.html">following</a> the <a
+href="../../../2017/02/01/zk_snarks.html">ZK-SNARK</a> space <a
+href="../../../2017/11/09/starks_part_1.html">closely</a> should by now
+be familiar with the high level of how ZK-SNARKs work. ZK-SNARKs are
+based on checking equations where the elements going into the equations
+are mathematical abstractions like <a
+href="../../../2021/01/26/snarks.html">polynomials</a> (or in <a
+href="../../../2016/12/10/qap.html">rank-1 constraint systems</a>
+matrices and vectors) that can hold a lot of data. There are three major
+families of cryptographic technologies that allow us to represent these
+abstractions succinctly: Merkle trees (for <a
+href="../../../2017/11/09/starks_part_1.html">FRI</a>), regular elliptic
+curves (for <a
+href="https://twitter.com/VitalikButerin/status/1371844878968176647">inner
+product arguments (IPAs)</a>), and elliptic curves with pairings and
+trusted setups (for <a
+href="https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html">KZG
+commitments</a>). These three technologies lead to the three types of
+proofs: FRI leads to STARKs, KZG commitments lead to "regular" SNARKs,
+and IPA-based schemes lead to bulletproofs. These three technologies
+have very distinct tradeoffs:</p>
 <p><br></p>
 <table>
 <colgroup>
@@ -149,121 +172,489 @@ MathJax = {
 </tbody>
 </table>
 <p><br></p>
-<p>So far, the first and the third have seen the most attention. The reason for this has to do with that pesky right column in the second row of the table: elliptic curve-based inner product arguments have linear verification time. What this means that even though the <em>size</em> of a proof is small, the amount of time needed to verify the proof always takes longer than just running the computation yourself. This makes IPAs non-viable for scalability-related ZK-SNARK use cases: there's no point in using an IPA-based argument to prove the validity of an Ethereum block, because verifying the proof will take longer than just checking the block yourself. KZG and FRI-based proofs, on the other hand, really are much faster to verify than doing the computation yourself, so one of those two seems like the obvious choice.</p>
-<p><strong>More recently, however, there has been a slew of research into techniques for <em>merging</em> multiple IPA proofs into one.</strong> Much of the initial work on this was done as part of designing the <a href="https://eprint.iacr.org/2019/1021.pdf">Halo protocol</a> which is <a href="https://electriccoin.co/blog/halo-arc-for-zcash-proposed-for-release-later-this-year/">going into Zcash</a>. These merging techniques are cheap, and a merged proof takes no longer to verify than a single one of the proofs that it's merging. This opens a way forward for IPAs to be useful: instead of verifying a size-<span class="math inline">\(n\)</span> computation with a proof that takes still takes <span class="math inline">\(O(n)\)</span> time to verify, break that computation up into smaller size-<span class="math inline">\(k\)</span> steps, make <span class="math inline">\(\frac{n}{k}\)</span> proofs for each step, and merge them together so the verifier's work goes down to a little more than <span class="math inline">\(O(k)\)</span>. These techniques also allow us to do <em>incremental verification</em>: if new things keep being introduced that need to be proven, you can just keep taking the existing proof, mixing it in with a proof of the new statement, and getting a proof of the new combined statement out. This is really useful for verifying the integrity of, say, an entire blockchain.</p>
-<p>So how do these techniques work, and what can they do? That's exactly what this post is about.</p>
-<h2 id="background-how-do-inner-product-arguments-work">Background: how do inner product arguments work?</h2>
-<p>Inner product arguments are a proof scheme that can work over many mathematical structures, but usually we focus on IPAs over <a href="https://en.wikipedia.org/wiki/Elliptic_curve">elliptic curve points</a>. IPAs can be made over simple elliptic curves, theoretically even Bitcoin and Ethereum's <a href="https://en.bitcoin.it/wiki/Secp256k1">secp256k1</a> (though some special properties are preferred to make <a href="https://vitalik.ca/general/2019/05/12/fft.html">FFTs</a> more efficient); no need for insanely complicated pairing schemes that despite having written an <a href="https://vitalik.ca/general/2017/01/14/exploring_ecp.html">explainer article</a> and an <a href="https://github.com/ethereum/py_ecc/blob/master/py_ecc/bls12_381/bls12_381_pairing.py">implementation</a> I can still barely understand myself.</p>
-<p>We'll start off with the commitment scheme, typically called <strong>Pedersen vector commitments</strong>. To be able to commit to degree <span class="math inline">\(&lt; n\)</span> polynomials, we first publicly choose a set of base points, <span class="math inline">\(G_0 ... G_{n-1}\)</span>. These points can be generated through a pseudo-random procedure that can be re-executed by anyone (eg. the x coordinate of <span class="math inline">\(G_i\)</span> can be <span class="math inline">\(hash(i, j)\)</span> for the lowest integer <span class="math inline">\(j \ge 0\)</span> that produces a valid point); this is <em>not</em> a trusted setup as it does not rely on any specific party to introduce secret information.</p>
-<p>To commit to a polynomial <span class="math inline">\(P(x) = \sum_i c_i x^i\)</span>, the prover computes <span class="math inline">\(com(P) = \sum_i c_i G_i\)</span>. For example, <span class="math inline">\(com(x^2 + 4)\)</span> would equal <span class="math inline">\(G_2 + 4 * G_0\)</span> (remember, the <span class="math inline">\(+\)</span> and <span class="math inline">\(*\)</span> here are <a href="https://hackernoon.com/what-is-the-math-behind-elliptic-curve-cryptography-f61b25253da3">elliptic curve addition</a> and multiplication). Cryptographers will also often add an extra <span class="math inline">\(r \cdot H\)</span> hiding parameter for privacy, but for simplicity of exposition we'll ignore privacy for now; in general, it's not that hard to add privacy into all of these schemes.</p>
+<p>So far, the first and the third have seen the most attention. The
+reason for this has to do with that pesky right column in the second row
+of the table: elliptic curve-based inner product arguments have linear
+verification time. What this means that even though the <em>size</em> of
+a proof is small, the amount of time needed to verify the proof always
+takes longer than just running the computation yourself. This makes IPAs
+non-viable for scalability-related ZK-SNARK use cases: there's no point
+in using an IPA-based argument to prove the validity of an Ethereum
+block, because verifying the proof will take longer than just checking
+the block yourself. KZG and FRI-based proofs, on the other hand, really
+are much faster to verify than doing the computation yourself, so one of
+those two seems like the obvious choice.</p>
+<p><strong>More recently, however, there has been a slew of research
+into techniques for <em>merging</em> multiple IPA proofs into
+one.</strong> Much of the initial work on this was done as part of
+designing the <a href="https://eprint.iacr.org/2019/1021.pdf">Halo
+protocol</a> which is <a
+href="https://electriccoin.co/blog/halo-arc-for-zcash-proposed-for-release-later-this-year/">going
+into Zcash</a>. These merging techniques are cheap, and a merged proof
+takes no longer to verify than a single one of the proofs that it's
+merging. This opens a way forward for IPAs to be useful: instead of
+verifying a size-<span class="math inline">\(n\)</span> computation with
+a proof that takes still takes <span class="math inline">\(O(n)\)</span>
+time to verify, break that computation up into smaller size-<span
+class="math inline">\(k\)</span> steps, make <span
+class="math inline">\(\frac{n}{k}\)</span> proofs for each step, and
+merge them together so the verifier's work goes down to a little more
+than <span class="math inline">\(O(k)\)</span>. These techniques also
+allow us to do <em>incremental verification</em>: if new things keep
+being introduced that need to be proven, you can just keep taking the
+existing proof, mixing it in with a proof of the new statement, and
+getting a proof of the new combined statement out. This is really useful
+for verifying the integrity of, say, an entire blockchain.</p>
+<p>So how do these techniques work, and what can they do? That's exactly
+what this post is about.</p>
+<h2 id="background-how-do-inner-product-arguments-work">Background: how
+do inner product arguments work?</h2>
+<p>Inner product arguments are a proof scheme that can work over many
+mathematical structures, but usually we focus on IPAs over <a
+href="https://en.wikipedia.org/wiki/Elliptic_curve">elliptic curve
+points</a>. IPAs can be made over simple elliptic curves, theoretically
+even Bitcoin and Ethereum's <a
+href="https://en.bitcoin.it/wiki/Secp256k1">secp256k1</a> (though some
+special properties are preferred to make <a
+href="../../../2019/05/12/fft.html">FFTs</a> more efficient); no need
+for insanely complicated pairing schemes that despite having written an
+<a href="../../../2017/01/14/exploring_ecp.html">explainer article</a>
+and an <a
+href="https://github.com/ethereum/py_ecc/blob/master/py_ecc/bls12_381/bls12_381_pairing.py">implementation</a>
+I can still barely understand myself.</p>
+<p>We'll start off with the commitment scheme, typically called
+<strong>Pedersen vector commitments</strong>. To be able to commit to
+degree <span class="math inline">\(&lt; n\)</span> polynomials, we first
+publicly choose a set of base points, <span class="math inline">\(G_0
+... G_{n-1}\)</span>. These points can be generated through a
+pseudo-random procedure that can be re-executed by anyone (eg. the x
+coordinate of <span class="math inline">\(G_i\)</span> can be <span
+class="math inline">\(hash(i, j)\)</span> for the lowest integer <span
+class="math inline">\(j \ge 0\)</span> that produces a valid point);
+this is <em>not</em> a trusted setup as it does not rely on any specific
+party to introduce secret information.</p>
+<p>To commit to a polynomial <span class="math inline">\(P(x) = \sum_i
+c_i x^i\)</span>, the prover computes <span class="math inline">\(com(P)
+= \sum_i c_i G_i\)</span>. For example, <span
+class="math inline">\(com(x^2 + 4)\)</span> would equal <span
+class="math inline">\(G_2 + 4 * G_0\)</span> (remember, the <span
+class="math inline">\(+\)</span> and <span
+class="math inline">\(*\)</span> here are <a
+href="https://hackernoon.com/what-is-the-math-behind-elliptic-curve-cryptography-f61b25253da3">elliptic
+curve addition</a> and multiplication). Cryptographers will also often
+add an extra <span class="math inline">\(r \cdot H\)</span> hiding
+parameter for privacy, but for simplicity of exposition we'll ignore
+privacy for now; in general, it's not that hard to add privacy into all
+of these schemes.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/halo/commitments1.png" class="padded" /></p>
+<p><img src="../../../../images/halo/commitments1.png"
+class="padded" /></p>
 <p><small></p>
-<p><em>Though it's not really mathematically accurate to think of elliptic curve points as being like real numbers that have sizes, area is nevertheless a good intuition for thinking about linear combinations of elliptic curve points like we use in these commitments. The blue area here is the value of the Pedersen commitment <span class="math inline">\(C = \sum_i c_i G_i\)</span> to the polynomial <span class="math inline">\(P = \sum_i c_i x^i\)</span>.</em></p>
+<p><em>Though it's not really mathematically accurate to think of
+elliptic curve points as being like real numbers that have sizes, area
+is nevertheless a good intuition for thinking about linear combinations
+of elliptic curve points like we use in these commitments. The blue area
+here is the value of the Pedersen commitment <span
+class="math inline">\(C = \sum_i c_i G_i\)</span> to the polynomial
+<span class="math inline">\(P = \sum_i c_i x^i\)</span>.</em></p>
 </small>
 </center>
 <p><br></p>
-<p>Now, let's get into how the proof works. <strong>Our final goal will be a polynomial evaluation proof</strong>: given some <span class="math inline">\(z\)</span>, we want to make a proof that <span class="math inline">\(P(z) = a\)</span>, where this proof can be verified by anyone who has the commitment <span class="math inline">\(C = com(P)\)</span>. <strong>But first, we'll focus on a simpler task: proving that <span class="math inline">\(C\)</span> is a <em>valid commitment to any polynomial at all</em></strong> - that is, proving that <span class="math inline">\(C\)</span> was constructed by taking a linear combination <span class="math inline">\(\sum_i c_i G_i\)</span> of the points <span class="math inline">\(\{G_0 ... G_{n-1}\}\)</span>, without anything else mixed in.</p>
-<p>Of course, technically <em>any</em> point is some multiple of <span class="math inline">\(G_0\)</span> and so it's theoretically a valid commitment of something, but what we care about is proving that the prover <em>knows</em> some <span class="math inline">\(\{c_0 ... c_{n-1}\}\)</span> such that <span class="math inline">\(\sum_i c_i G_i = C\)</span>. A commitment <span class="math inline">\(C\)</span> cannot commit to multiple distinct polynomials <em>that the prover knows about</em>, because if it could, that would imply that elliptic curves are broken.</p>
-<p>The prover <em>could</em>, of course, just provide <span class="math inline">\(\{c_0 ... c_{n-1}\}\)</span> directly and let the verifier check the commitment. But this takes too much space. So instead, we try to reduce the problem to a smaller problem of half the size. The prover provides two points, <span class="math inline">\(L\)</span> and <span class="math inline">\(R\)</span>, representing the yellow and green areas in this diagram:</p>
+<p>Now, let's get into how the proof works. <strong>Our final goal will
+be a polynomial evaluation proof</strong>: given some <span
+class="math inline">\(z\)</span>, we want to make a proof that <span
+class="math inline">\(P(z) = a\)</span>, where this proof can be
+verified by anyone who has the commitment <span class="math inline">\(C
+= com(P)\)</span>. <strong>But first, we'll focus on a simpler task:
+proving that <span class="math inline">\(C\)</span> is a <em>valid
+commitment to any polynomial at all</em></strong> - that is, proving
+that <span class="math inline">\(C\)</span> was constructed by taking a
+linear combination <span class="math inline">\(\sum_i c_i G_i\)</span>
+of the points <span class="math inline">\(\{G_0 ... G_{n-1}\}\)</span>,
+without anything else mixed in.</p>
+<p>Of course, technically <em>any</em> point is some multiple of <span
+class="math inline">\(G_0\)</span> and so it's theoretically a valid
+commitment of something, but what we care about is proving that the
+prover <em>knows</em> some <span class="math inline">\(\{c_0 ...
+c_{n-1}\}\)</span> such that <span class="math inline">\(\sum_i c_i G_i
+= C\)</span>. A commitment <span class="math inline">\(C\)</span> cannot
+commit to multiple distinct polynomials <em>that the prover knows
+about</em>, because if it could, that would imply that elliptic curves
+are broken.</p>
+<p>The prover <em>could</em>, of course, just provide <span
+class="math inline">\(\{c_0 ... c_{n-1}\}\)</span> directly and let the
+verifier check the commitment. But this takes too much space. So
+instead, we try to reduce the problem to a smaller problem of half the
+size. The prover provides two points, <span
+class="math inline">\(L\)</span> and <span
+class="math inline">\(R\)</span>, representing the yellow and green
+areas in this diagram:</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/halo/commitments2.png" class="padded" /></p>
+<p><img src="../../../../images/halo/commitments2.png"
+class="padded" /></p>
 </center>
 <p><br></p>
-<p>You may be able to see where this is going: if you add <span class="math inline">\(C + L + R\)</span> together (remember: <span class="math inline">\(C\)</span> was the original commitment, so the blue area), the new combined point can be expressed as a sum of <em>four</em> squares instead of eight. And so now, the prover could finish by providing only four sums, the widths of each of the new squares. Repeat this protocol two more times, and we're down to a single full square, which the prover can prove by sending a single value representing its width.</p>
-<p>But there's a problem: if <span class="math inline">\(C\)</span> is incorrect in some way (eg. the prover added some extra point <span class="math inline">\(H\)</span> into it), then the prover could just subtract <span class="math inline">\(H\)</span> from <span class="math inline">\(L\)</span> or <span class="math inline">\(R\)</span> to compensate for it. We plug this hole by randomly scaling our points after the prover provides <span class="math inline">\(L\)</span> and <span class="math inline">\(R\)</span>:</p>
+<p>You may be able to see where this is going: if you add <span
+class="math inline">\(C + L + R\)</span> together (remember: <span
+class="math inline">\(C\)</span> was the original commitment, so the
+blue area), the new combined point can be expressed as a sum of
+<em>four</em> squares instead of eight. And so now, the prover could
+finish by providing only four sums, the widths of each of the new
+squares. Repeat this protocol two more times, and we're down to a single
+full square, which the prover can prove by sending a single value
+representing its width.</p>
+<p>But there's a problem: if <span class="math inline">\(C\)</span> is
+incorrect in some way (eg. the prover added some extra point <span
+class="math inline">\(H\)</span> into it), then the prover could just
+subtract <span class="math inline">\(H\)</span> from <span
+class="math inline">\(L\)</span> or <span
+class="math inline">\(R\)</span> to compensate for it. We plug this hole
+by randomly scaling our points after the prover provides <span
+class="math inline">\(L\)</span> and <span
+class="math inline">\(R\)</span>:</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/halo/commitments3.png" class="padded" /></p>
+<p><img src="../../../../images/halo/commitments3.png"
+class="padded" /></p>
 </center>
 <p><br></p>
-<p>Choose a random factor <span class="math inline">\(\alpha\)</span> (typically, we set <span class="math inline">\(\alpha\)</span> to be the hash of all data added to the proof so far, including the <span class="math inline">\(L\)</span> and <span class="math inline">\(R\)</span>, to ensure the verifier can also compute <span class="math inline">\(\alpha\)</span>). Every even <span class="math inline">\(G_i\)</span> point gets scaled by <span class="math inline">\(\alpha\)</span>, every odd <span class="math inline">\(G_i\)</span> point gets scaled <em>down</em> by the same factor. Every odd coefficient gets scaled up by <span class="math inline">\(\alpha\)</span> (notice the flip), and every even coefficient gets scaled down by <span class="math inline">\(\alpha\)</span>. Now, notice that:</p>
+<p>Choose a random factor <span class="math inline">\(\alpha\)</span>
+(typically, we set <span class="math inline">\(\alpha\)</span> to be the
+hash of all data added to the proof so far, including the <span
+class="math inline">\(L\)</span> and <span
+class="math inline">\(R\)</span>, to ensure the verifier can also
+compute <span class="math inline">\(\alpha\)</span>). Every even <span
+class="math inline">\(G_i\)</span> point gets scaled by <span
+class="math inline">\(\alpha\)</span>, every odd <span
+class="math inline">\(G_i\)</span> point gets scaled <em>down</em> by
+the same factor. Every odd coefficient gets scaled up by <span
+class="math inline">\(\alpha\)</span> (notice the flip), and every even
+coefficient gets scaled down by <span
+class="math inline">\(\alpha\)</span>. Now, notice that:</p>
 <ul>
-<li>The yellow area (<span class="math inline">\(L\)</span>) gets multiplied by <span class="math inline">\(\alpha^2\)</span> (because every yellow square is scaled up by <span class="math inline">\(\alpha\)</span> on both dimensions)</li>
-<li>The green area (<span class="math inline">\(R\)</span>) gets divided by <span class="math inline">\(\alpha^2\)</span> (because every green square is scaled down by <span class="math inline">\(\alpha\)</span> on both dimensions)</li>
-<li>The blue area (<span class="math inline">\(C\)</span>) remains unchanged (because its width is scaled up but its height is scaled down)</li>
+<li>The yellow area (<span class="math inline">\(L\)</span>) gets
+multiplied by <span class="math inline">\(\alpha^2\)</span> (because
+every yellow square is scaled up by <span
+class="math inline">\(\alpha\)</span> on both dimensions)</li>
+<li>The green area (<span class="math inline">\(R\)</span>) gets divided
+by <span class="math inline">\(\alpha^2\)</span> (because every green
+square is scaled down by <span class="math inline">\(\alpha\)</span> on
+both dimensions)</li>
+<li>The blue area (<span class="math inline">\(C\)</span>) remains
+unchanged (because its width is scaled up but its height is scaled
+down)</li>
 </ul>
-<p>Hence, we can generate our new half-size instance of the problem with some simple transformations:</p>
+<p>Hence, we can generate our new half-size instance of the problem with
+some simple transformations:</p>
 <ul>
-<li><span class="math inline">\(G&#39;_{i} = \alpha G_{2i} + \frac{G_{2i+1}}{\alpha}\)</span></li>
-<li><span class="math inline">\(c&#39;_{i} = \frac{c_{2i}}{\alpha} + \alpha c_{2i+1}\)</span></li>
-<li><span class="math inline">\(C&#39; = C + \alpha^2 L + \frac{R}{\alpha^2}\)</span></li>
+<li><span class="math inline">\(G&#39;_{i} = \alpha G_{2i} +
+\frac{G_{2i+1}}{\alpha}\)</span></li>
+<li><span class="math inline">\(c&#39;_{i} = \frac{c_{2i}}{\alpha} +
+\alpha c_{2i+1}\)</span></li>
+<li><span class="math inline">\(C&#39; = C + \alpha^2 L +
+\frac{R}{\alpha^2}\)</span></li>
 </ul>
-<p>(Note: in some implementations you instead do <span class="math inline">\(G&#39;_i = \alpha G_{2i} + G_{2i+1}\)</span> and <span class="math inline">\(c&#39;_i = c_{2i} + \alpha c_{2i+1}\)</span> without dividing the odd points by <span class="math inline">\(\alpha\)</span>. This makes the equation <span class="math inline">\(C&#39; = \alpha C + \alpha^2 L + R\)</span>, which is less symmetric, but ensures that the function to compute any <span class="math inline">\(G&#39;\)</span> in any round of the protocol becomes a polynomial without any division. <a href="https://hackmd.io/yA9DlU5YQ3WtiFxC_2LAlg">Yet <em>another</em> alternative</a> is to do <span class="math inline">\(G&#39;_i = \alpha G_{2i} + G_{2i+1}\)</span> and <span class="math inline">\(c&#39;_i = c_{2i} + \frac{c_{2i+1}}{\alpha}\)</span>, which avoids any <span class="math inline">\(\alpha^2\)</span> terms.)</p>
+<p>(Note: in some implementations you instead do <span
+class="math inline">\(G&#39;_i = \alpha G_{2i} + G_{2i+1}\)</span> and
+<span class="math inline">\(c&#39;_i = c_{2i} + \alpha c_{2i+1}\)</span>
+without dividing the odd points by <span
+class="math inline">\(\alpha\)</span>. This makes the equation <span
+class="math inline">\(C&#39; = \alpha C + \alpha^2 L + R\)</span>, which
+is less symmetric, but ensures that the function to compute any <span
+class="math inline">\(G&#39;\)</span> in any round of the protocol
+becomes a polynomial without any division. <a
+href="https://hackmd.io/yA9DlU5YQ3WtiFxC_2LAlg">Yet <em>another</em>
+alternative</a> is to do <span class="math inline">\(G&#39;_i = \alpha
+G_{2i} + G_{2i+1}\)</span> and <span class="math inline">\(c&#39;_i =
+c_{2i} + \frac{c_{2i+1}}{\alpha}\)</span>, which avoids any <span
+class="math inline">\(\alpha^2\)</span> terms.)</p>
 <p>And then we repeat the process until we get down to one point:</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/halo/commitments4.png" class="padded" /></p>
+<p><img src="../../../../images/halo/commitments4.png"
+class="padded" /></p>
 </center>
 <p><br></p>
-<p>Finally, we have a size-1 problem: prove that the final modified <span class="math inline">\(C^*\)</span> (in this diagram it's <span class="math inline">\(C&#39;&#39;&#39;\)</span> because we had to do three iterations, but it's <span class="math inline">\(log(n)\)</span> iterations generally) equals the final modified <span class="math inline">\(G^*_0\)</span> and <span class="math inline">\(c^*_0\)</span>. Here, the prover just provides <span class="math inline">\(c^*_0\)</span> in the clear, and the verifier checks <span class="math inline">\(c^*_0 G^*_0 = C^*\)</span>. Computing <span class="math inline">\(c^*_0\)</span> required being able to compute a linear combination of <span class="math inline">\(\{c_0 ... c_{n-1}\}\)</span> that was not known ahead of time, so providing it and verifying it convinces the verifier that the prover actually does know all the coefficients that go into the commitment. This concludes the proof.</p>
+<p>Finally, we have a size-1 problem: prove that the final modified
+<span class="math inline">\(C^*\)</span> (in this diagram it's <span
+class="math inline">\(C&#39;&#39;&#39;\)</span> because we had to do
+three iterations, but it's <span class="math inline">\(log(n)\)</span>
+iterations generally) equals the final modified <span
+class="math inline">\(G^*_0\)</span> and <span
+class="math inline">\(c^*_0\)</span>. Here, the prover just provides
+<span class="math inline">\(c^*_0\)</span> in the clear, and the
+verifier checks <span class="math inline">\(c^*_0 G^*_0 = C^*\)</span>.
+Computing <span class="math inline">\(c^*_0\)</span> required being able
+to compute a linear combination of <span class="math inline">\(\{c_0 ...
+c_{n-1}\}\)</span> that was not known ahead of time, so providing it and
+verifying it convinces the verifier that the prover actually does know
+all the coefficients that go into the commitment. This concludes the
+proof.</p>
 <h3 id="recapping">Recapping:</h3>
 <ul>
-<li>The statement we are proving is that <span class="math inline">\(C\)</span> is a commitment to <em>some</em> polynomial <span class="math inline">\(P(x) = \sum_i c_i x^i\)</span> committed to using the agreed-upon base points <span class="math inline">\(\{G_0 ... G_{n-1}\}\)</span></li>
-<li>The proof consists of <span class="math inline">\(log(n)\)</span> pairs of <span class="math inline">\((L, R)\)</span> values, representing the yellow and green areas at each step. The prover also provides the final <span class="math inline">\(c^*_0\)</span></li>
-<li>The verifier walks through the proof, generating the <span class="math inline">\(\alpha\)</span> value at each step using the same algorithm as the prover and computing the new <span class="math inline">\(C&#39;\)</span> and <span class="math inline">\(G&#39;_i\)</span> values (the verifier doesn't know the <span class="math inline">\(c_i\)</span> values so they can't compute any <span class="math inline">\(c&#39;_i\)</span> values)</li>
-<li>At the end, they check whether or not <span class="math inline">\(c^*_0 G^*_0 = C^*\)</span></li>
+<li>The statement we are proving is that <span
+class="math inline">\(C\)</span> is a commitment to <em>some</em>
+polynomial <span class="math inline">\(P(x) = \sum_i c_i x^i\)</span>
+committed to using the agreed-upon base points <span
+class="math inline">\(\{G_0 ... G_{n-1}\}\)</span></li>
+<li>The proof consists of <span class="math inline">\(log(n)\)</span>
+pairs of <span class="math inline">\((L, R)\)</span> values,
+representing the yellow and green areas at each step. The prover also
+provides the final <span class="math inline">\(c^*_0\)</span></li>
+<li>The verifier walks through the proof, generating the <span
+class="math inline">\(\alpha\)</span> value at each step using the same
+algorithm as the prover and computing the new <span
+class="math inline">\(C&#39;\)</span> and <span
+class="math inline">\(G&#39;_i\)</span> values (the verifier doesn't
+know the <span class="math inline">\(c_i\)</span> values so they can't
+compute any <span class="math inline">\(c&#39;_i\)</span> values)</li>
+<li>At the end, they check whether or not <span
+class="math inline">\(c^*_0 G^*_0 = C^*\)</span></li>
 </ul>
-<p>On the whole, the proof contains <span class="math inline">\(2 * log(n)\)</span> elliptic curve points and one number (for pedants: one <em>field element</em>). Verifying the proof takes logarithmic time in every step except one: computing the new <span class="math inline">\(G&#39;_i\)</span> values. This step is, unfortunately, linear.</p>
-<p><em>See also: <a href="https://dankradfeist.de/ethereum/2021/07/27/inner-product-arguments.html">Dankrad Feist's more detailed explanation</a> of inner product arguments.</em></p>
-<h3 id="extension-to-polynomial-evaluations">Extension to polynomial evaluations</h3>
-<p>We can extend to polynomial evaluations with a simple clever trick. Suppose we are trying to prove <span class="math inline">\(P(z) = a\)</span>. The prover and the verifier can extend the base points <span class="math inline">\(G_0 ... G_{n-1}\)</span> by attaching powers of <span class="math inline">\(z\)</span> to them: the new base points become <span class="math inline">\((G_0, 1), (G_1, z) ... (G_{n-1}, z^{n-1})\)</span>. These pairs can be treated as mathematical objects (for pedants: <em>group elements</em>) much like elliptic curve points themselves; to add them you do so element-by-element: <span class="math inline">\((A, x) + (B, y) =\)</span> <span class="math inline">\((A + B,\ x + y)\)</span>, using elliptic curve addition for the points and regular field addition for the numbers.</p>
+<p>On the whole, the proof contains <span class="math inline">\(2 *
+log(n)\)</span> elliptic curve points and one number (for pedants: one
+<em>field element</em>). Verifying the proof takes logarithmic time in
+every step except one: computing the new <span
+class="math inline">\(G&#39;_i\)</span> values. This step is,
+unfortunately, linear.</p>
+<p><em>See also: <a
+href="https://dankradfeist.de/ethereum/2021/07/27/inner-product-arguments.html">Dankrad
+Feist's more detailed explanation</a> of inner product
+arguments.</em></p>
+<h3 id="extension-to-polynomial-evaluations">Extension to polynomial
+evaluations</h3>
+<p>We can extend to polynomial evaluations with a simple clever trick.
+Suppose we are trying to prove <span class="math inline">\(P(z) =
+a\)</span>. The prover and the verifier can extend the base points <span
+class="math inline">\(G_0 ... G_{n-1}\)</span> by attaching powers of
+<span class="math inline">\(z\)</span> to them: the new base points
+become <span class="math inline">\((G_0, 1), (G_1, z) ... (G_{n-1},
+z^{n-1})\)</span>. These pairs can be treated as mathematical objects
+(for pedants: <em>group elements</em>) much like elliptic curve points
+themselves; to add them you do so element-by-element: <span
+class="math inline">\((A, x) + (B, y) =\)</span> <span
+class="math inline">\((A + B,\ x + y)\)</span>, using elliptic curve
+addition for the points and regular field addition for the numbers.</p>
 <p>We can make a Pedersen commitment using this extended base!</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/halo/commitments5.png" class="padded" /></p>
+<p><img src="../../../../images/halo/commitments5.png"
+class="padded" /></p>
 </center>
 <p><br></p>
-<p>Now, here's a puzzle. Suppose <span class="math inline">\(P(x) = \sum_i c_i x^i\)</span>, where <span class="math inline">\(P(z) = a\)</span>, would have a commitment <span class="math inline">\(C = \sum_i c_i G_i\)</span> if we were to use the regular elliptic curve points we used before as a base. If we use the pairs <span class="math inline">\((G_i, z^i)\)</span> as a base instead, the commitment would be <span class="math inline">\((C, y)\)</span> for some <span class="math inline">\(y\)</span>. What must be the value of <span class="math inline">\(y\)</span>?</p>
-<p>The answer is: it must be equal to <span class="math inline">\(a\)</span>! This is easy to see: the commitment is <span class="math inline">\((C, y) = \sum_i c_i (G_i, z^i)\)</span>, which we can decompose as <span class="math inline">\((\sum_i c_i G_i,\ \sum_i c_i z^i)\)</span>. The former is equal to <span class="math inline">\(C\)</span>, and the latter is just the evaluation <span class="math inline">\(P(z)\)</span>!</p>
-<p>Hence, if <span class="math inline">\(C\)</span> is a "regular" commitment to <span class="math inline">\(P\)</span> using <span class="math inline">\(\{G_0 ... G_{n-1}\}\)</span> as a base, then to prove that <span class="math inline">\(P(z) = a\)</span> we need only use the same protocol above, but proving that <span class="math inline">\((C, a)\)</span> is a valid commitment using <span class="math inline">\((G_0, 1), (G_1, z) ... (G_{n-1}, z^{n-1})\)</span> as a base!</p>
-<p>Note that in practice, this is usually done slightly differently as an optimization: instead of attaching the numbers to the points and explicitly dealing with structures of the form <span class="math inline">\((G_i, z^i)\)</span>, we add another randomly chosen base point <span class="math inline">\(H\)</span> and express it as <span class="math inline">\(G_i + z^i H\)</span>. This saves space.</p>
-<p><strong>See <a href="https://github.com/ethereum/research/blob/master/bulletproofs/ipa_commitments.py">here</a> for an example implementation of this whole protocol.</strong></p>
-<h2 id="so-how-do-we-combine-these-proofs">So, how do we combine these proofs?</h2>
-<p>Suppose that you are given two polynomial evaluation proofs, with different polynomials and different evaluation points, and want to make a proof that they are both correct. You have:</p>
+<p>Now, here's a puzzle. Suppose <span class="math inline">\(P(x) =
+\sum_i c_i x^i\)</span>, where <span class="math inline">\(P(z) =
+a\)</span>, would have a commitment <span class="math inline">\(C =
+\sum_i c_i G_i\)</span> if we were to use the regular elliptic curve
+points we used before as a base. If we use the pairs <span
+class="math inline">\((G_i, z^i)\)</span> as a base instead, the
+commitment would be <span class="math inline">\((C, y)\)</span> for some
+<span class="math inline">\(y\)</span>. What must be the value of <span
+class="math inline">\(y\)</span>?</p>
+<p>The answer is: it must be equal to <span
+class="math inline">\(a\)</span>! This is easy to see: the commitment is
+<span class="math inline">\((C, y) = \sum_i c_i (G_i, z^i)\)</span>,
+which we can decompose as <span class="math inline">\((\sum_i c_i G_i,\
+\sum_i c_i z^i)\)</span>. The former is equal to <span
+class="math inline">\(C\)</span>, and the latter is just the evaluation
+<span class="math inline">\(P(z)\)</span>!</p>
+<p>Hence, if <span class="math inline">\(C\)</span> is a "regular"
+commitment to <span class="math inline">\(P\)</span> using <span
+class="math inline">\(\{G_0 ... G_{n-1}\}\)</span> as a base, then to
+prove that <span class="math inline">\(P(z) = a\)</span> we need only
+use the same protocol above, but proving that <span
+class="math inline">\((C, a)\)</span> is a valid commitment using <span
+class="math inline">\((G_0, 1), (G_1, z) ... (G_{n-1}, z^{n-1})\)</span>
+as a base!</p>
+<p>Note that in practice, this is usually done slightly differently as
+an optimization: instead of attaching the numbers to the points and
+explicitly dealing with structures of the form <span
+class="math inline">\((G_i, z^i)\)</span>, we add another randomly
+chosen base point <span class="math inline">\(H\)</span> and express it
+as <span class="math inline">\(G_i + z^i H\)</span>. This saves
+space.</p>
+<p><strong>See <a
+href="https://github.com/ethereum/research/blob/master/bulletproofs/ipa_commitments.py">here</a>
+for an example implementation of this whole protocol.</strong></p>
+<h2 id="so-how-do-we-combine-these-proofs">So, how do we combine these
+proofs?</h2>
+<p>Suppose that you are given two polynomial evaluation proofs, with
+different polynomials and different evaluation points, and want to make
+a proof that they are both correct. You have:</p>
 <ul>
-<li>Proof <span class="math inline">\(\Pi_1\)</span> proving that <span class="math inline">\(P_1(z_1) = y_1\)</span>, where <span class="math inline">\(P_1\)</span> is represented by <span class="math inline">\(com(P_1) = C_1\)</span></li>
-<li>Proof <span class="math inline">\(\Pi_2\)</span> proving that <span class="math inline">\(P_2(z_2) = y_2\)</span>, where <span class="math inline">\(P_2\)</span> is represented by <span class="math inline">\(com(P_2) = C_2\)</span></li>
+<li>Proof <span class="math inline">\(\Pi_1\)</span> proving that <span
+class="math inline">\(P_1(z_1) = y_1\)</span>, where <span
+class="math inline">\(P_1\)</span> is represented by <span
+class="math inline">\(com(P_1) = C_1\)</span></li>
+<li>Proof <span class="math inline">\(\Pi_2\)</span> proving that <span
+class="math inline">\(P_2(z_2) = y_2\)</span>, where <span
+class="math inline">\(P_2\)</span> is represented by <span
+class="math inline">\(com(P_2) = C_2\)</span></li>
 </ul>
-<p>Verifying each proof takes linear time. We want to make a proof that proves that both proofs are correct. This will still take linear time, but the verifier will only have to make <em>one</em> round of linear time verification instead of two.</p>
-<p>We start off with an observation. The only linear-time step in performing the verification of the proofs is computing the <span class="math inline">\(G&#39;_i\)</span> values. This is <span class="math inline">\(O(n)\)</span> work because you have to combine <span class="math inline">\(\frac{n}{2}\)</span> pairs of <span class="math inline">\(G_i\)</span> values into <span class="math inline">\(G&#39;_i\)</span> values, then <span class="math inline">\(\frac{n}{4}\)</span> pairs of <span class="math inline">\(G&#39;_i\)</span> values into <span class="math inline">\(G&#39;&#39;_i\)</span> values, and so on, for a total of <span class="math inline">\(n\)</span> combinations of pairs. But if you look at the algorithm carefully, you will notice that <em>we don't actually need any of the intermediate <span class="math inline">\(G&#39;_i\)</span> values; we only need the final <span class="math inline">\(G^*_0\)</span></em>. This <span class="math inline">\(G^*_0\)</span> is a linear combination of the initial <span class="math inline">\(G_i\)</span> values. What are the coefficients to that linear combination? It turns out that the <span class="math inline">\(G_i\)</span> coefficient is the <span class="math inline">\(X^i\)</span> term of this polynomial:</p>
-<p><span class="math display">\[(X + \alpha_1) * (X^2 + \alpha_2)\ *\ ...\ *\ (X^{\frac{n}{2}} + \alpha_{log(n)}) \]</span></p>
-<p>This is using the <span class="math inline">\(C&#39; = \alpha C + \alpha^2 L + R\)</span> version we mentioned above. The ability to directly compute <span class="math inline">\(G^*_0\)</span> as a linear combination already cuts down our work to <span class="math inline">\(O(\frac{n}{log(n)})\)</span> due to <a href="https://ethresear.ch/t/simple-guide-to-fast-linear-combinations-aka-multiexponentiations/7238">fast linear combination algorithms</a>, but we can go further.</p>
-<p>The above polynomial has degree <span class="math inline">\(n - 1\)</span>, with <span class="math inline">\(n\)</span> nonzero coefficients. But its un-expanded form has size <span class="math inline">\(log(n)\)</span>, and so you can <em>evaluate</em> the polynomial at any point in <span class="math inline">\(O(log(n))\)</span> time. Additionally, you might notice that <span class="math inline">\(G^*_0\)</span> is a commitment to this polynomial, so we can directly <em>prove</em> evaluations! So here is what we do:</p>
+<p>Verifying each proof takes linear time. We want to make a proof that
+proves that both proofs are correct. This will still take linear time,
+but the verifier will only have to make <em>one</em> round of linear
+time verification instead of two.</p>
+<p>We start off with an observation. The only linear-time step in
+performing the verification of the proofs is computing the <span
+class="math inline">\(G&#39;_i\)</span> values. This is <span
+class="math inline">\(O(n)\)</span> work because you have to combine
+<span class="math inline">\(\frac{n}{2}\)</span> pairs of <span
+class="math inline">\(G_i\)</span> values into <span
+class="math inline">\(G&#39;_i\)</span> values, then <span
+class="math inline">\(\frac{n}{4}\)</span> pairs of <span
+class="math inline">\(G&#39;_i\)</span> values into <span
+class="math inline">\(G&#39;&#39;_i\)</span> values, and so on, for a
+total of <span class="math inline">\(n\)</span> combinations of pairs.
+But if you look at the algorithm carefully, you will notice that <em>we
+don't actually need any of the intermediate <span
+class="math inline">\(G&#39;_i\)</span> values; we only need the final
+<span class="math inline">\(G^*_0\)</span></em>. This <span
+class="math inline">\(G^*_0\)</span> is a linear combination of the
+initial <span class="math inline">\(G_i\)</span> values. What are the
+coefficients to that linear combination? It turns out that the <span
+class="math inline">\(G_i\)</span> coefficient is the <span
+class="math inline">\(X^i\)</span> term of this polynomial:</p>
+<p><span class="math display">\[(X + \alpha_1) * (X^2 + \alpha_2)\ *\
+...\ *\ (X^{\frac{n}{2}} + \alpha_{log(n)}) \]</span></p>
+<p>This is using the <span class="math inline">\(C&#39; = \alpha C +
+\alpha^2 L + R\)</span> version we mentioned above. The ability to
+directly compute <span class="math inline">\(G^*_0\)</span> as a linear
+combination already cuts down our work to <span
+class="math inline">\(O(\frac{n}{log(n)})\)</span> due to <a
+href="https://ethresear.ch/t/simple-guide-to-fast-linear-combinations-aka-multiexponentiations/7238">fast
+linear combination algorithms</a>, but we can go further.</p>
+<p>The above polynomial has degree <span class="math inline">\(n -
+1\)</span>, with <span class="math inline">\(n\)</span> nonzero
+coefficients. But its un-expanded form has size <span
+class="math inline">\(log(n)\)</span>, and so you can <em>evaluate</em>
+the polynomial at any point in <span
+class="math inline">\(O(log(n))\)</span> time. Additionally, you might
+notice that <span class="math inline">\(G^*_0\)</span> is a commitment
+to this polynomial, so we can directly <em>prove</em> evaluations! So
+here is what we do:</p>
 <ul>
-<li>The prover computes the above polynomial for each proof; we'll call these polynomials <span class="math inline">\(K_1\)</span> with <span class="math inline">\(com(K_1) = D_1\)</span> and <span class="math inline">\(K_2\)</span> with <span class="math inline">\(com(K_2) = D_2\)</span>. In a "normal" verification, the verifier would be computing <span class="math inline">\(D_1\)</span> and <span class="math inline">\(D_2\)</span> themselves as these are just the <span class="math inline">\(G^*_0\)</span> values for their respective proofs. Here, the prover provides <span class="math inline">\(D_1\)</span> and <span class="math inline">\(D_2\)</span> and the rest of the work is proving that they're correct.</li>
-<li>To prove the correctness of <span class="math inline">\(D_1\)</span> and <span class="math inline">\(D_2\)</span> we'll prove that they're correct at a random point. We choose a random point <span class="math inline">\(t\)</span>, and evaluate both <span class="math inline">\(e_1 = K_1(t)\)</span> and <span class="math inline">\(e_2 = K_2(t)\)</span></li>
-<li>The prover generates a random linear combination <span class="math inline">\(L(x) = K_1(x) + rK_2(x)\)</span> (and the verifier can generate <span class="math inline">\(com(L) = D_1 + rD_2\)</span>). The prover now just needs to make a single proof that <span class="math inline">\(L(t) = e_1 + re_2\)</span>.</li>
+<li>The prover computes the above polynomial for each proof; we'll call
+these polynomials <span class="math inline">\(K_1\)</span> with <span
+class="math inline">\(com(K_1) = D_1\)</span> and <span
+class="math inline">\(K_2\)</span> with <span
+class="math inline">\(com(K_2) = D_2\)</span>. In a "normal"
+verification, the verifier would be computing <span
+class="math inline">\(D_1\)</span> and <span
+class="math inline">\(D_2\)</span> themselves as these are just the
+<span class="math inline">\(G^*_0\)</span> values for their respective
+proofs. Here, the prover provides <span
+class="math inline">\(D_1\)</span> and <span
+class="math inline">\(D_2\)</span> and the rest of the work is proving
+that they're correct.</li>
+<li>To prove the correctness of <span class="math inline">\(D_1\)</span>
+and <span class="math inline">\(D_2\)</span> we'll prove that they're
+correct at a random point. We choose a random point <span
+class="math inline">\(t\)</span>, and evaluate both <span
+class="math inline">\(e_1 = K_1(t)\)</span> and <span
+class="math inline">\(e_2 = K_2(t)\)</span></li>
+<li>The prover generates a random linear combination <span
+class="math inline">\(L(x) = K_1(x) + rK_2(x)\)</span> (and the verifier
+can generate <span class="math inline">\(com(L) = D_1 + rD_2\)</span>).
+The prover now just needs to make a single proof that <span
+class="math inline">\(L(t) = e_1 + re_2\)</span>.</li>
 </ul>
 <center>
 <p><br></p>
-<p><img src="../../../../images/halo/proof_combining.png" class="padded" /></p>
+<p><img src="../../../../images/halo/proof_combining.png"
+class="padded" /></p>
 </center>
 <p><br></p>
-<p>The verifier still needs to do a bunch of extra steps, but all of those steps take either <span class="math inline">\(O(1)\)</span> or <span class="math inline">\(O(log(n))\)</span> work: evaluate <span class="math inline">\(e_1 = K_1(t)\)</span> and <span class="math inline">\(e_2 = K_2(t)\)</span>, calculate the <span class="math inline">\(\alpha_i\)</span> coefficients of both <span class="math inline">\(K_i\)</span> polynomials in the first place, do the elliptic curve addition <span class="math inline">\(com(L) = D_1 + rD_2\)</span>. But this all takes vastly less than linear time, so all in all we still benefit: the verifier only needs to do the linear-time step of computing a <span class="math inline">\(G^*_0\)</span> point themselves once.</p>
-<p>This technique can easily be generalized to merge <span class="math inline">\(m &gt; 2\)</span> signatures.</p>
-<h2 id="from-merging-ipas-to-merging-ipa-based-snarks-halo">From merging IPAs to merging IPA-based SNARKs: Halo</h2>
-<p>Now, we get into the core mechanic of the <a href="https://eprint.iacr.org/2019/1021.pdf">Halo protocol</a> being integrated in Zcash, which uses this proof combining technique to create a recursive proof system. The setup is simple: suppose you have a chain, where each block has an associated IPA-based SNARK (see <a href="https://vitalik.ca/general/2021/01/26/snarks.html">here</a> for how generic SNARKs from polynomial commitments work) proving its correctness. You want to create a new block, building on top of the previous tip of the chain. The new block should have its own IPA-based SNARK proving the correctness of the block. In fact, this proof should cover both the correctness of the new block <em>and</em> the correctness of the previous block's proof of the correctness of the entire chain before it.</p>
-<p>IPA-based proofs by themselves cannot do this, because a proof of a statement takes longer to verify than checking the statement itself, so a proof of a proof will take even longer to verify than both proofs separately. But proof merging can do it!</p>
+<p>The verifier still needs to do a bunch of extra steps, but all of
+those steps take either <span class="math inline">\(O(1)\)</span> or
+<span class="math inline">\(O(log(n))\)</span> work: evaluate <span
+class="math inline">\(e_1 = K_1(t)\)</span> and <span
+class="math inline">\(e_2 = K_2(t)\)</span>, calculate the <span
+class="math inline">\(\alpha_i\)</span> coefficients of both <span
+class="math inline">\(K_i\)</span> polynomials in the first place, do
+the elliptic curve addition <span class="math inline">\(com(L) = D_1 +
+rD_2\)</span>. But this all takes vastly less than linear time, so all
+in all we still benefit: the verifier only needs to do the linear-time
+step of computing a <span class="math inline">\(G^*_0\)</span> point
+themselves once.</p>
+<p>This technique can easily be generalized to merge <span
+class="math inline">\(m &gt; 2\)</span> signatures.</p>
+<h2 id="from-merging-ipas-to-merging-ipa-based-snarks-halo">From merging
+IPAs to merging IPA-based SNARKs: Halo</h2>
+<p>Now, we get into the core mechanic of the <a
+href="https://eprint.iacr.org/2019/1021.pdf">Halo protocol</a> being
+integrated in Zcash, which uses this proof combining technique to create
+a recursive proof system. The setup is simple: suppose you have a chain,
+where each block has an associated IPA-based SNARK (see <a
+href="../../../2021/01/26/snarks.html">here</a> for how generic SNARKs
+from polynomial commitments work) proving its correctness. You want to
+create a new block, building on top of the previous tip of the chain.
+The new block should have its own IPA-based SNARK proving the
+correctness of the block. In fact, this proof should cover both the
+correctness of the new block <em>and</em> the correctness of the
+previous block's proof of the correctness of the entire chain before
+it.</p>
+<p>IPA-based proofs by themselves cannot do this, because a proof of a
+statement takes longer to verify than checking the statement itself, so
+a proof of a proof will take even longer to verify than both proofs
+separately. But proof merging can do it!</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/halo/recursion.png" class="padded" /></p>
+<p><img src="../../../../images/halo/recursion.png"
+class="padded" /></p>
 </center>
 <p><br></p>
-<p>Essentially, we use the usual "recursive SNARK" technique to verify the proofs, except the "proof of a proof" part is only proving the logarithmic part of the work. We add an extra chain of aggregate proofs, using a trick similar to the proof merging scheme above, to handle the linear part of the work. To verify the whole chain, the verifier need only verify one linear-time proof at the very tip of the chain.</p>
-<p>The precise details are somewhat different from the exact proof-combining trick in the previous section for efficiency reasons. Instead of using the proof-combining trick to combine multiple proofs, we use it on a <em>single</em> proof, just to re-randomize the point that the polynomial committed to by <span class="math inline">\(G^*_0\)</span> needs to be evaluated at. We then use the <em>same</em> newly chosen evaluation point to evaluate the polynomials in the proof of the block's correctness, which allows us to prove the polynomial evaluations together in a single IPA.</p>
+<p>Essentially, we use the usual "recursive SNARK" technique to verify
+the proofs, except the "proof of a proof" part is only proving the
+logarithmic part of the work. We add an extra chain of aggregate proofs,
+using a trick similar to the proof merging scheme above, to handle the
+linear part of the work. To verify the whole chain, the verifier need
+only verify one linear-time proof at the very tip of the chain.</p>
+<p>The precise details are somewhat different from the exact
+proof-combining trick in the previous section for efficiency reasons.
+Instead of using the proof-combining trick to combine multiple proofs,
+we use it on a <em>single</em> proof, just to re-randomize the point
+that the polynomial committed to by <span
+class="math inline">\(G^*_0\)</span> needs to be evaluated at. We then
+use the <em>same</em> newly chosen evaluation point to evaluate the
+polynomials in the proof of the block's correctness, which allows us to
+prove the polynomial evaluations together in a single IPA.</p>
 <p>Expressed in math:</p>
 <ul>
-<li>Let <span class="math inline">\(P(z) = a\)</span> be the previous statement that needs to be proven</li>
+<li>Let <span class="math inline">\(P(z) = a\)</span> be the previous
+statement that needs to be proven</li>
 <li>The prover generates <span class="math inline">\(G^*_0\)</span></li>
-<li>The prover proves the correctness of the new block plus the logarithmic work in the previous statements by generating a <a href="https://vitalik.ca/general/2019/09/22/plonk.html#putting-it-all-together">PLONK proof</a>: <span class="math inline">\(Q_L * A + Q_R * B + Q_O * C + Q_M * A * B + Q_C = Z * H\)</span></li>
-<li>The prover chooses a random point <span class="math inline">\(t\)</span>, and proves the evaluation of a linear combination of <span class="math inline">\(\{G^*_0,\ Q_L,\ A,\ Q_R,\ B,\ Q_O,\ C,\ Q_M,\ Q_C,\ Z,\ H\}\)</span> at <span class="math inline">\(t\)</span>. We can then check the above equation, replacing each polynomial with its now-verified evaluation at <span class="math inline">\(t\)</span>, to verify the PLONK proof.</li>
+<li>The prover proves the correctness of the new block plus the
+logarithmic work in the previous statements by generating a <a
+href="../../../2019/09/22/plonk.html#putting-it-all-together">PLONK
+proof</a>: <span class="math inline">\(Q_L * A + Q_R * B + Q_O * C + Q_M
+* A * B + Q_C = Z * H\)</span></li>
+<li>The prover chooses a random point <span
+class="math inline">\(t\)</span>, and proves the evaluation of a linear
+combination of <span class="math inline">\(\{G^*_0,\ Q_L,\ A,\ Q_R,\ B,\
+Q_O,\ C,\ Q_M,\ Q_C,\ Z,\ H\}\)</span> at <span
+class="math inline">\(t\)</span>. We can then check the above equation,
+replacing each polynomial with its now-verified evaluation at <span
+class="math inline">\(t\)</span>, to verify the PLONK proof.</li>
 </ul>
-<h3 id="incremental-verification-more-generally">Incremental verification, more generally</h3>
-<p>The size of each "step" does not need to be a full block verification; it could be something as small as a single step of a virtual machine. The smaller the steps the better: it ensures that the linear work that the verifier ultimately has to do at the end is less. The only lower bound is that each step has to be big enough to contain a SNARK verifying the <span class="math inline">\(log(n)\)</span> portion of the work of a step.</p>
-<p>But regardless of the fine details, this mechanism allows us to make succinct and easy-to-verify SNARKs, including easy support for recursive proofs that allow you to extend proofs in real time as the computation extends and even have different provers to do different parts of the proving work, all without pairings or a trusted setup! The main downside is some extra technical complexity, compared with a "simple" polynomial-based proof using eg. KZG-based commitments.</p>
+<h3 id="incremental-verification-more-generally">Incremental
+verification, more generally</h3>
+<p>The size of each "step" does not need to be a full block
+verification; it could be something as small as a single step of a
+virtual machine. The smaller the steps the better: it ensures that the
+linear work that the verifier ultimately has to do at the end is less.
+The only lower bound is that each step has to be big enough to contain a
+SNARK verifying the <span class="math inline">\(log(n)\)</span> portion
+of the work of a step.</p>
+<p>But regardless of the fine details, this mechanism allows us to make
+succinct and easy-to-verify SNARKs, including easy support for recursive
+proofs that allow you to extend proofs in real time as the computation
+extends and even have different provers to do different parts of the
+proving work, all without pairings or a trusted setup! The main downside
+is some extra technical complexity, compared with a "simple"
+polynomial-based proof using eg. KZG-based commitments.</p>
 <p><br></p>
 <table>
 <colgroup>
@@ -308,38 +699,129 @@ MathJax = {
 </tbody>
 </table>
 <p><br></p>
-<h2 id="not-just-polynomials-merging-r1cs-proofs">Not just polynomials! Merging R1CS proofs</h2>
-<p>A common alternative to building SNARKs out of polynomial games is building SNARKs out of matrix-vector multiplication games. Polynomials and vectors+matrices are both natural bases for SNARK protocols because they are mathematical abstractions that can store and compute over large amounts of data at the same time, and that admit commitment schemes that allow verifiers to check equations quickly.</p>
-<p>In R1CS (see a more detailed description <a href="https://vitalik.ca/general/2016/12/10/qap.html">here</a>), an instance of the game consists of three matrices <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span>, and a solution is a vector <span class="math inline">\(Z\)</span> such that <span class="math inline">\((A \cdot Z) \circ (B \cdot Z) = C \cdot Z\)</span> (the problem is often in practice restricted further by requiring the prover to make part of <span class="math inline">\(Z\)</span> public and requiring the last entry of <span class="math inline">\(Z\)</span> to be 1).</p>
+<h2 id="not-just-polynomials-merging-r1cs-proofs">Not just polynomials!
+Merging R1CS proofs</h2>
+<p>A common alternative to building SNARKs out of polynomial games is
+building SNARKs out of matrix-vector multiplication games. Polynomials
+and vectors+matrices are both natural bases for SNARK protocols because
+they are mathematical abstractions that can store and compute over large
+amounts of data at the same time, and that admit commitment schemes that
+allow verifiers to check equations quickly.</p>
+<p>In R1CS (see a more detailed description <a
+href="../../../2016/12/10/qap.html">here</a>), an instance of the game
+consists of three matrices <span class="math inline">\(A\)</span>, <span
+class="math inline">\(B\)</span>, <span
+class="math inline">\(C\)</span>, and a solution is a vector <span
+class="math inline">\(Z\)</span> such that <span
+class="math inline">\((A \cdot Z) \circ (B \cdot Z) = C \cdot Z\)</span>
+(the problem is often in practice restricted further by requiring the
+prover to make part of <span class="math inline">\(Z\)</span> public and
+requiring the last entry of <span class="math inline">\(Z\)</span> to be
+1).</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/halo/r1cs.png" style="width:450px" class="padded" /></p>
 <p><br></p>
-<p><em>An R1CS instance with a single constraint (so <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span> have width 1), with a satisfying <span class="math inline">\(Z\)</span> vector, though notice that here the <span class="math inline">\(Z\)</span> appears on the left and has 1 in the top position instead of the bottom.</em></p>
+<p><em>An R1CS instance with a single constraint (so <span
+class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>
+and <span class="math inline">\(C\)</span> have width 1), with a
+satisfying <span class="math inline">\(Z\)</span> vector, though notice
+that here the <span class="math inline">\(Z\)</span> appears on the left
+and has 1 in the top position instead of the bottom.</em></p>
 </center>
 <p><br></p>
-<p>Just like with polynomial-based SNARKs, this R1CS game can be turned into a proof scheme by creating commitments to <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span>, requiring the prover to provide a commitment to (the private portion of) <span class="math inline">\(Z\)</span>, and using fancy proving tricks to prove the equation <span class="math inline">\((A \cdot Z) \circ (B \cdot Z) = C \cdot Z\)</span>, where <span class="math inline">\(\circ\)</span> is item-by-item multiplication, without fully revealing any of these objects. And just like with IPAs, this R1CS game has a proof merging scheme!</p>
-<p>Ioanna Tzialla et al describe such a scheme in a <a href="https://eprint.iacr.org/2021/1263.pdf">recent paper</a> (see page 8-9 for their description). They first modify the game by introducing an expanded equation:</p>
-<p><span class="math display">\[ (A \cdot Z) \circ (B \cdot Z) - u * (C \cdot Z) = E\]</span></p>
-<p>For a "base" instance, <span class="math inline">\(u = 1\)</span> and <span class="math inline">\(E = 0\)</span>, so we get back the original R1CS equation. The extra slack variables are added to make aggregation possible; aggregated instances will have other values of <span class="math inline">\(u\)</span> and <span class="math inline">\(E\)</span>. Now, suppose that you have two solutions to the same instance, though with different <span class="math inline">\(u\)</span> and <span class="math inline">\(E\)</span> variables:</p>
-<p><span class="math display">\[(A \cdot Z_1) \circ (B \cdot Z_1) - u_1 * (C \cdot Z_1) = E_1\]</span></p>
-<p><span class="math display">\[(A \cdot Z_2) \circ (B \cdot Z_2) - u_2 * (C \cdot Z_2) = E_2\]</span></p>
-<p>The trick involves taking a random linear combination <span class="math inline">\(Z_3 = Z_1 + r Z_2\)</span>, and making the equation work with this new value. First, let's evaluate the left side:</p>
-<p><span class="math display">\[ (A \cdot (Z_1 + rZ_2)) \circ (B \cdot (Z_1 + rZ_2)) - (u_1 + ru_2)*(C \cdot (Z_1 + rZ_2)) \]</span></p>
-<p>This expands into the following (grouping the <span class="math inline">\(1\)</span>, <span class="math inline">\(r\)</span> and <span class="math inline">\(r^2\)</span> terms together):</p>
-<p><span class="math display">\[(A \cdot Z_1) \circ (B \cdot Z_1) - u_1 * (C \cdot Z_1)\]</span></p>
-<p><span class="math display">\[r((A \cdot Z_1) \circ (B \cdot Z_2) + (A \cdot Z_2) \circ (B \cdot Z_1) - u_1 * (C \cdot Z_2) - u_2 * (C \cdot Z_1))\]</span></p>
-<p><span class="math display">\[r^2((A \cdot Z_2) \circ (B \cdot Z_2) - u_2 * (C \cdot Z_2))\]</span></p>
-<p>The first term is just <span class="math inline">\(E_1\)</span>; the third term is <span class="math inline">\(r^2 * E_2\)</span>. The middle term is very similar to the cross-term (the yellow + green areas) near the very start of this post. The prover simply provides the middle term (without the <span class="math inline">\(r\)</span> factor), and just like in the IPA proof, the randomization forces the prover to be honest.</p>
-<p>Hence, it's possible to make merging schemes for R1CS-based protocols too. Interestingly enough, we don't even technically need to have a "succinct" protocol for proving the <span class="math display">\[ (A \cdot Z) \circ (B \cdot Z) = u * (C \cdot Z) + E\]</span> relation at the end; instead, the prover could just prove by opening all the commitments directly! This would still be "succinct" because the verifier would only need to verify one proof that actually represents an arbitrarily large number of statements. However, in practice having a succinct protocol for this last step is better because it keeps the proofs smaller, and <a href="https://eprint.iacr.org/2021/1263.pdf">Tzialla et al's paper</a> provides such a protocol too (see page 10).</p>
+<p>Just like with polynomial-based SNARKs, this R1CS game can be turned
+into a proof scheme by creating commitments to <span
+class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>
+and <span class="math inline">\(C\)</span>, requiring the prover to
+provide a commitment to (the private portion of) <span
+class="math inline">\(Z\)</span>, and using fancy proving tricks to
+prove the equation <span class="math inline">\((A \cdot Z) \circ (B
+\cdot Z) = C \cdot Z\)</span>, where <span
+class="math inline">\(\circ\)</span> is item-by-item multiplication,
+without fully revealing any of these objects. And just like with IPAs,
+this R1CS game has a proof merging scheme!</p>
+<p>Ioanna Tzialla et al describe such a scheme in a <a
+href="https://eprint.iacr.org/2021/1263.pdf">recent paper</a> (see page
+8-9 for their description). They first modify the game by introducing an
+expanded equation:</p>
+<p><span class="math display">\[ (A \cdot Z) \circ (B \cdot Z) - u * (C
+\cdot Z) = E\]</span></p>
+<p>For a "base" instance, <span class="math inline">\(u = 1\)</span> and
+<span class="math inline">\(E = 0\)</span>, so we get back the original
+R1CS equation. The extra slack variables are added to make aggregation
+possible; aggregated instances will have other values of <span
+class="math inline">\(u\)</span> and <span
+class="math inline">\(E\)</span>. Now, suppose that you have two
+solutions to the same instance, though with different <span
+class="math inline">\(u\)</span> and <span
+class="math inline">\(E\)</span> variables:</p>
+<p><span class="math display">\[(A \cdot Z_1) \circ (B \cdot Z_1) - u_1
+* (C \cdot Z_1) = E_1\]</span></p>
+<p><span class="math display">\[(A \cdot Z_2) \circ (B \cdot Z_2) - u_2
+* (C \cdot Z_2) = E_2\]</span></p>
+<p>The trick involves taking a random linear combination <span
+class="math inline">\(Z_3 = Z_1 + r Z_2\)</span>, and making the
+equation work with this new value. First, let's evaluate the left
+side:</p>
+<p><span class="math display">\[ (A \cdot (Z_1 + rZ_2)) \circ (B \cdot
+(Z_1 + rZ_2)) - (u_1 + ru_2)*(C \cdot (Z_1 + rZ_2)) \]</span></p>
+<p>This expands into the following (grouping the <span
+class="math inline">\(1\)</span>, <span class="math inline">\(r\)</span>
+and <span class="math inline">\(r^2\)</span> terms together):</p>
+<p><span class="math display">\[(A \cdot Z_1) \circ (B \cdot Z_1) - u_1
+* (C \cdot Z_1)\]</span></p>
+<p><span class="math display">\[r((A \cdot Z_1) \circ (B \cdot Z_2) + (A
+\cdot Z_2) \circ (B \cdot Z_1) - u_1 * (C \cdot Z_2) - u_2 * (C \cdot
+Z_1))\]</span></p>
+<p><span class="math display">\[r^2((A \cdot Z_2) \circ (B \cdot Z_2) -
+u_2 * (C \cdot Z_2))\]</span></p>
+<p>The first term is just <span class="math inline">\(E_1\)</span>; the
+third term is <span class="math inline">\(r^2 * E_2\)</span>. The middle
+term is very similar to the cross-term (the yellow + green areas) near
+the very start of this post. The prover simply provides the middle term
+(without the <span class="math inline">\(r\)</span> factor), and just
+like in the IPA proof, the randomization forces the prover to be
+honest.</p>
+<p>Hence, it's possible to make merging schemes for R1CS-based protocols
+too. Interestingly enough, we don't even technically need to have a
+"succinct" protocol for proving the <span class="math display">\[ (A
+\cdot Z) \circ (B \cdot Z) = u * (C \cdot Z) + E\]</span> relation at
+the end; instead, the prover could just prove by opening all the
+commitments directly! This would still be "succinct" because the
+verifier would only need to verify one proof that actually represents an
+arbitrarily large number of statements. However, in practice having a
+succinct protocol for this last step is better because it keeps the
+proofs smaller, and <a
+href="https://eprint.iacr.org/2021/1263.pdf">Tzialla et al's paper</a>
+provides such a protocol too (see page 10).</p>
 <h2 id="recap">Recap</h2>
 <ul>
-<li>We don't know of a way to make a commitment to a size-<span class="math inline">\(n\)</span> polynomial where evaluations of the polynomial can be verified in <span class="math inline">\(&lt; O(n)\)</span> time directly. The best that we can do is make a <span class="math inline">\(log(n)\)</span> sized proof, where all of the work to verify it is logarithmic <em>except for one final <span class="math inline">\(O(n)\)</span>-time piece</em>.</li>
-<li>But what we <em>can</em> do is merge multiple proofs together. Given <span class="math inline">\(m\)</span> proofs of evaluations of size-<span class="math inline">\(n\)</span> polynomials, you can make a proof that covers <em>all</em> of these evaluations, that takes logarithmic work plus a single size-<span class="math inline">\(n\)</span> polynomial proof to verify.</li>
-<li>With some clever trickery, separating out the logarithmic parts from the linear parts of proof verification, we can leverage this to make recursive SNARKs.</li>
-<li>These recursive SNARKs are actually more efficient than doing recursive SNARKs "directly"! In fact, even in contexts where direct recursive SNARKs are possible (eg. proofs with KZG commitments), Halo-style techniques are typically used instead because they are more efficient.</li>
-<li>It's not just about polynomials; other games used in SNARKs like R1CS can also be aggregated in similar clever ways.</li>
+<li>We don't know of a way to make a commitment to a size-<span
+class="math inline">\(n\)</span> polynomial where evaluations of the
+polynomial can be verified in <span class="math inline">\(&lt;
+O(n)\)</span> time directly. The best that we can do is make a <span
+class="math inline">\(log(n)\)</span> sized proof, where all of the work
+to verify it is logarithmic <em>except for one final <span
+class="math inline">\(O(n)\)</span>-time piece</em>.</li>
+<li>But what we <em>can</em> do is merge multiple proofs together. Given
+<span class="math inline">\(m\)</span> proofs of evaluations of
+size-<span class="math inline">\(n\)</span> polynomials, you can make a
+proof that covers <em>all</em> of these evaluations, that takes
+logarithmic work plus a single size-<span
+class="math inline">\(n\)</span> polynomial proof to verify.</li>
+<li>With some clever trickery, separating out the logarithmic parts from
+the linear parts of proof verification, we can leverage this to make
+recursive SNARKs.</li>
+<li>These recursive SNARKs are actually more efficient than doing
+recursive SNARKs "directly"! In fact, even in contexts where direct
+recursive SNARKs are possible (eg. proofs with KZG commitments),
+Halo-style techniques are typically used instead because they are more
+efficient.</li>
+<li>It's not just about polynomials; other games used in SNARKs like
+R1CS can also be aggregated in similar clever ways.</li>
 <li>No pairings or trusted setups required!</li>
 </ul>
-<p>The march toward faster and more efficient and safer ZK-SNARKs just keeps going...</p>
+<p>The march toward faster and more efficient and safer ZK-SNARKs just
+keeps going...</p>
  </div> 

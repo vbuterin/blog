@@ -7,7 +7,7 @@
 
 近來各家 ZK-EVM 紛紛登場。[Polygon](https://blog.polygon.technology/the-future-is-now-for-ethereum-scaling-introducing-polygon-zkevm/) 的 ZK-EVM 以開源的方式釋出，[ZKSync](https://blog.matter-labs.io/100-days-to-mainnet-6f230893bd73?gi=1bc4e1596b2d) 公佈了 ZKSync 2.0 的規劃，相對晚進場的 [Scroll](https://scroll.mirror.xyz/XQyXDgyxoefag6hcBgGJFz8qrb10rmSU-zUBvY3Q9_A) 也推出了他們的 ZK-EVM。正在開發 ZK-EVM 的，還有 [PSE](https://github.com/privacy-scaling-explorations/zkevm-circuits), [Nicholas Liochon 等人](https://ethresear.ch/t/a-zk-evm-specification/11549)，以及 Starkware 正在開發的 [alpha compiler](https://medium.com/starkware/starknet-alpha-2-4aa116f0ecfc) (能把 EVM 編譯成 Starkware 所開發的 [Cairo](https://starkware.co/cairo/))，族繁不及備載。
 
-上述專案有一個共同的目標：利用 [ZK-SNARK](https://vitalik.ca/general/2021/01/26/snarks.html) 進行密碼學證明，驗證以太坊生態（Ethereum-like）交易的執行。這樣更好驗證以太坊 L1 鏈上的交易與狀態，也建立（接近）與以太等價且擴展性更好的 [ZK-rollups](https://vitalik.ca/general/2021/01/05/rollup.html)。但這幾個專案之間的些微的差異，反映在實用性和速度之間的取捨。本文試著提出分類不同 EVM 的方法，並說明其中的利弊得失。
+上述專案有一個共同的目標：利用 [ZK-SNARK](../../../2021/01/26/snarks.html) 進行密碼學證明，驗證以太坊生態（Ethereum-like）交易的執行。這樣更好驗證以太坊 L1 鏈上的交易與狀態，也建立（接近）與以太等價且擴展性更好的 [ZK-rollups](../../../2021/01/05/rollup.html)。但這幾個專案之間的些微的差異，反映在實用性和速度之間的取捨。本文試著提出分類不同 EVM 的方法，並說明其中的利弊得失。
 
 ## 懶人包（以圖表呈現）
 ![zkevm](https://user-images.githubusercontent.com/85469891/186605516-b6e9a19a-895d-4e36-b7b9-729bb2b198d0.png)

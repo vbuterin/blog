@@ -70,7 +70,7 @@ Para admitir depósitos y retiros, agregamos la capacidad de tener transacciones
 Los dos tipos de Rollups son:
 
 1. **Optimistic Rollups**, que utilizan **pruebas de fraude**: el contrato del Rollup realiza un seguimiento de todo su historial de state roots y el hash de cada batch. Si alguien descubre que un batch tenía un root posterior al estado incorrecta, puede publicar una prueba en cadena, demostrando que el batch se calculó incorrectamente. El contrato verifica la prueba y revierte ese batch y todos los batches posteriores.
-2. **ZK Rollups**, que usan **pruebas de validez**: cada batch incluye una prueba criptográfica llamada ZK-SNARK (por ejemplo: usando el protocolo [PLONK](https://vitalik.ca/general/2019/09/22/plonk.html)), lo que demuestra que el root posterior al estado es el resultado correcto para ejecutar el batch. No importa cuán grande sea el cálculo, la prueba se puede verificar muy rápidamente en la cadena.
+2. **ZK Rollups**, que usan **pruebas de validez**: cada batch incluye una prueba criptográfica llamada ZK-SNARK (por ejemplo: usando el protocolo [PLONK](../../../2019/09/22/plonk.html)), lo que demuestra que el root posterior al estado es el resultado correcto para ejecutar el batch. No importa cuán grande sea el cálculo, la prueba se puede verificar muy rápidamente en la cadena.
 
 Hay compensaciones complejas entre los dos tipos de Rollups:
 

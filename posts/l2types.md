@@ -81,7 +81,7 @@ Note that (1) does have one edge case. If a 51% attack on Ethereum creates two n
 The ability of a chain to trustlessly read Ethereum is valuable for two reasons:
 
 1. It reduces security issues involved in bridging tokens issued on Ethereum (or other L2s) to that chain
-2. It allows account abstraction wallets that use the [shared keystore architecture](https://vitalik.ca/general/2023/06/20/deeperdive.html) to hold assets on that chain securely.
+2. It allows account abstraction wallets that use the [shared keystore architecture](../../../2023/06/20/deeperdive.html) to hold assets on that chain securely.
 
 (1) is important, though arguably this need is already widely recognized. (2) is important too, because it means that you can have a wallet that allows easy key changes and that holds assets across a large number of different chains.
 

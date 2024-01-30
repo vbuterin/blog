@@ -5,7 +5,7 @@
 
 _Special thanks to Ben DiFrancesco, Matt Solomon, Toni Wahrstätter and Antonio Sanso for feedback and review_
 
-One of the largest remaining challenges in the Ethereum ecosystem is privacy. By default, anything that goes onto a public blockchain is public. Increasingly, this means not just money and financial transactions, but also ENS names, POAPs, NFTs, [soulbound tokens](https://vitalik.ca/general/2022/01/26/soulbound.html), and much more. In practice, using the entire suite of Ethereum applications involves making a significant portion of your life public for anyone to see and analyze.
+One of the largest remaining challenges in the Ethereum ecosystem is privacy. By default, anything that goes onto a public blockchain is public. Increasingly, this means not just money and financial transactions, but also ENS names, POAPs, NFTs, [soulbound tokens](../../../2022/01/26/soulbound.html), and much more. In practice, using the entire suite of Ethereum applications involves making a significant portion of your life public for anyone to see and analyze.
 
 Improving this state of affairs is an important problem, and this is widely recognized. So far, however, discussions on improving privacy have largely centered around one specific use case: privacy-preserving transfers (and usually self-transfers) of ETH and mainstream ERC20 tokens. This post will describe the mechanics and use cases of a different category of tool that could improve the state of privacy on Ethereum in a number of other contexts: **stealth addresses**.
 
@@ -116,9 +116,9 @@ The main weakness of isogeny-based cryptography is its highly complicated underl
 
 </center><br>
 
-[Lattices](https://eprint.iacr.org/2015/938.pdf) are a very different cryptographic construction that relies on far simpler mathematics than elliptic curve isogenies, and is capable of some very powerful things (eg. [fully homomorphic encryption](https://vitalik.ca/general/2020/07/20/homomorphic.html)). Stealth address schemes could be built on lattices, though designing the best one is an open problem. However, lattice-based constructions tend to have much larger key sizes.
+[Lattices](https://eprint.iacr.org/2015/938.pdf) are a very different cryptographic construction that relies on far simpler mathematics than elliptic curve isogenies, and is capable of some very powerful things (eg. [fully homomorphic encryption](../../../2020/07/20/homomorphic.html)). Stealth address schemes could be built on lattices, though designing the best one is an open problem. However, lattice-based constructions tend to have much larger key sizes.
 
-<center><br><a href="https://vitalik.ca/general/2020/07/20/homomorphic.html">
+<center><br><a href="../../../2020/07/20/homomorphic.html">
 
 ![](../../../../images/stealth/homomorphic.png)
 
@@ -128,7 +128,7 @@ The main weakness of isogeny-based cryptography is its highly complicated underl
 
 A third approach is to construct a stealth address scheme from generic black-box primitives: basic ingredients that lots of people need for other reasons. The shared secret generation part of the scheme maps directly to [key exchange](https://en.wikipedia.org/wiki/Key_exchange), a,  errr... _important_ component in public key encryption systems. The harder part is the parallel algorithms that let Alice generate only the stealth address (and not the spending key) and let Bob generate the spending key.
 
-Unfortunately, you cannot build stealth addresses out of ingredients that are _simpler_ than what is required to build a public-key encryption system. There is a simple proof of this: you can build a public-key encryption system out of a stealth address scheme. If Alice wants to encrypt a message to Bob, she can send N transactions, each transaction going to either a stealth address belonging to Bob or to a stealth address belonging to herself, and Bob can see which transactions he received to read the message. This is important because there are [mathematical proofs](https://arxiv.org/abs/0801.3669) that you can't do public key encryption with just hashes, whereas you can do [zero-knowledge proofs with just hashes](https://vitalik.ca/general/2018/07/21/starks_part_3.html) - hence, stealth addresses cannot be done with just hashes.
+Unfortunately, you cannot build stealth addresses out of ingredients that are _simpler_ than what is required to build a public-key encryption system. There is a simple proof of this: you can build a public-key encryption system out of a stealth address scheme. If Alice wants to encrypt a message to Bob, she can send N transactions, each transaction going to either a stealth address belonging to Bob or to a stealth address belonging to herself, and Bob can see which transactions he received to read the message. This is important because there are [mathematical proofs](https://arxiv.org/abs/0801.3669) that you can't do public key encryption with just hashes, whereas you can do [zero-knowledge proofs with just hashes](../../../2018/07/21/starks_part_3.html) - hence, stealth addresses cannot be done with just hashes.
 
 Here is one approach that does use relatively simple ingredients: zero knowledge proofs, which can be made out of hashes, and (key-hiding) public key encryption. Bob's meta-address is a public encryption key plus a hash `h = hash(x)`, and his spending key is the corresponding decryption key plus `x`. To create a stealth address, Alice generates a value `c`, and publishes as her ephemeral pubkey an encryption of `c` readable by Bob. The address itself is an [ERC-4337 account](https://eips.ethereum.org/EIPS/eip-4337) whose code verifies transactions by requiring them to come with a zero-knowledge proof proving ownership of values `x` and `c` such that `k = hash(hash(x), c)` (where `k` is part of the account's code). Knowing `x` and `c`, Bob can reconstruct the address and its code himself.
 
@@ -140,11 +140,11 @@ Here is one approach that does use relatively simple ingredients: zero knowledge
 
 The encryption of `c` tells no one other than Bob anything, and `k` is a hash, so it reveals almost nothing about `c`. The wallet code itself only contains `k`, and `c` being private means that `k` cannot be traced back to `h`.
 
-However, this requires a STARK, and STARKs are big. Ultimately, I think it is likely that a post-quantum Ethereum world will involve many applications using many starks, and so I would advocate for an aggregation protocol [like that described here](https://vitalik.ca/general/2022/09/17/layer_3.html#rollups-and-validiums-have-a-confirmation-time-vs-fixed-cost-tradeoff.-layer-3s-can-help-fix-this.-but-what-else-can) to combine all of these STARKs into a single recursive STARK to save space.
+However, this requires a STARK, and STARKs are big. Ultimately, I think it is likely that a post-quantum Ethereum world will involve many applications using many starks, and so I would advocate for an aggregation protocol [like that described here](../../../2022/09/17/layer_3.html#rollups-and-validiums-have-a-confirmation-time-vs-fixed-cost-tradeoff.-layer-3s-can-help-fix-this.-but-what-else-can) to combine all of these STARKs into a single recursive STARK to save space.
 
 ## Stealth addresses and social recovery and multi-L2 wallets
 
-I have for a long time been a fan of [social recovery wallets](https://vitalik.ca/general/2021/01/11/recovery.html): wallets that have a multisig mechanism with keys shared between some combination of institutions, your other devices and your friends, where some supermajority of those keys can recover access to your account if you lose your primary key.
+I have for a long time been a fan of [social recovery wallets](../../../2021/01/11/recovery.html): wallets that have a multisig mechanism with keys shared between some combination of institutions, your other devices and your friends, where some supermajority of those keys can recover access to your account if you lose your primary key.
 
 However, social recovery wallets do not mix nicely with stealth addresses: if you have to recover your account (meaning, change which private key controls it), you would also have to perform some step to change the account verification logic of your N stealth wallets, and this would require N transactions, at a high cost to fees, convenience and privacy.
 

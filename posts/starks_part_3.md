@@ -16,7 +16,7 @@ div.foo:hover {
 }
 </style>
 
-As a followup to [Part 1](https://vitalik.ca/general/2017/11/09/starks_part_1.html) and [Part 2](https://vitalik.ca/general/2017/11/22/starks_part_2.html) of this series, this post will cover what it looks like to actually implement a STARK, complete with an implementation in python. STARKs ("Scalable Transparent ARgument of Knowledge" are a technique for creating a proof that $f(x)=y$ where $f$ may potentially take a very long time to calculate, but where the proof can be verified very quickly. A STARK is "doubly scalable": for a computation with $t$ steps, it takes roughly $O(t \cdot \log{t})$ steps to produce a proof, which is likely optimal, and it takes ~$O(\log^2{t})$ steps to verify, which for even moderately large values of $t$ is much faster than the original computation. STARKs can also have a privacy-preserving "zero knowledge" property, though the use case we will apply them to here, making verifiable delay functions, does not require this property, so we do not need to worry about it.
+As a followup to [Part 1](../../../2017/11/09/starks_part_1.html) and [Part 2](../../../2017/11/22/starks_part_2.html) of this series, this post will cover what it looks like to actually implement a STARK, complete with an implementation in python. STARKs ("Scalable Transparent ARgument of Knowledge" are a technique for creating a proof that $f(x)=y$ where $f$ may potentially take a very long time to calculate, but where the proof can be verified very quickly. A STARK is "doubly scalable": for a computation with $t$ steps, it takes roughly $O(t \cdot \log{t})$ steps to produce a proof, which is likely optimal, and it takes ~$O(\log^2{t})$ steps to verify, which for even moderately large values of $t$ is much faster than the original computation. STARKs can also have a privacy-preserving "zero knowledge" property, though the use case we will apply them to here, making verifiable delay functions, does not require this property, so we do not need to worry about it.
 
 First, some disclaimers:
 
@@ -24,7 +24,7 @@ First, some disclaimers:
 * This code is very suboptimal (it's written in Python, what did you expect)
 * STARKs "in real life" (ie. as implemented in Eli and co's production implementations) tend to use binary fields and not prime fields for application-specific efficiency reasons; however, they do stress in their writings the prime field-based approach to STARKs described here is legitimate and can be used
 * There is no "one true way" to do a STARK. It's a broad category of cryptographic and mathematical constructs, with different setups optimal for different applications and constant ongoing research to reduce prover and verifier complexity and improve soundness.
-* This article absolutely expects you to know how modular arithmetic and prime fields work, and be comfortable with the concepts of polynomials, interpolation and evaluation. If you don't, go back to [Part 2](https://vitalik.ca/general/2017/11/22/starks_part_2.html), and also this [earlier post on quadratic arithmetic programs](https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649)
+* This article absolutely expects you to know how modular arithmetic and prime fields work, and be comfortable with the concepts of polynomials, interpolation and evaluation. If you don't, go back to [Part 2](../../../2017/11/22/starks_part_2.html), and also this [earlier post on quadratic arithmetic programs](https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649)
 
 Now, let's get to it.
 
@@ -250,7 +250,7 @@ I recommend [this](http://web.cecs.pdx.edu/~maier/cs584/Lectures/lect07b-11-MG.p
 
 ### Thank Goodness It's FRI-day (that's "Fast Reed-Solomon Interactive Oracle Proofs of Proximity")
 
-_**Reminder**: now may be a good time to review and re-read [Part 2](https://vitalik.ca/general/2017/11/22/starks_part_2.html)_
+_**Reminder**: now may be a good time to review and re-read [Part 2](../../../2017/11/22/starks_part_2.html)_
 
 Now, we'll get into [the code](https://github.com/ethereum/research/blob/master/mimc_stark/fri.py) for making a low-degree proof. To review, a low-degree proof is a (probabilistic) proof that at least some high percentage (eg. 80%) of a given set of values represent the evaluations of some specific polynomial whose degree is much lower than the number of values given. Intuitively, just think of it as a proof that "some Merkle root that we claim represents a polynomial actually does represent a polynomial, possibly with a few errors". As input, we have:
 
@@ -259,7 +259,7 @@ Now, we'll get into [the code](https://github.com/ethereum/research/blob/master/
 * A value $N$ such that we are proving the degree of the polynomial is _strictly less than_ $N$
 * The modulus
 
-Our approach is a recursive one, with two cases. First, if the degree is low enough, we just provide the entire list of values as a proof; this is the "base case". Verification of the base case is trivial: do an FFT or Lagrange interpolation or whatever else to interpolate the polynomial representing those values, and verify that its degree is $< N$. Otherwise, if the degree is higher than some set minimum, we do the vertical-and-diagonal trick described [at the bottom of Part 2](https://vitalik.ca/general/2017/11/22/starks_part_2.html).
+Our approach is a recursive one, with two cases. First, if the degree is low enough, we just provide the entire list of values as a proof; this is the "base case". Verification of the base case is trivial: do an FFT or Lagrange interpolation or whatever else to interpolate the polynomial representing those values, and verify that its degree is $< N$. Otherwise, if the degree is higher than some set minimum, we do the vertical-and-diagonal trick described [at the bottom of Part 2](../../../2017/11/22/starks_part_2.html).
 
 We start off by putting the values into a Merkle tree and using the Merkle root to select a pseudo-random x coordinate (`special_x`). We then calculate the "column":
 
@@ -305,7 +305,7 @@ As a challenge exercise, you could try creating low-degree proofs of polynomial 
 
 ### The STARK
 
-_**Reminder**: now may be a good time to review and re-read [Part 1](https://vitalik.ca/general/2017/11/09/starks_part_1.html)_
+_**Reminder**: now may be a good time to review and re-read [Part 1](../../../2017/11/09/starks_part_1.html)_
 
 Now, we get to the actual meat that puts all of these pieces together: `def mk_mimc_proof(inp, steps, round_constants)` (code [here](https://github.com/ethereum/research/blob/master/mimc_stark/mimc_stark.py)), which generates a proof of the execution result of running the MIMC function with the given input for some number of steps. First, some asserts:
 

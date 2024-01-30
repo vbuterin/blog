@@ -14,7 +14,7 @@ First of all, here are the results, starting with the tech and community section
 
 ### Stability of income
 
-In the last round, one [concern I raised](https://vitalik.ca/general/2020/04/30/round5.html) was stability of income. People trying to earn a livelihood off of quadratic funding grants would want to have some guarantee that their income isn't going to completely disappear in the next round just because the hive mind suddenly gets excited about something else.
+In the last round, one [concern I raised](../../../2020/04/30/round5.html) was stability of income. People trying to earn a livelihood off of quadratic funding grants would want to have some guarantee that their income isn't going to completely disappear in the next round just because the hive mind suddenly gets excited about something else.
 
 Round 6 had two mechanisms to try to provide more stability of income:
 
@@ -49,7 +49,7 @@ The grant had quite a few very large contributions, including roughly $2,400 eac
 
 ### Quadratic signaling
 
-Unexpectedly, this grant proved to have a double function. First, it provided $65,473 of much-needed funding to EIP 1559 implementation. Second, it served as a credible community signal of the level of demand for the proposal. The Ethereum community has [long been struggling](https://vitalik.ca/general/2017/12/17/voting.html) to find effective ways to determine what "the community" supports, especially in cases of controversy.
+Unexpectedly, this grant proved to have a double function. First, it provided $65,473 of much-needed funding to EIP 1559 implementation. Second, it served as a credible community signal of the level of demand for the proposal. The Ethereum community has [long been struggling](../../../2017/12/17/voting.html) to find effective ways to determine what "the community" supports, especially in cases of controversy.
 
 Coin votes have been [used in the past](https://www.etherchain.org/coinvote), and have the advantage that they come with an answer to the key problem of determining who is a "real community member" - the answer is, your membership in the Ethereum community is proportional to how much ETH you have. However, they are plutocratic; in the famous DAO coin vote, a single "yes" voter voted with more ETH than all "no" voters put together (~20% of the total).
 
@@ -62,7 +62,7 @@ The alternative, looking at github, reddit and twitter comments and votes to mea
 Quadratic funding falls perfectly in the middle: the need to contribute monetary value to vote ensures that the votes of those who _really_ care about the project count more than the votes of less-concerned outsiders, and the square-root function ensures that the votes of individual ultra-wealthy "whales" cannot beat out a poorer, but broader, coalition.
 
 <center>
-<img src="../../../../images/round6/quadraticpayments.png" style="width:600px" class="padded" /><br><br><small><i>A diagram from my <a href="https://vitalik.ca/general/2019/12/07/quadratic.html">post on quadratic payments</a> showing how quadratic payments is "in the middle" between the extremes of voting-like systems and money-like systems, and avoids the worst flaws of both.</i></small>
+<img src="../../../../images/round6/quadraticpayments.png" style="width:600px" class="padded" /><br><br><small><i>A diagram from my <a href="../../../2019/12/07/quadratic.html">post on quadratic payments</a> showing how quadratic payments is "in the middle" between the extremes of voting-like systems and money-like systems, and avoids the worst flaws of both.</i></small>
 </center><br>
 
 This raises the question: might it make sense to try to use explicit quadratic _voting_ (with the ability to vote "yes" or "no" to a proposal) as an additional signaling tool to determine community sentiment for ethereum protocol proposals?

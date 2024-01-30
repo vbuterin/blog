@@ -5,7 +5,7 @@
 
 _译者：wonder @ [GreenPill CN](https://twitter.com/GreenpillCN)_
 
-_原文：[Some personal user experiences](https://vitalik.ca/general/2023/02/28/ux.html)_
+_原文：[Some personal user experiences](../../../2023/02/28/ux.html)_
 
 # 我在加密世界的一些个人体验
 
@@ -37,7 +37,7 @@ _[Yinhong (William) Zhao 和 Kartik Nayak 制作的报告](https://decentralized
 
 **经验教训**：交易相关的用户体验仍需改进，改善方法其实相当简单。感谢 [Brave 钱包](https://brave.com/wallet/)团队认真对待了我在这个问题上的建议，首先将[最大基本费用的限制从 12.5% 提高到了 33%](https://github.com/brave/brave-browser/issues/28527)；近期，他们还在[探索如何在用户界面清晰地展示「交易被卡住了」这一状态的方法](https://github.com/brave/brave-browser/issues/28527)。
 
-**2019 年**，我测试了一款早期的钱包，它提供[社交恢复](https://vitalik.ca/general/2021/01/11/recovery.html)方案。与我偏爱的智能合约方案不同的是，社交恢复采取了[沙米尔的秘密分享](https://blog.ethereum.org/2014/08/16/secret-sharing-erasure-coding-guide-aspiring-dropbox-decentralizer)理念，即将账户的私钥分成五部分，集齐其中任何三个部分都可以恢复私钥。用户需要选择五个朋友（或者是当代术语「**守护人（guardians）**」），说服他们下载一个单独的移动应用程序，并提供一个确认码，通过 [Firebase](https://firebase.google.com/) 创建一个从用户钱包到应用程序的加密连接，并将他们拥有的密钥发送给用户。
+**2019 年**，我测试了一款早期的钱包，它提供[社交恢复](../../../2021/01/11/recovery.html)方案。与我偏爱的智能合约方案不同的是，社交恢复采取了[沙米尔的秘密分享](https://blog.ethereum.org/2014/08/16/secret-sharing-erasure-coding-guide-aspiring-dropbox-decentralizer)理念，即将账户的私钥分成五部分，集齐其中任何三个部分都可以恢复私钥。用户需要选择五个朋友（或者是当代术语「**守护人（guardians）**」），说服他们下载一个单独的移动应用程序，并提供一个确认码，通过 [Firebase](https://firebase.google.com/) 创建一个从用户钱包到应用程序的加密连接，并将他们拥有的密钥发送给用户。
 
 **于我而言，使用这种方法很快就遇到了麻烦**。几个月后，我的钱包出了问题，我需要使用恢复程序来恢复钱包。我请朋友们通过他们的应用程序和我一起执行恢复程序，但事情并没有按计划进行。其中两位朋友丢失了他们的密钥，因为他们换了手机，忘记迁移恢复程序。第三位朋友表示，Firebase 的连接机制在很长一段时间内不起作用。虽然最终我们还是想出了解决问题的办法，并恢复了密钥。但是，几个月之后，钱包又坏了。这一次的问题在于，一次常规的软件更新莫名其妙重置了应用程序的存储，并删除了密钥。由于 Firebase 的连接机制过于垃圾，我无法添加足够的恢复伙伴，最终损失了少量的 BTC 和 ETH。
 

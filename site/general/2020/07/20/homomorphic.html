@@ -109,69 +109,323 @@ MathJax = {
 <br> <br> <br>
 <title> Exploring Fully Homomorphic Encryption </title>
 
-<p><em>Special thanks to Karl Floersch and Dankrad Feist for review</em></p>
-<p>Fully homomorphic encryption has for a long time been considered one of the holy grails of cryptography. The promise of fully homomorphic encryption (FHE) is powerful: it is a type of encryption that allows a third party to perform computations on encrypted data, and get an encrypted result that they can hand back to whoever has the decryption key for the original data, <em>without</em> the third party being able to decrypt the data or the result themselves.</p>
+<p><em>Special thanks to Karl Floersch and Dankrad Feist for
+review</em></p>
+<p>Fully homomorphic encryption has for a long time been considered one
+of the holy grails of cryptography. The promise of fully homomorphic
+encryption (FHE) is powerful: it is a type of encryption that allows a
+third party to perform computations on encrypted data, and get an
+encrypted result that they can hand back to whoever has the decryption
+key for the original data, <em>without</em> the third party being able
+to decrypt the data or the result themselves.</p>
 <center>
 <img src="../../../../images/fhe/HomoEncrypt.png?1" class="padded" /><br>
 </center>
-<p>As a simple example, imagine that you have a set of emails, and you want to use a third party spam filter to check whether or not they are spam. The spam filter has a desire for <em>privacy of their algorithm</em>: either the spam filter provider wants to keep their source code closed, or the spam filter depends on a very large database that they do not want to reveal publicly as that would make attacking easier, or both. However, you care about the <em>privacy of your data</em>, and don't want to upload your unencrypted emails to a third party. So here's how you do it:</p>
+<p>As a simple example, imagine that you have a set of emails, and you
+want to use a third party spam filter to check whether or not they are
+spam. The spam filter has a desire for <em>privacy of their
+algorithm</em>: either the spam filter provider wants to keep their
+source code closed, or the spam filter depends on a very large database
+that they do not want to reveal publicly as that would make attacking
+easier, or both. However, you care about the <em>privacy of your
+data</em>, and don't want to upload your unencrypted emails to a third
+party. So here's how you do it:</p>
 <center>
 <img src="../../../../images/fhe/HomoEncrypt2.png" class="padded" /><br>
 </center>
-<p>Fully homomorphic encryption has many applications, including in the blockchain space. One key example is that can be used to implement privacy-preserving light clients (the light client hands the server an encrypted index <code>i</code>, the server computes and returns <code>data[0] * (i = 0) + data[1] * (i = 1) + ... + data[n] * (i = n)</code>, where <code>data[i]</code> is the i'th piece of data in a block or state along with its Merkle branch and <code>(i = k)</code> is an expression that returns 1 if <code>i = k</code> and otherwise 0; the light client gets the data it needs and the server learns nothing about what the light client asked).</p>
+<p>Fully homomorphic encryption has many applications, including in the
+blockchain space. One key example is that can be used to implement
+privacy-preserving light clients (the light client hands the server an
+encrypted index <code>i</code>, the server computes and returns
+<code>data[0] * (i = 0) + data[1] * (i = 1) + ... + data[n] * (i = n)</code>,
+where <code>data[i]</code> is the i'th piece of data in a block or state
+along with its Merkle branch and <code>(i = k)</code> is an expression
+that returns 1 if <code>i = k</code> and otherwise 0; the light client
+gets the data it needs and the server learns nothing about what the
+light client asked).</p>
 <p>It can also be used for:</p>
 <ul>
-<li>More efficient <a href="https://ethresear.ch/t/open-problem-improving-stealth-addresses/7438">stealth address protocols</a>, and more generally scalability solutions to privacy-preserving protocols that today require each user to personally scan the entire blockchain for incoming transactions</li>
-<li>Privacy-preserving data-sharing marketplaces that let users allow some specific computation to be performed on their data while keeping full control of their data for themselves</li>
-<li>An ingredient in more powerful cryptographic primitives, such as more efficient multi-party computation protocols and perhaps eventually obfuscation</li>
+<li>More efficient <a
+href="https://ethresear.ch/t/open-problem-improving-stealth-addresses/7438">stealth
+address protocols</a>, and more generally scalability solutions to
+privacy-preserving protocols that today require each user to personally
+scan the entire blockchain for incoming transactions</li>
+<li>Privacy-preserving data-sharing marketplaces that let users allow
+some specific computation to be performed on their data while keeping
+full control of their data for themselves</li>
+<li>An ingredient in more powerful cryptographic primitives, such as
+more efficient multi-party computation protocols and perhaps eventually
+obfuscation</li>
 </ul>
-<p>And it turns out that fully homomorphic encryption is, conceptually, not that difficult to understand!</p>
-<h3 id="partially-somewhat-fully-homomorphic-encryption">Partially, Somewhat, Fully homomorphic encryption</h3>
-<p>First, a note on definitions. There are different kinds of homomorphic encryption, some more powerful than others, and they are separated by what kinds of functions one can compute on the encrypted data.</p>
+<p>And it turns out that fully homomorphic encryption is, conceptually,
+not that difficult to understand!</p>
+<h3 id="partially-somewhat-fully-homomorphic-encryption">Partially,
+Somewhat, Fully homomorphic encryption</h3>
+<p>First, a note on definitions. There are different kinds of
+homomorphic encryption, some more powerful than others, and they are
+separated by what kinds of functions one can compute on the encrypted
+data.</p>
 <ul>
-<li><strong>Partially homomorphic encryption</strong> allows evaluating only a <em>very</em> limited set of operations on encrypted data: either just additions (so given <code>encrypt(a)</code> and <code>encrypt(b)</code> you can compute <code>encrypt(a+b)</code>), or just multiplications (given <code>encrypt(a)</code> and <code>encrypt(b)</code> you can compute <code>encrypt(a*b)</code>).</li>
-<li><strong>Somewhat homomorphic encryption</strong> allows computing additions as well as a <em>limited</em> number of multiplications (alternatively, polynomials up to a limited degree). That is, if you get <code>encrypt(x1) ... encrypt(xn)</code> (assuming these are "original" encryptions and not already the result of homomorphic computation), you can compute <code>encrypt(p(x1 ... xn))</code>, <em>as long as</em> <code>p(x1 ... xn)</code> is a polynomial with degree <code>&lt; D</code> for some specific degree bound <code>D</code> (<code>D</code> is usually very low, think 5-15).</li>
-<li><strong>Fully homomorphic encryption</strong> allows unlimited additions and multiplications. Additions and multiplications let you replicate any binary circuit gates (<code>AND(x, y) = x*y</code>, <code>OR(x, y) = x+y-x*y</code>, <code>XOR(x, y) = x+y-2*x*y</code> or just <code>x+y</code> if you only care about even vs odd, <code>NOT(x) = 1-x</code>...), so this is sufficient to do arbitrary computation on encrypted data.</li>
+<li><strong>Partially homomorphic encryption</strong> allows evaluating
+only a <em>very</em> limited set of operations on encrypted data: either
+just additions (so given <code>encrypt(a)</code> and
+<code>encrypt(b)</code> you can compute <code>encrypt(a+b)</code>), or
+just multiplications (given <code>encrypt(a)</code> and
+<code>encrypt(b)</code> you can compute <code>encrypt(a*b)</code>).</li>
+<li><strong>Somewhat homomorphic encryption</strong> allows computing
+additions as well as a <em>limited</em> number of multiplications
+(alternatively, polynomials up to a limited degree). That is, if you get
+<code>encrypt(x1) ... encrypt(xn)</code> (assuming these are "original"
+encryptions and not already the result of homomorphic computation), you
+can compute <code>encrypt(p(x1 ... xn))</code>, <em>as long as</em>
+<code>p(x1 ... xn)</code> is a polynomial with degree
+<code>&lt; D</code> for some specific degree bound <code>D</code>
+(<code>D</code> is usually very low, think 5-15).</li>
+<li><strong>Fully homomorphic encryption</strong> allows unlimited
+additions and multiplications. Additions and multiplications let you
+replicate any binary circuit gates (<code>AND(x, y) = x*y</code>,
+<code>OR(x, y) = x+y-x*y</code>, <code>XOR(x, y) = x+y-2*x*y</code> or
+just <code>x+y</code> if you only care about even vs odd,
+<code>NOT(x) = 1-x</code>...), so this is sufficient to do arbitrary
+computation on encrypted data.</li>
 </ul>
-<p>Partially homomorphic encryption is fairly easy; eg. RSA has a multiplicative homomorphism: <span class="math inline">\(enc(x) = x^e\)</span>, <span class="math inline">\(enc(y) = y^e\)</span>, so <span class="math inline">\(enc(x) * enc(y) = (xy)^e = enc(xy)\)</span>. Elliptic curves can offer similar properties with addition. Allowing <em>both</em> addition and multiplication is, it turns out, significantly harder.</p>
-<h3 id="a-simple-somewhat-he-algorithm">A simple somewhat-HE algorithm</h3>
-<p>Here, we will go through a somewhat-homomorphic encryption algorithm (ie. one that supports a limited number of multiplications) that is surprisingly simple. A more complex version of this category of technique was used by Craig Gentry to create <a href="https://crypto.stanford.edu/craig/craig-thesis.pdf">the first-ever <em>fully</em> homomorphic scheme</a> in 2009. More recent efforts have switched to using different schemes based on vectors and matrices, but we will still go through this technique first.</p>
-<p>We will describe all of these encryption schemes as <em>secret-key</em> schemes; that is, the same key is used to encrypt and decrypt. Any secret-key HE scheme can be turned into a public key scheme easily: a "public key" is typically just a set of many encryptions of zero, as well as an encryption of one (and possibly more powers of two). To encrypt a value, generate it by adding together the appropriate subset of the non-zero encryptions, and then adding a random subset of the encryptions of zero to "randomize" the ciphertext and make it infeasible to tell what it represents.</p>
-<p>The secret key here is a large prime, <span class="math inline">\(p\)</span> (think of <span class="math inline">\(p\)</span> as having hundreds or even thousands of digits). The scheme can only encrypt 0 or 1, and "addition" becomes XOR, ie. 1 + 1 = 0. To encrypt a value <span class="math inline">\(m\)</span> (which is either 0 or 1), generate a large random value <span class="math inline">\(R\)</span> (this will typically be even larger than <span class="math inline">\(p\)</span>) and a smaller random value <span class="math inline">\(r\)</span> (typically much smaller than <span class="math inline">\(p\)</span>), and output:</p>
+<p>Partially homomorphic encryption is fairly easy; eg. RSA has a
+multiplicative homomorphism: <span class="math inline">\(enc(x) =
+x^e\)</span>, <span class="math inline">\(enc(y) = y^e\)</span>, so
+<span class="math inline">\(enc(x) * enc(y) = (xy)^e = enc(xy)\)</span>.
+Elliptic curves can offer similar properties with addition. Allowing
+<em>both</em> addition and multiplication is, it turns out,
+significantly harder.</p>
+<h3 id="a-simple-somewhat-he-algorithm">A simple somewhat-HE
+algorithm</h3>
+<p>Here, we will go through a somewhat-homomorphic encryption algorithm
+(ie. one that supports a limited number of multiplications) that is
+surprisingly simple. A more complex version of this category of
+technique was used by Craig Gentry to create <a
+href="https://crypto.stanford.edu/craig/craig-thesis.pdf">the first-ever
+<em>fully</em> homomorphic scheme</a> in 2009. More recent efforts have
+switched to using different schemes based on vectors and matrices, but
+we will still go through this technique first.</p>
+<p>We will describe all of these encryption schemes as
+<em>secret-key</em> schemes; that is, the same key is used to encrypt
+and decrypt. Any secret-key HE scheme can be turned into a public key
+scheme easily: a "public key" is typically just a set of many
+encryptions of zero, as well as an encryption of one (and possibly more
+powers of two). To encrypt a value, generate it by adding together the
+appropriate subset of the non-zero encryptions, and then adding a random
+subset of the encryptions of zero to "randomize" the ciphertext and make
+it infeasible to tell what it represents.</p>
+<p>The secret key here is a large prime, <span
+class="math inline">\(p\)</span> (think of <span
+class="math inline">\(p\)</span> as having hundreds or even thousands of
+digits). The scheme can only encrypt 0 or 1, and "addition" becomes XOR,
+ie. 1 + 1 = 0. To encrypt a value <span class="math inline">\(m\)</span>
+(which is either 0 or 1), generate a large random value <span
+class="math inline">\(R\)</span> (this will typically be even larger
+than <span class="math inline">\(p\)</span>) and a smaller random value
+<span class="math inline">\(r\)</span> (typically much smaller than
+<span class="math inline">\(p\)</span>), and output:</p>
 <p><span class="math display">\[enc(m) = R * p + r * 2 + m\]</span></p>
-<p>To decrypt a ciphertext <span class="math inline">\(ct\)</span>, compute:</p>
-<p><span class="math display">\[dec(ct) = (ct\ mod\ p)\ mod\ 2\]</span></p>
-<p>To add two ciphertexts <span class="math inline">\(ct_1\)</span> and <span class="math inline">\(ct_2\)</span>, you simply, well, add them: <span class="math inline">\(ct_1 + ct_2\)</span>. And to multiply two ciphertexts, you once again... multiply them: <span class="math inline">\(ct_1 * ct_2\)</span>. We can prove the homomorphic property (that the sum of the encryptions is an encryption of the sum, and likewise for products) as follows.</p>
+<p>To decrypt a ciphertext <span class="math inline">\(ct\)</span>,
+compute:</p>
+<p><span class="math display">\[dec(ct) = (ct\ mod\ p)\ mod\
+2\]</span></p>
+<p>To add two ciphertexts <span class="math inline">\(ct_1\)</span> and
+<span class="math inline">\(ct_2\)</span>, you simply, well, add them:
+<span class="math inline">\(ct_1 + ct_2\)</span>. And to multiply two
+ciphertexts, you once again... multiply them: <span
+class="math inline">\(ct_1 * ct_2\)</span>. We can prove the homomorphic
+property (that the sum of the encryptions is an encryption of the sum,
+and likewise for products) as follows.</p>
 <p>Let:</p>
-<p><span class="math display">\[ct_1 = R_1 * p + r_1 * 2 + m_1\]</span> <span class="math display">\[ct_2 = R_2 * p + r_2 * 2 + m_2\]</span></p>
+<p><span class="math display">\[ct_1 = R_1 * p + r_1 * 2 + m_1\]</span>
+<span class="math display">\[ct_2 = R_2 * p + r_2 * 2 + m_2\]</span></p>
 <p>We add:</p>
-<p><span class="math display">\[ct_1 + ct_2 = R_1 * p + R_2 * p + r_1 * 2 + r_2 * 2 + m_1 + m_2\]</span></p>
+<p><span class="math display">\[ct_1 + ct_2 = R_1 * p + R_2 * p + r_1 *
+2 + r_2 * 2 + m_1 + m_2\]</span></p>
 <p>Which can be rewritten as:</p>
-<p><span class="math display">\[(R_1 + R_2) * p + (r_1 + r_2) * 2 + (m_1 + m_2)\]</span></p>
-<p>Which is of the exact same "form" as a ciphertext of <span class="math inline">\(m_1 + m_2\)</span>. If you decrypt it, the first <span class="math inline">\(mod\ p\)</span> removes the first term, the second <span class="math inline">\(mod\ 2\)</span> removes the second term, and what's left is <span class="math inline">\(m_1 + m_2\)</span> (remember that if <span class="math inline">\(m_1 = 1\)</span> and <span class="math inline">\(m_2 = 1\)</span> then the 2 will get absorbed into the second term and you'll be left with zero). And so, voila, we have additive homomorphism!</p>
+<p><span class="math display">\[(R_1 + R_2) * p + (r_1 + r_2) * 2 + (m_1
++ m_2)\]</span></p>
+<p>Which is of the exact same "form" as a ciphertext of <span
+class="math inline">\(m_1 + m_2\)</span>. If you decrypt it, the first
+<span class="math inline">\(mod\ p\)</span> removes the first term, the
+second <span class="math inline">\(mod\ 2\)</span> removes the second
+term, and what's left is <span class="math inline">\(m_1 + m_2\)</span>
+(remember that if <span class="math inline">\(m_1 = 1\)</span> and <span
+class="math inline">\(m_2 = 1\)</span> then the 2 will get absorbed into
+the second term and you'll be left with zero). And so, voila, we have
+additive homomorphism!</p>
 <p>Now let's check multiplication:</p>
-<p><span class="math display">\[ct_1 * ct_2 = (R_1 * p + r_1 * 2 + m_1) * (R_2 * p + r_2 * 2 + m_2)\]</span></p>
+<p><span class="math display">\[ct_1 * ct_2 = (R_1 * p + r_1 * 2 + m_1)
+* (R_2 * p + r_2 * 2 + m_2)\]</span></p>
 <p>Or:</p>
-<p><span class="math display">\[(R_1 * R_2 * p + r_1 * 2 + m_1 + r_2 * 2 + m_2) * p + \]</span> <span class="math display">\[(r_1 * r_2 * 2 + r_1 * m_2 + r_2 * m_1) * 2 + \]</span> <span class="math display">\[(m_1 * m_2)\]</span></p>
-<p>This was simply a matter of expanding the product above, and grouping together all the terms that contain <span class="math inline">\(p\)</span>, then all the remaining terms that contain <span class="math inline">\(2\)</span>, and finally the remaining term which is the product of the messages. If you decrypt, then once again the <span class="math inline">\(mod\ p\)</span> removes the first group, the <span class="math inline">\(mod\ 2\)</span> removes the second group, and only <span class="math inline">\(m_1 * m_2\)</span> is left.</p>
-<p>But there are two problems here: first, the size of the ciphertext itself grows (the length roughly doubles when you multiply), and second, the "noise" (also often called "error") in the smaller <span class="math inline">\(\* 2\)</span> term also gets quadratically bigger. Adding this error into the ciphertexts was necessary because the security of this scheme is based on the <a href="https://oeis.org/wiki/Greatest_common_divisor#Approximate_GCD_problem">approximate GCD problem</a>:</p>
+<p><span class="math display">\[(R_1 * R_2 * p + r_1 * 2 + m_1 + r_2 * 2
++ m_2) * p + \]</span> <span class="math display">\[(r_1 * r_2 * 2 + r_1
+* m_2 + r_2 * m_1) * 2 + \]</span> <span class="math display">\[(m_1 *
+m_2)\]</span></p>
+<p>This was simply a matter of expanding the product above, and grouping
+together all the terms that contain <span
+class="math inline">\(p\)</span>, then all the remaining terms that
+contain <span class="math inline">\(2\)</span>, and finally the
+remaining term which is the product of the messages. If you decrypt,
+then once again the <span class="math inline">\(mod\ p\)</span> removes
+the first group, the <span class="math inline">\(mod\ 2\)</span> removes
+the second group, and only <span class="math inline">\(m_1 *
+m_2\)</span> is left.</p>
+<p>But there are two problems here: first, the size of the ciphertext
+itself grows (the length roughly doubles when you multiply), and second,
+the "noise" (also often called "error") in the smaller <span
+class="math inline">\(\* 2\)</span> term also gets quadratically bigger.
+Adding this error into the ciphertexts was necessary because the
+security of this scheme is based on the <a
+href="https://oeis.org/wiki/Greatest_common_divisor#Approximate_GCD_problem">approximate
+GCD problem</a>:</p>
 <center>
 <img src="../../../../images/fhe/approx_gcd.png" ><br><br>
 </center>
-<p>Had we instead used the "exact GCD problem", breaking the system would be easy: if you just had a set of expressions of the form <span class="math inline">\(p * R_1 + m_1\)</span>, <span class="math inline">\(p * R_2 + m_2\)</span>..., then you could use the <a href="https://en.wikipedia.org/wiki/Euclidean_algorithm">Euclidean algorithm</a> to efficiently compute the greatest common divisor <span class="math inline">\(p\)</span>. But if the ciphertexts are only <em>approximate</em> multiples of <span class="math inline">\(p\)</span> with some "error", then extracting <span class="math inline">\(p\)</span> quickly becomes impractical, and so the scheme can be secure.</p>
-<p>Unfortunately, the error introduces the inherent limitation that if you multiply the ciphertexts by each other enough times, the error eventually grows big enough that it exceeds <span class="math inline">\(p\)</span>, and at that point the <span class="math inline">\(mod\ p\)</span> and <span class="math inline">\(mod\ 2\)</span> steps "interfere" with each other, making the data unextractable. This will be an inherent tradeoff in all of these homomorphic encryption schemes: extracting information from <em>approximate</em> equations "with errors" is much harder than extracting information from exact equations, but any error you add quickly increases as you do computations on encrypted data, bounding the amount of computation that you can do before the error becomes overwhelming. And <strong>this is why these schemes are only "somewhat" homomorphic</strong>.</p>
+<p>Had we instead used the "exact GCD problem", breaking the system
+would be easy: if you just had a set of expressions of the form <span
+class="math inline">\(p * R_1 + m_1\)</span>, <span
+class="math inline">\(p * R_2 + m_2\)</span>..., then you could use the <a
+href="https://en.wikipedia.org/wiki/Euclidean_algorithm">Euclidean
+algorithm</a> to efficiently compute the greatest common divisor <span
+class="math inline">\(p\)</span>. But if the ciphertexts are only
+<em>approximate</em> multiples of <span class="math inline">\(p\)</span>
+with some "error", then extracting <span
+class="math inline">\(p\)</span> quickly becomes impractical, and so the
+scheme can be secure.</p>
+<p>Unfortunately, the error introduces the inherent limitation that if
+you multiply the ciphertexts by each other enough times, the error
+eventually grows big enough that it exceeds <span
+class="math inline">\(p\)</span>, and at that point the <span
+class="math inline">\(mod\ p\)</span> and <span
+class="math inline">\(mod\ 2\)</span> steps "interfere" with each other,
+making the data unextractable. This will be an inherent tradeoff in all
+of these homomorphic encryption schemes: extracting information from
+<em>approximate</em> equations "with errors" is much harder than
+extracting information from exact equations, but any error you add
+quickly increases as you do computations on encrypted data, bounding the
+amount of computation that you can do before the error becomes
+overwhelming. And <strong>this is why these schemes are only "somewhat"
+homomorphic</strong>.</p>
 <h2 id="bootstrapping">Bootstrapping</h2>
-<p>There are two classes of solution to this problem. First, in many somewhat homomorphic encryption schemes, there are clever tricks to make multiplication only increase the error by a constant factor (eg. 1000x) instead of squaring it. Increasing the error by 1000x still sounds by a lot, but keep in mind that if <span class="math inline">\(p\)</span> (or its equivalent in other schemes) is a 300-digit number, that means that you can multiply numbers by each other 100 times, which is enough to compute a very wide class of computations. Second, there is Craig Gentry's technique of "bootstrapping".</p>
-<p>Suppose that you have a ciphertext <span class="math inline">\(ct\)</span> that is an encryption of some <span class="math inline">\(m\)</span> under a key <span class="math inline">\(p\)</span>, that has a lot of error. The idea is that we "refresh" the ciphertext by turning it into a new ciphertext of <span class="math inline">\(m\)</span> under another key <span class="math inline">\(p_2\)</span>, where this process "clears out" the old error (though it will introduce a fixed amount of new error). The trick is quite clever. The holder of <span class="math inline">\(p\)</span> and <span class="math inline">\(p_2\)</span> provides a "bootstrapping key" that consists of an encryption of <em>the bits of <span class="math inline">\(p\)</span></em> under the key <span class="math inline">\(p_2\)</span>, as well as the public key for <span class="math inline">\(p_2\)</span>. Whoever is doing computations on data encrypted under <span class="math inline">\(p\)</span> would then take the bits of the ciphertext <span class="math inline">\(ct\)</span>, and individually encrypt these bits under <span class="math inline">\(p_2\)</span>. They would then <em>homomorphically compute the decryption under <span class="math inline">\(p\)</span></em> using these ciphertexts, and get out the single bit, which would be <span class="math inline">\(m\)</span> encrypted under <span class="math inline">\(p_2\)</span>.</p>
+<p>There are two classes of solution to this problem. First, in many
+somewhat homomorphic encryption schemes, there are clever tricks to make
+multiplication only increase the error by a constant factor (eg. 1000x)
+instead of squaring it. Increasing the error by 1000x still sounds by a
+lot, but keep in mind that if <span class="math inline">\(p\)</span> (or
+its equivalent in other schemes) is a 300-digit number, that means that
+you can multiply numbers by each other 100 times, which is enough to
+compute a very wide class of computations. Second, there is Craig
+Gentry's technique of "bootstrapping".</p>
+<p>Suppose that you have a ciphertext <span
+class="math inline">\(ct\)</span> that is an encryption of some <span
+class="math inline">\(m\)</span> under a key <span
+class="math inline">\(p\)</span>, that has a lot of error. The idea is
+that we "refresh" the ciphertext by turning it into a new ciphertext of
+<span class="math inline">\(m\)</span> under another key <span
+class="math inline">\(p_2\)</span>, where this process "clears out" the
+old error (though it will introduce a fixed amount of new error). The
+trick is quite clever. The holder of <span
+class="math inline">\(p\)</span> and <span
+class="math inline">\(p_2\)</span> provides a "bootstrapping key" that
+consists of an encryption of <em>the bits of <span
+class="math inline">\(p\)</span></em> under the key <span
+class="math inline">\(p_2\)</span>, as well as the public key for <span
+class="math inline">\(p_2\)</span>. Whoever is doing computations on
+data encrypted under <span class="math inline">\(p\)</span> would then
+take the bits of the ciphertext <span class="math inline">\(ct\)</span>,
+and individually encrypt these bits under <span
+class="math inline">\(p_2\)</span>. They would then <em>homomorphically
+compute the decryption under <span class="math inline">\(p\)</span></em>
+using these ciphertexts, and get out the single bit, which would be
+<span class="math inline">\(m\)</span> encrypted under <span
+class="math inline">\(p_2\)</span>.</p>
 <center>
 <img src="../../../../images/fhe/bootstrapping.png" class="padded" /><br><br>
 </center>
-<p>This is difficult to understand, so we can restate it as follows. The decryption procedure <span class="math inline">\(dec(ct, p)\)</span> <em>is itself a computation</em>, and so it <em>can itself be implemented as a circuit</em> that takes as input the bits of <span class="math inline">\(ct\)</span> and the bits of <span class="math inline">\(p\)</span>, and outputs the decrypted bit <span class="math inline">\(m \in {0, 1}\)</span>. If someone has a ciphertext <span class="math inline">\(ct\)</span> encrypted under <span class="math inline">\(p\)</span>, a public key for <span class="math inline">\(p_2\)</span>, <em>and</em> the bits of <span class="math inline">\(p\)</span> encrypted under <span class="math inline">\(p_2\)</span>, then they can compute <span class="math inline">\(dec(ct, p) = m\)</span> "homomorphically", and get out <span class="math inline">\(m\)</span> encrypted under <span class="math inline">\(p_2\)</span>. Notice that the decryption procedure itself washes away the old error; it just outputs 0 or 1. The decryption procedure is itself a circuit, which contains additions or multiplications, so it will introduce new error, but this new error <em>does not depend</em> on the amount of error in the original encryption.</p>
-<p><small>(Note that we can avoid having a distinct new key <span class="math inline">\(p_2\)</span> (and if you want to bootstrap multiple times, also a <span class="math inline">\(p_3\)</span>, <span class="math inline">\(p_4\)</span>...) by just setting <span class="math inline">\(p_2 = p\)</span>. However, this introduces a new assumption, usually called "circular security"; it <a href="https://link.springer.com/content/pdf/10.1007%2F978-3-642-36594-2_32.pdf">becomes more difficult</a> to formally prove security if you do this, though many cryptographers think it's fine and circular security poses no significant risk in practice)</small></p>
-<p>But.... there is a catch. In the scheme as described above (using circular security or not), the error blows up so quickly that even the decryption circuit of the scheme itself is too much for it. That is, the new <span class="math inline">\(m\)</span> encrypted under <span class="math inline">\(p_2\)</span> would <em>already</em> have so much error that it is unreadable. This is because each AND gate doubles the bit-length of the error, so a scheme using a <span class="math inline">\(d\)</span>-bit modulus <span class="math inline">\(p\)</span> can only handle less than <span class="math inline">\(log(d)\)</span> multiplications (in series), but decryption requires computing <span class="math inline">\(mod\ p\)</span> in a circuit made up of these binary logic gates, which requires... more than <span class="math inline">\(log(d)\)</span> multiplications.</p>
-<p>Craig Gentry came up with clever techniques to get around this problem, but they are arguably too complicated to explain; instead, we will skip straight to newer work from 2011 and 2013, that solves this problem in a different way.</p>
+<p>This is difficult to understand, so we can restate it as follows. The
+decryption procedure <span class="math inline">\(dec(ct, p)\)</span>
+<em>is itself a computation</em>, and so it <em>can itself be
+implemented as a circuit</em> that takes as input the bits of <span
+class="math inline">\(ct\)</span> and the bits of <span
+class="math inline">\(p\)</span>, and outputs the decrypted bit <span
+class="math inline">\(m \in {0, 1}\)</span>. If someone has a ciphertext
+<span class="math inline">\(ct\)</span> encrypted under <span
+class="math inline">\(p\)</span>, a public key for <span
+class="math inline">\(p_2\)</span>, <em>and</em> the bits of <span
+class="math inline">\(p\)</span> encrypted under <span
+class="math inline">\(p_2\)</span>, then they can compute <span
+class="math inline">\(dec(ct, p) = m\)</span> "homomorphically", and get
+out <span class="math inline">\(m\)</span> encrypted under <span
+class="math inline">\(p_2\)</span>. Notice that the decryption procedure
+itself washes away the old error; it just outputs 0 or 1. The decryption
+procedure is itself a circuit, which contains additions or
+multiplications, so it will introduce new error, but this new error
+<em>does not depend</em> on the amount of error in the original
+encryption.</p>
+<p><small>(Note that we can avoid having a distinct new key <span
+class="math inline">\(p_2\)</span> (and if you want to bootstrap
+multiple times, also a <span class="math inline">\(p_3\)</span>, <span
+class="math inline">\(p_4\)</span>...) by just setting <span
+class="math inline">\(p_2 = p\)</span>. However, this introduces a new
+assumption, usually called "circular security"; it <a
+href="https://link.springer.com/content/pdf/10.1007%2F978-3-642-36594-2_32.pdf">becomes
+more difficult</a> to formally prove security if you do this, though
+many cryptographers think it's fine and circular security poses no
+significant risk in practice)</small></p>
+<p>But.... there is a catch. In the scheme as described above (using
+circular security or not), the error blows up so quickly that even the
+decryption circuit of the scheme itself is too much for it. That is, the
+new <span class="math inline">\(m\)</span> encrypted under <span
+class="math inline">\(p_2\)</span> would <em>already</em> have so much
+error that it is unreadable. This is because each AND gate doubles the
+bit-length of the error, so a scheme using a <span
+class="math inline">\(d\)</span>-bit modulus <span
+class="math inline">\(p\)</span> can only handle less than <span
+class="math inline">\(log(d)\)</span> multiplications (in series), but
+decryption requires computing <span class="math inline">\(mod\
+p\)</span> in a circuit made up of these binary logic gates, which
+requires... more than <span class="math inline">\(log(d)\)</span>
+multiplications.</p>
+<p>Craig Gentry came up with clever techniques to get around this
+problem, but they are arguably too complicated to explain; instead, we
+will skip straight to newer work from 2011 and 2013, that solves this
+problem in a different way.</p>
 <h2 id="learning-with-errors">Learning with errors</h2>
-<p>To move further, we will introduce a <a href="https://eprint.iacr.org/2011/344.pdf">different type of somewhat-homomorphic encryption</a> introduced by Brakerski and Vaikuntanathan in 2011, and show how to bootstrap it. Here, we will move away from keys and ciphertexts being <em>integers</em>, and instead have keys and ciphertexts be <em>vectors</em>. Given a key <span class="math inline">\(k = {k_1, k_2 .... k_n}\)</span>, to encrypt a message <span class="math inline">\(m\)</span>, construct a vector <span class="math inline">\(c = {c_1, c_2 ... c_n}\)</span> such that the inner product (or "<a href="https://en.wikipedia.org/wiki/Dot_product">dot product</a>") <span class="math inline">\(&lt;c, k&gt; = c_1k_1 + c_2k_1 + ... + c_nk_n\)</span>, modulo some fixed number <span class="math inline">\(p\)</span>, equals <span class="math inline">\(m+2e\)</span> where <span class="math inline">\(m\)</span> is the message (which must be 0 or 1), and <span class="math inline">\(e\)</span> is a small (much smaller than <span class="math inline">\(p\)</span>) "error" term. A "public key" that allows encryption but not decryption can be constructed, as before, by making a set of encryptions of 0; an encryptor can randomly combine a subset of these equations and add 1 if the message they are encrypting is 1. To decrypt a ciphertext <span class="math inline">\(c\)</span> knowing the key <span class="math inline">\(k\)</span>, you would compute <span class="math inline">\(&lt;c, k&gt;\)</span> modulo <span class="math inline">\(p\)</span>, and see if the result is odd or even (this is the same "mod p mod 2" trick we used earlier). Note that here the <span class="math inline">\(mod\ p\)</span> is typically a "symmetric" mod, that is, it returns a number between <span class="math inline">\(-\frac{p}{2}\)</span> and <span class="math inline">\(\frac{p}{2}\)</span> (eg. 137 mod 10 = -3, 212 mod 10 = 2); this allows our error to be positive or negative. Additionally, <span class="math inline">\(p\)</span> does not necessarily have to be prime, though it does need to be odd.</p>
+<p>To move further, we will introduce a <a
+href="https://eprint.iacr.org/2011/344.pdf">different type of
+somewhat-homomorphic encryption</a> introduced by Brakerski and
+Vaikuntanathan in 2011, and show how to bootstrap it. Here, we will move
+away from keys and ciphertexts being <em>integers</em>, and instead have
+keys and ciphertexts be <em>vectors</em>. Given a key <span
+class="math inline">\(k = {k_1, k_2 .... k_n}\)</span>, to encrypt a
+message <span class="math inline">\(m\)</span>, construct a vector <span
+class="math inline">\(c = {c_1, c_2 ... c_n}\)</span> such that the
+inner product (or "<a
+href="https://en.wikipedia.org/wiki/Dot_product">dot product</a>") <span
+class="math inline">\(&lt;c, k&gt; = c_1k_1 + c_2k_1 + ... +
+c_nk_n\)</span>, modulo some fixed number <span
+class="math inline">\(p\)</span>, equals <span
+class="math inline">\(m+2e\)</span> where <span
+class="math inline">\(m\)</span> is the message (which must be 0 or 1),
+and <span class="math inline">\(e\)</span> is a small (much smaller than
+<span class="math inline">\(p\)</span>) "error" term. A "public key"
+that allows encryption but not decryption can be constructed, as before,
+by making a set of encryptions of 0; an encryptor can randomly combine a
+subset of these equations and add 1 if the message they are encrypting
+is 1. To decrypt a ciphertext <span class="math inline">\(c\)</span>
+knowing the key <span class="math inline">\(k\)</span>, you would
+compute <span class="math inline">\(&lt;c, k&gt;\)</span> modulo <span
+class="math inline">\(p\)</span>, and see if the result is odd or even
+(this is the same "mod p mod 2" trick we used earlier). Note that here
+the <span class="math inline">\(mod\ p\)</span> is typically a
+"symmetric" mod, that is, it returns a number between <span
+class="math inline">\(-\frac{p}{2}\)</span> and <span
+class="math inline">\(\frac{p}{2}\)</span> (eg. 137 mod 10 = -3, 212 mod
+10 = 2); this allows our error to be positive or negative. Additionally,
+<span class="math inline">\(p\)</span> does not necessarily have to be
+prime, though it does need to be odd.</p>
 <center>
 <table>
 <tr>
@@ -215,82 +469,396 @@ MathJax = {
 </td>
 </tr>
 </table>
-<small><i>The key and the ciphertext are both vectors, in this example of five elements each.</i></small><br><br>
+<small><i>The key and the ciphertext are both vectors, in this example
+of five elements each.</i></small><br><br>
 </center>
-<p>In this example, we set the modulus <span class="math inline">\(p = 103\)</span>. The dot product is <code>3 * 2 + 14 * 71 + 15 * 82 + 92 * 81 + 65 * 8 = 10202</code>, and <span class="math inline">\(10202 = 99 * 103 + 5\)</span>. 5 itself is of course <span class="math inline">\(2 * 2 + 1\)</span>, so the message is 1. Note that in practice, the first element of the key is often set to <span class="math inline">\(1\)</span>; this makes it easier to generate ciphertexts for a particular value (see if you can figure out why).</p>
-<p>The security of the scheme is based on an assumption known as "<a href="https://en.wikipedia.org/wiki/Learning_with_errors">learning with errors</a>" (LWE) - or, in more jargony but also more understandable terms, the hardness of <em>solving systems of equations with errors</em>.</p>
+<p>In this example, we set the modulus <span class="math inline">\(p =
+103\)</span>. The dot product is
+<code>3 * 2 + 14 * 71 + 15 * 82 + 92 * 81 + 65 * 8 = 10202</code>, and
+<span class="math inline">\(10202 = 99 * 103 + 5\)</span>. 5 itself is
+of course <span class="math inline">\(2 * 2 + 1\)</span>, so the message
+is 1. Note that in practice, the first element of the key is often set
+to <span class="math inline">\(1\)</span>; this makes it easier to
+generate ciphertexts for a particular value (see if you can figure out
+why).</p>
+<p>The security of the scheme is based on an assumption known as "<a
+href="https://en.wikipedia.org/wiki/Learning_with_errors">learning with
+errors</a>" (LWE) - or, in more jargony but also more understandable
+terms, the hardness of <em>solving systems of equations with
+errors</em>.</p>
 <center>
 <a href="https://cims.nyu.edu/~regev/papers/lwesurvey.pdf"><img src="../../../../images/fhe/lwe.png" class="padded" /></a><br>
 </center>
 <p><br></p>
-<p>A ciphertext can itself be viewed as an equation: <span class="math inline">\(k_1c_1 + .... + k_nc_n \approx 0\)</span>, where the key <span class="math inline">\(k_1 ... k_n\)</span> is the unknowns, the ciphertext <span class="math inline">\(c_1 ... c_n\)</span> is the coefficients, and the equality is only approximate because of both the message (0 or 1) and the error (<span class="math inline">\(2e\)</span> for some relatively small <span class="math inline">\(e\)</span>). The LWE assumption ensures that even if you have access to many of these ciphertexts, you cannot recover <span class="math inline">\(k\)</span>.</p>
-<p><small><i>Note that in some descriptions of LWE, &lt;c, k&gt; can equal <em>any</em> value, but this value must be provided as part of the ciphertext. This is mathematically equivalent to the &lt;c, k&gt; = m+2e formulation, because you can just add this answer to the end of the ciphertext and add -1 to the end of the key, and get two vectors that when multiplied together just give m+2e. We'll use the formulation that requires &lt;c, k&gt; to be near-zero (ie. just m+2e) because it is simpler to work with.</i></small></p>
+<p>A ciphertext can itself be viewed as an equation: <span
+class="math inline">\(k_1c_1 + .... + k_nc_n \approx 0\)</span>, where
+the key <span class="math inline">\(k_1 ... k_n\)</span> is the
+unknowns, the ciphertext <span class="math inline">\(c_1 ...
+c_n\)</span> is the coefficients, and the equality is only approximate
+because of both the message (0 or 1) and the error (<span
+class="math inline">\(2e\)</span> for some relatively small <span
+class="math inline">\(e\)</span>). The LWE assumption ensures that even
+if you have access to many of these ciphertexts, you cannot recover
+<span class="math inline">\(k\)</span>.</p>
+<p><small><i>Note that in some descriptions of LWE, &lt;c, k&gt; can
+equal <em>any</em> value, but this value must be provided as part of the
+ciphertext. This is mathematically equivalent to the &lt;c, k&gt; = m+2e
+formulation, because you can just add this answer to the end of the
+ciphertext and add -1 to the end of the key, and get two vectors that
+when multiplied together just give m+2e. We'll use the formulation that
+requires &lt;c, k&gt; to be near-zero (ie. just m+2e) because it is
+simpler to work with.</i></small></p>
 <h3 id="multiplying-ciphertexts">Multiplying ciphertexts</h3>
-<p>It is easy to verify that the encryption is additive: if <span class="math inline">\(&lt;ct_1, k&gt; = 2e_1 + m_1\)</span> and <span class="math inline">\(&lt;ct_2, k&gt; = 2e_2 + m_2\)</span>, then <span class="math inline">\(&lt;ct_1 + ct_2, k&gt; = 2(e_1 + e_2) + m_1 + m_2\)</span> (the addition here is modulo <span class="math inline">\(p\)</span>). What is harder is multiplication: unlike with numbers, there is no natural way to multiply two length-n vectors into another length-n vector. The best that we can do is the <a href="https://en.wikipedia.org/wiki/Outer_product">outer product</a>: a vector containing the products of each possible pair where the first element comes from the first vector and the second element comes from the second vector. That is, <span class="math inline">\(a \otimes b = a_1b_1 + a_2b_1 + ... + a_nb_1 + a_1b_2 + ... + a_nb_2 + ... + a_nb_n\)</span>. We can "multiply ciphertexts" using the convenient mathematical identity <span class="math inline">\(&lt;a \otimes b, c \otimes d&gt; = &lt;a, c&gt; * &lt;b, d&gt;\)</span>.</p>
-<p>Given two ciphertexts <span class="math inline">\(c_1\)</span> and <span class="math inline">\(c_2\)</span>, we compute the outer product <span class="math inline">\(c_1 \otimes c_2\)</span>. If both <span class="math inline">\(c_1\)</span> and <span class="math inline">\(c_2\)</span> were encrypted with <span class="math inline">\(k\)</span>, then <span class="math inline">\(&lt;c_1, k&gt; = 2e_1 + m_1\)</span> and <span class="math inline">\(&lt;c_2, k&gt; = 2e_2 + m_2\)</span>. The outer product <span class="math inline">\(c_1 \otimes c_2\)</span> can be viewed as an encryption of <span class="math inline">\(m_1 * m_2\)</span> under <span class="math inline">\(k \otimes k\)</span>; we can see this by looking what happens when we try to decrypt with <span class="math inline">\(k \otimes k\)</span>:</p>
-<p><span class="math display">\[&lt;c_1 \otimes c_2, k \otimes k&gt;\]</span> <span class="math display">\[= &lt;c_1, k&gt; * &lt;c_2, k&gt;\]</span> <span class="math display">\[ = (2e_1 + m_1) * (2e_2 + m_2)\]</span> <span class="math display">\[ = 2(e_1m_2 + e_2m_1 + 2e_1e_2) + m_1m_2\]</span></p>
-<p>So this outer-product approach works. But there is, as you may have already noticed, a catch: the size of the ciphertext, and the key, grows quadratically.</p>
+<p>It is easy to verify that the encryption is additive: if <span
+class="math inline">\(&lt;ct_1, k&gt; = 2e_1 + m_1\)</span> and <span
+class="math inline">\(&lt;ct_2, k&gt; = 2e_2 + m_2\)</span>, then <span
+class="math inline">\(&lt;ct_1 + ct_2, k&gt; = 2(e_1 + e_2) + m_1 +
+m_2\)</span> (the addition here is modulo <span
+class="math inline">\(p\)</span>). What is harder is multiplication:
+unlike with numbers, there is no natural way to multiply two length-n
+vectors into another length-n vector. The best that we can do is the <a
+href="https://en.wikipedia.org/wiki/Outer_product">outer product</a>: a
+vector containing the products of each possible pair where the first
+element comes from the first vector and the second element comes from
+the second vector. That is, <span class="math inline">\(a \otimes b =
+a_1b_1 + a_2b_1 + ... + a_nb_1 + a_1b_2 + ... + a_nb_2 + ... +
+a_nb_n\)</span>. We can "multiply ciphertexts" using the convenient
+mathematical identity <span class="math inline">\(&lt;a \otimes b, c
+\otimes d&gt; = &lt;a, c&gt; * &lt;b, d&gt;\)</span>.</p>
+<p>Given two ciphertexts <span class="math inline">\(c_1\)</span> and
+<span class="math inline">\(c_2\)</span>, we compute the outer product
+<span class="math inline">\(c_1 \otimes c_2\)</span>. If both <span
+class="math inline">\(c_1\)</span> and <span
+class="math inline">\(c_2\)</span> were encrypted with <span
+class="math inline">\(k\)</span>, then <span
+class="math inline">\(&lt;c_1, k&gt; = 2e_1 + m_1\)</span> and <span
+class="math inline">\(&lt;c_2, k&gt; = 2e_2 + m_2\)</span>. The outer
+product <span class="math inline">\(c_1 \otimes c_2\)</span> can be
+viewed as an encryption of <span class="math inline">\(m_1 *
+m_2\)</span> under <span class="math inline">\(k \otimes k\)</span>; we
+can see this by looking what happens when we try to decrypt with <span
+class="math inline">\(k \otimes k\)</span>:</p>
+<p><span class="math display">\[&lt;c_1 \otimes c_2, k \otimes
+k&gt;\]</span> <span class="math display">\[= &lt;c_1, k&gt; * &lt;c_2,
+k&gt;\]</span> <span class="math display">\[ = (2e_1 + m_1) * (2e_2 +
+m_2)\]</span> <span class="math display">\[ = 2(e_1m_2 + e_2m_1 +
+2e_1e_2) + m_1m_2\]</span></p>
+<p>So this outer-product approach works. But there is, as you may have
+already noticed, a catch: the size of the ciphertext, and the key, grows
+quadratically.</p>
 <h3 id="relinearization">Relinearization</h3>
-<p>We solve this with a <strong>relinearization</strong> procedure. The holder of the private key <span class="math inline">\(k\)</span> provides, as part of the public key, a "relinearization key", which you can think of as "noisy" encryptions of <span class="math inline">\(k \otimes k\)</span> under <span class="math inline">\(k\)</span>. The idea is that we provide these encrypted pieces of <span class="math inline">\(k \otimes k\)</span> to anyone performing the computations, allowing them to compute the equation <span class="math inline">\(&lt;c_1 \otimes c_2, k \otimes k&gt;\)</span> to "decrypt" the ciphertext, but only in such a way that the output comes back encrypted under <span class="math inline">\(k\)</span>.</p>
-<p>It's important to understand what we mean here by "noisy encryptions". Normally, this encryption scheme only allows encrypting <span class="math inline">\(m \in \{0,1\}\)</span>, and an "encryption of <span class="math inline">\(m\)</span>" is a vector <span class="math inline">\(c\)</span> such that <span class="math inline">\(&lt;c, k&gt; = m+2e\)</span> for some small error <span class="math inline">\(e\)</span>. Here, we're "encrypting" arbitrary <span class="math inline">\(m \in \{0,1, 2....p-1\}\)</span>. Note that the error means that you can't fully recover <span class="math inline">\(m\)</span> from <span class="math inline">\(c\)</span>; your answer will be off by some multiple of 2. However, it turns out that, for this specific use case, this is fine.</p>
-<p>The relinearization key consists of a set of vectors which, when inner-producted (modulo <span class="math inline">\(p\)</span>) with the key <span class="math inline">\(k\)</span>, give values of the form <span class="math inline">\(k_i * k_j * 2^d + 2e\)</span> (mod <span class="math inline">\(p\)</span>), one such vector for every possible triple <span class="math inline">\((i, j, d)\)</span>, where <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are indices in the key and <span class="math inline">\(d\)</span> is an exponent where <span class="math inline">\(2^d &lt; p\)</span> (note: if the key has length <span class="math inline">\(n\)</span>, there would be <span class="math inline">\(n^2 * log(p)\)</span> values in the relinearization key; make sure you understand why before continuing).</p>
+<p>We solve this with a <strong>relinearization</strong> procedure. The
+holder of the private key <span class="math inline">\(k\)</span>
+provides, as part of the public key, a "relinearization key", which you
+can think of as "noisy" encryptions of <span class="math inline">\(k
+\otimes k\)</span> under <span class="math inline">\(k\)</span>. The
+idea is that we provide these encrypted pieces of <span
+class="math inline">\(k \otimes k\)</span> to anyone performing the
+computations, allowing them to compute the equation <span
+class="math inline">\(&lt;c_1 \otimes c_2, k \otimes k&gt;\)</span> to
+"decrypt" the ciphertext, but only in such a way that the output comes
+back encrypted under <span class="math inline">\(k\)</span>.</p>
+<p>It's important to understand what we mean here by "noisy
+encryptions". Normally, this encryption scheme only allows encrypting
+<span class="math inline">\(m \in \{0,1\}\)</span>, and an "encryption
+of <span class="math inline">\(m\)</span>" is a vector <span
+class="math inline">\(c\)</span> such that <span
+class="math inline">\(&lt;c, k&gt; = m+2e\)</span> for some small error
+<span class="math inline">\(e\)</span>. Here, we're "encrypting"
+arbitrary <span class="math inline">\(m \in \{0,1, 2....p-1\}\)</span>.
+Note that the error means that you can't fully recover <span
+class="math inline">\(m\)</span> from <span
+class="math inline">\(c\)</span>; your answer will be off by some
+multiple of 2. However, it turns out that, for this specific use case,
+this is fine.</p>
+<p>The relinearization key consists of a set of vectors which, when
+inner-producted (modulo <span class="math inline">\(p\)</span>) with the
+key <span class="math inline">\(k\)</span>, give values of the form
+<span class="math inline">\(k_i * k_j * 2^d + 2e\)</span> (mod <span
+class="math inline">\(p\)</span>), one such vector for every possible
+triple <span class="math inline">\((i, j, d)\)</span>, where <span
+class="math inline">\(i\)</span> and <span
+class="math inline">\(j\)</span> are indices in the key and <span
+class="math inline">\(d\)</span> is an exponent where <span
+class="math inline">\(2^d &lt; p\)</span> (note: if the key has length
+<span class="math inline">\(n\)</span>, there would be <span
+class="math inline">\(n^2 * log(p)\)</span> values in the
+relinearization key; make sure you understand why before
+continuing).</p>
 <center>
 <center>
 <img src="../../../../images/fhe/relin.png" /><br>
 </center>
-<small><i>Example assuming p = 15 and k has length 2. Formally, enc(x) here means "outputs x+2e if inner-producted with k".</i></small><br><br>
+<small><i>Example assuming p = 15 and k has length 2. Formally, enc(x)
+here means "outputs x+2e if inner-producted with k".</i></small><br><br>
 </center>
-<p>Now, let us take a step back and look again at our goal. We have a ciphertext which, if decrypted with <span class="math inline">\(k \otimes k\)</span>, gives <span class="math inline">\(m_1 * m_2\)</span>. We <em>want</em> a ciphertext which, if decrypted with <span class="math inline">\(k\)</span>, gives <span class="math inline">\(m_1 * m_2\)</span>. We can do this with the relinearization key. Notice that the decryption equation <span class="math inline">\(&lt;ct_1 \otimes ct_2, k \otimes k&gt;\)</span> is just a big sum of terms of the form <span class="math inline">\((ct_{1_i} * ct_{2_j}) * k_p * k_q\)</span>.</p>
-<p>And what do we have in our relinearization key? A bunch of elements of the form <span class="math inline">\(2^d * k_p * k_q\)</span>, noisy-encrypted under <span class="math inline">\(k\)</span>, for every possible combination of <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span>! Having all the powers of two in our relinearization key allows us to generate any <span class="math inline">\((ct_{1_i} * ct_{2_j}) * k_p * k_q\)</span> by just adding up <span class="math inline">\(\le log(p)\)</span> powers of two (eg. 13 = 8 + 4 + 1) together for each <span class="math inline">\((p, q)\)</span> pair.</p>
-<p>For example, if <span class="math inline">\(ct_1 = [1, 2]\)</span> and <span class="math inline">\(ct_2 = [3, 4]\)</span>, then <span class="math inline">\(ct_1 \otimes ct_2 = [3, 4, 6, 8]\)</span>, and <span class="math inline">\(enc(&lt;ct_1 \otimes ct_2, k \otimes k&gt;) = enc(3k_1k_1 + 4k_1k_2 + 6k_2k_1 + 8k_2k_2)\)</span> could be computed via:</p>
-<p><span class="math display">\[enc(k_1 * k_1) + enc(k_1 * k_1 * 2)  + enc(k_1 * k_2 * 4)  + \]</span></p>
-<p><span class="math display">\[enc(k_2 * k_1 * 2) + enc(k_2 * k_1 * 4)  + enc(k_2 * k_2 * 8) \]</span></p>
-<p>Note that each noisy-encryption in the relinearization key has some even error <span class="math inline">\(2e\)</span>, and the equation <span class="math inline">\(&lt;ct_1 \otimes ct_2, k \otimes k&gt;\)</span> itself has some error: if <span class="math inline">\(&lt;ct_1, k&gt; = 2e_1 + m_1\)</span> and <span class="math inline">\(&lt;ct_2 + k&gt; = 2e_2 + m_2\)</span>, then <span class="math inline">\(&lt;ct_1 \otimes ct_2, k \otimes k&gt; =\)</span> <span class="math inline">\(&lt;ct_1, k&gt; * &lt;ct_2 + k&gt; =\)</span> <span class="math inline">\(2(2e_1e_2 + e_1m_2 + e_2m_1) + m_1m_2\)</span>. But this total error is still (relatively) small (<span class="math inline">\(2e_1e_2 + e_1m_2 + e_2m_1\)</span> plus <span class="math inline">\(n^2 * log(p)\)</span> fixed-size errors from the realinearization key), and the error is even, and so the result of this calculation still gives a value which, when inner-producted with <span class="math inline">\(k\)</span>, gives <span class="math inline">\(m_1 * m_2 + 2e&#39;\)</span> for some "combined error" <span class="math inline">\(e&#39;\)</span>.</p>
-<p>The broader technique we used here is a common trick in homomorphic encryption: provide pieces of the key encrypted under the key itself (or a different key if you are pedantic about avoiding circular security assumptions), such that someone computing on the data can compute the decryption equation, but only in such a way that the output itself is still encrypted. It was used in bootstrapping above, and it's used here; it's best to make sure you mentally understand what's going on in both cases.</p>
-<p>This new ciphertext has considerably more error in it: the <span class="math inline">\(n^2 * log(p)\)</span> different errors from the portions of the relinearization key that we used, plus the <span class="math inline">\(2(2e_1e_2 + e_1m_2 + e_2m_1)\)</span> from the original outer-product ciphertext. Hence, the new ciphertext still does have quadratically larger error than the original ciphertexts, and so we still haven't solved the problem that the error blows up too quickly. To solve this, we move on to another trick...</p>
+<p>Now, let us take a step back and look again at our goal. We have a
+ciphertext which, if decrypted with <span class="math inline">\(k
+\otimes k\)</span>, gives <span class="math inline">\(m_1 *
+m_2\)</span>. We <em>want</em> a ciphertext which, if decrypted with
+<span class="math inline">\(k\)</span>, gives <span
+class="math inline">\(m_1 * m_2\)</span>. We can do this with the
+relinearization key. Notice that the decryption equation <span
+class="math inline">\(&lt;ct_1 \otimes ct_2, k \otimes k&gt;\)</span> is
+just a big sum of terms of the form <span
+class="math inline">\((ct_{1_i} * ct_{2_j}) * k_p * k_q\)</span>.</p>
+<p>And what do we have in our relinearization key? A bunch of elements
+of the form <span class="math inline">\(2^d * k_p * k_q\)</span>,
+noisy-encrypted under <span class="math inline">\(k\)</span>, for every
+possible combination of <span class="math inline">\(p\)</span> and <span
+class="math inline">\(q\)</span>! Having all the powers of two in our
+relinearization key allows us to generate any <span
+class="math inline">\((ct_{1_i} * ct_{2_j}) * k_p * k_q\)</span> by just
+adding up <span class="math inline">\(\le log(p)\)</span> powers of two
+(eg. 13 = 8 + 4 + 1) together for each <span class="math inline">\((p,
+q)\)</span> pair.</p>
+<p>For example, if <span class="math inline">\(ct_1 = [1, 2]\)</span>
+and <span class="math inline">\(ct_2 = [3, 4]\)</span>, then <span
+class="math inline">\(ct_1 \otimes ct_2 = [3, 4, 6, 8]\)</span>, and
+<span class="math inline">\(enc(&lt;ct_1 \otimes ct_2, k \otimes k&gt;)
+= enc(3k_1k_1 + 4k_1k_2 + 6k_2k_1 + 8k_2k_2)\)</span> could be computed
+via:</p>
+<p><span class="math display">\[enc(k_1 * k_1) + enc(k_1 * k_1 * 2)  +
+enc(k_1 * k_2 * 4)  + \]</span></p>
+<p><span class="math display">\[enc(k_2 * k_1 * 2) + enc(k_2 * k_1 *
+4)  + enc(k_2 * k_2 * 8) \]</span></p>
+<p>Note that each noisy-encryption in the relinearization key has some
+even error <span class="math inline">\(2e\)</span>, and the equation
+<span class="math inline">\(&lt;ct_1 \otimes ct_2, k \otimes
+k&gt;\)</span> itself has some error: if <span
+class="math inline">\(&lt;ct_1, k&gt; = 2e_1 + m_1\)</span> and <span
+class="math inline">\(&lt;ct_2 + k&gt; = 2e_2 + m_2\)</span>, then <span
+class="math inline">\(&lt;ct_1 \otimes ct_2, k \otimes k&gt; =\)</span>
+<span class="math inline">\(&lt;ct_1, k&gt; * &lt;ct_2 + k&gt;
+=\)</span> <span class="math inline">\(2(2e_1e_2 + e_1m_2 + e_2m_1) +
+m_1m_2\)</span>. But this total error is still (relatively) small (<span
+class="math inline">\(2e_1e_2 + e_1m_2 + e_2m_1\)</span> plus <span
+class="math inline">\(n^2 * log(p)\)</span> fixed-size errors from the
+realinearization key), and the error is even, and so the result of this
+calculation still gives a value which, when inner-producted with <span
+class="math inline">\(k\)</span>, gives <span class="math inline">\(m_1
+* m_2 + 2e&#39;\)</span> for some "combined error" <span
+class="math inline">\(e&#39;\)</span>.</p>
+<p>The broader technique we used here is a common trick in homomorphic
+encryption: provide pieces of the key encrypted under the key itself (or
+a different key if you are pedantic about avoiding circular security
+assumptions), such that someone computing on the data can compute the
+decryption equation, but only in such a way that the output itself is
+still encrypted. It was used in bootstrapping above, and it's used here;
+it's best to make sure you mentally understand what's going on in both
+cases.</p>
+<p>This new ciphertext has considerably more error in it: the <span
+class="math inline">\(n^2 * log(p)\)</span> different errors from the
+portions of the relinearization key that we used, plus the <span
+class="math inline">\(2(2e_1e_2 + e_1m_2 + e_2m_1)\)</span> from the
+original outer-product ciphertext. Hence, the new ciphertext still does
+have quadratically larger error than the original ciphertexts, and so we
+still haven't solved the problem that the error blows up too quickly. To
+solve this, we move on to another trick...</p>
 <h3 id="modulus-switching">Modulus switching</h3>
-<p>Here, we need to understand an important algebraic fact. A ciphertext is a vector <span class="math inline">\(ct\)</span>, such that <span class="math inline">\(&lt;ct, k&gt; = m+2e\)</span>, where <span class="math inline">\(m \in \{0,1\}\)</span>. But we can also look at the ciphertext from a different "perspective": consider <span class="math inline">\(\frac{ct}{2}\)</span> (modulo <span class="math inline">\(p\)</span>). <span class="math inline">\(&lt;\frac{ct}{2}, k&gt; = \frac{m}{2} + e\)</span>, where <span class="math inline">\(\frac{m}{2} \in \{0,\frac{p+1}{2}\}\)</span>. Note that because (modulo <span class="math inline">\(p\)</span>) <span class="math inline">\((\frac{p+1}{2})*2 = p+1 = 1\)</span>, division by 2 (modulo <span class="math inline">\(p\)</span>) maps <span class="math inline">\(1\)</span> to <span class="math inline">\(\frac{p+1}{2}\)</span>; this is a very convenient fact for us.</p>
+<p>Here, we need to understand an important algebraic fact. A ciphertext
+is a vector <span class="math inline">\(ct\)</span>, such that <span
+class="math inline">\(&lt;ct, k&gt; = m+2e\)</span>, where <span
+class="math inline">\(m \in \{0,1\}\)</span>. But we can also look at
+the ciphertext from a different "perspective": consider <span
+class="math inline">\(\frac{ct}{2}\)</span> (modulo <span
+class="math inline">\(p\)</span>). <span
+class="math inline">\(&lt;\frac{ct}{2}, k&gt; = \frac{m}{2} +
+e\)</span>, where <span class="math inline">\(\frac{m}{2} \in
+\{0,\frac{p+1}{2}\}\)</span>. Note that because (modulo <span
+class="math inline">\(p\)</span>) <span
+class="math inline">\((\frac{p+1}{2})*2 = p+1 = 1\)</span>, division by
+2 (modulo <span class="math inline">\(p\)</span>) maps <span
+class="math inline">\(1\)</span> to <span
+class="math inline">\(\frac{p+1}{2}\)</span>; this is a very convenient
+fact for us.</p>
 <center>
 <img src="../../../../images/fhe/table.png" /><br><br>
 </center>
-<p><small>The scheme in this section uses both modular division (ie. multiplying by the <a href="https://en.wikipedia.org/wiki/Modular_multiplicative_inverse">modular multiplicative inverse</a>) and regular "rounded down" integer division; make sure you understand how both work and how they are different from each other.</small></p>
-<p>That is, the operation of dividing by 2 (modulo <span class="math inline">\(p\)</span>) converts small even numbers into small numbers, and it converts 1 into <span class="math inline">\(\frac{p}{2}\)</span> (rounded up). So if we look at <span class="math inline">\(\frac{ct}{2}\)</span> (modulo <span class="math inline">\(p\)</span>) instead of <span class="math inline">\(ct\)</span>, decryption involves computing <span class="math inline">\(&lt;\frac{ct}{2}, k&gt;\)</span> and seeing if it's closer to <span class="math inline">\(0\)</span> or <span class="math inline">\(\frac{p}{2}\)</span>. This "perspective" is much more robust to certain kinds of errors, where you know the error is small but can't guarantee that it's a multiple of 2.</p>
+<p><small>The scheme in this section uses both modular division (ie.
+multiplying by the <a
+href="https://en.wikipedia.org/wiki/Modular_multiplicative_inverse">modular
+multiplicative inverse</a>) and regular "rounded down" integer division;
+make sure you understand how both work and how they are different from
+each other.</small></p>
+<p>That is, the operation of dividing by 2 (modulo <span
+class="math inline">\(p\)</span>) converts small even numbers into small
+numbers, and it converts 1 into <span
+class="math inline">\(\frac{p}{2}\)</span> (rounded up). So if we look
+at <span class="math inline">\(\frac{ct}{2}\)</span> (modulo <span
+class="math inline">\(p\)</span>) instead of <span
+class="math inline">\(ct\)</span>, decryption involves computing <span
+class="math inline">\(&lt;\frac{ct}{2}, k&gt;\)</span> and seeing if
+it's closer to <span class="math inline">\(0\)</span> or <span
+class="math inline">\(\frac{p}{2}\)</span>. This "perspective" is much
+more robust to certain kinds of errors, where you know the error is
+small but can't guarantee that it's a multiple of 2.</p>
 <p>Now, here is something we can do to a ciphertext.</p>
 <ol type="1">
-<li>Start: <span class="math inline">\(&lt;ct, k&gt; = \{0\ or\ 1\} + 2e\ (mod\ p)\)</span></li>
-<li>Divide <span class="math inline">\(ct\)</span> by 2 (modulo <span class="math inline">\(p\)</span>): <span class="math inline">\(&lt;ct&#39;, k&gt; = \{0\ or\ \frac{p}{2}\} + e\ (mod\ p)\)</span></li>
-<li>Multiply <span class="math inline">\(ct&#39;\)</span> by <span class="math inline">\(\frac{q}{p}\)</span> <em>using "regular rounded-down integer division"</em>: <span class="math inline">\(&lt;ct&#39;&#39;, k&gt; = \{0\ or\ \frac{q}{2}\} + e&#39; + e_2\ (mod\ q)\)</span></li>
-<li>Multiply <span class="math inline">\(ct&#39;&#39;\)</span> by 2 (modulo <span class="math inline">\(q\)</span>): <span class="math inline">\(&lt;ct&#39;&#39;&#39;, k&gt; = \{0\ or\ 1\} + 2e&#39; + 2e_2\ (mod\ q)\)</span></li>
+<li>Start: <span class="math inline">\(&lt;ct, k&gt; = \{0\ or\ 1\} +
+2e\ (mod\ p)\)</span></li>
+<li>Divide <span class="math inline">\(ct\)</span> by 2 (modulo <span
+class="math inline">\(p\)</span>): <span
+class="math inline">\(&lt;ct&#39;, k&gt; = \{0\ or\ \frac{p}{2}\} + e\
+(mod\ p)\)</span></li>
+<li>Multiply <span class="math inline">\(ct&#39;\)</span> by <span
+class="math inline">\(\frac{q}{p}\)</span> <em>using "regular
+rounded-down integer division"</em>: <span
+class="math inline">\(&lt;ct&#39;&#39;, k&gt; = \{0\ or\ \frac{q}{2}\} +
+e&#39; + e_2\ (mod\ q)\)</span></li>
+<li>Multiply <span class="math inline">\(ct&#39;&#39;\)</span> by 2
+(modulo <span class="math inline">\(q\)</span>): <span
+class="math inline">\(&lt;ct&#39;&#39;&#39;, k&gt; = \{0\ or\ 1\} +
+2e&#39; + 2e_2\ (mod\ q)\)</span></li>
 </ol>
-<p>Step 3 is the crucial one: it converts a ciphertext under modulus <span class="math inline">\(p\)</span> into a ciphertext under modulus <span class="math inline">\(q\)</span>. The process just involves "scaling down" each element of <span class="math inline">\(ct&#39;\)</span> by multiplying by <span class="math inline">\(\frac{q}{p}\)</span> and rounding down, eg. <span class="math inline">\(floor(56 * \frac{15}{103}) = floor(8.15533..) = 8\)</span>.</p>
-<p>The idea is this: if <span class="math inline">\(&lt;ct&#39;, k&gt; = m*\frac{p}{2} + e\ (mod\ p)\)</span>, then we can interpret this as <span class="math inline">\(&lt;ct&#39;, k&gt; = p(z + \frac{m}{2}) + e\)</span> for some integer <span class="math inline">\(z\)</span>. Therefore, <span class="math inline">\(&lt;ct&#39; * \frac{q}{p}, k&gt; = q(z + \frac{m}{2}) + e*\frac{p}{q}\)</span>. Rounding adds error, but only a little bit (specifically, up to the size of the values in <span class="math inline">\(k\)</span>, and we can make the values in <span class="math inline">\(k\)</span> small without sacrificing security). Therefore, we can say <span class="math inline">\(&lt;ct&#39; * \frac{q}{p}, k&gt; = m*\frac{q}{2} + e&#39; + e_2\ (mod\ q)\)</span>, where <span class="math inline">\(e&#39; = e * \frac{q}{p}\)</span>, and <span class="math inline">\(e_2\)</span> is a small error from rounding.</p>
-<p>What have we accomplished? We turned a ciphertext with modulus <span class="math inline">\(p\)</span> and error <span class="math inline">\(2e\)</span> into a ciphertext with modulus <span class="math inline">\(q\)</span> and error <span class="math inline">\(2(floor(e*\frac{p}{q}) + e_2)\)</span>, where the new error is <em>smaller</em> than the original error.</p>
+<p>Step 3 is the crucial one: it converts a ciphertext under modulus
+<span class="math inline">\(p\)</span> into a ciphertext under modulus
+<span class="math inline">\(q\)</span>. The process just involves
+"scaling down" each element of <span
+class="math inline">\(ct&#39;\)</span> by multiplying by <span
+class="math inline">\(\frac{q}{p}\)</span> and rounding down, eg. <span
+class="math inline">\(floor(56 * \frac{15}{103}) = floor(8.15533..) =
+8\)</span>.</p>
+<p>The idea is this: if <span class="math inline">\(&lt;ct&#39;, k&gt; =
+m*\frac{p}{2} + e\ (mod\ p)\)</span>, then we can interpret this as
+<span class="math inline">\(&lt;ct&#39;, k&gt; = p(z + \frac{m}{2}) +
+e\)</span> for some integer <span class="math inline">\(z\)</span>.
+Therefore, <span class="math inline">\(&lt;ct&#39; * \frac{q}{p}, k&gt;
+= q(z + \frac{m}{2}) + e*\frac{p}{q}\)</span>. Rounding adds error, but
+only a little bit (specifically, up to the size of the values in <span
+class="math inline">\(k\)</span>, and we can make the values in <span
+class="math inline">\(k\)</span> small without sacrificing security).
+Therefore, we can say <span class="math inline">\(&lt;ct&#39; *
+\frac{q}{p}, k&gt; = m*\frac{q}{2} + e&#39; + e_2\ (mod\ q)\)</span>,
+where <span class="math inline">\(e&#39; = e * \frac{q}{p}\)</span>, and
+<span class="math inline">\(e_2\)</span> is a small error from
+rounding.</p>
+<p>What have we accomplished? We turned a ciphertext with modulus <span
+class="math inline">\(p\)</span> and error <span
+class="math inline">\(2e\)</span> into a ciphertext with modulus <span
+class="math inline">\(q\)</span> and error <span
+class="math inline">\(2(floor(e*\frac{p}{q}) + e_2)\)</span>, where the
+new error is <em>smaller</em> than the original error.</p>
 <p>Let's go through the above with an example. Suppose:</p>
 <ul>
-<li><span class="math inline">\(ct\)</span> is just one value, <span class="math inline">\([5612]\)</span></li>
+<li><span class="math inline">\(ct\)</span> is just one value, <span
+class="math inline">\([5612]\)</span></li>
 <li><span class="math inline">\(k = [9]\)</span></li>
-<li><span class="math inline">\(p = 9999\)</span> and <span class="math inline">\(q = 113\)</span></li>
+<li><span class="math inline">\(p = 9999\)</span> and <span
+class="math inline">\(q = 113\)</span></li>
 </ul>
-<p><span class="math inline">\(&lt;ct, k&gt; = 5612 * 9 = 50508 = 9999 * 5 + 2 * 256 + 1\)</span>, so <span class="math inline">\(ct\)</span> represents the bit 1, but the error is fairly large (<span class="math inline">\(e = 256\)</span>).</p>
-<p>Step 2: <span class="math inline">\(ct&#39; = \frac{ct}{2} = 2806\)</span> (remember this is modular division; if <span class="math inline">\(ct\)</span> were instead <span class="math inline">\(5613\)</span>, then we would have <span class="math inline">\(\frac{ct}{2} = 7806\)</span>). Checking: <span class="math inline">\(&lt;ct&#39;, k&gt; = 2806 * 9 = 25254 = 9999 * 2.5 + 256.5\)</span></p>
-<p>Step 3: <span class="math inline">\(ct&#39;&#39; = floor(2806 * \frac{113}{9999}) = floor(31.7109...) = 31\)</span>. Checking: <span class="math inline">\(&lt;ct&#39;&#39;, k&gt; = 279 = 113 * 2.5 - 3.5\)</span></p>
-<p>Step 4: <span class="math inline">\(ct&#39;&#39;&#39; = 31 * 2 = 62\)</span>. Checking: <span class="math inline">\(&lt;ct&#39;&#39;&#39;, k&gt; = 558 = 113 * 5 - 2 * 4 + 1\)</span></p>
-<p>And so the bit <span class="math inline">\(1\)</span> is preserved through the transformation. The crazy thing about this procedure is: <em>none of it requires knowing <span class="math inline">\(k\)</span></em>. Now, an astute reader might notice: you reduced the <em>absolute</em> size of the error (from 256 to 2), but the <em>relative</em> size of the error remained unchanged, and even slightly increased: <span class="math inline">\(\frac{256}{9999} \approx 2.5\%\)</span> but <span class="math inline">\(\frac{4}{113} \approx 3.5\%\)</span>. Given that it's the relative error that causes ciphertexts to break, what have we gained here?</p>
-<p>The answer comes from what happens to error when you multiply ciphertexts. Suppose that we start with a ciphertext <span class="math inline">\(x\)</span> with error 100, and modulus <span class="math inline">\(p = 10^{16} - 1\)</span>. We want to repeatedly square <span class="math inline">\(x\)</span>, to compute <span class="math inline">\((((x^2)^2)^2)^2 = x^{16}\)</span>. First, the "normal way":</p>
+<p><span class="math inline">\(&lt;ct, k&gt; = 5612 * 9 = 50508 = 9999 *
+5 + 2 * 256 + 1\)</span>, so <span class="math inline">\(ct\)</span>
+represents the bit 1, but the error is fairly large (<span
+class="math inline">\(e = 256\)</span>).</p>
+<p>Step 2: <span class="math inline">\(ct&#39; = \frac{ct}{2} =
+2806\)</span> (remember this is modular division; if <span
+class="math inline">\(ct\)</span> were instead <span
+class="math inline">\(5613\)</span>, then we would have <span
+class="math inline">\(\frac{ct}{2} = 7806\)</span>). Checking: <span
+class="math inline">\(&lt;ct&#39;, k&gt; = 2806 * 9 = 25254 = 9999 * 2.5
++ 256.5\)</span></p>
+<p>Step 3: <span class="math inline">\(ct&#39;&#39; = floor(2806 *
+\frac{113}{9999}) = floor(31.7109...) = 31\)</span>. Checking: <span
+class="math inline">\(&lt;ct&#39;&#39;, k&gt; = 279 = 113 * 2.5 -
+3.5\)</span></p>
+<p>Step 4: <span class="math inline">\(ct&#39;&#39;&#39; = 31 * 2 =
+62\)</span>. Checking: <span
+class="math inline">\(&lt;ct&#39;&#39;&#39;, k&gt; = 558 = 113 * 5 - 2 *
+4 + 1\)</span></p>
+<p>And so the bit <span class="math inline">\(1\)</span> is preserved
+through the transformation. The crazy thing about this procedure is:
+<em>none of it requires knowing <span
+class="math inline">\(k\)</span></em>. Now, an astute reader might
+notice: you reduced the <em>absolute</em> size of the error (from 256 to
+2), but the <em>relative</em> size of the error remained unchanged, and
+even slightly increased: <span class="math inline">\(\frac{256}{9999}
+\approx 2.5\%\)</span> but <span class="math inline">\(\frac{4}{113}
+\approx 3.5\%\)</span>. Given that it's the relative error that causes
+ciphertexts to break, what have we gained here?</p>
+<p>The answer comes from what happens to error when you multiply
+ciphertexts. Suppose that we start with a ciphertext <span
+class="math inline">\(x\)</span> with error 100, and modulus <span
+class="math inline">\(p = 10^{16} - 1\)</span>. We want to repeatedly
+square <span class="math inline">\(x\)</span>, to compute <span
+class="math inline">\((((x^2)^2)^2)^2 = x^{16}\)</span>. First, the
+"normal way":</p>
 <center>
 <img src="../../../../images/fhe/table2.png" /><br><br>
 </center>
-<p>The error blows up too quickly for the computation to be possible. Now, let's do a modulus reduction after every multiplication. We assume the modulus reduction is imperfect and increases error by a factor of 10, so a 1000x modulo reduction only reduces error from 10000 to 100 (and not to 10):</p>
+<p>The error blows up too quickly for the computation to be possible.
+Now, let's do a modulus reduction after every multiplication. We assume
+the modulus reduction is imperfect and increases error by a factor of
+10, so a 1000x modulo reduction only reduces error from 10000 to 100
+(and not to 10):</p>
 <center>
 <img src="../../../../images/fhe/table3.png" /><br><br>
 </center>
-<p>The key mathematical idea here is that the <em>factor</em> by which error increases in a multiplication depends on the absolute size of the error, and not its relative size, and so if we keep doing modulus reductions to keep the error small, each multiplication only increases the error by a constant factor. And so, with a <span class="math inline">\(d\)</span> bit modulus (and hence <span class="math inline">\(\approx 2^d\)</span> room for "error"), we can do <span class="math inline">\(O(d)\)</span> multiplications! This is enough to bootstrap.</p>
+<p>The key mathematical idea here is that the <em>factor</em> by which
+error increases in a multiplication depends on the absolute size of the
+error, and not its relative size, and so if we keep doing modulus
+reductions to keep the error small, each multiplication only increases
+the error by a constant factor. And so, with a <span
+class="math inline">\(d\)</span> bit modulus (and hence <span
+class="math inline">\(\approx 2^d\)</span> room for "error"), we can do
+<span class="math inline">\(O(d)\)</span> multiplications! This is
+enough to bootstrap.</p>
 <h3 id="another-technique-matrices">Another technique: matrices</h3>
-<p>Another technique (see <a href="https://eprint.iacr.org/2013/340.pdf">Gentry, Sahai, Waters (2013)</a>) for fully homomorphic encryption involves matrices: instead of representing a ciphertext as <span class="math inline">\(ct\)</span> where <span class="math inline">\(&lt;ct, k&gt; = 2e + m\)</span>, a ciphertext is a matrix, where <span class="math inline">\(k * CT = k * m + e\)</span> (<span class="math inline">\(k\)</span>, the key, is still a vector). The idea here is that <span class="math inline">\(k\)</span> is a "secret near-eigenvector" - a secret vector which, if you multiply the matrix by it, returns something very close to either zero or the key itself.</p>
-<p>The fact that addition works is easy: if <span class="math inline">\(k * CT_1 = m_1 * k + e_1\)</span> and <span class="math inline">\(k * CT_2 = m_2 * k + e_2\)</span>, then <span class="math inline">\(k * (CT_1 + CT_2) = (m_1 + m_2) * k + (e_1 + e_2)\)</span>. The fact that multiplication works is also easy:</p>
-<p><span class="math inline">\(k * CT_1 * CT_2\)</span> <span class="math inline">\(= (m_1 * k + e_1) * CT_2\)</span> <span class="math inline">\(= m_1 * k * CT_2 + e_1 * CT_2\)</span> <span class="math inline">\(= m_1 * m_2 * k + m_1 * e_2 + e_1 * CT_2\)</span></p>
-<p>The first term is the "intended term"; the latter two terms are the "error". That said, notice that here error does blow up quadratically (see the <span class="math inline">\(e_1 * CT_2\)</span> term; the size of the error increases by the size of each ciphertext element, and the ciphertext elements also square in size), and you do need some clever tricks for avoiding this. Basically, this involves turning ciphertexts into matrices containing their constituent bits before multiplying, to avoid multiplying by anything higher than 1; if you want to see how this works in detail I recommend looking at my code: <a href="https://github.com/vbuterin/research/blob/master/matrix_fhe/matrix_fhe.py#L121">https://github.com/vbuterin/research/blob/master/matrix_fhe/matrix_fhe.py#L121</a></p>
-<p>In addition, the code there, and also <a href="https://github.com/vbuterin/research/blob/master/tensor_fhe/homomorphic_encryption.py#L186">https://github.com/vbuterin/research/blob/master/tensor_fhe/homomorphic_encryption.py#L186</a>, provides simple examples of useful circuits that you can build out of these binary logical operations; the main example is for adding numbers that are represented as multiple bits, but one can also make circuits for comparison (<span class="math inline">\(&lt;\)</span>, <span class="math inline">\(&gt;\)</span>, <span class="math inline">\(=\)</span>), multiplication, division, and many other operations.</p>
-<p>Since 2012-13, when these algorithms were created, there have been many optimizations, but they all work on top of these basic frameworks. Often, polynomials are used instead of integers; this is called <a href="https://en.wikipedia.org/wiki/Ring_learning_with_errors">ring LWE</a>. The major challenge is still efficiency: an operation involving a single bit involves multiplying entire matrices or performing an entire relinearization computation, a very high overhead. There are tricks that allow you to perform many bit operations in a single ciphertext operation, and this is actively being worked on and improved.</p>
-<p>We are quickly getting to the point where many of the applications of homomorphic encryption in privacy-preserving computation are starting to become practical. Additionally, research in the more advanced applications of the lattice-based cryptography used in homomorphic encryption is rapidly progressing. So this is a space where some things can already be done today, but we can hopefully look forward to much more becoming possible over the next decade.</p>
+<p>Another technique (see <a
+href="https://eprint.iacr.org/2013/340.pdf">Gentry, Sahai, Waters
+(2013)</a>) for fully homomorphic encryption involves matrices: instead
+of representing a ciphertext as <span class="math inline">\(ct\)</span>
+where <span class="math inline">\(&lt;ct, k&gt; = 2e + m\)</span>, a
+ciphertext is a matrix, where <span class="math inline">\(k * CT = k * m
++ e\)</span> (<span class="math inline">\(k\)</span>, the key, is still
+a vector). The idea here is that <span class="math inline">\(k\)</span>
+is a "secret near-eigenvector" - a secret vector which, if you multiply
+the matrix by it, returns something very close to either zero or the key
+itself.</p>
+<p>The fact that addition works is easy: if <span
+class="math inline">\(k * CT_1 = m_1 * k + e_1\)</span> and <span
+class="math inline">\(k * CT_2 = m_2 * k + e_2\)</span>, then <span
+class="math inline">\(k * (CT_1 + CT_2) = (m_1 + m_2) * k + (e_1 +
+e_2)\)</span>. The fact that multiplication works is also easy:</p>
+<p><span class="math inline">\(k * CT_1 * CT_2\)</span> <span
+class="math inline">\(= (m_1 * k + e_1) * CT_2\)</span> <span
+class="math inline">\(= m_1 * k * CT_2 + e_1 * CT_2\)</span> <span
+class="math inline">\(= m_1 * m_2 * k + m_1 * e_2 + e_1 *
+CT_2\)</span></p>
+<p>The first term is the "intended term"; the latter two terms are the
+"error". That said, notice that here error does blow up quadratically
+(see the <span class="math inline">\(e_1 * CT_2\)</span> term; the size
+of the error increases by the size of each ciphertext element, and the
+ciphertext elements also square in size), and you do need some clever
+tricks for avoiding this. Basically, this involves turning ciphertexts
+into matrices containing their constituent bits before multiplying, to
+avoid multiplying by anything higher than 1; if you want to see how this
+works in detail I recommend looking at my code: <a
+href="https://github.com/vbuterin/research/blob/master/matrix_fhe/matrix_fhe.py#L121">https://github.com/vbuterin/research/blob/master/matrix_fhe/matrix_fhe.py#L121</a></p>
+<p>In addition, the code there, and also <a
+href="https://github.com/vbuterin/research/blob/master/tensor_fhe/homomorphic_encryption.py#L186">https://github.com/vbuterin/research/blob/master/tensor_fhe/homomorphic_encryption.py#L186</a>,
+provides simple examples of useful circuits that you can build out of
+these binary logical operations; the main example is for adding numbers
+that are represented as multiple bits, but one can also make circuits
+for comparison (<span class="math inline">\(&lt;\)</span>, <span
+class="math inline">\(&gt;\)</span>, <span
+class="math inline">\(=\)</span>), multiplication, division, and many
+other operations.</p>
+<p>Since 2012-13, when these algorithms were created, there have been
+many optimizations, but they all work on top of these basic frameworks.
+Often, polynomials are used instead of integers; this is called <a
+href="https://en.wikipedia.org/wiki/Ring_learning_with_errors">ring
+LWE</a>. The major challenge is still efficiency: an operation involving
+a single bit involves multiplying entire matrices or performing an
+entire relinearization computation, a very high overhead. There are
+tricks that allow you to perform many bit operations in a single
+ciphertext operation, and this is actively being worked on and
+improved.</p>
+<p>We are quickly getting to the point where many of the applications of
+homomorphic encryption in privacy-preserving computation are starting to
+become practical. Additionally, research in the more advanced
+applications of the lattice-based cryptography used in homomorphic
+encryption is rapidly progressing. So this is a space where some things
+can already be done today, but we can hopefully look forward to much
+more becoming possible over the next decade.</p>
  </div> 

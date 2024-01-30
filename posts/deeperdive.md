@@ -5,18 +5,18 @@
 
 _Special thanks to Yoav Weiss, Dan Finlay, Martin Koppelmann, and the Arbitrum, Optimism, Polygon, Scroll and SoulWallet teams for feedback and review._
 
-In [this post on the Three Transitions](https://vitalik.ca/general/2023/06/09/three_transitions.html), I outlined some key reasons why it's valuable to start thinking explicitly about L1 + cross-L2 support, wallet security, and privacy as necessary basic features of the ecosystem stack, rather than building each of these things as addons that can be designed separately by individual wallets.
+In [this post on the Three Transitions](../../../2023/06/09/three_transitions.html), I outlined some key reasons why it's valuable to start thinking explicitly about L1 + cross-L2 support, wallet security, and privacy as necessary basic features of the ecosystem stack, rather than building each of these things as addons that can be designed separately by individual wallets.
 
 **This post will focus more directly on the technical aspects of one specific sub-problem: how to make it easier to read L1 from L2, L2 from L1, or an L2 from another L2**. Solving this problem is crucial for implementing an asset / keystore separation architecture, but it also has valuable use cases in other areas, most notably optimizing reliable cross-L2 calls, including use cases like moving assets between L1 and L2s.
 
 ## Recommended pre-reads
 
-* Post on [the Three Transitions](https://vitalik.ca/general/2023/06/09/three_transitions.html)
+* Post on [the Three Transitions](../../../2023/06/09/three_transitions.html)
 * Ideas from the Safe team on [holding assets across multiple chains](https://forum.safe.global/t/how-can-a-safe-hold-asset-on-multiple-chains/2242)
-* Why we need wide adoption of [social recovery wallets](https://vitalik.ca/general/2021/01/11/recovery.html)
-* [ZK-SNARKs](https://vitalik.ca/general/2021/01/26/snarks.html), and [some privacy applications](https://vitalik.ca/general/2022/06/15/using_snarks.html)
+* Why we need wide adoption of [social recovery wallets](../../../2021/01/11/recovery.html)
+* [ZK-SNARKs](../../../2021/01/26/snarks.html), and [some privacy applications](../../../2022/06/15/using_snarks.html)
 * [Dankrad on KZG commitments](https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html)
-* [Verkle trees](https://vitalik.ca/general/2021/06/18/verkle.html)
+* [Verkle trees](../../../2021/06/18/verkle.html)
 
 ## Table of contents
 
@@ -66,7 +66,7 @@ There are two ways to implement this:
     * **Upside**: uses cross-chain proofs sparingly, so it's okay if cross-chain proofs are expensive. All funds are only spendable with the current keys, so it's still secure.
     * **Downside**: To change the verification key, you have to make an on-chain key change in both the keystore and in every wallet that is already initialized (though not counterfactual ones). This could cost a lot of gas.
 * **Heavy version (check for every tx)**: a cross-chain proof showing the key currently in the keystore is necessary for each transaction.
-    * **Upside**: less [systemic complexity](https://vitalik.ca/general/2022/02/28/complexity.html), and keystore updating is cheap.
+    * **Upside**: less [systemic complexity](../../../2022/02/28/complexity.html), and keystore updating is cheap.
     * **Downside**: expensive per-tx, so requires much more engineering to make cross-chain proofs acceptably cheap. Also not easily compatible with ERC-4337, which currently does not support cross-contract reading of mutable objects during validation.
 
 ## What does a cross-chain proof look like?
@@ -97,7 +97,7 @@ There are five major options:
 * **Merkle proofs**
 * **General-purpose ZK-SNARKs**
 * **Special-purpose proofs (eg. with KZG)**
-* **[Verkle proofs](https://vitalik.ca/general/2021/06/18/verkle.html)**, which are somewhere between KZG and ZK-SNARKs on both infrastructure workload and cost.
+* **[Verkle proofs](../../../2021/06/18/verkle.html)**, which are somewhere between KZG and ZK-SNARKs on both infrastructure workload and cost.
 * **No proofs and rely on direct state reading**
 
 In terms of infrastructure work required and cost for users, I rank them roughly as follows:

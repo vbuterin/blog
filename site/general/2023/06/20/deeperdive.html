@@ -109,48 +109,111 @@ MathJax = {
 <br> <br> <br>
 <title> Deeper dive on cross-L2 reading for wallets and other use cases </title>
 
-<p><em>Special thanks to Yoav Weiss, Dan Finlay, Martin Koppelmann, and the Arbitrum, Optimism, Polygon, Scroll and SoulWallet teams for feedback and review.</em></p>
-<p>In <a href="https://vitalik.ca/general/2023/06/09/three_transitions.html">this post on the Three Transitions</a>, I outlined some key reasons why it's valuable to start thinking explicitly about L1 + cross-L2 support, wallet security, and privacy as necessary basic features of the ecosystem stack, rather than building each of these things as addons that can be designed separately by individual wallets.</p>
-<p><strong>This post will focus more directly on the technical aspects of one specific sub-problem: how to make it easier to read L1 from L2, L2 from L1, or an L2 from another L2</strong>. Solving this problem is crucial for implementing an asset / keystore separation architecture, but it also has valuable use cases in other areas, most notably optimizing reliable cross-L2 calls, including use cases like moving assets between L1 and L2s.</p>
+<p><em>Special thanks to Yoav Weiss, Dan Finlay, Martin Koppelmann, and
+the Arbitrum, Optimism, Polygon, Scroll and SoulWallet teams for
+feedback and review.</em></p>
+<p>In <a href="../../../2023/06/09/three_transitions.html">this post on
+the Three Transitions</a>, I outlined some key reasons why it's valuable
+to start thinking explicitly about L1 + cross-L2 support, wallet
+security, and privacy as necessary basic features of the ecosystem
+stack, rather than building each of these things as addons that can be
+designed separately by individual wallets.</p>
+<p><strong>This post will focus more directly on the technical aspects
+of one specific sub-problem: how to make it easier to read L1 from L2,
+L2 from L1, or an L2 from another L2</strong>. Solving this problem is
+crucial for implementing an asset / keystore separation architecture,
+but it also has valuable use cases in other areas, most notably
+optimizing reliable cross-L2 calls, including use cases like moving
+assets between L1 and L2s.</p>
 <h2 id="recommended-pre-reads">Recommended pre-reads</h2>
 <ul>
-<li>Post on <a href="https://vitalik.ca/general/2023/06/09/three_transitions.html">the Three Transitions</a></li>
-<li>Ideas from the Safe team on <a href="https://forum.safe.global/t/how-can-a-safe-hold-asset-on-multiple-chains/2242">holding assets across multiple chains</a></li>
-<li>Why we need wide adoption of <a href="https://vitalik.ca/general/2021/01/11/recovery.html">social recovery wallets</a></li>
-<li><a href="https://vitalik.ca/general/2021/01/26/snarks.html">ZK-SNARKs</a>, and <a href="https://vitalik.ca/general/2022/06/15/using_snarks.html">some privacy applications</a></li>
-<li><a href="https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html">Dankrad on KZG commitments</a></li>
-<li><a href="https://vitalik.ca/general/2021/06/18/verkle.html">Verkle trees</a></li>
+<li>Post on <a href="../../../2023/06/09/three_transitions.html">the
+Three Transitions</a></li>
+<li>Ideas from the Safe team on <a
+href="https://forum.safe.global/t/how-can-a-safe-hold-asset-on-multiple-chains/2242">holding
+assets across multiple chains</a></li>
+<li>Why we need wide adoption of <a
+href="../../../2021/01/11/recovery.html">social recovery
+wallets</a></li>
+<li><a href="../../../2021/01/26/snarks.html">ZK-SNARKs</a>, and <a
+href="../../../2022/06/15/using_snarks.html">some privacy
+applications</a></li>
+<li><a
+href="https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html">Dankrad
+on KZG commitments</a></li>
+<li><a href="../../../2021/06/18/verkle.html">Verkle trees</a></li>
 </ul>
 <h2 id="table-of-contents">Table of contents</h2>
 <ul>
 <li><a href="#what-is-the-goal">What is the goal?</a></li>
-<li><a href="#what-does-a-cross-chain-proof-look-like">What does a cross-chain proof look like?</a></li>
-<li><a href="#what-kinds-of-proof-schemes-can-we-use">What kinds of proof schemes can we use?</a>
+<li><a href="#what-does-a-cross-chain-proof-look-like">What does a
+cross-chain proof look like?</a></li>
+<li><a href="#what-kinds-of-proof-schemes-can-we-use">What kinds of
+proof schemes can we use?</a>
 <ul>
 <li><a href="#how-would-merkle-proofs-work">Merkle proofs</a></li>
 <li><a href="#how-would-zk-snark-proofs-work">ZK SNARKs</a></li>
-<li><a href="#how-would-special-purpose-kzg-proofs-work">Special purpose KZG proofs</a></li>
+<li><a href="#how-would-special-purpose-kzg-proofs-work">Special purpose
+KZG proofs</a></li>
 <li><a href="#how-would-verkle-trees-work">Verkle tree proofs</a></li>
 <li><a href="#aggregation">Aggregation</a></li>
 <li><a href="#direct-state-reading">Direct state reading</a></li>
 </ul></li>
-<li><a href="#how-does-l2-learn-the-recent-ethereum-state-root">How does L2 learn the recent Ethereum state root?</a></li>
-<li><a href="#how-much-connection-to-ethereum-does-another-chain-need-to-hold-wallets-whose-keystores-are-rooted-on-ethereum-or-an-l2">Wallets on chains that are not L2s</a></li>
+<li><a href="#how-does-l2-learn-the-recent-ethereum-state-root">How does
+L2 learn the recent Ethereum state root?</a></li>
+<li><a
+href="#how-much-connection-to-ethereum-does-another-chain-need-to-hold-wallets-whose-keystores-are-rooted-on-ethereum-or-an-l2">Wallets
+on chains that are not L2s</a></li>
 <li><a href="#preserving-privacy">Preserving privacy</a></li>
 <li><a href="#summary">Summary</a></li>
 </ul>
 <h2 id="what-is-the-goal">What is the goal?</h2>
-<p>Once L2s become more mainstream, users will have assets across multiple L2s, and possibly L1 as well. Once smart contract wallets (multisig, social recovery or otherwise) become mainstream, <strong>the keys needed to access some account are going to change over time, and old keys would need to no longer be valid</strong>. Once <em>both</em> of these things happen, a user will need to have a way to change the keys that have authority to access many accounts which live in many different places, without making an extremely high number of transactions.</p>
-<p>Particularly, we need a way to handle <strong>counterfactual addresses: addresses that have not yet been "registered" in any way on-chain, but which nevertheless need to receive and securely hold funds</strong>. We all depend on counterfactual addresses: when you use Ethereum for the first time, you are able to generate an ETH address that someone can use to pay you, without "registering" the address on-chain (which would require paying txfees, and hence already holding some ETH).</p>
-<p>With <a href="https://ethereum.org/en/developers/docs/accounts/">EOAs</a>, all addresses start off as counterfactual addresses. With smart contract wallets, counterfactual addresses are still possible, largely thanks to <a href="https://eips.ethereum.org/EIPS/eip-1014">CREATE2</a>, which allows you to have an ETH address that can only be filled by a smart contract that has code matching a particular hash.</p>
+<p>Once L2s become more mainstream, users will have assets across
+multiple L2s, and possibly L1 as well. Once smart contract wallets
+(multisig, social recovery or otherwise) become mainstream, <strong>the
+keys needed to access some account are going to change over time, and
+old keys would need to no longer be valid</strong>. Once <em>both</em>
+of these things happen, a user will need to have a way to change the
+keys that have authority to access many accounts which live in many
+different places, without making an extremely high number of
+transactions.</p>
+<p>Particularly, we need a way to handle <strong>counterfactual
+addresses: addresses that have not yet been "registered" in any way
+on-chain, but which nevertheless need to receive and securely hold
+funds</strong>. We all depend on counterfactual addresses: when you use
+Ethereum for the first time, you are able to generate an ETH address
+that someone can use to pay you, without "registering" the address
+on-chain (which would require paying txfees, and hence already holding
+some ETH).</p>
+<p>With <a
+href="https://ethereum.org/en/developers/docs/accounts/">EOAs</a>, all
+addresses start off as counterfactual addresses. With smart contract
+wallets, counterfactual addresses are still possible, largely thanks to
+<a href="https://eips.ethereum.org/EIPS/eip-1014">CREATE2</a>, which
+allows you to have an ETH address that can only be filled by a smart
+contract that has code matching a particular hash.</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/deeperdive/create2.png" /></p>
-<p><em><a href="https://eips.ethereum.org/EIPS/eip-1014">EIP-1014 (CREATE2)</a> address calculation algorithm.</em></p>
+<p><em><a href="https://eips.ethereum.org/EIPS/eip-1014">EIP-1014
+(CREATE2)</a> address calculation algorithm.</em></p>
 </center>
 <p><br></p>
-<p>However, smart contract wallets introduce a new challenge: the possibility of access keys <em>changing</em>. The address, which is a hash of the <code>initcode</code>, can only contain the wallet's <em>initial</em> verification key. The <em>current</em> verification key would be stored in the wallet's storage, but that storage record does not magically propagate to other L2s.</p>
-<p>If a user has many addresses on many L2s, including addresses that (because they are counterfactual) the L2 that they are on does not know about, then it seems like there is only one way to allow users to change their keys: <strong>asset / keystore separation architecture</strong>. Each user has <strong>(i) a "keystore contract"</strong> (on L1 or on one particular L2), which stores the verification key for <em>all</em> wallets along with the rules for changing the key, and <strong>(ii) "wallet contracts"</strong> on L1 and many L2s, which read cross-chain to get the verification key.</p>
+<p>However, smart contract wallets introduce a new challenge: the
+possibility of access keys <em>changing</em>. The address, which is a
+hash of the <code>initcode</code>, can only contain the wallet's
+<em>initial</em> verification key. The <em>current</em> verification key
+would be stored in the wallet's storage, but that storage record does
+not magically propagate to other L2s.</p>
+<p>If a user has many addresses on many L2s, including addresses that
+(because they are counterfactual) the L2 that they are on does not know
+about, then it seems like there is only one way to allow users to change
+their keys: <strong>asset / keystore separation architecture</strong>.
+Each user has <strong>(i) a "keystore contract"</strong> (on L1 or on
+one particular L2), which stores the verification key for <em>all</em>
+wallets along with the rules for changing the key, and <strong>(ii)
+"wallet contracts"</strong> on L1 and many L2s, which read cross-chain
+to get the verification key.</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/deeperdive/keystore.png" /></p>
@@ -158,98 +221,253 @@ MathJax = {
 <p><br></p>
 <p>There are two ways to implement this:</p>
 <ul>
-<li><strong>Light version (check only to update keys)</strong>: each wallet stores the verification key locally, and contains a function which can be called to check a cross-chain proof of the keystore's current state, and update its locally stored verification key to match. When a wallet is used for the first time on a particular L2, calling that function to obtain the current verification key from the keystore is mandatory.
+<li><strong>Light version (check only to update keys)</strong>: each
+wallet stores the verification key locally, and contains a function
+which can be called to check a cross-chain proof of the keystore's
+current state, and update its locally stored verification key to match.
+When a wallet is used for the first time on a particular L2, calling
+that function to obtain the current verification key from the keystore
+is mandatory.
 <ul>
-<li><strong>Upside</strong>: uses cross-chain proofs sparingly, so it's okay if cross-chain proofs are expensive. All funds are only spendable with the current keys, so it's still secure.</li>
-<li><strong>Downside</strong>: To change the verification key, you have to make an on-chain key change in both the keystore and in every wallet that is already initialized (though not counterfactual ones). This could cost a lot of gas.</li>
+<li><strong>Upside</strong>: uses cross-chain proofs sparingly, so it's
+okay if cross-chain proofs are expensive. All funds are only spendable
+with the current keys, so it's still secure.</li>
+<li><strong>Downside</strong>: To change the verification key, you have
+to make an on-chain key change in both the keystore and in every wallet
+that is already initialized (though not counterfactual ones). This could
+cost a lot of gas.</li>
 </ul></li>
-<li><strong>Heavy version (check for every tx)</strong>: a cross-chain proof showing the key currently in the keystore is necessary for each transaction.
+<li><strong>Heavy version (check for every tx)</strong>: a cross-chain
+proof showing the key currently in the keystore is necessary for each
+transaction.
 <ul>
-<li><strong>Upside</strong>: less <a href="https://vitalik.ca/general/2022/02/28/complexity.html">systemic complexity</a>, and keystore updating is cheap.</li>
-<li><strong>Downside</strong>: expensive per-tx, so requires much more engineering to make cross-chain proofs acceptably cheap. Also not easily compatible with ERC-4337, which currently does not support cross-contract reading of mutable objects during validation.</li>
+<li><strong>Upside</strong>: less <a
+href="../../../2022/02/28/complexity.html">systemic complexity</a>, and
+keystore updating is cheap.</li>
+<li><strong>Downside</strong>: expensive per-tx, so requires much more
+engineering to make cross-chain proofs acceptably cheap. Also not easily
+compatible with ERC-4337, which currently does not support
+cross-contract reading of mutable objects during validation.</li>
 </ul></li>
 </ul>
-<h2 id="what-does-a-cross-chain-proof-look-like">What does a cross-chain proof look like?</h2>
-<p>To show the full complexity, we'll explore the most difficult case: where the keystore is on one L2, and the wallet is on a different L2. If either the keystore on the wallet is on L1, then only half of this design is needed.</p>
+<h2 id="what-does-a-cross-chain-proof-look-like">What does a cross-chain
+proof look like?</h2>
+<p>To show the full complexity, we'll explore the most difficult case:
+where the keystore is on one L2, and the wallet is on a different L2. If
+either the keystore on the wallet is on L1, then only half of this
+design is needed.</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/deeperdive/crosschainproof.png" /></p>
 </center>
 <p><br></p>
-<p>Let's assume that the keystore is on <a href="https://linea.build/">Linea</a>, and the wallet is on <a href="https://www.kakarot.org/">Kakarot</a>. A full proof of the keys to the wallet consists of:</p>
+<p>Let's assume that the keystore is on <a
+href="https://linea.build/">Linea</a>, and the wallet is on <a
+href="https://www.kakarot.org/">Kakarot</a>. A full proof of the keys to
+the wallet consists of:</p>
 <ul>
-<li>A proof proving the current Linea state root, given the current Ethereum state root that Kakarot knows about</li>
-<li>A proof proving the current keys in the keystore, given the current Linea state root</li>
+<li>A proof proving the current Linea state root, given the current
+Ethereum state root that Kakarot knows about</li>
+<li>A proof proving the current keys in the keystore, given the current
+Linea state root</li>
 </ul>
 <p>There are two primary tricky implementation questions here:</p>
 <ol type="1">
-<li><strong>What kind of proof do we use</strong>? (Is it Merkle proofs? something else?)</li>
-<li><strong>How does the L2 learn the recent L1 (Ethereum) state root</strong> (or, as we shall see, potentially the full L1 state) in the first place? And alternatively, how does the L1 learn the L2 state root?
+<li><strong>What kind of proof do we use</strong>? (Is it Merkle proofs?
+something else?)</li>
+<li><strong>How does the L2 learn the recent L1 (Ethereum) state
+root</strong> (or, as we shall see, potentially the full L1 state) in
+the first place? And alternatively, how does the L1 learn the L2 state
+root?
 <ul>
-<li>In both cases, <strong>how long are the delays</strong> between something happening on one side, and that thing being provable to the other side?</li>
+<li>In both cases, <strong>how long are the delays</strong> between
+something happening on one side, and that thing being provable to the
+other side?</li>
 </ul></li>
 </ol>
-<h2 id="what-kinds-of-proof-schemes-can-we-use">What kinds of proof schemes can we use?</h2>
+<h2 id="what-kinds-of-proof-schemes-can-we-use">What kinds of proof
+schemes can we use?</h2>
 <p>There are five major options:</p>
 <ul>
 <li><strong>Merkle proofs</strong></li>
 <li><strong>General-purpose ZK-SNARKs</strong></li>
 <li><strong>Special-purpose proofs (eg. with KZG)</strong></li>
-<li><strong><a href="https://vitalik.ca/general/2021/06/18/verkle.html">Verkle proofs</a></strong>, which are somewhere between KZG and ZK-SNARKs on both infrastructure workload and cost.</li>
+<li><strong><a href="../../../2021/06/18/verkle.html">Verkle
+proofs</a></strong>, which are somewhere between KZG and ZK-SNARKs on
+both infrastructure workload and cost.</li>
 <li><strong>No proofs and rely on direct state reading</strong></li>
 </ul>
-<p>In terms of infrastructure work required and cost for users, I rank them roughly as follows:</p>
+<p>In terms of infrastructure work required and cost for users, I rank
+them roughly as follows:</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/deeperdive/proofs.png" /></p>
 </center>
 <p><br></p>
-<p>"<strong>Aggregation</strong>" refers to the idea of aggregating all the proofs supplied by users within each block into a big meta-proof that combines all of them. This is possible for SNARKs, and for KZG, but not for Merkle branches (you <em>can</em> <a href="https://github.com/ethereum/consensus-specs/blob/dev/ssz/merkle-proofs.md#merkle-multiproofs">combine Merkle branches a little bit</a>, but it only saves you <code>log(txs per block) / log(total number of keystores)</code>, perhaps 15-30% in practice, so it's probably not worth the cost).</p>
-<p>Aggregation only becomes worth it once the scheme has a substantial number of users, so realistically it's okay for a version-1 implementation to leave aggregation out, and implement that for version 2.</p>
+<p>"<strong>Aggregation</strong>" refers to the idea of aggregating all
+the proofs supplied by users within each block into a big meta-proof
+that combines all of them. This is possible for SNARKs, and for KZG, but
+not for Merkle branches (you <em>can</em> <a
+href="https://github.com/ethereum/consensus-specs/blob/dev/ssz/merkle-proofs.md#merkle-multiproofs">combine
+Merkle branches a little bit</a>, but it only saves you
+<code>log(txs per block) / log(total number of keystores)</code>,
+perhaps 15-30% in practice, so it's probably not worth the cost).</p>
+<p>Aggregation only becomes worth it once the scheme has a substantial
+number of users, so realistically it's okay for a version-1
+implementation to leave aggregation out, and implement that for version
+2.</p>
 <h3 id="how-would-merkle-proofs-work">How would Merkle proofs work?</h3>
-<p>This one is simple: follow the <a href="#what-does-a-cross-chain-proof-look-like">diagram in the previous section</a> directly. More precisely, each "proof" (assuming the max-difficulty case of proving one L2 into another L2) would contain:</p>
+<p>This one is simple: follow the <a
+href="#what-does-a-cross-chain-proof-look-like">diagram in the previous
+section</a> directly. More precisely, each "proof" (assuming the
+max-difficulty case of proving one L2 into another L2) would
+contain:</p>
 <ul>
-<li><strong>A Merkle branch proving the state-root of the keystore-holding L2, given the most recent state root of Ethereum</strong> that the L2 knows about. The keystore-holding L2's state root is stored at a known storage slot of a known address (the contract on L1 representing the L2), and so the path through the tree could be hardcoded.</li>
-<li><strong>A Merkle branch proving the current verification keys, given the state-root of the keystore-holding L2</strong>. Here once again, the verification key is stored at a known storage slot of a known address, so the path can be hardcoded.</li>
+<li><strong>A Merkle branch proving the state-root of the
+keystore-holding L2, given the most recent state root of
+Ethereum</strong> that the L2 knows about. The keystore-holding L2's
+state root is stored at a known storage slot of a known address (the
+contract on L1 representing the L2), and so the path through the tree
+could be hardcoded.</li>
+<li><strong>A Merkle branch proving the current verification keys, given
+the state-root of the keystore-holding L2</strong>. Here once again, the
+verification key is stored at a known storage slot of a known address,
+so the path can be hardcoded.</li>
 </ul>
-<p>Unfortunately, Ethereum state proofs are complicated, but there exist <a href="https://github.com/ConsenSysMesh/rb-relay/blob/master/contracts/MerklePatriciaProof.sol">libraries for verifying them</a>, and if you use these libraries, this mechanism is not too complicated to implement.</p>
-<p>The larger problem is cost. Merkle proofs are long, and Patricia trees are unfortunately ~3.9x longer than necessary (precisely: an ideal Merkle proof into a tree holding <code>N</code> objects is <code>32 * log2(N)</code> bytes long, and because Ethereum's Patricia trees have 16 leaves per child, proofs for those trees are <code>32 * 15 * log16(N) ~= 125 * log2(N)</code> bytes long). In a state with roughly <a href="https://ycharts.com/indicators/ethereum_cumulative_unique_addresses">250 million (~2²⁸) accounts</a>, this makes each proof <code>125 * 28 = 3500</code> bytes, or about 56,000 gas, plus extra costs for decoding and verifying hashes.</p>
-<p>Two proofs together would end up costing around 100,000 to 150,000 gas (not including signature verification if this is used per-transaction) - significantly more than the current base 21,000 gas per transaction. But <strong>the disparity gets worse if the proof is being verified on L2</strong>. Computation inside an L2 is cheap, because computation is done off-chain and in an ecosystem with much fewer nodes than L1. Data, on the other hand, has to be posted to L1. Hence, the comparison is not 21000 gas vs 150,000 gas; it's 21,000 L2 gas vs 100,000 L1 gas.</p>
-<p>We can calculate what this means by looking at comparisons between L1 gas costs and L2 gas costs:</p>
+<p>Unfortunately, Ethereum state proofs are complicated, but there exist
+<a
+href="https://github.com/ConsenSysMesh/rb-relay/blob/master/contracts/MerklePatriciaProof.sol">libraries
+for verifying them</a>, and if you use these libraries, this mechanism
+is not too complicated to implement.</p>
+<p>The larger problem is cost. Merkle proofs are long, and Patricia
+trees are unfortunately ~3.9x longer than necessary (precisely: an ideal
+Merkle proof into a tree holding <code>N</code> objects is
+<code>32 * log2(N)</code> bytes long, and because Ethereum's Patricia
+trees have 16 leaves per child, proofs for those trees are
+<code>32 * 15 * log16(N) ~= 125 * log2(N)</code> bytes long). In a state
+with roughly <a
+href="https://ycharts.com/indicators/ethereum_cumulative_unique_addresses">250
+million (~2²⁸) accounts</a>, this makes each proof
+<code>125 * 28 = 3500</code> bytes, or about 56,000 gas, plus extra
+costs for decoding and verifying hashes.</p>
+<p>Two proofs together would end up costing around 100,000 to 150,000
+gas (not including signature verification if this is used
+per-transaction) - significantly more than the current base 21,000 gas
+per transaction. But <strong>the disparity gets worse if the proof is
+being verified on L2</strong>. Computation inside an L2 is cheap,
+because computation is done off-chain and in an ecosystem with much
+fewer nodes than L1. Data, on the other hand, has to be posted to L1.
+Hence, the comparison is not 21000 gas vs 150,000 gas; it's 21,000 L2
+gas vs 100,000 L1 gas.</p>
+<p>We can calculate what this means by looking at comparisons between L1
+gas costs and L2 gas costs:</p>
 <center>
 <p><br><a href="https://l2fees.info/"></p>
 <p><img src="../../../../images/deeperdive/l2fees.png" /></p>
 </a>
 </center>
 <p><br></p>
-<p>L1 is currently about 15-25x more expensive than L2 for simple sends, and 20-50x more expensive for token swaps. Simple sends are relatively data-heavy, but swaps are much more computationally heavy. Hence, swaps are a better benchmark to approximate cost of L1 computation vs L2 computation. Taking all this into account, if we assume a 30x cost ratio between L1 computation cost and L2 computation cost, this seems to imply that putting a Merkle proof on L2 will cost the equivalent of perhaps fifty regular transactions.</p>
-<p>Of course, using a binary Merkle tree can cut costs by ~4x, but even still, the cost is in most cases going to be too high - and if we're willing to make the sacrifice of no longer being compatible with Ethereum's current hexary state tree, we might as well seek even better options.</p>
-<h3 id="how-would-zk-snark-proofs-work">How would ZK-SNARK proofs work?</h3>
-<p>Conceptually, the use of ZK-SNARKs is also easy to understand: you simply replace the Merkle proofs in <a href="../../../../images/deeperdive/crosschainproof.png">the diagram above</a> with a ZK-SNARK proving that those Merkle proofs exist. A ZK-SNARK costs ~400,000 gas of computation, and about 400 bytes (compare: 21,000 gas and 100 bytes for a basic transaction, in the future <a href="https://twitter.com/VitalikButerin/status/1554983955182809088">reducible to ~25 bytes with compression</a>). Hence, from a <em>computational</em> perspective, a ZK-SNARK costs 19x the cost of a basic transaction today, and from a <em>data</em> perspective, a ZK-SNARK costs 4x as much as a basic transaction today, and 16x what a basic transaction may cost in the future.</p>
-<p>These numbers are a massive improvement over Merkle proofs, but they are still quite expensive. There are two ways to improve on this: (i) special-purpose KZG proofs, or (ii) aggregation, similar to <a href="https://www.stackup.sh/blog/understanding-aggregators-in-erc-4337">ERC-4337 aggregation</a> but using more fancy math. We can look into both.</p>
-<h3 id="how-would-special-purpose-kzg-proofs-work">How would special-purpose KZG proofs work?</h3>
-<p><em>Warning, this section is much more mathy than other sections. This is because we're going beyond general-purpose tools and building something special-purpose to be cheaper, so we have to go "under the hood" a lot more. If you don't like deep math, skip straight to <a href="#end_of_kzg">the next section</a>.</em></p>
+<p>L1 is currently about 15-25x more expensive than L2 for simple sends,
+and 20-50x more expensive for token swaps. Simple sends are relatively
+data-heavy, but swaps are much more computationally heavy. Hence, swaps
+are a better benchmark to approximate cost of L1 computation vs L2
+computation. Taking all this into account, if we assume a 30x cost ratio
+between L1 computation cost and L2 computation cost, this seems to imply
+that putting a Merkle proof on L2 will cost the equivalent of perhaps
+fifty regular transactions.</p>
+<p>Of course, using a binary Merkle tree can cut costs by ~4x, but even
+still, the cost is in most cases going to be too high - and if we're
+willing to make the sacrifice of no longer being compatible with
+Ethereum's current hexary state tree, we might as well seek even better
+options.</p>
+<h3 id="how-would-zk-snark-proofs-work">How would ZK-SNARK proofs
+work?</h3>
+<p>Conceptually, the use of ZK-SNARKs is also easy to understand: you
+simply replace the Merkle proofs in <a
+href="../../../../images/deeperdive/crosschainproof.png">the diagram
+above</a> with a ZK-SNARK proving that those Merkle proofs exist. A
+ZK-SNARK costs ~400,000 gas of computation, and about 400 bytes
+(compare: 21,000 gas and 100 bytes for a basic transaction, in the
+future <a
+href="https://twitter.com/VitalikButerin/status/1554983955182809088">reducible
+to ~25 bytes with compression</a>). Hence, from a <em>computational</em>
+perspective, a ZK-SNARK costs 19x the cost of a basic transaction today,
+and from a <em>data</em> perspective, a ZK-SNARK costs 4x as much as a
+basic transaction today, and 16x what a basic transaction may cost in
+the future.</p>
+<p>These numbers are a massive improvement over Merkle proofs, but they
+are still quite expensive. There are two ways to improve on this: (i)
+special-purpose KZG proofs, or (ii) aggregation, similar to <a
+href="https://www.stackup.sh/blog/understanding-aggregators-in-erc-4337">ERC-4337
+aggregation</a> but using more fancy math. We can look into both.</p>
+<h3 id="how-would-special-purpose-kzg-proofs-work">How would
+special-purpose KZG proofs work?</h3>
+<p><em>Warning, this section is much more mathy than other sections.
+This is because we're going beyond general-purpose tools and building
+something special-purpose to be cheaper, so we have to go "under the
+hood" a lot more. If you don't like deep math, skip straight to <a
+href="#end_of_kzg">the next section</a>.</em></p>
 <p>First, a recap of how KZG commitments work:</p>
 <ul>
-<li>We can represent a set of data <code>[D_1 ... D_n]</code> with a KZG proof of a <em>polynomial</em> derived from the data: specifically, the polynomial <code>P</code> where <code>P(w) = D_1</code>, <code>P(w²) = D_2</code> ... <code>P(wⁿ) = D_n</code>. <code>w</code> here is a "root of unity", a value where <code>wᴺ = 1</code> for some <em>evaluation domain size</em> <code>N</code> (this is all done in a <a href="../../../../general/2021/01/26/snarks.html#finite-fields">finite field</a>).</li>
-<li>To "commit" to <code>P</code>, we create an elliptic curve point <code>com(P) = P₀ * G + P₁ * S₁ + ... + Pₖ * Sₖ</code>. Here:
+<li>We can represent a set of data <code>[D_1 ... D_n]</code> with a KZG
+proof of a <em>polynomial</em> derived from the data: specifically, the
+polynomial <code>P</code> where <code>P(w) = D_1</code>,
+<code>P(w²) = D_2</code> ... <code>P(wⁿ) = D_n</code>. <code>w</code> here
+is a "root of unity", a value where <code>wᴺ = 1</code> for some
+<em>evaluation domain size</em> <code>N</code> (this is all done in a <a
+href="../../../../general/2021/01/26/snarks.html#finite-fields">finite
+field</a>).</li>
+<li>To "commit" to <code>P</code>, we create an elliptic curve point
+<code>com(P) = P₀ * G + P₁ * S₁ + ... + Pₖ * Sₖ</code>. Here:
 <ul>
 <li><code>G</code> is the <em>generator point</em> of the curve</li>
-<li><code>Pᵢ</code> is the i'th-degree coefficient of the polynomial <code>P</code></li>
+<li><code>Pᵢ</code> is the i'th-degree coefficient of the polynomial
+<code>P</code></li>
 <li><code>Sᵢ</code> is the i'th point in the <em>trusted setup</em></li>
 </ul></li>
-<li>To prove <code>P(z) = a</code>, we create a <em>quotient polynomial</em> <code>Q = (P - a) / (X - z)</code>, and create a commitment <code>com(Q)</code> to it. It is only possible to create such a polynomial if <code>P(z)</code> actually equals <code>a</code>.</li>
-<li>To verify a proof, we check the equation <code>Q * (X - z) = P - a</code> by doing an elliptic curve check on the proof <code>com(Q)</code> and the polynomial commitment <code>com(P)</code>: we check <code>e(com(Q), com(X - z)) ?= e(com(P) - com(a), com(1))</code></li>
+<li>To prove <code>P(z) = a</code>, we create a <em>quotient
+polynomial</em> <code>Q = (P - a) / (X - z)</code>, and create a
+commitment <code>com(Q)</code> to it. It is only possible to create such
+a polynomial if <code>P(z)</code> actually equals <code>a</code>.</li>
+<li>To verify a proof, we check the equation
+<code>Q * (X - z) = P - a</code> by doing an elliptic curve check on the
+proof <code>com(Q)</code> and the polynomial commitment
+<code>com(P)</code>: we check
+<code>e(com(Q), com(X - z)) ?= e(com(P) - com(a), com(1))</code></li>
 </ul>
 <p>Some key properties that are important to understand are:</p>
 <ul>
-<li>A proof is just the <code>com(Q)</code> value, which is 48 bytes</li>
+<li>A proof is just the <code>com(Q)</code> value, which is 48
+bytes</li>
 <li><code>com(P₁) + com(P₂) = com(P₁ + P₂)</code></li>
-<li>This also means that you can "edit" a value into an existing a commitment. Suppose that we know that <code>D_i</code> is currently <code>a</code>, we want to set it to <code>b</code>, and the existing commitment to <code>D</code> is <code>com(P)</code>. A commitment to "P, but with <code>P(wⁱ) = b</code>, and no other evaluations changed", then we set <code>com(new_P) = com(P) + (b-a) * com(Lᵢ)</code>, where <code>Lᵢ</code> is a the "Lagrange polynomial" that equals <code>1</code> at <code>wⁱ</code> and 0 at other <code>wʲ</code> points.</li>
-<li>To perform these updates efficiently, all <code>N</code> commitments to Lagrange polynomials (<code>com(Lᵢ)</code>) can be pre-calculated and stored by each client. Inside <em>a contract on-chain</em> it may be too much to store all <code>N</code> commitments, so instead you could make a KZG commitment <em>to the set of <code>com(L_i)</code> (or <code>hash(com(L_i)</code>) values</em>, so whenever someone needs to update the tree on-chain they can simply provide the appropriate <code>com(L_i)</code> with a proof of its correctness.</li>
+<li>This also means that you can "edit" a value into an existing a
+commitment. Suppose that we know that <code>D_i</code> is currently
+<code>a</code>, we want to set it to <code>b</code>, and the existing
+commitment to <code>D</code> is <code>com(P)</code>. A commitment to "P,
+but with <code>P(wⁱ) = b</code>, and no other evaluations changed", then
+we set <code>com(new_P) = com(P) + (b-a) * com(Lᵢ)</code>, where
+<code>Lᵢ</code> is a the "Lagrange polynomial" that equals
+<code>1</code> at <code>wⁱ</code> and 0 at other <code>wʲ</code>
+points.</li>
+<li>To perform these updates efficiently, all <code>N</code> commitments
+to Lagrange polynomials (<code>com(Lᵢ)</code>) can be pre-calculated and
+stored by each client. Inside <em>a contract on-chain</em> it may be too
+much to store all <code>N</code> commitments, so instead you could make
+a KZG commitment <em>to the set of <code>com(L_i)</code> (or
+<code>hash(com(L_i)</code>) values</em>, so whenever someone needs to
+update the tree on-chain they can simply provide the appropriate
+<code>com(L_i)</code> with a proof of its correctness.</li>
 </ul>
-<p>Hence, we have a structure where we can just keep adding values to the end of an ever-growing list, though with a certain size limit (realistically, hundreds of millions could be viable). We then use <em>that</em> as our data structure to manage (i) a commitment to the list of keys on each L2, stored on that L2 and mirrored to L1, and (ii) a commitment to the list of L2 key-commitments, stored on the Ethereum L1 and mirrored to each L2.</p>
-<p>Keeping the commitments updated could either become part of core L2 logic, or it could be implemented without L2 core-protocol changes through deposit and withdraw bridges.</p>
+<p>Hence, we have a structure where we can just keep adding values to
+the end of an ever-growing list, though with a certain size limit
+(realistically, hundreds of millions could be viable). We then use
+<em>that</em> as our data structure to manage (i) a commitment to the
+list of keys on each L2, stored on that L2 and mirrored to L1, and (ii)
+a commitment to the list of L2 key-commitments, stored on the Ethereum
+L1 and mirrored to each L2.</p>
+<p>Keeping the commitments updated could either become part of core L2
+logic, or it could be implemented without L2 core-protocol changes
+through deposit and withdraw bridges.</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/deeperdive/mirroring.png" /></p>
@@ -257,102 +475,334 @@ MathJax = {
 <p><br></p>
 <p>A full proof would thus require:</p>
 <ul>
-<li>The latest <code>com(key list)</code> on the keystore-holding L2 (48 bytes)</li>
-<li>KZG proof of <code>com(key list)</code> being a value inside <code>com(mirror_list)</code>, the commitment to the list of all key list comitments (48 bytes)</li>
-<li>KZG proof of your key in <code>com(key list)</code> (48 bytes, plus 4 bytes for the index)</li>
+<li>The latest <code>com(key list)</code> on the keystore-holding L2 (48
+bytes)</li>
+<li>KZG proof of <code>com(key list)</code> being a value inside
+<code>com(mirror_list)</code>, the commitment to the list of all key
+list comitments (48 bytes)</li>
+<li>KZG proof of your key in <code>com(key list)</code> (48 bytes, plus
+4 bytes for the index)</li>
 </ul>
-<p>It's actually possible to merge the two KZG proofs into one, so we get a total size of only 100 bytes.</p>
-<p>Note one subtlety: because the key list is a list, and not a key/value map like the state is, the key list will have to assign positions sequentially. The key commitment contract would contain its own internal registry mapping each keystore to an ID, and for each key it would store <code>hash(key, address of the keystore)</code> instead of just <code>key</code>, to unambiguously communicate to other L2s <em>which</em> keystore a particular entry is talking about.</p>
-<p>The upside of this technique is that it performs <em>very well on L2</em>. The data is 100 bytes, ~4x shorter than a ZK-SNARK and waaaay shorter than a Merkle proof. The computation cost is largely one size-2 pairing check, or <a href="https://eips.ethereum.org/EIPS/eip-1108">about 119,000 gas</a>. On L1, data is less important than computation, and so unfortunately KZG is somewhat more expensive than Merkle proofs.</p>
+<p>It's actually possible to merge the two KZG proofs into one, so we
+get a total size of only 100 bytes.</p>
+<p>Note one subtlety: because the key list is a list, and not a
+key/value map like the state is, the key list will have to assign
+positions sequentially. The key commitment contract would contain its
+own internal registry mapping each keystore to an ID, and for each key
+it would store <code>hash(key, address of the keystore)</code> instead
+of just <code>key</code>, to unambiguously communicate to other L2s
+<em>which</em> keystore a particular entry is talking about.</p>
+<p>The upside of this technique is that it performs <em>very well on
+L2</em>. The data is 100 bytes, ~4x shorter than a ZK-SNARK and waaaay
+shorter than a Merkle proof. The computation cost is largely one size-2
+pairing check, or <a
+href="https://eips.ethereum.org/EIPS/eip-1108">about 119,000 gas</a>. On
+L1, data is less important than computation, and so unfortunately KZG is
+somewhat more expensive than Merkle proofs.</p>
 <p><a id="end_of_kzg" /></p>
 <h3 id="how-would-verkle-trees-work">How would Verkle trees work?</h3>
-<p>Verkle trees essentially involve stacking KZG commitments (or <a href="../../../../general/2021/11/05/halo.html#background-how-do-inner-product-arguments-work">IPA commitments</a>, which can be more efficient and use simpler cryptography) on top of each other: to store 2⁴⁸ values, you can make a KZG commitment to a list of 2²⁴ values, each of which itself is a KZG commitment to 2²⁴ values. Verkle trees are being <a href="https://notes.ethereum.org/@vbuterin/verkle_tree_eip">strongly considered for the Ethereum state tree</a>, because Verkle trees can be used to hold key-value maps and not just lists (basically, you can make a size-2²⁵⁶ tree but start it empty, only filling in specific parts of the tree once you actually need to fill them).</p>
+<p>Verkle trees essentially involve stacking KZG commitments (or <a
+href="../../../../general/2021/11/05/halo.html#background-how-do-inner-product-arguments-work">IPA
+commitments</a>, which can be more efficient and use simpler
+cryptography) on top of each other: to store 2⁴⁸ values, you can make a
+KZG commitment to a list of 2²⁴ values, each of which itself is a KZG
+commitment to 2²⁴ values. Verkle trees are being <a
+href="https://notes.ethereum.org/@vbuterin/verkle_tree_eip">strongly
+considered for the Ethereum state tree</a>, because Verkle trees can be
+used to hold key-value maps and not just lists (basically, you can make
+a size-2²⁵⁶ tree but start it empty, only filling in specific parts of
+the tree once you actually need to fill them).</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/deeperdive/verkle.png" /></p>
-<p><em>What a Verkle tree looks like. In practice, you might give each node a width of 256 == 2⁸ for IPA-based trees, or 2²⁴ for KZG-based trees.</em></p>
+<p><em>What a Verkle tree looks like. In practice, you might give each
+node a width of 256 == 2⁸ for IPA-based trees, or 2²⁴ for KZG-based
+trees.</em></p>
 </center>
 <p><br></p>
-<p>Proofs in Verkle trees are somewhat longer than KZG; they might be a few hundred bytes long. They are also difficult to verify, especially if you try to aggregate many proofs into one.</p>
-<p>Realistically, Verkle trees should be considered to be like Merkle trees, but more viable without SNARKing (because of the lower data costs), and cheaper with SNARKing (because of lower prover costs).</p>
-<p><strong>The largest advantage of Verkle trees is the possibility of harmonizing data structures: Verkle proofs could be used directly over L1 or L2 state, without overlay structures, and using the exact same mechanism for L1 and L2</strong>. Once quantum computers become an issue, or once proving Merkle branches becomes efficient enough, Verkle trees could be replaced in-place with a binary hash tree with a suitable SNARK-friendly hash function.</p>
+<p>Proofs in Verkle trees are somewhat longer than KZG; they might be a
+few hundred bytes long. They are also difficult to verify, especially if
+you try to aggregate many proofs into one.</p>
+<p>Realistically, Verkle trees should be considered to be like Merkle
+trees, but more viable without SNARKing (because of the lower data
+costs), and cheaper with SNARKing (because of lower prover costs).</p>
+<p><strong>The largest advantage of Verkle trees is the possibility of
+harmonizing data structures: Verkle proofs could be used directly over
+L1 or L2 state, without overlay structures, and using the exact same
+mechanism for L1 and L2</strong>. Once quantum computers become an
+issue, or once proving Merkle branches becomes efficient enough, Verkle
+trees could be replaced in-place with a binary hash tree with a suitable
+SNARK-friendly hash function.</p>
 <h3 id="aggregation">Aggregation</h3>
-<p>If N users make N transactions (or more realistically, N <a href="https://eips.ethereum.org/EIPS/eip-4337">ERC-4337</a> UserOperations) that need to prove N cross-chain claims, we can save a lot of gas by <em>aggregating</em> those proofs: the builder that would be combining those transactions into a block or bundle that goes into a block can create a <em>single</em> proof that proves all of those claims simultaneously.</p>
+<p>If N users make N transactions (or more realistically, N <a
+href="https://eips.ethereum.org/EIPS/eip-4337">ERC-4337</a>
+UserOperations) that need to prove N cross-chain claims, we can save a
+lot of gas by <em>aggregating</em> those proofs: the builder that would
+be combining those transactions into a block or bundle that goes into a
+block can create a <em>single</em> proof that proves all of those claims
+simultaneously.</p>
 <p>This could mean:</p>
 <ul>
 <li>A ZK-SNARK proof of N Merkle branches</li>
-<li>A <a href="https://dankradfeist.de/ethereum/2021/06/18/pcs-multiproofs.html">KZG multi-proof</a></li>
-<li>A <a href="../../../../general/2021/06/18/verkle.html#merging-the-proofs">Verkle multi-proof</a> (or a ZK-SNARK of a multi-proof)</li>
+<li>A <a
+href="https://dankradfeist.de/ethereum/2021/06/18/pcs-multiproofs.html">KZG
+multi-proof</a></li>
+<li>A <a
+href="../../../../general/2021/06/18/verkle.html#merging-the-proofs">Verkle
+multi-proof</a> (or a ZK-SNARK of a multi-proof)</li>
 </ul>
-<p>In all three cases, the proofs would only cost a few hundred thousand gas each. The builder would need to make one of these <em>on each L2</em> for the users in that L2; hence, for this to be useful to build, the scheme as a whole needs to have enough usage that there are very often at least a few transactions within the same block <em>on multiple major L2s</em>.</p>
-<p>If ZK-SNARKs are used, the main marginal cost is simply "business logic" of passing numbers around between contracts, so perhaps a few thousand L2 gas per user. If KZG multi-proofs are used, the prover would need to add 48 gas for each keystore-holding L2 that is used within that block, so the marginal cost of the scheme per user would add another ~800 L1 gas per L2 (not per user) on top. But these costs are much lower than the costs of not aggregating, which inevitably involve over 10,000 L1 gas and hundreds of thousands of L2 gas <em>per user</em>. For Verkle trees, you can either use Verkle multi-proofs directly, adding around 100-200 bytes per user, or you can make a ZK-SNARK of a Verkle multi-proof, which has similar costs to ZK-SNARKs of Merkle branches but is significantly cheaper to prove.</p>
-<p>From an implementation perspective, it's probably best to have bundlers aggregate cross-chain proofs through the <a href="https://eips.ethereum.org/EIPS/eip-4337">ERC-4337</a> account abstraction standard. ERC-4337 already has a mechanism for builders to aggregate parts of UserOperations in custom ways. There is even an <a href="https://hackmd.io/@voltrevo/BJ0QBy3zi">implementation of this for BLS signature aggregation</a>, which could reduce gas costs on L2 by 1.5x to 3x depending on <a href="https://twitter.com/VitalikButerin/status/1554983955182809088">what other forms of compression are included</a>.</p>
+<p>In all three cases, the proofs would only cost a few hundred thousand
+gas each. The builder would need to make one of these <em>on each
+L2</em> for the users in that L2; hence, for this to be useful to build,
+the scheme as a whole needs to have enough usage that there are very
+often at least a few transactions within the same block <em>on multiple
+major L2s</em>.</p>
+<p>If ZK-SNARKs are used, the main marginal cost is simply "business
+logic" of passing numbers around between contracts, so perhaps a few
+thousand L2 gas per user. If KZG multi-proofs are used, the prover would
+need to add 48 gas for each keystore-holding L2 that is used within that
+block, so the marginal cost of the scheme per user would add another
+~800 L1 gas per L2 (not per user) on top. But these costs are much lower
+than the costs of not aggregating, which inevitably involve over 10,000
+L1 gas and hundreds of thousands of L2 gas <em>per user</em>. For Verkle
+trees, you can either use Verkle multi-proofs directly, adding around
+100-200 bytes per user, or you can make a ZK-SNARK of a Verkle
+multi-proof, which has similar costs to ZK-SNARKs of Merkle branches but
+is significantly cheaper to prove.</p>
+<p>From an implementation perspective, it's probably best to have
+bundlers aggregate cross-chain proofs through the <a
+href="https://eips.ethereum.org/EIPS/eip-4337">ERC-4337</a> account
+abstraction standard. ERC-4337 already has a mechanism for builders to
+aggregate parts of UserOperations in custom ways. There is even an <a
+href="https://hackmd.io/@voltrevo/BJ0QBy3zi">implementation of this for
+BLS signature aggregation</a>, which could reduce gas costs on L2 by
+1.5x to 3x depending on <a
+href="https://twitter.com/VitalikButerin/status/1554983955182809088">what
+other forms of compression are included</a>.</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/deeperdive/blswallet.png" /></p>
-<p><em>Diagram from a <a href="https://hackmd.io/@voltrevo/BJ0QBy3zi">BLS wallet implementation post</a> showing the workflow of BLS aggregate signatures within an earlier version of ERC-4337. The workflow of aggregating cross-chain proofs will likely look very similar.</em></p>
+<p><em>Diagram from a <a
+href="https://hackmd.io/@voltrevo/BJ0QBy3zi">BLS wallet implementation
+post</a> showing the workflow of BLS aggregate signatures within an
+earlier version of ERC-4337. The workflow of aggregating cross-chain
+proofs will likely look very similar.</em></p>
 <br>
 </center>
 <h3 id="direct-state-reading">Direct state reading</h3>
-<p>A final possibility, and one only usable for L2 reading L1 (and not L1 reading L2), is to <strong>modify L2s to let them make static calls to contracts on L1 directly</strong>.</p>
-<p>This could be done with an opcode or a precompile, which allows calls into L1 where you provide the destination address, gas and calldata, and it returns the output, though because these calls are static-calls they cannot actually <em>change</em> any L1 state. L2s have to be aware of L1 already to process deposits, so there is nothing fundamental stopping such a thing from being implemented; it is mainly a technical implementation challenge (see: <a href="https://github.com/ethereum-optimism/ecosystem-contributions/issues/76">this RFP from Optimism to support static calls into L1</a>).</p>
-<p><strong>Notice that if the keystore is on L1, <em>and</em> L2s integrate L1 static-call functionality, then no proofs are required at all</strong>! However, if L2s don't integrate L1 static-calls, or if the keystore is on L2 (which it may eventually have to be, once L1 gets too expensive for users to use even a little bit), then proofs will be required.</p>
-<h2 id="how-does-l2-learn-the-recent-ethereum-state-root">How does L2 learn the recent Ethereum state root?</h2>
-<p>All of the schemes above require the L2 to access either the recent L1 state root, or the entire recent L1 state. <strong>Fortunately, all L2s have some functionality to access the recent L1 state already</strong>. This is because they need such a functionality to process messages coming in from L1 to the L2, most notably deposits.</p>
-<p>And indeed, if an L2 has a deposit feature, then you can use that L2 as-is to move L1 state roots into a contract on the L2: simply have a contract on L1 call the <code>BLOCKHASH</code> opcode, and pass it to L2 as a deposit message. The full block header can be received, and its state root extracted, on the L2 side. However, it would be much better for every L2 to have an explicit way to access either the full recent L1 state, or recent L1 state roots, directly.</p>
-<p><strong>The main challenge with optimizing how L2s receive recent L1 state roots is simultaneously achieving safety and low latency</strong>:</p>
+<p>A final possibility, and one only usable for L2 reading L1 (and not
+L1 reading L2), is to <strong>modify L2s to let them make static calls
+to contracts on L1 directly</strong>.</p>
+<p>This could be done with an opcode or a precompile, which allows calls
+into L1 where you provide the destination address, gas and calldata, and
+it returns the output, though because these calls are static-calls they
+cannot actually <em>change</em> any L1 state. L2s have to be aware of L1
+already to process deposits, so there is nothing fundamental stopping
+such a thing from being implemented; it is mainly a technical
+implementation challenge (see: <a
+href="https://github.com/ethereum-optimism/ecosystem-contributions/issues/76">this
+RFP from Optimism to support static calls into L1</a>).</p>
+<p><strong>Notice that if the keystore is on L1, <em>and</em> L2s
+integrate L1 static-call functionality, then no proofs are required at
+all</strong>! However, if L2s don't integrate L1 static-calls, or if the
+keystore is on L2 (which it may eventually have to be, once L1 gets too
+expensive for users to use even a little bit), then proofs will be
+required.</p>
+<h2 id="how-does-l2-learn-the-recent-ethereum-state-root">How does L2
+learn the recent Ethereum state root?</h2>
+<p>All of the schemes above require the L2 to access either the recent
+L1 state root, or the entire recent L1 state. <strong>Fortunately, all
+L2s have some functionality to access the recent L1 state
+already</strong>. This is because they need such a functionality to
+process messages coming in from L1 to the L2, most notably deposits.</p>
+<p>And indeed, if an L2 has a deposit feature, then you can use that L2
+as-is to move L1 state roots into a contract on the L2: simply have a
+contract on L1 call the <code>BLOCKHASH</code> opcode, and pass it to L2
+as a deposit message. The full block header can be received, and its
+state root extracted, on the L2 side. However, it would be much better
+for every L2 to have an explicit way to access either the full recent L1
+state, or recent L1 state roots, directly.</p>
+<p><strong>The main challenge with optimizing how L2s receive recent L1
+state roots is simultaneously achieving safety and low
+latency</strong>:</p>
 <ul>
-<li>If L2s implement "direct reading of L1" functionality in a lazy way, <strong>only reading finalized L1 state roots</strong>, then the delay will <strong><em>normally</em> be 15 minutes</strong>, but in the extreme case of inactivity leaks (which you <em>have to</em> tolerate), <strong>the delay could be several weeks</strong>.</li>
-<li>L2s absolutely can be designed to read much more recent L1 state roots, but because L1 can revert (even with <a href="https://ethereum.org/fil/roadmap/single-slot-finality/">single slot finality</a>, reverts can happen during inactivity leaks), <strong>L2 would need to be able to revert as well</strong>. This is technically challenging from a software engineering perspective, but at least Optimism already has this capability.</li>
-<li>If you use the <strong>deposit bridge</strong> to bring L1 state roots into L2, then simple <strong>economic viability might require a long time between deposit updates</strong>: if the full cost of a deposit is 100,000 gas, and we assume ETH is at $1800, and fees are at 200 gwei, and L1 roots are brought into L2 <em>once per day</em>, that would be a cost of $36 per L2 per day, or $13148 per L2 per year to maintain the system. With a delay of one hour, that goes up to $315,569 per L2 per year. In the best case, a constant trickle of impatient wealthy users covers the updating fees and keep the system up to date for everyone else. In the worst case, some altruistic actor would have to pay for it themselves.</li>
-<li><strong>"Oracles" (at least, the kind of tech that some defi people <em>call</em> "oracles") are <em>not</em> an acceptable solution here</strong>: wallet key management is a very security-critical low-level functionality, and so it should depend on at most a few pieces of very simple, cryptographically trustless low-level infrastructure.</li>
+<li>If L2s implement "direct reading of L1" functionality in a lazy way,
+<strong>only reading finalized L1 state roots</strong>, then the delay
+will <strong><em>normally</em> be 15 minutes</strong>, but in the
+extreme case of inactivity leaks (which you <em>have to</em> tolerate),
+<strong>the delay could be several weeks</strong>.</li>
+<li>L2s absolutely can be designed to read much more recent L1 state
+roots, but because L1 can revert (even with <a
+href="https://ethereum.org/fil/roadmap/single-slot-finality/">single
+slot finality</a>, reverts can happen during inactivity leaks),
+<strong>L2 would need to be able to revert as well</strong>. This is
+technically challenging from a software engineering perspective, but at
+least Optimism already has this capability.</li>
+<li>If you use the <strong>deposit bridge</strong> to bring L1 state
+roots into L2, then simple <strong>economic viability might require a
+long time between deposit updates</strong>: if the full cost of a
+deposit is 100,000 gas, and we assume ETH is at $1800, and fees are at
+200 gwei, and L1 roots are brought into L2 <em>once per day</em>, that
+would be a cost of $36 per L2 per day, or $13148 per L2 per year to
+maintain the system. With a delay of one hour, that goes up to $315,569
+per L2 per year. In the best case, a constant trickle of impatient
+wealthy users covers the updating fees and keep the system up to date
+for everyone else. In the worst case, some altruistic actor would have
+to pay for it themselves.</li>
+<li><strong>"Oracles" (at least, the kind of tech that some defi people
+<em>call</em> "oracles") are <em>not</em> an acceptable solution
+here</strong>: wallet key management is a very security-critical
+low-level functionality, and so it should depend on at most a few pieces
+of very simple, cryptographically trustless low-level
+infrastructure.</li>
 </ul>
 <p>Additionally, in the opposite direction (L1s reading L2):</p>
 <ul>
-<li><strong>On optimistic rollups, state roots take one week to reach L1</strong> because of the fraud proof delay. On ZK rollups it takes a few hours for now because of a combination of proving times and economic limits, though future technology will reduce this.</li>
-<li><strong>Pre-confirmations (from sequencers, attesters, etc) are not an acceptable solution for L1 reading L2</strong>. Wallet management is a very security-critical low-level functionality, and so the level of security of the L2 -&gt; L1 communication must be absolute: it should not even be possible to push a false L1 state root by taking over the L2 validator set. The only state roots the L1 should trust are state roots that have been accepted as final by the L2's state-root-holding contract on L1.</li>
+<li><strong>On optimistic rollups, state roots take one week to reach
+L1</strong> because of the fraud proof delay. On ZK rollups it takes a
+few hours for now because of a combination of proving times and economic
+limits, though future technology will reduce this.</li>
+<li><strong>Pre-confirmations (from sequencers, attesters, etc) are not
+an acceptable solution for L1 reading L2</strong>. Wallet management is
+a very security-critical low-level functionality, and so the level of
+security of the L2 -&gt; L1 communication must be absolute: it should
+not even be possible to push a false L1 state root by taking over the L2
+validator set. The only state roots the L1 should trust are state roots
+that have been accepted as final by the L2's state-root-holding contract
+on L1.</li>
 </ul>
-<p>Some of these speeds for trustless cross-chain operations are unacceptably slow for many defi use cases; for those cases, you do need faster bridges with more imperfect security models. For the use case of updating wallet keys, however, longer delays are more acceptable: you're not <em>delaying transactions</em> by hours, you're delaying <em>key changes</em>. You'll just have to keep the old keys around longer. If you're changing keys because keys are stolen, then you do have a significant period of vulnerability, but this can be mitigated, eg. by wallets having a <code>freeze</code> function.</p>
-<p>Ultimately, the best latency-minimizing solution is for L2s to implement direct reading of L1 state roots in an optimal way, where each L2 block (or the state root computation log) contains a pointer to the most recent L1 block, so if L1 reverts, L2 can revert as well. Keystore contracts should be placed either on mainnet, or on L2s that are ZK-rollups and so can quickly commit to L1.</p>
+<p>Some of these speeds for trustless cross-chain operations are
+unacceptably slow for many defi use cases; for those cases, you do need
+faster bridges with more imperfect security models. For the use case of
+updating wallet keys, however, longer delays are more acceptable: you're
+not <em>delaying transactions</em> by hours, you're delaying <em>key
+changes</em>. You'll just have to keep the old keys around longer. If
+you're changing keys because keys are stolen, then you do have a
+significant period of vulnerability, but this can be mitigated, eg. by
+wallets having a <code>freeze</code> function.</p>
+<p>Ultimately, the best latency-minimizing solution is for L2s to
+implement direct reading of L1 state roots in an optimal way, where each
+L2 block (or the state root computation log) contains a pointer to the
+most recent L1 block, so if L1 reverts, L2 can revert as well. Keystore
+contracts should be placed either on mainnet, or on L2s that are
+ZK-rollups and so can quickly commit to L1.</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/deeperdive/l2forkchoice.png" /></p>
-<p><em>Blocks of the L2 chain can have dependencies on not just previous L2 blocks, but also on an L1 block. If L1 reverts past such a link, the L2 reverts too. It's worth noting that this is also how an earlier (pre-Dank) version of sharding was envisioned to work; see <a href="https://github.com/ethereum/research/blob/ddac715ee18a23d6198e3ae7bdeec61fd3bbfdb3/sharding_fork_choice_poc/beacon_chain_node.py">here</a> for code.</em></p>
+<p><em>Blocks of the L2 chain can have dependencies on not just previous
+L2 blocks, but also on an L1 block. If L1 reverts past such a link, the
+L2 reverts too. It's worth noting that this is also how an earlier
+(pre-Dank) version of sharding was envisioned to work; see <a
+href="https://github.com/ethereum/research/blob/ddac715ee18a23d6198e3ae7bdeec61fd3bbfdb3/sharding_fork_choice_poc/beacon_chain_node.py">here</a>
+for code.</em></p>
 </center>
 <p><br></p>
-<h2 id="how-much-connection-to-ethereum-does-another-chain-need-to-hold-wallets-whose-keystores-are-rooted-on-ethereum-or-an-l2">How much connection to Ethereum does another chain need to hold wallets whose keystores are rooted on Ethereum or an L2?</h2>
-<p>Surprisingly, not that much. It actually does not even need to be a rollup: if it's an L3, or a validium, then it's okay to hold wallets there, as long as you hold keystores either on L1 or on a ZK rollup. The thing that you <em>do</em> need is for the chain to have direct access to Ethereum state roots, and <strong>a technical and social commitment to be willing to reorg if Ethereum reorgs, and hard fork if Ethereum hard forks</strong>.</p>
-<p>One interesting research problem is identifying to what extent it is possible for a chain to have this form of connection to <em>multiple</em> other chains (eg. Ethereum and Zcash). Doing it naively is possible: your chain could agree to reorg if Ethereum <em>or</em> Zcash reorg (and hard fork if Ethereum <em>or</em> Zcash hard fork), but then your node operators and your community more generally have double the technical and political dependencies. Hence such a technique could be used to connect to a few other chains, but at increasing cost. Schemes based on <a href="https://zkvalidator.com/exploring-zk-bridges/">ZK bridges</a> have attractive technical properties, but they have the key weakness that they are not robust to 51% attacks or hard forks. There may be more clever solutions.</p>
+<h2
+id="how-much-connection-to-ethereum-does-another-chain-need-to-hold-wallets-whose-keystores-are-rooted-on-ethereum-or-an-l2">How
+much connection to Ethereum does another chain need to hold wallets
+whose keystores are rooted on Ethereum or an L2?</h2>
+<p>Surprisingly, not that much. It actually does not even need to be a
+rollup: if it's an L3, or a validium, then it's okay to hold wallets
+there, as long as you hold keystores either on L1 or on a ZK rollup. The
+thing that you <em>do</em> need is for the chain to have direct access
+to Ethereum state roots, and <strong>a technical and social commitment
+to be willing to reorg if Ethereum reorgs, and hard fork if Ethereum
+hard forks</strong>.</p>
+<p>One interesting research problem is identifying to what extent it is
+possible for a chain to have this form of connection to
+<em>multiple</em> other chains (eg. Ethereum and Zcash). Doing it
+naively is possible: your chain could agree to reorg if Ethereum
+<em>or</em> Zcash reorg (and hard fork if Ethereum <em>or</em> Zcash
+hard fork), but then your node operators and your community more
+generally have double the technical and political dependencies. Hence
+such a technique could be used to connect to a few other chains, but at
+increasing cost. Schemes based on <a
+href="https://zkvalidator.com/exploring-zk-bridges/">ZK bridges</a> have
+attractive technical properties, but they have the key weakness that
+they are not robust to 51% attacks or hard forks. There may be more
+clever solutions.</p>
 <h2 id="preserving-privacy">Preserving privacy</h2>
-<p>Ideally, we also want to preserve privacy. If you have many wallets that are managed by the same keystore, then we want to make sure:</p>
+<p>Ideally, we also want to preserve privacy. If you have many wallets
+that are managed by the same keystore, then we want to make sure:</p>
 <ul>
-<li>It's not publicly known that those wallets are all connected to each other.</li>
-<li>Social recovery guardians don't learn what the addresses are that they are guarding.</li>
+<li>It's not publicly known that those wallets are all connected to each
+other.</li>
+<li>Social recovery guardians don't learn what the addresses are that
+they are guarding.</li>
 </ul>
 <p>This creates a few issues:</p>
 <ul>
-<li>We cannot use Merkle proofs directly, because they do not preserve privacy.</li>
-<li>If we use KZG or SNARKs, then the proof needs to provide a blinded version of the verification key, without revealing the location of the verification key.</li>
-<li>If we use aggregation, then the aggregator should not learn the location in plaintext; rather, the aggregator should receive blinded proofs, and have a way to aggregate those.</li>
-<li>We can't use the "light version" (use cross-chain proofs only to update keys), because it creates a privacy leak: if many wallets get updated at the same time due to an update procedure, the timing leaks the information that those wallets are likely related. So we have to use the "heavy version" (cross-chain proofs for each transaction).</li>
+<li>We cannot use Merkle proofs directly, because they do not preserve
+privacy.</li>
+<li>If we use KZG or SNARKs, then the proof needs to provide a blinded
+version of the verification key, without revealing the location of the
+verification key.</li>
+<li>If we use aggregation, then the aggregator should not learn the
+location in plaintext; rather, the aggregator should receive blinded
+proofs, and have a way to aggregate those.</li>
+<li>We can't use the "light version" (use cross-chain proofs only to
+update keys), because it creates a privacy leak: if many wallets get
+updated at the same time due to an update procedure, the timing leaks
+the information that those wallets are likely related. So we have to use
+the "heavy version" (cross-chain proofs for each transaction).</li>
 </ul>
-<p>With SNARKs, the solutions are conceptually easy: proofs are information-hiding by default, and the aggregator needs to produce a recursive SNARK to prove the SNARKs.</p>
+<p>With SNARKs, the solutions are conceptually easy: proofs are
+information-hiding by default, and the aggregator needs to produce a
+recursive SNARK to prove the SNARKs.</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/deeperdive/zk_keystore.png" /></p>
 </center>
 <p><br></p>
-<p>The main challenge of this approach today is that aggregation requires the aggregator to create a recursive SNARK, which is currently quite slow.</p>
-<p>With KZG, we can use <a href="https://notes.ethereum.org/@vbuterin/non_index_revealing_proof">this work on non-index-revealing KZG proofs</a> (see also: a more formalized version of that work in <a href="https://eprint.iacr.org/2022/621.pdf">the Caulk paper</a>) as a starting point. Aggregation of blinded proofs, however, is an open problem that requires more attention.</p>
-<p>Directly reading L1 from inside L2, unfortunately, does not preserve privacy, though implementing direct-reading functionality is still very useful, both to minimize latency and because of its utility for other applications.</p>
+<p>The main challenge of this approach today is that aggregation
+requires the aggregator to create a recursive SNARK, which is currently
+quite slow.</p>
+<p>With KZG, we can use <a
+href="https://notes.ethereum.org/@vbuterin/non_index_revealing_proof">this
+work on non-index-revealing KZG proofs</a> (see also: a more formalized
+version of that work in <a
+href="https://eprint.iacr.org/2022/621.pdf">the Caulk paper</a>) as a
+starting point. Aggregation of blinded proofs, however, is an open
+problem that requires more attention.</p>
+<p>Directly reading L1 from inside L2, unfortunately, does not preserve
+privacy, though implementing direct-reading functionality is still very
+useful, both to minimize latency and because of its utility for other
+applications.</p>
 <h2 id="summary">Summary</h2>
 <ul>
-<li>To have cross-chain social recovery wallets, the most realistic workflow is a wallet that maintains a <strong>keystore</strong> in one location, and <strong>wallets</strong> in many locations, where wallet reads the keystore either (i) to update their local view of the verification key, or (ii) during the process of verifying each transaction.</li>
-<li>A key ingredient of making this possible is <strong>cross-chain proofs</strong>. We need to optimize these proofs hard. Either <strong>ZK-SNARKs</strong>, waiting for <strong>Verkle proofs</strong>, or a <strong>custom-built KZG solution</strong>, seem like the best options.</li>
-<li>In the longer term, <strong>aggregation protocols</strong> where bundlers generate aggregate proofs as part of creating a bundle of all the UserOperations that have been submitted by users will be necessary to minimize costs. This should probably be integrated into the <strong>ERC-4337</strong> ecosystem, though changes to ERC-4337 will likely be required.</li>
-<li>L2s should be optimized to <strong>minimize the latency of reading L1 state</strong> (or at least the state root) from inside the L2. L2s <strong>directly reading L1 state</strong> is ideal and can save on proof space.</li>
-<li>Wallets can be not just on L2s; <strong>you can also put wallets on systems with lower levels of connection to Ethereum</strong> (L3s, or even separate chains that only agree to include Ethereum state roots and reorg or hard fork when Ethereum reorgs or hardforks).</li>
-<li>However, <strong>keystores should be either on L1 or on high-security ZK-rollup L2</strong> . Being on L1 saves a lot of complexity, though in the long run even that may be too expensive, hence the need for keystores on L2.</li>
-<li>Preserving <strong>privacy</strong> will require additional work and make some options more difficult. However, we should probably move toward privacy-preserving solutions anyway, and at the least make sure that anything we propose is forward-compatible with preserving privacy.</li>
+<li>To have cross-chain social recovery wallets, the most realistic
+workflow is a wallet that maintains a <strong>keystore</strong> in one
+location, and <strong>wallets</strong> in many locations, where wallet
+reads the keystore either (i) to update their local view of the
+verification key, or (ii) during the process of verifying each
+transaction.</li>
+<li>A key ingredient of making this possible is <strong>cross-chain
+proofs</strong>. We need to optimize these proofs hard. Either
+<strong>ZK-SNARKs</strong>, waiting for <strong>Verkle proofs</strong>,
+or a <strong>custom-built KZG solution</strong>, seem like the best
+options.</li>
+<li>In the longer term, <strong>aggregation protocols</strong> where
+bundlers generate aggregate proofs as part of creating a bundle of all
+the UserOperations that have been submitted by users will be necessary
+to minimize costs. This should probably be integrated into the
+<strong>ERC-4337</strong> ecosystem, though changes to ERC-4337 will
+likely be required.</li>
+<li>L2s should be optimized to <strong>minimize the latency of reading
+L1 state</strong> (or at least the state root) from inside the L2. L2s
+<strong>directly reading L1 state</strong> is ideal and can save on
+proof space.</li>
+<li>Wallets can be not just on L2s; <strong>you can also put wallets on
+systems with lower levels of connection to Ethereum</strong> (L3s, or
+even separate chains that only agree to include Ethereum state roots and
+reorg or hard fork when Ethereum reorgs or hardforks).</li>
+<li>However, <strong>keystores should be either on L1 or on
+high-security ZK-rollup L2</strong> . Being on L1 saves a lot of
+complexity, though in the long run even that may be too expensive, hence
+the need for keystores on L2.</li>
+<li>Preserving <strong>privacy</strong> will require additional work and
+make some options more difficult. However, we should probably move
+toward privacy-preserving solutions anyway, and at the least make sure
+that anything we propose is forward-compatible with preserving
+privacy.</li>
 </ul>
  </div> 

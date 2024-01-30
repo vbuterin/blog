@@ -202,7 +202,7 @@ Note that prediction markets fare better than stock markets in this regard: the 
 
 ### Better participants and better technology
 
-Second, prediction markets themselves will improve. User interfaces have greatly improved already, and will continue to improve further. The complexity of the MakerDAO -> Foundry -> Catnip cycle will be abstracted away into a single transaction. Blockchain scaling technology will improve, reducing fees for participants (The [ZK-rollup](https://vitalik.ca/general/2021/01/05/rollup.html) [Loopring](https://loopring.io/) with a built-in AMM is already live on the Ethereum mainnet, and a prediction market could theoretically run on it).
+Second, prediction markets themselves will improve. User interfaces have greatly improved already, and will continue to improve further. The complexity of the MakerDAO -> Foundry -> Catnip cycle will be abstracted away into a single transaction. Blockchain scaling technology will improve, reducing fees for participants (The [ZK-rollup](../../../2021/01/05/rollup.html) [Loopring](https://loopring.io/) with a built-in AMM is already live on the Ethereum mainnet, and a prediction market could theoretically run on it).
 
 Third, the demonstration that we saw of the prediction market working correctly will ease participants' fears. Users will see that the Augur oracle is capable of giving correct outputs even in very contentious situations (this time, there were two rounds of disputes, but the no side nevertheless cleanly won). People from outside the crypto space will see that the process works and be more inclined to participate. Perhaps even Nate Silver himself might get some DAI and use Augur, Omen, Polymarket and other markets to supplement his income in 2022 and beyond.
 

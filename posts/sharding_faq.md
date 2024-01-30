@@ -240,7 +240,7 @@ Choosing _what goes in_ to a collation does require knowing the state of that co
 
 # Can SNARKs and STARKs help?
 
-Yes! One can create a second-level protocol where a [SNARK](https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6), [STARK](https://vitalik.ca/general/2017/11/09/starks_part_1.html) or similar succinct zero knowledge proof scheme is used to prove the state root of a shard chain, and proof creators can be rewarded for this. That said, shard chains to actually agree on what data gets included into the shard chains in the first place is still required.
+Yes! One can create a second-level protocol where a [SNARK](https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6), [STARK](../../../2017/11/09/starks_part_1.html) or similar succinct zero knowledge proof scheme is used to prove the state root of a shard chain, and proof creators can be rewarded for this. That said, shard chains to actually agree on what data gets included into the shard chains in the first place is still required.
 
 # How can we facilitate cross-shard communication?
 

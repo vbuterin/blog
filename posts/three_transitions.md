@@ -8,7 +8,7 @@ _Special thanks to Dan Finlay, Karl Floersch, David Hoffman, and the Scroll and 
 As Ethereum transitions from a young experimental technology into a mature tech stack that is capable of actually bringing an open, global and permissionless experience to average users, there are three major technical transitions that the stack needs to undergo, roughly simultaneously:
 
 * **The L2 scaling transition** - everyone [moving to rollups](https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698)
-* **The wallet security transition** - everyone moving to [smart contract wallets](https://vitalik.ca/general/2021/01/11/recovery.html)
+* **The wallet security transition** - everyone moving to [smart contract wallets](../../../2021/01/11/recovery.html)
 * **The privacy transition** - making sure privacy-preserving funds transfers are available, and making sure all of the _other_ gadgets that are being developed (social recovery, identity, reputation) are privacy-preserving
 
 <center>
@@ -39,14 +39,14 @@ _I have ETH in four places, according to my Brave Wallet view. And yes, Arbitrum
 
 </center><br>
 
-**Smart contract wallets add more complexity, by making it much more difficult to have _the same_ address across L1 and the various L2s**. Today, most users are using _externally owned accounts_, whose address is literally a hash of the public key that is used to verify signatures - so nothing changes between L1 and L2. With smart contract wallets, however, keeping one address becomes more difficult. Although a lot of work has been done to _try_ to make addresses be hashes of code that can be equivalent across networks, most notably [CREATE2](https://eips.ethereum.org/EIPS/eip-1014) and the [ERC-2470 singleton factory](https://eips.ethereum.org/EIPS/eip-2470), it's difficult to make this work perfectly. Some L2s (eg. "[type 4](https://vitalik.ca/general/2022/08/04/zkevm.html) ZK-EVMs") are not _quite_ EVM equivalent, often using Solidity or an intermediate assembly instead, preventing hash equivalence. And even when you can have hash equivalence, the possibility of wallets changing ownership through key changes creates [other unintuitive consequences](https://safe.mirror.xyz/4GcGAOFno-suTCjBewiYH4k4yXPDdIukC5woO5Bjc4w).
+**Smart contract wallets add more complexity, by making it much more difficult to have _the same_ address across L1 and the various L2s**. Today, most users are using _externally owned accounts_, whose address is literally a hash of the public key that is used to verify signatures - so nothing changes between L1 and L2. With smart contract wallets, however, keeping one address becomes more difficult. Although a lot of work has been done to _try_ to make addresses be hashes of code that can be equivalent across networks, most notably [CREATE2](https://eips.ethereum.org/EIPS/eip-1014) and the [ERC-2470 singleton factory](https://eips.ethereum.org/EIPS/eip-2470), it's difficult to make this work perfectly. Some L2s (eg. "[type 4](../../../2022/08/04/zkevm.html) ZK-EVMs") are not _quite_ EVM equivalent, often using Solidity or an intermediate assembly instead, preventing hash equivalence. And even when you can have hash equivalence, the possibility of wallets changing ownership through key changes creates [other unintuitive consequences](https://safe.mirror.xyz/4GcGAOFno-suTCjBewiYH4k4yXPDdIukC5woO5Bjc4w).
 
-**Privacy requires each user to have _even more_ addresses, and may even change _what kinds_ of addresses we're dealing with**. If [stealth address](https://vitalik.ca/general/2023/01/20/stealth.html) proposals become widely used, instead of each user having only a few addresses, or one address per L2, users might have _one address per transaction_. Other privacy schemes, even existing ones such as Tornado Cash, change how assets are stored in a different way: _many users' funds are stored in the same smart contract_ (and hence at the same address). To send funds to a specific user, users will need to rely on the privacy scheme's own internal addressing system.
+**Privacy requires each user to have _even more_ addresses, and may even change _what kinds_ of addresses we're dealing with**. If [stealth address](../../../2023/01/20/stealth.html) proposals become widely used, instead of each user having only a few addresses, or one address per L2, users might have _one address per transaction_. Other privacy schemes, even existing ones such as Tornado Cash, change how assets are stored in a different way: _many users' funds are stored in the same smart contract_ (and hence at the same address). To send funds to a specific user, users will need to rely on the privacy scheme's own internal addressing system.
 
 As we've seen, **each of the three transitions weaken the "one user ~= one address" mental model in different ways**, and some of these effects feed back into the complexity of executing the transitions. Two particular points of complexity are:
 
 1. **If you want to pay someone, how will you get the information on _how_ to pay them?**
-2. **If users have many assets stored in different places across different chains, how do they do key changes and [social recovery](https://vitalik.ca/general/2021/01/11/recovery.html)?**
+2. **If users have many assets stored in different places across different chains, how do they do key changes and [social recovery](../../../2021/01/11/recovery.html)?**
 
 ## The three transitions and on-chain payments (and identity)
 
@@ -65,7 +65,7 @@ A transition to smart contract wallets is fortunately not a large burden on the 
 
 Privacy, on the other hand, once again poses major challenges that we have not really dealt with yet. The original Tornado Cash did not introduce any of these issues, because it did not support internal transfers: users could only deposit into the system and withdraw out of it. Once you _can_ make internal transfers, however, users will need to use the internal addressing scheme of the privacy system. In practice, a user's "payment information" would need to contain both (i) some kind of "spending pubkey", a commitment to a secret that the recipient could use to spend, and (ii) some way for the sender to send encrypted information that only the recipient can decrypt, to help the recipient discover the payment.
 
-[Stealth address protocols](https://vitalik.ca/general/2023/01/20/stealth.html) rely on a concept of **meta-addresses**, which work in this way: one part of the meta-address is a blinded version of the sender's spending key, and another part is the sender's encryption key (though a minimal implementation could set those two keys to be the same).
+[Stealth address protocols](../../../2023/01/20/stealth.html) rely on a concept of **meta-addresses**, which work in this way: one part of the meta-address is a blinded version of the sender's spending key, and another part is the sender's encryption key (though a minimal implementation could set those two keys to be the same).
 
 <center><br>
 
@@ -98,7 +98,7 @@ Each user has a **keystore contract**, which exists in _one location_ (could eit
 The proof could be implemented in a few ways:
 
 * **Direct read-only L1 access inside the L2**. It's possible to modify L2s to give them a way to directly read L1 state. If the keystore contract is on L1, this would mean that contracts inside L2 can access the keystore "for free"
-* **Merkle branches**. Merkle branches can prove L1 state to an L2, or L2 state to an L1, or you can combine the two to prove parts of the state of one L2 to another L2. The main weakness of Merkle proofs is high gas costs due to proof length: potentially 5 kB for a proof, though this will reduce to < 1 kB in the future due to [Verkle trees](https://vitalik.ca/general/2021/06/18/verkle.html).
+* **Merkle branches**. Merkle branches can prove L1 state to an L2, or L2 state to an L1, or you can combine the two to prove parts of the state of one L2 to another L2. The main weakness of Merkle proofs is high gas costs due to proof length: potentially 5 kB for a proof, though this will reduce to < 1 kB in the future due to [Verkle trees](../../../2021/06/18/verkle.html).
 * **ZK-SNARKs**. You can reduce data costs by using a ZK-SNARK of a Merkle branch instead of the branch itself. It's possible to build off-chain aggregation techniques (eg. on top of [EIP-4337](https://eips.ethereum.org/EIPS/eip-4337)) to have one single ZK-SNARK verify all cross-chain state proofs in a block.
 * **KZG commitments**. Either L2s, or schemes built on top of them, could introduce a sequential addressing system, allowing proofs of state inside this system to be a mere 48 bytes long. Like with ZK-SNARKs, a [multiproof scheme](https://dankradfeist.de/ethereum/2021/06/18/pcs-multiproofs.html) could merge all of these proofs into a single proof per block.
 
@@ -130,7 +130,7 @@ Fortunately, the ENS team has stepped up, and ENS on L2 is actually happening! [
 
 </center><br>
 
-Actually fetching the proofs involves going to a list of URLs stored in the contract, which admittedly _feels_ like centralization, though I would argue it really isn't: it's a [1-of-N trust model](https://vitalik.ca/general/2020/08/20/trust.html) (invalid proofs get caught by the verification logic in the CCIP contract's callback function, and as long as even _one_ of the URLs returns a valid proof, you're good). The list of URLs could contain dozens of them.
+Actually fetching the proofs involves going to a list of URLs stored in the contract, which admittedly _feels_ like centralization, though I would argue it really isn't: it's a [1-of-N trust model](../../../2020/08/20/trust.html) (invalid proofs get caught by the verification logic in the CCIP contract's callback function, and as long as even _one_ of the URLs returns a valid proof, you're good). The list of URLs could contain dozens of them.
 
 **The ENS CCIP effort is a success story, and it should be viewed as a sign that radical reforms of the kind that we need are actually possible.** But there's a lot more application-layer reform that will need to be done. A few examples:
 

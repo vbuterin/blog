@@ -109,90 +109,279 @@ MathJax = {
 <br> <br> <br>
 <title> Some ways to use ZK-SNARKs for privacy </title>
 
-<p><em>Special thanks to Barry Whitehat and Gubsheep for feedback and review.</em></p>
-<p>ZK-SNARKs are a powerful cryptographic tool, and an increasingly important part of the applications that people are building both in the blockchain space and beyond. But they are complicated, both in terms of <em>how they work</em>, and in terms of <em>how you can use them</em>.</p>
-<p>My <a href="https://vitalik.ca/general/2021/01/26/snarks.html">previous post explaining ZK-SNARKs</a> focused on the first question, attempting to explain the math behind ZK-SNARKs in a way that's reasonably understandable but still theoretically complete. This post will focus on the second question: how do ZK-SNARKs fit into existing applications, what are some examples of what they can do, what can't they do, and what are some general guidelines for figuring out whether or not ZK-SNARKing some particular application is possible?</p>
-<p><strong>In particular, this post focuses on applications of ZK-SNARKs for preserving privacy</strong>.</p>
+<p><em>Special thanks to Barry Whitehat and Gubsheep for feedback and
+review.</em></p>
+<p>ZK-SNARKs are a powerful cryptographic tool, and an increasingly
+important part of the applications that people are building both in the
+blockchain space and beyond. But they are complicated, both in terms of
+<em>how they work</em>, and in terms of <em>how you can use
+them</em>.</p>
+<p>My <a href="../../../2021/01/26/snarks.html">previous post explaining
+ZK-SNARKs</a> focused on the first question, attempting to explain the
+math behind ZK-SNARKs in a way that's reasonably understandable but
+still theoretically complete. This post will focus on the second
+question: how do ZK-SNARKs fit into existing applications, what are some
+examples of what they can do, what can't they do, and what are some
+general guidelines for figuring out whether or not ZK-SNARKing some
+particular application is possible?</p>
+<p><strong>In particular, this post focuses on applications of ZK-SNARKs
+for preserving privacy</strong>.</p>
 <h2 id="what-does-a-zk-snark-do">What does a ZK-SNARK do?</h2>
-<p>Suppose that you have a public input <span class="math inline">\(x\)</span>, a private input <span class="math inline">\(w\)</span>, and a (public) function <span class="math inline">\(f(x, w) \rightarrow \{True, False\}\)</span> that performs some kind of verification on the inputs. With a ZK-SNARK, you can prove that you know an <span class="math inline">\(w\)</span> such that <span class="math inline">\(f(x, w) = True\)</span> for some given <span class="math inline">\(f\)</span> and <span class="math inline">\(x\)</span>, without revealing what <span class="math inline">\(w\)</span> is. Additionally, the verifier can verify the proof much faster it would take for them to compute <span class="math inline">\(f(x, w)\)</span> themselves, even if they know <span class="math inline">\(w\)</span>.</p>
+<p>Suppose that you have a public input <span
+class="math inline">\(x\)</span>, a private input <span
+class="math inline">\(w\)</span>, and a (public) function <span
+class="math inline">\(f(x, w) \rightarrow \{True, False\}\)</span> that
+performs some kind of verification on the inputs. With a ZK-SNARK, you
+can prove that you know an <span class="math inline">\(w\)</span> such
+that <span class="math inline">\(f(x, w) = True\)</span> for some given
+<span class="math inline">\(f\)</span> and <span
+class="math inline">\(x\)</span>, without revealing what <span
+class="math inline">\(w\)</span> is. Additionally, the verifier can
+verify the proof much faster it would take for them to compute <span
+class="math inline">\(f(x, w)\)</span> themselves, even if they know
+<span class="math inline">\(w\)</span>.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/using_snarks/definition.png" class="padded" /></p>
+<p><img src="../../../../images/using_snarks/definition.png"
+class="padded" /></p>
 </center>
 <p><br></p>
-<p>This gives the ZK-SNARK its two properties: <strong>privacy</strong> and <strong>scalability</strong>. As mentioned above, in this post our examples will focus on privacy.</p>
+<p>This gives the ZK-SNARK its two properties: <strong>privacy</strong>
+and <strong>scalability</strong>. As mentioned above, in this post our
+examples will focus on privacy.</p>
 <h2 id="proof-of-membership">Proof of membership</h2>
-<p>Suppose that you have an Ethereum wallet, and you want to prove that this wallet has a proof-of-humanity registration, without revealing <em>which</em> registered human you are. We can mathematically describe the function as follows:</p>
+<p>Suppose that you have an Ethereum wallet, and you want to prove that
+this wallet has a proof-of-humanity registration, without revealing
+<em>which</em> registered human you are. We can mathematically describe
+the function as follows:</p>
 <ul>
-<li>The <strong>private input</strong> (<span class="math inline">\(w\)</span>): your address <span class="math inline">\(A\)</span>, and the private key <span class="math inline">\(k\)</span> to your address</li>
-<li>The <strong>public input</strong> (<span class="math inline">\(x\)</span>): the set of all addresses with verified proof-of-humanity profiles <span class="math inline">\(\{H_1 ... H_n\}\)</span></li>
-<li>The <strong>verification function</strong> <span class="math inline">\(f(x, w)\)</span>:
+<li>The <strong>private input</strong> (<span
+class="math inline">\(w\)</span>): your address <span
+class="math inline">\(A\)</span>, and the private key <span
+class="math inline">\(k\)</span> to your address</li>
+<li>The <strong>public input</strong> (<span
+class="math inline">\(x\)</span>): the set of all addresses with
+verified proof-of-humanity profiles <span class="math inline">\(\{H_1
+... H_n\}\)</span></li>
+<li>The <strong>verification function</strong> <span
+class="math inline">\(f(x, w)\)</span>:
 <ul>
-<li>Interpret <span class="math inline">\(w\)</span> as the pair <span class="math inline">\((A, k)\)</span>, and <span class="math inline">\(x\)</span> as the list of valid profiles <span class="math inline">\(\{H_1 ... H_n\}\)</span></li>
-<li>Verify that <span class="math inline">\(A\)</span> is one of the addresses in <span class="math inline">\(\{H_1 ... H_n\}\)</span></li>
-<li>Verify that <span class="math inline">\(privtoaddr(k) = A\)</span></li>
-<li>Return <span class="math inline">\(True\)</span> if both verifications pass, <span class="math inline">\(False\)</span> if either verification fails</li>
+<li>Interpret <span class="math inline">\(w\)</span> as the pair <span
+class="math inline">\((A, k)\)</span>, and <span
+class="math inline">\(x\)</span> as the list of valid profiles <span
+class="math inline">\(\{H_1 ... H_n\}\)</span></li>
+<li>Verify that <span class="math inline">\(A\)</span> is one of the
+addresses in <span class="math inline">\(\{H_1 ... H_n\}\)</span></li>
+<li>Verify that <span class="math inline">\(privtoaddr(k) =
+A\)</span></li>
+<li>Return <span class="math inline">\(True\)</span> if both
+verifications pass, <span class="math inline">\(False\)</span> if either
+verification fails</li>
 </ul></li>
 </ul>
-<p>The prover generates their address <span class="math inline">\(A\)</span> and the associated key <span class="math inline">\(k\)</span>, and provides <span class="math inline">\(w = (A, k)\)</span> as the private input to <span class="math inline">\(f\)</span>. They take the public input, the current set of verified proof-of-humanity profiles <span class="math inline">\(\{H_1 ... H_n\}\)</span>, from the chain. They run the ZK-SNARK proving algorithm, which (assuming the inputs are correct) generates the proof. The prover sends the proof to the verifier and they provide the block height at which they obtained the list of verified profiles.</p>
-<p>The verifier also reads the chain, gets the list <span class="math inline">\(\{H_1 ... H_n\}\)</span> at the height that the prover specified, and checks the proof. If the check passes, the verifier is convinced that the prover has <em>some</em> verified proof-of-humanity profile.</p>
-<p><strong>Before we move on to more complicated examples, I highly recommend you go over the above example until you understand every bit of what is going on.</strong></p>
-<h2 id="making-the-proof-of-membership-more-efficient">Making the proof-of-membership more efficient</h2>
-<p>One weakness in the above proof system is that the verifier needs to know the whole set of profiles <span class="math inline">\(\{H_1 ... H_n\}\)</span>, and they need to spend <span class="math inline">\(O(n)\)</span> time "inputting" this set into the ZK-SNARK mechanism.</p>
-<p>We can solve this by instead passing in as a public input an on-chain Merkle root containing <em>all</em> profiles (this could just be the state root). We add another private input, a Merkle proof <span class="math inline">\(M\)</span> proving that the prover's account <span class="math inline">\(A\)</span> is in the relevant part of the tree.</p>
+<p>The prover generates their address <span
+class="math inline">\(A\)</span> and the associated key <span
+class="math inline">\(k\)</span>, and provides <span
+class="math inline">\(w = (A, k)\)</span> as the private input to <span
+class="math inline">\(f\)</span>. They take the public input, the
+current set of verified proof-of-humanity profiles <span
+class="math inline">\(\{H_1 ... H_n\}\)</span>, from the chain. They run
+the ZK-SNARK proving algorithm, which (assuming the inputs are correct)
+generates the proof. The prover sends the proof to the verifier and they
+provide the block height at which they obtained the list of verified
+profiles.</p>
+<p>The verifier also reads the chain, gets the list <span
+class="math inline">\(\{H_1 ... H_n\}\)</span> at the height that the
+prover specified, and checks the proof. If the check passes, the
+verifier is convinced that the prover has <em>some</em> verified
+proof-of-humanity profile.</p>
+<p><strong>Before we move on to more complicated examples, I highly
+recommend you go over the above example until you understand every bit
+of what is going on.</strong></p>
+<h2 id="making-the-proof-of-membership-more-efficient">Making the
+proof-of-membership more efficient</h2>
+<p>One weakness in the above proof system is that the verifier needs to
+know the whole set of profiles <span class="math inline">\(\{H_1 ...
+H_n\}\)</span>, and they need to spend <span
+class="math inline">\(O(n)\)</span> time "inputting" this set into the
+ZK-SNARK mechanism.</p>
+<p>We can solve this by instead passing in as a public input an on-chain
+Merkle root containing <em>all</em> profiles (this could just be the
+state root). We add another private input, a Merkle proof <span
+class="math inline">\(M\)</span> proving that the prover's account <span
+class="math inline">\(A\)</span> is in the relevant part of the
+tree.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/using_snarks/merkle_tree.png" class="padded" /></p>
+<p><img src="../../../../images/using_snarks/merkle_tree.png"
+class="padded" /></p>
 </center>
 <p><br></p>
-<p><em>Advanced readers: A very new and more efficient alternative to Merkle proofs for ZK-proving membership is <a href="https://eprint.iacr.org/2022/621">Caulk</a>. In the future, some of these use cases may migrate to Caulk-like schemes.</em></p>
+<p><em>Advanced readers: A very new and more efficient alternative to
+Merkle proofs for ZK-proving membership is <a
+href="https://eprint.iacr.org/2022/621">Caulk</a>. In the future, some
+of these use cases may migrate to Caulk-like schemes.</em></p>
 <h2 id="zk-snarks-for-coins">ZK-SNARKs for coins</h2>
-<p>Projects like <a href="https://z.cash/">Zcash</a> and <a href="https://tornado.cash">Tornado.cash</a> allow you to have privacy-preserving <em>currency</em>. Now, you might think that you can take the "ZK proof-of-humanity" above, but instead of proving access of a proof-of-humanity profile, use it to prove access to a <em>coin</em>. But we have a problem: we have to <em>simultaneously solve privacy and the double spending problem</em>. That is, it should not be possible to spend the coin twice.</p>
-<p>Here's how we solve this. Anyone who has a coin has a private secret <span class="math inline">\(s\)</span>. They locally compute the "leaf" <span class="math inline">\(L = hash(s, 1)\)</span>, which gets published on-chain and becomes part of the state, and <span class="math inline">\(N = hash(s, 2)\)</span>, which we call the <em>nullifier</em>. The state gets stored in a Merkle tree.</p>
+<p>Projects like <a href="https://z.cash/">Zcash</a> and <a
+href="https://tornado.cash">Tornado.cash</a> allow you to have
+privacy-preserving <em>currency</em>. Now, you might think that you can
+take the "ZK proof-of-humanity" above, but instead of proving access of
+a proof-of-humanity profile, use it to prove access to a <em>coin</em>.
+But we have a problem: we have to <em>simultaneously solve privacy and
+the double spending problem</em>. That is, it should not be possible to
+spend the coin twice.</p>
+<p>Here's how we solve this. Anyone who has a coin has a private secret
+<span class="math inline">\(s\)</span>. They locally compute the "leaf"
+<span class="math inline">\(L = hash(s, 1)\)</span>, which gets
+published on-chain and becomes part of the state, and <span
+class="math inline">\(N = hash(s, 2)\)</span>, which we call the
+<em>nullifier</em>. The state gets stored in a Merkle tree.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/using_snarks/coin.png" class="padded" /></p>
+<p><img src="../../../../images/using_snarks/coin.png"
+class="padded" /></p>
 </center>
 <p><br></p>
 <p>To spend a coin, the sender must make a ZK-SNARK where:</p>
 <ul>
-<li>The <strong>public input</strong> contains a nullifier <span class="math inline">\(N\)</span>, the current or recent Merkle root <span class="math inline">\(R\)</span>, and a new leaf <span class="math inline">\(L&#39;\)</span> (the intent is that recipient has a secret <span class="math inline">\(s&#39;\)</span>, and passes to the sender <span class="math inline">\(L&#39; = hash(s&#39;, 1)\)</span>)</li>
-<li>The <strong>private input</strong> contains a secret <span class="math inline">\(s\)</span>, a leaf <span class="math inline">\(L\)</span> and a Merkle branch <span class="math inline">\(M\)</span></li>
+<li>The <strong>public input</strong> contains a nullifier <span
+class="math inline">\(N\)</span>, the current or recent Merkle root
+<span class="math inline">\(R\)</span>, and a new leaf <span
+class="math inline">\(L&#39;\)</span> (the intent is that recipient has
+a secret <span class="math inline">\(s&#39;\)</span>, and passes to the
+sender <span class="math inline">\(L&#39; = hash(s&#39;,
+1)\)</span>)</li>
+<li>The <strong>private input</strong> contains a secret <span
+class="math inline">\(s\)</span>, a leaf <span
+class="math inline">\(L\)</span> and a Merkle branch <span
+class="math inline">\(M\)</span></li>
 <li>The <strong>verification function</strong> checks that:
 <ul>
-<li><span class="math inline">\(M\)</span> is a valid Merkle branch proving that <span class="math inline">\(L\)</span> is a leaf in a tree with root <span class="math inline">\(R\)</span>, where <span class="math inline">\(R\)</span> is the current Merkle root of the state</li>
+<li><span class="math inline">\(M\)</span> is a valid Merkle branch
+proving that <span class="math inline">\(L\)</span> is a leaf in a tree
+with root <span class="math inline">\(R\)</span>, where <span
+class="math inline">\(R\)</span> is the current Merkle root of the
+state</li>
 <li><span class="math inline">\(hash(s, 1) = L\)</span></li>
 <li><span class="math inline">\(hash(s, 2) = N\)</span></li>
 </ul></li>
 </ul>
-<p>The transaction contains the nullifier <span class="math inline">\(N\)</span> and the new leaf <span class="math inline">\(L&#39;\)</span>. We don't actually prove anything about <span class="math inline">\(L&#39;\)</span>, but we "mix it in" to the proof to prevent <span class="math inline">\(L&#39;\)</span> from being modified by third parties when the transaction is in-flight.</p>
-<p>To verify the transaction, the chain checks the ZK-SNARK, and additionally checks that <span class="math inline">\(N\)</span> has not been used in a previous spending transaction. If the transaction succeeds, <span class="math inline">\(N\)</span> is added to the spent nullifier set, so that it cannot be spent again. <span class="math inline">\(L&#39;\)</span> is added to the Merkle tree.</p>
-<p>What is going on here? We are using a zk-SNARK to relate two values, <span class="math inline">\(L\)</span> (which goes on-chain when a coin is created) and <span class="math inline">\(N\)</span> (which goes on-chain when a coin is spent), without revealing <em>which</em> <span class="math inline">\(L\)</span> is connected to <em>which</em> <span class="math inline">\(N\)</span>. The connection between <span class="math inline">\(L\)</span> and <span class="math inline">\(N\)</span> can only be discovered if you know the secret <span class="math inline">\(s\)</span> that generates both. Each coin that gets created can only be spent once (because for each <span class="math inline">\(L\)</span> there is only one valid corresponding <span class="math inline">\(N\)</span>), but <em>which</em> coin is being spent at a particular time is kept hidden.</p>
-<p><strong>This is also an important primitive to understand. Many of the mechanisms we describe below will be based on a very similar "privately spend only once" gadget, though for different purposes.</strong></p>
-<h2 id="coins-with-arbitrary-balances">Coins with arbitrary balances</h2>
-<p>The above can easily be extended to coins of arbitrary balances. We keep the concept of "coins", except each coin has a (private) balance attached. One simple way to do this is have the chain store for each coin not just the leaf <span class="math inline">\(L\)</span> but also an encrypted balance.</p>
-<p>Each transaction would consume <em>two</em> coins and create two new coins, and it would add two (leaf, encrypted balance) pairs to the state. The ZK-SNARK would also check that the sum of the balances coming in equals the sum of the balances going out, and that the two output balances are both non-negative.</p>
+<p>The transaction contains the nullifier <span
+class="math inline">\(N\)</span> and the new leaf <span
+class="math inline">\(L&#39;\)</span>. We don't actually prove anything
+about <span class="math inline">\(L&#39;\)</span>, but we "mix it in" to
+the proof to prevent <span class="math inline">\(L&#39;\)</span> from
+being modified by third parties when the transaction is in-flight.</p>
+<p>To verify the transaction, the chain checks the ZK-SNARK, and
+additionally checks that <span class="math inline">\(N\)</span> has not
+been used in a previous spending transaction. If the transaction
+succeeds, <span class="math inline">\(N\)</span> is added to the spent
+nullifier set, so that it cannot be spent again. <span
+class="math inline">\(L&#39;\)</span> is added to the Merkle tree.</p>
+<p>What is going on here? We are using a zk-SNARK to relate two values,
+<span class="math inline">\(L\)</span> (which goes on-chain when a coin
+is created) and <span class="math inline">\(N\)</span> (which goes
+on-chain when a coin is spent), without revealing <em>which</em> <span
+class="math inline">\(L\)</span> is connected to <em>which</em> <span
+class="math inline">\(N\)</span>. The connection between <span
+class="math inline">\(L\)</span> and <span
+class="math inline">\(N\)</span> can only be discovered if you know the
+secret <span class="math inline">\(s\)</span> that generates both. Each
+coin that gets created can only be spent once (because for each <span
+class="math inline">\(L\)</span> there is only one valid corresponding
+<span class="math inline">\(N\)</span>), but <em>which</em> coin is
+being spent at a particular time is kept hidden.</p>
+<p><strong>This is also an important primitive to understand. Many of
+the mechanisms we describe below will be based on a very similar
+"privately spend only once" gadget, though for different
+purposes.</strong></p>
+<h2 id="coins-with-arbitrary-balances">Coins with arbitrary
+balances</h2>
+<p>The above can easily be extended to coins of arbitrary balances. We
+keep the concept of "coins", except each coin has a (private) balance
+attached. One simple way to do this is have the chain store for each
+coin not just the leaf <span class="math inline">\(L\)</span> but also
+an encrypted balance.</p>
+<p>Each transaction would consume <em>two</em> coins and create two new
+coins, and it would add two (leaf, encrypted balance) pairs to the
+state. The ZK-SNARK would also check that the sum of the balances coming
+in equals the sum of the balances going out, and that the two output
+balances are both non-negative.</p>
 <h2 id="zk-anti-denial-of-service">ZK anti-denial-of-service</h2>
-<p>An interesting anti-<a href="https://en.wikipedia.org/wiki/Denial-of-service_attack">denial-of-service</a> gadget. Suppose that you have some on-chain identity that is non-trivial to create: it could be a proof-of-humanity profile, it could be a validator with 32 ETH, or it could just be an account that has a nonzero ETH balance. We could create a more DoS resistant peer-to-peer network by only accepting a message if it comes with a proof that the message's sender has such a profile. Every profile would be allowed to send up to 1000 messages per hour, and a sender's profile would be removed from the list if the sender cheats. But how do we make this privacy-preserving?</p>
-<p>First, the setup. Let <span class="math inline">\(k\)</span> be the private key of a user; <span class="math inline">\(A = privtoaddr(k)\)</span> is the corresponding address. The list of valid addresses is public (eg. it's a registry on-chain). So far this is similar to the proof-of-humanity example: you have to prove that you have the private key to one address without revealing which one. But here, we don't just want a proof that you're in the list. We want a protocol that lets you prove you're in the list <em>but prevents you from making too many proofs</em>. And so we need to do some more work.</p>
-<p>We'll divide up time into epochs; each epoch lasts 3.6 seconds (so, 1000 epochs per hour). Our goal will be to allow each user to send only one message per epoch; if the user sends <em>two</em> messages in the same epoch, they will get caught. To allow users to send occasional bursts of messages, they are allowed to use epochs in the recent past, so if some user has 500 unused epochs they can use those epochs to send 500 messages all at once.</p>
+<p>An interesting anti-<a
+href="https://en.wikipedia.org/wiki/Denial-of-service_attack">denial-of-service</a>
+gadget. Suppose that you have some on-chain identity that is non-trivial
+to create: it could be a proof-of-humanity profile, it could be a
+validator with 32 ETH, or it could just be an account that has a nonzero
+ETH balance. We could create a more DoS resistant peer-to-peer network
+by only accepting a message if it comes with a proof that the message's
+sender has such a profile. Every profile would be allowed to send up to
+1000 messages per hour, and a sender's profile would be removed from the
+list if the sender cheats. But how do we make this
+privacy-preserving?</p>
+<p>First, the setup. Let <span class="math inline">\(k\)</span> be the
+private key of a user; <span class="math inline">\(A =
+privtoaddr(k)\)</span> is the corresponding address. The list of valid
+addresses is public (eg. it's a registry on-chain). So far this is
+similar to the proof-of-humanity example: you have to prove that you
+have the private key to one address without revealing which one. But
+here, we don't just want a proof that you're in the list. We want a
+protocol that lets you prove you're in the list <em>but prevents you
+from making too many proofs</em>. And so we need to do some more
+work.</p>
+<p>We'll divide up time into epochs; each epoch lasts 3.6 seconds (so,
+1000 epochs per hour). Our goal will be to allow each user to send only
+one message per epoch; if the user sends <em>two</em> messages in the
+same epoch, they will get caught. To allow users to send occasional
+bursts of messages, they are allowed to use epochs in the recent past,
+so if some user has 500 unused epochs they can use those epochs to send
+500 messages all at once.</p>
 <h3 id="the-protocol">The protocol</h3>
-<p>We'll start with a simple version: we use nullifiers. A user generates a nullifier with <span class="math inline">\(N = hash(k, e)\)</span>, where <span class="math inline">\(k\)</span> is their key and <span class="math inline">\(e\)</span> is the epoch number, and publishes it along with the message <span class="math inline">\(m\)</span>. The ZK-SNARK once again mixes in <span class="math inline">\(hash(m)\)</span> without verifying anything about <span class="math inline">\(m\)</span>, so that the proof is bound to a single message. If a user makes two proofs bound to two different messages with the same nullifier, they can get caught.</p>
-<p>Now, we'll move on to the more complex version. Instead of just making it easy to prove if someone used the same epoch twice, this next protocol will actually <em>reveal their private key</em> in that case. Our core technique will rely on the "two points make a line" trick: if you reveal one point on a line, you've revealed little, but if you reveal two points on a line, you've revealed the whole line.</p>
-<p>For each epoch <span class="math inline">\(e\)</span>, we take the line <span class="math inline">\(L_e(x) = hash(k, e) * x + k\)</span>. The slope of the line is <span class="math inline">\(hash(k, e)\)</span>, and the y-intercept is <span class="math inline">\(k\)</span>; neither is known to the public. To make a <em>certificate</em> for a message <span class="math inline">\(m\)</span>, the sender provides <span class="math inline">\(y = L_e(hash(m)) =\)</span> <span class="math inline">\(hash(k, e) * hash(m) + k\)</span>, along with a ZK-SNARK proving that <span class="math inline">\(y\)</span> was computed correctly.</p>
+<p>We'll start with a simple version: we use nullifiers. A user
+generates a nullifier with <span class="math inline">\(N = hash(k,
+e)\)</span>, where <span class="math inline">\(k\)</span> is their key
+and <span class="math inline">\(e\)</span> is the epoch number, and
+publishes it along with the message <span
+class="math inline">\(m\)</span>. The ZK-SNARK once again mixes in <span
+class="math inline">\(hash(m)\)</span> without verifying anything about
+<span class="math inline">\(m\)</span>, so that the proof is bound to a
+single message. If a user makes two proofs bound to two different
+messages with the same nullifier, they can get caught.</p>
+<p>Now, we'll move on to the more complex version. Instead of just
+making it easy to prove if someone used the same epoch twice, this next
+protocol will actually <em>reveal their private key</em> in that case.
+Our core technique will rely on the "two points make a line" trick: if
+you reveal one point on a line, you've revealed little, but if you
+reveal two points on a line, you've revealed the whole line.</p>
+<p>For each epoch <span class="math inline">\(e\)</span>, we take the
+line <span class="math inline">\(L_e(x) = hash(k, e) * x + k\)</span>.
+The slope of the line is <span class="math inline">\(hash(k,
+e)\)</span>, and the y-intercept is <span
+class="math inline">\(k\)</span>; neither is known to the public. To
+make a <em>certificate</em> for a message <span
+class="math inline">\(m\)</span>, the sender provides <span
+class="math inline">\(y = L_e(hash(m)) =\)</span> <span
+class="math inline">\(hash(k, e) * hash(m) + k\)</span>, along with a
+ZK-SNARK proving that <span class="math inline">\(y\)</span> was
+computed correctly.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/using_snarks/line.png" class="padded" /></p>
+<p><img src="../../../../images/using_snarks/line.png"
+class="padded" /></p>
 </center>
 <p><br></p>
 <p>To recap, the ZK-SNARK here is as follows:</p>
 <ul>
 <li><strong>Public input</strong>:
 <ul>
-<li><span class="math inline">\(\{A_1 ... A_n\}\)</span>, the list of valid accounts</li>
-<li><span class="math inline">\(m\)</span>, the message that the certificate is verifying</li>
-<li><span class="math inline">\(e\)</span>, the epoch number used for the certificate</li>
-<li><span class="math inline">\(y\)</span>, the line function evaluation</li>
+<li><span class="math inline">\(\{A_1 ... A_n\}\)</span>, the list of
+valid accounts</li>
+<li><span class="math inline">\(m\)</span>, the message that the
+certificate is verifying</li>
+<li><span class="math inline">\(e\)</span>, the epoch number used for
+the certificate</li>
+<li><span class="math inline">\(y\)</span>, the line function
+evaluation</li>
 </ul></li>
 <li><strong>Private input</strong>:
 <ul>
@@ -200,77 +389,259 @@ MathJax = {
 </ul></li>
 <li><strong>Verification function</strong>:
 <ul>
-<li>Check that <span class="math inline">\(privtoaddr(k)\)</span> is in <span class="math inline">\(\{A_1 ... A_n\}\)</span></li>
-<li>Check that <span class="math inline">\(y = hash(k, e) * hash(m) + k\)</span></li>
+<li>Check that <span class="math inline">\(privtoaddr(k)\)</span> is in
+<span class="math inline">\(\{A_1 ... A_n\}\)</span></li>
+<li>Check that <span class="math inline">\(y = hash(k, e) * hash(m) +
+k\)</span></li>
 </ul></li>
 </ul>
-<p>But what if someone uses a single epoch twice? That means they published two values <span class="math inline">\(m_1\)</span> and <span class="math inline">\(m_2\)</span> and the corresponding certificate values <span class="math inline">\(y_1 = hash(k, e) * hash(m_1) + k\)</span> and <span class="math inline">\(y_2 = hash(k, e) * hash(m_2) + k\)</span>. We can use the two points to recover the line, and hence the y-intercept (which is the private key):</p>
+<p>But what if someone uses a single epoch twice? That means they
+published two values <span class="math inline">\(m_1\)</span> and <span
+class="math inline">\(m_2\)</span> and the corresponding certificate
+values <span class="math inline">\(y_1 = hash(k, e) * hash(m_1) +
+k\)</span> and <span class="math inline">\(y_2 = hash(k, e) * hash(m_2)
++ k\)</span>. We can use the two points to recover the line, and hence
+the y-intercept (which is the private key):</p>
 <center>
 <p><br></p>
-<p><span class="math inline">\(k = y_1 - hash(m_1) * \frac{y_2 - y_1}{hash(m_2) - hash(m_1)}\)</span></p>
+<p><span class="math inline">\(k = y_1 - hash(m_1) * \frac{y_2 -
+y_1}{hash(m_2) - hash(m_1)}\)</span></p>
 </center>
 <p><br></p>
-<p>So if someone reuses an epoch, they leak out their private key for everyone to see. Depending on the circumstance, this could imply stolen funds, a slashed validator, or simply the private key getting broadcasted and included into a smart contract, at which point the corresponding address would get removed from the set.</p>
-<p>What have we accomplished here? A viable off-chain, anonymous anti-denial-of-service system useful for systems like blockchain peer-to-peer networks, chat applications, etc, without requiring any proof of work. The <a href="https://medium.com/privacy-scaling-explorations/rate-limiting-nullifier-a-spam-protection-mechanism-for-anonymous-environments-bbe4006a57d">RLN (rate limiting nullifier)</a> project is currently building essentially this idea, though with minor modifications (namely, they do <em>both</em> the nullifier and the two-points-on-a-line technique, using the nullifier to make it easier to catch double-use of an epoch).</p>
+<p>So if someone reuses an epoch, they leak out their private key for
+everyone to see. Depending on the circumstance, this could imply stolen
+funds, a slashed validator, or simply the private key getting
+broadcasted and included into a smart contract, at which point the
+corresponding address would get removed from the set.</p>
+<p>What have we accomplished here? A viable off-chain, anonymous
+anti-denial-of-service system useful for systems like blockchain
+peer-to-peer networks, chat applications, etc, without requiring any
+proof of work. The <a
+href="https://medium.com/privacy-scaling-explorations/rate-limiting-nullifier-a-spam-protection-mechanism-for-anonymous-environments-bbe4006a57d">RLN
+(rate limiting nullifier)</a> project is currently building essentially
+this idea, though with minor modifications (namely, they do
+<em>both</em> the nullifier and the two-points-on-a-line technique,
+using the nullifier to make it easier to catch double-use of an
+epoch).</p>
 <h2 id="zk-negative-reputation">ZK negative reputation</h2>
-<p>Suppose that we want to build <strong>0chan</strong>, an internet forum which provides full anonymity like 4chan (so you don't even have persistent names), but has a reputation system to encourage more quality content. This could be a system where some moderation DAO can flag posts as violating the rules of the system and institutes a three-strikes-and-you're-out mechanism, it could be users being able to upvote and downvote posts; there are lots of configurations.</p>
-<p>The reputation system could support positive or negative reputation; however, supporting negative reputation requires extra infrastructure to <em>require</em> the user to take into account all reputation messages in their proof, even the negative ones. It's this harder use case, which is similar to what is being implemented with <a href="https://unirep.gitbook.io/unirep-social/">Unirep Social</a>, that we'll focus on.</p>
+<p>Suppose that we want to build <strong>0chan</strong>, an internet
+forum which provides full anonymity like 4chan (so you don't even have
+persistent names), but has a reputation system to encourage more quality
+content. This could be a system where some moderation DAO can flag posts
+as violating the rules of the system and institutes a
+three-strikes-and-you're-out mechanism, it could be users being able to
+upvote and downvote posts; there are lots of configurations.</p>
+<p>The reputation system could support positive or negative reputation;
+however, supporting negative reputation requires extra infrastructure to
+<em>require</em> the user to take into account all reputation messages
+in their proof, even the negative ones. It's this harder use case, which
+is similar to what is being implemented with <a
+href="https://unirep.gitbook.io/unirep-social/">Unirep Social</a>, that
+we'll focus on.</p>
 <h3 id="chaining-posts-the-basics">Chaining posts: the basics</h3>
-<p>Anyone can make a post by publishing a message on-chain that contains the post, and a ZK-SNARK proving that either (i) you own some scarce external identity, eg. proof-of-humanity, that entitles you to create an account, or (ii) that you made some specific previous post. Specifically, the ZK-SNARK is as follows:</p>
+<p>Anyone can make a post by publishing a message on-chain that contains
+the post, and a ZK-SNARK proving that either (i) you own some scarce
+external identity, eg. proof-of-humanity, that entitles you to create an
+account, or (ii) that you made some specific previous post.
+Specifically, the ZK-SNARK is as follows:</p>
 <ul>
 <li><strong>Public inputs</strong>:
 <ul>
 <li>The nullifier <span class="math inline">\(N\)</span></li>
-<li>A recent blockchain state root <span class="math inline">\(R\)</span></li>
-<li>The post contents ("mixed in" to the proof to bind it to the post, but we don't do any computation on it)</li>
+<li>A recent blockchain state root <span
+class="math inline">\(R\)</span></li>
+<li>The post contents ("mixed in" to the proof to bind it to the post,
+but we don't do any computation on it)</li>
 </ul></li>
 <li><strong>Private inputs</strong>:
 <ul>
 <li>Your private key <span class="math inline">\(k\)</span></li>
-<li>Either an external identity (with address <span class="math inline">\(A\)</span>), or the nullifier <span class="math inline">\(N_{prev}\)</span> used by the previous post</li>
-<li>A Merkle proof <span class="math inline">\(M\)</span> proving inclusion of <span class="math inline">\(A\)</span> or <span class="math inline">\(N_{prev}\)</span> on-chain</li>
-<li>The number <span class="math inline">\(i\)</span> of posts that you have previously made with this account</li>
+<li>Either an external identity (with address <span
+class="math inline">\(A\)</span>), or the nullifier <span
+class="math inline">\(N_{prev}\)</span> used by the previous post</li>
+<li>A Merkle proof <span class="math inline">\(M\)</span> proving
+inclusion of <span class="math inline">\(A\)</span> or <span
+class="math inline">\(N_{prev}\)</span> on-chain</li>
+<li>The number <span class="math inline">\(i\)</span> of posts that you
+have previously made with this account</li>
 </ul></li>
 <li><strong>Verification function</strong>:
 <ul>
-<li>Check that <span class="math inline">\(M\)</span> is a valid Merkle branch proving that (either <span class="math inline">\(A\)</span> or <span class="math inline">\(N_{prev}\)</span>, whichever is provided) is a leaf in a tree with root <span class="math inline">\(R\)</span></li>
-<li>Check that <span class="math inline">\(N = enc(i, k)\)</span>, where <span class="math inline">\(enc\)</span> is an encryption function (eg. AES)</li>
-<li>If <span class="math inline">\(i = 0\)</span>, check that <span class="math inline">\(A = privtoaddr(k)\)</span>, otherwise check that <span class="math inline">\(N_{prev} = enc(i-1, k)\)</span></li>
+<li>Check that <span class="math inline">\(M\)</span> is a valid Merkle
+branch proving that (either <span class="math inline">\(A\)</span> or
+<span class="math inline">\(N_{prev}\)</span>, whichever is provided) is
+a leaf in a tree with root <span class="math inline">\(R\)</span></li>
+<li>Check that <span class="math inline">\(N = enc(i, k)\)</span>, where
+<span class="math inline">\(enc\)</span> is an encryption function (eg.
+AES)</li>
+<li>If <span class="math inline">\(i = 0\)</span>, check that <span
+class="math inline">\(A = privtoaddr(k)\)</span>, otherwise check that
+<span class="math inline">\(N_{prev} = enc(i-1, k)\)</span></li>
 </ul></li>
 </ul>
-<p>In addition to verifying the proof, the chain also checks that (i) <span class="math inline">\(R\)</span> actually is a recent state root, and (ii) the nullifier <span class="math inline">\(N\)</span> has not yet been used. So far, this is like the privacy-preserving coin introduced earlier, but we add a procedure for "minting" a new account, and we remove the ability to "send" your account to a different key - instead, all nullifiers are generated using your original key.</p>
-<p>We use <span class="math inline">\(enc\)</span> instead of <span class="math inline">\(hash\)</span> here to make the nullifiers reversible: if you have <span class="math inline">\(k\)</span>, you can decrypt any specific nullifier you see on-chain and if the result is a valid index and not random junk (eg. we could just check <span class="math inline">\(dec(N) &lt; 2^{64}\)</span>), then you know that nullifier was generated using <span class="math inline">\(k\)</span>.</p>
+<p>In addition to verifying the proof, the chain also checks that (i)
+<span class="math inline">\(R\)</span> actually is a recent state root,
+and (ii) the nullifier <span class="math inline">\(N\)</span> has not
+yet been used. So far, this is like the privacy-preserving coin
+introduced earlier, but we add a procedure for "minting" a new account,
+and we remove the ability to "send" your account to a different key -
+instead, all nullifiers are generated using your original key.</p>
+<p>We use <span class="math inline">\(enc\)</span> instead of <span
+class="math inline">\(hash\)</span> here to make the nullifiers
+reversible: if you have <span class="math inline">\(k\)</span>, you can
+decrypt any specific nullifier you see on-chain and if the result is a
+valid index and not random junk (eg. we could just check <span
+class="math inline">\(dec(N) &lt; 2^{64}\)</span>), then you know that
+nullifier was generated using <span
+class="math inline">\(k\)</span>.</p>
 <h3 id="adding-reputation">Adding reputation</h3>
-<p>Reputation in this scheme is on-chain and in the clear: some smart contract has a method <code>addReputation</code>, which takes as input (i) the nullifier published along with the post, and (ii) the number of reputation units to add and subtract.</p>
-<p>We extend the on-chain data stored per post: instead of just storing the nullifier <span class="math inline">\(N\)</span>, we store <span class="math inline">\(\{N, \bar{h}, \bar{u}\}\)</span>, where:</p>
+<p>Reputation in this scheme is on-chain and in the clear: some smart
+contract has a method <code>addReputation</code>, which takes as input
+(i) the nullifier published along with the post, and (ii) the number of
+reputation units to add and subtract.</p>
+<p>We extend the on-chain data stored per post: instead of just storing
+the nullifier <span class="math inline">\(N\)</span>, we store <span
+class="math inline">\(\{N, \bar{h}, \bar{u}\}\)</span>, where:</p>
 <ul>
-<li><span class="math inline">\(\bar{h} = hash(h, r)\)</span> where <span class="math inline">\(h\)</span> is the block height of the state root that was referenced in the proof</li>
-<li><span class="math inline">\(\bar{u} = hash(u, r)\)</span> where <span class="math inline">\(u\)</span> is the account's reputation score (0 for a fresh account)</li>
+<li><span class="math inline">\(\bar{h} = hash(h, r)\)</span> where
+<span class="math inline">\(h\)</span> is the block height of the state
+root that was referenced in the proof</li>
+<li><span class="math inline">\(\bar{u} = hash(u, r)\)</span> where
+<span class="math inline">\(u\)</span> is the account's reputation score
+(0 for a fresh account)</li>
 </ul>
-<p><span class="math inline">\(r\)</span> here is simply a random value, added to prevent <span class="math inline">\(h\)</span> and <span class="math inline">\(u\)</span> from being uncovered by brute-force search (in cryptography jargon, adding <span class="math inline">\(r\)</span> makes the hash a <em>hiding commitment</em>).</p>
-<p>Suppose that a post uses a root <span class="math inline">\(R\)</span> and stores <span class="math inline">\(\{N, \bar{h}, \bar{u}\}\)</span>. In the proof, it links to a previous post, with stored data <span class="math inline">\(\{N_{prev}, \bar{h}_{prev}, \bar{u}_{prev}\}\)</span>. The post's proof is also required to walk over all the reputation entries that have been published between <span class="math inline">\(h_{prev}\)</span> and <span class="math inline">\(h\)</span>. For each nullifier <span class="math inline">\(N\)</span>, the verification function would decrypt <span class="math inline">\(N\)</span> using the user's key <span class="math inline">\(k\)</span>, and if the decryption outputs a valid index it would apply the reputation update. If the sum of all reputation updates is <span class="math inline">\(\delta\)</span>, the proof would finally check <span class="math inline">\(u = u_{prev} + \delta\)</span>.</p>
+<p><span class="math inline">\(r\)</span> here is simply a random value,
+added to prevent <span class="math inline">\(h\)</span> and <span
+class="math inline">\(u\)</span> from being uncovered by brute-force
+search (in cryptography jargon, adding <span
+class="math inline">\(r\)</span> makes the hash a <em>hiding
+commitment</em>).</p>
+<p>Suppose that a post uses a root <span
+class="math inline">\(R\)</span> and stores <span
+class="math inline">\(\{N, \bar{h}, \bar{u}\}\)</span>. In the proof, it
+links to a previous post, with stored data <span
+class="math inline">\(\{N_{prev}, \bar{h}_{prev},
+\bar{u}_{prev}\}\)</span>. The post's proof is also required to walk
+over all the reputation entries that have been published between <span
+class="math inline">\(h_{prev}\)</span> and <span
+class="math inline">\(h\)</span>. For each nullifier <span
+class="math inline">\(N\)</span>, the verification function would
+decrypt <span class="math inline">\(N\)</span> using the user's key
+<span class="math inline">\(k\)</span>, and if the decryption outputs a
+valid index it would apply the reputation update. If the sum of all
+reputation updates is <span class="math inline">\(\delta\)</span>, the
+proof would finally check <span class="math inline">\(u = u_{prev} +
+\delta\)</span>.</p>
 <center>
 <p><br></p>
-<p><img src="../../../../images/using_snarks/0chan.png" class="padded" /></p>
+<p><img src="../../../../images/using_snarks/0chan.png"
+class="padded" /></p>
 </center>
 <p><br></p>
-<p>If we want a "three strikes and you're out" rule, the ZK-SNARK would also check <span class="math inline">\(u &gt; -3\)</span>. If we want a rule where a post can get a special "high-reputation poster" flag if the poster has <span class="math inline">\(\ge 100\)</span> rep, we can accommodate that by adding "is <span class="math inline">\(u \ge 100\)</span>?" as a public input. Many kinds of such rules can be accommodated.</p>
-<p>To increase the scalability of the scheme, we could split it up into two kinds of messages: <em>posts</em> and <em>reputation update acknowledgements</em> (RCAs). A post would be off-chain, though it would be required to point to an RCA made in the past week. RCAs would be on-chain, and an RCA would walk through all the reputation updates since that poster's previous RCA. This way, the on-chain load is reduced to one transaction per poster per week plus one transaction per reputation message (a very low level if reputation updates are rare, eg. they're only used for moderation actions or perhaps "post of the day" style prizes).</p>
-<h2 id="holding-centralized-parties-accountable">Holding centralized parties accountable</h2>
-<p>Sometimes, you need to build a scheme that has a central "operator" of some kind. This could be for many reasons: sometimes it's for scalability, and sometimes it's for privacy - specifically, the privacy of data held by the operator.</p>
-<p>The <a href="https://github.com/privacy-scaling-explorations/maci">MACI</a> coercion-resistant voting system, for example, requires voters to submit their votes on-chain encrypted to a secret key held by a central operator. The operator would decrypt all the votes on-chain, count them up, and reveal the final result, along with a ZK-SNARK proving that they did everything correctly. This extra complexity is necessary to ensure a strong privacy property (called <strong>coercion-resistance</strong>): that users cannot prove to others how they voted <em>even if they wanted to</em>.</p>
-<p>Thanks to blockchains and ZK-SNARKs, the amount of trust in the operator can be kept very low. A malicious operator could still break coercion resistance, but because votes are published on the blockchain, the operator cannot cheat by censoring votes, and because the operator must provide a ZK-SNARK, they cannot cheat by mis-calculating the result.</p>
+<p>If we want a "three strikes and you're out" rule, the ZK-SNARK would
+also check <span class="math inline">\(u &gt; -3\)</span>. If we want a
+rule where a post can get a special "high-reputation poster" flag if the
+poster has <span class="math inline">\(\ge 100\)</span> rep, we can
+accommodate that by adding "is <span class="math inline">\(u \ge
+100\)</span>?" as a public input. Many kinds of such rules can be
+accommodated.</p>
+<p>To increase the scalability of the scheme, we could split it up into
+two kinds of messages: <em>posts</em> and <em>reputation update
+acknowledgements</em> (RCAs). A post would be off-chain, though it would
+be required to point to an RCA made in the past week. RCAs would be
+on-chain, and an RCA would walk through all the reputation updates since
+that poster's previous RCA. This way, the on-chain load is reduced to
+one transaction per poster per week plus one transaction per reputation
+message (a very low level if reputation updates are rare, eg. they're
+only used for moderation actions or perhaps "post of the day" style
+prizes).</p>
+<h2 id="holding-centralized-parties-accountable">Holding centralized
+parties accountable</h2>
+<p>Sometimes, you need to build a scheme that has a central "operator"
+of some kind. This could be for many reasons: sometimes it's for
+scalability, and sometimes it's for privacy - specifically, the privacy
+of data held by the operator.</p>
+<p>The <a
+href="https://github.com/privacy-scaling-explorations/maci">MACI</a>
+coercion-resistant voting system, for example, requires voters to submit
+their votes on-chain encrypted to a secret key held by a central
+operator. The operator would decrypt all the votes on-chain, count them
+up, and reveal the final result, along with a ZK-SNARK proving that they
+did everything correctly. This extra complexity is necessary to ensure a
+strong privacy property (called <strong>coercion-resistance</strong>):
+that users cannot prove to others how they voted <em>even if they wanted
+to</em>.</p>
+<p>Thanks to blockchains and ZK-SNARKs, the amount of trust in the
+operator can be kept very low. A malicious operator could still break
+coercion resistance, but because votes are published on the blockchain,
+the operator cannot cheat by censoring votes, and because the operator
+must provide a ZK-SNARK, they cannot cheat by mis-calculating the
+result.</p>
 <h2 id="combining-zk-snarks-with-mpc">Combining ZK-SNARKs with MPC</h2>
-<p>A more advanced use of ZK-SNARKs involves making proofs over computations where the inputs are split between two or more parties, and we don't want each party to learn the other parties' inputs. You can satisfy the privacy requirement with <a href="https://vitalik.ca/general/2020/03/21/garbled.html">garbled circuits</a> in the 2-party case, and more complicated multi-party computation protocols in the N-party case. ZK-SNARKs can be combined with these protocols to do verifiable multi-party computation.</p>
-<p>This could enable more advanced reputation systems where multiple participants can perform joint computations over their private inputs, it could enable privacy-preserving but authenticated data markets, and many other applications. That said, note that the math for doing this efficiently is still relatively in its infancy.</p>
+<p>A more advanced use of ZK-SNARKs involves making proofs over
+computations where the inputs are split between two or more parties, and
+we don't want each party to learn the other parties' inputs. You can
+satisfy the privacy requirement with <a
+href="../../../2020/03/21/garbled.html">garbled circuits</a> in the
+2-party case, and more complicated multi-party computation protocols in
+the N-party case. ZK-SNARKs can be combined with these protocols to do
+verifiable multi-party computation.</p>
+<p>This could enable more advanced reputation systems where multiple
+participants can perform joint computations over their private inputs,
+it could enable privacy-preserving but authenticated data markets, and
+many other applications. That said, note that the math for doing this
+efficiently is still relatively in its infancy.</p>
 <h2 id="what-cant-we-make-private">What can't we make private?</h2>
-<p>ZK-SNARKs are generally very effective for creating systems where users have private state. <strong>But ZK-SNARKs cannot hold private state that <em>nobody</em> knows.</strong> To make a proof about a piece of information, the prover has to know that piece of information in cleartext.</p>
-<p>A simple example of what can't (easily) be made private is Uniswap. In Uniswap, there is a single <a href="https://medium.com/@VitalikButerin/the-meaning-of-decentralization-a0c92b76a274">logically-central</a> "thing", the market maker account, which belongs to no one, and every single trade on Uniswap is trading against the market maker account. You can't hide the state of the market maker account, because then someone would have to hold the state in cleartext to make proofs, and their active involvement would be necessary in every single transaction.</p>
-<p>You <em>could</em> make a centrally-operated, but safe and private, Uniswap with ZK-SNARKed garbled circuits, but it's not clear that the benefits of doing this are worth the costs. There may not even be any real benefit: the contract would need to be able to tell users what the prices of the assets are, and the block-by-block changes in the prices tell a lot about what the trading activity is.</p>
-<p>Blockchains can make state information <em>global</em>, ZK-SNARKs can make state information <em>private</em>, but we don't really have any good way to make state information <em>global and private</em> at the same time.</p>
-<p><em>Edit: you can use multi-party computation to implement shared private state. But this requires an honest-majority threshold assumption, and one that's likely unstable in practice because (unlike eg. with 51% attacks) a malicious majority could collude to break the privacy without ever being detected.</em></p>
-<h2 id="putting-the-primitives-together">Putting the primitives together</h2>
-<p>In the sections above, we've seen some examples that are powerful and useful tools by themselves, but they are also intended to serve as building blocks in other applications. Nullifiers, for example, are important for currency, but it turns out that they pop up again and again in all kinds of use cases.</p>
-<p>The "forced chaining" technique used in the negative reputation section is very broadly applicable. It's effective for many applications where users have complex "profiles" that change in complex ways over time, and you want to force the users to follow the rules of the system while preserving privacy so no one sees which user is performing which action. Users could even be required to have entire private Merkle trees representing their internal "state". The "commitment pool" gadget <a href="https://vitalik.ca/general/2022/06/12/nonfin.html#common-knowledge">proposed in this post</a> could be built with ZK-SNARKs. And if some application can't be entirely on-chain and must have a centralized operator, the exact same techniques can be used to keep the operator honest too.</p>
-<p>ZK-SNARKs are a really powerful tool for combining together the benefits of accountability and privacy. They do have their limits, though in some cases clever application design can work around those limits. I expect to see many more applications using ZK-SNARKs, and eventually applications combining ZK-SNARKs with other forms of cryptography, to be built in the years to come.</p>
+<p>ZK-SNARKs are generally very effective for creating systems where
+users have private state. <strong>But ZK-SNARKs cannot hold private
+state that <em>nobody</em> knows.</strong> To make a proof about a piece
+of information, the prover has to know that piece of information in
+cleartext.</p>
+<p>A simple example of what can't (easily) be made private is Uniswap.
+In Uniswap, there is a single <a
+href="https://medium.com/@VitalikButerin/the-meaning-of-decentralization-a0c92b76a274">logically-central</a>
+"thing", the market maker account, which belongs to no one, and every
+single trade on Uniswap is trading against the market maker account. You
+can't hide the state of the market maker account, because then someone
+would have to hold the state in cleartext to make proofs, and their
+active involvement would be necessary in every single transaction.</p>
+<p>You <em>could</em> make a centrally-operated, but safe and private,
+Uniswap with ZK-SNARKed garbled circuits, but it's not clear that the
+benefits of doing this are worth the costs. There may not even be any
+real benefit: the contract would need to be able to tell users what the
+prices of the assets are, and the block-by-block changes in the prices
+tell a lot about what the trading activity is.</p>
+<p>Blockchains can make state information <em>global</em>, ZK-SNARKs can
+make state information <em>private</em>, but we don't really have any
+good way to make state information <em>global and private</em> at the
+same time.</p>
+<p><em>Edit: you can use multi-party computation to implement shared
+private state. But this requires an honest-majority threshold
+assumption, and one that's likely unstable in practice because (unlike
+eg. with 51% attacks) a malicious majority could collude to break the
+privacy without ever being detected.</em></p>
+<h2 id="putting-the-primitives-together">Putting the primitives
+together</h2>
+<p>In the sections above, we've seen some examples that are powerful and
+useful tools by themselves, but they are also intended to serve as
+building blocks in other applications. Nullifiers, for example, are
+important for currency, but it turns out that they pop up again and
+again in all kinds of use cases.</p>
+<p>The "forced chaining" technique used in the negative reputation
+section is very broadly applicable. It's effective for many applications
+where users have complex "profiles" that change in complex ways over
+time, and you want to force the users to follow the rules of the system
+while preserving privacy so no one sees which user is performing which
+action. Users could even be required to have entire private Merkle trees
+representing their internal "state". The "commitment pool" gadget <a
+href="../../../2022/06/12/nonfin.html#common-knowledge">proposed in this
+post</a> could be built with ZK-SNARKs. And if some application can't be
+entirely on-chain and must have a centralized operator, the exact same
+techniques can be used to keep the operator honest too.</p>
+<p>ZK-SNARKs are a really powerful tool for combining together the
+benefits of accountability and privacy. They do have their limits,
+though in some cases clever application design can work around those
+limits. I expect to see many more applications using ZK-SNARKs, and
+eventually applications combining ZK-SNARKs with other forms of
+cryptography, to be built in the years to come.</p>
  </div> 

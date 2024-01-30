@@ -15,7 +15,7 @@ This post will argue why this position is often wrong, and offer a different and
 
 ## Centralization is convex, decentralization is concave
 
-_See the original post: [https://vitalik.ca/general/2020/11/08/concave.html](https://vitalik.ca/general/2020/11/08/concave.html)_
+_See the original post: [../../../2020/11/08/concave.html](../../../2020/11/08/concave.html)_
 
 One way to categorize decisions that need to be made is to look at whether they are **convex** or **concave**. In a choice between A and B, we would first look not at the question of A vs B itself, but instead at a higher-order question: would you rather take a _compromise_ between A and B or a _coin flip_? In expected utility terms, we can express this distinction using a graph:
 
@@ -58,7 +58,7 @@ One natural question that one might ask is: **isn't this kind of "DAO" just rebr
 Two things that can help ensure that an organization built this way will actually turn out to be meaningfully decentralized include:
 
 1. A truly **high level of autonomy for pods**, where the pods accept resources from the core and are occasionally checked for alignment and competence if they want to keep getting those resources, but otherwise act entirely on their own and don't "take orders" from the core.
-2. **Highly decentralized and diverse core governance**. This [does not require a "governance token"](https://vitalik.ca/general/2021/08/16/voting3.html), but it does require broader and more diverse participation in the core. Normally, broad and diverse participation is a large tax on efficiency. But if (1) is satisfied, so pods are highly autonomous and the core needs to make fewer decisions, the effects of top-level governance being less efficient become smaller.
+2. **Highly decentralized and diverse core governance**. This [does not require a "governance token"](../../../2021/08/16/voting3.html), but it does require broader and more diverse participation in the core. Normally, broad and diverse participation is a large tax on efficiency. But if (1) is satisfied, so pods are highly autonomous and the core needs to make fewer decisions, the effects of top-level governance being less efficient become smaller.
 
 Now, how does this fit into the "convex vs concave" framework? Here, the answer is roughly as follows: **the (more decentralized) top level is concave, the (more centralized within each pod) bottom level is convex**. Giving a pod $X is generally better than a coin flip between giving it $0 and giving it $2X, and there isn't a large loss from having compromises or "inconsistent" philosophies guiding different decisions. But within each individual pod, having a clear opinionated perspective guiding decisions and being able to insist on many choices that have synergies with each other is much more important.
 
@@ -118,7 +118,7 @@ Of course, this is but one side of one issue in a broader debate, and it's up to
 
 ### Optimism retro funding
 
-Optimism's [retroactive founding round 1](https://vitalik.ca/general/2021/11/16/retro1.html) results were chosen by a quadratic vote among 24 "badge holders". Round 2 will likely use a larger number of badge holders, and the eventual goal is to move to a system where [a much larger body of citizens](https://community.optimism.io/docs/governance/) control retro funding allocation, likely through some multilayered mechanism involving sortition, subcommittees and/or delegation.
+Optimism's [retroactive founding round 1](../../../2021/11/16/retro1.html) results were chosen by a quadratic vote among 24 "badge holders". Round 2 will likely use a larger number of badge holders, and the eventual goal is to move to a system where [a much larger body of citizens](https://community.optimism.io/docs/governance/) control retro funding allocation, likely through some multilayered mechanism involving sortition, subcommittees and/or delegation.
 
 There have been some internal debates about whether to have more vs fewer citizens: should "citizen" _really_ mean something closer to "senator", an expert contributor who deeply understands the Optimism ecosystem, should it be a position given out to _just about anyone_ who has significantly participated in the Optimism ecosystem, or somewhere in between? **My personal stance on this issue has always been in the direction of more citizens, solving governance inefficiency issues with second-layer delegation instead of adding enshrined centralization into the governance protocol. One key reason for my position is the potential for insider trading and self-dealing issues**.
 

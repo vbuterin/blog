@@ -109,113 +109,592 @@ MathJax = {
 <br> <br> <br>
 <title> On Radical Markets </title>
 
-<p>Recently I had the fortune to have received an advance copy of Eric Posner and Glen Weyl's new book, <em><a href="https://www.amazon.ca/dp/B0773X7RKB/ref=dp-kindle-redirect?_encoding=UTF8&amp;btkr=1">Radical Markets</a></em>, which could be best described as an interesting new way of looking at the subject that is sometimes called "<a href="https://en.wikipedia.org/wiki/Political_economy">political economy</a>" - tackling the big questions of how markets and politics and society intersect. The general philosophy of the book, as I interpret it, can be expressed as follows. Markets are great, and price mechanisms are an awesome way of guiding the use of resources in society and bringing together many participants' objectives and information into a coherent whole. However, markets are socially constructed because they depend on property rights that are socially constructed, and there are many different ways that markets and property rights can be constructed, some of which are unexplored and potentially far better than what we have today. Contra doctrinaire libertarians, freedom is a high-dimensional design space.</p>
-<p>The book interests me for multiple reasons. First, although I spend most of my time in the blockchain/crypto space heading up the Ethereum project and in some cases providing various kinds of support to projects in the space, I do also have broader interests, of which the use of economics and mechanism design to make more open, free, egalitarian and efficient systems for human cooperation, including improving or replacing present-day corporations and governments, is a major one. The intersection of interests between the Ethereum community and Posner and Weyl's work is multifaceted and plentiful; <em>Radical Markets</em> dedicates an entire chapter to the idea of "markets for personal data", redefining the economic relationship between ourselves and services like Facebook, and well, look what the Ethereum community is working on: <a href="https://cointelegraph.com/news/blockchain-startup-can-help-consumers-profit-from-their-personal-data">markets</a> <a href="https://cointelegraph.com/news/marketplace-aims-to-resell-personal-data-and-create-passive-income-stream-for-users">for</a> <a href="https://datum.org/">personal</a> <a href="https://blog.enigma.co/the-enigma-data-marketplace-is-live-84a269ec17fb">data</a>.</p>
-<p>Second, blockchains may well be used as a technical backbone for some of the solutions described in the book, and Ethereum-style smart contracts are ideal for the kinds of complex systems of property rights that the book explores. Third, the economic ideas and challenges that the book brings up are ideas that have also been explored, and will be continue to be explored, at great length by the blockchain community for its own purposes. Posner and Weyl's ideas often have the feature that they allow economic incentive alignment to serve as a substitute for subjective ad-hoc bureaucracy (eg. Harberger taxes can essentially replace <a href="https://en.wikipedia.org/wiki/Eminent_domain">eminent domain</a>), and given that blockchains lack access to trusted human-controlled courts, these kinds of solutions may prove to be be even more ideal for blockchain-based markets than they are for "real life".</p>
-<p>I will warn that readers are not at all guaranteed to find the book's proposals acceptable; at least the first three have <a href="https://www.politico.com/magazine/story/2018/02/13/immigration-visas-economics-216968">already been</a> highly controversial and they do contravene many people's moral preconceptions about how property should and should work and where money and markets can and can't be used. The authors are no strangers to controversy; Posner has on previous occasions even <a href="https://www.theguardian.com/news/2014/dec/04/-sp-case-against-human-rights">proven willing</a> to argue against such notions as human rights law. That said, the book does go to considerable lengths to explain why each proposal improves efficiency if it could be done, and offer multiple versions of each proposal in the hopes that there is at least one (even if partial) implementation of each idea that any given reader can find agreeable.</p>
-<h2 id="what-do-posner-and-weyl-talk-about">What do Posner and Weyl talk about?</h2>
-<p>The book is split into five major sections, each arguing for a particular reform: self-assessed property taxes, quadratic voting, a new kind of immigration program, breaking up big financial conglomerates that currently make banks and other industries act like monopolies even if they appear at first glance to be competitive, and markets for selling personal data. Properly summarizing all five sections and doing them justice would take too long, so I will focus on a deep summary of one specific section, dealing with a new kind of property taxation, to give the reader a feel for the kinds of ideas that the book is about.</p>
+<p>Recently I had the fortune to have received an advance copy of Eric
+Posner and Glen Weyl's new book, <em><a
+href="https://www.amazon.ca/dp/B0773X7RKB/ref=dp-kindle-redirect?_encoding=UTF8&amp;btkr=1">Radical
+Markets</a></em>, which could be best described as an interesting new
+way of looking at the subject that is sometimes called "<a
+href="https://en.wikipedia.org/wiki/Political_economy">political
+economy</a>" - tackling the big questions of how markets and politics
+and society intersect. The general philosophy of the book, as I
+interpret it, can be expressed as follows. Markets are great, and price
+mechanisms are an awesome way of guiding the use of resources in society
+and bringing together many participants' objectives and information into
+a coherent whole. However, markets are socially constructed because they
+depend on property rights that are socially constructed, and there are
+many different ways that markets and property rights can be constructed,
+some of which are unexplored and potentially far better than what we
+have today. Contra doctrinaire libertarians, freedom is a
+high-dimensional design space.</p>
+<p>The book interests me for multiple reasons. First, although I spend
+most of my time in the blockchain/crypto space heading up the Ethereum
+project and in some cases providing various kinds of support to projects
+in the space, I do also have broader interests, of which the use of
+economics and mechanism design to make more open, free, egalitarian and
+efficient systems for human cooperation, including improving or
+replacing present-day corporations and governments, is a major one. The
+intersection of interests between the Ethereum community and Posner and
+Weyl's work is multifaceted and plentiful; <em>Radical Markets</em>
+dedicates an entire chapter to the idea of "markets for personal data",
+redefining the economic relationship between ourselves and services like
+Facebook, and well, look what the Ethereum community is working on: <a
+href="https://cointelegraph.com/news/blockchain-startup-can-help-consumers-profit-from-their-personal-data">markets</a>
+<a
+href="https://cointelegraph.com/news/marketplace-aims-to-resell-personal-data-and-create-passive-income-stream-for-users">for</a>
+<a href="https://datum.org/">personal</a> <a
+href="https://blog.enigma.co/the-enigma-data-marketplace-is-live-84a269ec17fb">data</a>.</p>
+<p>Second, blockchains may well be used as a technical backbone for some
+of the solutions described in the book, and Ethereum-style smart
+contracts are ideal for the kinds of complex systems of property rights
+that the book explores. Third, the economic ideas and challenges that
+the book brings up are ideas that have also been explored, and will be
+continue to be explored, at great length by the blockchain community for
+its own purposes. Posner and Weyl's ideas often have the feature that
+they allow economic incentive alignment to serve as a substitute for
+subjective ad-hoc bureaucracy (eg. Harberger taxes can essentially
+replace <a href="https://en.wikipedia.org/wiki/Eminent_domain">eminent
+domain</a>), and given that blockchains lack access to trusted
+human-controlled courts, these kinds of solutions may prove to be be
+even more ideal for blockchain-based markets than they are for "real
+life".</p>
+<p>I will warn that readers are not at all guaranteed to find the book's
+proposals acceptable; at least the first three have <a
+href="https://www.politico.com/magazine/story/2018/02/13/immigration-visas-economics-216968">already
+been</a> highly controversial and they do contravene many people's moral
+preconceptions about how property should and should work and where money
+and markets can and can't be used. The authors are no strangers to
+controversy; Posner has on previous occasions even <a
+href="https://www.theguardian.com/news/2014/dec/04/-sp-case-against-human-rights">proven
+willing</a> to argue against such notions as human rights law. That
+said, the book does go to considerable lengths to explain why each
+proposal improves efficiency if it could be done, and offer multiple
+versions of each proposal in the hopes that there is at least one (even
+if partial) implementation of each idea that any given reader can find
+agreeable.</p>
+<h2 id="what-do-posner-and-weyl-talk-about">What do Posner and Weyl talk
+about?</h2>
+<p>The book is split into five major sections, each arguing for a
+particular reform: self-assessed property taxes, quadratic voting, a new
+kind of immigration program, breaking up big financial conglomerates
+that currently make banks and other industries act like monopolies even
+if they appear at first glance to be competitive, and markets for
+selling personal data. Properly summarizing all five sections and doing
+them justice would take too long, so I will focus on a deep summary of
+one specific section, dealing with a new kind of property taxation, to
+give the reader a feel for the kinds of ideas that the book is
+about.</p>
 <h3 id="harberger-taxes">Harberger taxes</h3>
-<p><em>See also: "<a href="https://chicagounbound.uchicago.edu/cgi/viewcontent.cgi?article=12668&amp;context=journal_articles">Property Is Only Another Name for Monopoly</a>", Posner and Weyl</em></p>
-<p>Markets and private property are two ideas that are often considered together, and it is difficult in modern discourse to imagine one without (or even with much less of) the other. In the 19th century, however, many economists in Europe were both libertarian <em>and</em> egalitarian, and it was quite common to appreciate markets while maintaining skepticism toward the excesses of private property. A rather interesting example of this is the <a href="http://praxeology.net/FB-PJP-DOI.htm">Bastiat-Proudhon debate</a> from 1849-1850 where the two dispute the legitimacy of charging interest on loans, with one side focusing on the mutual gains from voluntary contracts and the other focusing on their suspicion of the potential for people with capital to get even richer without working, leading to unbalanced capital accumulation.</p>
-<p>As it turns out, it is absolutely possible to have a system that contains markets but not property rights: at the end of every year, collect every piece of property, and at the start of the next year have the government auction every piece out to the highest bidder. This kind of system is intuitively quite unrealistic and impractical, but it has the benefit that it achieves perfect <strong>allocative efficiency</strong>: every year, every object goes to the person who can derive the most value from it (ie. the highest bidder). It also gives the government a large amount of revenue that could be used to completely substitute income and sales taxes or fund a basic income.</p>
-<p>Now you might ask: doesn't the existing property system also achieve allocative efficiency? After all, if I have an apple, and I value it at $2, and you value it at $3, then you could offer me $2.50 and I would accept. However, this fails to take into account imperfect information: how do you know that I value it at $2, and not $2.70? You could offer to buy it for $2.99 so that you can be sure that you'll get it if you really are the one who values the apple more, but then you would be gaining practically nothing from the transaction. And if you ask me to set the price, how do I know that you value it at $3, and not $2.30? And if I set the price to $2.01 to be sure, I would be gaining practically nothing from the transaction. Unfortunately, there is a result known as the <a href="https://en.wikipedia.org/wiki/Myerson%E2%80%93Satterthwaite_theorem">Myerson-Satterthwaite Theorem</a> which means that <em>no</em> solution is efficient; that is, any bargaining algorithm in such a situation must at least sometimes lead to inefficiency from mutually beneficial deals falling through.</p>
-<p>If there are many buyers you have to negotiate with, things get even harder. If a developer (in the real estate sense) is trying to make a large project that requires buying 100 existing properties, and 99 have already agreed, the remaining one has a strong incentive to charge a very high price, much higher than their actual personal valuation of the property, hoping that the developer will have no choice but to pay up.</p>
+<p><em>See also: "<a
+href="https://chicagounbound.uchicago.edu/cgi/viewcontent.cgi?article=12668&amp;context=journal_articles">Property
+Is Only Another Name for Monopoly</a>", Posner and Weyl</em></p>
+<p>Markets and private property are two ideas that are often considered
+together, and it is difficult in modern discourse to imagine one without
+(or even with much less of) the other. In the 19th century, however,
+many economists in Europe were both libertarian <em>and</em>
+egalitarian, and it was quite common to appreciate markets while
+maintaining skepticism toward the excesses of private property. A rather
+interesting example of this is the <a
+href="http://praxeology.net/FB-PJP-DOI.htm">Bastiat-Proudhon debate</a>
+from 1849-1850 where the two dispute the legitimacy of charging interest
+on loans, with one side focusing on the mutual gains from voluntary
+contracts and the other focusing on their suspicion of the potential for
+people with capital to get even richer without working, leading to
+unbalanced capital accumulation.</p>
+<p>As it turns out, it is absolutely possible to have a system that
+contains markets but not property rights: at the end of every year,
+collect every piece of property, and at the start of the next year have
+the government auction every piece out to the highest bidder. This kind
+of system is intuitively quite unrealistic and impractical, but it has
+the benefit that it achieves perfect <strong>allocative
+efficiency</strong>: every year, every object goes to the person who can
+derive the most value from it (ie. the highest bidder). It also gives
+the government a large amount of revenue that could be used to
+completely substitute income and sales taxes or fund a basic income.</p>
+<p>Now you might ask: doesn't the existing property system also achieve
+allocative efficiency? After all, if I have an apple, and I value it at
+$2, and you value it at $3, then you could offer me $2.50 and I would
+accept. However, this fails to take into account imperfect information:
+how do you know that I value it at $2, and not $2.70? You could offer to
+buy it for $2.99 so that you can be sure that you'll get it if you
+really are the one who values the apple more, but then you would be
+gaining practically nothing from the transaction. And if you ask me to
+set the price, how do I know that you value it at $3, and not $2.30? And
+if I set the price to $2.01 to be sure, I would be gaining practically
+nothing from the transaction. Unfortunately, there is a result known as
+the <a
+href="https://en.wikipedia.org/wiki/Myerson%E2%80%93Satterthwaite_theorem">Myerson-Satterthwaite
+Theorem</a> which means that <em>no</em> solution is efficient; that is,
+any bargaining algorithm in such a situation must at least sometimes
+lead to inefficiency from mutually beneficial deals falling through.</p>
+<p>If there are many buyers you have to negotiate with, things get even
+harder. If a developer (in the real estate sense) is trying to make a
+large project that requires buying 100 existing properties, and 99 have
+already agreed, the remaining one has a strong incentive to charge a
+very high price, much higher than their actual personal valuation of the
+property, hoping that the developer will have no choice but to pay
+up.</p>
 <center>
-<img src="https://nationalpostcom.files.wordpress.com/2012/11/highway-built-around-house03.jpg" style="width:450px" /><br><br> <small><i>Well, not necessarily no choice. But a very inconvenient and both privately and socially wasteful choice.</i></small>
+<img src="https://nationalpostcom.files.wordpress.com/2012/11/highway-built-around-house03.jpg" style="width:450px" /><br><br>
+<small><i>Well, not necessarily no choice. But a very inconvenient and
+both privately and socially wasteful choice.</i></small>
 </center>
 <p><br></p>
-<p>Re-auctioning everything once a year completely solves this problem of allocative efficiency, but at a very high cost to <strong>investment efficiency</strong>: there's no point in building a house in the first place if six months later it will get taken away from you and re-sold in an auction. All property taxes have this problem; if building a house costs you $90 and brings you $100 of benefit, but then you have to pay $15 more property tax if you build the house, then you will not build the house and that $10 gain is lost to society.</p>
-<p>One of the more interesting ideas from the 19th century economists, and specifically Henry George, was a kind of property tax that did not have this problem: the <a href="https://en.wikipedia.org/wiki/Land_value_tax">land value tax</a>. The idea is to charge tax on the value of land, but not the <em>improvements to the land</em>; if you own a $100,000 plot of dirt you would have to pay $5,000 per year taxes on it regardless of whether you used the land to build a condominium or simply as a place to walk your pet doge.</p>
+<p>Re-auctioning everything once a year completely solves this problem
+of allocative efficiency, but at a very high cost to <strong>investment
+efficiency</strong>: there's no point in building a house in the first
+place if six months later it will get taken away from you and re-sold in
+an auction. All property taxes have this problem; if building a house
+costs you $90 and brings you $100 of benefit, but then you have to pay
+$15 more property tax if you build the house, then you will not build
+the house and that $10 gain is lost to society.</p>
+<p>One of the more interesting ideas from the 19th century economists,
+and specifically Henry George, was a kind of property tax that did not
+have this problem: the <a
+href="https://en.wikipedia.org/wiki/Land_value_tax">land value tax</a>.
+The idea is to charge tax on the value of land, but not the
+<em>improvements to the land</em>; if you own a $100,000 plot of dirt
+you would have to pay $5,000 per year taxes on it regardless of whether
+you used the land to build a condominium or simply as a place to walk
+your pet doge.</p>
 <center>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Shiba_inu_taiki.jpg/220px-Shiba_inu_taiki.jpg" style="width:250px"/><br><br> <small><i>A doge.</i></small>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Shiba_inu_taiki.jpg/220px-Shiba_inu_taiki.jpg" style="width:250px"/><br><br>
+<small><i>A doge.</i></small>
 </center>
 <p><br></p>
-<p>Weyl and Posner are not convinced that Georgian land taxes are viable in practice:</p>
+<p>Weyl and Posner are not convinced that Georgian land taxes are viable
+in practice:</p>
 <blockquote>
-<p>Consider, for example, the Empire State Building. What is the pure value of the land beneath it? One could try to infer its value by comparing it to the value of adjoining land. But the building itself defines the neighborhood around it; removing the building would almost certainly change the value of its surrounding land. The land and the building, even the neighborhood, are so tied together, it would be hard to figure out a separate value for each of them.</p>
+<p>Consider, for example, the Empire State Building. What is the pure
+value of the land beneath it? One could try to infer its value by
+comparing it to the value of adjoining land. But the building itself
+defines the neighborhood around it; removing the building would almost
+certainly change the value of its surrounding land. The land and the
+building, even the neighborhood, are so tied together, it would be hard
+to figure out a separate value for each of them.</p>
 </blockquote>
-<p>Arguably this does not exclude the possibility of a different kind of Georgian-style land tax: a tax based on the <em>average</em> of property values across a sufficiently large area. That would preserve the property that improving a single piece of land would not (greatly) perversely increase the taxes that they have to pay, without having to find a way to distinguish land from improvements in an absolute sense. But in any case, Posner and Weyl move on to their main proposal: self-assessed property taxes.</p>
-<p>Consider a system where property owners themselves specify what the value of their property is, and pay a tax rate of, say, 2% of that value per year. But here is the twist: whatever value they specify for their property, <em>they have to be willing to sell it to anyone at that price</em>.</p>
-<p>If the tax rate is equal to the chance per year that the property gets sold, then this achieves optimal allocative efficiency: raising your self-assessed property value by $1 increases the tax you pay by $0.02, but it also means there is a 2% chance that someone will buy the property and pay $1 more, so there is no incentive to cheat in either direction. It does harm investment efficiency, but vastly less so than all property being re-auctioned every year.</p>
-<p>Posner and Weyl then point out that if more investment efficiency is desired, a hybrid solution with a lower property tax is possible:</p>
+<p>Arguably this does not exclude the possibility of a different kind of
+Georgian-style land tax: a tax based on the <em>average</em> of property
+values across a sufficiently large area. That would preserve the
+property that improving a single piece of land would not (greatly)
+perversely increase the taxes that they have to pay, without having to
+find a way to distinguish land from improvements in an absolute sense.
+But in any case, Posner and Weyl move on to their main proposal:
+self-assessed property taxes.</p>
+<p>Consider a system where property owners themselves specify what the
+value of their property is, and pay a tax rate of, say, 2% of that value
+per year. But here is the twist: whatever value they specify for their
+property, <em>they have to be willing to sell it to anyone at that
+price</em>.</p>
+<p>If the tax rate is equal to the chance per year that the property
+gets sold, then this achieves optimal allocative efficiency: raising
+your self-assessed property value by $1 increases the tax you pay by
+$0.02, but it also means there is a 2% chance that someone will buy the
+property and pay $1 more, so there is no incentive to cheat in either
+direction. It does harm investment efficiency, but vastly less so than
+all property being re-auctioned every year.</p>
+<p>Posner and Weyl then point out that if more investment efficiency is
+desired, a hybrid solution with a lower property tax is possible:</p>
 <blockquote>
-<p>When the tax is reduced incrementally to improve investment efficiency, the loss in allocative efficiency is less than the gain in investment efficiency. The reason is that the most valuable sales are ones where the buyer is willing to pay significantly more than the seller is willing to accept. These transactions are the first ones enabled by a reduction in the price as even a small price reduction will avoid blocking these most valuable transactions. In fact, it can be shown that the size of the social loss from monopoly power grows quadratically in the extent of this power. Thus, reducing the markup by a third eliminates close to <span class="math inline">\(\frac{5}{9} = (3^2-2^2)/(3^2\)</span>) of the allocative harm from private ownership.</p>
+<p>When the tax is reduced incrementally to improve investment
+efficiency, the loss in allocative efficiency is less than the gain in
+investment efficiency. The reason is that the most valuable sales are
+ones where the buyer is willing to pay significantly more than the
+seller is willing to accept. These transactions are the first ones
+enabled by a reduction in the price as even a small price reduction will
+avoid blocking these most valuable transactions. In fact, it can be
+shown that the size of the social loss from monopoly power grows
+quadratically in the extent of this power. Thus, reducing the markup by
+a third eliminates close to <span class="math inline">\(\frac{5}{9} =
+(3^2-2^2)/(3^2\)</span>) of the allocative harm from private
+ownership.</p>
 </blockquote>
-<p>This concept of quadratic deadweight loss is a truly important insight in economics, and is arguably the deep reason why "moderation in all things" is such an attractive principle: the first step you take away from an extreme will generally be the most valuable.</p>
+<p>This concept of quadratic deadweight loss is a truly important
+insight in economics, and is arguably the deep reason why "moderation in
+all things" is such an attractive principle: the first step you take
+away from an extreme will generally be the most valuable.</p>
 <center>
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Deadweight-loss-price-ceiling.svg/350px-Deadweight-loss-price-ceiling.svg.png" style="width:300px" class="padded" />
 </center>
 <p><br></p>
-<p>The book then proceeds to give a series of side benefits that this tax would have, as well as some downsides. One interesting side benefit is that it removes an information asymmetry flaw that exists with property sales today, where owners have the incentive to expend effort on making their property look good even in potentially misleading ways. With a properly set Harberger tax, if you somehow mange to trick the world into thinking your house is 5% more valuable, you'll get 5% more when you sell it but until that point you'll have to pay 5% more in taxes, or else someone will much more quickly snap it up from you at the original price.</p>
-<p>The downsides are smaller than they seem; for example, one natural disadvantage is that it exposes property owners to uncertainty due to the possibility that someone will snap up their property at any time, but that is hardly an unknown as it's a risk that renters already face every day. But Weyl and Posner <em>do</em> propose more moderate ways of introducing the tax that don't have these issues. First, the tax can be applied to types of property that are currently government owned; it's a potentially superior alternative to both continued government ownership <em>and</em> traditional full-on privatization. Second, the tax can be applied to forms of property that are already "industrial" in usage: radio spectrum licenses, domain names, intellectual property, etc.</p>
+<p>The book then proceeds to give a series of side benefits that this
+tax would have, as well as some downsides. One interesting side benefit
+is that it removes an information asymmetry flaw that exists with
+property sales today, where owners have the incentive to expend effort
+on making their property look good even in potentially misleading ways.
+With a properly set Harberger tax, if you somehow mange to trick the
+world into thinking your house is 5% more valuable, you'll get 5% more
+when you sell it but until that point you'll have to pay 5% more in
+taxes, or else someone will much more quickly snap it up from you at the
+original price.</p>
+<p>The downsides are smaller than they seem; for example, one natural
+disadvantage is that it exposes property owners to uncertainty due to
+the possibility that someone will snap up their property at any time,
+but that is hardly an unknown as it's a risk that renters already face
+every day. But Weyl and Posner <em>do</em> propose more moderate ways of
+introducing the tax that don't have these issues. First, the tax can be
+applied to types of property that are currently government owned; it's a
+potentially superior alternative to both continued government ownership
+<em>and</em> traditional full-on privatization. Second, the tax can be
+applied to forms of property that are already "industrial" in usage:
+radio spectrum licenses, domain names, intellectual property, etc.</p>
 <h3 id="the-rest-of-the-book">The Rest of the Book</h3>
-<p>The remaining chapters bring up similar ideas that are similar in spirit to the discussion on Harberger taxes in their use of modern game-theoretic principles to make mathematically optimized versions of existing social institutions. One of the proposals is for something called quadratic voting, which I summarize as follows.</p>
-<p>Suppose that you can vote as many times as you want, but voting costs "voting tokens" (say each citizen is assigned <span class="math inline">\(N\)</span> voting tokens per year), and it costs tokens in a nonlinear way: your first vote costs one token, your second vote costs two tokens, and so forth. If someone feels more strongly about something, the argument goes, they would be willing to pay more for a single vote; quadratic voting takes advantage of this by perfectly aligning <em>quantity</em> of votes with <em>cost</em> of votes: if you're willing to pay up to 15 tokens for a vote, then you will keep buying votes until your last one costs 15 tokens, and so you will cast 15 votes in total. If you're willing to pay up to 30 tokens for a vote, then you will keep buying votes until you can't buy any more for a price less than or equal to 30 tokens, and so you will end up casting 30 votes. The voting is "quadratic" because the total amount you pay for <span class="math inline">\(N\)</span> votes goes up proportionately to <span class="math inline">\(N^2\)</span>.</p>
+<p>The remaining chapters bring up similar ideas that are similar in
+spirit to the discussion on Harberger taxes in their use of modern
+game-theoretic principles to make mathematically optimized versions of
+existing social institutions. One of the proposals is for something
+called quadratic voting, which I summarize as follows.</p>
+<p>Suppose that you can vote as many times as you want, but voting costs
+"voting tokens" (say each citizen is assigned <span
+class="math inline">\(N\)</span> voting tokens per year), and it costs
+tokens in a nonlinear way: your first vote costs one token, your second
+vote costs two tokens, and so forth. If someone feels more strongly
+about something, the argument goes, they would be willing to pay more
+for a single vote; quadratic voting takes advantage of this by perfectly
+aligning <em>quantity</em> of votes with <em>cost</em> of votes: if
+you're willing to pay up to 15 tokens for a vote, then you will keep
+buying votes until your last one costs 15 tokens, and so you will cast
+15 votes in total. If you're willing to pay up to 30 tokens for a vote,
+then you will keep buying votes until you can't buy any more for a price
+less than or equal to 30 tokens, and so you will end up casting 30
+votes. The voting is "quadratic" because the total amount you pay for
+<span class="math inline">\(N\)</span> votes goes up proportionately to
+<span class="math inline">\(N^2\)</span>.</p>
 <center>
 <img src="../../../../images/radical-markets-files/quadratic_voting.png" style="width:300px" class="padded" />
 </center>
 <p><br></p>
-<p>After this, the book describes a market for immigration visas that could greatly expand the number of immigrants admitted while making sure local residents benefit and at the same time aligning incentives to encourage visa sponsors to choose immigrants that are more ikely to succeed in the country and less likely to commit crimes, then an enhancement to antitrust law, and finally the idea of setting up markets for personal data.</p>
+<p>After this, the book describes a market for immigration visas that
+could greatly expand the number of immigrants admitted while making sure
+local residents benefit and at the same time aligning incentives to
+encourage visa sponsors to choose immigrants that are more ikely to
+succeed in the country and less likely to commit crimes, then an
+enhancement to antitrust law, and finally the idea of setting up markets
+for personal data.</p>
 <h3 id="markets-in-everything">Markets in Everything</h3>
-<p>There are plenty of ways that one could respond to each individual proposal made in the book. I personally, for example, find the immigration visa scheme that Posner and Weyl propose well-intentioned and see how it could improve on the status quo, but also overcomplicated, and it seems simpler to me to have a scheme where visas are auctioned or sold every year, with an additional requirement for migrants to obtain liability insurance. Robin Hanson recently <a href="https://www.overcomingbias.com/2018/01/privately-enforced-punished-crime.html">proposed</a> greatly expanding liability insurance mandates as an alternative to many kinds of regulation, and while imposing new mandates on an entire society seems unrealistic, a new expanded immigration program seems like the perfect place to start considering them. Paying people for personal data is interesting, but there are concerns about adverse selection: to put it politely, the kinds of people that are willing to sit around submitting lots of data to Facebook all year to earn $16.92 (Facebook's current <a href="https://www.cnbc.com/2017/05/03/facebook-average-revenue-per-user-arpu-q1-2017.html">annualized revenue per user</a>) are <em>not</em> the kinds of people that advertisers are willing to burn hundreds of dollars per person trying to market rolexes and Lambos to. However, what I find more interesting is the general principle that the book tries to promote.</p>
-<p>Over the last hundred years, there truly has been a large amount of research into designing economic mechanisms that have desirable properties and that outperform simple two-sided buy-and-sell markets. Some of this research has been put into use in some specific industries; for example, <a href="https://en.wikipedia.org/wiki/Combinatorial_auction">combinatorial auctions</a> are used in airports, radio spectrum auctions and several other industrial use cases, but it hasn't really seeped into any kind of broader policy design; the political systems and property rights that we have are still largely the same as we had two centuries ago. So can we use modern economic insights to reform base-layer markets and politics in such a deep way, and if so, should we?</p>
-<p>Normally, I love markets and clean incentive alignment, and dislike politics and bureaucrats and ugly hacks, and I love economics, and I so love the idea of using economic insights to design markets that work better so that we can reduce the role of politics and bureaucrats and ugly hacks in society. Hence, naturally, I love this vision. So let me be a good intellectual citizen and do my best to try to make a case against it.</p>
-<p>There is a limit to how complex economic incentive structures and markets can be because there is a limit to users' ability to think and re-evaluate and give ongoing precise measurements for their valuations of things, and people value reliability and certainty. Quoting <a href="http://www.interfluidity.com/v2/5822.html">Steve Waldman criticizing Uber surge pricing</a>:</p>
+<p>There are plenty of ways that one could respond to each individual
+proposal made in the book. I personally, for example, find the
+immigration visa scheme that Posner and Weyl propose well-intentioned
+and see how it could improve on the status quo, but also
+overcomplicated, and it seems simpler to me to have a scheme where visas
+are auctioned or sold every year, with an additional requirement for
+migrants to obtain liability insurance. Robin Hanson recently <a
+href="https://www.overcomingbias.com/2018/01/privately-enforced-punished-crime.html">proposed</a>
+greatly expanding liability insurance mandates as an alternative to many
+kinds of regulation, and while imposing new mandates on an entire
+society seems unrealistic, a new expanded immigration program seems like
+the perfect place to start considering them. Paying people for personal
+data is interesting, but there are concerns about adverse selection: to
+put it politely, the kinds of people that are willing to sit around
+submitting lots of data to Facebook all year to earn $16.92 (Facebook's
+current <a
+href="https://www.cnbc.com/2017/05/03/facebook-average-revenue-per-user-arpu-q1-2017.html">annualized
+revenue per user</a>) are <em>not</em> the kinds of people that
+advertisers are willing to burn hundreds of dollars per person trying to
+market rolexes and Lambos to. However, what I find more interesting is
+the general principle that the book tries to promote.</p>
+<p>Over the last hundred years, there truly has been a large amount of
+research into designing economic mechanisms that have desirable
+properties and that outperform simple two-sided buy-and-sell markets.
+Some of this research has been put into use in some specific industries;
+for example, <a
+href="https://en.wikipedia.org/wiki/Combinatorial_auction">combinatorial
+auctions</a> are used in airports, radio spectrum auctions and several
+other industrial use cases, but it hasn't really seeped into any kind of
+broader policy design; the political systems and property rights that we
+have are still largely the same as we had two centuries ago. So can we
+use modern economic insights to reform base-layer markets and politics
+in such a deep way, and if so, should we?</p>
+<p>Normally, I love markets and clean incentive alignment, and dislike
+politics and bureaucrats and ugly hacks, and I love economics, and I so
+love the idea of using economic insights to design markets that work
+better so that we can reduce the role of politics and bureaucrats and
+ugly hacks in society. Hence, naturally, I love this vision. So let me
+be a good intellectual citizen and do my best to try to make a case
+against it.</p>
+<p>There is a limit to how complex economic incentive structures and
+markets can be because there is a limit to users' ability to think and
+re-evaluate and give ongoing precise measurements for their valuations
+of things, and people value reliability and certainty. Quoting <a
+href="http://www.interfluidity.com/v2/5822.html">Steve Waldman
+criticizing Uber surge pricing</a>:</p>
 <blockquote>
-<p>Finally, we need to consider questions of economic calculation. In macroeconomics, we sometimes face tradeoffs between an increasing and unpredictably variable price-level and full employment. Wisely or not, our current policy is to stabilize the price level, even at short-term cost to output and employment, because stable prices enable longer-term economic calculation. That vague good, not visible on a supply/demand diagram, is deemed worth very large sacrifices. The same concern exists in a microeconomic context. If the "ride-sharing revolution" really takes hold, a lot of us will have decisions to make about whether to own a car or rely upon the Sidecars, Lyfts, and Ubers of the world to take us to work every day. To make those calculations, we will need something like predictable pricing. Commuting to our minimum wage jobs (average is over!) by Uber may be OK at standard pricing, but not so OK on a surge. In the desperate utopia of the "free-market economist", there is always a solution to this problem. We can define futures markets on Uber trips, and so hedge our exposure to price volatility! In practice that is not so likely...</p>
+<p>Finally, we need to consider questions of economic calculation. In
+macroeconomics, we sometimes face tradeoffs between an increasing and
+unpredictably variable price-level and full employment. Wisely or not,
+our current policy is to stabilize the price level, even at short-term
+cost to output and employment, because stable prices enable longer-term
+economic calculation. That vague good, not visible on a supply/demand
+diagram, is deemed worth very large sacrifices. The same concern exists
+in a microeconomic context. If the "ride-sharing revolution" really
+takes hold, a lot of us will have decisions to make about whether to own
+a car or rely upon the Sidecars, Lyfts, and Ubers of the world to take
+us to work every day. To make those calculations, we will need something
+like predictable pricing. Commuting to our minimum wage jobs (average is
+over!) by Uber may be OK at standard pricing, but not so OK on a surge.
+In the desperate utopia of the "free-market economist", there is always
+a solution to this problem. We can define futures markets on Uber trips,
+and so hedge our exposure to price volatility! In practice that is not
+so likely...</p>
 </blockquote>
 <p>And:</p>
 <blockquote>
-<p>It's clear that in a lot of contexts, people have a strong preference for price-predictability over immediate access. The vast majority of services that we purchase and consume are not price-rationed in any fine-grained way. If your hairdresser or auto mechanic is busy, you get penciled in for next week...</p>
+<p>It's clear that in a lot of contexts, people have a strong preference
+for price-predictability over immediate access. The vast majority of
+services that we purchase and consume are not price-rationed in any
+fine-grained way. If your hairdresser or auto mechanic is busy, you get
+penciled in for next week...</p>
 </blockquote>
-<p>Strong property rights are valuable for the same reason: beyond the arguments about allocative and investment efficiency, they provide the mental convenience and planning benefits of predictability.</p>
-<p>It's worth noting that even Uber itself doesn't do surge pricing in the "market-based" way that economists would recommend. Uber is not a market where drivers can set their own prices, riders can see what prices are available, and themselves choose their tradeoff between price and waiting time. Why does Uber not do this? One argument is that, as Steve Waldman says, "Uber itself is a cartel", and wants to have the power to adjust market prices not just for efficiency but also reasons such as profit maximization, strategically setting prices to drive out competing platforms (and taxis and public transit), and public relations. As Waldman further points out, one Uber competitor, Sidecar, <em>does</em> have the ability for <a href="https://www.side.cr/drivers/">drivers to set prices</a>, and I would add that I have seen ride-sharing apps in China where <em>passengers</em> can offer drivers higher prices to try to coax them to get a car faster.</p>
-<p>A possible counter-argument that Uber might give is that drivers themselves are actually less good at setting optimal prices than Uber's own algorithms, and in general people value the convenience of one-click interfaces over the mental complexity of thinking about prices. If we assume that Uber won its market dominance over competitors like Sidecar fairly, then the market itself has decided that the economic gain from marketizing more things is not worth the mental transaction costs.</p>
-<p>Harberger taxes, at least to me, seem like they would lead to these exact kinds of issues multipled by ten; people are not experts at property valuation, and would have to spend a significant amount of time and mental effort figuring out what self-assessed value to put for their house, and they would complain much more if they accidentally put a value that's too low and suddenly find that their house is gone. If Harberger taxes were to be applied to smaller property items as well, people would need to juggle a large amount of mental valuations of everything. A similar critique could apply to many kinds of personal data markets, and possibly even to quadratic voting if implemented in its full form.</p>
-<p>I could challenge this by saying "ah, even if that's true, this is the 21st century, we could have companies that build AIs that make pricing decisions on your behalf, and people could choose the AI that seems to work best; there could even be a public option"; and Posner and Weyl themselves suggest that this is likely the way to go. And this is where the interesting conversation starts.</p>
+<p>Strong property rights are valuable for the same reason: beyond the
+arguments about allocative and investment efficiency, they provide the
+mental convenience and planning benefits of predictability.</p>
+<p>It's worth noting that even Uber itself doesn't do surge pricing in
+the "market-based" way that economists would recommend. Uber is not a
+market where drivers can set their own prices, riders can see what
+prices are available, and themselves choose their tradeoff between price
+and waiting time. Why does Uber not do this? One argument is that, as
+Steve Waldman says, "Uber itself is a cartel", and wants to have the
+power to adjust market prices not just for efficiency but also reasons
+such as profit maximization, strategically setting prices to drive out
+competing platforms (and taxis and public transit), and public
+relations. As Waldman further points out, one Uber competitor, Sidecar,
+<em>does</em> have the ability for <a
+href="https://www.side.cr/drivers/">drivers to set prices</a>, and I
+would add that I have seen ride-sharing apps in China where
+<em>passengers</em> can offer drivers higher prices to try to coax them
+to get a car faster.</p>
+<p>A possible counter-argument that Uber might give is that drivers
+themselves are actually less good at setting optimal prices than Uber's
+own algorithms, and in general people value the convenience of one-click
+interfaces over the mental complexity of thinking about prices. If we
+assume that Uber won its market dominance over competitors like Sidecar
+fairly, then the market itself has decided that the economic gain from
+marketizing more things is not worth the mental transaction costs.</p>
+<p>Harberger taxes, at least to me, seem like they would lead to these
+exact kinds of issues multipled by ten; people are not experts at
+property valuation, and would have to spend a significant amount of time
+and mental effort figuring out what self-assessed value to put for their
+house, and they would complain much more if they accidentally put a
+value that's too low and suddenly find that their house is gone. If
+Harberger taxes were to be applied to smaller property items as well,
+people would need to juggle a large amount of mental valuations of
+everything. A similar critique could apply to many kinds of personal
+data markets, and possibly even to quadratic voting if implemented in
+its full form.</p>
+<p>I could challenge this by saying "ah, even if that's true, this is
+the 21st century, we could have companies that build AIs that make
+pricing decisions on your behalf, and people could choose the AI that
+seems to work best; there could even be a public option"; and Posner and
+Weyl themselves suggest that this is likely the way to go. And this is
+where the interesting conversation starts.</p>
 <h3 id="tales-from-crypto-land">Tales from Crypto Land</h3>
-<p>One reason why this discussion particularly interests me is that the cryptocurrency and blockchain space itself has, in some cases, run up against similar challenges. In the case of Harberger taxes, we actually did consider almost exactly that same proposal in the context of the <a href="https://ens.domains/">Ethereum Name System</a> (our decentralized alternative to DNS), but the proposal was ultimately rejected. I asked the ENS developers why it was rejected. Paraphrasing their reply, the challenge is as follows.</p>
-<p>Many ENS domain names are of a type that would only be interesting to precisely two classes of actors: (i) the "legitimate owner" of some given name, and (ii) scammers. Furthermore, in some particular cases, the legitimate owner is uniquely underfunded, and scammers are uniquely dangerous. One particular case is <a href="http://myetherwallet.com">MyEtherWallet</a>, an Ethereum wallet provider. MyEtherWallet provides an important public good to the Ethereum ecosystem, making Ethereum easier to use for many thousands of people, but is able to capture only a very small portion of the value that it provides; as a result, the budget that it has for outbidding others for the domain name is low. If a scammer gets their hands on the domain, users trusting MyEtherWallet could easily be tricked into sending all of their ether (or other Ethereum assets) to a scammer. Hence, because there is generally one clear "legitimate owner" for any domain name, a pure property rights regime presents little allocative efficiency loss, and there is a strong overriding public interest toward stability of reference (ie. a domain that's legitimate one day doesn't redirect to a scam the next day), so <em>any</em> level of Harberger taxation may well bring more harm than good.</p>
-<p>I suggested to the ENS developers the idea of applying Harberger taxes to short domains (eg. abc.eth), but not long ones; the reply was that it would be too complicated to have two classes of names. That said, perhaps there is some version of the proposal that could satisfy the specific constraints here; I would be interested to hear Posner and Weyl's feedback on this particular application.</p>
-<p>Another story from the blockchain and Ethereum space that has a more pro-radical-market conclusion is that of transaction fees. The notion of <a href="http://nakamotoinstitute.org/literature/micropayments-and-mental-transaction-costs/">mental transaction costs</a>, the idea that the inconvenience of even thinking about whether or not some small payment for a given digital good is worth it is enough of a burden to prevent "micro-markets" from working, is often used as an argument for why mass adoption of blockchain tech would be difficult: every transaction requires a small fee, and the mental expenditure of figuring out what fee to pay is itself a major usability barrier. These arguments increased further at the end of last year, when both <a href="https://bitinfocharts.com/comparison/bitcoin-transactionfees.html">Bitcoin</a> and <a href="https://bitinfocharts.com/comparison/ethereum-transactionfees.html">Ethereum</a> transaction fees briefly spiked up by a factor of over 100 due to high usage (talk about surge pricing!), and those who accidentally did not pay high enough fees saw their transactions get stuck for days.</p>
-<p>That said, this is a problem that we have now, arguably, to a large extent overcome. After the spikes at the end of last year, Ethereum wallets developed more advanced algorithms for choosing what transaction fees to pay to ensure that one's transaction gets included in the chain, and today most users are happy to simply defer to them. In my own personal experience, the mental transaction costs of worrying about transaction fees do not really exist, much like a driver of a car does not worry about the gasoline consumed by every single turn, acceleration and braking made by their car.</p>
+<p>One reason why this discussion particularly interests me is that the
+cryptocurrency and blockchain space itself has, in some cases, run up
+against similar challenges. In the case of Harberger taxes, we actually
+did consider almost exactly that same proposal in the context of the <a
+href="https://ens.domains/">Ethereum Name System</a> (our decentralized
+alternative to DNS), but the proposal was ultimately rejected. I asked
+the ENS developers why it was rejected. Paraphrasing their reply, the
+challenge is as follows.</p>
+<p>Many ENS domain names are of a type that would only be interesting to
+precisely two classes of actors: (i) the "legitimate owner" of some
+given name, and (ii) scammers. Furthermore, in some particular cases,
+the legitimate owner is uniquely underfunded, and scammers are uniquely
+dangerous. One particular case is <a
+href="http://myetherwallet.com">MyEtherWallet</a>, an Ethereum wallet
+provider. MyEtherWallet provides an important public good to the
+Ethereum ecosystem, making Ethereum easier to use for many thousands of
+people, but is able to capture only a very small portion of the value
+that it provides; as a result, the budget that it has for outbidding
+others for the domain name is low. If a scammer gets their hands on the
+domain, users trusting MyEtherWallet could easily be tricked into
+sending all of their ether (or other Ethereum assets) to a scammer.
+Hence, because there is generally one clear "legitimate owner" for any
+domain name, a pure property rights regime presents little allocative
+efficiency loss, and there is a strong overriding public interest toward
+stability of reference (ie. a domain that's legitimate one day doesn't
+redirect to a scam the next day), so <em>any</em> level of Harberger
+taxation may well bring more harm than good.</p>
+<p>I suggested to the ENS developers the idea of applying Harberger
+taxes to short domains (eg. abc.eth), but not long ones; the reply was
+that it would be too complicated to have two classes of names. That
+said, perhaps there is some version of the proposal that could satisfy
+the specific constraints here; I would be interested to hear Posner and
+Weyl's feedback on this particular application.</p>
+<p>Another story from the blockchain and Ethereum space that has a more
+pro-radical-market conclusion is that of transaction fees. The notion of
+<a
+href="http://nakamotoinstitute.org/literature/micropayments-and-mental-transaction-costs/">mental
+transaction costs</a>, the idea that the inconvenience of even thinking
+about whether or not some small payment for a given digital good is
+worth it is enough of a burden to prevent "micro-markets" from working,
+is often used as an argument for why mass adoption of blockchain tech
+would be difficult: every transaction requires a small fee, and the
+mental expenditure of figuring out what fee to pay is itself a major
+usability barrier. These arguments increased further at the end of last
+year, when both <a
+href="https://bitinfocharts.com/comparison/bitcoin-transactionfees.html">Bitcoin</a>
+and <a
+href="https://bitinfocharts.com/comparison/ethereum-transactionfees.html">Ethereum</a>
+transaction fees briefly spiked up by a factor of over 100 due to high
+usage (talk about surge pricing!), and those who accidentally did not
+pay high enough fees saw their transactions get stuck for days.</p>
+<p>That said, this is a problem that we have now, arguably, to a large
+extent overcome. After the spikes at the end of last year, Ethereum
+wallets developed more advanced algorithms for choosing what transaction
+fees to pay to ensure that one's transaction gets included in the chain,
+and today most users are happy to simply defer to them. In my own
+personal experience, the mental transaction costs of worrying about
+transaction fees do not really exist, much like a driver of a car does
+not worry about the gasoline consumed by every single turn, acceleration
+and braking made by their car.</p>
 <center>
-<img src="../../../../images/radical-markets-files/metamask1.png" style="width:200px"/><br><br> <small><i>Personal price-setting AIs for interacting with open markets: already a reality in the Ethereum transaction fee market</i></small>
+<img src="../../../../images/radical-markets-files/metamask1.png" style="width:200px"/><br><br>
+<small><i>Personal price-setting AIs for interacting with open markets:
+already a reality in the Ethereum transaction fee market</i></small>
 </center>
 <p><br></p>
-<p>A third kind of "radical market" that we are considering implementing in the context of Ethereum's consensus system is one for incentivizing deconcentration of validator nodes in <a href="https://medium.com/@jonchoi/ethereum-casper-101-7a851a4f1eb0">proof of stake consensus</a>. It's important for blockchains to be decentralized, a similar challenge to what antitrust law tries to solve, but the tools at our disposal are different. Posner and Weyl's solution to antitrust, banning institutional investment funds from owning shares in multiple competitors in the same industry, is far too subjective and human-judgement-dependent to work in a blockchain, but for our specific context we have a different solution: if a validator node commits an error, it gets penalized an amount proportional to the number of other nodes that have committed an error around the same time. This incentivizes nodes to set themselves up in such a way that their failure rate is maximally uncorrelated with everyone else's failure rate, reducing the chance that many nodes fail at the same time and threaten to the blockchain's integrity. I want to ask Posner and Weyl: though our exact approach is fairly application-specific, could a similarly elegant "market-based" solution be discovered to incentivize market deconcentration in general?</p>
-<p>All in all, I am optimistic that the various behavioral kinks around implementing "radical markets" in practice could be worked out with the help of good defaults and personal AIs, though I do think that if this vision is to be pushed forward, the greatest challenge will be finding progressively larger and more meaningful places to test it out and show that the model works. I particularly welcome the use of the blockchain and crypto space as a testing ground.</p>
-<h3 id="another-kind-of-radical-market">Another Kind of Radical Market</h3>
-<p>The book as a whole tends to focus on centralized reforms that could be implemented on an economy from the top down, even if their intended long-term effect is to push more decision-making power to individuals. The proposals involve large-scale restructurings of how property rights work, how voting works, how immigration and antitrust law works, and how individuals see their relationship with property, money, prices and society. But there is also the potential to use economics and game theory to come up with <em>decentralized</em> economic institutions that could be adopted by smaller groups of people at a time.</p>
-<p>Perhaps the most famous examples of decentralized institutions from game theory and economics land are (i) assurance contracts, and (ii) prediction markets. An assurance contract is a system where some public good is funded by giving anyone the opportunity to pledge money, and only collecting the pledges if the total amount pledged exceeds some threshold. This ensures that people can donate money knowing that either they will get their money back or there actually will be enough to achieve some objective. A possible extension of this concept is Alex Tabarrok's <a href="https://en.wikipedia.org/wiki/Assurance_contract#Dominant_assurance_contracts">dominant assurance contracts</a>, where an entrepreneur offers to refund participants <em>more</em> than 100% of their deposits if a given assurance contract does not raise enough money.</p>
-<p>Prediction markets allow people to bet on the probability that events will happen, potentially even conditional on some action being taken ("I bet $20 that unemployment will go down if candidate X wins the election"); there are techniques for people interested in the information to subsidize the markets. Any attempt to manipulate the probability that a prediction market shows simply creates an opportunity for people to earn free money (yes I know, risk aversion and capital efficiency etc etc; still close to free) by betting against the manipulator.</p>
-<p>Posner and Weyl do give one example of what I would call a decentralized institution: a game for choosing who gets an asset in the event of a divorce or a company splitting in half, where both sides provide their own valuation, the person with the higher valuation gets the item, but they must then give an amount equal to half the average of the two valuations to the loser. There's some economic reasoning by which this solution, while not perfect, is still close to mathematically optimal.</p>
-<p>One particular category of decentralized institutions I've been interested in is improving incentivization for content posting and content curation in social media. Some ideas that I have had include:</p>
+<p>A third kind of "radical market" that we are considering implementing
+in the context of Ethereum's consensus system is one for incentivizing
+deconcentration of validator nodes in <a
+href="https://medium.com/@jonchoi/ethereum-casper-101-7a851a4f1eb0">proof
+of stake consensus</a>. It's important for blockchains to be
+decentralized, a similar challenge to what antitrust law tries to solve,
+but the tools at our disposal are different. Posner and Weyl's solution
+to antitrust, banning institutional investment funds from owning shares
+in multiple competitors in the same industry, is far too subjective and
+human-judgement-dependent to work in a blockchain, but for our specific
+context we have a different solution: if a validator node commits an
+error, it gets penalized an amount proportional to the number of other
+nodes that have committed an error around the same time. This
+incentivizes nodes to set themselves up in such a way that their failure
+rate is maximally uncorrelated with everyone else's failure rate,
+reducing the chance that many nodes fail at the same time and threaten
+to the blockchain's integrity. I want to ask Posner and Weyl: though our
+exact approach is fairly application-specific, could a similarly elegant
+"market-based" solution be discovered to incentivize market
+deconcentration in general?</p>
+<p>All in all, I am optimistic that the various behavioral kinks around
+implementing "radical markets" in practice could be worked out with the
+help of good defaults and personal AIs, though I do think that if this
+vision is to be pushed forward, the greatest challenge will be finding
+progressively larger and more meaningful places to test it out and show
+that the model works. I particularly welcome the use of the blockchain
+and crypto space as a testing ground.</p>
+<h3 id="another-kind-of-radical-market">Another Kind of Radical
+Market</h3>
+<p>The book as a whole tends to focus on centralized reforms that could
+be implemented on an economy from the top down, even if their intended
+long-term effect is to push more decision-making power to individuals.
+The proposals involve large-scale restructurings of how property rights
+work, how voting works, how immigration and antitrust law works, and how
+individuals see their relationship with property, money, prices and
+society. But there is also the potential to use economics and game
+theory to come up with <em>decentralized</em> economic institutions that
+could be adopted by smaller groups of people at a time.</p>
+<p>Perhaps the most famous examples of decentralized institutions from
+game theory and economics land are (i) assurance contracts, and (ii)
+prediction markets. An assurance contract is a system where some public
+good is funded by giving anyone the opportunity to pledge money, and
+only collecting the pledges if the total amount pledged exceeds some
+threshold. This ensures that people can donate money knowing that either
+they will get their money back or there actually will be enough to
+achieve some objective. A possible extension of this concept is Alex
+Tabarrok's <a
+href="https://en.wikipedia.org/wiki/Assurance_contract#Dominant_assurance_contracts">dominant
+assurance contracts</a>, where an entrepreneur offers to refund
+participants <em>more</em> than 100% of their deposits if a given
+assurance contract does not raise enough money.</p>
+<p>Prediction markets allow people to bet on the probability that events
+will happen, potentially even conditional on some action being taken ("I
+bet $20 that unemployment will go down if candidate X wins the
+election"); there are techniques for people interested in the
+information to subsidize the markets. Any attempt to manipulate the
+probability that a prediction market shows simply creates an opportunity
+for people to earn free money (yes I know, risk aversion and capital
+efficiency etc etc; still close to free) by betting against the
+manipulator.</p>
+<p>Posner and Weyl do give one example of what I would call a
+decentralized institution: a game for choosing who gets an asset in the
+event of a divorce or a company splitting in half, where both sides
+provide their own valuation, the person with the higher valuation gets
+the item, but they must then give an amount equal to half the average of
+the two valuations to the loser. There's some economic reasoning by
+which this solution, while not perfect, is still close to mathematically
+optimal.</p>
+<p>One particular category of decentralized institutions I've been
+interested in is improving incentivization for content posting and
+content curation in social media. Some ideas that I have had
+include:</p>
 <ul>
-<li><a href="https://ethresear.ch/t/conditional-proof-of-stake-hashcash/1301">Proof of stake conditional hashcash</a> (when you send someone an email, you give them the opportunity to burn $0.5 of your money if they think it's spam)</li>
-<li><a href="https://ethresear.ch/t/prediction-markets-for-content-curation-daos/1312">Prediction markets for content curation</a> (use prediction markets to predict the results of a moderation vote on content, thereby encouraging a market of fast content pre-moderators while penalizing manipulative pre-moderation)</li>
-<li>Conditional payments for paywalled content (after you pay for a piece of downloadable content and view it, you can decide after the fact if payments should go to the author or to proportionately refund previous readers)</li>
+<li><a
+href="https://ethresear.ch/t/conditional-proof-of-stake-hashcash/1301">Proof
+of stake conditional hashcash</a> (when you send someone an email, you
+give them the opportunity to burn $0.5 of your money if they think it's
+spam)</li>
+<li><a
+href="https://ethresear.ch/t/prediction-markets-for-content-curation-daos/1312">Prediction
+markets for content curation</a> (use prediction markets to predict the
+results of a moderation vote on content, thereby encouraging a market of
+fast content pre-moderators while penalizing manipulative
+pre-moderation)</li>
+<li>Conditional payments for paywalled content (after you pay for a
+piece of downloadable content and view it, you can decide after the fact
+if payments should go to the author or to proportionately refund
+previous readers)</li>
 </ul>
 <p>And ideas I have had in other contexts:</p>
 <ul>
-<li><a href="https://ethresear.ch/t/call-out-assurance-contracts/466">Call-out assurance contracts</a></li>
-<li><a href="https://ethresear.ch/t/explanation-of-daicos/465">DAICOs</a> (a more decentralized and safer alternative to ICOs)</li>
+<li><a
+href="https://ethresear.ch/t/call-out-assurance-contracts/466">Call-out
+assurance contracts</a></li>
+<li><a
+href="https://ethresear.ch/t/explanation-of-daicos/465">DAICOs</a> (a
+more decentralized and safer alternative to ICOs)</li>
 </ul>
 <center>
-<img src="https://cryptobriefing.com/wp-content/uploads/2018/02/Buterin-Copycat-Poster-1.png" style="width:400px" /><br><br> <small><i>Twitter scammers: can prediction markets incentivize an autonomous swarm of human and AI-driven moderators to flag these posts and warn users not to send them ether within a few seconds of the post being made? And could such a system be generalized to the entire internet, where these is no single centralized moderator that can easily take posts down?</i></small>
+<img src="https://cryptobriefing.com/wp-content/uploads/2018/02/Buterin-Copycat-Poster-1.png" style="width:400px" /><br><br>
+<small><i>Twitter scammers: can prediction markets incentivize an
+autonomous swarm of human and AI-driven moderators to flag these posts
+and warn users not to send them ether within a few seconds of the post
+being made? And could such a system be generalized to the entire
+internet, where these is no single centralized moderator that can easily
+take posts down?</i></small>
 </center>
 <p><br></p>
-<p>Some ideas others have had for decentralized institutions in general include:</p>
+<p>Some ideas others have had for decentralized institutions in general
+include:</p>
 <ul>
-<li><a href="http://trustdavis.io/">TrustDavis</a> (adding skin-in-the-game to e-commerce reputations by making e-commerce ratings <em>be</em> offers to insure others against the receiver of the rating committing fraud)</li>
-<li><a href="https://joincircles.net/">Circles</a> (decentralized basic income through locally fungible coin issuance)</li>
+<li><a href="http://trustdavis.io/">TrustDavis</a> (adding
+skin-in-the-game to e-commerce reputations by making e-commerce ratings
+<em>be</em> offers to insure others against the receiver of the rating
+committing fraud)</li>
+<li><a href="https://joincircles.net/">Circles</a> (decentralized basic
+income through locally fungible coin issuance)</li>
 <li>Markets for CAPTCHA services</li>
-<li>Digitized peer to peer rotating savings and credit <a href="https://www.wetrust.io/">associations</a></li>
-<li><a href="https://medium.com/@ilovebagels/token-curated-registries-1-0-61a232f8dac7">Token curated registries</a></li>
-<li><a href="https://medium.com/@edmundedgar/snopes-meets-mechanical-turk-announcing-reality-check-a-crowd-sourced-smart-contract-oracle-551d03468177">Crowdsourced smart contract truth oracles</a></li>
+<li>Digitized peer to peer rotating savings and credit <a
+href="https://www.wetrust.io/">associations</a></li>
+<li><a
+href="https://medium.com/@ilovebagels/token-curated-registries-1-0-61a232f8dac7">Token
+curated registries</a></li>
+<li><a
+href="https://medium.com/@edmundedgar/snopes-meets-mechanical-turk-announcing-reality-check-a-crowd-sourced-smart-contract-oracle-551d03468177">Crowdsourced
+smart contract truth oracles</a></li>
 <li>Using blockchain-based smart contracts to coordinate unions</li>
 </ul>
-<p>I would be interested in hearing Posner and Weyl's opinion on these kinds of "radical markets", that groups of people can spin up and start using by themselves without requiring potentially contentious society-wide changes to political and property rights. Could decentralized institutions like these be used to solve the key defining challenges of the twenty first century: promoting beneficial scientific progress, developing informational public goods, reducing global wealth inequality, and the big meta-problem behind fake news, government-driven and corporate-driven social media censorship, and regulation of cryptocurrency products: how do we do quality assurance in an open society?</p>
-<p>All in all, I highly recommend <em>Radical Markets</em> (and by the way I also recommend Eliezer Yudkowsky's <em><a href="https://equilibriabook.com/">Inadequate Equilibria</a></em>) to anyone interested in these kinds of issues, and look forward to seeing the discussion that the book generates.</p>
+<p>I would be interested in hearing Posner and Weyl's opinion on these
+kinds of "radical markets", that groups of people can spin up and start
+using by themselves without requiring potentially contentious
+society-wide changes to political and property rights. Could
+decentralized institutions like these be used to solve the key defining
+challenges of the twenty first century: promoting beneficial scientific
+progress, developing informational public goods, reducing global wealth
+inequality, and the big meta-problem behind fake news, government-driven
+and corporate-driven social media censorship, and regulation of
+cryptocurrency products: how do we do quality assurance in an open
+society?</p>
+<p>All in all, I highly recommend <em>Radical Markets</em> (and by the
+way I also recommend Eliezer Yudkowsky's <em><a
+href="https://equilibriabook.com/">Inadequate Equilibria</a></em>) to
+anyone interested in these kinds of issues, and look forward to seeing
+the discussion that the book generates.</p>
  </div> 

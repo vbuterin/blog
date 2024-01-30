@@ -11,7 +11,7 @@ For the purposes of analyzing blockchain protocols, I tend to break down trust i
 
 * How many people do you need to behave as you expect?
 * Out of how many?
-* What kinds of motivations are needed for those people to behave? Do they need to be altruistic, or just profit seeking? Do they [need to be uncoordinated](https://vitalik.ca/general/2017/05/08/coordination_problems.html)?
+* What kinds of motivations are needed for those people to behave? Do they need to be altruistic, or just profit seeking? Do they [need to be uncoordinated](../../../2017/05/08/coordination_problems.html)?
 * How badly will the system fail if the assumptions are violated?
 
 For now, let us focus on the first two. We can draw a graph:
@@ -25,7 +25,7 @@ The more green, the better. Let us explore the categories in more detail:
 
 * **1 of 1**: there is exactly one actor, and the system works if (and only if) that one actor does what you expect them to. This is the traditional "centralized" model, and it is what we are trying to do better than.
 * **N of N**: the "dystopian" world. You rely on a whole bunch of actors, _all_ of whom need to act as expected for everything to work, with no backups if any of them fail.
-* **N/2 of N**: this is how blockchains work - they work if the majority of the miners (or PoS validators) are honest. Notice that N/2 of N becomes significantly more valuable the larger the N gets; a blockchain with a few miners/validators dominating the network is much less interesting than a blockchain with its miners/validators widely distributed. That said, we want to improve on even this level of security, hence the [concern around surviving 51% attacks](https://vitalik.ca/general/2020/08/17/philosophy.html).
+* **N/2 of N**: this is how blockchains work - they work if the majority of the miners (or PoS validators) are honest. Notice that N/2 of N becomes significantly more valuable the larger the N gets; a blockchain with a few miners/validators dominating the network is much less interesting than a blockchain with its miners/validators widely distributed. That said, we want to improve on even this level of security, hence the [concern around surviving 51% attacks](../../../2020/08/17/philosophy.html).
 * **1 of N**: there are many actors, and the system works as long as at least one of them does what you expect them to. Any system based on fraud proofs falls into this category, as do trusted setups though in that case the N is often smaller. Note that you do want the N to be as large as possible!
 * **Few of N**: there are many actors, and the system works as long as at least some small fixed number of them do what you expect them do. [Data availability checks](https://arxiv.org/abs/1809.09044) fall into this category.
 * **0 of N**: the systems works as expected without any dependence whatsoever on external actors. Validating a block by checking it yourself falls into this category.
@@ -47,6 +47,6 @@ Here are a few examples of trust models of a few blockchain layer 2 protocols. I
 
 Finally, there is the question of incentives: does the actor you're trusting need to be very altruistic to act as expected, only slightly altruistic, or is being rational enough? Searching for fraud proofs is "by default" slightly altruistic, though just how altruistic it is depends on the complexity of the computation (see [the verifier's dilemma](https://eprint.iacr.org/2015/702.pdf)), and there are ways to modify the game to make it rational.
 
-Assisting others with withdrawing from a ZK rollup is rational if we add a way to micro-pay for the service, so there is _really_ little cause for concern that you won't be able to exit from a rollup with any significant use. Meanwhile, the greater risks of the other systems can be alleviated if we [agree as a community](https://vitalik.ca/general/2020/08/17/philosophy.html) to [not accept 51% attack chains](https://ethresear.ch/t/timeliness-detectors-and-51-attack-recovery-in-blockchains/6925) that revert too far in history or censor blocks for too long.
+Assisting others with withdrawing from a ZK rollup is rational if we add a way to micro-pay for the service, so there is _really_ little cause for concern that you won't be able to exit from a rollup with any significant use. Meanwhile, the greater risks of the other systems can be alleviated if we [agree as a community](../../../2020/08/17/philosophy.html) to [not accept 51% attack chains](https://ethresear.ch/t/timeliness-detectors-and-51-attack-recovery-in-blockchains/6925) that revert too far in history or censor blocks for too long.
 
 Conclusion: when someone says that a system "depends on trust", ask them in more detail what they mean! Do they mean 1 of 1, or 1 of N, or N/2 of N? Are they demanding these participants be altruistic or just rational? If altruistic, is it a tiny expense or a huge expense? And what if the assumption is violated - do you just need to wait a few hours or days, or do you have assets that are stuck forever? Depending on the answers, your own answer to whether or not you want to use that system might be very different.

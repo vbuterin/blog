@@ -7,7 +7,7 @@ See also:
 
 * [A Proof of Stake Design Philosophy](https://medium.com/@VitalikButerin/a-proof-of-stake-design-philosophy-506585978d51)
 * [The Meaning of Decentralization](https://medium.com/@VitalikButerin/the-meaning-of-decentralization-a0c92b76a274)
-* [Engineering Security through Coordination Problems](https://vitalik.ca/general/2017/05/08/coordination_problems.html)
+* [Engineering Security through Coordination Problems](../../../2017/05/08/coordination_problems.html)
 
 One of the most powerful properties of a blockchain is the fact that every single part of the blockchain's execution can be independently validated. Even if a great majority of a blockchain's miners (or validators in PoS) get taken over by an attacker, if that attacker tries to push through invalid blocks, the network will simply reject them. Even those users that were not verifying blocks at that time can be (potentially automatically) warned by those who were, at which point they can check that the attacker's chain is invalid, and automatically reject it and coordinate on accepting a chain that follows the rules.
 
@@ -49,7 +49,7 @@ From your point of view, you still have your coins in a system that runs on rule
 
 ![](../../../../images/philosophy/lonely.png){.padded}
 
-So what is the alternative view? The core idea is to look at blockchains as **[engineering security through coordination problems](https://vitalik.ca/general/2017/05/08/coordination_problems.html)**.
+So what is the alternative view? The core idea is to look at blockchains as **[engineering security through coordination problems](../../../2017/05/08/coordination_problems.html)**.
 
 Normally, coordination problems in the world are a bad thing: while it would be better for most people if the English language got rid of its highly complex and irregular spelling system and made a phonetic one, or if the United States switched to metric, or if we could immediately [drop all prices and wages by ten percent in the event of a recession](http://www.interfluidity.com/v2/6088.html), in practice this requires everyone to agree on the switch at the same time, and this is often very very hard.
 

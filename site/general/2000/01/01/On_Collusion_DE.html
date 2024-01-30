@@ -109,26 +109,241 @@ MathJax = {
 <br> <br> <br>
 <title> Über Kollusion </title>
 
-<p><em>Besonderer Dank geht an Glen Weyl, Phil Daian und Jinglan Wang für das Gegenlesen dieses Artikels, und an inlak16 für die Übersetzung.</em></p>
-<p>In den letzten Jahren hat sich das Interesse erhöht, absichtlich entwickelte wirtschaftliche Anreize und Mechanismus-Design zu nutzen, um das Verhalten der Teilnehmer in verschiedenen Zusammenhängen in Einklang zu bringen. Im Raum der Blockchain bietet das Mechanismus-Design in erster Linie die Sicherheit für die Blockchain selbst, indem Miner oder Proof-of-Stake-Validatoren zu ehrlicher Teilnahme ermutigt werden. In jüngerer Zeit jedoch wird es in <a href="https://www.augur.net/">Vorhersagemärkten</a>, "<a href="https://medium.com/@tokencuratedregistry/a-simple-overview-of-token-curated-registries-84e2b7b19a06">Token-kuratierte Register</a>" und vielen anderen Zusammenhängen angewandt. Die aufkeimende <a href="https://radicalxchange.org/">RadicalXChange-Bewegung</a> hat inzwischen Experimente mit <a href="https://medium.com/@simondlr/this-artwork-is-always-on-sale-92a7d0c67f43">Harberger-Steuern</a>, quadratischer Abstimmung, <a href="https://medium.com/gitcoin/gitcoin-grants-50k-open-source-fund-e20e09dc2110">quadratischer Finanzierung</a> und weiteres hervorgebracht. In jüngerer Zeit wächst auch das Interesse an der Nutzung von Token-basierten Anreizen, um hochwertige Beiträge in den sozialen Medien zu fördern. Da sich die Entwicklung dieser Systeme von der Theorie zur Praxis annähert, gibt es eine Reihe von Herausforderungen, die angegangen werden müssen. Herausforderungen, denen wir meines Erachtens noch nicht ausreichend begegnet sind. Das jüngstes Beispiel für diesen Schritt von der Theorie in Richtung Einsatz ist Bihu, eine chinesische Plattform, die kürzlich einen tokenbasierten Mechanismus veröffentlicht hat, der Leute zum Schreiben von Beiträgen motiviert. Der grundlegende Mechanismus (siehe Whitepaper in Chinesisch <a href="https://www.chainwhy.com/whitepaper/keywhitepaper.html">hier</a>) ist, dass, wenn ein Nutzer der Plattform KEY-Token hält, haben sie die Möglichkeit, diese KEY-Token auf Artikel zu setzen. Jeder Benutzer kann <code>k</code> "Befürwortungen" pro Tag setzen, und das "Gewicht" jeder positiven Bewertung ist proportional zum Einsatz des Benutzers, der die Stimmabgabe vornimmt. Artikel mit einer größeren Menge an sie aufwertenden Einsätzen (Stakes) erscheinen prominenter und der Autor eines Artikels erhält eine Belohnung in Form von KEY-Tokens in etwa proportional zur Menge an KEY-Token, die den Artikel "befürwortet" haben. Das ist eine übertriebene Vereinfachung und der eigentliche Mechanismus beinhaltet einige Nichtlinearitäten. Aber diese sind nicht wesentlich für das grundlegende Funktionieren des Mechanismus. Der KEY hat Wert, da er auf verschiedene Arten innerhalb der Plattform verwendet werden kann. Vor allem aber wird ein Prozentsatz aller Werbeeinnahmen verwendet, um KEY zu kaufen und zu verbrennen (Yay, große Daumen hoch für sie, dass sie nicht noch einen weiteren <a href="https://vitalik.ca/general/2017/10/17/moe.html">Tauschmittel-Token</a> erschaffen haben !). Dieses Design ist alles andere als einzigartig. Das Motivieren zur Erstellung von Online-Inhalten ist etwas, worum sich sehr viele Menschen bemühen. Es gibt viele Designs mit ähnlichem Charakter, sowie einige ziemlich unterschiedliche Designs und in diesem Fall wird diese spezielle Plattform bereits signifikant genutzt:</p>
+<p><em>Besonderer Dank geht an Glen Weyl, Phil Daian und Jinglan Wang
+für das Gegenlesen dieses Artikels, und an inlak16 für die
+Übersetzung.</em></p>
+<p>In den letzten Jahren hat sich das Interesse erhöht, absichtlich
+entwickelte wirtschaftliche Anreize und Mechanismus-Design zu nutzen, um
+das Verhalten der Teilnehmer in verschiedenen Zusammenhängen in Einklang
+zu bringen. Im Raum der Blockchain bietet das Mechanismus-Design in
+erster Linie die Sicherheit für die Blockchain selbst, indem Miner oder
+Proof-of-Stake-Validatoren zu ehrlicher Teilnahme ermutigt werden. In
+jüngerer Zeit jedoch wird es in <a
+href="https://www.augur.net/">Vorhersagemärkten</a>, "<a
+href="https://medium.com/@tokencuratedregistry/a-simple-overview-of-token-curated-registries-84e2b7b19a06">Token-kuratierte
+Register</a>" und vielen anderen Zusammenhängen angewandt. Die
+aufkeimende <a
+href="https://radicalxchange.org/">RadicalXChange-Bewegung</a> hat
+inzwischen Experimente mit <a
+href="https://medium.com/@simondlr/this-artwork-is-always-on-sale-92a7d0c67f43">Harberger-Steuern</a>,
+quadratischer Abstimmung, <a
+href="https://medium.com/gitcoin/gitcoin-grants-50k-open-source-fund-e20e09dc2110">quadratischer
+Finanzierung</a> und weiteres hervorgebracht. In jüngerer Zeit wächst
+auch das Interesse an der Nutzung von Token-basierten Anreizen, um
+hochwertige Beiträge in den sozialen Medien zu fördern. Da sich die
+Entwicklung dieser Systeme von der Theorie zur Praxis annähert, gibt es
+eine Reihe von Herausforderungen, die angegangen werden müssen.
+Herausforderungen, denen wir meines Erachtens noch nicht ausreichend
+begegnet sind. Das jüngstes Beispiel für diesen Schritt von der Theorie
+in Richtung Einsatz ist Bihu, eine chinesische Plattform, die kürzlich
+einen tokenbasierten Mechanismus veröffentlicht hat, der Leute zum
+Schreiben von Beiträgen motiviert. Der grundlegende Mechanismus (siehe
+Whitepaper in Chinesisch <a
+href="https://www.chainwhy.com/whitepaper/keywhitepaper.html">hier</a>)
+ist, dass, wenn ein Nutzer der Plattform KEY-Token hält, haben sie die
+Möglichkeit, diese KEY-Token auf Artikel zu setzen. Jeder Benutzer kann
+<code>k</code> "Befürwortungen" pro Tag setzen, und das "Gewicht" jeder
+positiven Bewertung ist proportional zum Einsatz des Benutzers, der die
+Stimmabgabe vornimmt. Artikel mit einer größeren Menge an sie
+aufwertenden Einsätzen (Stakes) erscheinen prominenter und der Autor
+eines Artikels erhält eine Belohnung in Form von KEY-Tokens in etwa
+proportional zur Menge an KEY-Token, die den Artikel "befürwortet"
+haben. Das ist eine übertriebene Vereinfachung und der eigentliche
+Mechanismus beinhaltet einige Nichtlinearitäten. Aber diese sind nicht
+wesentlich für das grundlegende Funktionieren des Mechanismus. Der KEY
+hat Wert, da er auf verschiedene Arten innerhalb der Plattform verwendet
+werden kann. Vor allem aber wird ein Prozentsatz aller Werbeeinnahmen
+verwendet, um KEY zu kaufen und zu verbrennen (Yay, große Daumen hoch
+für sie, dass sie nicht noch einen weiteren <a
+href="../../../2017/10/17/moe.html">Tauschmittel-Token</a> erschaffen
+haben !). Dieses Design ist alles andere als einzigartig. Das Motivieren
+zur Erstellung von Online-Inhalten ist etwas, worum sich sehr viele
+Menschen bemühen. Es gibt viele Designs mit ähnlichem Charakter, sowie
+einige ziemlich unterschiedliche Designs und in diesem Fall wird diese
+spezielle Plattform bereits signifikant genutzt:</p>
 <p><img src="../../../../images/collusion-files/screenie.png" /></p>
-<p>Vor ein paar Monaten hat das Ethereum Trading-Subreddit <a href="http://reddit.com/r/ethtrader">/r/ethtrader</a> eine teilweise ähnliche experimentelle Funktion eingeführt, in der ein Token namens "Donuts" an Benutzer ausgegeben wird, die positiv bewertete Kommentare verfasst haben. Eine bestimmte wöchentliche Menge von Donuts wird an die Nutzer proportional zu der Anzahl der positiven Bewertungen, die ihre Beiträge bekommen haben, ausgegeben. Die Donuts können verwendet werden, um das Recht zu kaufen, den Inhalt des Banners am Kopf des Subreddits zu bestimmen, sowie bei Meinungsumfragen zu wählen. Im Gegensatz zu den Vorgängen im KEY-System ist hier die Belohnung die B erhält, wenn A B positiv bewertet, nicht proportional zur vorhandenen Token-Menge von A. Stattdessen hat jedes Reddit-Konto die gleiche Fähigkeit, zu anderen Reddit-Konten beizutragen.</p>
+<p>Vor ein paar Monaten hat das Ethereum Trading-Subreddit <a
+href="http://reddit.com/r/ethtrader">/r/ethtrader</a> eine teilweise
+ähnliche experimentelle Funktion eingeführt, in der ein Token namens
+"Donuts" an Benutzer ausgegeben wird, die positiv bewertete Kommentare
+verfasst haben. Eine bestimmte wöchentliche Menge von Donuts wird an die
+Nutzer proportional zu der Anzahl der positiven Bewertungen, die ihre
+Beiträge bekommen haben, ausgegeben. Die Donuts können verwendet werden,
+um das Recht zu kaufen, den Inhalt des Banners am Kopf des Subreddits zu
+bestimmen, sowie bei Meinungsumfragen zu wählen. Im Gegensatz zu den
+Vorgängen im KEY-System ist hier die Belohnung die B erhält, wenn A B
+positiv bewertet, nicht proportional zur vorhandenen Token-Menge von A.
+Stattdessen hat jedes Reddit-Konto die gleiche Fähigkeit, zu anderen
+Reddit-Konten beizutragen.</p>
 <p><img src="../../../../images/collusion-files/donuts.png" /></p>
-Diese Art von Experimente, bei denen die Erstellung qualitativ hochwertiger Inhalte in einer Weise belohnt wird, die über die bekannten Grenzen von Spenden/Kleinst-Trinkgelder hinausgeht, sind sehr wertvoll. Die unzureichende Kompensation von benutzergenerierten Internetinhalten ist in der Gesellschaft im Allgemeinen ein sehr erhebliches Problem (siehe "<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3243656">liberal radicalism</a>" und "<a href="http://radicalmarkets.com/chapters/data-as-labor/">data as labor</a>") und es ist ermutigend zu sehen, wie Krypto-Communities versuchen, die Macht des Mechanismus-Designs zu nutzen, um bei der Lösung voranzukommen. <strong>Aber leider sind diese Systeme auch anfällig für Angriffe. /0&gt; </strong>Selbstabstimmung, Plutokratie und Bestechungsgelder.** Hier kann man das oben vorgeschlagene Design wirtschaftlich angreifen. Angenommen, ein wohlhabender Benutzer erwirbt eine Menge <code>N</code> von Token, und als Ergebnis jeder der <code>k</code> Upvotes des Benutzers gibt dem Empfänger eine Belohnung von <code>N * q</code> (<code>q</code> hier wahrscheinlich eine sehr kleine Zahl, z.B. denke <code>q = 0.000001</code>). Der Benutzer befürwortet einfach mit Stimmen seine eigenen Pseudo-Accounts und gibt sich die Belohnung von <code>N * k * q</code> letztendlich selbst. Dann fällt das System einfach zusammen, indem jeder Benutzer einen "Zinssatz" von <code>k * q</code> pro Periode erhält und der Mechanismus nichts anderes erreicht. Der eigentliche Bihu-Mechanismus scheint dies vorherzusehen und hat eine überlineare Logik, in der Artikel mit mehr befürwortenden KEY-Tokens eine unverhältnismäßig höhere Belohnung erhalten, um die Befürwortung populärer Artikel zu ermutigen, anstatt Selbst-Promotion zu fördern. Es ist ein gängiges Muster unter den Abstimmungssystemen für Tokens, diese Art von Superlinearität hinzuzufügen, um zu verhindern, dass die Selbst-Promotion das gesamte System untergräbt. Die meisten DPOS-Schemen haben eine begrenzte Anzahl von delegierten Slots mit Null-Belohnungen für alle, die nicht genug Stimmen erhalten, um einem der Slots beizutreten - mit ähnlicher Wirkung. Doch führen diese Regelungen unweigerlich zu zwei neuen Schwächen:
+Diese Art von Experimente, bei denen die Erstellung qualitativ
+hochwertiger Inhalte in einer Weise belohnt wird, die über die bekannten
+Grenzen von Spenden/Kleinst-Trinkgelder hinausgeht, sind sehr wertvoll.
+Die unzureichende Kompensation von benutzergenerierten Internetinhalten
+ist in der Gesellschaft im Allgemeinen ein sehr erhebliches Problem
+(siehe "<a
+href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3243656">liberal
+radicalism</a>" und "<a
+href="http://radicalmarkets.com/chapters/data-as-labor/">data as
+labor</a>") und es ist ermutigend zu sehen, wie Krypto-Communities
+versuchen, die Macht des Mechanismus-Designs zu nutzen, um bei der
+Lösung voranzukommen. <strong>Aber leider sind diese Systeme auch
+anfällig für Angriffe. /0&gt; </strong>Selbstabstimmung, Plutokratie und
+Bestechungsgelder.** Hier kann man das oben vorgeschlagene Design
+wirtschaftlich angreifen. Angenommen, ein wohlhabender Benutzer erwirbt
+eine Menge <code>N</code> von Token, und als Ergebnis jeder der
+<code>k</code> Upvotes des Benutzers gibt dem Empfänger eine Belohnung
+von <code>N * q</code> (<code>q</code> hier wahrscheinlich eine sehr
+kleine Zahl, z.B. denke <code>q = 0.000001</code>). Der Benutzer
+befürwortet einfach mit Stimmen seine eigenen Pseudo-Accounts und gibt
+sich die Belohnung von <code>N * k * q</code> letztendlich selbst. Dann
+fällt das System einfach zusammen, indem jeder Benutzer einen "Zinssatz"
+von <code>k * q</code> pro Periode erhält und der Mechanismus nichts
+anderes erreicht. Der eigentliche Bihu-Mechanismus scheint dies
+vorherzusehen und hat eine überlineare Logik, in der Artikel mit mehr
+befürwortenden KEY-Tokens eine unverhältnismäßig höhere Belohnung
+erhalten, um die Befürwortung populärer Artikel zu ermutigen, anstatt
+Selbst-Promotion zu fördern. Es ist ein gängiges Muster unter den
+Abstimmungssystemen für Tokens, diese Art von Superlinearität
+hinzuzufügen, um zu verhindern, dass die Selbst-Promotion das gesamte
+System untergräbt. Die meisten DPOS-Schemen haben eine begrenzte Anzahl
+von delegierten Slots mit Null-Belohnungen für alle, die nicht genug
+Stimmen erhalten, um einem der Slots beizutreten - mit ähnlicher
+Wirkung. Doch führen diese Regelungen unweigerlich zu zwei neuen
+Schwächen:
 </p>
 <ul>
-<li>Sie <strong>subventionieren Plutokratie</strong>, da sehr wohlhabende Menschen und Kartelle immer noch genügend Mittel zur Selbst-Promotion bekommen können.</li>
-<li>Sie können umgangen werden, indem Nutzer andere Nutzer <strong><em>bestechen</em></strong>, um en masse für sie zu stimmen.</li>
+<li>Sie <strong>subventionieren Plutokratie</strong>, da sehr
+wohlhabende Menschen und Kartelle immer noch genügend Mittel zur
+Selbst-Promotion bekommen können.</li>
+<li>Sie können umgangen werden, indem Nutzer andere Nutzer
+<strong><em>bestechen</em></strong>, um en masse für sie zu
+stimmen.</li>
 </ul>
-<p>Bestechungsangriffe können weit hergeholt klingen (wer hat hier jemals eine Bestechung im wirklichen Leben akzeptiert?), aber in einem ausgereiften Ökosystem sind sie viel realistischer, als es scheint. In den meisten <a href="https://vitalik.ca/general/2017/12/17/voting.html">Zusammenhängen, in denen Bestechung im Blockchain-Space stattgefunden hat</a>, verwenden die Betreiber einen euphemistischen neuen Namen, um dem Konzept ein freundliches Gesicht zu geben: Es ist keine Bestechung, es ist ein "Staking-Pool", der "Dividendenden teilt". Bestechungsgelder können sogar verschleiert werden: Stellen Sie sich eine Kryptowährung vor, die ein System ohne Gebühren anbietet und die Anstrengungen auf sich nimmt, eine ungewöhnlich gute Benutzeroberfläche auf die Beine zu stellen, und zudem nicht einmal versucht, Gewinne zu sammeln. Stattdessen verwendet sie Token, die von den Benutzern hinterlegt werden, um an verschiedenen Tokenwahlsystemen teilzunehmen. Es wird unweigerlich auch Leute geben, die Absprachen innerhalb von Gruppen als ganz normal ansehen; Sieh dir zum Beispiel den jüngsten <a href="https://twitter.com/MapleLeafCap/status/1044958643731533825">Skandal um EOS DPOS</a> an:</p>
+<p>Bestechungsangriffe können weit hergeholt klingen (wer hat hier
+jemals eine Bestechung im wirklichen Leben akzeptiert?), aber in einem
+ausgereiften Ökosystem sind sie viel realistischer, als es scheint. In
+den meisten <a href="../../../2017/12/17/voting.html">Zusammenhängen, in
+denen Bestechung im Blockchain-Space stattgefunden hat</a>, verwenden
+die Betreiber einen euphemistischen neuen Namen, um dem Konzept ein
+freundliches Gesicht zu geben: Es ist keine Bestechung, es ist ein
+"Staking-Pool", der "Dividendenden teilt". Bestechungsgelder können
+sogar verschleiert werden: Stellen Sie sich eine Kryptowährung vor, die
+ein System ohne Gebühren anbietet und die Anstrengungen auf sich nimmt,
+eine ungewöhnlich gute Benutzeroberfläche auf die Beine zu stellen, und
+zudem nicht einmal versucht, Gewinne zu sammeln. Stattdessen verwendet
+sie Token, die von den Benutzern hinterlegt werden, um an verschiedenen
+Tokenwahlsystemen teilzunehmen. Es wird unweigerlich auch Leute geben,
+die Absprachen innerhalb von Gruppen als ganz normal ansehen; Sieh dir
+zum Beispiel den jüngsten <a
+href="https://twitter.com/MapleLeafCap/status/1044958643731533825">Skandal
+um EOS DPOS</a> an:</p>
 <p><img src="../../../../images/collusion-files/mapleleaf1.png" /></p>
 <p><img src="../../../../images/collusion-files/mapleleaf2.png" /></p>
-<p>Schließlich gibt es die Möglichkeit einer "negativen Bestechung", dh. Erpressung oder Nötigung. In diesem Fall wird den Teilnehmern mit Schaden gedroht, es sei denn, sie handeln innerhalb des Mechanismus auf eine bestimmte Weise. Im /r/ethtrader-Experiment hat Angst vor Menschen, die hinzukommen, um Donuts zu <em>kaufen</em> und Abstimmungen zu verfälschen, dazu geführt, dass die Gemeinschaft sich dazu entschlossen hat, nur gesperrte (dh. unhandelbare) Donuts für die Stimmabgabe zu verwenden. Aber es gibt einen noch günstigeren Angriff als den Kauf von Donuts (ein Angriff, den man als eine Art verschleierte Bestechung bezeichnen kann): Sie zu <em>verleihen </em>. Wenn ein Angreifer bereits ETH hält, kann er es als Sicherheiten auf einer Plattform wie <a href="https://compound.finance/">Compound</a> verwenden, um eine Anleihe mit irgendeinem Token aufzunehmen. Gleichzeitig gibt es ihm das volle Recht, diesen Token für welchen Zweck auch immer, einschließlich der Teilnahme an Abstimmungen zu verwenden. Wenn er fertig ist, schickt er einfach den Token an den Kreditvertrag zurück, um die Sicherheiten zurück zu bekommen - all das ohne auch nur eine Sekunde der Preisexposition gegenüber dem Token, mit dem er gerade eine Tokenabstimmung manipuliert hat, ausgesetzt gewesen zu sein, selbst wenn der Tokenwahlmechanismus eine Zeitsperre enthält (wie zB. Bihu). In jedem Fall sind Probleme rund um Bestechung und versehentlich übermäßige Ermächtigung gut vernetzter und wohlhabender Teilnehmer überraschend schwer zu vermeiden. <strong>Identität</strong> Einige Systeme versuchen, die plutokratischen Aspekte der Tokenabstimmung durch Verwendung eines Identitätssystems zu mildern. Im Fall des /r/ethtrader-Donut-Systems zum Beispiel wird, obwohl die <em>Governance-Umfragen</em> über Tokenabstimmung durchgeführt werden, der Mechanismus zur Bestimmung <em>der Donut Ausschüttung (dh. Token)</em>, an Reddit-Konten gebunden: 1 positive Stimme von 1 Reddit-Konto = verdient N Donuts. Das ideale Ziel eines Identitätssystems ist, den Erhalt einer Identität zu vereinfachen, aber den Erhalt vieler Identitäten zu erschweren. Im /r/ethtrader-Donut-System sind das Reddit-Konten, im Gitcoin CLR Matching Gadget sind es Github Konten, die für den gleichen Zweck verwendet werden. Aber Identität, zumindest wie sie bisher eingesetzt wurde, ist eine anfällige Angelegenheit....</p>
+<p>Schließlich gibt es die Möglichkeit einer "negativen Bestechung", dh.
+Erpressung oder Nötigung. In diesem Fall wird den Teilnehmern mit
+Schaden gedroht, es sei denn, sie handeln innerhalb des Mechanismus auf
+eine bestimmte Weise. Im /r/ethtrader-Experiment hat Angst vor Menschen,
+die hinzukommen, um Donuts zu <em>kaufen</em> und Abstimmungen zu
+verfälschen, dazu geführt, dass die Gemeinschaft sich dazu entschlossen
+hat, nur gesperrte (dh. unhandelbare) Donuts für die Stimmabgabe zu
+verwenden. Aber es gibt einen noch günstigeren Angriff als den Kauf von
+Donuts (ein Angriff, den man als eine Art verschleierte Bestechung
+bezeichnen kann): Sie zu <em>verleihen </em>. Wenn ein Angreifer bereits
+ETH hält, kann er es als Sicherheiten auf einer Plattform wie <a
+href="https://compound.finance/">Compound</a> verwenden, um eine Anleihe
+mit irgendeinem Token aufzunehmen. Gleichzeitig gibt es ihm das volle
+Recht, diesen Token für welchen Zweck auch immer, einschließlich der
+Teilnahme an Abstimmungen zu verwenden. Wenn er fertig ist, schickt er
+einfach den Token an den Kreditvertrag zurück, um die Sicherheiten
+zurück zu bekommen - all das ohne auch nur eine Sekunde der
+Preisexposition gegenüber dem Token, mit dem er gerade eine
+Tokenabstimmung manipuliert hat, ausgesetzt gewesen zu sein, selbst wenn
+der Tokenwahlmechanismus eine Zeitsperre enthält (wie zB. Bihu). In
+jedem Fall sind Probleme rund um Bestechung und versehentlich übermäßige
+Ermächtigung gut vernetzter und wohlhabender Teilnehmer überraschend
+schwer zu vermeiden. <strong>Identität</strong> Einige Systeme
+versuchen, die plutokratischen Aspekte der Tokenabstimmung durch
+Verwendung eines Identitätssystems zu mildern. Im Fall des
+/r/ethtrader-Donut-Systems zum Beispiel wird, obwohl die
+<em>Governance-Umfragen</em> über Tokenabstimmung durchgeführt werden,
+der Mechanismus zur Bestimmung <em>der Donut Ausschüttung (dh.
+Token)</em>, an Reddit-Konten gebunden: 1 positive Stimme von 1
+Reddit-Konto = verdient N Donuts. Das ideale Ziel eines
+Identitätssystems ist, den Erhalt einer Identität zu vereinfachen, aber
+den Erhalt vieler Identitäten zu erschweren. Im
+/r/ethtrader-Donut-System sind das Reddit-Konten, im Gitcoin CLR
+Matching Gadget sind es Github Konten, die für den gleichen Zweck
+verwendet werden. Aber Identität, zumindest wie sie bisher eingesetzt
+wurde, ist eine anfällige Angelegenheit....</p>
 <p><img src="../../../../images/collusion-files/clickfarm.png" /></p>
-<p>Oh, bist du zu faul um eine große Menge an Telefonen zu nutzen? Vielleicht suchst du <a href="http://buyaccs.com/">hiernach</a>:</p>
+<p>Oh, bist du zu faul um eine große Menge an Telefonen zu nutzen?
+Vielleicht suchst du <a href="http://buyaccs.com/">hiernach</a>:</p>
 <p><img src="../../../../images/collusion-files/buyaccs.png" /></p>
-<p><em>Eine gewöhnliche Warnung darüber, wie dubiose Seiten dich betrügen können oder auch nicht, mache deine eigene Recherche usw. trifft hier zu.</em></p>
-<p>Vermutlich ist das Angreifen dieser Mechanismen, indem man einfach tausende gefälschte Identitäten wie ein Puppenmeister kontrolliert <em>noch einfacher</em>, als Menschen zu bestechen. Und wenn du denkst, dass die Antwort nur darin besteht, die Sicherheit auf das Niveau von <em>Regierungsebenen</em> zu erhöhen? Nun, wenn du ein paar davon erhalten möchtest, kannst du dich <a href="https://thehiddenwiki.com/Main_Page">hier</a> erkundigen, aber bedenke, dass es spezialisierte kriminelle Organisationen gibt, die dir weit voraus sind. Selbst wenn alle kriminellen Strukturen zerschlagen würden, gibt es feindselige Regierungen, die definitiv gefälschte Pässe in Millionenanzahl erstellen werden, wenn wir so dumm sind, Systeme zu schaffen, die diese Art von Aktivität rentabel machen. Und dies bezieht nicht einmal Angriffe in die entgegengesetzte Richtung mit ein, wenn Identitätsausgabeinstitutionen versuchen, marginalisierte Gemeinschaften durch das <em>Leugnen</em> ihrer Identitätsdokumente zu entmachten... Kollusion Angesichts der Tatsache, dass so viele Mechanismen auf ähnliche Weise zu scheitern scheinen, wenn mehrere Identitäten oder sogar liquide Märkte ins Bild kommen, könnte man sich fragen, ob es einen tief verwurtelzen, gemeinsamen Grund gibt, der all diese Probleme verursacht? Ich würde argumentieren, die Antwort lautet ja; und der "gemeinsame Grund" lautet folgendermaßen: Es ist viel schwieriger und wahrscheinlich unmöglich, Mechanismen zu erschaffen, die wünschenswerte Eigenschaften in einem Modell erhalten, in dem die Teilnehmer zusammenarbeiten können, als in einem Modell, wo sie es nicht können. Die meisten Leute haben wahrscheinlich schon eine gewisse Intuition in dieser Hinsicht. Spezifische Beispiele dieses Prinzips liegen hinter etablierten Normen und oft hinter Gesetzen zur Förderung wettbewerbsfähiger Märkte und zur Einschränkung von Preisfestlegungen, Kauf und Verkauf von Stimmen und Bestechung. Aber die Problematik geht viel tiefer und in die Breite. In der Version der Spieltheorie, die sich auf die individuelle Wahl konzentriert (das heißt, die Version, die davon ausgeht, dass jeder Teilnehmer selbständig entscheidet und die nicht die Möglichkeit bietet, dass Gruppen von Agenten zum gegenseitigen Nutzen zusammen arbeiten können), gibt es <a href="https://en.wikipedia.org/wiki/Nash_equilibrium#Proof_of_existence">mathematische Beweise</a>, dass mindestens ein stabiles Nash-Gleichgewicht in jedem Spiel existieren muss. Mechanismus-Designer haben hier einen sehr breiten Spielraum, Spiele zu "konstruieren", um bestimmte Ergebnisse zu erzielen. Aber in der Version der Spieltheorie, die es ermöglicht, in Koalitionen zusammenzuarbeiten, genannt <em>kooperative Spieltheorie</em>, <strong>gibt es</strong> <a href="https://en.wikipedia.org/wiki/Bondareva%E2%80%93Shapley_theorem"><strong>große Klassen von Spielen</strong></a> <strong>, die kein stabiles Ergebnis haben, von dem eine Koalition nicht rentabel abweichen kann</strong>. <em>Mehrheitsspiele</em> werden formell als Spiele von <code>N</code> Akteuren beschrieben, bei denen jede Teilmenge von mehr als der Hälfte von ihnen eine feste Belohnung erlangen und unter sich aufteilen kann. Ein Setup, das vielen Situationen in der Unternehmensführung, Politik und vielen anderen Situationen im menschlichen Leben unheimlich ähnlich ist, sind <a href="https://web.archive.org/web/20180329012328/https://www.math.mcgill.ca/vetta/CS764.dir/Core.pdf">Teil dieser Menge von inhärent instabilen Spielen</a>. Das heißt, wenn es eine Situation mit einem festen Pool von Ressourcen und einem Mechanismus für die Verteilung dieser Ressourcen gibt und es unvermeidlich möglich ist, dass sich 51% der Teilnehmer verschwören können, um die Kontrolle über die Ressourcen zu übernehmen, egal, was die aktuelle Konfiguration ist, gibt es immer eine Verschwörung, die entstehen kann, die für die Teilnehmer profitabel wäre. Allerdings wäre diese Verschwörung dann wiederum anfällig für potenzielle neue Verschwörungen, möglicherweise auch für eine Kombination früherer Verschwörer und Opfer. Und so weiter und so weiter.</p>
+<p><em>Eine gewöhnliche Warnung darüber, wie dubiose Seiten dich
+betrügen können oder auch nicht, mache deine eigene Recherche usw.
+trifft hier zu.</em></p>
+<p>Vermutlich ist das Angreifen dieser Mechanismen, indem man einfach
+tausende gefälschte Identitäten wie ein Puppenmeister kontrolliert
+<em>noch einfacher</em>, als Menschen zu bestechen. Und wenn du denkst,
+dass die Antwort nur darin besteht, die Sicherheit auf das Niveau von
+<em>Regierungsebenen</em> zu erhöhen? Nun, wenn du ein paar davon
+erhalten möchtest, kannst du dich <a
+href="https://thehiddenwiki.com/Main_Page">hier</a> erkundigen, aber
+bedenke, dass es spezialisierte kriminelle Organisationen gibt, die dir
+weit voraus sind. Selbst wenn alle kriminellen Strukturen zerschlagen
+würden, gibt es feindselige Regierungen, die definitiv gefälschte Pässe
+in Millionenanzahl erstellen werden, wenn wir so dumm sind, Systeme zu
+schaffen, die diese Art von Aktivität rentabel machen. Und dies bezieht
+nicht einmal Angriffe in die entgegengesetzte Richtung mit ein, wenn
+Identitätsausgabeinstitutionen versuchen, marginalisierte Gemeinschaften
+durch das <em>Leugnen</em> ihrer Identitätsdokumente zu entmachten...
+Kollusion Angesichts der Tatsache, dass so viele Mechanismen auf
+ähnliche Weise zu scheitern scheinen, wenn mehrere Identitäten oder
+sogar liquide Märkte ins Bild kommen, könnte man sich fragen, ob es
+einen tief verwurtelzen, gemeinsamen Grund gibt, der all diese Probleme
+verursacht? Ich würde argumentieren, die Antwort lautet ja; und der
+"gemeinsame Grund" lautet folgendermaßen: Es ist viel schwieriger und
+wahrscheinlich unmöglich, Mechanismen zu erschaffen, die wünschenswerte
+Eigenschaften in einem Modell erhalten, in dem die Teilnehmer
+zusammenarbeiten können, als in einem Modell, wo sie es nicht können.
+Die meisten Leute haben wahrscheinlich schon eine gewisse Intuition in
+dieser Hinsicht. Spezifische Beispiele dieses Prinzips liegen hinter
+etablierten Normen und oft hinter Gesetzen zur Förderung
+wettbewerbsfähiger Märkte und zur Einschränkung von Preisfestlegungen,
+Kauf und Verkauf von Stimmen und Bestechung. Aber die Problematik geht
+viel tiefer und in die Breite. In der Version der Spieltheorie, die sich
+auf die individuelle Wahl konzentriert (das heißt, die Version, die
+davon ausgeht, dass jeder Teilnehmer selbständig entscheidet und die
+nicht die Möglichkeit bietet, dass Gruppen von Agenten zum gegenseitigen
+Nutzen zusammen arbeiten können), gibt es <a
+href="https://en.wikipedia.org/wiki/Nash_equilibrium#Proof_of_existence">mathematische
+Beweise</a>, dass mindestens ein stabiles Nash-Gleichgewicht in jedem
+Spiel existieren muss. Mechanismus-Designer haben hier einen sehr
+breiten Spielraum, Spiele zu "konstruieren", um bestimmte Ergebnisse zu
+erzielen. Aber in der Version der Spieltheorie, die es ermöglicht, in
+Koalitionen zusammenzuarbeiten, genannt <em>kooperative
+Spieltheorie</em>, <strong>gibt es</strong> <a
+href="https://en.wikipedia.org/wiki/Bondareva%E2%80%93Shapley_theorem"><strong>große
+Klassen von Spielen</strong></a> <strong>, die kein stabiles Ergebnis
+haben, von dem eine Koalition nicht rentabel abweichen kann</strong>.
+<em>Mehrheitsspiele</em> werden formell als Spiele von <code>N</code>
+Akteuren beschrieben, bei denen jede Teilmenge von mehr als der Hälfte
+von ihnen eine feste Belohnung erlangen und unter sich aufteilen kann.
+Ein Setup, das vielen Situationen in der Unternehmensführung, Politik
+und vielen anderen Situationen im menschlichen Leben unheimlich ähnlich
+ist, sind <a
+href="https://web.archive.org/web/20180329012328/https://www.math.mcgill.ca/vetta/CS764.dir/Core.pdf">Teil
+dieser Menge von inhärent instabilen Spielen</a>. Das heißt, wenn es
+eine Situation mit einem festen Pool von Ressourcen und einem
+Mechanismus für die Verteilung dieser Ressourcen gibt und es
+unvermeidlich möglich ist, dass sich 51% der Teilnehmer verschwören
+können, um die Kontrolle über die Ressourcen zu übernehmen, egal, was
+die aktuelle Konfiguration ist, gibt es immer eine Verschwörung, die
+entstehen kann, die für die Teilnehmer profitabel wäre. Allerdings wäre
+diese Verschwörung dann wiederum anfällig für potenzielle neue
+Verschwörungen, möglicherweise auch für eine Kombination früherer
+Verschwörer und Opfer. Und so weiter und so weiter.</p>
 <table>
 <thead>
 <tr class="header">
@@ -165,14 +380,259 @@ Diese Art von Experimente, bei denen die Erstellung qualitativ hochwertiger Inha
 </tr>
 </tbody>
 </table>
-<p><strong>Diese Tatsache, die Instabilität von Mehrheitsspielen im Rahmen der kooperativen Spieltheorie, wird wohl als vereinfachtes mathematisches Modell massiv unterschätzt, weswegen es in der Politik kein "Ende der Geschichte" und kein System gibt, das sich als vollkommen zufriedenstellend erweist. Ich persönlich glaube, dass es viel nützlicher ist, als beispielsweise das berühmtere</strong> <a href="https://en.wikipedia.org/wiki/Arrow%27s_impossibility_theorem"><strong>Arrow-Theorem</strong></a><strong>. </strong> Es gibt zwei Wege, dieses Problem zu umgehen. Die erste besteht darin, uns auf die Klasse von Spielen zu beschränken, die "identitätsfrei" und "kollusionssicher" <em>sind</em>, also wo wir uns nicht um Bestechungen oder Identitäten Sorgen machen müssen. Die zweite besteht darin, die Probleme der Identitäts- und Kollusionsresistenz direkt anzugehen und sie tatsächlich gut genug zu lösen, um absprachefreie Spiele mit den besseren Eigenschaften, die sie bieten, zu implementieren. <strong>Identitätsfreies und absprachefreies Spieldesign</strong> Die Klasse von Spielen, die identitätsfrei und absprachesicher sind, ist beträchtlich. Sogar Proof of Work ist absprachesicher bis hin zu einem einzigen Akteur mit <a href="https://arxiv.org/abs/1507.06183">~23,21% der gesamten Hashpower</a>. Diese Bindung kann mit <a href="https://eprint.iacr.org/2016/916.pdf">cleverer Konstruktion</a> auf bis zu 50% erhöht werden. Wettbewerbsfähige Märkte sind einigermaßen absprachesicher bis zu einer relativ hohen Grenze, die in einigen Fällen leicht erreicht werden kann, in anderen Fällen jedoch nicht. Im Falle von <em>Governance</em> und <em>Inhaltspflege</em> (beides sind wirklich nur Sonderfälle des allgemeinen Problems der Identifizierung öffentlichen Gemeinwohls und öffentlichen Nachteils) ist eine gut funktionierende Klasse von Mechanismen <a href="https://blog.ethereum.org/2014/08/21/introduction-futarchy/"><em>Futarchy</em></a> - typischerweise als "Führung nach Vorhersagemärkten" dargestellt, obwohl ich auch argumentieren würde, dass der Einsatz von Sicherheitseinlagen grundsätzlich in der gleichen Klasse der Technik liegt. In ihrer allgemeinsten Form funktionieren Futarchy-Mechanismen, indem sie nicht nur zum Ausdruck der Meinung "abstimmen", sondern auch eine <em>Vorhersage </em> mit einer Belohnung für wahre Vorhersagen und einer Strafe für falsche Vorhersagen machen. Beispielsweise schlägt <a href="https://ethresear.ch/t/prediction-markets-for-content-curation-daos/1312">mein Vorschlag</a> für "Vorhersagemärkte für inhaltspflegende DAOs" ein semi-zentralisiertes Design vor, bei dem jeder eingereichte Inhalte befürworten oder ablehnen kann. Positiv bewertete Inhalte werden stärker sichtbar und ein "Moderation Panel" trifft die endgültigen Entscheidungen. Für jeden Beitrag gibt es eine geringe Wahrscheinlichkeit (proportional zum Gesamtvolumen von Upvotes+Downvotes auf diesem Beitrag), dass das Moderations-Panel aufgerufen wird, um eine endgültige Entscheidung über den Beitrag zu treffen. Wenn das Moderations-Panel einen Beitrag billigt, wird jeder, der ihn gewählt hat, belohnt und jeder, der ihn abgelehnt hat, bestraft. Und wenn das Moderations-Panel einen Beitrag ablehnt, findet das Rückwärtsverfahren Anwendung. Dieser Mechanismus ermutigt die Teilnehmer, Befürwortungen und Ablehnungen zu vergeben, die versuchen, die Bewertungen des Moderationspersonals "vorherzusehen". Ein weiteres mögliches Beispiel für Futarchy ist ein Verwaltungssystem für ein Projekt mit einem Token in dem jeder, der für eine Entscheidung stimmt, verpflichtet ist, zum Zeitpunkt der Abstimmung eine gewisse Menge an Tokens zum aktuellen Preis zu kaufen, wenn die Abstimmung gewinnt. Dadurch wird sichergestellt, dass die Abstimmung für eine schlechte Entscheidung kostspielig ist und im Extremfall, wenn eine schlechte Entscheidung eine Abstimmung gewinnt, müssen alle, die die Entscheidung gebilligt haben, im Wesentlichen alle anderen in dem Projekt herauskaufen. Dies stellt sicher, dass eine individuelle Abstimmung über eine "falsche" Entscheidung für die Wähler sehr kostspielig sein kann und die Möglichkeit billiger Bestechungsangriffe ausschließt.</p>
-<p><img src="https://ethresear.ch/uploads/default/original/2X/4/4236db5226633dcc00bb4924f55db33488707488.png" /></p>
-<p><em>Eine grafische Beschreibung einer Form der Futarchy, Schaffung von zwei Märkten, die die beiden "möglichen Zukunftswelten" repräsentieren und die diejenige mit dem günstigeren Preis wählen. Quelle</em> <a href="https://ethresear.ch/uploads/default/original/2X/4/4236db5226633dcc00bb4924f55db33488707488.png"><em>Dieser Beitrag auf ethresear.ch</em></a></p>
-<p>Die Bandbreite von Dingen, die Mechanismen dieser Art leisten können, ist jedoch begrenzt. Im Fall des Inhaltspflegebeispiels lösen wir nicht wirklich Governance, wir <em>skalieren</em> nur die Funktionalität eines Governance-Gadgets, das bereits als vertrauenswürdig angenommen wurde. Man könnte versuchen, das Moderations-Panel durch einen Vorhersagemarkt zu ersetzen, der das Recht auf den Kauf von Werbeflächen repräsentiert. Aber in der Praxis sind die Preise zu volatil als Indikator, um dies für alles andere als eine sehr geringe Zahl von sehr großen Entscheidungen zu ermöglichen. Und oft ist der Wert, den wir zu maximieren versuchen, explizit etwas anderes als der maximalen Wert eines Tokens. Schauen wir uns genauer an, warum im allgemeineren Fall, in dem wir den Wert einer Governance-Entscheidung nicht einfach durch ihre Auswirkung auf den Preis eines Tokens bestimmen können, gute Mechanismen zur Identifizierung öffentlichen Gemeinwohls und öffentlichen Nachteils leider nicht identitätsfrei oder absprachefrei sein können. Wenn man versucht, die Eigenschaften eines Spiels identitätsfrei zu halten, in dem ein System gebaut wird, wo Identitäten keine Rolle spielen und nur Tokens entscheidend sind, <strong>gibt es einen unmöglichen Kompromiss zwischen dem Versäumnis, legitimes öffentliches Gemeinwohl anzuregen oder der übermäßigen Subventionierung der Plutokratie</strong>. Das Argument lautet wie folgt: Nehmen wir an, es gibt einen Autor, der ein öffentliches Gut produziert (zB. eine Reihe von Blog-Beiträgen), das Wert für jedes Mitglied einer Gemeinschaft von 10000 Personen bietet. Angenommen, es gibt einen Mechanismus, bei dem Mitglieder der Gemeinschaft eine Aktion durchführen können, die dem Autor einen Gewinn von $1 zukommen lässt. Sofern die Community-Mitglieder nicht <em>extrem</em> altruistisch sind, müssen, damit der Mechanismus funktioniert, die Kosten für die Durchführung dieser Aktion viel niedriger sein als $1, da sonst der Anteil des Nutzens, den das Mitglied der Gemeinschaft für den Autor einnimmt, viel geringer wäre als die Kosten für die Unterstützung des Autors. Und so bricht das System in eine <a href="https://en.wikipedia.org/wiki/Tragedy_of_the_commons">Tragödie des Allgemeinguts</a> zusammen, wo niemand den Autor unterstützt. Daher muss es eine Möglichkeit geben, den Autor $1 verdienen zu lassen, zu Kosten von weit weniger als $1. Aber jetzt nehmen wir an, dass es auch eine gefälschte Gemeinschaft gibt, die aus 10000 gefälschten Pseudo-Konten desselben wohlhabenden Angreifers besteht. Diese Community führt alle gleichen Aktionen wie die wirkliche Gemeinschaft durch, außer den Autor zu unterstützen. Sie unterstützen <em>ein anderes</em> gefälschtes Konto, das auch ein Pseudo-Account des Angreifers ist. Wenn es einem Mitglied der "echten Gemeinschaft" möglich ist, dem Autor $1 zu persönlichen Kosten von weit weniger als $1 zu geben, ist es für den Angreifer möglich, <em>sich selbst</em> immer wieder $1 zu einem Preis von weniger als $1 zu geben und damit dem System die Finanzierung zu entziehen. Jeder Mechanismus, der wirklich wenig koordinierten Parteien bei der Koordinierung helfen kann wird, ohne die richtigen Schutzmechanismen auch bereits koordinierten Parteien helfen (wie viele Konten, die von derselben Person kontrolliert werden) <em>zuviel zu koordinieren</em>, wodurch Geld aus dem System entnommen wird. Eine ähnliche Herausforderung stellt sich dann, wenn das Ziel nicht die Finanzierung ist, sondern zu bestimmen, welche Inhalte am sichtbarsten sein sollen. Welche Inhalte würden deiner Meinung nach durch mehr Dollarwert Unterstützung finden: Ein legitimer hochwertiger Blog-Artikel, der Tausenden von Menschen zugute kommt, aber jedem Einzelnen relativ wenig zugute kommt, oder dies?</p>
+<p><strong>Diese Tatsache, die Instabilität von Mehrheitsspielen im
+Rahmen der kooperativen Spieltheorie, wird wohl als vereinfachtes
+mathematisches Modell massiv unterschätzt, weswegen es in der Politik
+kein "Ende der Geschichte" und kein System gibt, das sich als vollkommen
+zufriedenstellend erweist. Ich persönlich glaube, dass es viel
+nützlicher ist, als beispielsweise das berühmtere</strong> <a
+href="https://en.wikipedia.org/wiki/Arrow%27s_impossibility_theorem"><strong>Arrow-Theorem</strong></a><strong>.
+</strong> Es gibt zwei Wege, dieses Problem zu umgehen. Die erste
+besteht darin, uns auf die Klasse von Spielen zu beschränken, die
+"identitätsfrei" und "kollusionssicher" <em>sind</em>, also wo wir uns
+nicht um Bestechungen oder Identitäten Sorgen machen müssen. Die zweite
+besteht darin, die Probleme der Identitäts- und Kollusionsresistenz
+direkt anzugehen und sie tatsächlich gut genug zu lösen, um
+absprachefreie Spiele mit den besseren Eigenschaften, die sie bieten, zu
+implementieren. <strong>Identitätsfreies und absprachefreies
+Spieldesign</strong> Die Klasse von Spielen, die identitätsfrei und
+absprachesicher sind, ist beträchtlich. Sogar Proof of Work ist
+absprachesicher bis hin zu einem einzigen Akteur mit <a
+href="https://arxiv.org/abs/1507.06183">~23,21% der gesamten
+Hashpower</a>. Diese Bindung kann mit <a
+href="https://eprint.iacr.org/2016/916.pdf">cleverer Konstruktion</a>
+auf bis zu 50% erhöht werden. Wettbewerbsfähige Märkte sind einigermaßen
+absprachesicher bis zu einer relativ hohen Grenze, die in einigen Fällen
+leicht erreicht werden kann, in anderen Fällen jedoch nicht. Im Falle
+von <em>Governance</em> und <em>Inhaltspflege</em> (beides sind wirklich
+nur Sonderfälle des allgemeinen Problems der Identifizierung
+öffentlichen Gemeinwohls und öffentlichen Nachteils) ist eine gut
+funktionierende Klasse von Mechanismen <a
+href="https://blog.ethereum.org/2014/08/21/introduction-futarchy/"><em>Futarchy</em></a>
+- typischerweise als "Führung nach Vorhersagemärkten" dargestellt,
+obwohl ich auch argumentieren würde, dass der Einsatz von
+Sicherheitseinlagen grundsätzlich in der gleichen Klasse der Technik
+liegt. In ihrer allgemeinsten Form funktionieren Futarchy-Mechanismen,
+indem sie nicht nur zum Ausdruck der Meinung "abstimmen", sondern auch
+eine <em>Vorhersage </em> mit einer Belohnung für wahre Vorhersagen und
+einer Strafe für falsche Vorhersagen machen. Beispielsweise schlägt <a
+href="https://ethresear.ch/t/prediction-markets-for-content-curation-daos/1312">mein
+Vorschlag</a> für "Vorhersagemärkte für inhaltspflegende DAOs" ein
+semi-zentralisiertes Design vor, bei dem jeder eingereichte Inhalte
+befürworten oder ablehnen kann. Positiv bewertete Inhalte werden stärker
+sichtbar und ein "Moderation Panel" trifft die endgültigen
+Entscheidungen. Für jeden Beitrag gibt es eine geringe
+Wahrscheinlichkeit (proportional zum Gesamtvolumen von Upvotes+Downvotes
+auf diesem Beitrag), dass das Moderations-Panel aufgerufen wird, um eine
+endgültige Entscheidung über den Beitrag zu treffen. Wenn das
+Moderations-Panel einen Beitrag billigt, wird jeder, der ihn gewählt
+hat, belohnt und jeder, der ihn abgelehnt hat, bestraft. Und wenn das
+Moderations-Panel einen Beitrag ablehnt, findet das Rückwärtsverfahren
+Anwendung. Dieser Mechanismus ermutigt die Teilnehmer, Befürwortungen
+und Ablehnungen zu vergeben, die versuchen, die Bewertungen des
+Moderationspersonals "vorherzusehen". Ein weiteres mögliches Beispiel
+für Futarchy ist ein Verwaltungssystem für ein Projekt mit einem Token
+in dem jeder, der für eine Entscheidung stimmt, verpflichtet ist, zum
+Zeitpunkt der Abstimmung eine gewisse Menge an Tokens zum aktuellen
+Preis zu kaufen, wenn die Abstimmung gewinnt. Dadurch wird
+sichergestellt, dass die Abstimmung für eine schlechte Entscheidung
+kostspielig ist und im Extremfall, wenn eine schlechte Entscheidung eine
+Abstimmung gewinnt, müssen alle, die die Entscheidung gebilligt haben,
+im Wesentlichen alle anderen in dem Projekt herauskaufen. Dies stellt
+sicher, dass eine individuelle Abstimmung über eine "falsche"
+Entscheidung für die Wähler sehr kostspielig sein kann und die
+Möglichkeit billiger Bestechungsangriffe ausschließt.</p>
+<p><img
+src="https://ethresear.ch/uploads/default/original/2X/4/4236db5226633dcc00bb4924f55db33488707488.png" /></p>
+<p><em>Eine grafische Beschreibung einer Form der Futarchy, Schaffung
+von zwei Märkten, die die beiden "möglichen Zukunftswelten"
+repräsentieren und die diejenige mit dem günstigeren Preis wählen.
+Quelle</em> <a
+href="https://ethresear.ch/uploads/default/original/2X/4/4236db5226633dcc00bb4924f55db33488707488.png"><em>Dieser
+Beitrag auf ethresear.ch</em></a></p>
+<p>Die Bandbreite von Dingen, die Mechanismen dieser Art leisten können,
+ist jedoch begrenzt. Im Fall des Inhaltspflegebeispiels lösen wir nicht
+wirklich Governance, wir <em>skalieren</em> nur die Funktionalität eines
+Governance-Gadgets, das bereits als vertrauenswürdig angenommen wurde.
+Man könnte versuchen, das Moderations-Panel durch einen Vorhersagemarkt
+zu ersetzen, der das Recht auf den Kauf von Werbeflächen repräsentiert.
+Aber in der Praxis sind die Preise zu volatil als Indikator, um dies für
+alles andere als eine sehr geringe Zahl von sehr großen Entscheidungen
+zu ermöglichen. Und oft ist der Wert, den wir zu maximieren versuchen,
+explizit etwas anderes als der maximalen Wert eines Tokens. Schauen wir
+uns genauer an, warum im allgemeineren Fall, in dem wir den Wert einer
+Governance-Entscheidung nicht einfach durch ihre Auswirkung auf den
+Preis eines Tokens bestimmen können, gute Mechanismen zur
+Identifizierung öffentlichen Gemeinwohls und öffentlichen Nachteils
+leider nicht identitätsfrei oder absprachefrei sein können. Wenn man
+versucht, die Eigenschaften eines Spiels identitätsfrei zu halten, in
+dem ein System gebaut wird, wo Identitäten keine Rolle spielen und nur
+Tokens entscheidend sind, <strong>gibt es einen unmöglichen Kompromiss
+zwischen dem Versäumnis, legitimes öffentliches Gemeinwohl anzuregen
+oder der übermäßigen Subventionierung der Plutokratie</strong>. Das
+Argument lautet wie folgt: Nehmen wir an, es gibt einen Autor, der ein
+öffentliches Gut produziert (zB. eine Reihe von Blog-Beiträgen), das
+Wert für jedes Mitglied einer Gemeinschaft von 10000 Personen bietet.
+Angenommen, es gibt einen Mechanismus, bei dem Mitglieder der
+Gemeinschaft eine Aktion durchführen können, die dem Autor einen Gewinn
+von $1 zukommen lässt. Sofern die Community-Mitglieder nicht
+<em>extrem</em> altruistisch sind, müssen, damit der Mechanismus
+funktioniert, die Kosten für die Durchführung dieser Aktion viel
+niedriger sein als $1, da sonst der Anteil des Nutzens, den das Mitglied
+der Gemeinschaft für den Autor einnimmt, viel geringer wäre als die
+Kosten für die Unterstützung des Autors. Und so bricht das System in
+eine <a
+href="https://en.wikipedia.org/wiki/Tragedy_of_the_commons">Tragödie des
+Allgemeinguts</a> zusammen, wo niemand den Autor unterstützt. Daher muss
+es eine Möglichkeit geben, den Autor $1 verdienen zu lassen, zu Kosten
+von weit weniger als $1. Aber jetzt nehmen wir an, dass es auch eine
+gefälschte Gemeinschaft gibt, die aus 10000 gefälschten Pseudo-Konten
+desselben wohlhabenden Angreifers besteht. Diese Community führt alle
+gleichen Aktionen wie die wirkliche Gemeinschaft durch, außer den Autor
+zu unterstützen. Sie unterstützen <em>ein anderes</em> gefälschtes
+Konto, das auch ein Pseudo-Account des Angreifers ist. Wenn es einem
+Mitglied der "echten Gemeinschaft" möglich ist, dem Autor $1 zu
+persönlichen Kosten von weit weniger als $1 zu geben, ist es für den
+Angreifer möglich, <em>sich selbst</em> immer wieder $1 zu einem Preis
+von weniger als $1 zu geben und damit dem System die Finanzierung zu
+entziehen. Jeder Mechanismus, der wirklich wenig koordinierten Parteien
+bei der Koordinierung helfen kann wird, ohne die richtigen
+Schutzmechanismen auch bereits koordinierten Parteien helfen (wie viele
+Konten, die von derselben Person kontrolliert werden) <em>zuviel zu
+koordinieren</em>, wodurch Geld aus dem System entnommen wird. Eine
+ähnliche Herausforderung stellt sich dann, wenn das Ziel nicht die
+Finanzierung ist, sondern zu bestimmen, welche Inhalte am sichtbarsten
+sein sollen. Welche Inhalte würden deiner Meinung nach durch mehr
+Dollarwert Unterstützung finden: Ein legitimer hochwertiger
+Blog-Artikel, der Tausenden von Menschen zugute kommt, aber jedem
+Einzelnen relativ wenig zugute kommt, oder dies?</p>
 <p><img src="../../../../images/collusion-files/cocacola.jpg" /></p>
 <p>Oder vielleicht dies?</p>
 <p><img src="../../../../images/collusion-files/bitconnect.png" /></p>
-<p>Diejenigen, die die jüngste Politik "in der realen Welt" verfolgt haben, könnten auch auf eine andere Art von Inhalten hinweisen, von denen hoch zentralisierte Akteure profitieren: Die Manipulation der sozialen Medien durch feindliche Regierungen. Letzten Endes stehen sowohl die zentralisierten Systeme als auch die dezentralen Systeme vor dem gleichen grundlegenden Problem. Der <strong>"Marktplatz der Ideen" (und allgemein öffentlicher Güter) ist sehr weit von einem "effizienten Markt" entfernt in dem Sinne, dass Ökonomen normalerweise den Begriff verwenden </strong> und dies führt sowohl zur Unterproduktion öffentlicher Güter selbst in "Friedenszeit" und auch zur Anfälligkeit für aktive Angriffe. Es ist nur ein schwieriges Problem. Dies ist auch der Grund, warum tokenbasierte Abstimmungssysteme (wie Bihu) einen großen echten Vorteil gegenüber identitätsbasierten Systemen haben (wie dem Gitcoin CLR oder dem /r/ethtrader Donut Experiment): Zumindest gibt es keinen Nutzen für den Kauf von Konten en masse. Denn alles, was du tust, ist proportional zu der Anzahl der Token, die du hast, unabhängig davon, auf wie viele Konten die Münzen aufgeteilt sind. Allerdings können Mechanismen, die sich nicht auf irgendein Identitätsmodell stützen und sich nur auf Token stützen, das Problem konzentrierter Interessen, die gegen zersplitterte das Gemeinwohl unterstützende Gemeinschaften die Oberhand haben, nicht grundsätzlich lösen. Ein identitätsfreier Mechanismus, der verteilte Gemeinschaften ermächtigt, kann es nicht vermeiden, zentralisierte Plutokraten zu ermächtigen, die vorgeben, verteilte Gemeinschaften zu sein. Aber es sind nicht nur Identitätsfragen, die Spiele öffentlichen Gemeinwohls angreifbar machen, sondern auch Bestechungen. Um das zu erkennen, solltest du dir das obige Beispiel erneut anschauen, aber anstelle der "fake Community" mit 10001 Pseudo-Accounts des Angreifers, hat der Angreifer nur eine Identität, das Geld erhaltende Konto und die anderen 10000 Konten sind echte Benutzer - aber Benutzer, die eine Bestechung von je $0,01 für die Handlung erhalten, die dem Angreifer den Erhalt von zusätzlich $1 verursacht. Wie bereits erwähnt, können diese Bestechungsgelder stark verschleiert werden, auch durch die Dienste von Dritten, die gegen Bequemlichkeit im Namen eines Benutzers abstimmen und im Falle der Tokenabstimmung ist ein verschleiertes Bestechungsgeld sogar noch einfacher: Man kann Token auf dem Markt mieten und sie für die Teilnahme an den Abstimmungen nutzen. Einige Arten von Spielen, vor allem Vorhersagemärkte oder Sicherheits-Einzahlungs-basierte Spiele, können kollusionssicher und identitätsfrei gemacht werden. Die allgemeine Finanzierung öffentlichen Gemeinguts hingegen scheint eine Problemklasse zu sein, in der kollusionssichere und identitätsfreie Ansätze leider nicht funktionieren. <strong>Kollusionsresistenz und Identität</strong> Die andere Alternative ist, das Identitätsproblem direkt anzugreifen. Wie bereits erwähnt, werden die zentralisierten Identitätsysteme mit höherem Sicherheitsniveau, wie Pässe und andere staatliche Ausweise nicht in großem Maßstab funktionieren. In einem ausreichend begünstigten Kontext sind sie sehr unsicher und anfällig gegenüber den ausstellenden Regierungen selbst! Die Art von "Identität", über die wir hier sprechen, ist eher eine Art robuste, multifaktorielle Reihe von Forderungen, dass ein Akteur, der durch eine Reihe von Nachrichten identifiziert wird, tatsächlich ein einzigartiges Individuum ist. Ein sehr frühes Modell dieser Art von vernetzter Identität ist wohl "soziale Erholung" in HTC's Blockchain Smart-Phone:</p>
+<p>Diejenigen, die die jüngste Politik "in der realen Welt" verfolgt
+haben, könnten auch auf eine andere Art von Inhalten hinweisen, von
+denen hoch zentralisierte Akteure profitieren: Die Manipulation der
+sozialen Medien durch feindliche Regierungen. Letzten Endes stehen
+sowohl die zentralisierten Systeme als auch die dezentralen Systeme vor
+dem gleichen grundlegenden Problem. Der <strong>"Marktplatz der Ideen"
+(und allgemein öffentlicher Güter) ist sehr weit von einem "effizienten
+Markt" entfernt in dem Sinne, dass Ökonomen normalerweise den Begriff
+verwenden </strong> und dies führt sowohl zur Unterproduktion
+öffentlicher Güter selbst in "Friedenszeit" und auch zur Anfälligkeit
+für aktive Angriffe. Es ist nur ein schwieriges Problem. Dies ist auch
+der Grund, warum tokenbasierte Abstimmungssysteme (wie Bihu) einen
+großen echten Vorteil gegenüber identitätsbasierten Systemen haben (wie
+dem Gitcoin CLR oder dem /r/ethtrader Donut Experiment): Zumindest gibt
+es keinen Nutzen für den Kauf von Konten en masse. Denn alles, was du
+tust, ist proportional zu der Anzahl der Token, die du hast, unabhängig
+davon, auf wie viele Konten die Münzen aufgeteilt sind. Allerdings
+können Mechanismen, die sich nicht auf irgendein Identitätsmodell
+stützen und sich nur auf Token stützen, das Problem konzentrierter
+Interessen, die gegen zersplitterte das Gemeinwohl unterstützende
+Gemeinschaften die Oberhand haben, nicht grundsätzlich lösen. Ein
+identitätsfreier Mechanismus, der verteilte Gemeinschaften ermächtigt,
+kann es nicht vermeiden, zentralisierte Plutokraten zu ermächtigen, die
+vorgeben, verteilte Gemeinschaften zu sein. Aber es sind nicht nur
+Identitätsfragen, die Spiele öffentlichen Gemeinwohls angreifbar machen,
+sondern auch Bestechungen. Um das zu erkennen, solltest du dir das obige
+Beispiel erneut anschauen, aber anstelle der "fake Community" mit 10001
+Pseudo-Accounts des Angreifers, hat der Angreifer nur eine Identität,
+das Geld erhaltende Konto und die anderen 10000 Konten sind echte
+Benutzer - aber Benutzer, die eine Bestechung von je $0,01 für die
+Handlung erhalten, die dem Angreifer den Erhalt von zusätzlich $1
+verursacht. Wie bereits erwähnt, können diese Bestechungsgelder stark
+verschleiert werden, auch durch die Dienste von Dritten, die gegen
+Bequemlichkeit im Namen eines Benutzers abstimmen und im Falle der
+Tokenabstimmung ist ein verschleiertes Bestechungsgeld sogar noch
+einfacher: Man kann Token auf dem Markt mieten und sie für die Teilnahme
+an den Abstimmungen nutzen. Einige Arten von Spielen, vor allem
+Vorhersagemärkte oder Sicherheits-Einzahlungs-basierte Spiele, können
+kollusionssicher und identitätsfrei gemacht werden. Die allgemeine
+Finanzierung öffentlichen Gemeinguts hingegen scheint eine Problemklasse
+zu sein, in der kollusionssichere und identitätsfreie Ansätze leider
+nicht funktionieren. <strong>Kollusionsresistenz und Identität</strong>
+Die andere Alternative ist, das Identitätsproblem direkt anzugreifen.
+Wie bereits erwähnt, werden die zentralisierten Identitätsysteme mit
+höherem Sicherheitsniveau, wie Pässe und andere staatliche Ausweise
+nicht in großem Maßstab funktionieren. In einem ausreichend begünstigten
+Kontext sind sie sehr unsicher und anfällig gegenüber den ausstellenden
+Regierungen selbst! Die Art von "Identität", über die wir hier sprechen,
+ist eher eine Art robuste, multifaktorielle Reihe von Forderungen, dass
+ein Akteur, der durch eine Reihe von Nachrichten identifiziert wird,
+tatsächlich ein einzigartiges Individuum ist. Ein sehr frühes Modell
+dieser Art von vernetzter Identität ist wohl "soziale Erholung" in HTC's
+Blockchain Smart-Phone:</p>
 <p><img src="../../../../images/collusion-files/htcphone.jpg" /></p>
-<p>Die Grundidee ist, dass dein privater Schlüssel zwischen bis zu fünf vertrauenswürdigen Kontakten geteilt wird, so dass mathematisch sichergestellt ist, dass drei von ihnen den ursprünglichen Schlüssel zurückholen können, aber zwei oder weniger nicht. Dies qualifiziert sich als "Identitätssystem" - es sind deine fünf Freunde, die entscheiden, ob jemand versucht, dein Konto wiederherzustellen oder nicht. Allerdings ist es ein spezielles Identitätssystem, das versucht, ein Problem zu lösen - persönliche Kontosicherheit - das sich von dem Problem des Versuchs, einzigartige Menschen zu identifizieren, unterscheidet (und einfacher ist!). Allerdings kann das allgemeine Modell von Einzelpersonen, die untereinander Ansprüche erheben, durchaus in eine Art robusteres Identitätsmodell eingebunden werden. Diese Systeme könnten auf Wunsch mit der oben beschriebenen "Futarchy"-Mechanik erweitert werden: Wenn jemand behauptet, jemand sei ein einzigartiger Mensch, jemand anderes anderer Meinung ist und beide Seiten bereit sind, in eine Anleihe einzuzahlen, um das Problem zu klären, kann das System ein Urteilsgremium zusammenrufen, um zu bestimmen, wer Recht hat. Aber wir wollen auch ein anderes wichtiges Eigenschaft: Wir wollen eine Identität, die man nicht glaubwürdig mieten oder verkaufen kann. Natürlich können wir die Leute nicht daran hindern, ein Geschäft zu machen "Schicke mir $50 und ich sende dir meinen Schlüssel", aber wir <em>können</em> versuchen, zu verhindern, dass solche Geschäfte <em>glaubwürdig</em> wirken - sodass der Verkäufer den Käufer leicht betrügen und dem Käufer einen Schlüssel geben kann, der nicht wirklich funktioniert. Eine Möglichkeit ist, einen Mechanismus zu schaffen, durch den der Eigentümer eines Schlüssels eine Transaktion senden kann, die den Schlüssel widerruft, ihn durch einen anderen Schlüssel der Wahl des Eigentümers ersetzt und das alles in einer Weise, die nicht bewiesen werden kann. Vielleicht ist der einfachste Weg, dies zu umgehen, entweder eine vertrauenswürdige Partei zu verwenden, die die Berechnung betreibt und nur Ergebnisse veröffentlicht (zusammen mit Zero Knowledge Beweisen, die die Ergebnisse belegen, damit der vertrauenswürdigen Partei nur aus Gründen der Privatsphäre, nicht aus Gründen der Integrität vertraut wird) oder die gleiche Funktionalität durch <a href="https://blog.ethereum.org/2014/12/26/secret-sharing-daos-crypto-2-0/">Mehrparteien-Berechnung</a> dezentralisiert. Derartige Ansätze werden das Problem der Kollusion nicht vollständig lösen. Eine Gruppe von Freunden könnte zusammenkommen und auf der gleichen Couch sitzen und Abstimmungen koordinieren, aber sie würden es zumindest auf ein überschaubares Ausmaß reduzieren, das nicht zu einem völligen Versagen dieser Systeme führen wird. Es gibt noch ein weiteres Problem: Die anfängliche Verteilung des Schlüssels. Was passiert, wenn ein Nutzer seine Identität in einem Drittanbieter-Gewahrsam erstellt, der dann den privaten Schlüssel speichert und ihn dazu verwendet, heimlich über Dinge abstimmen zu lassen? Dies wäre eine implizite Bestechung, die Stimmrechte des Benutzers im Gegenzug für die Bereitstellung eines bequemen Dienstes einfordert. Und wenn das System insofern sicher ist, als es Bestechungsgelder erfolgreich verhindert, dass Stimmen nicht nachweisbar sind, wäre die geheime Stimmabgabe durch Dritte <em>auch</em> nicht nachweisbar. Der einzige Ansatz, der dieses Problem umgeht: Personenüberprüfung. Zum Beispiel könnte man ein Ökosystem von "Herausgebern" haben, in dem jeder Herausgeber Chipkarten mit privaten Schlüsseln ausgibt, die der Benutzer sofort auf sein Smartphone herunterladen und eine Nachricht senden kann, um den Schlüssel durch einen anderen Schlüssel zu ersetzen, den er niemandem preisgibt. Diese Herausgeber könnten Treffen und Konferenzen sein, oder potenziell Personen, die von einigen Wahlmechanismen bereits als vertrauenswürdig eingestuft wurden. Der Aufbau der Infrastruktur, um kollusionsresistente Mechanismen wie robuste dezentrale Identitätsysteme möglich zu machen ist eine schwierige Herausforderung. Aber wenn wir das Potenzial solcher Mechanismen wirklich freischalten wollen, scheint es unvermeidlich, unser Bestes zu tun, um es zu ausprobieren. Es stimmt, dass zum Beispiel das derzeitige Dogma für die Computersicherheit, zum Beispiel für die Einführung der Online-Abstimmung einfach "<a href="https://www.geekwire.com/2018/online-voting-dont-experts-say-report-americas-election-system-security/">mach es nicht</a>" ist. Aber wenn wir die Rolle der Abstimmungsmechanismen, einschließlich fortgeschrittener Formen, wie quadratische Abstimmungen und quadratische Finanzen, auf mehr Rollen erweitern wollen, haben wir keine andere Wahl, als der Herausforderung frontal zu begegnen. Wir müssen wirklich hart daran arbeiten und hoffentlich gelingt es, zumindest für einige Anwendungsfälle, Mechanismen zu finden, die sicher genug sind.</p>
+<p>Die Grundidee ist, dass dein privater Schlüssel zwischen bis zu fünf
+vertrauenswürdigen Kontakten geteilt wird, so dass mathematisch
+sichergestellt ist, dass drei von ihnen den ursprünglichen Schlüssel
+zurückholen können, aber zwei oder weniger nicht. Dies qualifiziert sich
+als "Identitätssystem" - es sind deine fünf Freunde, die entscheiden, ob
+jemand versucht, dein Konto wiederherzustellen oder nicht. Allerdings
+ist es ein spezielles Identitätssystem, das versucht, ein Problem zu
+lösen - persönliche Kontosicherheit - das sich von dem Problem des
+Versuchs, einzigartige Menschen zu identifizieren, unterscheidet (und
+einfacher ist!). Allerdings kann das allgemeine Modell von
+Einzelpersonen, die untereinander Ansprüche erheben, durchaus in eine
+Art robusteres Identitätsmodell eingebunden werden. Diese Systeme
+könnten auf Wunsch mit der oben beschriebenen "Futarchy"-Mechanik
+erweitert werden: Wenn jemand behauptet, jemand sei ein einzigartiger
+Mensch, jemand anderes anderer Meinung ist und beide Seiten bereit sind,
+in eine Anleihe einzuzahlen, um das Problem zu klären, kann das System
+ein Urteilsgremium zusammenrufen, um zu bestimmen, wer Recht hat. Aber
+wir wollen auch ein anderes wichtiges Eigenschaft: Wir wollen eine
+Identität, die man nicht glaubwürdig mieten oder verkaufen kann.
+Natürlich können wir die Leute nicht daran hindern, ein Geschäft zu
+machen "Schicke mir $50 und ich sende dir meinen Schlüssel", aber wir
+<em>können</em> versuchen, zu verhindern, dass solche Geschäfte
+<em>glaubwürdig</em> wirken - sodass der Verkäufer den Käufer leicht
+betrügen und dem Käufer einen Schlüssel geben kann, der nicht wirklich
+funktioniert. Eine Möglichkeit ist, einen Mechanismus zu schaffen, durch
+den der Eigentümer eines Schlüssels eine Transaktion senden kann, die
+den Schlüssel widerruft, ihn durch einen anderen Schlüssel der Wahl des
+Eigentümers ersetzt und das alles in einer Weise, die nicht bewiesen
+werden kann. Vielleicht ist der einfachste Weg, dies zu umgehen,
+entweder eine vertrauenswürdige Partei zu verwenden, die die Berechnung
+betreibt und nur Ergebnisse veröffentlicht (zusammen mit Zero Knowledge
+Beweisen, die die Ergebnisse belegen, damit der vertrauenswürdigen
+Partei nur aus Gründen der Privatsphäre, nicht aus Gründen der
+Integrität vertraut wird) oder die gleiche Funktionalität durch <a
+href="https://blog.ethereum.org/2014/12/26/secret-sharing-daos-crypto-2-0/">Mehrparteien-Berechnung</a>
+dezentralisiert. Derartige Ansätze werden das Problem der Kollusion
+nicht vollständig lösen. Eine Gruppe von Freunden könnte zusammenkommen
+und auf der gleichen Couch sitzen und Abstimmungen koordinieren, aber
+sie würden es zumindest auf ein überschaubares Ausmaß reduzieren, das
+nicht zu einem völligen Versagen dieser Systeme führen wird. Es gibt
+noch ein weiteres Problem: Die anfängliche Verteilung des Schlüssels.
+Was passiert, wenn ein Nutzer seine Identität in einem
+Drittanbieter-Gewahrsam erstellt, der dann den privaten Schlüssel
+speichert und ihn dazu verwendet, heimlich über Dinge abstimmen zu
+lassen? Dies wäre eine implizite Bestechung, die Stimmrechte des
+Benutzers im Gegenzug für die Bereitstellung eines bequemen Dienstes
+einfordert. Und wenn das System insofern sicher ist, als es
+Bestechungsgelder erfolgreich verhindert, dass Stimmen nicht nachweisbar
+sind, wäre die geheime Stimmabgabe durch Dritte <em>auch</em> nicht
+nachweisbar. Der einzige Ansatz, der dieses Problem umgeht:
+Personenüberprüfung. Zum Beispiel könnte man ein Ökosystem von
+"Herausgebern" haben, in dem jeder Herausgeber Chipkarten mit privaten
+Schlüsseln ausgibt, die der Benutzer sofort auf sein Smartphone
+herunterladen und eine Nachricht senden kann, um den Schlüssel durch
+einen anderen Schlüssel zu ersetzen, den er niemandem preisgibt. Diese
+Herausgeber könnten Treffen und Konferenzen sein, oder potenziell
+Personen, die von einigen Wahlmechanismen bereits als vertrauenswürdig
+eingestuft wurden. Der Aufbau der Infrastruktur, um kollusionsresistente
+Mechanismen wie robuste dezentrale Identitätsysteme möglich zu machen
+ist eine schwierige Herausforderung. Aber wenn wir das Potenzial solcher
+Mechanismen wirklich freischalten wollen, scheint es unvermeidlich,
+unser Bestes zu tun, um es zu ausprobieren. Es stimmt, dass zum Beispiel
+das derzeitige Dogma für die Computersicherheit, zum Beispiel für die
+Einführung der Online-Abstimmung einfach "<a
+href="https://www.geekwire.com/2018/online-voting-dont-experts-say-report-americas-election-system-security/">mach
+es nicht</a>" ist. Aber wenn wir die Rolle der Abstimmungsmechanismen,
+einschließlich fortgeschrittener Formen, wie quadratische Abstimmungen
+und quadratische Finanzen, auf mehr Rollen erweitern wollen, haben wir
+keine andere Wahl, als der Herausforderung frontal zu begegnen. Wir
+müssen wirklich hart daran arbeiten und hoffentlich gelingt es,
+zumindest für einige Anwendungsfälle, Mechanismen zu finden, die sicher
+genug sind.</p>
  </div> 

@@ -109,71 +109,335 @@ MathJax = {
 <br> <br> <br>
 <title> How do trusted setups work? </title>
 
-<p><em>Necessary background: <a href="https://vitalik.ca/general/2017/01/14/exploring_ecp.html">elliptic curves and elliptic curve pairings</a>. See also: <a href="https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html">Dankrad Feist's article on KZG polynomial commitments</a>.</em></p>
-<p><em>Special thanks to Justin Drake, Dankrad Feist and Chih-Cheng Liang for feedback and review.</em></p>
-<p>Many cryptographic protocols, especially in the areas of <a href="https://hackmd.io/@vbuterin/sharding_proposal">data availability sampling</a> and <a href="https://vitalik.ca/general/2021/01/26/snarks.html">ZK-SNARKs</a> depend on trusted setups. <strong>A trusted setup ceremony is a procedure that is done once to generate a piece of data that must then be used every time some cryptographic protocol is run</strong>. Generating this data requires some secret information; the "trust" comes from the fact that some person or some group of people has to generate these secrets, use them to generate the data, and then publish the data and forget the secrets. But once the data is generated, and the secrets are forgotten, no further participation from the creators of the ceremony is required.</p>
+<p><em>Necessary background: <a
+href="../../../2017/01/14/exploring_ecp.html">elliptic curves and
+elliptic curve pairings</a>. See also: <a
+href="https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html">Dankrad
+Feist's article on KZG polynomial commitments</a>.</em></p>
+<p><em>Special thanks to Justin Drake, Dankrad Feist and Chih-Cheng
+Liang for feedback and review.</em></p>
+<p>Many cryptographic protocols, especially in the areas of <a
+href="https://hackmd.io/@vbuterin/sharding_proposal">data availability
+sampling</a> and <a href="../../../2021/01/26/snarks.html">ZK-SNARKs</a>
+depend on trusted setups. <strong>A trusted setup ceremony is a
+procedure that is done once to generate a piece of data that must then
+be used every time some cryptographic protocol is run</strong>.
+Generating this data requires some secret information; the "trust" comes
+from the fact that some person or some group of people has to generate
+these secrets, use them to generate the data, and then publish the data
+and forget the secrets. But once the data is generated, and the secrets
+are forgotten, no further participation from the creators of the
+ceremony is required.</p>
 <center>
-<p><img src="../../../../images/trustedsetup/setup1.png" class="padded" /></p>
+<p><img src="../../../../images/trustedsetup/setup1.png"
+class="padded" /></p>
 </center>
-<p>There are many types of trusted setups. The earliest instance of a trusted setup being used in a major protocol is the <a href="https://spectrum.ieee.org/the-crazy-security-behind-the-birth-of-zcash">original Zcash ceremony</a> in 2016. This ceremony was very complex, and required many rounds of communication, so it could only have six participants. Everyone using Zcash at that point was effectively trusting that at least one of the six participants was honest. More modern protocols usually use the <strong>powers-of-tau</strong> setup, which has a <a href="https://vitalik.ca/general/2020/08/20/trust.html">1-of-N trust model</a> with <span class="math inline">\(N\)</span> typically in the hundreds. That is to say, <strong>hundreds of people participate in generating the data together, and only one of them needs to be honest and not publish their secret for the final output to be secure. Well-executed setups like this are often considered "close enough to trustless" in practice</strong>.</p>
-<p>This article will explain how the KZG setup works, why it works, and the future of trusted setup protocols. Anyone proficient in code should also feel free to follow along this code implementation: <a href="https://github.com/ethereum/research/blob/master/trusted_setup/trusted_setup.py">https://github.com/ethereum/research/blob/master/trusted_setup/trusted_setup.py</a>.</p>
-<h2 id="what-does-a-powers-of-tau-setup-look-like">What does a powers-of-tau setup look like?</h2>
-<p>A powers-of-tau setup is made up of two series of elliptic curve points that look as follows:</p>
-<p><span class="math inline">\([G_1, G_1 * s, G_1 * s^2 ... G_1 * s^{n_1-1}]\)</span>  </p>
-<p><span class="math inline">\([G_2, G_2 * s, G_2 * s^2 ... G_2 * s^{n_2-1}]\)</span></p>
-<p><span class="math inline">\(G_1\)</span> and <span class="math inline">\(G_2\)</span> are the standardized generator points of the two elliptic curve groups; in BLS12-381, <span class="math inline">\(G_1\)</span> points are (in compressed form) 48 bytes long and <span class="math inline">\(G_2\)</span> points are 96 bytes long. <span class="math inline">\(n_1\)</span> and <span class="math inline">\(n_2\)</span> are the lengths of the <span class="math inline">\(G_1\)</span> and <span class="math inline">\(G_2\)</span> sides of the setup. Some protocols require <span class="math inline">\(n_2 = 2\)</span>, others require <span class="math inline">\(n_1\)</span> and <span class="math inline">\(n_2\)</span> to both be large, and some are in the middle (eg. Ethereum's data availability sampling in its current form requires <span class="math inline">\(n_1 = 4096\)</span> and <span class="math inline">\(n_2 = 16\)</span>). <span class="math inline">\(s\)</span> is the secret that is used to generate the points, and needs to be forgotten.</p>
-<p>To make a KZG commitment to a polynomial <span class="math inline">\(P(x) = \sum_i c_i x^i\)</span>, we simply take a linear combination <span class="math inline">\(\sum_i c_i S_i\)</span>, where <span class="math inline">\(S_i = G_1 * s^i\)</span> (the elliptic curve points in the trusted setup). The <span class="math inline">\(G_2\)</span> points in the setup are used to verify evaluations of polynomials that we make commitments to; I won't go into verification here in more detail, though <a href="https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html">Dankrad does in his post</a>.</p>
-<h2 id="intuitively-what-value-is-the-trusted-setup-providing">Intuitively, what value is the trusted setup providing?</h2>
-<p>It's worth understanding what is philosophically going on here, and why the trusted setup is providing value. A polynomial commitment is committing to a piece of size-<span class="math inline">\(N\)</span> data with a size <span class="math inline">\(O(1)\)</span> object (a single elliptic curve point). We <em>could</em> do this with a plain Pedersen commitment: just set the <span class="math inline">\(S_i\)</span> values to be <span class="math inline">\(N\)</span> random elliptic curve points that have no known relationship with each other, and commit to polynomials with <span class="math inline">\(\sum_i c_i S_i\)</span> as before. And in fact, this is exactly what <a href="https://vitalik.ca/general/2021/11/05/halo.html">IPA evaluation proofs</a> do.</p>
-<p>However, any IPA-based proofs take <span class="math inline">\(O(N)\)</span> time to verify, and there's an unavoidable reason why: a commitment to a polynomial <span class="math inline">\(P(x)\)</span> using the base points <span class="math inline">\([S_0, S_1 ... S_i ... S_{n-1}]\)</span> would commit to a different polynomial if we use the base points <span class="math inline">\([S_0, S_1 ... (S_i * 2) ... S_{n-1}]\)</span>.</p>
+<p>There are many types of trusted setups. The earliest instance of a
+trusted setup being used in a major protocol is the <a
+href="https://spectrum.ieee.org/the-crazy-security-behind-the-birth-of-zcash">original
+Zcash ceremony</a> in 2016. This ceremony was very complex, and required
+many rounds of communication, so it could only have six participants.
+Everyone using Zcash at that point was effectively trusting that at
+least one of the six participants was honest. More modern protocols
+usually use the <strong>powers-of-tau</strong> setup, which has a <a
+href="../../../2020/08/20/trust.html">1-of-N trust model</a> with <span
+class="math inline">\(N\)</span> typically in the hundreds. That is to
+say, <strong>hundreds of people participate in generating the data
+together, and only one of them needs to be honest and not publish their
+secret for the final output to be secure. Well-executed setups like this
+are often considered "close enough to trustless" in
+practice</strong>.</p>
+<p>This article will explain how the KZG setup works, why it works, and
+the future of trusted setup protocols. Anyone proficient in code should
+also feel free to follow along this code implementation: <a
+href="https://github.com/ethereum/research/blob/master/trusted_setup/trusted_setup.py">https://github.com/ethereum/research/blob/master/trusted_setup/trusted_setup.py</a>.</p>
+<h2 id="what-does-a-powers-of-tau-setup-look-like">What does a
+powers-of-tau setup look like?</h2>
+<p>A powers-of-tau setup is made up of two series of elliptic curve
+points that look as follows:</p>
+<p><span class="math inline">\([G_1, G_1 * s, G_1 * s^2 ... G_1 *
+s^{n_1-1}]\)</span>  </p>
+<p><span class="math inline">\([G_2, G_2 * s, G_2 * s^2 ... G_2 *
+s^{n_2-1}]\)</span></p>
+<p><span class="math inline">\(G_1\)</span> and <span
+class="math inline">\(G_2\)</span> are the standardized generator points
+of the two elliptic curve groups; in BLS12-381, <span
+class="math inline">\(G_1\)</span> points are (in compressed form) 48
+bytes long and <span class="math inline">\(G_2\)</span> points are 96
+bytes long. <span class="math inline">\(n_1\)</span> and <span
+class="math inline">\(n_2\)</span> are the lengths of the <span
+class="math inline">\(G_1\)</span> and <span
+class="math inline">\(G_2\)</span> sides of the setup. Some protocols
+require <span class="math inline">\(n_2 = 2\)</span>, others require
+<span class="math inline">\(n_1\)</span> and <span
+class="math inline">\(n_2\)</span> to both be large, and some are in the
+middle (eg. Ethereum's data availability sampling in its current form
+requires <span class="math inline">\(n_1 = 4096\)</span> and <span
+class="math inline">\(n_2 = 16\)</span>). <span
+class="math inline">\(s\)</span> is the secret that is used to generate
+the points, and needs to be forgotten.</p>
+<p>To make a KZG commitment to a polynomial <span
+class="math inline">\(P(x) = \sum_i c_i x^i\)</span>, we simply take a
+linear combination <span class="math inline">\(\sum_i c_i S_i\)</span>,
+where <span class="math inline">\(S_i = G_1 * s^i\)</span> (the elliptic
+curve points in the trusted setup). The <span
+class="math inline">\(G_2\)</span> points in the setup are used to
+verify evaluations of polynomials that we make commitments to; I won't
+go into verification here in more detail, though <a
+href="https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html">Dankrad
+does in his post</a>.</p>
+<h2
+id="intuitively-what-value-is-the-trusted-setup-providing">Intuitively,
+what value is the trusted setup providing?</h2>
+<p>It's worth understanding what is philosophically going on here, and
+why the trusted setup is providing value. A polynomial commitment is
+committing to a piece of size-<span class="math inline">\(N\)</span>
+data with a size <span class="math inline">\(O(1)\)</span> object (a
+single elliptic curve point). We <em>could</em> do this with a plain
+Pedersen commitment: just set the <span
+class="math inline">\(S_i\)</span> values to be <span
+class="math inline">\(N\)</span> random elliptic curve points that have
+no known relationship with each other, and commit to polynomials with
+<span class="math inline">\(\sum_i c_i S_i\)</span> as before. And in
+fact, this is exactly what <a href="../../../2021/11/05/halo.html">IPA
+evaluation proofs</a> do.</p>
+<p>However, any IPA-based proofs take <span
+class="math inline">\(O(N)\)</span> time to verify, and there's an
+unavoidable reason why: a commitment to a polynomial <span
+class="math inline">\(P(x)\)</span> using the base points <span
+class="math inline">\([S_0, S_1 ... S_i ... S_{n-1}]\)</span> would
+commit to a different polynomial if we use the base points <span
+class="math inline">\([S_0, S_1 ... (S_i * 2) ... S_{n-1}]\)</span>.</p>
 <center>
-<p><img src="../../../../images/trustedsetup/ipa_bases.png" class="padded" /></p>
+<p><img src="../../../../images/trustedsetup/ipa_bases.png"
+class="padded" /></p>
 <p><small></p>
-<p><em>A valid commitment to the polynomial <span class="math inline">\(3x^3 + 8x^2 + 2x + 6\)</span> under one set of base points is a valid commitment to <span class="math inline">\(3x^3 + 4x^2 + 2x + 6\)</span> under a different set of base points.</em></p>
+<p><em>A valid commitment to the polynomial <span
+class="math inline">\(3x^3 + 8x^2 + 2x + 6\)</span> under one set of
+base points is a valid commitment to <span class="math inline">\(3x^3 +
+4x^2 + 2x + 6\)</span> under a different set of base points.</em></p>
 </small>
 </center>
-<p>If we want to make an IPA-based <em>proof</em> for some statement (say, that this polynomial evaluated at <span class="math inline">\(x = 10\)</span> equals <span class="math inline">\(3826\)</span>), the proof should pass with the first set of base points and fail with the second. Hence, whatever the proof verification procedure is cannot avoid somehow taking into account each and every one of the <span class="math inline">\(S_i\)</span> values, and so it unavoidably takes <span class="math inline">\(O(N)\)</span> time.</p>
-<p><strong>But with a trusted setup, there is a hidden mathematical relationship between the points</strong>. It's guaranteed that <span class="math inline">\(S_{i+1} = s * S_i\)</span> with the same factor <span class="math inline">\(s\)</span> between any two adjacent points. If <span class="math inline">\([S_0, S_1 ... S_i ... S_{n-1}]\)</span> is a valid setup, the "edited setup" <span class="math inline">\([S_0, S_1 ... (S_i * 2) ... S_{n-1}]\)</span> <em>cannot also be a valid setup</em>. <strong>Hence, we don't need <span class="math inline">\(O(n)\)</span> computation; instead, we take advantage of this mathematical relationship to verify anything we need to verify in constant time.</strong></p>
-<p>However, the mathematical relationship has to remain secret: if <span class="math inline">\(s\)</span> is known, then anyone could come up with a commitment that stands for many different polynomials: if <span class="math inline">\(C\)</span> commits to <span class="math inline">\(P(x)\)</span>, it also commits to <span class="math inline">\(\frac{P(x) * x}{s}\)</span>, or <span class="math inline">\(P(x) - x + s\)</span>, or many other things. This would completely break all applications of polynomial commitments. <strong>Hence, while some secret <span class="math inline">\(s\)</span> must have existed at one point to make possible the mathematical link between the <span class="math inline">\(S_i\)</span> values that enables efficient verification, the <span class="math inline">\(s\)</span> must also have been forgotten.</strong></p>
-<h2 id="how-do-multi-participant-setups-work">How do multi-participant setups work?</h2>
-<p>It's easy to see how one participant can generate a setup: just pick a random <span class="math inline">\(s\)</span>, and generate the elliptic curve points using that <span class="math inline">\(s\)</span>. But a single-participant trusted setup is insecure: you have to trust one specific person!</p>
-<p>The solution to this is multi-participant trusted setups, where by "multi" we mean <em>a lot</em> of participants: over 100 is normal, and for smaller setups it's possible to get over 1000. Here is how a multi-participant powers-of-tau setup works.</p>
+<p>If we want to make an IPA-based <em>proof</em> for some statement
+(say, that this polynomial evaluated at <span class="math inline">\(x =
+10\)</span> equals <span class="math inline">\(3826\)</span>), the proof
+should pass with the first set of base points and fail with the second.
+Hence, whatever the proof verification procedure is cannot avoid somehow
+taking into account each and every one of the <span
+class="math inline">\(S_i\)</span> values, and so it unavoidably takes
+<span class="math inline">\(O(N)\)</span> time.</p>
+<p><strong>But with a trusted setup, there is a hidden mathematical
+relationship between the points</strong>. It's guaranteed that <span
+class="math inline">\(S_{i+1} = s * S_i\)</span> with the same factor
+<span class="math inline">\(s\)</span> between any two adjacent points.
+If <span class="math inline">\([S_0, S_1 ... S_i ... S_{n-1}]\)</span>
+is a valid setup, the "edited setup" <span class="math inline">\([S_0,
+S_1 ... (S_i * 2) ... S_{n-1}]\)</span> <em>cannot also be a valid
+setup</em>. <strong>Hence, we don't need <span
+class="math inline">\(O(n)\)</span> computation; instead, we take
+advantage of this mathematical relationship to verify anything we need
+to verify in constant time.</strong></p>
+<p>However, the mathematical relationship has to remain secret: if <span
+class="math inline">\(s\)</span> is known, then anyone could come up
+with a commitment that stands for many different polynomials: if <span
+class="math inline">\(C\)</span> commits to <span
+class="math inline">\(P(x)\)</span>, it also commits to <span
+class="math inline">\(\frac{P(x) * x}{s}\)</span>, or <span
+class="math inline">\(P(x) - x + s\)</span>, or many other things. This
+would completely break all applications of polynomial commitments.
+<strong>Hence, while some secret <span class="math inline">\(s\)</span>
+must have existed at one point to make possible the mathematical link
+between the <span class="math inline">\(S_i\)</span> values that enables
+efficient verification, the <span class="math inline">\(s\)</span> must
+also have been forgotten.</strong></p>
+<h2 id="how-do-multi-participant-setups-work">How do multi-participant
+setups work?</h2>
+<p>It's easy to see how one participant can generate a setup: just pick
+a random <span class="math inline">\(s\)</span>, and generate the
+elliptic curve points using that <span class="math inline">\(s\)</span>.
+But a single-participant trusted setup is insecure: you have to trust
+one specific person!</p>
+<p>The solution to this is multi-participant trusted setups, where by
+"multi" we mean <em>a lot</em> of participants: over 100 is normal, and
+for smaller setups it's possible to get over 1000. Here is how a
+multi-participant powers-of-tau setup works.</p>
 <center>
-<p><img src="../../../../images/trustedsetup/multiparticipants.png" class="padded" /></p>
+<p><img src="../../../../images/trustedsetup/multiparticipants.png"
+class="padded" /></p>
 </center>
-<p>Take an existing setup (note that you don't know <span class="math inline">\(s\)</span>, you just know the points):</p>
-<p><span class="math inline">\([G_1, G_1 * s, G_1 * s^2 ... G_1 * s^{n_1-1}]\)</span>  </p>
-<p><span class="math inline">\([G_2, G_2 * s, G_2 * s^2 ... G_2 * s^{n_2-1}]\)</span></p>
-<p>Now, choose your own random secret <span class="math inline">\(t\)</span>. Compute:</p>
-<p><span class="math inline">\([G_1, (G_1 * s) * t, (G_1 * s^2) * t^2 ... (G_1 * s^{n_1-1}) * t^{n_2-1}]\)</span>  </p>
-<p><span class="math inline">\([G_2, (G_2 * s) * t, (G_2 * s^2) * t^2 ... (G_2 * s^{n_2-1}) * t^{n_2-1}]\)</span></p>
+<p>Take an existing setup (note that you don't know <span
+class="math inline">\(s\)</span>, you just know the points):</p>
+<p><span class="math inline">\([G_1, G_1 * s, G_1 * s^2 ... G_1 *
+s^{n_1-1}]\)</span>  </p>
+<p><span class="math inline">\([G_2, G_2 * s, G_2 * s^2 ... G_2 *
+s^{n_2-1}]\)</span></p>
+<p>Now, choose your own random secret <span
+class="math inline">\(t\)</span>. Compute:</p>
+<p><span class="math inline">\([G_1, (G_1 * s) * t, (G_1 * s^2) * t^2
+... (G_1 * s^{n_1-1}) * t^{n_2-1}]\)</span>  </p>
+<p><span class="math inline">\([G_2, (G_2 * s) * t, (G_2 * s^2) * t^2
+... (G_2 * s^{n_2-1}) * t^{n_2-1}]\)</span></p>
 <p>Notice that this is equivalent to:</p>
-<p><span class="math inline">\([G_1, G_1 * (st), G_1 * (st)^2 ... G_1 * (st)^{n_1-1}]\)</span>  </p>
-<p><span class="math inline">\([G_2, G_2 * (st), G_2 * (st)^2 ... G_2 * (st)^{n_2-1}]\)</span></p>
-<p>That is to say, you've created a valid setup with the secret <span class="math inline">\(s * t\)</span>! You never give your <span class="math inline">\(t\)</span> to the previous participants, and the previous participants never give you their secrets that went into <span class="math inline">\(s\)</span>. And as long as any one of the participants is honest and does not reveal their part of the secret, the combined secret does not get revealed. In particular, finite fields have the property that if you know know <span class="math inline">\(s\)</span> but not <span class="math inline">\(t\)</span>, and <span class="math inline">\(t\)</span> is securely randomly generated, then you know <em>nothing</em> about <span class="math inline">\(s*t\)</span>!</p>
+<p><span class="math inline">\([G_1, G_1 * (st), G_1 * (st)^2 ... G_1 *
+(st)^{n_1-1}]\)</span>  </p>
+<p><span class="math inline">\([G_2, G_2 * (st), G_2 * (st)^2 ... G_2 *
+(st)^{n_2-1}]\)</span></p>
+<p>That is to say, you've created a valid setup with the secret <span
+class="math inline">\(s * t\)</span>! You never give your <span
+class="math inline">\(t\)</span> to the previous participants, and the
+previous participants never give you their secrets that went into <span
+class="math inline">\(s\)</span>. And as long as any one of the
+participants is honest and does not reveal their part of the secret, the
+combined secret does not get revealed. In particular, finite fields have
+the property that if you know know <span
+class="math inline">\(s\)</span> but not <span
+class="math inline">\(t\)</span>, and <span
+class="math inline">\(t\)</span> is securely randomly generated, then
+you know <em>nothing</em> about <span
+class="math inline">\(s*t\)</span>!</p>
 <h2 id="verifying-the-setup">Verifying the setup</h2>
-<p>To verify that each participant actually participated, each participant can provide a proof that consists of (i) the <span class="math inline">\(G_1 * s\)</span> point that they received and (ii) <span class="math inline">\(G_2 * t\)</span>, where <span class="math inline">\(t\)</span> is the secret that they introduce. The list of these proofs can be used to verify that the final setup combines together all the secrets (as opposed to, say, the last participant just forgetting the previous values and outputting a setup with just their own secret, which they keep so they can cheat in any protocols that use the setup).</p>
+<p>To verify that each participant actually participated, each
+participant can provide a proof that consists of (i) the <span
+class="math inline">\(G_1 * s\)</span> point that they received and (ii)
+<span class="math inline">\(G_2 * t\)</span>, where <span
+class="math inline">\(t\)</span> is the secret that they introduce. The
+list of these proofs can be used to verify that the final setup combines
+together all the secrets (as opposed to, say, the last participant just
+forgetting the previous values and outputting a setup with just their
+own secret, which they keep so they can cheat in any protocols that use
+the setup).</p>
 <center>
-<p><img src="../../../../images/trustedsetup/verifying.png" class="padded" /></p>
+<p><img src="../../../../images/trustedsetup/verifying.png"
+class="padded" /></p>
 <p><small></p>
-<p><em><span class="math inline">\(s_1\)</span> is the first participant's secret, <span class="math inline">\(s_2\)</span> is the second participant's secret, etc. The pairing check at each step proves that the setup at each step actually came from a combination of the setup at the previous step and a new secret known by the participant at that step.</em></p>
+<p><em><span class="math inline">\(s_1\)</span> is the first
+participant's secret, <span class="math inline">\(s_2\)</span> is the
+second participant's secret, etc. The pairing check at each step proves
+that the setup at each step actually came from a combination of the
+setup at the previous step and a new secret known by the participant at
+that step.</em></p>
 </small>
 </center>
-<p>Each participant should reveal their proof on some publicly verifiable medium (eg. personal website, transaction from their .eth address, Twitter). Note that this mechanism does <em>not</em> prevent someone from claiming to have participated at some index where someone else has (assuming that other person has revealed their proof), but it's generally considered that this does not matter: if someone is willing to lie about having participated, they would also be willing to lie about having deleted their secret. As long as at least one of the people who publicly claim to have participated is honest, the setup is secure.</p>
-<p>In addition to the above check, we also want to verify that all the powers in the setup are correctly constructed (ie. they're powers of the same secret). To do this, we <em>could</em> do a series of pairing checks, verifying that <span class="math inline">\(e(S_{i+1}, G_2) = e(S_i, T_1)\)</span> (where <span class="math inline">\(T_1\)</span> is the <span class="math inline">\(G_2 * s\)</span> value in the setup) for every <span class="math inline">\(i\)</span>. This verifies that the factor between each <span class="math inline">\(S_i\)</span> and <span class="math inline">\(S_{i+1}\)</span> is the same as the factor between <span class="math inline">\(T_1\)</span> and <span class="math inline">\(G_2\)</span>. We can then do the same on the <span class="math inline">\(G_2\)</span> side.</p>
-<p>But that's a lot of pairings and is expensive. Instead, we take a random linear combination <span class="math inline">\(L_1 = \sum_{i=0}^{n_1-2} r_iS_i\)</span>, and the same linear combination shifted by one: <span class="math inline">\(L_2 = \sum_{i=0}^{n_1-2} r_iS_{i+1}\)</span>. We use a single pairing check to verify that they match up: <span class="math inline">\(e(L_2, G_2) = e(L_1, T_1)\)</span>.</p>
-<p>We can even combine the process for the <span class="math inline">\(G_1\)</span> side and the <span class="math inline">\(G_2\)</span> side together: in addition to computing <span class="math inline">\(L_1\)</span> and <span class="math inline">\(L_2\)</span> as above, we also compute <span class="math inline">\(L_3 = \sum_{i=0}^{n_2-2} q_iT_i\)</span> (<span class="math inline">\(q_i\)</span> is another set of random coefficients) and <span class="math inline">\(L_4 = \sum_{i=0}^{n_2-2} q_iT_{i+1}\)</span>, and check <span class="math inline">\(e(L_2, L_3) = e(L_1, L_4)\)</span>.</p>
+<p>Each participant should reveal their proof on some publicly
+verifiable medium (eg. personal website, transaction from their .eth
+address, Twitter). Note that this mechanism does <em>not</em> prevent
+someone from claiming to have participated at some index where someone
+else has (assuming that other person has revealed their proof), but it's
+generally considered that this does not matter: if someone is willing to
+lie about having participated, they would also be willing to lie about
+having deleted their secret. As long as at least one of the people who
+publicly claim to have participated is honest, the setup is secure.</p>
+<p>In addition to the above check, we also want to verify that all the
+powers in the setup are correctly constructed (ie. they're powers of the
+same secret). To do this, we <em>could</em> do a series of pairing
+checks, verifying that <span class="math inline">\(e(S_{i+1}, G_2) =
+e(S_i, T_1)\)</span> (where <span class="math inline">\(T_1\)</span> is
+the <span class="math inline">\(G_2 * s\)</span> value in the setup) for
+every <span class="math inline">\(i\)</span>. This verifies that the
+factor between each <span class="math inline">\(S_i\)</span> and <span
+class="math inline">\(S_{i+1}\)</span> is the same as the factor between
+<span class="math inline">\(T_1\)</span> and <span
+class="math inline">\(G_2\)</span>. We can then do the same on the <span
+class="math inline">\(G_2\)</span> side.</p>
+<p>But that's a lot of pairings and is expensive. Instead, we take a
+random linear combination <span class="math inline">\(L_1 =
+\sum_{i=0}^{n_1-2} r_iS_i\)</span>, and the same linear combination
+shifted by one: <span class="math inline">\(L_2 = \sum_{i=0}^{n_1-2}
+r_iS_{i+1}\)</span>. We use a single pairing check to verify that they
+match up: <span class="math inline">\(e(L_2, G_2) = e(L_1,
+T_1)\)</span>.</p>
+<p>We can even combine the process for the <span
+class="math inline">\(G_1\)</span> side and the <span
+class="math inline">\(G_2\)</span> side together: in addition to
+computing <span class="math inline">\(L_1\)</span> and <span
+class="math inline">\(L_2\)</span> as above, we also compute <span
+class="math inline">\(L_3 = \sum_{i=0}^{n_2-2} q_iT_i\)</span> (<span
+class="math inline">\(q_i\)</span> is another set of random
+coefficients) and <span class="math inline">\(L_4 = \sum_{i=0}^{n_2-2}
+q_iT_{i+1}\)</span>, and check <span class="math inline">\(e(L_2, L_3) =
+e(L_1, L_4)\)</span>.</p>
 <h2 id="setups-in-lagrange-form">Setups in Lagrange form</h2>
-<p>In many use cases, you don't want to work with polynomials <em>in coefficient form</em> (eg. <span class="math inline">\(P(x) = 3x^3 + 8x^2 + 2x + 6\)</span>), you want to work with polynomials in <em>evaluation form</em> (eg. <span class="math inline">\(P(x)\)</span> is the polynomial that evaluates to <span class="math inline">\([19, 146, 9, 187]\)</span> on the domain <span class="math inline">\([1, 189, 336, 148]\)</span> modulo 337). Evaluation form has many advantages (eg. you can multiply and sometimes divide polynomials in <span class="math inline">\(O(N)\)</span> time) and you can even use it to <a href="https://hackmd.io/@vbuterin/barycentric_evaluation">evaluate in <span class="math inline">\(O(N)\)</span> time</a>. In particular, <a href="https://hackmd.io/@vbuterin/sharding_proposal">data availability sampling</a> expects the blobs to be in evaluation form.</p>
-<p>To work with these cases, it's often convenient to convert the trusted setup to evaluation form. This would allow you to take the evaluations (<span class="math inline">\([19, 146, 9, 187]\)</span> in the above example) and use them to compute the commitment directly.</p>
-<p>This is done most easily with a <a href="https://vitalik.ca/general/2019/05/12/fft.html">Fast Fourier transform (FFT)</a>, but passing the curve points as input instead of numbers. I'll avoid repeating a full detailed explanation of FFTs here, but <a href="https://github.com/ethereum/research/blob/master/trusted_setup/trusted_setup.py#L77">here is an implementation</a>; it is actually not that difficult.</p>
+<p>In many use cases, you don't want to work with polynomials <em>in
+coefficient form</em> (eg. <span class="math inline">\(P(x) = 3x^3 +
+8x^2 + 2x + 6\)</span>), you want to work with polynomials in
+<em>evaluation form</em> (eg. <span class="math inline">\(P(x)\)</span>
+is the polynomial that evaluates to <span class="math inline">\([19,
+146, 9, 187]\)</span> on the domain <span class="math inline">\([1, 189,
+336, 148]\)</span> modulo 337). Evaluation form has many advantages (eg.
+you can multiply and sometimes divide polynomials in <span
+class="math inline">\(O(N)\)</span> time) and you can even use it to <a
+href="https://hackmd.io/@vbuterin/barycentric_evaluation">evaluate in
+<span class="math inline">\(O(N)\)</span> time</a>. In particular, <a
+href="https://hackmd.io/@vbuterin/sharding_proposal">data availability
+sampling</a> expects the blobs to be in evaluation form.</p>
+<p>To work with these cases, it's often convenient to convert the
+trusted setup to evaluation form. This would allow you to take the
+evaluations (<span class="math inline">\([19, 146, 9, 187]\)</span> in
+the above example) and use them to compute the commitment directly.</p>
+<p>This is done most easily with a <a
+href="../../../2019/05/12/fft.html">Fast Fourier transform (FFT)</a>,
+but passing the curve points as input instead of numbers. I'll avoid
+repeating a full detailed explanation of FFTs here, but <a
+href="https://github.com/ethereum/research/blob/master/trusted_setup/trusted_setup.py#L77">here
+is an implementation</a>; it is actually not that difficult.</p>
 <h2 id="the-future-of-trusted-setups">The future of trusted setups</h2>
-<p>Powers-of-tau is not the only kind of trusted setup out there. Some other notable (actual or potential) trusted setups include:</p>
+<p>Powers-of-tau is not the only kind of trusted setup out there. Some
+other notable (actual or potential) trusted setups include:</p>
 <ul>
-<li>The more complicated setups in older ZK-SNARK protocols (eg. see <a href="https://vitalik.ca/general/2017/02/01/zk_snarks.html">here</a>), which are sometimes still used (particularly <a href="http://www.zeroknowledgeblog.com/index.php/groth16">Groth16</a>) because verification is cheaper than PLONK.</li>
-<li>Some cryptographic protocols (eg. <a href="https://eprint.iacr.org/2019/1229.pdf"><strong>DARK</strong></a>) depend on <strong>hidden-order groups</strong>, groups where it is not known what number an element can be multiplied by to get the zero element. Fully trustless versions of this exist (see: <a href="https://www.usf-crypto.org/class-groups/">class groups</a>), but by far the most efficient version uses RSA groups (powers of <span class="math inline">\(x\)</span> mod <span class="math inline">\(n = pq\)</span> where <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> are not known). Trusted setup ceremonies for this with 1-of-n trust assumptions <a href="https://eprint.iacr.org/2020/374.pdf">are possible</a>, but are very complicated to implement.</li>
-<li>If/when <strong><a href="https://en.wikipedia.org/wiki/Indistinguishability_obfuscation">indistinguishability obfuscation</a></strong> becomes viable, many protocols that depend on it will involve someone creating and publishing an obfuscated program that does something with a hidden internal secret. This is a trusted setup: the creator(s) would need to possess the secret to create the program, and would need to delete it afterwards.</li>
+<li>The more complicated setups in older ZK-SNARK protocols (eg. see <a
+href="../../../2017/02/01/zk_snarks.html">here</a>), which are sometimes
+still used (particularly <a
+href="http://www.zeroknowledgeblog.com/index.php/groth16">Groth16</a>)
+because verification is cheaper than PLONK.</li>
+<li>Some cryptographic protocols (eg. <a
+href="https://eprint.iacr.org/2019/1229.pdf"><strong>DARK</strong></a>)
+depend on <strong>hidden-order groups</strong>, groups where it is not
+known what number an element can be multiplied by to get the zero
+element. Fully trustless versions of this exist (see: <a
+href="https://www.usf-crypto.org/class-groups/">class groups</a>), but
+by far the most efficient version uses RSA groups (powers of <span
+class="math inline">\(x\)</span> mod <span class="math inline">\(n =
+pq\)</span> where <span class="math inline">\(p\)</span> and <span
+class="math inline">\(q\)</span> are not known). Trusted setup
+ceremonies for this with 1-of-n trust assumptions <a
+href="https://eprint.iacr.org/2020/374.pdf">are possible</a>, but are
+very complicated to implement.</li>
+<li>If/when <strong><a
+href="https://en.wikipedia.org/wiki/Indistinguishability_obfuscation">indistinguishability
+obfuscation</a></strong> becomes viable, many protocols that depend on
+it will involve someone creating and publishing an obfuscated program
+that does something with a hidden internal secret. This is a trusted
+setup: the creator(s) would need to possess the secret to create the
+program, and would need to delete it afterwards.</li>
 </ul>
-<p>Cryptography continues to be a rapidly evolving field, and how important trusted setups are could easily change. It's possible that techniques for working with IPAs and Halo-style ideas will improve to the point where KZG becomes outdated and unnecessary, or that quantum computers will make anything based on elliptic curves non-viable ten years from now and we'll be stuck working with trusted-setup-free hash-based protocols. It's also possible that what we can do with KZG will improve even faster, or that a new area of cryptography will emerge that depends on a different kind of trusted setup.</p>
-<p>To the extent that trusted setup ceremonies are necessary, it is important to remember that <strong>not all trusted setups are created equal</strong>. <a href="https://medium.com/aztec-protocol/aztec-crs-the-biggest-mpc-setup-in-history-has-successfully-finished-74c6909cd0c4">176 participants</a> is better than 6, and 2000 would be even better. A ceremony small enough that it can be run inside a browser or phone application (eg. the <a href="https://mpc.zkopru.network/">ZKopru setup is web-based</a>) could attract far more participants than one that requires running a complicated software package. Every ceremony should ideally have participants running multiple independently built software implementations and running different operating systems and environments, to reduce <a href="https://en.wikipedia.org/wiki/Common_cause_and_special_cause_(statistics)#Common_mode_failure_in_engineering">common mode failure</a> risks. Ceremonies that require only one round of interaction per participant (like powers-of-tau) are far better than multi-round ceremonies, both due to the ability to support far more participants and due to the greater ease of writing multiple implementations. Ceremonies should ideally be <em>universal</em> (the output of one ceremony being able to support a wide range of protocols). These are all things that we can and should keep working on, to ensure that trusted setups can be as secure and as trusted as possible.</p>
+<p>Cryptography continues to be a rapidly evolving field, and how
+important trusted setups are could easily change. It's possible that
+techniques for working with IPAs and Halo-style ideas will improve to
+the point where KZG becomes outdated and unnecessary, or that quantum
+computers will make anything based on elliptic curves non-viable ten
+years from now and we'll be stuck working with trusted-setup-free
+hash-based protocols. It's also possible that what we can do with KZG
+will improve even faster, or that a new area of cryptography will emerge
+that depends on a different kind of trusted setup.</p>
+<p>To the extent that trusted setup ceremonies are necessary, it is
+important to remember that <strong>not all trusted setups are created
+equal</strong>. <a
+href="https://medium.com/aztec-protocol/aztec-crs-the-biggest-mpc-setup-in-history-has-successfully-finished-74c6909cd0c4">176
+participants</a> is better than 6, and 2000 would be even better. A
+ceremony small enough that it can be run inside a browser or phone
+application (eg. the <a href="https://mpc.zkopru.network/">ZKopru setup
+is web-based</a>) could attract far more participants than one that
+requires running a complicated software package. Every ceremony should
+ideally have participants running multiple independently built software
+implementations and running different operating systems and
+environments, to reduce <a
+href="https://en.wikipedia.org/wiki/Common_cause_and_special_cause_(statistics)#Common_mode_failure_in_engineering">common
+mode failure</a> risks. Ceremonies that require only one round of
+interaction per participant (like powers-of-tau) are far better than
+multi-round ceremonies, both due to the ability to support far more
+participants and due to the greater ease of writing multiple
+implementations. Ceremonies should ideally be <em>universal</em> (the
+output of one ceremony being able to support a wide range of protocols).
+These are all things that we can and should keep working on, to ensure
+that trusted setups can be as secure and as trusted as possible.</p>
  </div> 
