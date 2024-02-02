@@ -3,7 +3,7 @@
 [title]: <> (La votación mediante blockchain está sobrevalorada entre personas desinformadas pero subestimada entre personas informadas)
 [pandoc]: <> (--mathjax)
 
-_Agradecimientos especiales a Karl Floersch, Albert Ni, Mr Silly y otros por sus comentarios y discusiones_
+_Agradecimientos especiales a Karl Floersch, Albert Ni, Mr Silly y otros por sus comentarios y discusiones. Agradecimientos especiales a crisgarner por traducir._
 
 La votación es un procedimiento que tiene una necesidad muy importante de integridad en el proceso. El resultado de la votación debe ser correcto y esto debe garantizarse mediante un proceso transparente para que todos puedan estar convencidos de que el resultado es correcto. No debería ser posible [interferir exitosamente con el intento de voto](https://en.wikipedia.org/wiki/Voter_suppression) de nadie o impedir que su voto sea contado.
 
