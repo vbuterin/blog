@@ -57,7 +57,7 @@ _感谢 [付航](https://twitter.com/fulihang2009) ，[Roy](https://twitter.com/
 
 <br>
 
-![https://vitalik.ca/images/networkstates/communes.png](https://vitalik.ca/images/networkstates/communes.png)
+![https://vitalik.eth.limo/images/networkstates/communes.png](https://vitalik.eth.limo/images/networkstates/communes.png)
 
 <br>
 
@@ -111,7 +111,7 @@ _感谢 [付航](https://twitter.com/fulihang2009) ，[Roy](https://twitter.com/
 
 接下来，巴拉吉总结了 [近代历史上的数次政治重组](https://thenetworkstate.com/left-is-the-new-right-is-the-new-left)，最终，我们得到了他的当今政治核心模型：[纽约时报（NYT）、中共（CCP）、比特币（BTC）](https://thenetworkstate.com/nyt-ccp-btc)构成的三角关系：
 
-![https://vitalik.ca/images/networkstates/nytccpbtc.png](https://vitalik.ca/images/networkstates/nytccpbtc.png)
+![https://vitalik.eth.limo/images/networkstates/nytccpbtc.png](https://vitalik.eth.limo/images/networkstates/nytccpbtc.png)
 
 纽约时报阵营基本上控制着美国，它的无能意味着美国正在走向崩溃。比特币阵营（包括比特币至上主义者和美国泛右翼）有着一些积极的价值观，但对集体行动和秩序的鲜明敌意，让他们无力建设任何东西。中共阵营有能力进行建设，但他们在建设的是一个反乌托邦的监控国家，全世界大部分地方都无意效仿。而且这三方都过于民族主义：他们从自己国家的角度看待事物，对所有其他人只会无视或加以利用。即使理论上都是国际主义者，他们阐释各自价值观的特定方式，仍让人们难以接受，除了世界上属于他们自己的那一小部分人。
 
@@ -121,7 +121,7 @@ _感谢 [付航](https://twitter.com/fulihang2009) ，[Roy](https://twitter.com/
 
 巴拉吉的历史螺旋论：是的，会有循环周期，但也不断会有进步。当下所处的周期，正需要我们伸出援手，去埋葬僵化的旧秩序， 也要去培育出更美好的新秩序。
 
-![https://vitalik.ca/images/networkstates/helical.png](https://vitalik.ca/images/networkstates/helical.png)
+![https://vitalik.eth.limo/images/networkstates/helical.png](https://vitalik.eth.limo/images/networkstates/helical.png)
 
 <h2 id='do-you-have-to-agree-with-balajis-megapolitics-to-like-network-states'>要接受网络国家就不得不同意巴拉吉的大政治观吗？</h2>
 

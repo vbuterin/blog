@@ -110,7 +110,7 @@ I went through the list and personally graded the 35 maybe-institutions from my 
 * **75% on "intentional structure"** (Tesla definitely has a deep structure with shareholders, directors, management, etc, but that structure isn't really part of its _identity_ in the way that, say, proof of stake consensus is for Ethereum or voting and congress are for a government)
 * **50% for "roles independent of individuals"** (while roles in companies are generally interchangeable, Tesla does get large gains from being part of the Elon-verse specifically)
 
-The full data is [here](https://vitalik.ca/files/misc_files/institution_analysis.ods). I know that many people will have many disagreements over various individual rankings I make, and readers could probably convince me that a few of my scores are wrong; I am mainly hoping that I've included a sufficient number of diverse maybe-instiutions in the list that individual disagreement or errors get roughly averaged out.
+The full data is [here](https://vitalik.eth.limo/files/misc_files/institution_analysis.ods). I know that many people will have many disagreements over various individual rankings I make, and readers could probably convince me that a few of my scores are wrong; I am mainly hoping that I've included a sufficient number of diverse maybe-instiutions in the list that individual disagreement or errors get roughly averaged out.
 
 Here's the table of correlations:
 
