@@ -3,13 +3,13 @@
 Fully homomorphic encryption has for a long time been considered one of the holy grails of cryptography. The promise of fully homomorphic encryption (FHE) is simple: it is a type of encryption that allows a third party to perform computations on encrypted data, and get an encrypted result, _without_ being able to decrypt the data or the result.
 
 <center>
-<img src="https://vitalik.ca/files/posts_files/fhe/HomoEncrypt.png" !><br>
+<img src="https://vitalik.eth.limo/files/posts_files/fhe/HomoEncrypt.png" !><br>
 </center>
 
 As a simple example, imagine that you have a set of emails, and you want to use a third party spam filter to check whether or not they are spam. Either the spam filter provider wants to keep their source code closed, or the spam filter depends on a very large database that they do not want to reveal publicly as that would make attacking easier, or both. However, you care about the privacy of your data, and don't want to upload your emails to a third party. So here's how you do it:
 
 <center>
-<img src="https://vitalik.ca/files/posts_files/fhe/HomoEncrypt2.png" !><br>
+<img src="https://vitalik.eth.limo/files/posts_files/fhe/HomoEncrypt2.png" !><br>
 </center>
 
 Fully homomorphic encryption has many applications, including in the blockchain space where it can be used to implement privacy-preserving light clients (the light client hands the server an encrypted index `i`, the server computes `data[0] * (i = 0) + data[1] * (i = 1) + ... + data[n] * (i = n)`, where `data[i]` is the i'th piece of data in a block or state along with its Merkle branch and `(i = k)` is an expression that returns 1 if `i = k` and otherwise 0, and returns the output; the light client gets the data it needs and the server learns nothing about what the light client asked).
@@ -70,7 +70,7 @@ This was simply a matter of expanding the product, and grouping together all the
 But there are two problems here: first, the size of the ciphertext itself grows (the length roughly doubles when you multiply), and second, the "noise" in the smaller $* 2$ term also gets quadratically bigger. Adding this noise into the ciphertexts was necessary because the security of this scheme is based on the [approximate GCD problem](https://oeis.org/wiki/Greatest_common_divisor#Approximate_GCD_problem):
 
 <center>
-<img src="https://vitalik.ca/files/posts_files/fhe/approx_gcd.png" !><br>
+<img src="https://vitalik.eth.limo/files/posts_files/fhe/approx_gcd.png" !><br>
 </center>
 
 Essentially, if you just had a set of expressions of the form $p * R_1 + m_1$, $p * R_2 + m_2$..., then you could use the [Euclidean algorithm](https://en.wikipedia.org/wiki/Euclidean_algorithm) to efficiently compute the greatest common divisor, which would give you the secret key $p$ and break the encryption, but if the ciphertexts are only _approximate_ multiples with some noise, then doing this quickly becomes impractical. Unfortunately, the noise introduces the inherent limitation that if you multiply the ciphertexts by each other enough, it eventually grows big enough that it exceeds $p$, and at that point the $mod\ p$ and $mod\ 2$ steps "interfere" with each other, making the data unextractable. This will be an inherent tradeoff in all of these homomorphic encryption schemes: extracting information from _approximate_ equations "with errors" is much harder than extracting information from exact equations, but the approximateness adds noise that bounds the amount of computation that you can do before the noise gets overwhelming. And **this is why these schemes are only "somewhat" homomorphic**.
@@ -103,7 +103,7 @@ In this example the dot product is `3 * 2 + 14 * 71 + 15 * 82 + 92 * 81 + 65 * 8
 The security of the scheme is based on an assumption known as "[learning with errors](https://en.wikipedia.org/wiki/Learning_with_errors)" (LWE) - or, in more jargony but also more understandable terms, the hardness of _solving systems of equations with errors_.
 
 <center>
-<a href="https://cims.nyu.edu/~regev/papers/lwesurvey.pdf"><img src="https://vitalik.ca/files/posts_files/fhe/lwe.png" !></a><br>
+<a href="https://cims.nyu.edu/~regev/papers/lwesurvey.pdf"><img src="https://vitalik.eth.limo/files/posts_files/fhe/lwe.png" !></a><br>
 </center>
 
 A ciphertext can itself be viewed as an equation: $k_1c_1 + .... + k_nc_n \approx 0$, where the key $k_1 ... k_n$ is the unknowns, the ciphertext $c_1 ... c_n$ is the coefficients, and the equality is approximate because of both the message and the error. The LWE assumption ensures that even given many of these ciphertexts, you cannot recover $k$.
