@@ -100,7 +100,7 @@ There are two sensible responses to this conundrum, and I believe that our ecosy
 1. **Remind people that money and finance still do matter, and do a good job of serving the world's underserved in that niche**
 2. **Extend beyond finance, and use our technology to build a more holistic vision of an alternative, more free and open and democratic tech stack, and how that could build toward either a broadly better society, or at least tools to help those who are excluded from mainstream digital infrastructure today.**
 
-(1) is important, and I would argue that the crypto space is uniquely positioned to provide value there. Crypto is one of the few tech industries that is genuinely highly decentralized, with developers spread out all over the globe:
+The first answer is important, and I would argue that the crypto space is uniquely positioned to provide value there. Crypto is one of the few tech industries that is genuinely highly decentralized, with developers spread out all over the globe:
 
 <center><br>
 
@@ -112,7 +112,7 @@ _Source: [Electric Capital's 2023 crypto developer report](https://www.developer
 
 Having visited many of the new global hubs of crypto over the past year, I can confirm that this is the case. More and more of the largest crypto projects are headquartered in all kinds of far-flung places around the world, or even nowhere. Furthermore, non-Western developers often have a unique advantage in understanding the concrete needs of crypto users in low-income countries, and being able to create products that satisfy those needs. When I talk to many people from San Francisco, I get a distinct impression that they think that AI is the only thing that matters, San Francisco is the capital of AI, and therefore San Francisco is the only place that matters. "So, Vitalik, why are you not settled down in the Bay with an O1 visa yet"? Crypto does not need to play this game: it's a big world, and it only takes one visit to Argentina or Turkey or Zambia to remind ourselves that many people still do have important problems that have to do with access to money and finance, and there is still an opportunity to do the complicated work of balancing user experience and decentralization to actually solve those problems in a sustainable way.
 
-The other vision is the one that I outlined in my recent post, "[Make Ethereum Cypherpunk Again](https://vitalik.eth.limo/general/2023/12/28/cypherpunk.html)". Rather than _just_ focusing on money, or being an "internet of value", I argued that the Ethereum community should expand its horizons. We should create an entire decentralized tech stack - a stack that is independent from the traditional Silicon Valley tech stack to the same extent that eg. the Chinese tech stack is - and compete with centralized tech companies at every level.
+The second answer is the same vision as what I outlined in more detail in my recent post, "[Make Ethereum Cypherpunk Again](https://vitalik.eth.limo/general/2023/12/28/cypherpunk.html)". Rather than _just_ focusing on money, or being an "internet of value", I argued that the Ethereum community should expand its horizons. We should create an entire decentralized tech stack - a stack that is independent from the traditional Silicon Valley tech stack to the same extent that eg. the Chinese tech stack is - and compete with centralized tech companies at every level.
 
 Reproducing that table here:
 
