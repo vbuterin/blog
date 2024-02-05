@@ -204,7 +204,7 @@ There are many other communities that are worth mentioning.
 
 When I first visited **Taiwan** many times in 2016 and 2017, what struck me most was the combination of _capacity for self-organization_ and _willingness to learn_ of the people there. Whenever I would write a document or blog post, I would often find that within a day a study club would independently form and start excitedly annotating every paragraph of the post on Google Docs. More recently, members of the Taiwanese Ministry of Digital Affairs took a similar excitement to Glen Weyl's ideas of digital democracy and "plurality", and soon posted [an entire mind map of the space](https://twitter.com/TAIWANmoda/status/1751795579649417639) (which includes a lot of Ethereum applications) on their twitter account.
 
-Paul Graham has written about how every city [sends a message](https://paulgraham.com/cities.html): in New York, "you should make more money". In Boston, You really should get around to reading all those books". In Silicon Valley, "you should be more powerful". When I visit Taipei, the message that comes to my mind is "you should rediscover your inner high school student".
+Paul Graham has written about how every city [sends a message](https://paulgraham.com/cities.html): in New York, "you should make more money". In Boston, "You really should get around to reading all those books". In Silicon Valley, "you should be more powerful". When I visit Taipei, the message that comes to my mind is "you should rediscover your inner high school student".
 
 <center><br>
 
