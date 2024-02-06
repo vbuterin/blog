@@ -49,6 +49,8 @@ Eight months later, I was watching the crypto world go through a convulsion of a
 
 [![](../../../../images/end/characters.png)](https://twitter.com/venturefounder/status/1590072787020165121)
 
+<small><i>Rankings copied from <a href="https://twitter.com/venturefounder/status/1590072787020165121">the above tweet</a>.</i></small>
+
 </center><br>
 
 The SBF situation was not unique: it mix-and-matched aspects of MtGox and several other convulsions that had engulfed the crypto space before. But it was a moment where I realized, all at once, that most of the people I had looked up to as guiding lights of the crypto space that I could comfortably follow in the footsteps of back in 2014 were no more.
