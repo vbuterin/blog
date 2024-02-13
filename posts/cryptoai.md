@@ -163,7 +163,7 @@ Now, let us get to the other big problem: the kinds of attacks that you can do _
 
 ![](../../../../images/cryptoai/inferredclassifier.png)
 
-_Use black-box access to a "target classifier" to train and refine your own locally stored "inferred classifier". Then, locally generate optimized attacks against the inferred classfier. It turns out these attacks will often also work against the original target classifier. [Diagram source](https://arxiv.org/pdf/1811.01811.pdf)._
+_Use black-box access to a "target classifier" to train and refine your own locally stored "inferred classifier". Then, locally generate optimized attacks against the inferred classifier. It turns out these attacks will often also work against the original target classifier. [Diagram source](https://arxiv.org/pdf/1811.01811.pdf)._
 
 </center><br>
 
@@ -186,7 +186,7 @@ _Wear an extra thing on your forehead, and evade detection or even impersonate s
 
 </center><br>
 
-**But the hope is that if you _combine all the defenses together_, hiding the AI model itself, greatly limiting the number of queries, and requiring each query to somehow be authenticated, you can adversarial attacks difficult enough that the system could be secure.** In the case of Worldcoin, increasing these other defences could also reduce their dependence on trusted hardware, increasing the project's decentralization.
+**But the hope is that if you _combine all the defenses together_, hiding the AI model itself, greatly limiting the number of queries, and requiring each query to somehow be authenticated, you can make adversarial attacks difficult enough that the system could be secure.** In the case of Worldcoin, increasing these other defences could also reduce their dependence on trusted hardware, increasing the project's decentralization.
 
 And this gets us to the second part: how can we hide the training data? This is where **"DAOs to democratically govern AI" might actually make sense**: we can create an on-chain DAO that governs the process of who is allowed to submit training data (and what attestations are required on the data itself), who is allowed to make queries, and how many, and use cryptographic techniques like MPC to encrypt the entire pipeline of creating and running the AI from each individual user's training input all the way to the final output of each query. This DAO could simultaneously satisfy the highly popular objective of compensating people for submitting data.
 
