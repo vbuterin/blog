@@ -85,7 +85,7 @@ The crypto space was born in late 2008, in the aftermath of the Global Financial
 
 </center><br>
 
-The early memes of Bitcoin were heavily influenced by these themes. Bitcoin is there to abolish the banks, which is a good thing to do because the banks are unsustainable megaliths that keep creating financial crises. Bitcoin is there to abolish fiat currency, because the banking system can't exist without the underlying central banks and the fiat currencies that they issue - and furthermore, fiat currency enables money printing which can fund wars. But Iin the fifteen years since then, the broader public discourse as a whole seems to have to a large extent moved beyond caring about money and banks. What is considered important now? Well, we can ask the copy of [Mixtral 8x7b](https://mistral.ai/news/mixtral-of-experts/) running on my new GPU laptop:
+The early memes of Bitcoin were heavily influenced by these themes. Bitcoin is there to abolish the banks, which is a good thing to do because the banks are unsustainable megaliths that keep creating financial crises. Bitcoin is there to abolish fiat currency, because the banking system can't exist without the underlying central banks and the fiat currencies that they issue - and furthermore, fiat currency enables money printing which can fund wars. But in the fifteen years since then, the broader public discourse as a whole seems to have to a large extent moved beyond caring about money and banks. What is considered important now? Well, we can ask the copy of [Mixtral 8x7b](https://mistral.ai/news/mixtral-of-experts/) running on my new GPU laptop:
 
 <center><br>
 
