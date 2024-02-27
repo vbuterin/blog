@@ -51,14 +51,14 @@ Hay un contrato inteligente dentro de la cadena que mantiene una **estado root**
 
 <br>
 <center>
-<img src="https://vitalik.ca/images/rollup-files/diag1.png" />
+<img src="https://vitalik.eth.limo/images/rollup-files/diag1.png" />
 </center><br>
 
 Cualquiera puede publicar un **batch**, una colección de transacciones en un formato altamente comprimido junto con el root del estado anterior y el root del nuevo estado (el Merkle root _después_ de procesar las transacciones). El contrato verifica que el root de estado anterior en el batch coincida con su root de estado actual; si lo hace, cambia el root del estado a el nuevo root del estado.
 
 <br>
 <center>
-<img src="https://vitalik.ca/images/rollup-files/diag2.png" />
+<img src="https://vitalik.eth.limo/images/rollup-files/diag2.png" />
 </center><br>
 
 Para admitir depósitos y retiros, agregamos la capacidad de tener transacciones cuya entrada o salida está "fuera" del estado del Rollup. Si un batch tiene entradas desde el exterior, la transacción que envía el batch también debe transferir estos activos al contrato de Rollup. Si un batch tiene salidas al exterior, luego de procesar el batch, el contrato inteligente inicia esos retiros.
@@ -91,7 +91,7 @@ La seguridad de un Rollup de Optimistic depende de la idea de que si alguien pub
 
 <br>
 <center>
-<img src="https://vitalik.ca/images/rollup-files/tree.png" />
+<img src="https://vitalik.eth.limo/images/rollup-files/tree.png" />
 </center><br>
 
 Una prueba de fraude que afirme que un batch no es válido contendría los datos en verde: el batch en sí (que podría verificarse con un hash almacenado en cadena) y las partes del árbol Merkle necesarias para probar solo las cuentas específicas que se leyeron y/o modificado por el batch. Los nodos del árbol en amarillo se pueden reconstruir a partir de los nodos en verde, por lo que no es necesario proporcionarlos. Estos datos son suficientes para ejecutar el batch y calcular el root posterior al estado (tenga en cuenta que esto es exactamente igual a cómo los [clientes sin estado](https://ethresear.ch/t/the-stateless-client-concept/172) verifican bloques individuales). Si el root posterior al estado calculado y el root posterior al estado proporcionado en el batch no son iguales, entonces el batch es fraudulento.

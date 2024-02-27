@@ -17,7 +17,7 @@ Typically, attempts to collapse down political preferences into a few dimensions
 
 </td></tr></table></center>
 
-There have been many variations on this, and even an entire [subreddit dedicated to memes](https://www.reddit.com/r/politicalcompassmemes) based on these charts. I even made a spin on the concept myself, with [this "meta-political compass"](https://vitalik.ca/files/misc_files/meta_political_compass_expanded.png) where at each point on the compass there is a smaller compass depicting what the people at that point on the compass see the axes of the compass as being.
+There have been many variations on this, and even an entire [subreddit dedicated to memes](https://www.reddit.com/r/politicalcompassmemes) based on these charts. I even made a spin on the concept myself, with [this "meta-political compass"](https://vitalik.eth.limo/files/misc_files/meta_political_compass_expanded.png) where at each point on the compass there is a smaller compass depicting what the people at that point on the compass see the axes of the compass as being.
 
 Of course, "authoritarian vs libertarian" and "left vs right" are both incredibly un-nuanced gross oversimplifications. But us puny-brained human beings do not have the capacity to run anything close to accurate simulations of humanity inside our heads, and so sometimes incredibly un-nuanced gross oversimplifications are [something we need](https://kieranhealy.org/publications/fuck-nuance/) to understand the world. But what if there are other incredibly un-nuanced gross oversimplifications worth exploring?
 
