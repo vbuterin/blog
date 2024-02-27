@@ -1,0 +1,299 @@
+
+
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
+
+
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Ask security questions">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="../../../../scripts/tex-svg.js">
+</script>
+
+<style>
+</style>
+
+<div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
+
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Ask security questions" />
+<meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
+
+
+<br>
+<h1 style="margin-bottom:7px"> Ask security questions </h1>
+<small style="float:left; color: #888"> 2024 Feb 09 </small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
+<br> <br> <br>
+<title> Ask security questions </title>
+
+<p><em>Special thanks to Hudson Jameson, OfficerCIA and samczsun for
+feedback and review.</em></p>
+<p>Over the past week, an article has been floating around about a
+company that <a
+href="https://edition.cnn.com/2024/02/04/asia/deepfake-cfo-scam-hong-kong-intl-hnk/index.html">lost
+$25 million</a> when a finance worker was convinced to send a bank wire
+to a scammer pretending to be the CFO... over what appears to have been a
+very convincing deepfaked video call.</p>
+<center>
+<p><br></p>
+<p><a
+href="https://edition.cnn.com/2024/02/04/asia/deepfake-cfo-scam-hong-kong-intl-hnk/index.html"><img
+src="../../../../images/securityquestions/article.png" /></a></p>
+</center>
+<p><br></p>
+<p>Deepfakes (ie. AI-generated fake audio and video) are appearing
+increasingly often both in the crypto space and elsewhere. Over the past
+few months, deepfakes of me have been used to advertise <a
+href="https://crypto.news/analysts-discover-deepfakes-of-vitalik-buterin-promoting-scam-crypto-wallet/">all
+kinds of scams</a>, as well as <a
+href="../../../../images/securityquestions/fakevideo.mp4">dog coins</a>.
+The quality of the deepfakes is rapidly improving: while the deepfakes
+of 2020 were <a
+href="https://decrypt.co/23975/vitalik-buterin-sings-pink-floyds-money-in-deepfake-video">embarrassingly
+obvious and bad</a>, those from the last few months are getting
+increasingly difficult to distinguish. Someone who knows me well could
+still identify the recent video of <a
+href="../../../../images/securityquestions/fakevideo.mp4">me shilling a
+dog coin</a> as a fake because it has me saying "let's f***ing go"
+whereas I've only ever used "LFG" to mean <a
+href="https://slang.net/meaning/lfg">"looking for group"</a>, but people
+who have only heard my voice a few times could easily be convinced.</p>
+<p>Security experts to whom I mentioned the above $25 million theft
+uniformly confirm that it was an exceptional and embarrassing failure of
+enterprise operational security on multiple levels: standard practice is
+to require several levels of sign-off before a transfer anywhere close
+to that size can be approved. But even still, the fact remains that
+<strong>as of 2024, an audio or even video stream of a person is no
+longer a secure way of authenticating who they are</strong>.</p>
+<p>This raises the question: what is?</p>
+<h2 id="cryptographic-methods-alone-are-not-the-answer">Cryptographic
+methods alone are not the answer</h2>
+<p><strong>Being able to securely authenticate people is valuable to all
+kinds of people in all kinds of situations</strong>: individuals
+recovering their <a
+href="https://vitalik.eth.limo/general/2021/01/11/recovery.html">social
+recovery or multisig wallets</a>, enterprises approving business
+transactions, individuals approving large transactions for personal use
+(eg. to invest into a startup, buy a house, send remittances) whether
+with crypto or with fiat, and even family members needing to
+authenticate each other in emergencies. So it's really important to have
+a good solution that can survive the coming era of relatively easy
+deepfakes.</p>
+<p>One answer to this question that I often hear in crypto circles is:
+"you can authenticate yourself by providing a cryptographic signature
+from an address attached to your ENS / proof of humanity profile /
+public PGP key". This is an appealing answer. However, it completely
+misses the point of why involving other people when signing off on
+transactions is useful in the first place. Suppose that you are an
+individual with a personal multisig wallet, and you are sending off a
+transaction that you want some co-signers to approve. Under what
+circumstances would they approve it? <em>If they're confident that
+you're the one who actually wants the transfer to happen</em>. If it's a
+hacker who stole your key, or a kidnapper, they would not approve. In an
+enterprise context, you generally have more layers of defense; but even
+still, an attacker could potentially impersonate a manager not just for
+the final request, but also for the earlier stages in the approval
+process. They may even hijack a legitimate request-in-progress by
+providing the wrong address.</p>
+<p>And so in many cases, <strong>the other signers accepting that you
+are you if you sign with your key kills the whole point: it turns the
+entire contract into a 1-of-1 multisig where someone needs to only grab
+control of your single key in order to steal the funds!</strong></p>
+<p>This is where we get to one answer that actually makes some sense:
+<strong>security questions</strong>.</p>
+<h2 id="security-questions">Security questions</h2>
+<p>Suppose that someone texts you claiming to be a particular person who
+is your friend. They are texting from an account you have never seen
+before, and they are claiming to have lost all of their devices. How do
+you determine if they are who they say they are?</p>
+<p>There's an obvious answer: <strong>ask them things that only they
+would know about their life</strong>. These should be things that:</p>
+<ol type="1">
+<li>You know</li>
+<li>You expect them to remember</li>
+<li>The internet does not know</li>
+<li>Are difficult to guess</li>
+<li>Ideally, even someone who has hacked corporate and government
+databases does not know</li>
+</ol>
+<p>The natural thing to ask them about is <strong>shared
+experiences</strong>. Possible examples include:</p>
+<ul>
+<li>When the two of us last saw each other, what restaurant did we eat
+at for dinner, and what food did you have?</li>
+<li>Which of our friends made that joke about an ancient politician? And
+which politician was it?</li>
+<li>Which movie did we recently watch that you did not like?</li>
+<li>You suggested last week that I chat with ____ about the possibility
+of them helping us with ____ research?</li>
+</ul>
+<center>
+<p><br></p>
+<p><img src="../../../../images/securityquestions/example.png" /></p>
+<p><small><i>Actual example of a security question that someone recently
+used to authenticate me.</i></small></p>
+</center>
+<p><br></p>
+<p>The more unique your <em>question</em> is, the better. Questions that
+are right on the edge where someone has to think for a few seconds and
+might even forget the answer are good: but if the person you're asking
+<em>does</em> claim to have forgotten, make sure to ask them three more
+questions. Asking about "micro" details (what someone liked or disliked,
+specific jokes, etc) is often better than "macro" details, because the
+former are generally much more difficult for third parties to
+accidentally be able to dig up (eg. if even one person posted a photo of
+the dinner on Instagram, modern LLMs may well be fast enough to catch
+that and provide the location in real time). If your question is
+potentially guessable (in the sense that there are only a few potential
+options that make sense), stack up the entropy by adding another
+question.</p>
+<p>People will often stop engaging in security practices if they are
+dull and boring, so it's healthy to make security questions fun! They
+can be a way to remember positive shared experiences. And they can be an
+incentive to actually have those experiences in the first place.</p>
+<h2 id="complements-to-security-questions">Complements to security
+questions</h2>
+<p>No single security strategy is perfect, and so it's always best to
+stack together multiple techniques.</p>
+<ul>
+<li><strong>Pre-agreed code words</strong>: when you're together,
+intentionally agree on a shared code word that you can later use to
+authenticate each other.</li>
+<li>Perhaps even agree on a <strong>duress key</strong>: a word that you
+can innocently insert into a sentence that will quietly signal to the
+other side that you're being coerced or threatened. This word should be
+common enough that it will feel natural when you use it, but rare enough
+that you won't accidentally insert it into your speech.</li>
+<li>When someone is sending you an ETH address, ask them to
+<strong>confirm it on multiple channels</strong> (eg. Signal and Twitter
+DM, on the company website, or even through a mutual acquaintance)</li>
+<li><strong>Guard against man-in-the-middle attacks</strong>: Signal "<a
+href="https://support.signal.org/hc/en-us/articles/360007060632-What-is-a-safety-number-and-why-do-I-see-that-it-changed">safety
+numbers</a>", Telegram <a
+href="https://www.engadget.com/2017-03-30-telegrams-voice-calls-are-secured-by-emojis.html">emojis</a>
+and similar features are all good to understand and watch out for.</li>
+<li><strong>Daily limits and delays</strong>: simply impose delays on
+highly consequential and irreversible actions. This can be done either
+at policy level (pre-agree with signers that they will wait for N hours
+or days before signing) or at code level (impose limits and delays in
+smart contract code)</li>
+</ul>
+<center>
+<p><br></p>
+<p><img src="../../../../images/securityquestions/shoggy.png" /></p>
+<p><small><i>A potential sophisticated attack where an attacker
+impersonates an executive and a grantee at multiple steps of an approval
+process. Security questions and delays can both guard against this; it's
+probably better to use both.</i></small></p>
+</center>
+<p><br></p>
+<p>Security questions are nice because, unlike so many other techniques
+that fail because they are not human-friendly, security questions build
+off of information that human beings are naturally good at remembering.
+I have used security questions for years, and it is a habit that
+actually feels very natural and not awkward, and is worth including into
+your workflow - in addition to your other layers of protection.</p>
+<p>Note that "individual-to-individual" security questions as described
+above are a very different use case from "enterprise-to-individual"
+security questions, such as when you call your bank to reactivate your
+credit card after it got deactivated for the 17th time after you travel
+to a different country, and once you get past the 40-minute queue of
+annoying music a bank employee appears and asks you for your name, your
+birthday and maybe your last three transactions. The kinds of questions
+that an individual knows the answers to are very different from what an
+enterprise knows the answers to. Hence, it's worth thinking about these
+two cases quite separately.</p>
+<p>Each person's situation is unique, and so the kinds of unique shared
+information that you have with the people you might need to authenticate
+with differs for different people. It's generally better to adapt the
+technique to the people, and not the people to the technique. A
+technique does not need to be perfect to work: the ideal approach is to
+stack together multiple techniques at the same time, and choose the
+techniques that work best for you. In a post-deepfake world, we do need
+to adapt our strategies to the new reality of what is now easy to fake
+and what remains difficult to fake, but as long as we do, staying secure
+continues to be quite possible.</p>
+ </div> 

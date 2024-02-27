@@ -49,6 +49,8 @@ Eight months later, I was watching the crypto world go through a convulsion of a
 
 [![](../../../../images/end/characters.png)](https://twitter.com/venturefounder/status/1590072787020165121)
 
+<small><i>Rankings copied from <a href="https://twitter.com/venturefounder/status/1590072787020165121">the above tweet</a>.</i></small>
+
 </center><br>
 
 The SBF situation was not unique: it mix-and-matched aspects of MtGox and several other convulsions that had engulfed the crypto space before. But it was a moment where I realized, all at once, that most of the people I had looked up to as guiding lights of the crypto space that I could comfortably follow in the footsteps of back in 2014 were no more.
@@ -100,7 +102,7 @@ There are two sensible responses to this conundrum, and I believe that our ecosy
 1. **Remind people that money and finance still do matter, and do a good job of serving the world's underserved in that niche**
 2. **Extend beyond finance, and use our technology to build a more holistic vision of an alternative, more free and open and democratic tech stack, and how that could build toward either a broadly better society, or at least tools to help those who are excluded from mainstream digital infrastructure today.**
 
-(1) is important, and I would argue that the crypto space is uniquely positioned to provide value there. Crypto is one of the few tech industries that is genuinely highly decentralized, with developers spread out all over the globe:
+The first answer is important, and I would argue that the crypto space is uniquely positioned to provide value there. Crypto is one of the few tech industries that is genuinely highly decentralized, with developers spread out all over the globe:
 
 <center><br>
 
@@ -112,7 +114,7 @@ _Source: [Electric Capital's 2023 crypto developer report](https://www.developer
 
 Having visited many of the new global hubs of crypto over the past year, I can confirm that this is the case. More and more of the largest crypto projects are headquartered in all kinds of far-flung places around the world, or even nowhere. Furthermore, non-Western developers often have a unique advantage in understanding the concrete needs of crypto users in low-income countries, and being able to create products that satisfy those needs. When I talk to many people from San Francisco, I get a distinct impression that they think that AI is the only thing that matters, San Francisco is the capital of AI, and therefore San Francisco is the only place that matters. "So, Vitalik, why are you not settled down in the Bay with an O1 visa yet"? Crypto does not need to play this game: it's a big world, and it only takes one visit to Argentina or Turkey or Zambia to remind ourselves that many people still do have important problems that have to do with access to money and finance, and there is still an opportunity to do the complicated work of balancing user experience and decentralization to actually solve those problems in a sustainable way.
 
-The other vision is the one that I outlined in my recent post, "[Make Ethereum Cypherpunk Again](https://vitalik.eth.limo/general/2023/12/28/cypherpunk.html)". Rather than _just_ focusing on money, or being an "internet of value", I argued that the Ethereum community should expand its horizons. We should create an entire decentralized tech stack - a stack that is independent from the traditional Silicon Valley tech stack to the same extent that eg. the Chinese tech stack is - and compete with centralized tech companies at every level.
+The second answer is the same vision as what I outlined in more detail in my recent post, "[Make Ethereum Cypherpunk Again](https://vitalik.eth.limo/general/2023/12/28/cypherpunk.html)". Rather than _just_ focusing on money, or being an "internet of value", I argued that the Ethereum community should expand its horizons. We should create an entire decentralized tech stack - a stack that is independent from the traditional Silicon Valley tech stack to the same extent that eg. the Chinese tech stack is - and compete with centralized tech companies at every level.
 
 Reproducing that table here:
 
@@ -204,7 +206,7 @@ There are many other communities that are worth mentioning.
 
 When I first visited **Taiwan** many times in 2016 and 2017, what struck me most was the combination of _capacity for self-organization_ and _willingness to learn_ of the people there. Whenever I would write a document or blog post, I would often find that within a day a study club would independently form and start excitedly annotating every paragraph of the post on Google Docs. More recently, members of the Taiwanese Ministry of Digital Affairs took a similar excitement to Glen Weyl's ideas of digital democracy and "plurality", and soon posted [an entire mind map of the space](https://twitter.com/TAIWANmoda/status/1751795579649417639) (which includes a lot of Ethereum applications) on their twitter account.
 
-Paul Graham has written about how every city [sends a message](https://paulgraham.com/cities.html): in New York, "you should make more money". In Boston, You really should get around to reading all those books". In Silicon Valley, "you should be more powerful". When I visit Taipei, the message that comes to my mind is "you should rediscover your inner high school student".
+Paul Graham has written about how every city [sends a message](https://paulgraham.com/cities.html): in New York, "you should make more money". In Boston, "You really should get around to reading all those books". In Silicon Valley, "you should be more powerful". When I visit Taipei, the message that comes to my mind is "you should rediscover your inner high school student".
 
 <center><br>
 
