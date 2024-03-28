@@ -11,6 +11,15 @@
   </image>
 
 <item>
+<title>Ethereum has blobs. Where do we go from here?</title>
+<link>https://vitalik.ca/general/2024/03/28/blobs.html</link>
+<guid>https://vitalik.ca/general/2024/03/28/blobs.html</guid>
+<pubDate>Thu, 28 Mar 2024 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
 <title>Ask security questions</title>
 <link>https://vitalik.ca/general/2024/02/09/securityquestions.html</link>
 <guid>https://vitalik.ca/general/2024/02/09/securityquestions.html</guid>
@@ -515,18 +524,18 @@
 
 
 <item>
-<title>El recurso escaso más importante es la legitimidad</title>
-<link>https://vitalik.ca/general/2021/03/23/legitimacy_ES.html</link>
-<guid>https://vitalik.ca/general/2021/03/23/legitimacy_ES.html</guid>
+<title>The Most Important Scarce Resource is Legitimacy</title>
+<link>https://vitalik.ca/general/2021/03/23/legitimacy.html</link>
+<guid>https://vitalik.ca/general/2021/03/23/legitimacy.html</guid>
 <pubDate>Tue, 23 Mar 2021 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
 
 <item>
-<title>The Most Important Scarce Resource is Legitimacy</title>
-<link>https://vitalik.ca/general/2021/03/23/legitimacy.html</link>
-<guid>https://vitalik.ca/general/2021/03/23/legitimacy.html</guid>
+<title>El recurso escaso más importante es la legitimidad</title>
+<link>https://vitalik.ca/general/2021/03/23/legitimacy_ES.html</link>
+<guid>https://vitalik.ca/general/2021/03/23/legitimacy_ES.html</guid>
 <pubDate>Tue, 23 Mar 2021 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -560,18 +569,18 @@
 
 
 <item>
-<title>La Guía Incompleta de los Rollups</title>
-<link>https://vitalik.ca/general/2021/01/05/rollup_ES.html</link>
-<guid>https://vitalik.ca/general/2021/01/05/rollup_ES.html</guid>
+<title>An Incomplete Guide to Rollups</title>
+<link>https://vitalik.ca/general/2021/01/05/rollup.html</link>
+<guid>https://vitalik.ca/general/2021/01/05/rollup.html</guid>
 <pubDate>Tue, 05 Jan 2021 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
 
 <item>
-<title>An Incomplete Guide to Rollups</title>
-<link>https://vitalik.ca/general/2021/01/05/rollup.html</link>
-<guid>https://vitalik.ca/general/2021/01/05/rollup.html</guid>
+<title>La Guía Incompleta de los Rollups</title>
+<link>https://vitalik.ca/general/2021/01/05/rollup_ES.html</link>
+<guid>https://vitalik.ca/general/2021/01/05/rollup_ES.html</guid>
 <pubDate>Tue, 05 Jan 2021 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -596,15 +605,6 @@
 
 
 <item>
-<title>為什麼權益證明棒棒的（2020 年十一月）</title>
-<link>https://vitalik.ca/general/2020/11/06/pos2020_zhTW.html</link>
-<guid>https://vitalik.ca/general/2020/11/06/pos2020_zhTW.html</guid>
-<pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
-<description></description>
-</item>
-
-
-<item>
 <title>Why Proof of Stake (Nov 2020)</title>
 <link>https://vitalik.ca/general/2020/11/06/pos2020.html</link>
 <guid>https://vitalik.ca/general/2020/11/06/pos2020.html</guid>
@@ -614,10 +614,10 @@
 
 
 <item>
-<title>Gitcoin Grants Round 7 Retrospective</title>
-<link>https://vitalik.ca/general/2020/10/18/round7.html</link>
-<guid>https://vitalik.ca/general/2020/10/18/round7.html</guid>
-<pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
+<title>為什麼權益證明棒棒的（2020 年十一月）</title>
+<link>https://vitalik.ca/general/2020/11/06/pos2020_zhTW.html</link>
+<guid>https://vitalik.ca/general/2020/11/06/pos2020_zhTW.html</guid>
+<pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
@@ -626,6 +626,15 @@
 <title> 7ème tour des subventions Gitcoin - Rétrospective </title>
 <link>https://vitalik.ca/general/2020/10/18/round7_FR.html</link>
 <guid>https://vitalik.ca/general/2020/10/18/round7_FR.html</guid>
+<pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Gitcoin Grants Round 7 Retrospective</title>
+<link>https://vitalik.ca/general/2020/10/18/round7.html</link>
+<guid>https://vitalik.ca/general/2020/10/18/round7.html</guid>
 <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -1055,18 +1064,18 @@
 
 
 <item>
-<title>[Mirror] A Proof of Stake Design Philosophy</title>
-<link>https://vitalik.ca/general/2016/12/29/pos_design.html</link>
-<guid>https://vitalik.ca/general/2016/12/29/pos_design.html</guid>
+<title>[Mirror] Bir Proof of Stake Tasarım Felsefesi</title>
+<link>https://vitalik.ca/general/2016/12/29/pos_design_TR.html</link>
+<guid>https://vitalik.ca/general/2016/12/29/pos_design_TR.html</guid>
 <pubDate>Thu, 29 Dec 2016 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
 
 <item>
-<title>[Mirror] Bir Proof of Stake Tasarım Felsefesi</title>
-<link>https://vitalik.ca/general/2016/12/29/pos_design_TR.html</link>
-<guid>https://vitalik.ca/general/2016/12/29/pos_design_TR.html</guid>
+<title>[Mirror] A Proof of Stake Design Philosophy</title>
+<link>https://vitalik.ca/general/2016/12/29/pos_design.html</link>
+<guid>https://vitalik.ca/general/2016/12/29/pos_design.html</guid>
 <pubDate>Thu, 29 Dec 2016 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -1077,24 +1086,6 @@
 <link>https://vitalik.ca/general/2016/12/10/qap.html</link>
 <guid>https://vitalik.ca/general/2016/12/10/qap.html</guid>
 <pubDate>Sat, 10 Dec 2016 00:00:00 +0000</pubDate>
-<description></description>
-</item>
-
-
-<item>
-<title>Na colusão</title>
-<link>https://vitalik.ca/general/2000/01/01/On_Collusion_Portuguese.html</link>
-<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_Portuguese.html</guid>
-<pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
-<description></description>
-</item>
-
-
-<item>
-<title>Situazioni di collusione</title>
-<link>https://vitalik.ca/general/2000/01/01/On_Collusion_IT.html</link>
-<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_IT.html</guid>
-<pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
@@ -1112,6 +1103,24 @@
 <title>Zmowa</title>
 <link>https://vitalik.ca/general/2000/01/01/On_Collusion_Polish.html</link>
 <guid>https://vitalik.ca/general/2000/01/01/On_Collusion_Polish.html</guid>
+<pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Situazioni di collusione</title>
+<link>https://vitalik.ca/general/2000/01/01/On_Collusion_IT.html</link>
+<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_IT.html</guid>
+<pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Na colusão</title>
+<link>https://vitalik.ca/general/2000/01/01/On_Collusion_Portuguese.html</link>
+<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_Portuguese.html</guid>
 <pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
 <description></description>
 </item>
