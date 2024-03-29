@@ -62,7 +62,7 @@ There are four key places in which layer 2 protocols today can improve.
 
 </center><br>
 
-My outline-in-a-picture of data compression [continues to be available here]();
+My outline-in-a-picture of data compression [continues to be available here](https://twitter.com/VitalikButerin/status/1554983955182809088);
 
 Naively, a transaction takes up around 180 bytes of data. However, there are a series of compression techniques [that can be used](https://twitter.com/VitalikButerin/status/1554983955182809088) to bring this size down over several stages; with optimal compression we could potentially go all the way down to under 25 bytes per transaction.
 
