@@ -1,4 +1,4 @@
-[category]: <> (General,Philosophy)
+[category]: <> (General,Philosophy,Fun)
 [date]: <> (2024/04/01)
 [title]: <> (Degen communism: the only correct political ideology)
 
