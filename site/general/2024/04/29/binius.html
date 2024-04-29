@@ -1,0 +1,524 @@
+
+
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
+
+
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Binius: highly efficient proofs over binary fields">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="../../../../scripts/tex-svg.js">
+</script>
+
+<style>
+</style>
+
+<div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
+
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Binius: highly efficient proofs over binary fields" />
+<meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
+
+
+<br>
+<h1 style="margin-bottom:7px"> Binius: highly efficient proofs over binary fields </h1>
+<small style="float:left; color: #888"> 2024 Apr 29 </small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
+<br> <br> <br>
+<title> Binius: highly efficient proofs over binary fields </title>
+
+<p><em>This post is primarily intended for readers roughly familiar with 2019-era cryptography, especially <a href="https://vitalik.eth.limo/general/2021/01/26/snarks.html">SNARKs</a> and <a href="https://vitalik.eth.limo/general/2018/07/21/starks_part_3.html">STARKs</a>. If you are not, I recommend reading those articles first. Special thanks to Justin Drake, Jim Posen, Benjamin Diamond and Radi Cojbasic for feedback and review.</em></p>
+<p>Over the past two years, <a href="https://vitalik.eth.limo/general/2018/07/21/starks_part_3.html">STARKs</a> have become a crucial and irreplaceable technology for efficiently making <a href="https://vitalik.eth.limo/general/2021/01/26/snarks.html">easy-to-verify cryptographic proofs of very complicated statements</a> (eg. proving that an Ethereum block is valid). A key reason why is <em>small field sizes</em>: whereas elliptic curve-based SNARKs require you to work over 256-bit integers in order to be secure enough, STARKs let you use much smaller field sizes, which are more efficient: first <a href="https://polygon.technology/blog/plonky2-a-deep-dive">the Goldilocks field</a> (64-bit integers), and then <a href="https://blog.icme.io/small-fields-for-zero-knowledge/">Mersenne31 and BabyBear</a> (both 31-bit). Thanks to these efficiency gains, Plonky2, which uses Goldilocks, is <a href="https://polygon.technology/blog/introducing-plonky2">hundreds of times faster</a> at proving many kinds of computation than its predecessors.</p>
+<p>A natural question to ask is: can we take this trend to its logical conclusion, building proof systems that run even faster by operating directly over zeroes and ones? This is exactly what <a href="https://eprint.iacr.org/2023/1784.pdf">Binius</a> is trying to do, using a number of mathematical tricks that make it <em>very</em> different from the <a href="https://vitalik.eth.limo/general/2019/09/22/plonk.html">SNARKs</a> and <a href="https://vitalik.eth.limo/general/2018/07/21/starks_part_3.html">STARKs</a> of three years ago. This post goes through the reasons why small fields make proof generation more efficient, why binary fields are uniquely powerful, and the tricks that Binius uses to make proofs over binary fields work so effectively.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/binius/binius.drawio.png" /></p>
+<p><br> <small><i>Binius. By the end of this post, you should be able to understand every part of this diagram.</i></small></p>
+</center>
+<p><br></p>
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#recap1">Recap: finite fields</a></li>
+<li><a href="#recap2">Recap: arithmetization</a></li>
+<li><a href="#plonky2">Plonky2: from 256-bit SNARKs and STARKs to 64-bit... only STARKs</a></li>
+<li><a href="#smalltobinary">From small primes to binary</a></li>
+<li><a href="#hypercubes">From univariate polynomials to hypercubes</a></li>
+<li><a href="#simplebinius">Simple Binius - an example</a></li>
+<li><a href="#binaryfields">Binary fields</a></li>
+<li><a href="#fullbinius">Full Binius</a></li>
+<li><a href="#puttogether">Putting it all together</a></li>
+<li><a href="#notcovered">What did we <em>not</em> cover?</a></li>
+</ul>
+<p><a id="recap1" /></p>
+<h2 id="recap-finite-fields">Recap: finite fields</h2>
+<p>One of the key tasks of a cryptographic proving system is to operate over huge amounts of data, while keeping the numbers small. If you can compress a statement about a large program into a mathematical equation involving a few numbers, but those numbers are as big as the original program, you have not gained anything.</p>
+<p>To do complicated arithmetic while keeping numbers small, cryptographers generally use <strong>modular arithmetic</strong>. We pick some prime "modulus" <code>p</code>. The % operator means "take the remainder of": <span class="math inline">\(15\ \%\ 7 = 1\)</span>, <span class="math inline">\(53\ \%\ 10 = 3\)</span>, etc (note that the answer is always non-negative, so for example <span class="math inline">\(-1\ \%\ 10 = 9\)</span>).</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/binius/clock.png" /></p>
+<p><small><i>You've probably already seen <a href="https://en.wikipedia.org/wiki/Modular_arithmetic">modular arithmetic</a>, in the context of adding and subtracting time (eg. what time is four hours after 9:00?). But here, we don't just <em>add and subtract</em> modulo some number, we also multiply, divide and take exponents.</i></small></p>
+</center>
+<p><br></p>
+<p>We redefine:</p>
+<p><span class="math inline">\(x + y \Rightarrow (x + y)\)</span> % <span class="math inline">\(p\)</span></p>
+<p><span class="math inline">\(x * y \Rightarrow (x * y)\)</span> % <span class="math inline">\(p\)</span></p>
+<p><span class="math inline">\(x^y \Rightarrow (x^y)\)</span> % <span class="math inline">\(p\)</span></p>
+<p><span class="math inline">\(x - y \Rightarrow (x - y)\)</span> % <span class="math inline">\(p\)</span></p>
+<p><span class="math inline">\(x / y \Rightarrow (x * y ^{p-2})\)</span> % <span class="math inline">\(p\)</span></p>
+<p>The above rules are all self-consistent. For example, if <span class="math inline">\(p = 7\)</span>, then:</p>
+<ul>
+<li><span class="math inline">\(5 + 3 = 1\)</span> (because <span class="math inline">\(8\)</span> % <span class="math inline">\(7 = 1\)</span>)</li>
+<li><span class="math inline">\(1 - 3 = 5\)</span> (because <span class="math inline">\(-2\)</span> % <span class="math inline">\(7 = 5\)</span>)</li>
+<li><span class="math inline">\(2 \cdot 5 = 3\)</span></li>
+<li><span class="math inline">\(3 / 5 = 2\)</span> (because (<span class="math inline">\(3 \cdot 5^5\)</span>) % <span class="math inline">\(7 = 9375\)</span> % <span class="math inline">\(7 = 2\)</span>)</li>
+</ul>
+<p>A more general term for this kind of structure is a <strong>finite field</strong>. A <a href="https://en.wikipedia.org/wiki/Finite_field">finite field</a> is a mathematical structure that obeys the usual laws of arithmetic, but where there's a limited number of possible values, and so each value can be represented in a fixed size.</p>
+<p>Modular arithmetic (or <strong>prime fields</strong>) is the most common type of finite field, but there is also another type: <strong>extension fields</strong>. You've probably already seen an extension field before: the complex numbers. We "imagine" a new element, which we label <span class="math inline">\(i\)</span>, and declare that it satisfies <span class="math inline">\(i^2 = -1\)</span>. You can then take any combination of regular numbers and <span class="math inline">\(i\)</span>, and do math with it: <span class="math inline">\((3i+2) * (2i + 4) =\)</span> <span class="math inline">\(6i^2 + 12i + 4i + 8 = 16i + 2\)</span>. We can similarly take extensions of prime fields. As we start working over fields that are smaller, extensions of prime fields become increasingly important for preserving security, and binary fields (which Binius uses) depend on extensions entirely to have practical utility.</p>
+<p><a id="recap2" /></p>
+<h2 id="recap-arithmetization">Recap: arithmetization</h2>
+<p>The way that SNARKs and STARKs prove things about computer programs is through <strong>arithmetization</strong>: you convert a statement about a program that you want to prove, into a mathematical equation involving polynomials. A valid solution to the equation corresponds to a valid execution of the program.</p>
+<p>To give a simple example, suppose that I computed the 100'th Fibonacci number, and I want to prove to you what it is. I create a polynomial <span class="math inline">\(F\)</span> that encodes Fibonacci numbers: so <span class="math inline">\(F(0) = F(1) = 1\)</span>, <span class="math inline">\(F(2) = 2\)</span>, <span class="math inline">\(F(3) = 3\)</span>, <span class="math inline">\(F(4) = 5\)</span>, and so on for 100 steps. The condition that I need to prove is that <span class="math inline">\(F(x+2) = F(x) + F(x+1)\)</span> across the range <span class="math inline">\(x = \{0, 1 ... 98\}\)</span>. I can convince you of this by giving you the quotient:</p>
+<p><br></p>
+<p><span class="math display">\[H(x) = \frac{F(x+2) - F(x+1) - F(x)}{Z(x)}\]</span></p>
+<p><br></p>
+<p>Where <span class="math inline">\(Z(x) = (x - 0) * (x - 1) * ... * (x - 98)\)</span>. If I can provide valid <span class="math inline">\(F\)</span> and <span class="math inline">\(H\)</span> that satisfy this equation, then <span class="math inline">\(F\)</span> must satisfy <span class="math inline">\(F(x+2) - F(x+1) - F(x)\)</span> across that range. If I additionally verify that <span class="math inline">\(F\)</span> satisfies <span class="math inline">\(F(0) = F(1) = 1\)</span>, then <span class="math inline">\(F(100)\)</span> must actually be the 100th Fibonacci number.</p>
+<p>If you want to prove something more complicated, then you replace the "simple" relation <span class="math inline">\(F(x+2) = F(x) + F(x+1)\)</span> with a more complicated equation, which basically says "<span class="math inline">\(F(x+1)\)</span> is the output of initializing a virtual machine with the state <span class="math inline">\(F(x)\)</span>, and running one computational step". You can also replace the number 100 with a bigger number, eg. 100000000, to accommodate more steps.</p>
+<p>All SNARKs and STARKs are based on this idea of using a simple equation over polynomials (or sometimes vectors and matrices) to represent a large number of relationships between individual values. Not all involve checking equivalence between adjacent computational steps in the same way as above: <a href="https://vitalik.eth.limo/general/2019/09/22/plonk.html">PLONK</a> does not, for example, and neither does R1CS. But many of the most efficient ones do, because enforcing the same check (or the same few checks) many times makes it easier to minimize overhead.</p>
+<p><a id="plonky2" /></p>
+<h2 id="plonky2-from-256-bit-snarks-and-starks-to-64-bit-only-starks">Plonky2: from 256-bit SNARKs and STARKs to 64-bit... only STARKs</h2>
+<p>Five years ago, a reasonable summary of the different types of zero knowledge proof was as follows. There are two types of proofs: (elliptic-curve-based) SNARKs and (hash-based) STARKs. Technically, STARKs are a type of SNARK, but in practice it's common to use "SNARK" to refer to only the elliptic-curve-based variety, and "STARK" to refer to hash-based constructions. SNARKs are small, and so you can verify them very quickly and fit them onchain easily. STARKs are big, but they don't require <a href="https://vitalik.eth.limo/general/2022/03/14/trustedsetup.html">trusted setups</a>, and they are quantum-resistant.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/binius/starks.png" /></p>
+<p><small><i>STARKs work by treating the data as a polynomial, computing evaluations of that polynomial across a large number of points, and using the Merkle root of that extended data as the "polynomial commitment"</i></small></p>
+</center>
+<p><br></p>
+<p>A key bit of history here is that elliptic curve-based SNARKs came into widespread use first: it took until roughly 2018 for STARKs to become efficient enough to use, thanks to <a href="https://eccc.weizmann.ac.il/report/2017/134/">FRI</a>, and by then <a href="https://z.cash/">Zcash</a> had already been running for over a year. Elliptic curve-based SNARKs have a key limitation: if you want to use elliptic curve-based SNARKs, then the arithmetic in these equations must be done with integers modulo the number of points on the elliptic curve. This is a big number, usually near <span class="math inline">\(2^{256}\)</span>: for example, for the bn128 curve, it's <small>21888242871839275222246405745257275088548364400416034343698204186575808495617</small>. But the actual computation is using small numbers: if you think about a "real" program in your favorite language, most of the stuff it's working with is counters, indices in for loops, positions in the program, individual bits representing True or False, and other things that will almost always be only a few digits long.</p>
+<p>Even if your "original" data is made up of "small" numbers, the proving process requires computing quotients, extensions, random linear combinations, and other transformations of the data, which lead to an equal or larger number of objects that are, on average, as large as the full size of your field. This creates a key inefficiency: to prove a computation over <code>n</code> small values, you have to do even more computation over <code>n</code> much bigger values. At first, STARKs inherited the habit of using 256-bit fields from SNARKs, and so suffered the same inefficiency.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/binius/rs_example.png" /></p>
+<p><small><i>A Reed-Solomon extension of some polynomial evaluations. Even though the original values are small, the extra values all blow up to the full size of the field (in this case <span class="math inline">\(2^{31} - 1\)</span>).</i></small></p>
+</center>
+<p><br></p>
+<p>In 2022, Plonky2 was released. Plonky2's main innovation was doing arithmetic modulo a smaller prime: <span class="math inline">\(2^{64} - 2^{32} + 1 = 18446744069414584321\)</span>. Now, each addition or multiplication can always be done in just a few instructions on a CPU, and hashing all of the data together is 4x faster than before. But this comes with a catch: this approach is STARK-only. If you try to use a SNARK, with an elliptic curve of such a small size, the elliptic curve becomes insecure.</p>
+<p>To continue to be safe, Plonky2 also needed to introduce <em>extension fields</em>. A key technique in checking arithmetic equations is "sampling at a random point": if you want to check if <span class="math inline">\(H(x) * Z(x)\)</span> actually equals <span class="math inline">\(F(x+2) - F(x+1) - F(x)\)</span>, you can pick some random coordinate <span class="math inline">\(r\)</span>, provide <em>polynomial commitment opening proofs</em> proving <span class="math inline">\(H(r)\)</span>, <span class="math inline">\(Z(r)\)</span>, <span class="math inline">\(F(r)\)</span>, <span class="math inline">\(F(r+1)\)</span> and <span class="math inline">\(F(r+2)\)</span>, and then actually check if <span class="math inline">\(H(r) * Z(r)\)</span> equals <span class="math inline">\(F(r+2) - F(r+1) - F(r)\)</span>. If the attacker can guess the coordinate ahead of time, the attacker can trick the proof system - hence why it must be random. But this also means that the coordinate must be sampled from a set large enough that the attacker cannot guess it by random chance. If the modulus is near <span class="math inline">\(2^{256}\)</span>, this is clearly the case. But with a modulus of <span class="math inline">\(2^{64} - 2^{32} + 1\)</span>, we're not quite there, and if we drop to <span class="math inline">\(2^{31} - 1\)</span>, it's <em>definitely</em> not the case. Trying to fake a proof two billion times until one gets lucky is absolutely within the range of an attacker's capabilities.</p>
+<p>To stop this, we sample <span class="math inline">\(r\)</span> from an extension field. For example, you can define <span class="math inline">\(y\)</span> where <span class="math inline">\(y^3 = 5\)</span>, and take combinations of <span class="math inline">\(1\)</span>, <span class="math inline">\(y\)</span> and <span class="math inline">\(y^2\)</span>. This increases the total number of coordinates back up to roughly <span class="math inline">\(2^{93}\)</span>. The bulk of the polynomials computed by the prover don't go into this extension field; they just use integers modulo <span class="math inline">\(2^{31}-1\)</span>, and so you still get all the efficiencies from using the small field. But the random point check, and the FRI computation, does dive into this larger field, in order to get the needed security.</p>
+<p><a id="smalltobinary" /></p>
+<h2 id="from-small-primes-to-binary">From small primes to binary</h2>
+<p>Computers do arithmetic by representing larger numbers as sequences of zeroes and ones, and building "circuits" on top of those bits to compute things like addition and multiplication. Computers are particularly optimized for doing computation with 16-bit, 32-bit and 64-bit integers. Moduluses like <span class="math inline">\(2^{64} - 2^{32} + 1\)</span> and <span class="math inline">\(2^{31} - 1\)</span> are chosen not just because they fit within those bounds, but also because they <em>align well</em> with those bounds: you can do multiplication modulo <span class="math inline">\(2^{64} - 2^{32} + 1\)</span> by doing regular 32-bit multiplication, and shift and copy the outputs bitwise in a few places; <a href="https://xn--2-umb.com/22/goldilocks/">this article</a> explains some of the tricks well.</p>
+<p>What would be even better, however, is doing computation in binary directly. What if addition could be "just" XOR, with no need to worry about "carrying" the overflow from adding 1 + 1 in one bit position to the next bit position? What if multiplication could be more parallelizable in the same way? And these advantages would all come <em>on top</em> of being able to represent True/False values with just one bit.</p>
+<p>Capturing these advantages of doing binary computation directly is exactly what Binius is trying to do. A table from the <a href="https://docs.google.com/presentation/d/1WuTiof1BiaL6vB50CSeb-hvi5H4j_oqUt19-sZTQEB4/edit#slide=id.g2c9c013854e_0_95">Binius team's zkSummit presentation</a> shows the efficiency gains:</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/binius/zksummit_slides.png" /></p>
+</center>
+<p><br></p>
+<p>Despite being roughly the same "size", a 32-bit binary field operation takes 5x less computational resources than an operation over the 31-bit Mersenne field.</p>
+<p><a id="hypercubes" /></p>
+<h2 id="from-univariate-polynomials-to-hypercubes">From univariate polynomials to hypercubes</h2>
+<p>Suppose that we are convinced by this reasoning, and want to do everything over bits (zeroes and ones). How do we actually commit to a polynomial representing a billion bits?</p>
+<p>Here, we face two practical problems:</p>
+<ol type="1">
+<li>For a polynomial to represent a lot of values, those values need to be accessible at evaluations of the polynomial: in our Fibonacci example above, <span class="math inline">\(F(0)\)</span>, <span class="math inline">\(F(1)\)</span> ... <span class="math inline">\(F(100)\)</span>, and in a bigger computation, the indices would go into the millions. And the field that we use needs to contain numbers going up to that size.</li>
+<li>Proving anything about a value that we're committing to in a Merkle tree (as all STARKs do) requires Reed-Solomon encoding it: extending <span class="math inline">\(n\)</span> values into eg. <span class="math inline">\(8n\)</span> values, using the redundancy to prevent a malicious prover from cheating by faking one value in the middle of the computation. This also requires having a large enough field: to extend a million values to 8 million, you need 8 million different points at which to evaluate the polynomial.</li>
+</ol>
+<p>A key idea in Binius is solving these two problems separately, and doing so by representing the same data in two different ways. First, the polynomial itself. Elliptic curve-based SNARKs, 2019-era STARKs, Plonky2 and other systems generally deal with polynomials over <em>one</em> variable: <span class="math inline">\(F(x)\)</span>. Binius, on the other hand, takes inspiration from the <a href="https://eprint.iacr.org/2019/550.pdf">Spartan</a> protocol, and works with <em>multivariate</em> polynomials: <span class="math inline">\(F(x_1, x_2 ... x_k)\)</span>. In fact, we represent the entire computational trace on the "hypercube" of evaluations where each <span class="math inline">\(x_i\)</span> is either 0 or 1. For example, if we wanted to represent a sequence of Fibonacci numbers, and we were still using a field large enough to represent them, we might visualize the first sixteen of them as being something like this:</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/binius/hypercube.png" /></p>
+</center>
+<p><br></p>
+<p>That is, <span class="math inline">\(F(0,0,0,0)\)</span> would be 1, <span class="math inline">\(F(1,0,0,0)\)</span> would also be 1, <span class="math inline">\(F(0,1,0,0)\)</span> would be 2, and so forth, up until we get to <span class="math inline">\(F(1,1,1,1) = 987\)</span>. Given such a hypercube of evaluations, there is exactly one multilinear (degree-1 in each variable) polynomial that produces those evaluations. So we can think of that set of evaluations as representing the polynomial; we never actually need to bother computing the coefficients.</p>
+<p>This example is of course just for illustration: in practice, the whole point of going to a hypercube is to let us work with individual bits. The "Binius-native" way to count Fibonacci numbers would be to use a higher-dimensional cube, using each set of eg. 16 bits to store a number. This requires some cleverness to implement integer addition on top of the bits, but with Binius it's not too difficult.</p>
+<p>Now, we get to the erasure coding. The way STARKs work is: you take <span class="math inline">\(n\)</span> values, Reed-Solomon extend them to a larger number of values (often <span class="math inline">\(8n\)</span>, usually between <span class="math inline">\(2n\)</span> and <span class="math inline">\(32n\)</span>), and then randomly select some Merkle branches from the extension and perform some kind of check on them. A hypercube has length 2 in each dimension. Hence, it's not practical to extend it directly: there's not enough "space" to sample Merkle branches from 16 values. So what do we do instead? We pretend the hypercube is a square!</p>
+<p><a id="simplebinius" /></p>
+<h2 id="simple-binius---an-example">Simple Binius - an example</h2>
+<p><em>See <a href="https://github.com/ethereum/research/blob/master/binius/simple_binius.py">here</a> for a python implementation of this protocol.</em></p>
+<p>Let's go through an example, using regular integers as our field for convenience (in a real implementation this will be binary field elements). First, we take the hypercube we want to commit to, and encode it as a square:</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/binius/basicbinius1.drawio.png" /></p>
+</center>
+<p><br></p>
+<p>Now, we Reed-Solomon extend the square. That is, we treat each row as being a degree-3 polynomial evaluated at <code>x = {0, 1, 2, 3}</code>, and evaluate the same polynomial at <code>x = {4, 5, 6, 7}</code>:</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/binius/basicbinius.drawio.png" /></p>
+</center>
+<p><br></p>
+<p>Notice that the numbers blow up quickly! This is why in a real implementation, we always use a finite field for this, instead of regular integers: if we used integers modulo 11, for example, the extension of the first row would just be <code>[3, 10, 0, 6]</code>.</p>
+<p>If you want to play around with extending and verify the numbers here for yourself, you can use <a href="https://github.com/ethereum/research/blob/master/binius/utils.py#L123">my simple Reed-Solomon extension code here</a>.</p>
+<p>Next, we treat this extension as <em>columns</em>, and make a Merkle tree of the columns. The root of the Merkle tree is our commitment.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/binius/binius_merkletree.drawio.png" /></p>
+</center>
+<p><br></p>
+<p>Now, let's suppose that the prover wants to prove an evaluation of this polynomial at some point <span class="math inline">\(r = \{r_0, r_1, r_2, r_3\}\)</span>. There is one nuance in Binius that makes it somewhat weaker than other polynomial commitment schemes: the prover should not know, or be able to guess, <span class="math inline">\(s\)</span>, until after they committed to the Merkle root (in other words, <span class="math inline">\(r\)</span> should be a pseudo-random value that depends on the Merkle root). This makes the scheme useless for "database lookup" (eg. "ok you gave me the Merkle root, now prove to me <span class="math inline">\(P(0, 0, 1, 0)\)</span>!"). But the actual zero-knowledge proof protocols that we use generally don't need "database lookup"; they simply need to check the polynomial at a random evaluation point. Hence, this restriction is okay for our purposes.</p>
+<p>Suppose we pick <span class="math inline">\(r = \{1, 2, 3, 4\}\)</span> (the polynomial, at this point, evaluates to <span class="math inline">\(-137\)</span>; you can confirm it <a href="https://github.com/ethereum/research/blob/master/binius/utils.py#L100">with this code</a>). Now, we get into the process of actually making the proof. We split up <span class="math inline">\(r\)</span> into two parts: the first part <span class="math inline">\(\{1, 2\}\)</span> representing a linear combination of <em>columns within a row</em>, and the second part <span class="math inline">\(\{3, 4\}\)</span> representing a linear combination <em>of rows</em>. We compute a "tensor product", both for the column part:</p>
+<p><span class="math display">\[\bigotimes_{i=0}^1 (1 - r_i, r_i)\]</span></p>
+<p>And for the row part:</p>
+<p><span class="math display">\[\bigotimes_{i=2}^3 (1 - r_i, r_i)\]</span></p>
+<p>What this means is: a list of all possible products of one value from each set. In the row case, we get:</p>
+<p><span class="math display">\[[(1 - r_2) * (1 - r_3), r_2 * (1 - r_3), (1 - r_2) * r_3, r_2 * r_3]\]</span></p>
+<p>Using <span class="math inline">\(r = \{1, 2, 3, 4\}\)</span> (so <span class="math inline">\(r_2 = 3\)</span> and <span class="math inline">\(r_3 = 4\)</span>):</p>
+<p><span class="math display">\[
+[(1 - 3) * (1 - 4), 3 * (1 - 4), (1 - 3) * 4, 3 * 4] \\
+= [6, -9, -8, 12]\]</span></p>
+<p>Now, we compute a new "row" <span class="math inline">\(t&#39;\)</span>, by taking this linear combination of the existing rows. That is, we take:</p>
+<p><span class="math display">\[\begin{matrix}[3, 1, 4, 1] * 6\ + \\
+[5, 9, 2, 6] * (-9)\ + \\
+[5, 3, 5, 8] * (-8)\ + \\
+[9, 7, 9, 3] * 12 = \\
+[41, -15, 74, -76]
+\end{matrix}\]</span></p>
+<p>You can view what's going on here as a <strong>partial evaluation</strong>. If we were to multiply the full tensor product <span class="math inline">\(\bigotimes_{i=0}^3 (1 - r_i, r_i)\)</span> by the full vector of all values, you would get the evaluation <span class="math inline">\(P(1, 2, 3, 4) = -137\)</span>. Here we're multiplying a <em>partial</em> tensor product that only uses <em>half</em> the evaluation coordinates, and we're reducing a grid of <span class="math inline">\(N\)</span> values to a row of <span class="math inline">\(\sqrt{N}\)</span> values. If you give this row to someone else, they can use the tensor product of the <em>other</em> half of the evaluation coordinates to complete the rest of the computation.</p>
+<p>The prover provides the verifier with this new row, <span class="math inline">\(t&#39;\)</span>, as well as the Merkle proofs of some randomly sampled columns. This is <span class="math inline">\(O(\sqrt{N})\)</span> data. In our illustrative example, we'll have the prover provide just the last column; in real life, the prover would need to provide a few dozen columns to achieve adequate security.</p>
+<p>Now, we take advantage of the linearity of Reed-Solomon codes. The key property that we use is: <strong>taking a linear combination of a Reed-Solomon extension gives the same result as a Reed-Solomon extension of a linear combination</strong>. This kind of "order independence" often happens when you have two operations that are both linear.</p>
+<p>The verifier does exactly this. They compute the extension of <span class="math inline">\(t&#39;\)</span>, and they compute the same linear combination of columns that the prover computed before (but only to the columns provided by the prover), and verify that these two procedures give the same answer.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/binius/basicbinius2.drawio.png" /></p>
+</center>
+<p><br></p>
+<p>In this case, extending <span class="math inline">\(t&#39;\)</span>, and computing the same linear combination (<span class="math inline">\([6, -9, -8, 12]\)</span>) of the column, both give the same answer: <span class="math inline">\(-10746\)</span>. This proves that the Merkle root was constructed "in good faith" (or it at least "close enough"), and it matches <span class="math inline">\(t&#39;\)</span>: at least the great majority of the columns are compatible with each other and with <span class="math inline">\(t&#39;\)</span>.</p>
+<p>But the verifier still needs to check one more thing: actually check the evaluation of the polynomial at <span class="math inline">\(\{r_0 .. r_3\}\)</span>. So far, none of the verifier's steps actually depended on the value that the prover claimed. So here is how we do that check. We take the tensor product of what we labelled as the "column part" of the evaluation point:</p>
+<p><span class="math display">\[\bigotimes_{i=0}^1 (1 - r_i, r_i)\]</span></p>
+<p>In our example, where <span class="math inline">\(r = \{1, 2, 3, 4\}\)</span> (so the half that chooses the column is <span class="math inline">\(\{1, 2\}\)</span>), this equals:</p>
+<p><span class="math display">\[
+[(1 - 1) * (1 - 2), 1 * (1 - 2), (1 - 1) * 2, 1 * 2] \\
+= [0, -1, 0, 2]\]</span></p>
+<p>So now we take this linear combination of <span class="math inline">\(t&#39;\)</span>:</p>
+<p><span class="math display">\[
+0 * 41 + (-1) * (-15) + 0 * 74 + 2 * (-76) = -137
+\]</span></p>
+<p>Which exactly equals the answer you get if you evaluate the polynomial directly.</p>
+<p>The above is pretty close to a complete description of the "simple" Binius protocol. This already has some interesting advantages: for example, because the data is split into rows and columns, you only need a field half the size. But this doesn't come close to realizing the full benefits of doing computation in binary. For this, we will need the full Binius protocol. But first, let's get a deeper understanding of binary fields.</p>
+<p><a id="binaryfields" /></p>
+<h2 id="binary-fields">Binary fields</h2>
+<p>The smallest possible field is arithmetic modulo 2, which is so small that we can write out its addition and multiplication tables:</p>
+<center>
+<br>
+<table>
+<tr>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th>+</th>
+<th><strong>0</strong></th>
+<th><strong>1</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>0</strong></td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td><strong>1</strong></td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th>*</th>
+<th><strong>0</strong></th>
+<th><strong>1</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>0</strong></td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td><strong>1</strong></td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</table>
+<br>
+</center>
+<p>We can do the same thing with primes; if we start with <span class="math inline">\(F_2\)</span> (integers modulo 2) and then define <span class="math inline">\(x\)</span> where <span class="math inline">\(x^2 = x + 1\)</span>, we get the following addition and multiplication tables:</p>
+<center>
+<br>
+<table>
+<tr>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th>+</th>
+<th><strong>0</strong></th>
+<th><strong>1</strong></th>
+<th><strong>x</strong></th>
+<th><strong>x+1</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>0</strong></td>
+<td>0</td>
+<td>1</td>
+<td>x</td>
+<td>x+1</td>
+</tr>
+<tr class="even">
+<td><strong>1</strong></td>
+<td>1</td>
+<td>0</td>
+<td>x+1</td>
+<td>x</td>
+</tr>
+<tr class="odd">
+<td><strong>x</strong></td>
+<td>x</td>
+<td>x+1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td><strong>x+1</strong></td>
+<td>x+1</td>
+<td>x</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th>+</th>
+<th><strong>0</strong></th>
+<th><strong>1</strong></th>
+<th><strong>x</strong></th>
+<th><strong>x+1</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>0</strong></td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td><strong>1</strong></td>
+<td>0</td>
+<td>1</td>
+<td>x</td>
+<td>x+1</td>
+</tr>
+<tr class="odd">
+<td><strong>x</strong></td>
+<td>0</td>
+<td>x</td>
+<td>x+1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td><strong>x+1</strong></td>
+<td>0</td>
+<td>x+1</td>
+<td>1</td>
+<td>x</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</table>
+<br>
+</center>
+<p>It turns out that we can expand the binary field to arbitrarily large sizes by repeating this construction. Unlike with complex numbers over reals, where you can add <em>one</em> new element <span class="math inline">\(i\)</span>, but you can't add any more (<a href="https://en.wikipedia.org/wiki/Quaternion">quaternions</a> do exist, but they're mathematically weird, eg. <span class="math inline">\(ab \neq ba\)</span>), with finite fields you can keep adding new extensions forever. Specifically, we define elements as follows:</p>
+<ul>
+<li><span class="math inline">\(x_0\)</span> satisfies <span class="math inline">\(x_0^2 = x_0 + 1\)</span></li>
+<li><span class="math inline">\(x_1\)</span> satisfies <span class="math inline">\(x_1^2 = x_1x_0 + 1\)</span></li>
+<li><span class="math inline">\(x_2\)</span> satisfies <span class="math inline">\(x_2^2 = x_2x_1 + 1\)</span></li>
+<li><span class="math inline">\(x_3\)</span> satisfies <span class="math inline">\(x_3^2 = x_3x_2 + 1\)</span></li>
+</ul>
+<p>And so on. This is often called the <strong>tower construction</strong>, because of how each successive extension can be viewed as adding a new layer to a tower. This is not the only way to construct binary fields of arbitary size, but it has some unique advantages that Binius takes advantage of.</p>
+<p>We can represent these numbers as a list of bits, eg. <span class="math inline">\(\texttt{1100101010001111}\)</span>. The first bit represents multiples of 1, the second bit represents multiples of <span class="math inline">\(x_0\)</span>, then subsequent bits represent multiples of: <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_1 * x_0\)</span>, <span class="math inline">\(x_2\)</span>, <span class="math inline">\(x_2 * x_0\)</span>, and so forth. This encoding is nice because you can decompose it:</p>
+<center>
+<p><span class="math inline">\(\texttt{1100101010001111} = \texttt{11001010} + \texttt{10001111} * x_3\)</span> <span class="math inline">\(= \texttt{1100} + \texttt{1010} * x_2 + \texttt{1000} * x_3 + \texttt{1111} * x_2x_3\)</span> <span class="math inline">\(= \texttt{11} + \texttt{10} * x_2 + \texttt{10} * x_2x_1 + \texttt{10} * x_3 + \texttt{11} * x_2x_3 + \texttt{11} * x_1x_2x_3\)</span> <span class="math inline">\(= 1 + x_0 + x_2 + x_2x_1 + x_3 + x_2x_3 + x_0x_2x_3 + x_1x_2x_3 + x_0x_1x_2x_3\)</span></p>
+</center>
+<p>This is a relatively uncommon notation, but I like representing binary field elements as integers, taking the bit representation where more-significant bits are to the right. That is, <span class="math inline">\(\texttt{1} = 1\)</span>, <span class="math inline">\(x_0 = \texttt{01} = 2\)</span>, <span class="math inline">\(1 + x_0 = \texttt{11} = 3\)</span>, <span class="math inline">\(1 + x_0 + x_2 = \texttt{11001000} = 19\)</span>, and so forth. <span class="math inline">\(\texttt{1100101010001111}\)</span> is, in this representation, 61779.</p>
+<p>Addition in binary fields is just XOR (and, incidentally, so is subtraction); note that this implies that <span class="math inline">\(x + x = 0\)</span> for any <span class="math inline">\(x\)</span>. To multiply two elements <span class="math inline">\(x * y\)</span>, there's a pretty simple recursive algorithm: split each number into two halves:</p>
+<p><span class="math inline">\(x = L_x + R_x * x_k\)</span> <span class="math inline">\(y = L_y + R_y * x_k\)</span></p>
+<p>Then, split up the multiplication:</p>
+<p><span class="math inline">\(x * y = (L_x * L_y) + (L_x * R_y) * x_k + (R_x * L_y) * x_k + (R_x * R_y) * x_k^2\)</span></p>
+<p>The last piece is the only slightly tricky one, because you have to apply the reduction rule, and replace <span class="math inline">\(R_x * R_y * x_k^2\)</span> with <span class="math inline">\(R_x * R_y * (x_{k-1} * x_k + 1)\)</span>. There are more efficient ways to do multiplication, analogues of the <a href="https://en.wikipedia.org/wiki/Karatsuba_algorithm">Karatsuba algorithm</a> and <a href="https://vitalik.eth.limo/general/2019/05/12/fft.html">fast Fourier transforms</a>, but I will leave it as an exercise to the interested reader to figure those out.</p>
+<p>Division in binary fields is done by combining multiplication and inversion: <span class="math inline">\(\frac{3}{5} = 3 * \frac{1}{5}\)</span>. The "simple but slow" way to do inversion is an application of <a href="https://planetmath.org/fermatslittletheorem">generalized Fermat's little theorem</a>: <span class="math inline">\(\frac{1}{x} = x^{2^{2^k}-2}\)</span> for any <span class="math inline">\(k\)</span> where <span class="math inline">\(2^{2^k} &gt; x\)</span>. In this case, <span class="math inline">\(\frac{1}{5} = 5^{14} = 14\)</span>, and so <span class="math inline">\(\frac{3}{5} = 3 * 14 = 9\)</span>. There is also a more complicated but more efficient inversion algorithm, which you can find <a href="https://ieeexplore.ieee.org/document/612935">here</a>. You can use <a href="https://github.com/ethereum/research/blob/master/binius/binary_fields.py">the code here</a> to play around with binary field addition, multiplication and division yourself.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/binius/additiontable.png" style="width:330px; margin-right: 30px" /> <img src="../../../../images/binius/multiplicationtable.png" style="width:330px" /></p>
+<p><br><small><i>Left: addition table for four-bit binary field elements (ie. elements made up only of combinations of <span class="math inline">\(1\)</span>, <span class="math inline">\(x_0\)</span>, <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_0x_1\)</span>). Right: multiplication table for four-bit binary field elements.</i></small></p>
+</center>
+<p><br></p>
+<p>The beautiful thing about this type of binary field is that it combines some of the best parts of "regular" integers and modular arithmetic. Like regular integers, binary field elements are unbounded: you can keep extending as far as you want. But like modular arithmetic, if you do operations over values within a certain size limit, all of your answers also stay within the same bound. For example, if you take successive powers of <span class="math inline">\(42\)</span>, you get:</p>
+<p><span class="math display">\[1, 42, 199, 215, 245, 249, 180, 91...\]</span></p>
+<p>And after 255 steps, you get right back to <span class="math inline">\(42^{255} = 1\)</span>. And like <em>both</em> regular integers and modular arithmetic, they obey the usual laws of mathematics: <span class="math inline">\(a*b = b*a\)</span>, <span class="math inline">\(a * (b+c) = a*b + a*c\)</span>, and even some strange new laws, eg. <span class="math inline">\(a^2 + b^2 = (a+b)^2\)</span> (the usual <span class="math inline">\(2ab\)</span> term is missing, because in a binary field, <span class="math inline">\(1 + 1 = 0\)</span>).</p>
+<p>And finally, binary fields work conveniently with bits: if you do math with numbers that fit into <span class="math inline">\(2^k\)</span> bits, then all of your outputs will also fit into <span class="math inline">\(2^k\)</span> bits. This avoids awkwardness like eg. with Ethereum's <a href="https://www.eip4844.com/">EIP-4844</a>, where the individual "chunks" of a blob have to be numbers modulo <small><code>52435875175126190479447740508185965837690552500527637822603658699938581184513</code></small>, and so encoding binary data involves throwing away a bit of space and doing extra checks at the application layer to make sure that each element is storing a value less than <span class="math inline">\(2^{248}\)</span>. It also means that binary field arithmetic is <em>super</em> fast on computers - both CPUs, and theoretically optimal FPGA and ASIC designs.</p>
+<p>This all means that we can do things like the Reed-Solomon encoding that we did above, in a way that completely avoids integers "blowing up" like we saw in our example, and in a way that is extremely "native" to the kind of calculation that computers are good at. The "splitting" property of binary fields - how we were able to do <span class="math inline">\(\texttt{1100101010001111} = \texttt{11001010} + \texttt{10001111} * x_3\)</span>, and then keep splitting as little or as much as we wanted, is also crucial for enabling a lot of flexibility.</p>
+<p><a id="fullbinius" /></p>
+<h2 id="full-binius">Full Binius</h2>
+<p><em>See <a href="https://github.com/ethereum/research/blob/master/binius/packed_binius.py">here</a> for a python implementation of this protocol.</em></p>
+<p>Now, we can get to "full Binius", which adjusts "simple Binius" to (i) work over binary fields, and (ii) let us commit to individual bits. This protocol is tricky to understand, because it keeps going back and forth between different ways of looking at a matrix of bits; it certainly took me longer to understand than it usually takes me to understand a cryptographic protocol. But once you understand binary fields, the good news is that there isn't any "harder math" that Binius depends on. This is not <a href="https://vitalik.eth.limo/general/2017/01/14/exploring_ecp.html">elliptic curve pairings</a>, where there are deeper and deeper rabbit holes of algebraic geometry to go down; here, binary fields are all you need.</p>
+<p>Let's look again at the full diagram:</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/binius/binius.drawio.png" /></p>
+</center>
+<p><br></p>
+<p>By now, you should be familiar with most of the components. The idea of "flattening" a hypercube into a grid, the idea of computing a row combination and a column combination as tensor products of the evaluation point, and the idea of checking equivalence between "Reed-Solomon extending then computing the row combination", and "computing the row combination then Reed-Solomon extending", were all in simple Binius.</p>
+<p>What's new in "full Binius"? Basically three things:</p>
+<ul>
+<li>The individual values in the hypercube, and in the square, have to be bits (0 or 1)</li>
+<li>The extension process extends bits into more bits, by grouping bits into columns and temporarily pretending that they are larger field elements</li>
+<li>After the row combination step, there's an element-wise "decompose into bits" step, which converts the extension back into bits</li>
+</ul>
+<p>We will go through both in turn. First, the new extension procedure. A Reed-Solomon code has the fundamental limitation that if you are extending <span class="math inline">\(n\)</span> values to <span class="math inline">\(k*n\)</span> values, you need to be working in a field that has <span class="math inline">\(k*n\)</span> different values that you can use as coordinates. With <span class="math inline">\(F_2\)</span> (aka, bits), you cannot do that. And so what we do is, we "pack" adjacent <span class="math inline">\(F_2\)</span> elements together into larger values. In the example here, we're packing two bits at a time into elements in <span class="math inline">\(\{0, 1, 2, 3\}\)</span>, because our extension only has four evaluation points and so that's enough for us. In a "real" proof, we would probably back 16 bits at a time together. We then do the Reed-Solomon code over these packed values, and unpack them again into bits.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/binius/basicbinius3.drawio.png" /></p>
+</center>
+<p><br></p>
+<p>Now, the row combination. To make "evaluate at a random point" checks cryptographically secure, we need that point to be sampled from a pretty large space, much larger than the hypercube itself. Hence, while the points <em>within</em> the hypercube are bits, evaluations <em>outside</em> the hypercube will be much larger. In our example above, the "row combination" ends up being <span class="math inline">\([11, 4, 6, 1]\)</span>.</p>
+<p>This presents a problem: we know how to combine pairs of <em>bits</em> into a larger value, and then do a Reed-Solomon extension on that, but how do you do the same to pairs of much larger values?</p>
+<p>The trick in Binius is to do it bitwise: we look at the individual bits of each value (eg. for what we labeled as "11", that's <span class="math inline">\([1, 1, 0, 1]\)</span>), and then we extend <em>row-wise</em>. That is, we perform the extension procedure on the <span class="math inline">\(1\)</span> row of each element, then on the <span class="math inline">\(x_0\)</span> row, then on the "<span class="math inline">\(x_1\)</span>" row, then on the <span class="math inline">\(x_0 * x_1\)</span> row, and so forth (well, in our toy example we stop there, but in a real implementation we would go up to 128 rows (the last one being <span class="math inline">\(x_6 *\ ... *\ x_0\)</span>)).</p>
+<p>Recapping:</p>
+<ul>
+<li>We take the bits in the hypercube, and convert them into a grid</li>
+<li>Then, we treat adjacent groups of bits <em>on each row</em> as larger field elements, and do arithmetic on them to Reed-Solomon extend the rows</li>
+<li>Then, we take a row combination of each <em>column</em> of bits, and get a (for squares larger than 4x4, much smaller) column of bits for each row as the output</li>
+<li>Then, we look at the output as a matrix, and treat the bits of <em>that</em> as rows again</li>
+</ul>
+<p>Why does this work? In "normal" math, the ability to (often) do linear operations in either order and get the same result stops working if you start slicing a number up by digits. For example, if I start with the number 345, and I multiply it by 8 and then by 3, I get 8280, and if do those two operations in reverse, I also do 8280. But if I insert a "split by digit" operation in between the two steps, it breaks down: if you do 8x then 3x, you get:</p>
+<p><span class="math display">\[345 \xrightarrow{\times 8} 2760 \rightarrow [2, 7, 6, 0] \xrightarrow{\times 3} [6, 21, 18, 0]\]</span></p>
+<p>But if you do 3x then 8x, you get:</p>
+<p><span class="math display">\[345 \xrightarrow{\times 3} 1035 \rightarrow [1, 0, 3, 5] \xrightarrow{\times 8} [8, 0, 24, 40]\]</span></p>
+<p>But in binary fields built with the tower construction, this kind of thing <em>does</em> work. The reason why has to do with their separability: if you multiply a big value by a small value, what happens in each segment, stays in each segment. If we multiply <span class="math inline">\(\texttt{1100101010001111}\)</span> by <span class="math inline">\(\texttt{11}\)</span>, that's the same as first decomposing <span class="math inline">\(\texttt{1100101010001111}\)</span> into <span class="math inline">\(\texttt{11} + \texttt{10} * x_2 + \texttt{10} * x_2x_1 + \texttt{10} * x_3 + \texttt{11} * x_2x_3 + \texttt{11} * x_1x_2x_3\)</span>, and then multiplying each component by <span class="math inline">\(\texttt{11}\)</span> separately.</p>
+<p><a id="puttogether" /></p>
+<h2 id="putting-it-all-together">Putting it all together</h2>
+<p>Generally, zero knowledge proof systems work by making statements about polynomials that simultaneously represent statements about the underlying evaluations: just like we saw in the Fibonacci example, <span class="math inline">\(F(X+2) - F(X+1) - F(X) = Z(X) * H(X)\)</span> simultaneously checks all steps of the Fibonacci computation. We check statements about polynomials by proving evaluations at a random point: given a commitment to <span class="math inline">\(F\)</span>, you might randomly choose eg. 1892470, demand proofs of evaluations of <span class="math inline">\(F\)</span>, <span class="math inline">\(Z\)</span> and <span class="math inline">\(H\)</span> at that point (and <span class="math inline">\(H\)</span> at adjacent points), check those proofs, and then check if <span class="math inline">\(F(1892472) - F(1892471) - F(1892470)\)</span> <span class="math inline">\(= Z(1892470) * H(1892470)\)</span>. This check at a random point stands in for checking the whole polynomial: if the polynomial equation <em>doesn't</em> match, the chance that it matches at a specific random coordinate is tiny.</p>
+<p>In practice, a major source of inefficiency comes from the fact that in real programs, most of the numbers we are working with are tiny: indices in for loops, True/False values, counters, and similar things. But when we "extend" the data using Reed-Solomon encoding to give it the redundancy needed to make Merkle proof-based checks safe, most of the "extra" values end up taking up the full size of a field, even if the original values are small.</p>
+<p>To get around this, we want to make the field as small as possible. Plonky2 brought us down from 256-bit numbers to 64-bit numbers, and then Plonky3 went further to 31 bits. But even this is sub-optimal. With binary fields, we can work over <em>individual bits</em>. This makes the encoding "dense": if your actual underlying data has <code>n</code> bits, then your encoding will have <code>n</code> bits, and the extension will have <code>8 * n</code> bits, with no extra overhead.</p>
+<p>Now, let's look at the diagram a third time:</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/binius/binius.drawio.png" /></p>
+<p><br></p>
+</center>
+<p>In Binius, we are committing to a <em>multilinear polynomial</em>: a hypercube <span class="math inline">\(P(x_0, x_1 ... x_k)\)</span>, where the individual evaluations <span class="math inline">\(P(0, 0 ... 0)\)</span>, <span class="math inline">\(P(0, 0 ... 1)\)</span> up to <span class="math inline">\(P(1, 1, ... 1)\)</span> are holding the data that we care about. To prove an evaluation at a point, we "re-interpret" the same data as a square. We then extend each <em>row</em>, using Reed-Solomon encoding over <em>groups</em> of bits, to give the data the redundancy needed for random Merkle branch queries to be secure. We then compute a random linear combination of rows, with coefficients designed so that the new combined row actually holds the evaluation that we care about. Both this newly-created row (which get re-interpreted as 128 rows of bits), and a few randomly-selected columns with Merkle branches, get passed to the verifier. This is <span class="math inline">\(O(\sqrt{N})\)</span> data: the new row has <span class="math inline">\(O(\sqrt{N})\)</span> size, and each of the (constant number of) columns that get passed has <span class="math inline">\(O(\sqrt{N})\)</span> size.</p>
+<p>The verifier then does a "row combination of the extension" (or rather, a few columns of the extension), and an "extension of the row combination", and verifies that the two match. They then compute a <em>column</em> combination, and check that it returns the value that the prover is claiming. And there's our proof system (or rather, the <em>polynomial commitment scheme</em>, which is the key building block of a proof system).</p>
+<p><a id="notcovered" /></p>
+<h2 id="what-did-we-not-cover">What did we <em>not</em> cover?</h2>
+<ul>
+<li><strong>Efficient algorithms to extend the rows</strong>, which are needed to actually make the computational efficiency of the verifier <span class="math inline">\(O(\sqrt{N})\)</span>. With naive Lagrange interpolation, we can only get <span class="math inline">\(O(N^{\frac{2}{3}})\)</span>. For this, we use Fast Fourier transforms over binary fields, described <a href="https://vitalik.eth.limo/general/2019/05/12/fft.html">here</a> (though the exact implementation will be different, because this post uses a less efficient construction not based on recursive extension).</li>
+<li><strong>Arithmetization</strong>. Univariate polynomials are convenient because you can do things like <span class="math inline">\(F(X+2) - F(X+1) - F(X) = Z(X) * H(X)\)</span> to relate adjacent steps in the computation. In a hypercube, the interpretation of "the next step" is not nearly as clean as "<span class="math inline">\(X + 1\)</span>". You <em>can</em> do <span class="math inline">\(X * k\)</span> and jump around powers of <span class="math inline">\(k\)</span>, but this jumping around behavior would sacrifice many of the key advantages of Binius. The <a href="https://eprint.iacr.org/2023/1784.pdf">Binius paper</a> introduces solutions to this (eg. see Section 4.3), but this is a "deep rabbit hole" in its own right.</li>
+<li><strong>How to actually safely do specific-value checks</strong>. The Fibonacci example required checking key boundary conditions: <span class="math inline">\(F(0) = F(1) = 1\)</span>, and the value of <span class="math inline">\(F(100)\)</span>. But with "raw" Binius, checking at pre-known evaluation points is insecure. There are fairly simple ways to convert a known-evaluation check into an unknown-evaluation check, using what are called sum-check protocols; but we did not get into those here.</li>
+<li><strong>Lookup protocols</strong>, <a href="https://zkresear.ch/t/lookup-singularity/65">another technology</a> which has been recently gaining usage as a way to make ultra-efficient proving systems. Binius can be combined with lookup protocols for many applications.</li>
+<li><strong>Going beyond square-root verification time</strong>. Square root is expensive: a Binius proof of <span class="math inline">\(2^{32}\)</span> bits is about 11 MB long. You can remedy this using some other proof system to make a "proof of a Binius proof", thus gaining both Binius's efficiency in proving the main statement <em>and</em> a small proof size. Another option is the much more complicated <a href="https://eprint.iacr.org/2024/504">FRI-Binius</a> protocol, which creates a poly-logarithmic-sized proof (like <a href="https://vitalik.eth.limo/general/2017/11/22/starks_part_2.html">regular FRI</a>).</li>
+<li><strong>How Binius affects what counts as "SNARK-friendly"</strong>. The basic summary is that, if you use Binius, you no longer need to care much about making computation "arithmetic-friendly": "regular" hashes are no longer more efficient than traditional arithmetic hashes, multiplication modulo <span class="math inline">\(2^{32}\)</span> or modulo <span class="math inline">\(2^{256}\)</span> is no longer a big headache compared to multiplication modulo <span class="math inline">\(p\)</span>, and so forth. But this is a complicated topic; lots of things change when everything is done in binary.</li>
+</ul>
+<p>I expect many more improvements in binary-field-based proving techniques in the months ahead.</p>
+ </div> 
