@@ -109,407 +109,140 @@ MathJax = {
 <br> <br> <br>
 <title> Having a safe CEX: proof of solvency and beyond </title>
 
-<p><em>Special thanks to Balaji Srinivasan, and Coinbase, Kraken and
-Binance staff for discussion.</em></p>
-<p>Every time a major centralized exchange blows up, a common question
-that comes up is whether or not we can use cryptographic techniques to
-solve the problem. Rather than relying solely on "fiat" methods like
-government licenses, auditors and examining the corporate governance and
-the backgrounds of the individuals running the exchange, exchanges could
-create cryptographic <em>proofs</em> that show that the funds they hold
-on-chain are enough to cover their liabilities to their users.</p>
-<p>Even more ambitiously, an exchange could build a system where it
-can't withdraw a depositor's funds at all without their consent.
-Potentially, we could explore the entire spectrum between the "don't be
-evil" aspiring-good-guy CEX and the "can't be evil", but for-now
-inefficient and privacy-leaking, on-chain DEX. This post will get into
-the history of attempts to move exchanges one or two steps closer to
-trustlessness, the limitations of these techniques, and some newer and
-more powerful ideas that rely on <a
-href="../../../2021/01/26/snarks.html">ZK-SNARKs</a> and other advanced
-technologies.</p>
-<h2
-id="balance-lists-and-merkle-trees-old-school-proof-of-solvency">Balance
-lists and Merkle trees: old-school proof-of-solvency</h2>
-<p>The earliest attempts by exchanges to try to cryptographically prove
-that they are not cheating their users go back quite far. In 2011,
-then-largest Bitcoin exchange MtGox proved that they had funds by
-sending <a
-href="https://www.blockchain.com/btc/tx/3a1b9e330d32fef1ee42f8e86420d2be978bbe0dc5862f17da9027cf9e11f8c4">a
-transaction</a> that <a
-href="https://en.bitcoin.it/wiki/Mt._Gox#Trading_incidents">moved 424242
-BTC</a> to a pre-announced address. In 2013, <a
-href="https://web.archive.org/web/20170106070229/https://people.xiph.org/~greg/bitcoin-wizards-fraud-proof.log.txt">discussions
-started</a> on how to solve the other side of the problem: proving the
-total size of customers' deposits. If you prove that customers' deposits
-equal X ("<strong>proof of liabilities</strong>"), and prove ownership
-of the private keys of X coins ("<strong>proof of assets</strong>"),
-then you have a <strong>proof of solvency</strong>: you've proven the
-exchange has the funds to pay back all of its depositors.</p>
-<p>The simplest way to prove deposits is to simply publish a list of
-<code>(username, balance)</code> pairs. Each user can check that their
-balance is included in the list, and anyone can check the full list to
-see that (i) every balance is non-negative, and (ii) the total sum is
-the claimed amount. Of course, this breaks privacy, so we can change the
-scheme a little bit: publish a list of
-<code>(hash(username, salt), balance)</code> pairs, and send each user
-privately their <a
-href="https://en.wikipedia.org/wiki/Salt_(cryptography)"><code>salt</code></a>
-value. But even this leaks balances, and it leaks the pattern of changes
-in balances. The desire to preserve privacy <a
-href="https://bitcoin.stackexchange.com/questions/37060/is-there-a-generally-agreed-on-protocol-for-creating-proof-of-solvency">brings
-us</a> to the <a
-href="https://web.archive.org/web/20170114112433/https://iwilcox.me.uk/2014/proving-bitcoin-reserves#merkle_top">next
-invention</a>: <strong>the Merkle tree technique</strong>.</p>
+<p><em>Special thanks to Balaji Srinivasan, and Coinbase, Kraken and Binance staff for discussion.</em></p>
+<p>Every time a major centralized exchange blows up, a common question that comes up is whether or not we can use cryptographic techniques to solve the problem. Rather than relying solely on "fiat" methods like government licenses, auditors and examining the corporate governance and the backgrounds of the individuals running the exchange, exchanges could create cryptographic <em>proofs</em> that show that the funds they hold on-chain are enough to cover their liabilities to their users.</p>
+<p>Even more ambitiously, an exchange could build a system where it can't withdraw a depositor's funds at all without their consent. Potentially, we could explore the entire spectrum between the "don't be evil" aspiring-good-guy CEX and the "can't be evil", but for-now inefficient and privacy-leaking, on-chain DEX. This post will get into the history of attempts to move exchanges one or two steps closer to trustlessness, the limitations of these techniques, and some newer and more powerful ideas that rely on <a href="../../../2021/01/26/snarks.html">ZK-SNARKs</a> and other advanced technologies.</p>
+<h2 id="balance-lists-and-merkle-trees-old-school-proof-of-solvency">Balance lists and Merkle trees: old-school proof-of-solvency</h2>
+<p>The earliest attempts by exchanges to try to cryptographically prove that they are not cheating their users go back quite far. In 2011, then-largest Bitcoin exchange MtGox proved that they had funds by sending <a href="https://www.blockchain.com/btc/tx/3a1b9e330d32fef1ee42f8e86420d2be978bbe0dc5862f17da9027cf9e11f8c4">a transaction</a> that <a href="https://en.bitcoin.it/wiki/Mt._Gox#Trading_incidents">moved 424242 BTC</a> to a pre-announced address. In 2013, <a href="https://web.archive.org/web/20170106070229/https://people.xiph.org/~greg/bitcoin-wizards-fraud-proof.log.txt">discussions started</a> on how to solve the other side of the problem: proving the total size of customers' deposits. If you prove that customers' deposits equal X ("<strong>proof of liabilities</strong>"), and prove ownership of the private keys of X coins ("<strong>proof of assets</strong>"), then you have a <strong>proof of solvency</strong>: you've proven the exchange has the funds to pay back all of its depositors.</p>
+<p>The simplest way to prove deposits is to simply publish a list of <code>(username, balance)</code> pairs. Each user can check that their balance is included in the list, and anyone can check the full list to see that (i) every balance is non-negative, and (ii) the total sum is the claimed amount. Of course, this breaks privacy, so we can change the scheme a little bit: publish a list of <code>(hash(username, salt), balance)</code> pairs, and send each user privately their <a href="https://en.wikipedia.org/wiki/Salt_(cryptography)"><code>salt</code></a> value. But even this leaks balances, and it leaks the pattern of changes in balances. The desire to preserve privacy <a href="https://bitcoin.stackexchange.com/questions/37060/is-there-a-generally-agreed-on-protocol-for-creating-proof-of-solvency">brings us</a> to the <a href="https://web.archive.org/web/20170114112433/https://iwilcox.me.uk/2014/proving-bitcoin-reserves#merkle_top">next invention</a>: <strong>the Merkle tree technique</strong>.</p>
 <center>
 <p><br></p>
-<p><img
-src="../../../../images/proof_of_solvency/merkle_tree_1.png" /></p>
+<p><img src="../../../../images/proof_of_solvency/merkle_tree_1.png" /></p>
 <p><i><small></p>
-<p>Green: Charlie's node. Blue: nodes Charlie will receive as part of
-his proof. Yellow: root node, publicly shown to everyone.</p>
+<p>Green: Charlie's node. Blue: nodes Charlie will receive as part of his proof. Yellow: root node, publicly shown to everyone.</p>
 </small></i>
 </center>
 <p><br></p>
-<p>The Merkle tree technique consists of putting the table of customers'
-balances into a <strong>Merkle sum tree</strong>. In a Merkle sum tree,
-each node is a <code>(balance, hash)</code> pair. The bottom-layer leaf
-nodes represent the balances and salted username hashes of individual
-customers. In each higher-layer node, the balance is the sum of the two
-balances below, and the hash is the hash of the two nodes below. A
-Merkle sum proof, like a Merkle proof, is a "branch" of the tree,
-consisting of the sister nodes along the path from a leaf to the
-root.</p>
-<p>The exchange would send each user a Merkle sum proof of their
-balance. The user would then have a guarantee that their balance is
-correctly included as part of the total. <strong>A simple example code
-implementation can be found <a
-href="https://github.com/ethereum/research/blob/master/proof_of_solvency/merkle_sum_tree.py">here</a></strong>.</p>
-<div
-style="height: 300px; margin-top: 40px; margin-bottom: 40px; overflow-y: scroll">
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The function for computing a parent node given two child nodes</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> combine_tree_nodes(L, R):</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    L_hash, L_balance <span class="op">=</span> L</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    R_hash, R_balance <span class="op">=</span> R</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> L_balance <span class="op">&gt;=</span> <span class="dv">0</span> <span class="kw">and</span> R_balance <span class="op">&gt;=</span> <span class="dv">0</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    new_node_hash <span class="op">=</span> <span class="bu">hash</span>(</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        L_hash <span class="op">+</span> L_balance.to_bytes(<span class="dv">32</span>, <span class="st">&#39;big&#39;</span>) <span class="op">+</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        R_hash <span class="op">+</span> R_balance.to_bytes(<span class="dv">32</span>, <span class="st">&#39;big&#39;</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (new_node_hash, L_balance <span class="op">+</span> R_balance)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Builds a full Merkle tree. Stored in flattened form where</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># node i is the parent of nodes 2i and 2i+1</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> build_merkle_sum_tree(user_table: <span class="st">&quot;List[(username, salt, balance)]&quot;</span>):</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    tree_size <span class="op">=</span> get_next_power_of_2(<span class="bu">len</span>(user_table))</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    tree <span class="op">=</span> (</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        [<span class="va">None</span>] <span class="op">*</span> tree_size <span class="op">+</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        [userdata_to_leaf(<span class="op">*</span>user) <span class="cf">for</span> user <span class="kw">in</span> user_table] <span class="op">+</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        [EMPTY_LEAF <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(tree_size <span class="op">-</span> <span class="bu">len</span>(user_table))]</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(tree_size <span class="op">-</span> <span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>):</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        tree[i] <span class="op">=</span> combine_tree_nodes(tree[i<span class="op">*</span><span class="dv">2</span>], tree[i<span class="op">*</span><span class="dv">2</span><span class="op">+</span><span class="dv">1</span>])</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tree</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Root of a tree is stored at index 1 in the flattened form</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_root(tree):</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tree[<span class="dv">1</span>]</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Gets a proof for a node at a particular index</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_proof(tree, index):</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    branch_length <span class="op">=</span> log2(<span class="bu">len</span>(tree)) <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ^ = bitwise xor, x ^ 1 = sister node of x</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    index_in_tree <span class="op">=</span> index <span class="op">+</span> <span class="bu">len</span>(tree) <span class="op">//</span> <span class="dv">2</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [tree[(index_in_tree <span class="op">//</span> <span class="dv">2</span><span class="op">**</span>i) <span class="op">^</span> <span class="dv">1</span>] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(branch_length)]</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Verifies a proof (duh)</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> verify_proof(username, salt, balance, index, user_table_size, root, proof):</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    leaf <span class="op">=</span> userdata_to_leaf(username, salt, balance)</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    branch_length <span class="op">=</span> log2(get_next_power_of_2(user_table_size)) <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(branch_length):</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> index <span class="op">&amp;</span> (<span class="dv">2</span><span class="op">**</span>i):</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>            leaf <span class="op">=</span> combine_tree_nodes(proof[i], leaf)</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>            leaf <span class="op">=</span> combine_tree_nodes(leaf, proof[i])</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> leaf <span class="op">==</span> root</span></code></pre></div>
+<p>The Merkle tree technique consists of putting the table of customers' balances into a <strong>Merkle sum tree</strong>. In a Merkle sum tree, each node is a <code>(balance, hash)</code> pair. The bottom-layer leaf nodes represent the balances and salted username hashes of individual customers. In each higher-layer node, the balance is the sum of the two balances below, and the hash is the hash of the two nodes below. A Merkle sum proof, like a Merkle proof, is a "branch" of the tree, consisting of the sister nodes along the path from a leaf to the root.</p>
+<p>The exchange would send each user a Merkle sum proof of their balance. The user would then have a guarantee that their balance is correctly included as part of the total. <strong>A simple example code implementation can be found <a href="https://github.com/ethereum/research/blob/master/proof_of_solvency/merkle_sum_tree.py">here</a></strong>.</p>
+<div style="height: 300px; margin-top: 40px; margin-bottom: 40px; overflow-y: scroll">
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co"># The function for computing a parent node given two child nodes</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">def</span> combine_tree_nodes(L, R):</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>    L_hash, L_balance <span class="op">=</span> L</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>    R_hash, R_balance <span class="op">=</span> R</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>    <span class="cf">assert</span> L_balance <span class="op">&gt;=</span> <span class="dv">0</span> <span class="kw">and</span> R_balance <span class="op">&gt;=</span> <span class="dv">0</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>    new_node_hash <span class="op">=</span> <span class="bu">hash</span>(</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>        L_hash <span class="op">+</span> L_balance.to_bytes(<span class="dv">32</span>, <span class="st">&#39;big&#39;</span>) <span class="op">+</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>        R_hash <span class="op">+</span> R_balance.to_bytes(<span class="dv">32</span>, <span class="st">&#39;big&#39;</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>    )</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>    <span class="cf">return</span> (new_node_hash, L_balance <span class="op">+</span> R_balance)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a><span class="co"># Builds a full Merkle tree. Stored in flattened form where</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a><span class="co"># node i is the parent of nodes 2i and 2i+1</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a><span class="kw">def</span> build_merkle_sum_tree(user_table: <span class="st">&quot;List[(username, salt, balance)]&quot;</span>):</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a>    tree_size <span class="op">=</span> get_next_power_of_2(<span class="bu">len</span>(user_table))</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a>    tree <span class="op">=</span> (</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>        [<span class="va">None</span>] <span class="op">*</span> tree_size <span class="op">+</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a>        [userdata_to_leaf(<span class="op">*</span>user) <span class="cf">for</span> user <span class="kw">in</span> user_table] <span class="op">+</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a>        [EMPTY_LEAF <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(tree_size <span class="op">-</span> <span class="bu">len</span>(user_table))]</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a>    )</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(tree_size <span class="op">-</span> <span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a>        tree[i] <span class="op">=</span> combine_tree_nodes(tree[i<span class="op">*</span><span class="dv">2</span>], tree[i<span class="op">*</span><span class="dv">2</span><span class="op">+</span><span class="dv">1</span>])</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a>    <span class="cf">return</span> tree</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true"></a><span class="co"># Root of a tree is stored at index 1 in the flattened form</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true"></a><span class="kw">def</span> get_root(tree):</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true"></a>    <span class="cf">return</span> tree[<span class="dv">1</span>]</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true"></a><span class="co"># Gets a proof for a node at a particular index</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true"></a><span class="kw">def</span> get_proof(tree, index):</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true"></a>    branch_length <span class="op">=</span> log2(<span class="bu">len</span>(tree)) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true"></a>    <span class="co"># ^ = bitwise xor, x ^ 1 = sister node of x</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true"></a>    index_in_tree <span class="op">=</span> index <span class="op">+</span> <span class="bu">len</span>(tree) <span class="op">//</span> <span class="dv">2</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true"></a>    <span class="cf">return</span> [tree[(index_in_tree <span class="op">//</span> <span class="dv">2</span><span class="op">**</span>i) <span class="op">^</span> <span class="dv">1</span>] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(branch_length)]</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true"></a><span class="co"># Verifies a proof (duh)</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true"></a><span class="kw">def</span> verify_proof(username, salt, balance, index, user_table_size, root, proof):</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true"></a>    leaf <span class="op">=</span> userdata_to_leaf(username, salt, balance)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true"></a>    branch_length <span class="op">=</span> log2(get_next_power_of_2(user_table_size)) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(branch_length):</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true"></a>        <span class="cf">if</span> index <span class="op">&amp;</span> (<span class="dv">2</span><span class="op">**</span>i):</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true"></a>            leaf <span class="op">=</span> combine_tree_nodes(proof[i], leaf)</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true"></a>        <span class="cf">else</span>:</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true"></a>            leaf <span class="op">=</span> combine_tree_nodes(leaf, proof[i])</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true"></a>    <span class="cf">return</span> leaf <span class="op">==</span> root</span></code></pre></div>
 </div>
-<p>Privacy leakage in this design is much lower than with a fully public
-list, and it can be decreased further by shuffling the branches each
-time a root is published, but some privacy leakage is still there:
-Charlie learns that <em>someone</em> has a balance of 164 ETH,
-<em>some</em> two users have balances that add up to 70 ETH, etc. An
-attacker that controls many accounts could still potentially learn a
-significant amount about the exchange's users.</p>
-<p>One important subtlety of the scheme is the possibility of
-<em>negative</em> balances: what if an exchange that has 1390 ETH of
-customer balances but only 890 ETH in reserves tries to make up the
-difference by adding a -500 ETH balance under a fake account somewhere
-in the tree? It turns out that this possibility does not break the
-scheme, though this is the reason why we specifically need a Merkle sum
-tree and not a regular Merkle tree. Suppose that Henry is the fake
-account controlled by the exchange, and the exchange puts -500 ETH
-there:</p>
+<p>Privacy leakage in this design is much lower than with a fully public list, and it can be decreased further by shuffling the branches each time a root is published, but some privacy leakage is still there: Charlie learns that <em>someone</em> has a balance of 164 ETH, <em>some</em> two users have balances that add up to 70 ETH, etc. An attacker that controls many accounts could still potentially learn a significant amount about the exchange's users.</p>
+<p>One important subtlety of the scheme is the possibility of <em>negative</em> balances: what if an exchange that has 1390 ETH of customer balances but only 890 ETH in reserves tries to make up the difference by adding a -500 ETH balance under a fake account somewhere in the tree? It turns out that this possibility does not break the scheme, though this is the reason why we specifically need a Merkle sum tree and not a regular Merkle tree. Suppose that Henry is the fake account controlled by the exchange, and the exchange puts -500 ETH there:</p>
 <center>
 <p><br></p>
-<p><img
-src="../../../../images/proof_of_solvency/merkle_tree_2.png" /></p>
+<p><img src="../../../../images/proof_of_solvency/merkle_tree_2.png" /></p>
 </center>
 <p><br></p>
-<p>Greta's proof verification would fail: the exchange would have to
-give her Henry's -500 ETH node, which she would reject as invalid. Eve
-and Fred's proof verification would <em>also</em> fail, because the
-intermediate node above Henry has -230 total ETH, and so is also
-invalid! To get away with the theft, the exchange would have to hope
-that nobody in the entire right half of the tree checks their balance
-proof.</p>
-<p>If the exchange can identify 500 ETH worth of users that they are
-confident will either not bother to check the proof, or will not be
-believed when they complain that they never received a proof, they could
-get away with the theft. But then the exchange could also just exclude
-those users from the tree and have the same effect. Hence, the Merkle
-tree technique is basically as good as a proof-of-liabilities scheme can
-be, if only achieving a proof of liabilities is the goal. But its
-privacy properties are still not ideal. You can go a little bit further
-by using Merkle trees in more clever ways, like <a
-href="https://github.com/ethereum/research/blob/master/proof_of_solvency/crazy_merkle_tree.py">making
-each satoshi or wei a separate leaf</a>, but ultimately with more modern
-tech there are even better ways to do it.</p>
-<h3 id="improving-privacy-and-robustness-with-zk-snarks">Improving
-privacy and robustness with ZK-SNARKs</h3>
-<p>ZK-SNARKs are a powerful technology. ZK-SNARKs may be to cryptography
-what <a
-href="https://en.wikipedia.org/wiki/Transformer_(machine_learning_model)">transformers</a>
-are to AI: a general-purpose technology that is so powerful that it will
-completely steamroll a whole bunch of application-specific techniques
-for a whole bunch of problems that were developed in the decades prior.
-And so, of course, we can use ZK-SNARKs to greatly simplify and improve
-privacy in proof-of-liabilities protocols.</p>
-<p>The simplest thing that we can do is put all users' deposits into a
-Merkle tree (or, even simpler, a <a
-href="https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html">KZG
-commitment</a>), and use a ZK-SNARK to prove that all balances in the
-tree are non-negative and add up to some claimed value. If we add a
-layer of hashing for privacy, the Merkle branch (or KZG proof) given to
-each user would reveal <em>nothing</em> about the balance of any other
-user.</p>
+<p>Greta's proof verification would fail: the exchange would have to give her Henry's -500 ETH node, which she would reject as invalid. Eve and Fred's proof verification would <em>also</em> fail, because the intermediate node above Henry has -230 total ETH, and so is also invalid! To get away with the theft, the exchange would have to hope that nobody in the entire right half of the tree checks their balance proof.</p>
+<p>If the exchange can identify 500 ETH worth of users that they are confident will either not bother to check the proof, or will not be believed when they complain that they never received a proof, they could get away with the theft. But then the exchange could also just exclude those users from the tree and have the same effect. Hence, the Merkle tree technique is basically as good as a proof-of-liabilities scheme can be, if only achieving a proof of liabilities is the goal. But its privacy properties are still not ideal. You can go a little bit further by using Merkle trees in more clever ways, like <a href="https://github.com/ethereum/research/blob/master/proof_of_solvency/crazy_merkle_tree.py">making each satoshi or wei a separate leaf</a>, but ultimately with more modern tech there are even better ways to do it.</p>
+<h3 id="improving-privacy-and-robustness-with-zk-snarks">Improving privacy and robustness with ZK-SNARKs</h3>
+<p>ZK-SNARKs are a powerful technology. ZK-SNARKs may be to cryptography what <a href="https://en.wikipedia.org/wiki/Transformer_(machine_learning_model)">transformers</a> are to AI: a general-purpose technology that is so powerful that it will completely steamroll a whole bunch of application-specific techniques for a whole bunch of problems that were developed in the decades prior. And so, of course, we can use ZK-SNARKs to greatly simplify and improve privacy in proof-of-liabilities protocols.</p>
+<p>The simplest thing that we can do is put all users' deposits into a Merkle tree (or, even simpler, a <a href="https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html">KZG commitment</a>), and use a ZK-SNARK to prove that all balances in the tree are non-negative and add up to some claimed value. If we add a layer of hashing for privacy, the Merkle branch (or KZG proof) given to each user would reveal <em>nothing</em> about the balance of any other user.</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/proof_of_solvency/kzg.png" /></p>
 <p><i><small></p>
-<p>Using KZG commitments is one way to avoid privacy leakage, as there
-is no need to provide "sister nodes" as proofs, and a simple ZK-SNARK
-can be used to prove the sum of the balances and that each balance is
-non-negative.</p>
+<p>Using KZG commitments is one way to avoid privacy leakage, as there is no need to provide "sister nodes" as proofs, and a simple ZK-SNARK can be used to prove the sum of the balances and that each balance is non-negative.</p>
 </small></i>
 </center>
 <p><br></p>
-<p>We can prove the sum and non-negativity of balances in the above KZG
-with a special-purpose ZK-SNARK. Here is one simple example way to do
-this. We introduce an auxiliary polynomial <span
-class="math inline">\(I(x)\)</span>, which "builds up the bits" of each
-balance (we assume for the sake of example that balances are under <span
-class="math inline">\(2^{15}\)</span>) and where every 16th position
-tracks a running total with an offset so that it sums to zero only if
-the actual total matches the declared total. If <span
-class="math inline">\(z\)</span> is an order-128 root of unity, we might
-prove the equations:</p>
+<p>We can prove the sum and non-negativity of balances in the above KZG with a special-purpose ZK-SNARK. Here is one simple example way to do this. We introduce an auxiliary polynomial <span class="math inline">\(I(x)\)</span>, which "builds up the bits" of each balance (we assume for the sake of example that balances are under <span class="math inline">\(2^{15}\)</span>) and where every 16th position tracks a running total with an offset so that it sums to zero only if the actual total matches the declared total. If <span class="math inline">\(z\)</span> is an order-128 root of unity, we might prove the equations:</p>
 <center>
 <p><span class="math inline">\(I(z^{16x}) = 0\)</span></p>
-<p><span class="math inline">\(I(z^{16x + 14}) =
-P(\omega^{2x+1})\)</span></p>
-<p><span class="math inline">\(I(z^{i}) - 2*I(z^{i-1}) \in \{0, 1\}\ \
-if\ \ i\ \ mod\ 16 \not \in \{0, 15\}\)</span></p>
-<p><span class="math inline">\(I(z^{16*x + 15}) = I(z^{16*x-1}) +
-I(z^{16*x+14}) - \frac{the\ declared\ total}{user\ count}\)</span></p>
+<p><span class="math inline">\(I(z^{16x + 14}) = P(\omega^{2x+1})\)</span></p>
+<p><span class="math inline">\(I(z^{i}) - 2*I(z^{i-1}) \in \{0, 1\}\ \ if\ \ i\ \ mod\ 16 \not \in \{0, 15\}\)</span></p>
+<p><span class="math inline">\(I(z^{16*x + 15}) = I(z^{16*x-1}) + I(z^{16*x+14}) - \frac{the\ declared\ total}{user\ count}\)</span></p>
 </center>
-<p>The first values of a valid setting for <span
-class="math inline">\(I(x)\)</span> would be <code>0 0 0 0</code>
-<code>0 0 0 0</code> <code>0 0 1 2</code> <code>5 10 20 -165</code>
-<code>0 0 0 0</code> <code>0 0 0 0</code> <code>0 1 3 6</code>
-<code>12 25 50 -300</code> ...</p>
-<p>See <a
-href="../../../2021/01/26/snarks.html#comparing-a-polynomial-to-itself">here</a>
-and <a
-href="../../../2021/01/26/snarks.html#whats-a-slightly-more-useful-example-of-a-computation-being-converted-into-a-set-of-polynomial-equations">here</a>
-in <a href="../../../2021/01/26/snarks.html">my post on ZK-SNARKs</a>
-for further explanation of how to convert equations like these into a
-polynomial check and then into a ZK-SNARK. This isn't an optimal
-protocol, but it does show how these days these kinds of cryptographic
-proofs are not that spooky!</p>
-<p>With only a few extra equations, constraint systems like this can be
-adapted to more complex settings. For example, in a leverage trading
-system, an individual users having negative balances is acceptable but
-only if they have enough other assets to cover the funds with some
-collateralization margin. A SNARK could be used to prove this more
-complicated constraint, reassuring users that the exchange is not
-risking their funds by <a
-href="https://decrypt.co/114941/god-mode-sbf-alameda-secret-exemptions-ftx-liquidation">secretly
-exempting other users</a> from the rules.</p>
-<p>In the longer-term future, this kind of ZK proof of liabilities could
-perhaps be used not just for customer deposits at exchanges, but for
-lending more broadly. Anyone taking out a loan would put a record into a
-polynomial or a tree containing that loan, and the root of that
-structure would get published on-chain. This would let anyone seeking a
-loan ZK-prove to the lender that they have not yet taken out too many
-other loans. Eventually, legal innovation could even make loans that
-have been committed to in this way higher-priority than loans that have
-not. This leads us in exactly the same direction as one of the ideas
-that was discussed in the <a
-href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4105763">"Decentralized
-Society: Finding Web3's Soul" paper</a>: a general notion of negative
-reputation or encumberments on-chain through some form of "soulbound
-tokens".</p>
+<p>The first values of a valid setting for <span class="math inline">\(I(x)\)</span> would be <code>0 0 0 0</code> <code>0 0 0 0</code> <code>0 0 1 2</code> <code>5 10 20 -165</code> <code>0 0 0 0</code> <code>0 0 0 0</code> <code>0 1 3 6</code> <code>12 25 50 -300</code> ...</p>
+<p>See <a href="../../../2021/01/26/snarks.html#comparing-a-polynomial-to-itself">here</a> and <a href="../../../2021/01/26/snarks.html#whats-a-slightly-more-useful-example-of-a-computation-being-converted-into-a-set-of-polynomial-equations">here</a> in <a href="../../../2021/01/26/snarks.html">my post on ZK-SNARKs</a> for further explanation of how to convert equations like these into a polynomial check and then into a ZK-SNARK. This isn't an optimal protocol, but it does show how these days these kinds of cryptographic proofs are not that spooky!</p>
+<p>With only a few extra equations, constraint systems like this can be adapted to more complex settings. For example, in a leverage trading system, an individual users having negative balances is acceptable but only if they have enough other assets to cover the funds with some collateralization margin. A SNARK could be used to prove this more complicated constraint, reassuring users that the exchange is not risking their funds by <a href="https://decrypt.co/114941/god-mode-sbf-alameda-secret-exemptions-ftx-liquidation">secretly exempting other users</a> from the rules.</p>
+<p>In the longer-term future, this kind of ZK proof of liabilities could perhaps be used not just for customer deposits at exchanges, but for lending more broadly. Anyone taking out a loan would put a record into a polynomial or a tree containing that loan, and the root of that structure would get published on-chain. This would let anyone seeking a loan ZK-prove to the lender that they have not yet taken out too many other loans. Eventually, legal innovation could even make loans that have been committed to in this way higher-priority than loans that have not. This leads us in exactly the same direction as one of the ideas that was discussed in the <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4105763">"Decentralized Society: Finding Web3's Soul" paper</a>: a general notion of negative reputation or encumberments on-chain through some form of "soulbound tokens".</p>
 <h2 id="proof-of-assets">Proof of assets</h2>
-<p>The simplest version of proof of assets is the protocol that we saw
-above: to prove that you hold X coins, you simply move X coins around at
-some pre-agreed time or in a transaction where the data field contains
-the words "these funds belong to Binance". To avoid paying transaction
-fees, you could sign an off-chain message instead; both <a
-href="https://en.bitcoin.it/wiki/Message_signing">Bitcoin</a> and <a
-href="https://w3c-ccg.github.io/ethereum-eip712-signature-2021-spec/">Ethereum</a>
-have standards for <a
-href="https://github.com/bitcoin/bips/blob/master/bip-0322.mediawiki">off-chain</a>
-signed <a
-href="https://eips.ethereum.org/EIPS/eip-1271">messages</a>.</p>
-<p>There are two practical problems with this simple proof-of-assets
-technique:</p>
+<p>The simplest version of proof of assets is the protocol that we saw above: to prove that you hold X coins, you simply move X coins around at some pre-agreed time or in a transaction where the data field contains the words "these funds belong to Binance". To avoid paying transaction fees, you could sign an off-chain message instead; both <a href="https://en.bitcoin.it/wiki/Message_signing">Bitcoin</a> and <a href="https://w3c-ccg.github.io/ethereum-eip712-signature-2021-spec/">Ethereum</a> have standards for <a href="https://github.com/bitcoin/bips/blob/master/bip-0322.mediawiki">off-chain</a> signed <a href="https://eips.ethereum.org/EIPS/eip-1271">messages</a>.</p>
+<p>There are two practical problems with this simple proof-of-assets technique:</p>
 <ul>
 <li><strong>Dealing with cold storage</strong></li>
 <li><strong>Collateral dual-use</strong></li>
 </ul>
-<p>For safety reasons, most exchanges keep the great majority of
-customer funds in "cold storage": on offline computers, where
-transactions need to be signed and carried over onto the internet
-manually. Literal air-gapping is common: a cold storage setup that I
-used to use for personal funds involved a permanently offline computer
-generating a QR code containing the signed transaction, which I would
-scan from my phone. Because of the high values at stake, the security
-protocols used by exchanges are crazier still, and often involve using
-multi-party computation between several devices to further reduce the
-chance of a hack against a single device compromising a key. Given this
-kind of setup, making even a single extra message to prove control of an
-address is an expensive operation!</p>
+<p>For safety reasons, most exchanges keep the great majority of customer funds in "cold storage": on offline computers, where transactions need to be signed and carried over onto the internet manually. Literal air-gapping is common: a cold storage setup that I used to use for personal funds involved a permanently offline computer generating a QR code containing the signed transaction, which I would scan from my phone. Because of the high values at stake, the security protocols used by exchanges are crazier still, and often involve using multi-party computation between several devices to further reduce the chance of a hack against a single device compromising a key. Given this kind of setup, making even a single extra message to prove control of an address is an expensive operation!</p>
 <p>There are several paths that an exchange can take:</p>
 <ul>
-<li><strong>Keep a few public long-term-use addresses</strong>. The
-exchange would generate a few addresses, publish a proof of each address
-<em>once</em> to prove ownership, and then use those addresses
-repeatedly. This is by far the simplest option, though it does add some
-constraints in how to preserve security and privacy.</li>
-<li><strong>Have many addresses, prove a few randomly</strong>. The
-exchange would have many addresses, perhaps even using each address only
-once and retiring it after a single transaction. In this case, the
-exchange may have a protocol where from time to time a few addresses get
-randomly selected and must be "opened" to prove ownership. Some
-exchanges already do something like this with an auditor, but in
-principle this technique could be turned into a fully automated
-procedure.</li>
-<li><strong>More complicated ZKP options</strong>. For example, an
-exchange could set all of its addresses to be 1-of-2 multisigs, where
-one of the keys is different per address, and the other is a blinded
-version of some "grand" emergency backup key stored in some complicated
-but very high-security way, eg. a 12-of-16 multisig. To preserve privacy
-and avoid revealing the entire set of its addresses, the exchange could
-even run a zero knowledge proof over the blockchain where it proves the
-total balance of all addresses on chain that have this format.</li>
+<li><strong>Keep a few public long-term-use addresses</strong>. The exchange would generate a few addresses, publish a proof of each address <em>once</em> to prove ownership, and then use those addresses repeatedly. This is by far the simplest option, though it does add some constraints in how to preserve security and privacy.</li>
+<li><strong>Have many addresses, prove a few randomly</strong>. The exchange would have many addresses, perhaps even using each address only once and retiring it after a single transaction. In this case, the exchange may have a protocol where from time to time a few addresses get randomly selected and must be "opened" to prove ownership. Some exchanges already do something like this with an auditor, but in principle this technique could be turned into a fully automated procedure.</li>
+<li><strong>More complicated ZKP options</strong>. For example, an exchange could set all of its addresses to be 1-of-2 multisigs, where one of the keys is different per address, and the other is a blinded version of some "grand" emergency backup key stored in some complicated but very high-security way, eg. a 12-of-16 multisig. To preserve privacy and avoid revealing the entire set of its addresses, the exchange could even run a zero knowledge proof over the blockchain where it proves the total balance of all addresses on chain that have this format.</li>
 </ul>
-<p>The other major issue is guarding against collateral dual-use.
-Shuttling collateral back and forth between each other to do proof of
-reserves is something that exchanges <a
-href="https://twitter.com/cz_binance/status/1591690261029130240">could
-easily do</a>, and would allow them to pretend to be solvent when they
-actually are not. Ideally, proof of solvency would be done in real time,
-with a proof that updates after every block. If this is impractical, the
-next best thing would be to coordinate on a fixed schedule between the
-different exchanges, eg. proving reserves at 1400 UTC every Tuesday.</p>
-<p>One final issue is: <strong>can you do proof-of-assets on
-fiat?</strong> Exchanges don't just hold cryptocurrency, they also hold
-fiat currency within the banking system. Here, the answer is: yes, but
-such a procedure would inevitably rely on "fiat" trust models: the bank
-itself can attest to balances, auditors can attest to balance sheets,
-etc. Given that fiat is not cryptographically verifiable, this is the
-best that can be done within that framework, but it's still worth
-doing.</p>
-<p>An alternative approach would be to cleanly separate between one
-entity that runs the exchange and deals with asset-backed stablecoins
-like USDC, and another entity (USDC itself) that handles the cash-in and
-cash-out process for moving between crypto and traditional banking
-systems. Because the "liabilities" of USDC are just on-chain ERC20
-tokens, proof of liabilities comes "for free" and only proof of assets
-is required.</p>
-<h2 id="plasma-and-validiums-can-we-make-cexes-non-custodial">Plasma and
-validiums: can we make CEXes non-custodial?</h2>
-<p>Suppose that we want to go further: we don't want to just prove that
-the exchange <em>has the funds</em> to pay back its users. Rather, we
-want to <strong>prevent the exchange from stealing users' funds
-completely</strong>.</p>
-<p>The first major attempt at this was <strong>Plasma</strong>, a
-scaling solution that was popular in Ethereum research circles in 2017
-and 2018. Plasma works by splitting up the balance into a set of
-individual "coins", where each coin is assigned an index and lives in a
-particular position in the Merkle tree of a Plasma block. Making a valid
-transfer of a coin requires putting a transaction into the correct
-position of a tree whose root gets published on-chain.</p>
+<p>The other major issue is guarding against collateral dual-use. Shuttling collateral back and forth between each other to do proof of reserves is something that exchanges <a href="https://twitter.com/cz_binance/status/1591690261029130240">could easily do</a>, and would allow them to pretend to be solvent when they actually are not. Ideally, proof of solvency would be done in real time, with a proof that updates after every block. If this is impractical, the next best thing would be to coordinate on a fixed schedule between the different exchanges, eg. proving reserves at 1400 UTC every Tuesday.</p>
+<p>One final issue is: <strong>can you do proof-of-assets on fiat?</strong> Exchanges don't just hold cryptocurrency, they also hold fiat currency within the banking system. Here, the answer is: yes, but such a procedure would inevitably rely on "fiat" trust models: the bank itself can attest to balances, auditors can attest to balance sheets, etc. Given that fiat is not cryptographically verifiable, this is the best that can be done within that framework, but it's still worth doing.</p>
+<p>An alternative approach would be to cleanly separate between one entity that runs the exchange and deals with asset-backed stablecoins like USDC, and another entity (USDC itself) that handles the cash-in and cash-out process for moving between crypto and traditional banking systems. Because the "liabilities" of USDC are just on-chain ERC20 tokens, proof of liabilities comes "for free" and only proof of assets is required.</p>
+<h2 id="plasma-and-validiums-can-we-make-cexes-non-custodial">Plasma and validiums: can we make CEXes non-custodial?</h2>
+<p>Suppose that we want to go further: we don't want to just prove that the exchange <em>has the funds</em> to pay back its users. Rather, we want to <strong>prevent the exchange from stealing users' funds completely</strong>.</p>
+<p>The first major attempt at this was <strong>Plasma</strong>, a scaling solution that was popular in Ethereum research circles in 2017 and 2018. Plasma works by splitting up the balance into a set of individual "coins", where each coin is assigned an index and lives in a particular position in the Merkle tree of a Plasma block. Making a valid transfer of a coin requires putting a transaction into the correct position of a tree whose root gets published on-chain.</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/proof_of_solvency/plasmacash.png" /></p>
 <p><i><small></p>
-<p>Oversimplified diagram of one version of Plasma. Coins are held in a
-smart contract that enforces the rules of the Plasma protocol at
-withdrawal time.</p>
+<p>Oversimplified diagram of one version of Plasma. Coins are held in a smart contract that enforces the rules of the Plasma protocol at withdrawal time.</p>
 </small></i>
 </center>
 <p><br></p>
-<p>OmiseGo attempted to make a decentralized exchange based on this
-protocol, but since then they have pivoted to other ideas - as has, for
-that matter, Plasma Group itself, which is now the optimistic EVM rollup
-project <a href="https://www.optimism.io/">Optimism</a>.</p>
-<p>It's not worth looking at the technical limitations of Plasma as
-conceived in 2018 (eg. <a
-href="https://ethresear.ch/t/plasma-cash-defragmentation/3410">proving
-coin defragmentation</a>) as some kind of morality tale about the whole
-concept. Since the peak of Plasma discourse in 2018, ZK-SNARKs have
-become much more viable for scaling-related use cases, and as we have
-said above, ZK-SNARKs change everything.</p>
-<p>The more modern version of the Plasma idea is what Starkware calls a
-<a
-href="https://ethereum.org/en/developers/docs/scaling/validium/">validium</a>:
-basically the same as a ZK-rollup, except where data is held off-chain.
-This construction could be used for a lot of use cases, conceivably
-anything where a centralized server needs to run some code and prove
-that it's executing code correctly. <strong>In a validium, the operator
-has <em>no</em> way to steal funds, though depending on the details of
-the implementation some quantity of user funds could get <em>stuck</em>
-if the operator disappears.</strong></p>
-<p>This is all really good: far from CEX vs DEX being a binary, it turns
-out that there is a whole spectrum of options, including various forms
-of hybrid centralization where you gain some benefits like efficiency
-but still have a lot of cryptographic guardrails preventing the
-centralized operator from engaging in most forms of abuses.</p>
+<p>OmiseGo attempted to make a decentralized exchange based on this protocol, but since then they have pivoted to other ideas - as has, for that matter, Plasma Group itself, which is now the optimistic EVM rollup project <a href="https://www.optimism.io/">Optimism</a>.</p>
+<p>It's not worth looking at the technical limitations of Plasma as conceived in 2018 (eg. <a href="https://ethresear.ch/t/plasma-cash-defragmentation/3410">proving coin defragmentation</a>) as some kind of morality tale about the whole concept. Since the peak of Plasma discourse in 2018, ZK-SNARKs have become much more viable for scaling-related use cases, and as we have said above, ZK-SNARKs change everything.</p>
+<p>The more modern version of the Plasma idea is what Starkware calls a <a href="https://ethereum.org/en/developers/docs/scaling/validium/">validium</a>: basically the same as a ZK-rollup, except where data is held off-chain. This construction could be used for a lot of use cases, conceivably anything where a centralized server needs to run some code and prove that it's executing code correctly. <strong>In a validium, the operator has <em>no</em> way to steal funds, though depending on the details of the implementation some quantity of user funds could get <em>stuck</em> if the operator disappears.</strong></p>
+<p>This is all really good: far from CEX vs DEX being a binary, it turns out that there is a whole spectrum of options, including various forms of hybrid centralization where you gain some benefits like efficiency but still have a lot of cryptographic guardrails preventing the centralized operator from engaging in most forms of abuses.</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/proof_of_solvency/spectrum.png" /></p>
 </center>
 <p><br></p>
-<p>But it's worth getting to the fundamental issue with the right half
-of this design space: <strong>dealing with user errors</strong>. By far
-the most important type of error is: what if a user forgets their
-password, loses their devices, gets hacked, or otherwise loses access to
-their account?</p>
-<p>Exchanges can solve this problem: first e-mail recovery, and if even
-that fails, more complicated forms of recovery through KYC. But to be
-able to solve such problems, the exchange needs to actually have control
-over the coins. In order to have the ability to recover user accounts'
-funds for good reasons, exchanges need to have power that could also be
-used to steal user accounts' funds for bad reasons. This is an
-unavoidable tradeoff.</p>
-<p>The ideal long-term solution is to rely on self-custody, in a future
-where users have easy access to technologies such as <a
-href="../../../2021/01/11/recovery.html">multisig and social recovery
-wallets</a> to help deal with emergency situations. But <em>in the short
-term</em>, there are two clear alternatives that have clearly distinct
-costs and benefits:</p>
+<p>But it's worth getting to the fundamental issue with the right half of this design space: <strong>dealing with user errors</strong>. By far the most important type of error is: what if a user forgets their password, loses their devices, gets hacked, or otherwise loses access to their account?</p>
+<p>Exchanges can solve this problem: first e-mail recovery, and if even that fails, more complicated forms of recovery through KYC. But to be able to solve such problems, the exchange needs to actually have control over the coins. In order to have the ability to recover user accounts' funds for good reasons, exchanges need to have power that could also be used to steal user accounts' funds for bad reasons. This is an unavoidable tradeoff.</p>
+<p>The ideal long-term solution is to rely on self-custody, in a future where users have easy access to technologies such as <a href="../../../2021/01/11/recovery.html">multisig and social recovery wallets</a> to help deal with emergency situations. But <em>in the short term</em>, there are two clear alternatives that have clearly distinct costs and benefits:</p>
 <p><br></p>
 <table>
 <colgroup>
@@ -527,8 +260,7 @@ costs and benefits:</p>
 <tbody>
 <tr class="odd">
 <td>Custodial exchange (eg. Coinbase today)</td>
-<td>User funds may be lost if there is a problem on the exchange
-side</td>
+<td>User funds may be lost if there is a problem on the exchange side</td>
 <td>Exchange can help recover account</td>
 </tr>
 <tr class="even">
@@ -539,37 +271,9 @@ side</td>
 </tbody>
 </table>
 <p><br></p>
-<p>Another important issue is cross-chain support: exchanges need to
-support many different chains, and systems like Plasma and validiums
-would need to have code written in different languages to support
-different platforms, and cannot be implemented at all on others (notably
-Bitcoin) in their current form. In the long-term future, this can
-hopefully be fixed with technological upgrades and standardization; in
-the short term, however, it's another argument in favor of custodial
-exchanges remaining custodial for now.</p>
-<h2 id="conclusions-the-future-of-better-exchanges">Conclusions: the
-future of better exchanges</h2>
-<p>In the short term, there are two clear "classes" of exchanges:
-custodial exchanges and non-custodial exchanges. Today, the latter
-category is just DEXes such as Uniswap, and in the future we may also
-see cryptographically "constrained" CEXes where user funds are held in
-something like a validium smart contract. We may also see half-custodial
-exchanges where we trust them with fiat but not cryptocurrency.</p>
-<p>Both types of exchanges will continue to exist, and the easiest
-backwards-compatible way to improve the safety of custodial exchanges is
-to add proof of reserve. This consists of a combination of proof of
-assets and proof of liabilities. There are technical challenges in
-making good protocols for both, but we can and should go as far as
-possible to make headway in both, and open-source the software and
-processes as much as possible so that all exchanges can benefit.</p>
-<p>In the longer-term future, my hope is that we move closer and closer
-to all exchanges being non-custodial, at least on the crypto side.
-Wallet recovery would exist, and there may need to be highly centralized
-recovery options for new users dealing with small amounts, as well as
-institutions that require such arrangements for legal reasons, but this
-can be done at the wallet layer rather than within the exchange itself.
-On the fiat side, movement between the traditional banking system and
-the crypto ecosystem could be done via cash in / cash out processes
-native to asset-backed stablecoins such as USDC. However, it will still
-take a while before we can fully get there.</p>
+<p>Another important issue is cross-chain support: exchanges need to support many different chains, and systems like Plasma and validiums would need to have code written in different languages to support different platforms, and cannot be implemented at all on others (notably Bitcoin) in their current form. In the long-term future, this can hopefully be fixed with technological upgrades and standardization; in the short term, however, it's another argument in favor of custodial exchanges remaining custodial for now.</p>
+<h2 id="conclusions-the-future-of-better-exchanges">Conclusions: the future of better exchanges</h2>
+<p>In the short term, there are two clear "classes" of exchanges: custodial exchanges and non-custodial exchanges. Today, the latter category is just DEXes such as Uniswap, and in the future we may also see cryptographically "constrained" CEXes where user funds are held in something like a validium smart contract. We may also see half-custodial exchanges where we trust them with fiat but not cryptocurrency.</p>
+<p>Both types of exchanges will continue to exist, and the easiest backwards-compatible way to improve the safety of custodial exchanges is to add proof of reserve. This consists of a combination of proof of assets and proof of liabilities. There are technical challenges in making good protocols for both, but we can and should go as far as possible to make headway in both, and open-source the software and processes as much as possible so that all exchanges can benefit.</p>
+<p>In the longer-term future, my hope is that we move closer and closer to all exchanges being non-custodial, at least on the crypto side. Wallet recovery would exist, and there may need to be highly centralized recovery options for new users dealing with small amounts, as well as institutions that require such arrangements for legal reasons, but this can be done at the wallet layer rather than within the exchange itself. On the fiat side, movement between the traditional banking system and the crypto ecosystem could be done via cash in / cash out processes native to asset-backed stablecoins such as USDC. However, it will still take a while before we can fully get there.</p>
  </div> 

@@ -109,334 +109,73 @@ MathJax = {
 <br> <br> <br>
 <title> [Mirror] Zk-SNARKs: Under the Hood </title>
 
-<p><em>This is a mirror of the post at
-<a href="https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6">https://medium.com/<span
-class="citation"
-data-cites="VitalikButerin/zk-snarks-under-the-hood-b33151a013f6">@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6</span></a></em></p>
-<p><em>This is the third part of a series of articles explaining how the
-technology behind zk-SNARKs works; the previous articles on <a
-href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">quadratic
-arithmetic programs</a> and <a
-href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">elliptic
-curve pairings</a> are required reading, and this article will assume
-knowledge of both concepts. Basic knowledge of what zk-SNARKs are and
-what they do is also assumed. See also <a
-href="https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell/">Christian
-Reitwiessner's article here</a> for another technical
-introduction.</em></p>
-<p>In the previous articles, we introduced the quadratic arithmetic
-program, a way of representing any computational problem with a
-polynomial equation that is much more amenable to various forms of
-mathematical trickery. We also introduced elliptic curve pairings, which
-allow a very limited form of one-way homomorphic encryption that lets
-you do equality checking. Now, we are going to start from where we left
-off, and use elliptic curve pairings, together with a few other
-mathematical tricks, in order to allow a prover to prove that they know
-a solution for a particular QAP without revealing anything else about
-the actual solution.</p>
-<p>This article will focus on the <a
-href="https://eprint.iacr.org/2013/279.pdf">Pinocchio protocol</a> by
-Parno, Gentry, Howell and Raykova from 2013 (often called PGHR13); there
-are a few variations on the basic mechanism, so a zk-SNARK scheme
-implemented in practice may work slightly differently, but the basic
-principles will in general remain the same.</p>
-<p>To start off, let us go into the key cryptographic assumption
-underlying the security of the mechanism that we are going to use: the
-<a
-href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;cad=rja&amp;uact=8&amp;ved=0ahUKEwjz1-Ht7-vRAhVEr1QKHfvtAKIQFggaMAA&amp;url=https%3A%2F%2Fwww.iacr.org%2Farchive%2Fcrypto2004%2F31520273%2Fbp.pdf&amp;usg=AFQjCNFJk9kCq86ms46ZQVkMgAxTbPWEdg&amp;bvm=bv.145822982,d.cGw">*knowledge-of-exponent</a>*
-assumption.</p>
-<p><img
-src="https://cdn-images-1.medium.com/max/2000/1*xX1YSBNSFjmkNKR2kP-TFA.png" /></p>
-<p>Basically, if you get a pair of points <span
-class="math inline">\(P\)</span> and <span
-class="math inline">\(Q\)</span>, where <span class="math inline">\(P
-\cdot k = Q\)</span>, and you get a point <span
-class="math inline">\(C\)</span>, then it is not possible to come up
-with <span class="math inline">\(C \cdot k\)</span> unless <span
-class="math inline">\(C\)</span> is "derived" from <span
-class="math inline">\(P\)</span> in some way that you know. This may
-seem intuitively obvious, but this assumption actually cannot be derived
-from any other assumption (eg. discrete log hardness) that we usually
-use when proving security of elliptic curve-based protocols, and so
-zk-SNARKs do in fact rest on a somewhat shakier foundation than elliptic
-curve cryptography more generally — although it's still sturdy enough
-that most cryptographers are okay with it.</p>
-<p>Now, let's go into how this can be used. Supposed that a pair of
-points <span class="math inline">\((P, Q)\)</span> falls from the sky,
-where <span class="math inline">\(P \cdot k = Q\)</span>, but nobody
-knows what the value of <span class="math inline">\(k\)</span> is. Now,
-suppose that I come up with a pair of points <span
-class="math inline">\((R, S)\)</span> where <span
-class="math inline">\(R \cdot k = S\)</span>. Then, the KoE assumption
-implies that the only way I could have made that pair of points was by
-taking <span class="math inline">\(P\)</span> and <span
-class="math inline">\(Q\)</span>, and multiplying both by some factor r
-<em>that I personally know</em>. Note also that thanks to the magic of
-elliptic curve pairings, checking that <span class="math inline">\(R = k
-\cdot S\)</span> <em>doesn't actually require knowing <span
-class="math inline">\(k\)</span> </em> - instead, you can simply check
-whether or not <span class="math inline">\(e(R, Q) = e(P,
-S)\)</span>.</p>
-<p>Let's do something more interesting. Suppose that we have ten pairs
-of points fall from the sky: <span class="math inline">\((P_1, Q_1),
-(P_2, Q_2)... (P_{10}, Q_{10})\)</span>. In all cases, <span
-class="math inline">\(P_i \cdot k = Q_i\)</span>. Suppose that I then
-provide you with a pair of points <span class="math inline">\((R,
-S)\)</span> where <span class="math inline">\(R \cdot k = S\)</span>.
-What do you know now? <em>You know that <span
-class="math inline">\(R\)</span> is some linear combination <span
-class="math inline">\(P_1 \cdot i_1 + P_2 \cdot i_2 + ... + P_{10} \cdot
-i_{10}\)</span>, where I know the coefficients <span
-class="math inline">\(i_1, i_2 ... i_{10}\)</span>. </em>That is, the only
-way to arrive at such a pair of points <span class="math inline">\((R,
-S)\)</span> is to take some multiples of <span
-class="math inline">\(P_1, P_2 ... P_{10}\)</span> and add them together,
-and make the same calculation with <span class="math inline">\(Q_1, Q_2
-... Q_{10}\)</span>.</p>
-<p>Note that, given any specific set of <span
-class="math inline">\(P_1...P_{10}\)</span> points that you might want to
-check linear combinations for, you can't actually create the
-accompanying <span class="math inline">\(Q_1...Q_{10}\)</span> points
-without knowing what <span class="math inline">\(k\)</span> is, and if
-you do know what <span class="math inline">\(k\)</span> is then you can
-create a pair <span class="math inline">\((R, S)\)</span> where <span
-class="math inline">\(R \cdot k = S\)</span> for whatever <span
-class="math inline">\(R\)</span> you want, without bothering to create a
-linear combination. Hence, for this to work it's absolutely imperative
-that whoever creates those points is trustworthy and actually deletes
-<span class="math inline">\(k\)</span> once they created the ten points.
-<strong>This is where the concept of a "trusted setup" comes
-from</strong>.</p>
-<p>Remember that the solution to a QAP is a set of polynomials <span
-class="math inline">\((A, B, C)\)</span> such that <span
-class="math inline">\(A(x) \cdot B(x) - C(x) = H(x) \cdot Z(x)\)</span>,
-where:</p>
+<p><em>This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6">https://medium.com/<span class="citation" data-cites="VitalikButerin/zk-snarks-under-the-hood-b33151a013f6">@VitalikButerin/zk-snarks-under-the-hood-b33151a013f6</span></a></em></p>
+<p><em>This is the third part of a series of articles explaining how the technology behind zk-SNARKs works; the previous articles on <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">quadratic arithmetic programs</a> and <a href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">elliptic curve pairings</a> are required reading, and this article will assume knowledge of both concepts. Basic knowledge of what zk-SNARKs are and what they do is also assumed. See also <a href="https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell/">Christian Reitwiessner's article here</a> for another technical introduction.</em></p>
+<p>In the previous articles, we introduced the quadratic arithmetic program, a way of representing any computational problem with a polynomial equation that is much more amenable to various forms of mathematical trickery. We also introduced elliptic curve pairings, which allow a very limited form of one-way homomorphic encryption that lets you do equality checking. Now, we are going to start from where we left off, and use elliptic curve pairings, together with a few other mathematical tricks, in order to allow a prover to prove that they know a solution for a particular QAP without revealing anything else about the actual solution.</p>
+<p>This article will focus on the <a href="https://eprint.iacr.org/2013/279.pdf">Pinocchio protocol</a> by Parno, Gentry, Howell and Raykova from 2013 (often called PGHR13); there are a few variations on the basic mechanism, so a zk-SNARK scheme implemented in practice may work slightly differently, but the basic principles will in general remain the same.</p>
+<p>To start off, let us go into the key cryptographic assumption underlying the security of the mechanism that we are going to use: the <a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;cad=rja&amp;uact=8&amp;ved=0ahUKEwjz1-Ht7-vRAhVEr1QKHfvtAKIQFggaMAA&amp;url=https%3A%2F%2Fwww.iacr.org%2Farchive%2Fcrypto2004%2F31520273%2Fbp.pdf&amp;usg=AFQjCNFJk9kCq86ms46ZQVkMgAxTbPWEdg&amp;bvm=bv.145822982,d.cGw">*knowledge-of-exponent</a>* assumption.</p>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*xX1YSBNSFjmkNKR2kP-TFA.png" /></p>
+<p>Basically, if you get a pair of points <span class="math inline">\(P\)</span> and <span class="math inline">\(Q\)</span>, where <span class="math inline">\(P \cdot k = Q\)</span>, and you get a point <span class="math inline">\(C\)</span>, then it is not possible to come up with <span class="math inline">\(C \cdot k\)</span> unless <span class="math inline">\(C\)</span> is "derived" from <span class="math inline">\(P\)</span> in some way that you know. This may seem intuitively obvious, but this assumption actually cannot be derived from any other assumption (eg. discrete log hardness) that we usually use when proving security of elliptic curve-based protocols, and so zk-SNARKs do in fact rest on a somewhat shakier foundation than elliptic curve cryptography more generally — although it's still sturdy enough that most cryptographers are okay with it.</p>
+<p>Now, let's go into how this can be used. Supposed that a pair of points <span class="math inline">\((P, Q)\)</span> falls from the sky, where <span class="math inline">\(P \cdot k = Q\)</span>, but nobody knows what the value of <span class="math inline">\(k\)</span> is. Now, suppose that I come up with a pair of points <span class="math inline">\((R, S)\)</span> where <span class="math inline">\(R \cdot k = S\)</span>. Then, the KoE assumption implies that the only way I could have made that pair of points was by taking <span class="math inline">\(P\)</span> and <span class="math inline">\(Q\)</span>, and multiplying both by some factor r <em>that I personally know</em>. Note also that thanks to the magic of elliptic curve pairings, checking that <span class="math inline">\(R = k \cdot S\)</span> <em>doesn't actually require knowing <span class="math inline">\(k\)</span> </em> - instead, you can simply check whether or not <span class="math inline">\(e(R, Q) = e(P, S)\)</span>.</p>
+<p>Let's do something more interesting. Suppose that we have ten pairs of points fall from the sky: <span class="math inline">\((P_1, Q_1), (P_2, Q_2)... (P_{10}, Q_{10})\)</span>. In all cases, <span class="math inline">\(P_i \cdot k = Q_i\)</span>. Suppose that I then provide you with a pair of points <span class="math inline">\((R, S)\)</span> where <span class="math inline">\(R \cdot k = S\)</span>. What do you know now? <em>You know that <span class="math inline">\(R\)</span> is some linear combination <span class="math inline">\(P_1 \cdot i_1 + P_2 \cdot i_2 + ... + P_{10} \cdot i_{10}\)</span>, where I know the coefficients <span class="math inline">\(i_1, i_2 ... i_{10}\)</span>. </em>That is, the only way to arrive at such a pair of points <span class="math inline">\((R, S)\)</span> is to take some multiples of <span class="math inline">\(P_1, P_2 ... P_{10}\)</span> and add them together, and make the same calculation with <span class="math inline">\(Q_1, Q_2 ... Q_{10}\)</span>.</p>
+<p>Note that, given any specific set of <span class="math inline">\(P_1...P_{10}\)</span> points that you might want to check linear combinations for, you can't actually create the accompanying <span class="math inline">\(Q_1...Q_{10}\)</span> points without knowing what <span class="math inline">\(k\)</span> is, and if you do know what <span class="math inline">\(k\)</span> is then you can create a pair <span class="math inline">\((R, S)\)</span> where <span class="math inline">\(R \cdot k = S\)</span> for whatever <span class="math inline">\(R\)</span> you want, without bothering to create a linear combination. Hence, for this to work it's absolutely imperative that whoever creates those points is trustworthy and actually deletes <span class="math inline">\(k\)</span> once they created the ten points. <strong>This is where the concept of a "trusted setup" comes from</strong>.</p>
+<p>Remember that the solution to a QAP is a set of polynomials <span class="math inline">\((A, B, C)\)</span> such that <span class="math inline">\(A(x) \cdot B(x) - C(x) = H(x) \cdot Z(x)\)</span>, where:</p>
 <ul>
-<li><p><span class="math inline">\(A\)</span> is a linear combination of
-a set of polynomials <span
-class="math inline">\(\{A_1...A_m\}\)</span></p></li>
-<li><p><span class="math inline">\(B\)</span> is the linear combination
-of <span class="math inline">\(\{B_1...B_m\}\)</span> with the same
-coefficients</p></li>
-<li><p><span class="math inline">\(C\)</span> is a linear combination of
-<span class="math inline">\(\{C_1...C_m\}\)</span> with the same
-coefficients</p></li>
+<li><p><span class="math inline">\(A\)</span> is a linear combination of a set of polynomials <span class="math inline">\(\{A_1...A_m\}\)</span></p></li>
+<li><p><span class="math inline">\(B\)</span> is the linear combination of <span class="math inline">\(\{B_1...B_m\}\)</span> with the same coefficients</p></li>
+<li><p><span class="math inline">\(C\)</span> is a linear combination of <span class="math inline">\(\{C_1...C_m\}\)</span> with the same coefficients</p></li>
 </ul>
-<p>The sets <span class="math inline">\(\{A_1...A_m\},
-\{B_1...B_m\}\)</span> and <span
-class="math inline">\(\{C_1...C_m\}\)</span> and the polynomial <span
-class="math inline">\(Z\)</span> are part of the problem statement.</p>
-<p>However, in most real-world cases, <span class="math inline">\(A,
-B\)</span> and <span class="math inline">\(C\)</span> are extremely
-large; for something with many thousands of circuit gates like a hash
-function, the polynomials (and the factors for the linear combinations)
-may have many thousands of terms. Hence, instead of having the prover
-provide the linear combinations directly, we are going to use the trick
-that we introduced above to have the prover prove that they are
-providing something which is a linear combination, but without revealing
-anything else.</p>
-<p>You might have noticed that the trick above works on elliptic curve
-points, not polynomials. Hence, what actually happens is that we add the
-following values to the trusted setup:</p>
+<p>The sets <span class="math inline">\(\{A_1...A_m\}, \{B_1...B_m\}\)</span> and <span class="math inline">\(\{C_1...C_m\}\)</span> and the polynomial <span class="math inline">\(Z\)</span> are part of the problem statement.</p>
+<p>However, in most real-world cases, <span class="math inline">\(A, B\)</span> and <span class="math inline">\(C\)</span> are extremely large; for something with many thousands of circuit gates like a hash function, the polynomials (and the factors for the linear combinations) may have many thousands of terms. Hence, instead of having the prover provide the linear combinations directly, we are going to use the trick that we introduced above to have the prover prove that they are providing something which is a linear combination, but without revealing anything else.</p>
+<p>You might have noticed that the trick above works on elliptic curve points, not polynomials. Hence, what actually happens is that we add the following values to the trusted setup:</p>
 <ul>
-<li><p><span class="math inline">\(G \cdot A_1(t), G \cdot A_1(t) \cdot
-k_a\)</span></p></li>
-<li><p><span class="math inline">\(G \cdot A_2(t), G \cdot A_2(t) \cdot
-k_a\)</span></p></li>
+<li><p><span class="math inline">\(G \cdot A_1(t), G \cdot A_1(t) \cdot k_a\)</span></p></li>
+<li><p><span class="math inline">\(G \cdot A_2(t), G \cdot A_2(t) \cdot k_a\)</span></p></li>
 <li><p>...</p></li>
-<li><p><span class="math inline">\(G \cdot B_1(t), G \cdot B_1(t) \cdot
-k_b\)</span></p></li>
-<li><p><span class="math inline">\(G \cdot B_2(t), G \cdot B_2(t) \cdot
-k_b\)</span></p></li>
+<li><p><span class="math inline">\(G \cdot B_1(t), G \cdot B_1(t) \cdot k_b\)</span></p></li>
+<li><p><span class="math inline">\(G \cdot B_2(t), G \cdot B_2(t) \cdot k_b\)</span></p></li>
 <li><p>...</p></li>
-<li><p><span class="math inline">\(G \cdot C_1(t), G \cdot C_1(t) \cdot
-k_c\)</span></p></li>
-<li><p><span class="math inline">\(G \cdot C_2(t), G \cdot C_2(t) \cdot
-k_c\)</span></p></li>
+<li><p><span class="math inline">\(G \cdot C_1(t), G \cdot C_1(t) \cdot k_c\)</span></p></li>
+<li><p><span class="math inline">\(G \cdot C_2(t), G \cdot C_2(t) \cdot k_c\)</span></p></li>
 <li><p>...</p></li>
 </ul>
-<p>You can think of t as a "secret point" at which the polynomial is
-evaluated. <span class="math inline">\(G\)</span> is a "generator" (some
-random elliptic curve point that is specified as part of the protocol)
-and <span class="math inline">\(t, k_a, k_b\)</span> and <span
-class="math inline">\(k_c\)</span> are "toxic waste", numbers that
-absolutely must be deleted at all costs, or else whoever has them will
-be able to make fake proofs. Now, if someone gives you a pair of points
-<span class="math inline">\(P\)</span>, <span
-class="math inline">\(Q\)</span> such that <span class="math inline">\(P
-\cdot k_a = Q\)</span> (reminder: we don't need <span
-class="math inline">\(k_a\)</span> to check this, as we can do a pairing
-check), then you know that what they are giving you is a linear
-combination of <span class="math inline">\(A_i\)</span> polynomials
-evaluated at <span class="math inline">\(t\)</span>.</p>
+<p>You can think of t as a "secret point" at which the polynomial is evaluated. <span class="math inline">\(G\)</span> is a "generator" (some random elliptic curve point that is specified as part of the protocol) and <span class="math inline">\(t, k_a, k_b\)</span> and <span class="math inline">\(k_c\)</span> are "toxic waste", numbers that absolutely must be deleted at all costs, or else whoever has them will be able to make fake proofs. Now, if someone gives you a pair of points <span class="math inline">\(P\)</span>, <span class="math inline">\(Q\)</span> such that <span class="math inline">\(P \cdot k_a = Q\)</span> (reminder: we don't need <span class="math inline">\(k_a\)</span> to check this, as we can do a pairing check), then you know that what they are giving you is a linear combination of <span class="math inline">\(A_i\)</span> polynomials evaluated at <span class="math inline">\(t\)</span>.</p>
 <p>Hence, so far the prover must give:</p>
 <ul>
-<li><p><span class="math inline">\(\pi _a = G \cdot A(t), \pi &#39;_a =
-G \cdot A(t) \cdot k_a\)</span></p></li>
-<li><p><span class="math inline">\(\pi _b = G \cdot B(t), \pi &#39;_b =
-G \cdot B(t) \cdot k_b\)</span></p></li>
-<li><p><span class="math inline">\(\pi _c = G \cdot C(t), \pi &#39;_c =
-G \cdot C(t) \cdot k_c\)</span></p></li>
+<li><p><span class="math inline">\(\pi _a = G \cdot A(t), \pi &#39;_a = G \cdot A(t) \cdot k_a\)</span></p></li>
+<li><p><span class="math inline">\(\pi _b = G \cdot B(t), \pi &#39;_b = G \cdot B(t) \cdot k_b\)</span></p></li>
+<li><p><span class="math inline">\(\pi _c = G \cdot C(t), \pi &#39;_c = G \cdot C(t) \cdot k_c\)</span></p></li>
 </ul>
-<p>Note that the prover doesn't actually need to know (and shouldn't
-know!) <span class="math inline">\(t, k_a, k_b\)</span> or <span
-class="math inline">\(k_c\)</span> to compute these values; rather, the
-prover should be able to compute these values just from the points that
-we're adding to the trusted setup.</p>
-<p>The next step is to make sure that all three linear combinations have
-the same coefficients. This we can do by adding another set of values to
-the trusted setup: <span class="math inline">\(G \cdot (A_i(t) + B_i(t)
-+ C_i(t)) \cdot b\)</span>, where <span class="math inline">\(b\)</span>
-is another number that should be considered "toxic waste" and discarded
-as soon as the trusted setup is completed. We can then have the prover
-create a linear combination with these values with the same
-coefficients, and use the same pairing trick as above to verify that
-this value matches up with the provided <span class="math inline">\(A +
-B + C\)</span>.</p>
-<p>Finally, we need to prove that <span class="math inline">\(A \cdot B
-- C = H \cdot Z\)</span>. We do this once again with a pairing
-check:</p>
-<p><span class="math inline">\(e(\pi _a, \pi _b) / e(\pi _c, G) ?= e(\pi
-_h, G \cdot Z(t))\)</span></p>
-<p>Where <span class="math inline">\(\pi _h= G \cdot H(t)\)</span>. If
-the connection between this equation and <span class="math inline">\(A
-\cdot B - C = H \cdot Z\)</span> does not make sense to you, go back and
-read the <a
-href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">article
-on pairings</a>.</p>
-<p>We saw above how to convert <span class="math inline">\(A, B\)</span>
-and <span class="math inline">\(C\)</span> into elliptic curve points;
-<span class="math inline">\(G\)</span> is just the generator (ie. the
-elliptic curve point equivalent of the number one). We can add <span
-class="math inline">\(G \cdot Z(t)\)</span> to the trusted setup. <span
-class="math inline">\(H\)</span> is harder; <span
-class="math inline">\(H\)</span> is just a polynomial, and we predict
-very little ahead of time about what its coefficients will be for each
-individual QAP solution. Hence, we need to add yet more data to the
-trusted setup; specifically the sequence:</p>
-<p><span class="math inline">\(G, G \cdot t, G \cdot t^2, G \cdot t^3, G
-\cdot t^4 ...\)</span>.</p>
-<p>In the Zcash trusted setup, the sequence here goes up to about 2
-million; this is how many powers of <span
-class="math inline">\(t\)</span> you need to make sure that you will
-always be able to compute <span class="math inline">\(H(t)\)</span>, at
-least for the specific QAP instance that they care about. And with that,
-the prover can provide all of the information for the verifier to make
-the final check.</p>
-<p>There is one more detail that we need to discuss. Most of the time we
-don't just want to prove in the abstract that some solution exists for
-some specific problem; rather, we want to prove either the correctness
-of some specific solution (eg. proving that if you take the word "cow"
-and SHA3 hash it a million times, the final result starts with
-0x73064fe5), or that a solution exists if you restrict some of the
-parameters. For example, in a cryptocurrency instantiation where
-transaction amounts and account balances are encrypted, you want to
-prove that you know some decryption key k such that:</p>
+<p>Note that the prover doesn't actually need to know (and shouldn't know!) <span class="math inline">\(t, k_a, k_b\)</span> or <span class="math inline">\(k_c\)</span> to compute these values; rather, the prover should be able to compute these values just from the points that we're adding to the trusted setup.</p>
+<p>The next step is to make sure that all three linear combinations have the same coefficients. This we can do by adding another set of values to the trusted setup: <span class="math inline">\(G \cdot (A_i(t) + B_i(t) + C_i(t)) \cdot b\)</span>, where <span class="math inline">\(b\)</span> is another number that should be considered "toxic waste" and discarded as soon as the trusted setup is completed. We can then have the prover create a linear combination with these values with the same coefficients, and use the same pairing trick as above to verify that this value matches up with the provided <span class="math inline">\(A + B + C\)</span>.</p>
+<p>Finally, we need to prove that <span class="math inline">\(A \cdot B - C = H \cdot Z\)</span>. We do this once again with a pairing check:</p>
+<p><span class="math inline">\(e(\pi _a, \pi _b) / e(\pi _c, G) ?= e(\pi _h, G \cdot Z(t))\)</span></p>
+<p>Where <span class="math inline">\(\pi _h= G \cdot H(t)\)</span>. If the connection between this equation and <span class="math inline">\(A \cdot B - C = H \cdot Z\)</span> does not make sense to you, go back and read the <a href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">article on pairings</a>.</p>
+<p>We saw above how to convert <span class="math inline">\(A, B\)</span> and <span class="math inline">\(C\)</span> into elliptic curve points; <span class="math inline">\(G\)</span> is just the generator (ie. the elliptic curve point equivalent of the number one). We can add <span class="math inline">\(G \cdot Z(t)\)</span> to the trusted setup. <span class="math inline">\(H\)</span> is harder; <span class="math inline">\(H\)</span> is just a polynomial, and we predict very little ahead of time about what its coefficients will be for each individual QAP solution. Hence, we need to add yet more data to the trusted setup; specifically the sequence:</p>
+<p><span class="math inline">\(G, G \cdot t, G \cdot t^2, G \cdot t^3, G \cdot t^4 ...\)</span>.</p>
+<p>In the Zcash trusted setup, the sequence here goes up to about 2 million; this is how many powers of <span class="math inline">\(t\)</span> you need to make sure that you will always be able to compute <span class="math inline">\(H(t)\)</span>, at least for the specific QAP instance that they care about. And with that, the prover can provide all of the information for the verifier to make the final check.</p>
+<p>There is one more detail that we need to discuss. Most of the time we don't just want to prove in the abstract that some solution exists for some specific problem; rather, we want to prove either the correctness of some specific solution (eg. proving that if you take the word "cow" and SHA3 hash it a million times, the final result starts with 0x73064fe5), or that a solution exists if you restrict some of the parameters. For example, in a cryptocurrency instantiation where transaction amounts and account balances are encrypted, you want to prove that you know some decryption key k such that:</p>
 <ol type="1">
 <li><p><code>decrypt(old_balance, k) &gt;= decrypt(tx_value, k)</code></p></li>
 <li><p><code>decrypt(old_balance, k) - decrypt(tx_value, k) = decrypt(new_balance, k)</code></p></li>
 </ol>
-<p>The encrypted <code>old_balance</code>, <code>tx_value</code> and
-<code>new_balance</code> should be specified publicly, as those are the
-specific values that we are looking to verify at that particular time;
-only the decryption key should be hidden. Some slight modifications to
-the protocol are needed to create a "custom verification key" that
-corresponds to some specific restriction on the inputs.</p>
-<p>Now, let's step back a bit. First of all, here's the verification
-algorithm in its entirety, courtesy of ben <a
-href="https://eprint.iacr.org/2013/879.pdf">Sasson, Tromer, Virza and
-Chiesa</a>:</p>
-<p><img
-src="https://cdn-images-1.medium.com/max/2000/1*gOI0njM1tPSvmvZuIUe0MA.png"
-class="padded" /></p>
-<p>The first line deals with parametrization; essentially, you can think
-of its function as being to create a "custom verification key" <em>for
-the specific instance of the problem</em> where some of the arguments
-are specified. The second line is the linear combination check for <span
-class="math inline">\(A, B\)</span> and <span
-class="math inline">\(C\)</span>; the third line is the check that the
-linear combinations have the same coefficients, and the fourth line is
-the product check <span class="math inline">\(A \cdot B - C = H \cdot
-Z\)</span>.</p>
-<p>Altogether, the verification process is a few elliptic curve
-multiplications (one for each "public" input variable), and five pairing
-checks, one of which includes an additional pairing multiplication. The
-proof contains eight elliptic curve points: a pair of points each for
-<span class="math inline">\(A(t), B(t)\)</span> and <span
-class="math inline">\(C(t)\)</span>, a point <span
-class="math inline">\(\pi _k\)</span> for <span class="math inline">\(b
-\cdot (A(t) + B(t) + C(t))\)</span>, and a point <span
-class="math inline">\(\pi _h\)</span> for <span
-class="math inline">\(H(t)\)</span>. Seven of these points are on the
-<span class="math inline">\(F_p\)</span> curve (32 bytes each, as you
-can compress the <span class="math inline">\(y\)</span> coordinate to a
-single bit), and in the Zcash implementation one point (<span
-class="math inline">\(\pi _b\)</span>) is on the twisted curve in <span
-class="math inline">\(F_{p^2}\)</span> (64 bytes), so the total size of
-the proof is ~288 bytes.</p>
+<p>The encrypted <code>old_balance</code>, <code>tx_value</code> and <code>new_balance</code> should be specified publicly, as those are the specific values that we are looking to verify at that particular time; only the decryption key should be hidden. Some slight modifications to the protocol are needed to create a "custom verification key" that corresponds to some specific restriction on the inputs.</p>
+<p>Now, let's step back a bit. First of all, here's the verification algorithm in its entirety, courtesy of ben <a href="https://eprint.iacr.org/2013/879.pdf">Sasson, Tromer, Virza and Chiesa</a>:</p>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*gOI0njM1tPSvmvZuIUe0MA.png" class="padded" /></p>
+<p>The first line deals with parametrization; essentially, you can think of its function as being to create a "custom verification key" <em>for the specific instance of the problem</em> where some of the arguments are specified. The second line is the linear combination check for <span class="math inline">\(A, B\)</span> and <span class="math inline">\(C\)</span>; the third line is the check that the linear combinations have the same coefficients, and the fourth line is the product check <span class="math inline">\(A \cdot B - C = H \cdot Z\)</span>.</p>
+<p>Altogether, the verification process is a few elliptic curve multiplications (one for each "public" input variable), and five pairing checks, one of which includes an additional pairing multiplication. The proof contains eight elliptic curve points: a pair of points each for <span class="math inline">\(A(t), B(t)\)</span> and <span class="math inline">\(C(t)\)</span>, a point <span class="math inline">\(\pi _k\)</span> for <span class="math inline">\(b \cdot (A(t) + B(t) + C(t))\)</span>, and a point <span class="math inline">\(\pi _h\)</span> for <span class="math inline">\(H(t)\)</span>. Seven of these points are on the <span class="math inline">\(F_p\)</span> curve (32 bytes each, as you can compress the <span class="math inline">\(y\)</span> coordinate to a single bit), and in the Zcash implementation one point (<span class="math inline">\(\pi _b\)</span>) is on the twisted curve in <span class="math inline">\(F_{p^2}\)</span> (64 bytes), so the total size of the proof is ~288 bytes.</p>
 <p>The two computationally hardest parts of creating a proof are:</p>
 <ul>
-<li><p>Dividing <span class="math inline">\((A \cdot B - C) / Z\)</span>
-to get <span class="math inline">\(H\)</span> (algorithms based on the
-<a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">Fast
-Fourier transform</a> can do this in sub-quadratic time, but it's still
-quite computationally intensive)</p></li>
-<li><p>Making the elliptic curve multiplications and additions to create
-the <span class="math inline">\(A(t), B(t), C(t)\)</span> and <span
-class="math inline">\(H(t)\)</span> values and their corresponding
-pairs</p></li>
+<li><p>Dividing <span class="math inline">\((A \cdot B - C) / Z\)</span> to get <span class="math inline">\(H\)</span> (algorithms based on the <a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">Fast Fourier transform</a> can do this in sub-quadratic time, but it's still quite computationally intensive)</p></li>
+<li><p>Making the elliptic curve multiplications and additions to create the <span class="math inline">\(A(t), B(t), C(t)\)</span> and <span class="math inline">\(H(t)\)</span> values and their corresponding pairs</p></li>
 </ul>
-<p>The basic reason why creating a proof is so hard is the fact that
-what was a single binary logic gate in the original computation turns
-into an operation that must be cryptographically processed through
-elliptic curve operations if we are making a zero-knowledge proof out of
-it. This fact, together with the superlinearity of fast Fourier
-transforms, means that proof creation takes ~20–40 seconds for a Zcash
-transaction.</p>
-<p>Another very important question is: can we try to make the trusted
-setup a little... less trust-demanding? Unfortunately we can't make it
-completely trustless; the KoE assumption itself precludes making
-independent pairs <span class="math inline">\((P_i, P_i \cdot
-k)\)</span> without knowing what <span class="math inline">\(k\)</span>
-is. However, we can increase security greatly by using <span
-class="math inline">\(N\)</span>-of-<span
-class="math inline">\(N\)</span> multiparty computation - that is,
-constructing the trusted setup between <span
-class="math inline">\(N\)</span> parties in such a way that as long as
-at least one of the participants deleted their toxic waste then you're
-okay.</p>
-<p>To get a bit of a feel for how you would do this, here's a simple
-algorithm for taking an existing set (<span class="math inline">\(G, G
-\cdot t, G \cdot t^2, G \cdot t^3...\)</span>), and "adding in" your own
-secret so that you need both your secret and the previous secret (or
-previous set of secrets) to cheat.</p>
+<p>The basic reason why creating a proof is so hard is the fact that what was a single binary logic gate in the original computation turns into an operation that must be cryptographically processed through elliptic curve operations if we are making a zero-knowledge proof out of it. This fact, together with the superlinearity of fast Fourier transforms, means that proof creation takes ~20–40 seconds for a Zcash transaction.</p>
+<p>Another very important question is: can we try to make the trusted setup a little... less trust-demanding? Unfortunately we can't make it completely trustless; the KoE assumption itself precludes making independent pairs <span class="math inline">\((P_i, P_i \cdot k)\)</span> without knowing what <span class="math inline">\(k\)</span> is. However, we can increase security greatly by using <span class="math inline">\(N\)</span>-of-<span class="math inline">\(N\)</span> multiparty computation - that is, constructing the trusted setup between <span class="math inline">\(N\)</span> parties in such a way that as long as at least one of the participants deleted their toxic waste then you're okay.</p>
+<p>To get a bit of a feel for how you would do this, here's a simple algorithm for taking an existing set (<span class="math inline">\(G, G \cdot t, G \cdot t^2, G \cdot t^3...\)</span>), and "adding in" your own secret so that you need both your secret and the previous secret (or previous set of secrets) to cheat.</p>
 <p>The output set is simply:</p>
-<p><span class="math inline">\(G, (G \cdot t) \cdot s, (G \cdot t^2)
-\cdot s^2, (G \cdot t^3) \cdot s^3...\)</span></p>
-<p>Note that you can produce this set knowing only the original set and
-s, and the new set functions in the same way as the old set, except now
-using <span class="math inline">\(t \cdot s\)</span> as the "toxic
-waste" instead of <span class="math inline">\(t\)</span>. As long as you
-and the person (or people) who created the previous set do not both fail
-to delete your toxic waste and later collude, the set is "safe".</p>
-<p>Doing this for the complete trusted setup is quite a bit harder, as
-there are several values involved, and the algorithm has to be done
-between the parties in several rounds. It's an area of active research
-to see if the multi-party computation algorithm can be simplified
-further and made to require fewer rounds or made more parallelizable, as
-the more you can do that the more parties it becomes feasible to include
-into the trusted setup procedure. It's reasonable to see why a trusted
-setup between six participants who all know and work with each other
-might make some people uncomfortable, but a trusted setup with thousands
-of participants would be nearly indistinguishable from no trust at all -
-and if you're really paranoid, you can get in and participate in the
-setup procedure yourself, and be sure that you personally deleted your
-value.</p>
-<p>Another area of active research is the use of other approaches that
-do not use pairings and the same trusted setup paradigm to achieve the
-same goal; see <a href="https://www.youtube.com/watch?v=HJ9K_o-RRSY">Eli
-ben Sasson's recent presentation</a> for one alternative (though be
-warned, it's at least as mathematically complicated as SNARKs are!)</p>
-<p><em>Special thanks to Ariel Gabizon and Christian Reitwiessner for
-reviewing.</em></p>
+<p><span class="math inline">\(G, (G \cdot t) \cdot s, (G \cdot t^2) \cdot s^2, (G \cdot t^3) \cdot s^3...\)</span></p>
+<p>Note that you can produce this set knowing only the original set and s, and the new set functions in the same way as the old set, except now using <span class="math inline">\(t \cdot s\)</span> as the "toxic waste" instead of <span class="math inline">\(t\)</span>. As long as you and the person (or people) who created the previous set do not both fail to delete your toxic waste and later collude, the set is "safe".</p>
+<p>Doing this for the complete trusted setup is quite a bit harder, as there are several values involved, and the algorithm has to be done between the parties in several rounds. It's an area of active research to see if the multi-party computation algorithm can be simplified further and made to require fewer rounds or made more parallelizable, as the more you can do that the more parties it becomes feasible to include into the trusted setup procedure. It's reasonable to see why a trusted setup between six participants who all know and work with each other might make some people uncomfortable, but a trusted setup with thousands of participants would be nearly indistinguishable from no trust at all - and if you're really paranoid, you can get in and participate in the setup procedure yourself, and be sure that you personally deleted your value.</p>
+<p>Another area of active research is the use of other approaches that do not use pairings and the same trusted setup paradigm to achieve the same goal; see <a href="https://www.youtube.com/watch?v=HJ9K_o-RRSY">Eli ben Sasson's recent presentation</a> for one alternative (though be warned, it's at least as mathematically complicated as SNARKs are!)</p>
+<p><em>Special thanks to Ariel Gabizon and Christian Reitwiessner for reviewing.</em></p>
  </div> 

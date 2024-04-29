@@ -109,490 +109,132 @@ MathJax = {
 <br> <br> <br>
 <title> The Three Transitions </title>
 
-<p><em>Special thanks to Dan Finlay, Karl Floersch, David Hoffman, and
-the Scroll and SoulWallet teams for feedback and review and
-suggestions.</em></p>
-<p>As Ethereum transitions from a young experimental technology into a
-mature tech stack that is capable of actually bringing an open, global
-and permissionless experience to average users, there are three major
-technical transitions that the stack needs to undergo, roughly
-simultaneously:</p>
+<p><em>Special thanks to Dan Finlay, Karl Floersch, David Hoffman, and the Scroll and SoulWallet teams for feedback and review and suggestions.</em></p>
+<p>As Ethereum transitions from a young experimental technology into a mature tech stack that is capable of actually bringing an open, global and permissionless experience to average users, there are three major technical transitions that the stack needs to undergo, roughly simultaneously:</p>
 <ul>
-<li><strong>The L2 scaling transition</strong> - everyone <a
-href="https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698">moving
-to rollups</a></li>
-<li><strong>The wallet security transition</strong> - everyone moving to
-<a href="../../../2021/01/11/recovery.html">smart contract
-wallets</a></li>
-<li><strong>The privacy transition</strong> - making sure
-privacy-preserving funds transfers are available, and making sure all of
-the <em>other</em> gadgets that are being developed (social recovery,
-identity, reputation) are privacy-preserving</li>
+<li><strong>The L2 scaling transition</strong> - everyone <a href="https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698">moving to rollups</a></li>
+<li><strong>The wallet security transition</strong> - everyone moving to <a href="../../../2021/01/11/recovery.html">smart contract wallets</a></li>
+<li><strong>The privacy transition</strong> - making sure privacy-preserving funds transfers are available, and making sure all of the <em>other</em> gadgets that are being developed (social recovery, identity, reputation) are privacy-preserving</li>
 </ul>
 <center>
 <p><img src="../../../../images/three_transitions/triangle.png" /></p>
-<p><em>The ecosystem transition triangle. <strong>You can only pick 3
-out of 3.</strong></em></p>
+<p><em>The ecosystem transition triangle. <strong>You can only pick 3 out of 3.</strong></em></p>
 </center>
 <p><br></p>
-<p>Without the first, Ethereum fails because each transaction costs
-$3.75 ($82.48 if we have another bull run), and every product aiming for
-the mass market inevitably forgets about the chain and adopts
-centralized workarounds for everything.</p>
-<p>Without the second, Ethereum fails because users are uncomfortable
-storing their funds (and non-financial assets), and everyone moves onto
-centralized exchanges.</p>
-<p>Without the third, Ethereum fails because having all transactions
-(and POAPs, etc) available publicly for literally anyone to see is far
-too high a privacy sacrifice for many users, and everyone moves onto
-centralized solutions that at least somewhat hide your data.</p>
-<p>These three transitions are crucial for the reasons above. But they
-are also challenging because of the intense coordination involved to
-properly resolve them. It's not just features of the protocol that need
-to improve; in some cases, the way that we interact with Ethereum needs
-to change pretty fundamentally, requiring deep changes from applications
-and wallets.</p>
-<h2
-id="the-three-transitions-will-radically-reshape-the-relationship-between-users-and-addresses">The
-three transitions will radically reshape the relationship between
-<em>users</em> and <em>addresses</em></h2>
-<p>In an L2 scaling world, users are going to exist on lots of L2s. Are
-you a member of ExampleDAO, which lives on Optimism? Then you have an
-account on Optimism! Are you holding a CDP in a stablecoin system on
-ZkSync? Then you have an account on ZkSync! Did you <em>once</em> go try
-some application that happened to live on Kakarot? Then you have an
-account on Kakarot! The days of a user having only one address will be
-gone.</p>
+<p>Without the first, Ethereum fails because each transaction costs $3.75 ($82.48 if we have another bull run), and every product aiming for the mass market inevitably forgets about the chain and adopts centralized workarounds for everything.</p>
+<p>Without the second, Ethereum fails because users are uncomfortable storing their funds (and non-financial assets), and everyone moves onto centralized exchanges.</p>
+<p>Without the third, Ethereum fails because having all transactions (and POAPs, etc) available publicly for literally anyone to see is far too high a privacy sacrifice for many users, and everyone moves onto centralized solutions that at least somewhat hide your data.</p>
+<p>These three transitions are crucial for the reasons above. But they are also challenging because of the intense coordination involved to properly resolve them. It's not just features of the protocol that need to improve; in some cases, the way that we interact with Ethereum needs to change pretty fundamentally, requiring deep changes from applications and wallets.</p>
+<h2 id="the-three-transitions-will-radically-reshape-the-relationship-between-users-and-addresses">The three transitions will radically reshape the relationship between <em>users</em> and <em>addresses</em></h2>
+<p>In an L2 scaling world, users are going to exist on lots of L2s. Are you a member of ExampleDAO, which lives on Optimism? Then you have an account on Optimism! Are you holding a CDP in a stablecoin system on ZkSync? Then you have an account on ZkSync! Did you <em>once</em> go try some application that happened to live on Kakarot? Then you have an account on Kakarot! The days of a user having only one address will be gone.</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/three_transitions/braveview.png" /></p>
-<p><em>I have ETH in four places, according to my Brave Wallet view. And
-yes, Arbitrum and Arbitrum Nova are different. Don't worry, it will get
-more confusing over time!</em></p>
+<p><em>I have ETH in four places, according to my Brave Wallet view. And yes, Arbitrum and Arbitrum Nova are different. Don't worry, it will get more confusing over time!</em></p>
 </center>
 <p><br></p>
-<p><strong>Smart contract wallets add more complexity, by making it much
-more difficult to have <em>the same</em> address across L1 and the
-various L2s</strong>. Today, most users are using <em>externally owned
-accounts</em>, whose address is literally a hash of the public key that
-is used to verify signatures - so nothing changes between L1 and L2.
-With smart contract wallets, however, keeping one address becomes more
-difficult. Although a lot of work has been done to <em>try</em> to make
-addresses be hashes of code that can be equivalent across networks, most
-notably <a href="https://eips.ethereum.org/EIPS/eip-1014">CREATE2</a>
-and the <a href="https://eips.ethereum.org/EIPS/eip-2470">ERC-2470
-singleton factory</a>, it's difficult to make this work perfectly. Some
-L2s (eg. "<a href="../../../2022/08/04/zkevm.html">type 4</a> ZK-EVMs")
-are not <em>quite</em> EVM equivalent, often using Solidity or an
-intermediate assembly instead, preventing hash equivalence. And even
-when you can have hash equivalence, the possibility of wallets changing
-ownership through key changes creates <a
-href="https://safe.mirror.xyz/4GcGAOFno-suTCjBewiYH4k4yXPDdIukC5woO5Bjc4w">other
-unintuitive consequences</a>.</p>
-<p><strong>Privacy requires each user to have <em>even more</em>
-addresses, and may even change <em>what kinds</em> of addresses we're
-dealing with</strong>. If <a
-href="../../../2023/01/20/stealth.html">stealth address</a> proposals
-become widely used, instead of each user having only a few addresses, or
-one address per L2, users might have <em>one address per
-transaction</em>. Other privacy schemes, even existing ones such as
-Tornado Cash, change how assets are stored in a different way: <em>many
-users' funds are stored in the same smart contract</em> (and hence at
-the same address). To send funds to a specific user, users will need to
-rely on the privacy scheme's own internal addressing system.</p>
-<p>As we've seen, <strong>each of the three transitions weaken the "one
-user ~= one address" mental model in different ways</strong>, and some
-of these effects feed back into the complexity of executing the
-transitions. Two particular points of complexity are:</p>
+<p><strong>Smart contract wallets add more complexity, by making it much more difficult to have <em>the same</em> address across L1 and the various L2s</strong>. Today, most users are using <em>externally owned accounts</em>, whose address is literally a hash of the public key that is used to verify signatures - so nothing changes between L1 and L2. With smart contract wallets, however, keeping one address becomes more difficult. Although a lot of work has been done to <em>try</em> to make addresses be hashes of code that can be equivalent across networks, most notably <a href="https://eips.ethereum.org/EIPS/eip-1014">CREATE2</a> and the <a href="https://eips.ethereum.org/EIPS/eip-2470">ERC-2470 singleton factory</a>, it's difficult to make this work perfectly. Some L2s (eg. "<a href="../../../2022/08/04/zkevm.html">type 4</a> ZK-EVMs") are not <em>quite</em> EVM equivalent, often using Solidity or an intermediate assembly instead, preventing hash equivalence. And even when you can have hash equivalence, the possibility of wallets changing ownership through key changes creates <a href="https://safe.mirror.xyz/4GcGAOFno-suTCjBewiYH4k4yXPDdIukC5woO5Bjc4w">other unintuitive consequences</a>.</p>
+<p><strong>Privacy requires each user to have <em>even more</em> addresses, and may even change <em>what kinds</em> of addresses we're dealing with</strong>. If <a href="../../../2023/01/20/stealth.html">stealth address</a> proposals become widely used, instead of each user having only a few addresses, or one address per L2, users might have <em>one address per transaction</em>. Other privacy schemes, even existing ones such as Tornado Cash, change how assets are stored in a different way: <em>many users' funds are stored in the same smart contract</em> (and hence at the same address). To send funds to a specific user, users will need to rely on the privacy scheme's own internal addressing system.</p>
+<p>As we've seen, <strong>each of the three transitions weaken the "one user ~= one address" mental model in different ways</strong>, and some of these effects feed back into the complexity of executing the transitions. Two particular points of complexity are:</p>
 <ol type="1">
-<li><strong>If you want to pay someone, how will you get the information
-on <em>how</em> to pay them?</strong></li>
-<li><strong>If users have many assets stored in different places across
-different chains, how do they do key changes and <a
-href="../../../2021/01/11/recovery.html">social
-recovery</a>?</strong></li>
+<li><strong>If you want to pay someone, how will you get the information on <em>how</em> to pay them?</strong></li>
+<li><strong>If users have many assets stored in different places across different chains, how do they do key changes and <a href="../../../2021/01/11/recovery.html">social recovery</a>?</strong></li>
 </ol>
-<h2 id="the-three-transitions-and-on-chain-payments-and-identity">The
-three transitions and on-chain payments (and identity)</h2>
-<p>I have coins on Scroll, and I want to pay for coffee (if the "I" is
-literally me, the writer of this article, then "coffee" is of course a
-metonymy for "green tea"). You are selling me the coffee, but you are
-only set up to receive coins on Taiko. Wat do?</p>
+<h2 id="the-three-transitions-and-on-chain-payments-and-identity">The three transitions and on-chain payments (and identity)</h2>
+<p>I have coins on Scroll, and I want to pay for coffee (if the "I" is literally me, the writer of this article, then "coffee" is of course a metonymy for "green tea"). You are selling me the coffee, but you are only set up to receive coins on Taiko. Wat do?</p>
 <p>There are basically two solutions:</p>
 <ol type="1">
-<li>Receiving wallets (which could be merchants, but also could just be
-regular individuals) try really hard to support <em>every</em> L2, and
-have some automated functionality for consolidating funds
-asynchronously.</li>
-<li>The recipient provides their L2 alongside their address, and the
-sender's wallet automatically routes funds to the destination L2 through
-some cross-L2 bridging system.</li>
+<li>Receiving wallets (which could be merchants, but also could just be regular individuals) try really hard to support <em>every</em> L2, and have some automated functionality for consolidating funds asynchronously.</li>
+<li>The recipient provides their L2 alongside their address, and the sender's wallet automatically routes funds to the destination L2 through some cross-L2 bridging system.</li>
 </ol>
-<p>Of course, these solutions can be combined: the recipient provides
-the <em>list</em> of L2s they're willing to accept, and the sender's
-wallet figures out payment, which could involve either a direct send if
-they're lucky, or otherwise a cross-L2 bridging path.</p>
-<p>But this is only one example of a key challenge that the three
-transitions introduce: <strong>simple actions like <em>paying
-someone</em> start to require a lot more information than just a 20-byte
-address</strong>.</p>
-<p>A transition to smart contract wallets is fortunately not a large
-burden on the addressing system, but there are still some technical
-issues in other parts of the application stack that need to be worked
-through. Wallets will need to be updated to make sure that they do not
-send only 21000 gas along with a transaction, and it will be even more
-important to ensure that the payment <em>receiving</em> side of a wallet
-tracks not only ETH transfers from EOAs, but also ETH sent by smart
-contract code. Apps that rely on the assumption that address ownership
-is <em>immutable</em> (eg. NFTs that ban smart contracts to enforce
-royalties) will have to find other ways of achieving their goals. Smart
-contract wallets will also make some things <em>easier</em> - notably,
-if someone receives <em>only</em> a non-ETH ERC20 token, they will be
-able to use <a href="https://eips.ethereum.org/EIPS/eip-4337">ERC-4337
-paymasters</a> to pay for gas with that token.</p>
-<p>Privacy, on the other hand, once again poses major challenges that we
-have not really dealt with yet. The original Tornado Cash did not
-introduce any of these issues, because it did not support internal
-transfers: users could only deposit into the system and withdraw out of
-it. Once you <em>can</em> make internal transfers, however, users will
-need to use the internal addressing scheme of the privacy system. In
-practice, a user's "payment information" would need to contain both (i)
-some kind of "spending pubkey", a commitment to a secret that the
-recipient could use to spend, and (ii) some way for the sender to send
-encrypted information that only the recipient can decrypt, to help the
-recipient discover the payment.</p>
-<p><a href="../../../2023/01/20/stealth.html">Stealth address
-protocols</a> rely on a concept of <strong>meta-addresses</strong>,
-which work in this way: one part of the meta-address is a blinded
-version of the sender's spending key, and another part is the sender's
-encryption key (though a minimal implementation could set those two keys
-to be the same).</p>
+<p>Of course, these solutions can be combined: the recipient provides the <em>list</em> of L2s they're willing to accept, and the sender's wallet figures out payment, which could involve either a direct send if they're lucky, or otherwise a cross-L2 bridging path.</p>
+<p>But this is only one example of a key challenge that the three transitions introduce: <strong>simple actions like <em>paying someone</em> start to require a lot more information than just a 20-byte address</strong>.</p>
+<p>A transition to smart contract wallets is fortunately not a large burden on the addressing system, but there are still some technical issues in other parts of the application stack that need to be worked through. Wallets will need to be updated to make sure that they do not send only 21000 gas along with a transaction, and it will be even more important to ensure that the payment <em>receiving</em> side of a wallet tracks not only ETH transfers from EOAs, but also ETH sent by smart contract code. Apps that rely on the assumption that address ownership is <em>immutable</em> (eg. NFTs that ban smart contracts to enforce royalties) will have to find other ways of achieving their goals. Smart contract wallets will also make some things <em>easier</em> - notably, if someone receives <em>only</em> a non-ETH ERC20 token, they will be able to use <a href="https://eips.ethereum.org/EIPS/eip-4337">ERC-4337 paymasters</a> to pay for gas with that token.</p>
+<p>Privacy, on the other hand, once again poses major challenges that we have not really dealt with yet. The original Tornado Cash did not introduce any of these issues, because it did not support internal transfers: users could only deposit into the system and withdraw out of it. Once you <em>can</em> make internal transfers, however, users will need to use the internal addressing scheme of the privacy system. In practice, a user's "payment information" would need to contain both (i) some kind of "spending pubkey", a commitment to a secret that the recipient could use to spend, and (ii) some way for the sender to send encrypted information that only the recipient can decrypt, to help the recipient discover the payment.</p>
+<p><a href="../../../2023/01/20/stealth.html">Stealth address protocols</a> rely on a concept of <strong>meta-addresses</strong>, which work in this way: one part of the meta-address is a blinded version of the sender's spending key, and another part is the sender's encryption key (though a minimal implementation could set those two keys to be the same).</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/three_transitions/zk_stealth.png" /></p>
-<p><em>Schematic overview of an abstract stealth address scheme based on
-encryption and ZK-SNARKs.</em></p>
+<p><em>Schematic overview of an abstract stealth address scheme based on encryption and ZK-SNARKs.</em></p>
 </center>
 <p><br></p>
-<p>A key lesson here is that <strong>in a privacy-friendly ecosystem, a
-user will have both spending pubkeys and encryption pubkeys, and a
-user's "payment information" will have to include both keys</strong>.
-There are also good reasons other than payments to expand in this
-direction. For example, if we want Ethereum-based encrypted email, users
-will need to publicly provide some kind of encryption key. In "EOA
-world", we could re-use account keys for this, but in a safe
-smart-contract-wallet world, we probably should have more explicit
-functionality for this. This would also help in making Ethereum-based
-identity more compatible with non-Ethereum decentralized privacy
-ecosystems, most notably PGP keys.</p>
-<h2 id="the-three-transitions-and-key-recovery">The three transitions
-and key recovery</h2>
-<p>The default way to implement key changes and social recovery in a
-many-address-per-user world is to simply have users run the recovery
-procedure on each address separately. This can be done in one click: the
-wallet can include software to execute the recovery procedure across all
-of a user's addresses at the same time. However, even with such UX
-simplifications, naive multi-address recovery has three issues:</p>
+<p>A key lesson here is that <strong>in a privacy-friendly ecosystem, a user will have both spending pubkeys and encryption pubkeys, and a user's "payment information" will have to include both keys</strong>. There are also good reasons other than payments to expand in this direction. For example, if we want Ethereum-based encrypted email, users will need to publicly provide some kind of encryption key. In "EOA world", we could re-use account keys for this, but in a safe smart-contract-wallet world, we probably should have more explicit functionality for this. This would also help in making Ethereum-based identity more compatible with non-Ethereum decentralized privacy ecosystems, most notably PGP keys.</p>
+<h2 id="the-three-transitions-and-key-recovery">The three transitions and key recovery</h2>
+<p>The default way to implement key changes and social recovery in a many-address-per-user world is to simply have users run the recovery procedure on each address separately. This can be done in one click: the wallet can include software to execute the recovery procedure across all of a user's addresses at the same time. However, even with such UX simplifications, naive multi-address recovery has three issues:</p>
 <ol type="1">
-<li><strong>Gas cost impracticality</strong>: this one is
-self-explanatory.</li>
-<li><strong>Counterfactual addresses</strong>: addresses for which the
-smart contract has not yet been published (in practice, this will mean
-an account that you have not yet sent funds from). You as a user have a
-potentially unlimited number of counterfactual addresses: one or more on
-every L2, including L2s that do not yet exist, and a whole other
-infinite set of counterfactual addresses arising from stealth address
-schemes.</li>
-<li><strong>Privacy</strong>: if a user intentionally has many addresses
-to avoid linking them to each other, they certainly do not want to
-publicly link all of them by recovering them at or around the same
-time!</li>
+<li><strong>Gas cost impracticality</strong>: this one is self-explanatory.</li>
+<li><strong>Counterfactual addresses</strong>: addresses for which the smart contract has not yet been published (in practice, this will mean an account that you have not yet sent funds from). You as a user have a potentially unlimited number of counterfactual addresses: one or more on every L2, including L2s that do not yet exist, and a whole other infinite set of counterfactual addresses arising from stealth address schemes.</li>
+<li><strong>Privacy</strong>: if a user intentionally has many addresses to avoid linking them to each other, they certainly do not want to publicly link all of them by recovering them at or around the same time!</li>
 </ol>
-<p>Solving these problems is hard. Fortunately, there is a somewhat
-elegant solution that performs reasonably well: <strong>an architecture
-that separates verification logic and asset holdings</strong>.</p>
+<p>Solving these problems is hard. Fortunately, there is a somewhat elegant solution that performs reasonably well: <strong>an architecture that separates verification logic and asset holdings</strong>.</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/three_transitions/keystore.png" /></p>
 </center>
 <p><br></p>
-<p>Each user has a <strong>keystore contract</strong>, which exists in
-<em>one location</em> (could either be mainnet or a specific L2). Users
-then have addresses on different L2s, where the verification logic of
-each of those addresses is <em>a pointer to the keystore contract</em>.
-Spending from those addresses would require a proof going into the
-keystore contract showing the <em>current</em> (or, more realistically,
-<em>very recent</em>) spending public key.</p>
+<p>Each user has a <strong>keystore contract</strong>, which exists in <em>one location</em> (could either be mainnet or a specific L2). Users then have addresses on different L2s, where the verification logic of each of those addresses is <em>a pointer to the keystore contract</em>. Spending from those addresses would require a proof going into the keystore contract showing the <em>current</em> (or, more realistically, <em>very recent</em>) spending public key.</p>
 <p>The proof could be implemented in a few ways:</p>
 <ul>
-<li><strong>Direct read-only L1 access inside the L2</strong>. It's
-possible to modify L2s to give them a way to directly read L1 state. If
-the keystore contract is on L1, this would mean that contracts inside L2
-can access the keystore "for free"</li>
-<li><strong>Merkle branches</strong>. Merkle branches can prove L1 state
-to an L2, or L2 state to an L1, or you can combine the two to prove
-parts of the state of one L2 to another L2. The main weakness of Merkle
-proofs is high gas costs due to proof length: potentially 5 kB for a
-proof, though this will reduce to &lt; 1 kB in the future due to <a
-href="../../../2021/06/18/verkle.html">Verkle trees</a>.</li>
-<li><strong>ZK-SNARKs</strong>. You can reduce data costs by using a
-ZK-SNARK of a Merkle branch instead of the branch itself. It's possible
-to build off-chain aggregation techniques (eg. on top of <a
-href="https://eips.ethereum.org/EIPS/eip-4337">EIP-4337</a>) to have one
-single ZK-SNARK verify all cross-chain state proofs in a block.</li>
-<li><strong>KZG commitments</strong>. Either L2s, or schemes built on
-top of them, could introduce a sequential addressing system, allowing
-proofs of state inside this system to be a mere 48 bytes long. Like with
-ZK-SNARKs, a <a
-href="https://dankradfeist.de/ethereum/2021/06/18/pcs-multiproofs.html">multiproof
-scheme</a> could merge all of these proofs into a single proof per
-block.</li>
+<li><strong>Direct read-only L1 access inside the L2</strong>. It's possible to modify L2s to give them a way to directly read L1 state. If the keystore contract is on L1, this would mean that contracts inside L2 can access the keystore "for free"</li>
+<li><strong>Merkle branches</strong>. Merkle branches can prove L1 state to an L2, or L2 state to an L1, or you can combine the two to prove parts of the state of one L2 to another L2. The main weakness of Merkle proofs is high gas costs due to proof length: potentially 5 kB for a proof, though this will reduce to &lt; 1 kB in the future due to <a href="../../../2021/06/18/verkle.html">Verkle trees</a>.</li>
+<li><strong>ZK-SNARKs</strong>. You can reduce data costs by using a ZK-SNARK of a Merkle branch instead of the branch itself. It's possible to build off-chain aggregation techniques (eg. on top of <a href="https://eips.ethereum.org/EIPS/eip-4337">EIP-4337</a>) to have one single ZK-SNARK verify all cross-chain state proofs in a block.</li>
+<li><strong>KZG commitments</strong>. Either L2s, or schemes built on top of them, could introduce a sequential addressing system, allowing proofs of state inside this system to be a mere 48 bytes long. Like with ZK-SNARKs, a <a href="https://dankradfeist.de/ethereum/2021/06/18/pcs-multiproofs.html">multiproof scheme</a> could merge all of these proofs into a single proof per block.</li>
 </ul>
 <center>
 <p><br></p>
 <p><img src="../../../../images/three_transitions/proofs.png" /></p>
 </center>
 <p><br></p>
-<p>If we want to avoid making one proof per transaction, we can
-implement a lighter scheme that only requires a cross-L2 proof for
-recovery. <em>Spending</em> from an account would depend on a spending
-key whose corresponding pubkey is stored within that account, but
-<em>recovery</em> would require a transaction that copies over the
-current <code>spending_pubkey</code> in the keystore. Funds in
-counterfactual addresses are safe even if your old keys are not:
-"activating" a counterfactual address to turn it into a working contract
-would require making a cross-L2 proof to copy over the current
-<code>spending_pubkey</code>. <a
-href="https://forum.safe.global/t/how-can-a-safe-hold-asset-on-multiple-chains/2242">This
-thread on the Safe forums</a> describes how a similar architecture might
-work.</p>
-<p><strong>To add <em>privacy</em> to such a scheme, then we just
-encrypt the pointer, and we do all of our proving inside
-ZK-SNARKs</strong>:</p>
-<p><img
-src="../../../../images/three_transitions/zk_keystore.png" /></p>
-<p>With more work (eg. using <a
-href="https://notes.ethereum.org/@vbuterin/non_index_revealing_proof">this
-work</a> as a starting point), we could also strip out most of the
-complexity of ZK-SNARKs and make a more bare-bones KZG-based scheme.</p>
-<p>These schemes can get complex. On the plus side, there are many
-potential synergies between them. For example, the concept of "keystore
-contracts" could also be a solution to the challenge of "addresses"
-mentioned in the previous section: if we want users to have persistent
-addresses, that do not change every time the user updates a key, we
-could put stealth meta-addresses, encryption keys, and other information
-into the keystore contract, and use the address of the keystore contract
-as a user's "address".</p>
-<h2 id="lots-of-secondary-infrastructure-needs-to-update">Lots of
-secondary infrastructure needs to update</h2>
-<p>Using ENS is expensive. Today, in June 2023, the situation is not too
-bad: the transaction fee is significant, but it's still comparable to
-the ENS domain fee. <a
-href="https://etherscan.io/tx/0xdd5950c46764d7fa8f41a6f83f5bcc3469c09330ef41a9f63f16f60fc28f30b6">Registering
-zuzalu.eth</a> cost me roughly $27, of which $11 was transaction fees.
-But if we have another bull market, fees will skyrocket. Even without
-ETH price increases, gas fees returning to 200 gwei would raise the tx
-fee of a domain registration to $104. And so if we want people to
-actually use ENS, especially for use cases like decentralized social
-media where users demand nearly-free registration (and the ENS domain
-fee is not an issue because these platforms offer their users
-sub-domains), we need ENS to work on L2.</p>
-<p>Fortunately, the ENS team has stepped up, and ENS on L2 is actually
-happening! <a
-href="https://eips.ethereum.org/EIPS/eip-3668">ERC-3668</a> (aka "the
-CCIP standard"), together with <a
-href="https://github.com/ensdomains/docs/blob/master/ens-improvement-proposals/ensip-10-wildcard-resolution.md">ENSIP-10</a>,
-provide a way to have ENS subdomains on <em>any</em> L2 automatically be
-verifiable. The CCIP standard requires setting up a smart contract that
-describes a method for verifying <em>proofs</em> of data on L2, and a
-domain (eg. <a href="https://optinames.xyz/">Optinames</a> uses
-<code>ecc.eth</code>) can be put under the control of such a contract.
-Once the CCIP contract controls <code>ecc.eth</code> on L1, accessing
-some <code>subdomain.ecc.eth</code> will automatically involve finding
-and verifying a proof (eg. Merkle branch) of the state in L2 that
-actually stores that particular subdomain.</p>
+<p>If we want to avoid making one proof per transaction, we can implement a lighter scheme that only requires a cross-L2 proof for recovery. <em>Spending</em> from an account would depend on a spending key whose corresponding pubkey is stored within that account, but <em>recovery</em> would require a transaction that copies over the current <code>spending_pubkey</code> in the keystore. Funds in counterfactual addresses are safe even if your old keys are not: "activating" a counterfactual address to turn it into a working contract would require making a cross-L2 proof to copy over the current <code>spending_pubkey</code>. <a href="https://forum.safe.global/t/how-can-a-safe-hold-asset-on-multiple-chains/2242">This thread on the Safe forums</a> describes how a similar architecture might work.</p>
+<p><strong>To add <em>privacy</em> to such a scheme, then we just encrypt the pointer, and we do all of our proving inside ZK-SNARKs</strong>:</p>
+<p><img src="../../../../images/three_transitions/zk_keystore.png" /></p>
+<p>With more work (eg. using <a href="https://notes.ethereum.org/@vbuterin/non_index_revealing_proof">this work</a> as a starting point), we could also strip out most of the complexity of ZK-SNARKs and make a more bare-bones KZG-based scheme.</p>
+<p>These schemes can get complex. On the plus side, there are many potential synergies between them. For example, the concept of "keystore contracts" could also be a solution to the challenge of "addresses" mentioned in the previous section: if we want users to have persistent addresses, that do not change every time the user updates a key, we could put stealth meta-addresses, encryption keys, and other information into the keystore contract, and use the address of the keystore contract as a user's "address".</p>
+<h2 id="lots-of-secondary-infrastructure-needs-to-update">Lots of secondary infrastructure needs to update</h2>
+<p>Using ENS is expensive. Today, in June 2023, the situation is not too bad: the transaction fee is significant, but it's still comparable to the ENS domain fee. <a href="https://etherscan.io/tx/0xdd5950c46764d7fa8f41a6f83f5bcc3469c09330ef41a9f63f16f60fc28f30b6">Registering zuzalu.eth</a> cost me roughly $27, of which $11 was transaction fees. But if we have another bull market, fees will skyrocket. Even without ETH price increases, gas fees returning to 200 gwei would raise the tx fee of a domain registration to $104. And so if we want people to actually use ENS, especially for use cases like decentralized social media where users demand nearly-free registration (and the ENS domain fee is not an issue because these platforms offer their users sub-domains), we need ENS to work on L2.</p>
+<p>Fortunately, the ENS team has stepped up, and ENS on L2 is actually happening! <a href="https://eips.ethereum.org/EIPS/eip-3668">ERC-3668</a> (aka "the CCIP standard"), together with <a href="https://github.com/ensdomains/docs/blob/master/ens-improvement-proposals/ensip-10-wildcard-resolution.md">ENSIP-10</a>, provide a way to have ENS subdomains on <em>any</em> L2 automatically be verifiable. The CCIP standard requires setting up a smart contract that describes a method for verifying <em>proofs</em> of data on L2, and a domain (eg. <a href="https://optinames.xyz/">Optinames</a> uses <code>ecc.eth</code>) can be put under the control of such a contract. Once the CCIP contract controls <code>ecc.eth</code> on L1, accessing some <code>subdomain.ecc.eth</code> will automatically involve finding and verifying a proof (eg. Merkle branch) of the state in L2 that actually stores that particular subdomain.</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/three_transitions/ccip.png" /></p>
 </center>
 <p><br></p>
-<p>Actually fetching the proofs involves going to a list of URLs stored
-in the contract, which admittedly <em>feels</em> like centralization,
-though I would argue it really isn't: it's a <a
-href="../../../2020/08/20/trust.html">1-of-N trust model</a> (invalid
-proofs get caught by the verification logic in the CCIP contract's
-callback function, and as long as even <em>one</em> of the URLs returns
-a valid proof, you're good). The list of URLs could contain dozens of
-them.</p>
-<p><strong>The ENS CCIP effort is a success story, and it should be
-viewed as a sign that radical reforms of the kind that we need are
-actually possible.</strong> But there's a lot more application-layer
-reform that will need to be done. A few examples:</p>
+<p>Actually fetching the proofs involves going to a list of URLs stored in the contract, which admittedly <em>feels</em> like centralization, though I would argue it really isn't: it's a <a href="../../../2020/08/20/trust.html">1-of-N trust model</a> (invalid proofs get caught by the verification logic in the CCIP contract's callback function, and as long as even <em>one</em> of the URLs returns a valid proof, you're good). The list of URLs could contain dozens of them.</p>
+<p><strong>The ENS CCIP effort is a success story, and it should be viewed as a sign that radical reforms of the kind that we need are actually possible.</strong> But there's a lot more application-layer reform that will need to be done. A few examples:</p>
 <ul>
-<li>Lots of dapps depend on users providing <strong>off-chain
-<em>signatures</em></strong>. With externally-owned accounts (EOAs),
-this is easy. <a
-href="https://eips.ethereum.org/EIPS/eip-1271">ERC-1271</a> provides a
-standardized way to do this for smart contract wallets. However, lots of
-dapps still don't support ERC-1271; they will need to.</li>
-<li><strong>Dapps that use "is this an EOA?" to discriminate between
-users and contracts (eg. to prevent transfer or enforce royalties) will
-break</strong>. In general, I advise against attempting to find a purely
-technical solution here; figuring out whether or not a particular
-transfer of cryptographic control is a transfer of beneficial ownership
-is a difficult problem and probably not solvable without resolving to
-some <a
-href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4105763">off-chain
-community-driven mechanisms</a>. Most likely, applications will have to
-rely less on preventing transfers and more on techniques like <a
-href="https://www.reddit.com/r/ethereum/comments/mo9mw8/reminder_in_the_long_run_asset_transfer_fees_are/">Harberger
-taxes</a>.</li>
-<li><strong>How wallets interact with spending and encryption keys will
-have to be improved.</strong> Currently, wallets often use deterministic
-signatures to generate application-specific keys: signing a standard
-nonce (eg. the hash of the application's name) with an EOA's private key
-generates a deterministic value that cannot be generated without the
-private key, and so it's secure in a purely technical sense. However,
-these techniques are "opaque" to the wallet, preventing the wallet from
-implementing user-interface level security checks. In a more mature
-ecosystem, signing, encryption and related functionalities will have to
-be handled by wallets more explicitly.</li>
-<li><strong>Light clients (eg. <a
-href="https://a16zcrypto.com/posts/article/building-helios-ethereum-light-client/">Helios</a>)
-will have to verify L2s and not just the L1</strong>. Today, light
-clients focus on checking the validity of the L1 headers (using the <a
-href="https://github.com/ethereum/annotated-spec/blob/master/altair/sync-protocol.md">light
-client sync protocol</a>), and verifying Merkle branches of L1 state and
-transactions rooted in the L1 header. Tomorrow, they will <em>also</em>
-need to verify a proof of L2 state rooted in the state root stored in
-the L1 (a more advanced version of this would actually look at <em>L2
-pre-confirmations</em>).</li>
+<li>Lots of dapps depend on users providing <strong>off-chain <em>signatures</em></strong>. With externally-owned accounts (EOAs), this is easy. <a href="https://eips.ethereum.org/EIPS/eip-1271">ERC-1271</a> provides a standardized way to do this for smart contract wallets. However, lots of dapps still don't support ERC-1271; they will need to.</li>
+<li><strong>Dapps that use "is this an EOA?" to discriminate between users and contracts (eg. to prevent transfer or enforce royalties) will break</strong>. In general, I advise against attempting to find a purely technical solution here; figuring out whether or not a particular transfer of cryptographic control is a transfer of beneficial ownership is a difficult problem and probably not solvable without resolving to some <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4105763">off-chain community-driven mechanisms</a>. Most likely, applications will have to rely less on preventing transfers and more on techniques like <a href="https://www.reddit.com/r/ethereum/comments/mo9mw8/reminder_in_the_long_run_asset_transfer_fees_are/">Harberger taxes</a>.</li>
+<li><strong>How wallets interact with spending and encryption keys will have to be improved.</strong> Currently, wallets often use deterministic signatures to generate application-specific keys: signing a standard nonce (eg. the hash of the application's name) with an EOA's private key generates a deterministic value that cannot be generated without the private key, and so it's secure in a purely technical sense. However, these techniques are "opaque" to the wallet, preventing the wallet from implementing user-interface level security checks. In a more mature ecosystem, signing, encryption and related functionalities will have to be handled by wallets more explicitly.</li>
+<li><strong>Light clients (eg. <a href="https://a16zcrypto.com/posts/article/building-helios-ethereum-light-client/">Helios</a>) will have to verify L2s and not just the L1</strong>. Today, light clients focus on checking the validity of the L1 headers (using the <a href="https://github.com/ethereum/annotated-spec/blob/master/altair/sync-protocol.md">light client sync protocol</a>), and verifying Merkle branches of L1 state and transactions rooted in the L1 header. Tomorrow, they will <em>also</em> need to verify a proof of L2 state rooted in the state root stored in the L1 (a more advanced version of this would actually look at <em>L2 pre-confirmations</em>).</li>
 </ul>
-<h2 id="wallets-will-need-to-secure-both-assets-and-data">Wallets will
-need to secure both <em>assets</em> and <em>data</em></h2>
-<p>Today, wallets are in the business of securing <em>assets</em>.
-Everything lives on-chain, and the only thing that the wallet needs to
-protect is the private key that is <em>currently</em> guarding those
-assets. If you change the key, you can safely publish your previous
-private key on the internet the next day. In a ZK world, however, this
-is no longer true: the wallet is not just protecting authentication
-credentials, it's also holding your <em>data</em>.</p>
-<p>We saw the first signs of such a world with <a
-href="https://zupass.org/">Zupass</a>, the ZK-SNARK-based identity
-system that was used at Zuzalu. Users had a private key that they used
-to authenticate to the system, which could be used to make basic proofs
-like "prove I'm a Zuzalu resident, without revealing which one". But the
-Zupass system also began to have other apps built on top, most notably
-<em>stamps</em> (Zupass's version of POAPs).</p>
+<h2 id="wallets-will-need-to-secure-both-assets-and-data">Wallets will need to secure both <em>assets</em> and <em>data</em></h2>
+<p>Today, wallets are in the business of securing <em>assets</em>. Everything lives on-chain, and the only thing that the wallet needs to protect is the private key that is <em>currently</em> guarding those assets. If you change the key, you can safely publish your previous private key on the internet the next day. In a ZK world, however, this is no longer true: the wallet is not just protecting authentication credentials, it's also holding your <em>data</em>.</p>
+<p>We saw the first signs of such a world with <a href="https://zupass.org/">Zupass</a>, the ZK-SNARK-based identity system that was used at Zuzalu. Users had a private key that they used to authenticate to the system, which could be used to make basic proofs like "prove I'm a Zuzalu resident, without revealing which one". But the Zupass system also began to have other apps built on top, most notably <em>stamps</em> (Zupass's version of POAPs).</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/three_transitions/zupass.png" /></p>
-<p><em>One of my many Zupass stamps, confirming that I am a proud member
-of Team Cat.</em></p>
+<p><em>One of my many Zupass stamps, confirming that I am a proud member of Team Cat.</em></p>
 </center>
 <p><br></p>
-<p>The key feature that stamps offer over POAPs is that stamps are
-private: you hold the data locally, and you only ZK-prove a stamp (or
-some computation over the stamps) to someone if you want them to have
-that information about you. But this creates added risk: if you lose
-that information, you lose your stamps.</p>
-<p>Of course, the problem of holding data can be reduced to the problem
-of holding a single encryption key: some third party (or even the chain)
-can hold an encrypted copy of the data. This has the convenient
-advantage that actions you take don't change the encryption key, and so
-do not require any interactions with the system holding your encryption
-key safe. But even still, <strong>if you lose your encryption key, you
-lose everything</strong>. And on the flip side, <strong>if someone
-<em>sees</em> your encryption key, they see everything that was
-encrypted to that key</strong>.</p>
-<p>Zupass's de-facto solution was to encourage people to store their key
-on multiple devices (eg. laptop and phone), as the chance that they
-would lose access to all devices at the same time is tiny. We could go
-further, and use <a
-href="https://blog.ethereum.org/2014/08/16/secret-sharing-erasure-coding-guide-aspiring-dropbox-decentralizer">secret
-sharing</a> to store the key, split between multiple guardians.</p>
-<p>This kind of social recovery via MPC is not a sufficient solution for
-<em>wallets</em>, because it means that not only current guardians but
-also previous guardians could collude to steal your assets, which is an
-unacceptably high risk. But privacy leaks are generally a lower risk
-than total asset loss, and someone with a high-privacy-demanding use
-case could always accept a higher risk of loss by not backing up the key
-associated with those privacy-demanding actions.</p>
-<p>To avoid overwheming the user with a byzantine system of multiple
-recovery paths, wallets that support social recovery will likely need to
-manage both recovery of assets <em>and</em> recovery of encryption
-keys.</p>
+<p>The key feature that stamps offer over POAPs is that stamps are private: you hold the data locally, and you only ZK-prove a stamp (or some computation over the stamps) to someone if you want them to have that information about you. But this creates added risk: if you lose that information, you lose your stamps.</p>
+<p>Of course, the problem of holding data can be reduced to the problem of holding a single encryption key: some third party (or even the chain) can hold an encrypted copy of the data. This has the convenient advantage that actions you take don't change the encryption key, and so do not require any interactions with the system holding your encryption key safe. But even still, <strong>if you lose your encryption key, you lose everything</strong>. And on the flip side, <strong>if someone <em>sees</em> your encryption key, they see everything that was encrypted to that key</strong>.</p>
+<p>Zupass's de-facto solution was to encourage people to store their key on multiple devices (eg. laptop and phone), as the chance that they would lose access to all devices at the same time is tiny. We could go further, and use <a href="https://blog.ethereum.org/2014/08/16/secret-sharing-erasure-coding-guide-aspiring-dropbox-decentralizer">secret sharing</a> to store the key, split between multiple guardians.</p>
+<p>This kind of social recovery via MPC is not a sufficient solution for <em>wallets</em>, because it means that not only current guardians but also previous guardians could collude to steal your assets, which is an unacceptably high risk. But privacy leaks are generally a lower risk than total asset loss, and someone with a high-privacy-demanding use case could always accept a higher risk of loss by not backing up the key associated with those privacy-demanding actions.</p>
+<p>To avoid overwheming the user with a byzantine system of multiple recovery paths, wallets that support social recovery will likely need to manage both recovery of assets <em>and</em> recovery of encryption keys.</p>
 <h2 id="back-to-identity">Back to identity</h2>
-<p>One of the common threads of these changes is that the concept of an
-"address", a cryptographic identifier that you use to represent "you"
-on-chain, will have to radically change. <strong>"Instructions for how
-to interact with me" would no longer just be an ETH address; they would
-have to be, in some form, some combination of multiple addresses on
-multiple L2s, stealth meta-addresses, encryption keys, and other
-data</strong>.</p>
-<p>One way to do this is to make ENS your identity: your ENS record
-could just contain all of this information, and if you send someone
-<code>bob.eth</code> (or <code>bob.ecc.eth</code>, or...), they could look
-up and see everything about how to pay and interact with you, including
-in the more complicated cross-domain and privacy-preserving ways.</p>
+<p>One of the common threads of these changes is that the concept of an "address", a cryptographic identifier that you use to represent "you" on-chain, will have to radically change. <strong>"Instructions for how to interact with me" would no longer just be an ETH address; they would have to be, in some form, some combination of multiple addresses on multiple L2s, stealth meta-addresses, encryption keys, and other data</strong>.</p>
+<p>One way to do this is to make ENS your identity: your ENS record could just contain all of this information, and if you send someone <code>bob.eth</code> (or <code>bob.ecc.eth</code>, or...), they could look up and see everything about how to pay and interact with you, including in the more complicated cross-domain and privacy-preserving ways.</p>
 <p>But this ENS-centric approach has two weaknesses:</p>
 <ul>
-<li><strong>It ties too many things to <em>your name</em></strong>. Your
-name is not you, your name is one of many attributes of you. It should
-be possible to change your name without moving over your entire identity
-profile and updating a whole bunch of records across many
-applications.</li>
-<li><strong>You can't have trustless counterfactual names</strong>. One
-key UX feature of any blockchain is the ability to send coins to people
-who have not interacted with the chain yet. Without such a
-functionality, there is a catch-22: interacting with the chain requires
-paying transaction fees, which requires... already having coins. ETH
-addresses, including smart contract addresses with CREATE2, have this
-feature. ENS names don't, because if two Bobs both decide off-chain that
-they are <code>bob.ecc.eth</code>, there's no way to choose which one of
-them gets the name.</li>
+<li><strong>It ties too many things to <em>your name</em></strong>. Your name is not you, your name is one of many attributes of you. It should be possible to change your name without moving over your entire identity profile and updating a whole bunch of records across many applications.</li>
+<li><strong>You can't have trustless counterfactual names</strong>. One key UX feature of any blockchain is the ability to send coins to people who have not interacted with the chain yet. Without such a functionality, there is a catch-22: interacting with the chain requires paying transaction fees, which requires... already having coins. ETH addresses, including smart contract addresses with CREATE2, have this feature. ENS names don't, because if two Bobs both decide off-chain that they are <code>bob.ecc.eth</code>, there's no way to choose which one of them gets the name.</li>
 </ul>
-<p>One possible solution is to put more things into the <strong>keystore
-contract</strong> mentioned in the architecture earlier in this post.
-The keystore contract could contain all of the various information about
-you and how to interact with you (and with CCIP, some of that info could
-be off-chain), and users would use their keystore contract as their
-primary identifier. But the actual <em>assets</em> that they receive
-would be stored in all kinds of different places. Keystore contracts are
-not tied to a name, and they are counterfactual-friendly: you can
-generate an address that can provably only be initialized by a keystore
-contract that has certain fixed initial parameters.</p>
-<p>Another category of solutions has to do with abandoning the concept
-of user-facing addresses altogether, in a similar spirit to <a
-href="https://github.com/bitcoin/bips/blob/master/bip-0070.mediawiki">the
-Bitcoin payment protocol</a>. One idea is to rely more heavily on direct
-communication channels between the sender and the recipient; for
-example, the sender could send a claim link (either as an explicit URL
-or a QR code) which the recipient could use to accept the payment
-however they wish.</p>
+<p>One possible solution is to put more things into the <strong>keystore contract</strong> mentioned in the architecture earlier in this post. The keystore contract could contain all of the various information about you and how to interact with you (and with CCIP, some of that info could be off-chain), and users would use their keystore contract as their primary identifier. But the actual <em>assets</em> that they receive would be stored in all kinds of different places. Keystore contracts are not tied to a name, and they are counterfactual-friendly: you can generate an address that can provably only be initialized by a keystore contract that has certain fixed initial parameters.</p>
+<p>Another category of solutions has to do with abandoning the concept of user-facing addresses altogether, in a similar spirit to <a href="https://github.com/bitcoin/bips/blob/master/bip-0070.mediawiki">the Bitcoin payment protocol</a>. One idea is to rely more heavily on direct communication channels between the sender and the recipient; for example, the sender could send a claim link (either as an explicit URL or a QR code) which the recipient could use to accept the payment however they wish.</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/three_transitions/claim.png" /></p>
 </center>
 <p><br></p>
-<p>Regardless of whether the sender or the recipient acts first, greater
-reliance on wallets directly generating up-to-date payment information
-in real time could reduce friction. That said, persistent identifiers
-are convenient (especially with ENS), and the assumption of direct
-communication between sender and recipient is a really tricky one in
-practice, and so we may end up seeing a combination of different
-techniques.</p>
-<p>In all of these designs, keeping things both decentralized and
-understandable to users is paramount. We need to make sure that users
-have easy access to an up-to-date view of what their current assets are
-and what messages have been published that are intended for them. These
-views should depend on open tools, not proprietary solutions. It will
-take hard work to avoid the greater complexity of payment infrastructure
-from turning into an opaque "tower of abstraction" where developers have
-a hard time making sense of what's going on and adapting it to new
-contexts. Despite the challenges, achieving scalability, wallet
-security, and privacy for regular users is crucial for Ethereum's
-future. It is not just about technical feasibility but about actual
-accessibility for regular users. We need to rise to meet this
-challenge.</p>
+<p>Regardless of whether the sender or the recipient acts first, greater reliance on wallets directly generating up-to-date payment information in real time could reduce friction. That said, persistent identifiers are convenient (especially with ENS), and the assumption of direct communication between sender and recipient is a really tricky one in practice, and so we may end up seeing a combination of different techniques.</p>
+<p>In all of these designs, keeping things both decentralized and understandable to users is paramount. We need to make sure that users have easy access to an up-to-date view of what their current assets are and what messages have been published that are intended for them. These views should depend on open tools, not proprietary solutions. It will take hard work to avoid the greater complexity of payment infrastructure from turning into an opaque "tower of abstraction" where developers have a hard time making sense of what's going on and adapting it to new contexts. Despite the challenges, achieving scalability, wallet security, and privacy for regular users is crucial for Ethereum's future. It is not just about technical feasibility but about actual accessibility for regular users. We need to rise to meet this challenge.</p>
  </div> 

@@ -109,427 +109,90 @@ MathJax = {
 <br> <br> <br>
 <title> STARKs, Part II: Thank Goodness It's FRI-day </title>
 
-<p><em>Special thanks to Eli Ben-Sasson for ongoing help and
-explanations, and Justin Drake for reviewing</em></p>
-<p>In the last part of this series, we talked about how you can make
-some pretty interesting succinct proofs of computation, such as proving
-that you have computed the millionth Fibonacci number, using a technique
-involving polynomial composition and division. However, it rested on one
-critical ingredient: the ability to prove that at least the great
-majority of a given large set of points are on the same low-degree
-polynomial. This problem, called "low-degree testing", is perhaps the
-single most complex part of the protocol.</p>
-<p>We'll start off by once again re-stating the problem. Suppose that
-you have a set of points, and you claim that they are all on the same
-polynomial, with degree less than <span class="math inline">\(D\)</span>
-(ie. <span class="math inline">\(deg &lt; 2\)</span> means they're on
-the same line, <span class="math inline">\(deg &lt; 3\)</span> means
-they're on the same line or parabola, etc). You want to create a
-succinct probabilistic proof that this is actually true.</p>
+<p><em>Special thanks to Eli Ben-Sasson for ongoing help and explanations, and Justin Drake for reviewing</em></p>
+<p>In the last part of this series, we talked about how you can make some pretty interesting succinct proofs of computation, such as proving that you have computed the millionth Fibonacci number, using a technique involving polynomial composition and division. However, it rested on one critical ingredient: the ability to prove that at least the great majority of a given large set of points are on the same low-degree polynomial. This problem, called "low-degree testing", is perhaps the single most complex part of the protocol.</p>
+<p>We'll start off by once again re-stating the problem. Suppose that you have a set of points, and you claim that they are all on the same polynomial, with degree less than <span class="math inline">\(D\)</span> (ie. <span class="math inline">\(deg &lt; 2\)</span> means they're on the same line, <span class="math inline">\(deg &lt; 3\)</span> means they're on the same line or parabola, etc). You want to create a succinct probabilistic proof that this is actually true.</p>
 <center>
-<img src="../../../../images/starks-part-2-files/fri1.png" style="width:500px" class="padded" /><br><br>
-<small>Left: points all on the same <span class="math inline">\(deg &lt;
-3\)</span> polynomial. Right: points not on the same <span
-class="math inline">\(deg &lt; 3\)</span> polynomial</small>
+<img src="../../../../images/starks-part-2-files/fri1.png" style="width:500px" class="padded" /><br><br> <small>Left: points all on the same <span class="math inline">\(deg &lt; 3\)</span> polynomial. Right: points not on the same <span class="math inline">\(deg &lt; 3\)</span> polynomial</small>
 </center>
-<p><br> If you want to verify that the points are <em>all</em> on the
-same degree <span class="math inline">\(&lt; D\)</span> polynomial, you
-would have to actually check every point, as if you fail to check even
-one point there is always some chance that that point will not be on the
-polynomial even if all the others are. But what you <em>can</em> do is
-<em>probabilistically check</em> that at least <em>some fraction</em>
-(eg. 90%) of all the points are on the same polynomial.</p>
+<p><br> If you want to verify that the points are <em>all</em> on the same degree <span class="math inline">\(&lt; D\)</span> polynomial, you would have to actually check every point, as if you fail to check even one point there is always some chance that that point will not be on the polynomial even if all the others are. But what you <em>can</em> do is <em>probabilistically check</em> that at least <em>some fraction</em> (eg. 90%) of all the points are on the same polynomial.</p>
 <center>
-<img src="../../../../images/starks-part-2-files/proximity1.png" style="width:220px" />
-<img src="../../../../images/starks-part-2-files/proximity2.png" style="width:220px" />
-<br>
-<img src="../../../../images/starks-part-2-files/proximity4.png" style="width:220px" />
-<img src="../../../../images/starks-part-2-files/proximity3.png" style="width:220px" />
-<br><br> <small>Top left: possibly close enough to a polynomial. Top
-right: not close enough to a polynomial. Bottom left: somewhat close to
-two polynomials, but not close enough to either one. Bottom right:
-definitely not close enough to a polynomial.</small>
+<img src="../../../../images/starks-part-2-files/proximity1.png" style="width:220px" /> <img src="../../../../images/starks-part-2-files/proximity2.png" style="width:220px" /> <br> <img src="../../../../images/starks-part-2-files/proximity4.png" style="width:220px" /> <img src="../../../../images/starks-part-2-files/proximity3.png" style="width:220px" /> <br><br> <small>Top left: possibly close enough to a polynomial. Top right: not close enough to a polynomial. Bottom left: somewhat close to two polynomials, but not close enough to either one. Bottom right: definitely not close enough to a polynomial.</small>
 </center>
 <p><br></p>
-<p>If you have the ability to look at <em>every</em> point on the
-polynomial, then the problem is easy. But what if you can only look at a
-few points - that is, you can ask for whatever specific point you want,
-and the prover is obligated to give you the data for that point as part
-of the protocol, but the total number of queries is limited? Then the
-question becomes, how many points do you need to check to be able to
-tell with some given degree of certainty?</p>
-<p>Clearly, <span class="math inline">\(D\)</span> points is
-<strong>not</strong> enough. <span class="math inline">\(D\)</span>
-points are exactly what you need to uniquely define a degree <span
-class="math inline">\(&lt; D\)</span> polynomial, so <em>any</em> set of
-points that you receive will correspond to <em>some</em> degree <span
-class="math inline">\(&lt; D\)</span> polynomial. As we see in the
-figure above, however, <span class="math inline">\(D+1\)</span> points
-or more <em>do</em> give some indication.</p>
-<p>The algorithm to check if a given set of values is on the same degree
-<span class="math inline">\(&lt; D\)</span> polynomial with <span
-class="math inline">\(D+1\)</span> queries is not too complex. First,
-select a random subset of <span class="math inline">\(D\)</span> points,
-and use something like Lagrange interpolation (search for "Lagrange
-interpolation" <a
-href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">here</a>
-for a more detailed description) to recover the unique degree <span
-class="math inline">\(&lt; D\)</span> polynomial that passes through all
-of them. Then, randomly sample one more point, and check that it is on
-the same polynomial.</p>
+<p>If you have the ability to look at <em>every</em> point on the polynomial, then the problem is easy. But what if you can only look at a few points - that is, you can ask for whatever specific point you want, and the prover is obligated to give you the data for that point as part of the protocol, but the total number of queries is limited? Then the question becomes, how many points do you need to check to be able to tell with some given degree of certainty?</p>
+<p>Clearly, <span class="math inline">\(D\)</span> points is <strong>not</strong> enough. <span class="math inline">\(D\)</span> points are exactly what you need to uniquely define a degree <span class="math inline">\(&lt; D\)</span> polynomial, so <em>any</em> set of points that you receive will correspond to <em>some</em> degree <span class="math inline">\(&lt; D\)</span> polynomial. As we see in the figure above, however, <span class="math inline">\(D+1\)</span> points or more <em>do</em> give some indication.</p>
+<p>The algorithm to check if a given set of values is on the same degree <span class="math inline">\(&lt; D\)</span> polynomial with <span class="math inline">\(D+1\)</span> queries is not too complex. First, select a random subset of <span class="math inline">\(D\)</span> points, and use something like Lagrange interpolation (search for "Lagrange interpolation" <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">here</a> for a more detailed description) to recover the unique degree <span class="math inline">\(&lt; D\)</span> polynomial that passes through all of them. Then, randomly sample one more point, and check that it is on the same polynomial.</p>
 <center>
 <img src="../../../../images/starks-part-2-files/fri2.png" style="width:420px" class="padded" /><br>
 </center>
 <p><br></p>
-<p>Note that this is only a proximity test, because there's always the
-possibility that most points are on the same low-degree polynomial, but
-a few are not, and the <span class="math inline">\(D+1\)</span> sample
-missed those points entirely. However, we can derive the result that if
-less than 90% of the points are on the same degree <span
-class="math inline">\(&lt; D\)</span> polynomial, then the test will
-fail with high probability. Specifically, if you make <span
-class="math inline">\(D+k\)</span> queries, and if at least some portion
-<span class="math inline">\(p\)</span> of the points are not on the same
-polynomial as the rest of the points, then the test will only pass with
-probability <span class="math inline">\((1 - p)^k\)</span>.</p>
-<p>But what if, as in the examples from the previous article, <span
-class="math inline">\(D\)</span> is very high, and you want to verify a
-polynomial's degree with less than <span
-class="math inline">\(D\)</span> queries? This is, of course, impossible
-to do directly, because of the simple argument made above (namely, that
-<em>any</em> <span class="math inline">\(k \leq D\)</span> points are
-all on at least one degree <span class="math inline">\(&lt; D\)</span>
-polynomial). However, it's quite possible to do this indirectly <em>by
-providing auxiliary data</em>, and achieve massive efficiency gains by
-doing so. And this is exactly what new protocols like <a
-href="https://eccc.weizmann.ac.il/report/2017/134/">FRI</a> ("Fast RS
-IOPP", RS = "<a
-href="https://en.wikipedia.org/wiki/Reed%E2%80%93Solomon_error_correction#Constructions">Reed-Solomon</a>",
-IOPP = "Interactive Oracle Proofs of Proximity"), and similar earlier
-designs called probabilistically checkable proofs of proximity (PCPPs),
-try to achieve.</p>
+<p>Note that this is only a proximity test, because there's always the possibility that most points are on the same low-degree polynomial, but a few are not, and the <span class="math inline">\(D+1\)</span> sample missed those points entirely. However, we can derive the result that if less than 90% of the points are on the same degree <span class="math inline">\(&lt; D\)</span> polynomial, then the test will fail with high probability. Specifically, if you make <span class="math inline">\(D+k\)</span> queries, and if at least some portion <span class="math inline">\(p\)</span> of the points are not on the same polynomial as the rest of the points, then the test will only pass with probability <span class="math inline">\((1 - p)^k\)</span>.</p>
+<p>But what if, as in the examples from the previous article, <span class="math inline">\(D\)</span> is very high, and you want to verify a polynomial's degree with less than <span class="math inline">\(D\)</span> queries? This is, of course, impossible to do directly, because of the simple argument made above (namely, that <em>any</em> <span class="math inline">\(k \leq D\)</span> points are all on at least one degree <span class="math inline">\(&lt; D\)</span> polynomial). However, it's quite possible to do this indirectly <em>by providing auxiliary data</em>, and achieve massive efficiency gains by doing so. And this is exactly what new protocols like <a href="https://eccc.weizmann.ac.il/report/2017/134/">FRI</a> ("Fast RS IOPP", RS = "<a href="https://en.wikipedia.org/wiki/Reed%E2%80%93Solomon_error_correction#Constructions">Reed-Solomon</a>", IOPP = "Interactive Oracle Proofs of Proximity"), and similar earlier designs called probabilistically checkable proofs of proximity (PCPPs), try to achieve.</p>
 <h3 id="a-first-look-at-sublinearity">A First Look at Sublinearity</h3>
-<p>To prove that this is at all possible, we'll start off with a
-relatively simple protocol, with fairly poor tradeoffs, but that still
-achieves the goal of sublinear verification complexity - that is, you
-can prove proximity to a degree <span class="math inline">\(&lt;
-D\)</span> polynomial with less than <span
-class="math inline">\(D\)</span> queries (and, for that matter, less
-than <span class="math inline">\(O(D)\)</span> computation to verify the
-proof).</p>
-<p>The idea is as follows. Suppose there are N points (we'll say <span
-class="math inline">\(N\)</span> = 1 billion), and they are all on a
-degree <span class="math inline">\(&lt;\)</span> 1,000,000 polynomial
-<span class="math inline">\(f(x)\)</span>. We find a bivariate
-polynomial (ie. an expression like <span class="math inline">\(1 + x +
-xy + x^5 \cdot y^3 + x^{12} + x \cdot y^{11}\)</span>), which we will
-denote <span class="math inline">\(g(x, y)\)</span>, such that <span
-class="math inline">\(g(x, x^{1000}) = f(x)\)</span>. This can be done
-as follows: for the <span class="math inline">\(k\)</span>th degree term
-in <span class="math inline">\(f(x)\)</span> (eg. <span
-class="math inline">\(1744 \cdot x^{185423}\)</span>), we decompose it
-into <span class="math inline">\(x^{k \% 1000} \cdot y^{floor(k /
-1000)}\)</span> (in this case, <span class="math inline">\(1744 \cdot
-x^{423} \cdot y^{185}\)</span>). You can see that if <span
-class="math inline">\(y = x^{1000}\)</span>, then <span
-class="math inline">\(1744 \cdot x^{423} \cdot y^{185}\)</span> equals
-<span class="math inline">\(1744 \cdot x^{185423}\)</span>.</p>
-<p>In the first stage of the proof, the prover commits to (ie. makes a
-Merkle tree of) the evaluation of <span class="math inline">\(g(x,
-y)\)</span> over the <em>entire</em> square <span
-class="math inline">\([1 ... N] x \{x^{1000}: 1 \leq x \leq N\}\)</span>
-- that is, all 1 billion <span class="math inline">\(x\)</span>
-coordinates for the columns, and all 1 billion corresponding
-<em>thousandth powers</em> for the <span
-class="math inline">\(y\)</span> coordinates of the rows. The diagonal
-of the square represents the values of <span class="math inline">\(g(x,
-y)\)</span> that are of the form <span class="math inline">\(g(x,
-x^{1000})\)</span>, and thus correspond to values of <span
-class="math inline">\(f(x)\)</span>.</p>
-<p>The verifier then randomly picks perhaps a few dozen rows and columns
-(possibly using <a
-href="https://en.wikipedia.org/wiki/Fiat%E2%80%93Shamir_heuristic">the
-Merkle root of the square as a source of pseudorandomness</a> if we want
-a non-interactive proof), and for each row or column that it picks the
-verifier asks for a sample of, say, 1010 points on the row and column,
-making sure in each case that one of the points demanded is on the
-diagonal. The prover must reply back with those points, along with
-Merkle branches proving that they are part of the original data
-committed to by the prover. The verifier checks that the Merkle branches
-match up, and that the points that the prover provides actually do
-correspond to a degree-1000 polynomial.</p>
+<p>To prove that this is at all possible, we'll start off with a relatively simple protocol, with fairly poor tradeoffs, but that still achieves the goal of sublinear verification complexity - that is, you can prove proximity to a degree <span class="math inline">\(&lt; D\)</span> polynomial with less than <span class="math inline">\(D\)</span> queries (and, for that matter, less than <span class="math inline">\(O(D)\)</span> computation to verify the proof).</p>
+<p>The idea is as follows. Suppose there are N points (we'll say <span class="math inline">\(N\)</span> = 1 billion), and they are all on a degree <span class="math inline">\(&lt;\)</span> 1,000,000 polynomial <span class="math inline">\(f(x)\)</span>. We find a bivariate polynomial (ie. an expression like <span class="math inline">\(1 + x + xy + x^5 \cdot y^3 + x^{12} + x \cdot y^{11}\)</span>), which we will denote <span class="math inline">\(g(x, y)\)</span>, such that <span class="math inline">\(g(x, x^{1000}) = f(x)\)</span>. This can be done as follows: for the <span class="math inline">\(k\)</span>th degree term in <span class="math inline">\(f(x)\)</span> (eg. <span class="math inline">\(1744 \cdot x^{185423}\)</span>), we decompose it into <span class="math inline">\(x^{k \% 1000} \cdot y^{floor(k / 1000)}\)</span> (in this case, <span class="math inline">\(1744 \cdot x^{423} \cdot y^{185}\)</span>). You can see that if <span class="math inline">\(y = x^{1000}\)</span>, then <span class="math inline">\(1744 \cdot x^{423} \cdot y^{185}\)</span> equals <span class="math inline">\(1744 \cdot x^{185423}\)</span>.</p>
+<p>In the first stage of the proof, the prover commits to (ie. makes a Merkle tree of) the evaluation of <span class="math inline">\(g(x, y)\)</span> over the <em>entire</em> square <span class="math inline">\([1 ... N] x \{x^{1000}: 1 \leq x \leq N\}\)</span> - that is, all 1 billion <span class="math inline">\(x\)</span> coordinates for the columns, and all 1 billion corresponding <em>thousandth powers</em> for the <span class="math inline">\(y\)</span> coordinates of the rows. The diagonal of the square represents the values of <span class="math inline">\(g(x, y)\)</span> that are of the form <span class="math inline">\(g(x, x^{1000})\)</span>, and thus correspond to values of <span class="math inline">\(f(x)\)</span>.</p>
+<p>The verifier then randomly picks perhaps a few dozen rows and columns (possibly using <a href="https://en.wikipedia.org/wiki/Fiat%E2%80%93Shamir_heuristic">the Merkle root of the square as a source of pseudorandomness</a> if we want a non-interactive proof), and for each row or column that it picks the verifier asks for a sample of, say, 1010 points on the row and column, making sure in each case that one of the points demanded is on the diagonal. The prover must reply back with those points, along with Merkle branches proving that they are part of the original data committed to by the prover. The verifier checks that the Merkle branches match up, and that the points that the prover provides actually do correspond to a degree-1000 polynomial.</p>
 <center>
 <img src="../../../../images/starks-part-2-files/fri3.png" style="width:450px" class="padded" />
 </center>
 <p><br></p>
-<p>This gives the verifier a statistical proof that (i) most rows are
-populated mostly by points on degree <span class="math inline">\(&lt;
-1000\)</span> polynomials, (ii) most columns are populated mostly by
-points on degree <span class="math inline">\(&lt; 1000\)</span>
-polynomials, and (iii) the diagonal line is mostly on these polynomials.
-This thus convinces the verifier that most points on the diagonal
-actually do correspond to a degree <span class="math inline">\(&lt;
-1,000,000\)</span> polynomial.</p>
-<p>If we pick thirty rows and thirty columns, the verifier needs to
-access a total of 1010 points <span class="math inline">\(\cdot\)</span>
-60 rows+cols = 60600 points, less than the original 1,000,000, but not
-by that much. As far as computation time goes, interpolating the degree
-<span class="math inline">\(&lt; 1000\)</span> polynomials will have its
-own overhead, though since polynomial interpolation can be made
-subquadratic the algorithm as a whole is still sublinear to verify. The
-<em>prover</em> complexity is higher: the prover needs to calculate and
-commit to the entire <span class="math inline">\(N \cdot N\)</span>
-rectangle, which is a total of <span
-class="math inline">\(10^{18}\)</span> computational effort (actually a
-bit more because polynomial evaluation is still superlinear). In all of
-these algorithms, it will be the case that proving a computation is
-substantially more complex than just running it; but as we will see the
-overhead does not have to be <em>that</em> high.</p>
+<p>This gives the verifier a statistical proof that (i) most rows are populated mostly by points on degree <span class="math inline">\(&lt; 1000\)</span> polynomials, (ii) most columns are populated mostly by points on degree <span class="math inline">\(&lt; 1000\)</span> polynomials, and (iii) the diagonal line is mostly on these polynomials. This thus convinces the verifier that most points on the diagonal actually do correspond to a degree <span class="math inline">\(&lt; 1,000,000\)</span> polynomial.</p>
+<p>If we pick thirty rows and thirty columns, the verifier needs to access a total of 1010 points <span class="math inline">\(\cdot\)</span> 60 rows+cols = 60600 points, less than the original 1,000,000, but not by that much. As far as computation time goes, interpolating the degree <span class="math inline">\(&lt; 1000\)</span> polynomials will have its own overhead, though since polynomial interpolation can be made subquadratic the algorithm as a whole is still sublinear to verify. The <em>prover</em> complexity is higher: the prover needs to calculate and commit to the entire <span class="math inline">\(N \cdot N\)</span> rectangle, which is a total of <span class="math inline">\(10^{18}\)</span> computational effort (actually a bit more because polynomial evaluation is still superlinear). In all of these algorithms, it will be the case that proving a computation is substantially more complex than just running it; but as we will see the overhead does not have to be <em>that</em> high.</p>
 <h3 id="a-modular-math-interlude">A Modular Math Interlude</h3>
-<p>Before we go into our more complex protocols, we will need to take a
-bit of a digression into the world of modular arithmetic. Usually, when
-we work with algebraic expressions and polynomials, we are working with
-regular numbers, and the arithmetic, using the operators +, -, <span
-class="math inline">\(\cdot\)</span>, / (and exponentiation, which is
-just repeated multiplication), is done in the usual way that we have all
-been taught since school: <span class="math inline">\(2 + 2 =
-4\)</span>, <span class="math inline">\(72 / 5 = 14.4\)</span>, <span
-class="math inline">\(1001 \cdot 1001 = 1002001\)</span>, etc. However,
-what mathematicians have realized is that these ways of defining
-addition, multiplication, subtraction and division are not the
-<em>only</em> self-consistent ways of defining those operators.</p>
-<p>The simplest example of an alternate way to define these operators is
-modular arithmetic, defined as follows. The % operator means "take the
-remainder of": <span class="math inline">\(15 % 7 = 1\)</span>, <span
-class="math inline">\(53 % 10 = 3\)</span>, etc (note that the answer is
-always non-negative, so for example <span class="math inline">\(-1 % 10
-= 9\)</span>). For any specific prime number <span
-class="math inline">\(p\)</span>, we can redefine:</p>
-<p><span class="math inline">\(x + y \Rightarrow (x + y)\)</span> %
-<span class="math inline">\(p\)</span></p>
-<p><span class="math inline">\(x \cdot y \Rightarrow (x \cdot
-y)\)</span> % <span class="math inline">\(p\)</span></p>
-<p><span class="math inline">\(x^y \Rightarrow (x^y)\)</span> % <span
-class="math inline">\(p\)</span></p>
-<p><span class="math inline">\(x - y \Rightarrow (x - y)\)</span> %
-<span class="math inline">\(p\)</span></p>
-<p><span class="math inline">\(x / y \Rightarrow (x \cdot y
-^{p-2})\)</span> % <span class="math inline">\(p\)</span></p>
-<p>The above rules are all self-consistent. For example, if <span
-class="math inline">\(p = 7\)</span>, then:</p>
+<p>Before we go into our more complex protocols, we will need to take a bit of a digression into the world of modular arithmetic. Usually, when we work with algebraic expressions and polynomials, we are working with regular numbers, and the arithmetic, using the operators +, -, <span class="math inline">\(\cdot\)</span>, / (and exponentiation, which is just repeated multiplication), is done in the usual way that we have all been taught since school: <span class="math inline">\(2 + 2 = 4\)</span>, <span class="math inline">\(72 / 5 = 14.4\)</span>, <span class="math inline">\(1001 \cdot 1001 = 1002001\)</span>, etc. However, what mathematicians have realized is that these ways of defining addition, multiplication, subtraction and division are not the <em>only</em> self-consistent ways of defining those operators.</p>
+<p>The simplest example of an alternate way to define these operators is modular arithmetic, defined as follows. The % operator means "take the remainder of": <span class="math inline">\(15 % 7 = 1\)</span>, <span class="math inline">\(53 % 10 = 3\)</span>, etc (note that the answer is always non-negative, so for example <span class="math inline">\(-1 % 10 = 9\)</span>). For any specific prime number <span class="math inline">\(p\)</span>, we can redefine:</p>
+<p><span class="math inline">\(x + y \Rightarrow (x + y)\)</span> % <span class="math inline">\(p\)</span></p>
+<p><span class="math inline">\(x \cdot y \Rightarrow (x \cdot y)\)</span> % <span class="math inline">\(p\)</span></p>
+<p><span class="math inline">\(x^y \Rightarrow (x^y)\)</span> % <span class="math inline">\(p\)</span></p>
+<p><span class="math inline">\(x - y \Rightarrow (x - y)\)</span> % <span class="math inline">\(p\)</span></p>
+<p><span class="math inline">\(x / y \Rightarrow (x \cdot y ^{p-2})\)</span> % <span class="math inline">\(p\)</span></p>
+<p>The above rules are all self-consistent. For example, if <span class="math inline">\(p = 7\)</span>, then:</p>
 <ul>
-<li><span class="math inline">\(5 + 3 = 1\)</span> (as <span
-class="math inline">\(8\)</span> % <span class="math inline">\(7 =
-1\)</span>)</li>
-<li><span class="math inline">\(1 - 3 = 5\)</span> (as <span
-class="math inline">\(-2\)</span> % <span class="math inline">\(7 =
-5\)</span>)</li>
+<li><span class="math inline">\(5 + 3 = 1\)</span> (as <span class="math inline">\(8\)</span> % <span class="math inline">\(7 = 1\)</span>)</li>
+<li><span class="math inline">\(1 - 3 = 5\)</span> (as <span class="math inline">\(-2\)</span> % <span class="math inline">\(7 = 5\)</span>)</li>
 <li><span class="math inline">\(2 \cdot 5 = 3\)</span></li>
-<li><span class="math inline">\(3 / 5 = 2\)</span> (as (<span
-class="math inline">\(3 \cdot 5^5\)</span>) % <span
-class="math inline">\(7 = 9375\)</span> % <span class="math inline">\(7
-= 2\)</span>)</li>
+<li><span class="math inline">\(3 / 5 = 2\)</span> (as (<span class="math inline">\(3 \cdot 5^5\)</span>) % <span class="math inline">\(7 = 9375\)</span> % <span class="math inline">\(7 = 2\)</span>)</li>
 </ul>
-<p>More complex identities such as the distributive law also hold: <span
-class="math inline">\((2 + 4) \cdot 3\)</span> and <span
-class="math inline">\(2 \cdot 3 + 4 \cdot 3\)</span> both evaluate to
-<span class="math inline">\(4\)</span>. Even formulas like <span
-class="math inline">\((a^2 - b^2)\)</span> = <span
-class="math inline">\((a - b) \cdot (a + b)\)</span> are still true in
-this new kind of arithmetic. Division is the hardest part; we can't use
-regular division because we want the values to always remain integers,
-and regular division often gives non-integer results (as in the case of
-<span class="math inline">\(3/5\)</span>). The funny <span
-class="math inline">\(p-2\)</span> exponent in the division formula
-above is a consequence of getting around this problem using <a
-href="https://en.wikipedia.org/wiki/Fermat%27s_little_theorem">Fermat's
-little theorem</a>, which states that for any nonzero <span
-class="math inline">\(x &lt; p\)</span>, it holds that <span
-class="math inline">\(x^{p-1}\)</span> % <span class="math inline">\(p =
-1\)</span>. This implies that <span
-class="math inline">\(x^{p-2}\)</span> gives a number which, if
-multiplied by <span class="math inline">\(x\)</span> one more time,
-gives <span class="math inline">\(1\)</span>, and so we can say that
-<span class="math inline">\(x^{p-2}\)</span> (which is an integer)
-equals <span class="math inline">\(\frac{1}{x}\)</span>. A somewhat more
-complicated but faster way to evaluate this modular division operator is
-the <a
-href="https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm">extended
-Euclidean algorithm</a>, implemented in python <a
-href="https://github.com/ethereum/py_ecc/blob/b036cf5cb37e9b89622788ec714a7da9cdb2e635/py_ecc/secp256k1/secp256k1.py#L34">here</a>.</p>
+<p>More complex identities such as the distributive law also hold: <span class="math inline">\((2 + 4) \cdot 3\)</span> and <span class="math inline">\(2 \cdot 3 + 4 \cdot 3\)</span> both evaluate to <span class="math inline">\(4\)</span>. Even formulas like <span class="math inline">\((a^2 - b^2)\)</span> = <span class="math inline">\((a - b) \cdot (a + b)\)</span> are still true in this new kind of arithmetic. Division is the hardest part; we can't use regular division because we want the values to always remain integers, and regular division often gives non-integer results (as in the case of <span class="math inline">\(3/5\)</span>). The funny <span class="math inline">\(p-2\)</span> exponent in the division formula above is a consequence of getting around this problem using <a href="https://en.wikipedia.org/wiki/Fermat%27s_little_theorem">Fermat's little theorem</a>, which states that for any nonzero <span class="math inline">\(x &lt; p\)</span>, it holds that <span class="math inline">\(x^{p-1}\)</span> % <span class="math inline">\(p = 1\)</span>. This implies that <span class="math inline">\(x^{p-2}\)</span> gives a number which, if multiplied by <span class="math inline">\(x\)</span> one more time, gives <span class="math inline">\(1\)</span>, and so we can say that <span class="math inline">\(x^{p-2}\)</span> (which is an integer) equals <span class="math inline">\(\frac{1}{x}\)</span>. A somewhat more complicated but faster way to evaluate this modular division operator is the <a href="https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm">extended Euclidean algorithm</a>, implemented in python <a href="https://github.com/ethereum/py_ecc/blob/b036cf5cb37e9b89622788ec714a7da9cdb2e635/py_ecc/secp256k1/secp256k1.py#L34">here</a>.</p>
 <center>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Clock_group.svg/560px-Clock_group.svg.png" style="width:350px" class="padded" /><br><br>
-<small>Because of how the numbers "wrap around", modular arithmetic is
-sometimes called "clock math"</small>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Clock_group.svg/560px-Clock_group.svg.png" style="width:350px" class="padded" /><br><br> <small>Because of how the numbers "wrap around", modular arithmetic is sometimes called "clock math"</small>
 </center>
 <p><br></p>
-<p>With modular math we've created an entirely new system of arithmetic,
-and because it's self-consistent in all the same ways traditional
-arithmetic is self-consistent we can talk about all of the same kinds of
-structures over this field, including polynomials, that we talk about in
-"regular math". Cryptographers love working in modular math (or, more
-generally, "finite fields") because there is a bound on the size of a
-number that can arise as a result of any modular math calculation - no
-matter what you do, the values will not "escape" the set <span
-class="math inline">\(\{0, 1, 2 ... p-1\}\)</span>.</p>
-<p>Fermat's little theorem also has another interesting consequence. If
-<span class="math inline">\(p-1\)</span> is a multiple of some number
-<span class="math inline">\(k\)</span>, then the function <span
-class="math inline">\(x \rightarrow x^k\)</span> has a small "image" -
-that is, the function can only give <span
-class="math inline">\(\frac{p-1}{k} + 1\)</span> possible results. For
-example, <span class="math inline">\(x \rightarrow x^2\)</span> with
-<span class="math inline">\(p=17\)</span> has only 9 possible
-results.</p>
+<p>With modular math we've created an entirely new system of arithmetic, and because it's self-consistent in all the same ways traditional arithmetic is self-consistent we can talk about all of the same kinds of structures over this field, including polynomials, that we talk about in "regular math". Cryptographers love working in modular math (or, more generally, "finite fields") because there is a bound on the size of a number that can arise as a result of any modular math calculation - no matter what you do, the values will not "escape" the set <span class="math inline">\(\{0, 1, 2 ... p-1\}\)</span>.</p>
+<p>Fermat's little theorem also has another interesting consequence. If <span class="math inline">\(p-1\)</span> is a multiple of some number <span class="math inline">\(k\)</span>, then the function <span class="math inline">\(x \rightarrow x^k\)</span> has a small "image" - that is, the function can only give <span class="math inline">\(\frac{p-1}{k} + 1\)</span> possible results. For example, <span class="math inline">\(x \rightarrow x^2\)</span> with <span class="math inline">\(p=17\)</span> has only 9 possible results.</p>
 <center>
 <img src="../../../../images/starks-part-2-files/fri4.png" style="width:350px" class="padded" /><br>
 </center>
 <p><br></p>
-<p>With higher exponents the results are more striking: for example,
-<span class="math inline">\(x \rightarrow x^8\)</span> with <span
-class="math inline">\(p=17\)</span> has only 3 possible results. And of
-course, <span class="math inline">\(x \rightarrow x^{16}\)</span> with
-<span class="math inline">\(p=17\)</span> has only 2 possible results:
-for <span class="math inline">\(0\)</span> it returns <span
-class="math inline">\(0\)</span>, and for everything else it returns
-<span class="math inline">\(1\)</span>.</p>
+<p>With higher exponents the results are more striking: for example, <span class="math inline">\(x \rightarrow x^8\)</span> with <span class="math inline">\(p=17\)</span> has only 3 possible results. And of course, <span class="math inline">\(x \rightarrow x^{16}\)</span> with <span class="math inline">\(p=17\)</span> has only 2 possible results: for <span class="math inline">\(0\)</span> it returns <span class="math inline">\(0\)</span>, and for everything else it returns <span class="math inline">\(1\)</span>.</p>
 <h3 id="now-a-bit-more-efficiency">Now A Bit More Efficiency</h3>
-<p>Let us now move on to a slightly more complicated version of the
-protocol, which has the modest goal of reducing the prover complexity
-from <span class="math inline">\(10^{18}\)</span> to <span
-class="math inline">\(10^{15}\)</span>, and then <span
-class="math inline">\(10^{9}\)</span>. First, instead of operating over
-regular numbers, we are going to be checking proximity to polynomials
-<em>as evaluated with modular math</em>. As we saw in the previous
-article, we need to do this to prevent numbers in our STARKs from
-growing to 200,000 digits anyway. Here, however, we are going to use the
-"small image" property of certain modular exponentiations as a side
-effect to make our protocols far more efficient.</p>
-<p>Specifically, we will work with <span class="math inline">\(p
-=\)</span> 1,000,005,001. We pick this modulus because (i) it's greater
-than 1 billion, and we need it to be at least 1 billion so we can check
-1 billion points, (ii) it's prime, and (iii) <span
-class="math inline">\(p-1\)</span> is an even multiple of 1000. The
-exponentiation <span class="math inline">\(x^{1000}\)</span> will have
-an image of size 1,000,006 - that is, the exponentiation can only give
-1,000,006 possible results.</p>
-<p>This means that the "diagonal" (<span
-class="math inline">\(x\)</span>, <span
-class="math inline">\(x^{1000}\)</span>) now becomes a diagonal with a
-wraparound; as <span class="math inline">\(x^{1000}\)</span> can only
-take on 1,000,006 possible values, we only need 1,000,006 rows. And so,
-the full evaluation of <span class="math inline">\(g(x,
-x^{1000})\)</span> now has only ~<span
-class="math inline">\(10^{15}\)</span> elements.</p>
+<p>Let us now move on to a slightly more complicated version of the protocol, which has the modest goal of reducing the prover complexity from <span class="math inline">\(10^{18}\)</span> to <span class="math inline">\(10^{15}\)</span>, and then <span class="math inline">\(10^{9}\)</span>. First, instead of operating over regular numbers, we are going to be checking proximity to polynomials <em>as evaluated with modular math</em>. As we saw in the previous article, we need to do this to prevent numbers in our STARKs from growing to 200,000 digits anyway. Here, however, we are going to use the "small image" property of certain modular exponentiations as a side effect to make our protocols far more efficient.</p>
+<p>Specifically, we will work with <span class="math inline">\(p =\)</span> 1,000,005,001. We pick this modulus because (i) it's greater than 1 billion, and we need it to be at least 1 billion so we can check 1 billion points, (ii) it's prime, and (iii) <span class="math inline">\(p-1\)</span> is an even multiple of 1000. The exponentiation <span class="math inline">\(x^{1000}\)</span> will have an image of size 1,000,006 - that is, the exponentiation can only give 1,000,006 possible results.</p>
+<p>This means that the "diagonal" (<span class="math inline">\(x\)</span>, <span class="math inline">\(x^{1000}\)</span>) now becomes a diagonal with a wraparound; as <span class="math inline">\(x^{1000}\)</span> can only take on 1,000,006 possible values, we only need 1,000,006 rows. And so, the full evaluation of <span class="math inline">\(g(x, x^{1000})\)</span> now has only ~<span class="math inline">\(10^{15}\)</span> elements.</p>
 <center>
 <img src="../../../../images/starks-part-2-files/fri5.png" style="width:500px" class="padded" />
 </center>
 <p><br></p>
-<p>As it turns out, we can go further: we can have the prover only
-commit to the evaluation of <span class="math inline">\(g\)</span> on a
-single column. The key trick is that the original data itself already
-contains 1000 points that are on any given row, so we can simply sample
-those, derive the degree <span class="math inline">\(&lt; 1000\)</span>
-polynomial that they are on, and then check that the corresponding point
-on the column is on the same polynomial. We then check that the column
-itself is <span class="math inline">\(a &lt; 1000\)</span>
-polynomial.</p>
+<p>As it turns out, we can go further: we can have the prover only commit to the evaluation of <span class="math inline">\(g\)</span> on a single column. The key trick is that the original data itself already contains 1000 points that are on any given row, so we can simply sample those, derive the degree <span class="math inline">\(&lt; 1000\)</span> polynomial that they are on, and then check that the corresponding point on the column is on the same polynomial. We then check that the column itself is <span class="math inline">\(a &lt; 1000\)</span> polynomial.</p>
 <center>
 <img src="../../../../images/starks-part-2-files/fri6.png" style="width:550px" class="padded" />
 </center>
 <p><br></p>
-<p>The verifier complexity is still sublinear, but the prover complexity
-has now decreased to <span class="math inline">\(10^9\)</span>, making
-it linear in the number of queries (though it's still superlinear in
-practice because of polynomial evaluation overhead).</p>
+<p>The verifier complexity is still sublinear, but the prover complexity has now decreased to <span class="math inline">\(10^9\)</span>, making it linear in the number of queries (though it's still superlinear in practice because of polynomial evaluation overhead).</p>
 <h3 id="and-even-more-efficiency">And Even More Efficiency</h3>
-<p>The prover complexity is now basically as low as it can be. But we
-can still knock the verifier complexity down further, from quadratic to
-logarithmic. And the way we do <em>that</em> is by making the algorithm
-recursive. We start off with the last protocol above, but instead of
-trying to embed a polynomial into a 2D polynomial where the degrees in
-<span class="math inline">\(x\)</span> and <span
-class="math inline">\(y\)</span> are equal, we embed the polynomial into
-a 2D polynomial where the degree bound in <span
-class="math inline">\(x\)</span> is a small constant value; for
-simplicity, we can even say this must be 2. That is, we express <span
-class="math inline">\(f(x) = g(x, x^2)\)</span>, so that the row check
-always requires only checking 3 points on each row that we sample (2
-from the diagonal plus one from the column).</p>
-<p>If the original polynomial has degree <span
-class="math inline">\(&lt; n\)</span>, then the rows have degree <span
-class="math inline">\(&lt; 2\)</span> (ie. the rows are straight lines),
-and the column has degree <span class="math inline">\(&lt;
-\frac{n}{2}\)</span>. Hence, what we now have is a linear-time process
-for converting a problem of proving proximity to a polynomial of degree
-<span class="math inline">\(&lt; n\)</span> into a problem of proving
-proximity to a polynomial of degree <span class="math inline">\(&lt;
-\frac{n}{2}\)</span>. Furthermore, the number of points that need to be
-committed to, and thus the prover's computational complexity, goes down
-by a factor of 2 each time (Eli Ben-Sasson likes to compare this aspect
-of FRI to <a
-href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">fast fourier
-transforms</a>, with the key difference that unlike with FFTs, each step
-of recursion only introduces one new sub-problem instead of branching
-out into two). Hence, we can simply keep using the protocol on the
-column created in the previous round of the protocol, until the column
-becomes so small that we can simply check it directly; the total
-complexity is something like <span class="math inline">\(n + \frac{n}{2}
-+ \frac{n}{4} + ... \approx 2n\)</span>.</p>
+<p>The prover complexity is now basically as low as it can be. But we can still knock the verifier complexity down further, from quadratic to logarithmic. And the way we do <em>that</em> is by making the algorithm recursive. We start off with the last protocol above, but instead of trying to embed a polynomial into a 2D polynomial where the degrees in <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are equal, we embed the polynomial into a 2D polynomial where the degree bound in <span class="math inline">\(x\)</span> is a small constant value; for simplicity, we can even say this must be 2. That is, we express <span class="math inline">\(f(x) = g(x, x^2)\)</span>, so that the row check always requires only checking 3 points on each row that we sample (2 from the diagonal plus one from the column).</p>
+<p>If the original polynomial has degree <span class="math inline">\(&lt; n\)</span>, then the rows have degree <span class="math inline">\(&lt; 2\)</span> (ie. the rows are straight lines), and the column has degree <span class="math inline">\(&lt; \frac{n}{2}\)</span>. Hence, what we now have is a linear-time process for converting a problem of proving proximity to a polynomial of degree <span class="math inline">\(&lt; n\)</span> into a problem of proving proximity to a polynomial of degree <span class="math inline">\(&lt; \frac{n}{2}\)</span>. Furthermore, the number of points that need to be committed to, and thus the prover's computational complexity, goes down by a factor of 2 each time (Eli Ben-Sasson likes to compare this aspect of FRI to <a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">fast fourier transforms</a>, with the key difference that unlike with FFTs, each step of recursion only introduces one new sub-problem instead of branching out into two). Hence, we can simply keep using the protocol on the column created in the previous round of the protocol, until the column becomes so small that we can simply check it directly; the total complexity is something like <span class="math inline">\(n + \frac{n}{2} + \frac{n}{4} + ... \approx 2n\)</span>.</p>
 <br>
 <center>
 <img src="../../../../images/starks-part-2-files/fri7.png" style="width:500px" class="padded" />
 </center>
 <p><br></p>
-<p>In reality, the protocol will need to be repeated several times,
-because there is still a significant probability that an attacker will
-cheat <em>one</em> round of the protocol. However, even still the proofs
-are not too large; the verification complexity is logarithmic in the
-degree, though it goes up to <span class="math inline">\(\log
-^{2}n\)</span> if you count the size of the Merkle proofs.</p>
-<p>The "real" FRI protocol also has some other modifications; for
-example, it uses a binary <a
-href="https://en.wikipedia.org/wiki/Finite_field#Explicit_construction_of_finite_fields">Galois
-field</a> (another weird kind of finite field; basically, the same thing
-as the 12th degree extension fields I talk about <a
-href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">here</a>,
-but with the prime modulus being 2). The exponent used for the row is
-also typically 4 and not 2. These modifications increase efficiency and
-make the system friendlier to building STARKs on top of it. However,
-these modifications are not essential to understanding how the algorithm
-works, and if you really wanted to, you could definitely make STARKs
-with the simple modular math-based FRI described here too.</p>
+<p>In reality, the protocol will need to be repeated several times, because there is still a significant probability that an attacker will cheat <em>one</em> round of the protocol. However, even still the proofs are not too large; the verification complexity is logarithmic in the degree, though it goes up to <span class="math inline">\(\log ^{2}n\)</span> if you count the size of the Merkle proofs.</p>
+<p>The "real" FRI protocol also has some other modifications; for example, it uses a binary <a href="https://en.wikipedia.org/wiki/Finite_field#Explicit_construction_of_finite_fields">Galois field</a> (another weird kind of finite field; basically, the same thing as the 12th degree extension fields I talk about <a href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">here</a>, but with the prime modulus being 2). The exponent used for the row is also typically 4 and not 2. These modifications increase efficiency and make the system friendlier to building STARKs on top of it. However, these modifications are not essential to understanding how the algorithm works, and if you really wanted to, you could definitely make STARKs with the simple modular math-based FRI described here too.</p>
 <h3 id="soundness">Soundness</h3>
-<p>I will warn that <em>calculating soundness</em> - that is,
-determining just how low the probability is that an optimally generated
-fake proof will pass the test for a given number of checks - is still
-somewhat of a "here be dragons" area in this space. For the simple test
-where you take 1,000,000 <span class="math inline">\(+ k\)</span>
-points, there is a simple lower bound: if a given dataset has the
-property that, for any polynomial, at least portion p of the dataset is
-not on the polynomial, then a test on that dataset will pass with at
-most <span class="math inline">\((1-p)^k\)</span> probability. However,
-even that is a very pessimistic lower bound - for example, it's not
-possible to be much more than 50% close to <em>two</em> low-degree
-polynomials at the same time, and the probability that the first points
-you select will be the one with the most points on it is quite low. For
-full-blown FRI, there are also complexities involving various specific
-kinds of attacks.</p>
-<p><a href="https://eccc.weizmann.ac.il/report/2016/149/">Here</a> is a
-recent article by Ben-Sasson et al describing soundness properties of
-FRI in the context of the entire STARK scheme. In general, the "good
-news" is that it seems likely that in order to pass the <span
-class="math inline">\(D(x) \cdot Z(x) = C(P(x))\)</span> check on the
-STARK, the <span class="math inline">\(D(x)\)</span> values for an
-invalid solution would need to be "worst case" in a certain sense - they
-would need to be maximally far from <em>any</em> valid polynomial. This
-implies that we don't need to check for <em>that</em> much proximity.
-There are proven lower bounds, but these bounds would imply that an
-actual STARK need to be ~1-3 megabytes in size; conjectured but not
-proven stronger bounds reduce the required number of checks by a factor
-of 4.</p>
-<p>The third part of this series will deal with the last major part of
-the challenge in building STARKs: how we actually construct constraint
-checking polynomials so that we can prove statements about arbitrary
-computation, and not just a few Fibonacci numbers.</p>
+<p>I will warn that <em>calculating soundness</em> - that is, determining just how low the probability is that an optimally generated fake proof will pass the test for a given number of checks - is still somewhat of a "here be dragons" area in this space. For the simple test where you take 1,000,000 <span class="math inline">\(+ k\)</span> points, there is a simple lower bound: if a given dataset has the property that, for any polynomial, at least portion p of the dataset is not on the polynomial, then a test on that dataset will pass with at most <span class="math inline">\((1-p)^k\)</span> probability. However, even that is a very pessimistic lower bound - for example, it's not possible to be much more than 50% close to <em>two</em> low-degree polynomials at the same time, and the probability that the first points you select will be the one with the most points on it is quite low. For full-blown FRI, there are also complexities involving various specific kinds of attacks.</p>
+<p><a href="https://eccc.weizmann.ac.il/report/2016/149/">Here</a> is a recent article by Ben-Sasson et al describing soundness properties of FRI in the context of the entire STARK scheme. In general, the "good news" is that it seems likely that in order to pass the <span class="math inline">\(D(x) \cdot Z(x) = C(P(x))\)</span> check on the STARK, the <span class="math inline">\(D(x)\)</span> values for an invalid solution would need to be "worst case" in a certain sense - they would need to be maximally far from <em>any</em> valid polynomial. This implies that we don't need to check for <em>that</em> much proximity. There are proven lower bounds, but these bounds would imply that an actual STARK need to be ~1-3 megabytes in size; conjectured but not proven stronger bounds reduce the required number of checks by a factor of 4.</p>
+<p>The third part of this series will deal with the last major part of the challenge in building STARKs: how we actually construct constraint checking polynomials so that we can prove statements about arbitrary computation, and not just a few Fibonacci numbers.</p>
  </div> 

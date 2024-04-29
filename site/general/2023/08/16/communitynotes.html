@@ -109,208 +109,54 @@ MathJax = {
 <br> <br> <br>
 <title> What do I think about Community Notes? </title>
 
-<p><em>Special thanks to Dennis Pourteaux and Jay Baxter for feedback
-and review.</em></p>
-<p>The last two years of <s>Twitter</s> X have been tumultuous, to say
-the least. After the platform was <s><a
-href="https://www.reuters.com/technology/exclusive-twitter-set-accept-musks-best-final-offer-sources-2022-04-25/">bought</a></s>
-<s><a
-href="https://www.nytimes.com/2022/06/06/technology/elon-musk-twitter.html">not
-bought</a></s> <a
-href="https://www.nytimes.com/2022/10/27/technology/elon-musk-twitter-deal-complete.html">bought</a>
-by Elon Musk for $44 billion last year, Elon enacted sweeping changes to
-the company's <a
-href="https://www.euronews.com/next/2022/11/04/twitter-temporarily-closes-offices-as-elon-musk-begins-mass-layoffs">staffing</a>,
-<a
-href="https://www.npr.org/2022/11/29/1139822833/twitter-covid-misinformation-policy-not-enforced">content
-moderation</a> and <a
-href="https://www.npr.org/2022/12/12/1139619598/twitter-blue-relaunch">business
-model</a>, not to mention changes to the culture on the site that may
-well have been a result of Elon's soft power more than any specific
-policy decision. But in the middle of these highly contentious actions,
-one new feature on Twitter grew rapidly in importance, and seems to be
-beloved by people across the political spectrum: Community Notes.</p>
+<p><em>Special thanks to Dennis Pourteaux and Jay Baxter for feedback and review.</em></p>
+<p>The last two years of <s>Twitter</s> X have been tumultuous, to say the least. After the platform was <s><a href="https://www.reuters.com/technology/exclusive-twitter-set-accept-musks-best-final-offer-sources-2022-04-25/">bought</a></s> <s><a href="https://www.nytimes.com/2022/06/06/technology/elon-musk-twitter.html">not bought</a></s> <a href="https://www.nytimes.com/2022/10/27/technology/elon-musk-twitter-deal-complete.html">bought</a> by Elon Musk for $44 billion last year, Elon enacted sweeping changes to the company's <a href="https://www.euronews.com/next/2022/11/04/twitter-temporarily-closes-offices-as-elon-musk-begins-mass-layoffs">staffing</a>, <a href="https://www.npr.org/2022/11/29/1139822833/twitter-covid-misinformation-policy-not-enforced">content moderation</a> and <a href="https://www.npr.org/2022/12/12/1139619598/twitter-blue-relaunch">business model</a>, not to mention changes to the culture on the site that may well have been a result of Elon's soft power more than any specific policy decision. But in the middle of these highly contentious actions, one new feature on Twitter grew rapidly in importance, and seems to be beloved by people across the political spectrum: Community Notes.</p>
 <a href="https://twitter.com/elonmusk/status/1597170780130852864">
 <center>
 <p><br></p>
 <p><img src="../../../../images/communitynotes/elonnote.png" /></p>
 </center>
 <p><br></a></p>
-<p>Community Notes is a fact-checking tool that sometimes attaches
-context notes, like the one on Elon's tweet above, to tweets as a
-fact-checking and anti-misinformation tool. It was originally called
-Birdwatch, and was first rolled out as a pilot project in January 2021.
-Since then, it has expanded in stages, with the most rapid phase of its
-expansion coinciding with Twitter's takeover by Elon last year. Today,
-Community Notes appear frequently on tweets that get a very large
-audience on Twitter, including those on contentious political topics.
-And both in my view, and in the view of many people across the political
-spectrum I talk to, the notes, when they appear, are informative and
-valuable.</p>
-<p>But what interests me most about Community Notes is how, despite not
-being a "crypto project", it might be the closest thing to an
-instantiation of "crypto values" that we have seen in the mainstream
-world. Community Notes are not written or curated by some centrally
-selected set of experts; rather, they can be written and voted on by
-anyone, and which notes are shown or not shown is decided entirely by an
-<a href="https://github.com/twitter/communitynotes">open source</a>
-algorithm. The Twitter site has a <a
-href="https://communitynotes.twitter.com/guide/en/about/introduction">detailed
-and extensive guide</a> describing how the algorithm works, and you can
-<a
-href="https://communitynotes.twitter.com/guide/en/under-the-hood/download-data">download
-the data</a> containing which notes and votes have been published, run
-<a
-href="https://github.com/twitter/communitynotes/tree/main/sourcecode">the
-algorithm</a> locally, and verify that the output matches what is
-visible on the Twitter site. It's not perfect, but it's surprisingly
-close to satisfying the ideal of <a
-href="https://nakamoto.com/credible-neutrality/">credible
-neutrality</a>, all while being impressively useful, even under
-contentious conditions, at the same time.</p>
-<h2 id="how-does-the-community-notes-algorithm-work">How does the
-Community Notes algorithm work?</h2>
-<p>Anyone with a Twitter account <a
-href="https://communitynotes.twitter.com/guide/en/contributing/signing-up">matching
-some criteria</a> (basically: active for 6+ months, no recent rule
-violations, verified phone number) can sign up to participate in
-Community Notes. Currently, participants are slowly and randomly being
-accepted, but eventually the plan is to let in anyone who fits the
-criteria. Once you are accepted, you can at first participate in rating
-existing notes, and once you've made enough good ratings (<a
-href="https://communitynotes.twitter.com/guide/en/under-the-hood/contributor-scores">measured
-by</a> seeing which ratings match with the final outcome for that note),
-you can also write notes of your own.</p>
-<p>When you write a note, the note gets a score based on the reviews
-that it receives from other Community Notes members. These reviews can
-be thought of as being votes along a 3-point scale of
-<code>HELPFUL</code>, <code>SOMEWHAT_HELPFUL</code> and
-<code>NOT_HELPFUL</code>, but a review can also contain some other tags
-that have roles in the algorithm. Based on these reviews, a note gets a
-score. If the note's score is above 0.40, the note is shown; otherwise,
-the note is not shown.</p>
-<p>The way that the score is calculated is what makes the algorithm
-unique. Unlike simpler algorithms, which aim to simply calculate some
-kind of sum or average over users' ratings and use that as the final
-result, <strong>the Community Notes rating algorithm explicitly attempts
-to prioritize notes that receive positive ratings from people across a
-diverse range of perspectives</strong>. That is, if people who usually
-disagree on how they rate notes end up agreeing on a particular note,
-that note is scored especially highly.</p>
-<p>Let us get into the deep math of how this works. We have a set of
-users and a set of notes; we can create a matrix <span
-class="math inline">\(M\)</span>, where the cell <span
-class="math inline">\(M_{i,j}\)</span> represents how the i'th user
-rated the j'th note.</p>
+<p>Community Notes is a fact-checking tool that sometimes attaches context notes, like the one on Elon's tweet above, to tweets as a fact-checking and anti-misinformation tool. It was originally called Birdwatch, and was first rolled out as a pilot project in January 2021. Since then, it has expanded in stages, with the most rapid phase of its expansion coinciding with Twitter's takeover by Elon last year. Today, Community Notes appear frequently on tweets that get a very large audience on Twitter, including those on contentious political topics. And both in my view, and in the view of many people across the political spectrum I talk to, the notes, when they appear, are informative and valuable.</p>
+<p>But what interests me most about Community Notes is how, despite not being a "crypto project", it might be the closest thing to an instantiation of "crypto values" that we have seen in the mainstream world. Community Notes are not written or curated by some centrally selected set of experts; rather, they can be written and voted on by anyone, and which notes are shown or not shown is decided entirely by an <a href="https://github.com/twitter/communitynotes">open source</a> algorithm. The Twitter site has a <a href="https://communitynotes.twitter.com/guide/en/about/introduction">detailed and extensive guide</a> describing how the algorithm works, and you can <a href="https://communitynotes.twitter.com/guide/en/under-the-hood/download-data">download the data</a> containing which notes and votes have been published, run <a href="https://github.com/twitter/communitynotes/tree/main/sourcecode">the algorithm</a> locally, and verify that the output matches what is visible on the Twitter site. It's not perfect, but it's surprisingly close to satisfying the ideal of <a href="https://nakamoto.com/credible-neutrality/">credible neutrality</a>, all while being impressively useful, even under contentious conditions, at the same time.</p>
+<h2 id="how-does-the-community-notes-algorithm-work">How does the Community Notes algorithm work?</h2>
+<p>Anyone with a Twitter account <a href="https://communitynotes.twitter.com/guide/en/contributing/signing-up">matching some criteria</a> (basically: active for 6+ months, no recent rule violations, verified phone number) can sign up to participate in Community Notes. Currently, participants are slowly and randomly being accepted, but eventually the plan is to let in anyone who fits the criteria. Once you are accepted, you can at first participate in rating existing notes, and once you've made enough good ratings (<a href="https://communitynotes.twitter.com/guide/en/under-the-hood/contributor-scores">measured by</a> seeing which ratings match with the final outcome for that note), you can also write notes of your own.</p>
+<p>When you write a note, the note gets a score based on the reviews that it receives from other Community Notes members. These reviews can be thought of as being votes along a 3-point scale of <code>HELPFUL</code>, <code>SOMEWHAT_HELPFUL</code> and <code>NOT_HELPFUL</code>, but a review can also contain some other tags that have roles in the algorithm. Based on these reviews, a note gets a score. If the note's score is above 0.40, the note is shown; otherwise, the note is not shown.</p>
+<p>The way that the score is calculated is what makes the algorithm unique. Unlike simpler algorithms, which aim to simply calculate some kind of sum or average over users' ratings and use that as the final result, <strong>the Community Notes rating algorithm explicitly attempts to prioritize notes that receive positive ratings from people across a diverse range of perspectives</strong>. That is, if people who usually disagree on how they rate notes end up agreeing on a particular note, that note is scored especially highly.</p>
+<p>Let us get into the deep math of how this works. We have a set of users and a set of notes; we can create a matrix <span class="math inline">\(M\)</span>, where the cell <span class="math inline">\(M_{i,j}\)</span> represents how the i'th user rated the j'th note.</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/communitynotes/matrix.png" /></p>
 </center>
 <p><br></p>
-<p>For any given note, most users have not rated that note, so most
-entries in the matrix will be zero, but that's fine. The goal of the
-algorithm is to create a four-column model of users and notes, assigning
-each user two stats that we can call "friendliness" and "polarity", and
-each note two stats that we can call "helpfulness" and "polarity". The
-model is trying to predict the matrix as a function of these values,
-using the following formula:</p>
+<p>For any given note, most users have not rated that note, so most entries in the matrix will be zero, but that's fine. The goal of the algorithm is to create a four-column model of users and notes, assigning each user two stats that we can call "friendliness" and "polarity", and each note two stats that we can call "helpfulness" and "polarity". The model is trying to predict the matrix as a function of these values, using the following formula:</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/communitynotes/formula.png" /></p>
 </center>
 <p><br></p>
-<p>Note that here I am introducing both the terminology used in the <a
-href="https://github.com/twitter/communitynotes/blob/main/birdwatch_paper_2022_10_27.pdf">Birdwatch
-paper</a>, and my own terms to provide a less mathematical intuition for
-what the variables mean:</p>
+<p>Note that here I am introducing both the terminology used in the <a href="https://github.com/twitter/communitynotes/blob/main/birdwatch_paper_2022_10_27.pdf">Birdwatch paper</a>, and my own terms to provide a less mathematical intuition for what the variables mean:</p>
 <ul>
-<li>μ is a "<strong>general public mood</strong>" parameter that
-accounts for how high the ratings are that users give in general</li>
-<li><span class="math inline">\(i_u\)</span> is a user's
-"<strong>friendliness</strong>": how likely that particular user is to
-give high ratings</li>
-<li><span class="math inline">\(i_n\)</span> is a note's
-"<strong>helpfulness</strong>": how likely that particular note is to
-get rated highly. <strong>Ultimately, this is the variable we care
-about</strong>.</li>
-<li><span class="math inline">\(f_u\)</span> or <span
-class="math inline">\(f_n\)</span> is user or note's
-"<strong>polarity</strong>": its position among the dominant axis of
-political polarization. In practice, negative polarity roughly means
-"left-leaning" and positive polarity means "right-leaning", but note
-that <strong>the axis of polarization is discovered emergently from
-analyzing users and notes; the concepts of leftism and rightism are in
-no way hard-coded</strong>.</li>
+<li>μ is a "<strong>general public mood</strong>" parameter that accounts for how high the ratings are that users give in general</li>
+<li><span class="math inline">\(i_u\)</span> is a user's "<strong>friendliness</strong>": how likely that particular user is to give high ratings</li>
+<li><span class="math inline">\(i_n\)</span> is a note's "<strong>helpfulness</strong>": how likely that particular note is to get rated highly. <strong>Ultimately, this is the variable we care about</strong>.</li>
+<li><span class="math inline">\(f_u\)</span> or <span class="math inline">\(f_n\)</span> is user or note's "<strong>polarity</strong>": its position among the dominant axis of political polarization. In practice, negative polarity roughly means "left-leaning" and positive polarity means "right-leaning", but note that <strong>the axis of polarization is discovered emergently from analyzing users and notes; the concepts of leftism and rightism are in no way hard-coded</strong>.</li>
 </ul>
-<p>The algorithm uses a pretty basic machine learning model (standard <a
-href="https://en.wikipedia.org/wiki/Gradient_descent">gradient
-descent</a>) to find values for these variables that do the best
-possible job of predicting the matrix values. The helpfulness that a
-particular note is assigned is the note's final score. If a note's
-helpfulness is at least +0.4, the note gets shown.</p>
-<p><strong>The core clever idea here is that the "polarity" terms absorb
-the properties of a note that cause it to be liked by some users and not
-others, and the "helpfulness" term only measures the properties that a
-note has that cause it to be liked by all</strong>. Thus, selecting for
-helpfulness identifies notes that get cross-tribal approval, and selects
-against notes that get cheering from one tribe at the expense of disgust
-from the other tribe.</p>
-<p>I made a simplified implementation of the basic algorithm; you can
-find it <a
-href="https://github.com/ethereum/research/blob/master/community_notes_analysis/basic_algo.py">here</a>,
-and are welcome to play around with it.</p>
-<p>Now, the above is only a description of the central core of the
-algorithm. In reality, there are a <em>lot</em> of extra mechanisms
-bolted on top. Fortunately, they are described in the <a
-href="https://communitynotes.twitter.com/guide/en/under-the-hood/ranking-notes">public
-documentation</a>. These mechanisms include the following:</p>
+<p>The algorithm uses a pretty basic machine learning model (standard <a href="https://en.wikipedia.org/wiki/Gradient_descent">gradient descent</a>) to find values for these variables that do the best possible job of predicting the matrix values. The helpfulness that a particular note is assigned is the note's final score. If a note's helpfulness is at least +0.4, the note gets shown.</p>
+<p><strong>The core clever idea here is that the "polarity" terms absorb the properties of a note that cause it to be liked by some users and not others, and the "helpfulness" term only measures the properties that a note has that cause it to be liked by all</strong>. Thus, selecting for helpfulness identifies notes that get cross-tribal approval, and selects against notes that get cheering from one tribe at the expense of disgust from the other tribe.</p>
+<p>I made a simplified implementation of the basic algorithm; you can find it <a href="https://github.com/ethereum/research/blob/master/community_notes_analysis/basic_algo.py">here</a>, and are welcome to play around with it.</p>
+<p>Now, the above is only a description of the central core of the algorithm. In reality, there are a <em>lot</em> of extra mechanisms bolted on top. Fortunately, they are described in the <a href="https://communitynotes.twitter.com/guide/en/under-the-hood/ranking-notes">public documentation</a>. These mechanisms include the following:</p>
 <ul>
-<li>The algorithm gets run many times, each time adding some randomly
-generated extreme "pseudo-votes" to the votes. This means that the
-algorithm's true output for each note is a range of values, and the
-final result depends on a "lower confidence bound" taken from this
-range, which is checked against a threshold of 0.32.</li>
-<li>If many users (especially users with a similar polarity to the note)
-rate a note "Not Helpful", and furthermore they specify the same "<a
-href="https://communitynotes.twitter.com/guide/en/under-the-hood/ranking-notes">tag</a>"
-(eg. "Argumentative or biased language", "Sources do not support note")
-as the reason for their rating, the helpfulness threshold required for
-the note to be published increases from 0.4 to 0.5 (this looks small but
-it's very significant in practice)</li>
-<li>If a note is accepted, the threshold that its helpfulness must drop
-below to de-accept it is 0.01 points lower than the threshold that a
-note's helpfulness needed to reach for the note to be originally
-accepted</li>
-<li>The algorithm gets run <em>even more times</em> with multiple
-models, and this can sometimes promote notes whose original helpfulness
-score is somewhere between 0.3 and 0.4</li>
+<li>The algorithm gets run many times, each time adding some randomly generated extreme "pseudo-votes" to the votes. This means that the algorithm's true output for each note is a range of values, and the final result depends on a "lower confidence bound" taken from this range, which is checked against a threshold of 0.32.</li>
+<li>If many users (especially users with a similar polarity to the note) rate a note "Not Helpful", and furthermore they specify the same "<a href="https://communitynotes.twitter.com/guide/en/under-the-hood/ranking-notes">tag</a>" (eg. "Argumentative or biased language", "Sources do not support note") as the reason for their rating, the helpfulness threshold required for the note to be published increases from 0.4 to 0.5 (this looks small but it's very significant in practice)</li>
+<li>If a note is accepted, the threshold that its helpfulness must drop below to de-accept it is 0.01 points lower than the threshold that a note's helpfulness needed to reach for the note to be originally accepted</li>
+<li>The algorithm gets run <em>even more times</em> with multiple models, and this can sometimes promote notes whose original helpfulness score is somewhere between 0.3 and 0.4</li>
 </ul>
-<p>All in all, you get some pretty complicated python code that amounts
-to 6282 lines stretching across 22 files. But it is all <a
-href="https://github.com/twitter/communitynotes">open</a>, you can
-download the <a
-href="https://communitynotes.twitter.com/guide/en/under-the-hood/ranking-notes">note
-and rating data</a> and run it yourself, and see if the outputs
-correspond to what is actually on Twitter at any given moment.</p>
-<h2 id="so-how-does-this-look-in-practice">So how does this look in
-practice?</h2>
-<p>Probably the single most important idea in this algorithm that
-distinguishes it from naively taking an average score from people's
-votes is what I call the "polarity" values. The algorithm documentation
-calls them <span class="math inline">\(f_u\)</span> and <span
-class="math inline">\(f_n\)</span>, using <span
-class="math inline">\(f\)</span> for <em>factor</em> because these are
-the two terms that get multiplied with each other; the more general
-language is in part because of a desire to eventually make <span
-class="math inline">\(f_u\)</span> and <span
-class="math inline">\(f_n\)</span> multi-dimensional.</p>
-<p>Polarity is assigned to both users and notes. The link between
-<em>user</em> IDs and the underlying Twitter accounts is intentionally
-kept hidden, but notes are public. In practice, the polarities generated
-by the algorithm, at least for the English-language data set, map very
-closely to the left vs right political spectrum.</p>
-<p>Here are some examples of notes that have gotten polarities around
--0.8:</p>
+<p>All in all, you get some pretty complicated python code that amounts to 6282 lines stretching across 22 files. But it is all <a href="https://github.com/twitter/communitynotes">open</a>, you can download the <a href="https://communitynotes.twitter.com/guide/en/under-the-hood/ranking-notes">note and rating data</a> and run it yourself, and see if the outputs correspond to what is actually on Twitter at any given moment.</p>
+<h2 id="so-how-does-this-look-in-practice">So how does this look in practice?</h2>
+<p>Probably the single most important idea in this algorithm that distinguishes it from naively taking an average score from people's votes is what I call the "polarity" values. The algorithm documentation calls them <span class="math inline">\(f_u\)</span> and <span class="math inline">\(f_n\)</span>, using <span class="math inline">\(f\)</span> for <em>factor</em> because these are the two terms that get multiplied with each other; the more general language is in part because of a desire to eventually make <span class="math inline">\(f_u\)</span> and <span class="math inline">\(f_n\)</span> multi-dimensional.</p>
+<p>Polarity is assigned to both users and notes. The link between <em>user</em> IDs and the underlying Twitter accounts is intentionally kept hidden, but notes are public. In practice, the polarities generated by the algorithm, at least for the English-language data set, map very closely to the left vs right political spectrum.</p>
+<p>Here are some examples of notes that have gotten polarities around -0.8:</p>
 <br>
 <table>
 <thead>
@@ -326,11 +172,7 @@ Polarity
 <tbody>
 <tr>
 <td>
-Anti-trans rhetoric has been amplified by some conservative Colorado
-lawmakers, including U.S. Rep. Lauren Boebert, who narrowly won
-re-election in Colorado's GOP-leaning 3rd Congressional District, which
-does not include Colorado Springs.
-<a href="https://coloradosun.com/2022/11/20/colorado-springs-club-q-lgbtq-trans/">https://coloradosun.com/2022/11/20/colorado-springs-club-q-lgbtq-trans/</a>
+Anti-trans rhetoric has been amplified by some conservative Colorado lawmakers, including U.S. Rep. Lauren Boebert, who narrowly won re-election in Colorado's GOP-leaning 3rd Congressional District, which does not include Colorado Springs. <a href="https://coloradosun.com/2022/11/20/colorado-springs-club-q-lgbtq-trans/">https://coloradosun.com/2022/11/20/colorado-springs-club-q-lgbtq-trans/</a>
 </td>
 <td>
 -0.800
@@ -338,10 +180,7 @@ does not include Colorado Springs.
 </tr>
 <tr>
 <td>
-President Trump explicitly undermined American faith in election results
-in the months leading up to the 2020 election.
-<a href="https://www.npr.org/2021/02/08/965342252/timeline-what-trump-told-supporters-for-months-before-they-attacked">https://www.npr.org/2021/02/08/965342252/timeline-what-trump-told-supporters-for-months-before-they-attacked</a>
-Enforcing Twitter's Terms of Service is not election interference.
+President Trump explicitly undermined American faith in election results in the months leading up to the 2020 election. <a href="https://www.npr.org/2021/02/08/965342252/timeline-what-trump-told-supporters-for-months-before-they-attacked">https://www.npr.org/2021/02/08/965342252/timeline-what-trump-told-supporters-for-months-before-they-attacked</a> Enforcing Twitter's Terms of Service is not election interference.
 </td>
 <td>
 -0.825
@@ -349,8 +188,7 @@ Enforcing Twitter's Terms of Service is not election interference.
 </tr>
 <tr>
 <td>
-The 2020 election was conducted in a free and fair manner.
-<a href="https://www.npr.org/2021/12/23/1065277246/trump-big-lie-jan-6-election">https://www.npr.org/2021/12/23/1065277246/trump-big-lie-jan-6-election</a>
+The 2020 election was conducted in a free and fair manner. <a href="https://www.npr.org/2021/12/23/1065277246/trump-big-lie-jan-6-election">https://www.npr.org/2021/12/23/1065277246/trump-big-lie-jan-6-election</a>
 </td>
 <td>
 -0.818
@@ -359,14 +197,8 @@ The 2020 election was conducted in a free and fair manner.
 </tbody>
 </table>
 <p><br></p>
-<p>Note that I am not cherry-picking here; these are literally the first
-three rows in the <code>scored_notes.tsv</code> spreadsheet generated by
-the algorithm when I ran it locally that have a polarity score (called
-<code>coreNoteFactor1</code> in the spreadsheet) of less than -0.8.</p>
-<p>Now, here are some notes that have gotten polarities around +0.8. It
-turns out that many of these are either people talking about Brazilian
-politics in Portuguese or Tesla fans angrily refuting criticism of
-Tesla, so let me cherry-pick a bit to find a few that are not:</p>
+<p>Note that I am not cherry-picking here; these are literally the first three rows in the <code>scored_notes.tsv</code> spreadsheet generated by the algorithm when I ran it locally that have a polarity score (called <code>coreNoteFactor1</code> in the spreadsheet) of less than -0.8.</p>
+<p>Now, here are some notes that have gotten polarities around +0.8. It turns out that many of these are either people talking about Brazilian politics in Portuguese or Tesla fans angrily refuting criticism of Tesla, so let me cherry-pick a bit to find a few that are not:</p>
 <p><br></p>
 <table>
 <thead>
@@ -382,9 +214,7 @@ Polarity
 <tbody>
 <tr>
 <td>
-As of 2021 data, 64% of "Black or African American" children lived in
-single-parent families.
-<a href="https://datacenter.aecf.org/data/tables/107-children-in-single-parent-families-by-race-and-ethnicity">https://datacenter.aecf.org/data/tables/107-children-in-single-parent-families-by-race-and-ethnicity</a>
+As of 2021 data, 64% of "Black or African American" children lived in single-parent families. <a href="https://datacenter.aecf.org/data/tables/107-children-in-single-parent-families-by-race-and-ethnicity">https://datacenter.aecf.org/data/tables/107-children-in-single-parent-families-by-race-and-ethnicity</a>
 </td>
 <td>
 +0.809
@@ -392,11 +222,7 @@ single-parent families.
 </tr>
 <tr>
 <td>
-Contrary to Rolling Stones push to claim child trafficking is "a Qanon
-adjacent conspiracy," child trafficking is a real and huge issue that
-this movie accurately depicts. Operation Underground Railroad works with
-multinational agencies to combat this issue.
-<a href="https://ourrescue.org/">https://ourrescue.org/</a>
+Contrary to Rolling Stones push to claim child trafficking is "a Qanon adjacent conspiracy," child trafficking is a real and huge issue that this movie accurately depicts. Operation Underground Railroad works with multinational agencies to combat this issue. <a href="https://ourrescue.org/">https://ourrescue.org/</a>
 </td>
 <td>
 +0.840
@@ -404,14 +230,7 @@ multinational agencies to combat this issue.
 </tr>
 <tr>
 <td>
-Example pages from these LGBTQ+ children's books being banned can be
-seen here:
-<a href="https://i.imgur.com/8SY6cEx.png">https://i.imgur.com/8SY6cEx.png</a>
-These books are obscene, which is not protected by the US constitution
-as free speech.
-<a href="https://www.justice.gov/criminal-ceos/obscenity">https://www.justice.gov/criminal-ceos/obscenity</a>
-"Federal law strictly prohibits the distribution of obscene matter to
-minors.
+Example pages from these LGBTQ+ children's books being banned can be seen here: <a href="https://i.imgur.com/8SY6cEx.png">https://i.imgur.com/8SY6cEx.png</a> These books are obscene, which is not protected by the US constitution as free speech. <a href="https://www.justice.gov/criminal-ceos/obscenity">https://www.justice.gov/criminal-ceos/obscenity</a> "Federal law strictly prohibits the distribution of obscene matter to minors.
 </td>
 <td>
 +0.806
@@ -420,15 +239,8 @@ minors.
 </tbody>
 </table>
 <p><br></p>
-<p>Once again, it is worth reminding ourselves that the "left vs right
-divide" was <em>not</em> in any way hardcoded into the algorithm; it was
-discovered emergently by the calculation. This suggests that if you
-apply this algorithm in other cultural contexts, it could automatically
-detect what their primary political divides are, and bridge across those
-too.</p>
-<p>Meanwhile, notes that get the highest <em>helpfulness</em> look like
-this. This time, because these notes are actually shown on Twitter, I
-can just screenshot one directly:</p>
+<p>Once again, it is worth reminding ourselves that the "left vs right divide" was <em>not</em> in any way hardcoded into the algorithm; it was discovered emergently by the calculation. This suggests that if you apply this algorithm in other cultural contexts, it could automatically detect what their primary political divides are, and bridge across those too.</p>
+<p>Meanwhile, notes that get the highest <em>helpfulness</em> look like this. This time, because these notes are actually shown on Twitter, I can just screenshot one directly:</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/communitynotes/helpfulnote1.png" /></p>
@@ -440,264 +252,80 @@ can just screenshot one directly:</p>
 <p><img src="../../../../images/communitynotes/helpfulnote2.png" /></p>
 </center>
 <p><br></p>
-<p>The second one touches on highly partisan political themes more
-directly, but it's a clear, high-quality and informative note, and so it
-gets rated highly. So all in all, the algorithm seems to work, and the
-ability to verify the outputs of the algorithm by running the code seems
-to work.</p>
-<h2 id="what-do-i-think-of-the-algorithm">What do I think of the
-algorithm?</h2>
-<p>The main thing that struck me when analyzing the algorithm is just
-how <em>complex</em> it is. There is the "academic paper version", a
-gradient descent which finds a best fit to a five-term vector and matrix
-equation, and then the real version, a complicated series of many
-different executions of the algorithm with lots of arbitrary
-coefficients along the way.</p>
-<p>Even the academic paper version hides complexity under the hood. The
-equation that it's optimizing is a <a
-href="https://en.wikipedia.org/wiki/Degree_of_a_polynomial">degree</a>-4
-equation (as there's a degree-2 <span class="math inline">\(f_u *
-f_n\)</span> term in the prediction formula, and compounding that the
-cost function <a
-href="https://en.wikipedia.org/wiki/Least_squares">measures error
-squared</a>). While optimizing a degree-2 equation over any number of
-variables almost always has a unique solution, which you can calculate
-with fairly basic linear algebra, a degree-4 equation over many
-variables often has many solutions, and so multiple rounds of a gradient
-descent algorithm may well arrive at different answers. Tiny changes to
-the input may well cause the descent to flip from one local minimum to
-another, significantly changing the output.</p>
-<p>The distinction between this, and algorithms that I helped work on
-such as <a href="../../../2019/12/07/quadratic.html">quadratic
-funding</a>, feels to me like a distinction between an
-<strong>economist's algorithm</strong> and an <strong>engineer's
-algorithm</strong>. An economist's algorithm, at its best, values being
-simple, being reasonably easy to analyze, and having clear mathematical
-properties that show why it's optimal (or least-bad) for the task that
-it's trying to solve, and ideally proves bounds on how much damage
-someone can do by trying to exploit it. An engineer's algorithm, on the
-other hand, is a result of iterative trial and error, seeing what works
-and what doesn't in the engineer's operational context. Engineer's
-algorithms <em>are pragmatic and do the job</em>; economist's algorithms
-<em>don't go totally crazy when confronted with the unexpected</em>.</p>
-<p>Or, as was <a
-href="https://twitter.com/tszzl/status/1473156331297120256">famously
-said</a> on a related topic by the esteemed internet philosopher roon
-(aka tszzl):</p>
+<p>The second one touches on highly partisan political themes more directly, but it's a clear, high-quality and informative note, and so it gets rated highly. So all in all, the algorithm seems to work, and the ability to verify the outputs of the algorithm by running the code seems to work.</p>
+<h2 id="what-do-i-think-of-the-algorithm">What do I think of the algorithm?</h2>
+<p>The main thing that struck me when analyzing the algorithm is just how <em>complex</em> it is. There is the "academic paper version", a gradient descent which finds a best fit to a five-term vector and matrix equation, and then the real version, a complicated series of many different executions of the algorithm with lots of arbitrary coefficients along the way.</p>
+<p>Even the academic paper version hides complexity under the hood. The equation that it's optimizing is a <a href="https://en.wikipedia.org/wiki/Degree_of_a_polynomial">degree</a>-4 equation (as there's a degree-2 <span class="math inline">\(f_u * f_n\)</span> term in the prediction formula, and compounding that the cost function <a href="https://en.wikipedia.org/wiki/Least_squares">measures error squared</a>). While optimizing a degree-2 equation over any number of variables almost always has a unique solution, which you can calculate with fairly basic linear algebra, a degree-4 equation over many variables often has many solutions, and so multiple rounds of a gradient descent algorithm may well arrive at different answers. Tiny changes to the input may well cause the descent to flip from one local minimum to another, significantly changing the output.</p>
+<p>The distinction between this, and algorithms that I helped work on such as <a href="../../../2019/12/07/quadratic.html">quadratic funding</a>, feels to me like a distinction between an <strong>economist's algorithm</strong> and an <strong>engineer's algorithm</strong>. An economist's algorithm, at its best, values being simple, being reasonably easy to analyze, and having clear mathematical properties that show why it's optimal (or least-bad) for the task that it's trying to solve, and ideally proves bounds on how much damage someone can do by trying to exploit it. An engineer's algorithm, on the other hand, is a result of iterative trial and error, seeing what works and what doesn't in the engineer's operational context. Engineer's algorithms <em>are pragmatic and do the job</em>; economist's algorithms <em>don't go totally crazy when confronted with the unexpected</em>.</p>
+<p>Or, as was <a href="https://twitter.com/tszzl/status/1473156331297120256">famously said</a> on a related topic by the esteemed internet philosopher roon (aka tszzl):</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/communitynotes/roontweet.png" /></p>
 </center>
 <p><br></p>
-<p>Of course, I would say that the "theorycel aesthetic" side of crypto
-is necessary precisely to distinguish protocols that are <a
-href="../../../2021/01/05/rollup.html">actually trustless</a> from janky
-constructions that look fine and seem to work well but under the hood
-require trusting a few centralized actors - or worse, actually end up
-being <a href="../../../2022/05/25/stable.html">outright scams</a>.</p>
-<p>Deep learning works when it works, but it has inevitable
-vulnerabilities to all kinds of <a
-href="https://en.wikipedia.org/wiki/Adversarial_machine_learning">adversarial
-machine learning</a> attacks. Nerd traps and sky-high abstraction
-ladders, if done well, can be quite robust against them. And so one
-question I have is: <strong>could we turn Community Notes itself into
-something that's more like an economist algorithm</strong>?</p>
-<p>To give a view of what this would mean in practice, let's explore an
-algorithm I came up with a few years ago for a similar purpose: <a
-href="https://ethresear.ch/t/pairwise-coordination-subsidies-a-new-quadratic-funding-design/5553">pairwise-bounded
-quadratic funding</a>.</p>
+<p>Of course, I would say that the "theorycel aesthetic" side of crypto is necessary precisely to distinguish protocols that are <a href="../../../2021/01/05/rollup.html">actually trustless</a> from janky constructions that look fine and seem to work well but under the hood require trusting a few centralized actors - or worse, actually end up being <a href="../../../2022/05/25/stable.html">outright scams</a>.</p>
+<p>Deep learning works when it works, but it has inevitable vulnerabilities to all kinds of <a href="https://en.wikipedia.org/wiki/Adversarial_machine_learning">adversarial machine learning</a> attacks. Nerd traps and sky-high abstraction ladders, if done well, can be quite robust against them. And so one question I have is: <strong>could we turn Community Notes itself into something that's more like an economist algorithm</strong>?</p>
+<p>To give a view of what this would mean in practice, let's explore an algorithm I came up with a few years ago for a similar purpose: <a href="https://ethresear.ch/t/pairwise-coordination-subsidies-a-new-quadratic-funding-design/5553">pairwise-bounded quadratic funding</a>.</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/communitynotes/pairwiseqf.png" /></p>
 </center>
 <p><br></p>
-<p>The goal of pairwise-bounded quadratic funding is to plug a hole in
-"regular" quadratic funding, where if even two participants collude with
-each other, they can each contribute a very high amount of money to a
-fake project that sends the money back to them, and get a large subsidy
-that drains the entire pool. In pairwise quadratic funding, we assign
-each pair of participants a limited budget <span
-class="math inline">\(M\)</span>. The algorithm walks over all possible
-pairs of participants, and if the algorithm decides to add a subsidy to
-some project <span class="math inline">\(P\)</span> because both
-participant <span class="math inline">\(A\)</span> and participant <span
-class="math inline">\(B\)</span> supported it, that subsidy comes out of
-the budget assigned to the pair <span class="math inline">\((A,
-B)\)</span>. Hence, even if <span class="math inline">\(k\)</span>
-participants were to collude, the amount they could steal from the
-mechanism is at most <span class="math inline">\(k * (k-1) *
-M\)</span>.</p>
-<p>An algorithm of <em>exactly</em> this form is not very applicable to
-the Community Notes context, because each user makes very few votes: on
-average, any two users would have exactly zero votes in common, and so
-the algorithm would learn nothing about users' polarities by just
-looking at each pair of users separately. The goal of the machine
-learning model is precisely to try to "fill in" the matrix from very
-sparse source data that cannot be analyzed in this way directly. But the
-challenge of this approach is that it takes extra effort to do it in a
-way that does not make the result highly volatile in the face of a few
-bad votes.</p>
-<h3 id="does-community-notes-actually-fight-polarization">Does Community
-Notes actually fight polarization?</h3>
-<p>One thing that we could do is analyze whether or not the Community
-Notes algorithm, as is, actually manages to fight polarization <em>at
-all</em> - that is, whether or not it actually does any better than a
-naive voting algorithm. Naive voting algorithms already fight
-polarization to some limited extent: a post with 200 upvotes and 100
-downvotes does worse than a post that just gets the 200 upvotes. But
-does Community Notes do better than <em>that</em>?</p>
-<p>Looking at the algorithm abstractly, it's hard to tell. Why wouldn't
-a high-average-rating but polarizing post get a strong polarity
-<em>and</em> a high helpfulness? The idea is that polarity is supposed
-to "absorb" the properties of a note that cause it to get a lot of votes
-if those votes are conflicting, but does it actually do that?</p>
-<p>To check this, I ran <a
-href="https://github.com/ethereum/research/blob/master/community_notes_analysis/basic_algo.py">my
-own simplified implementation</a> for 100 rounds. The average results
-were:</p>
+<p>The goal of pairwise-bounded quadratic funding is to plug a hole in "regular" quadratic funding, where if even two participants collude with each other, they can each contribute a very high amount of money to a fake project that sends the money back to them, and get a large subsidy that drains the entire pool. In pairwise quadratic funding, we assign each pair of participants a limited budget <span class="math inline">\(M\)</span>. The algorithm walks over all possible pairs of participants, and if the algorithm decides to add a subsidy to some project <span class="math inline">\(P\)</span> because both participant <span class="math inline">\(A\)</span> and participant <span class="math inline">\(B\)</span> supported it, that subsidy comes out of the budget assigned to the pair <span class="math inline">\((A, B)\)</span>. Hence, even if <span class="math inline">\(k\)</span> participants were to collude, the amount they could steal from the mechanism is at most <span class="math inline">\(k * (k-1) * M\)</span>.</p>
+<p>An algorithm of <em>exactly</em> this form is not very applicable to the Community Notes context, because each user makes very few votes: on average, any two users would have exactly zero votes in common, and so the algorithm would learn nothing about users' polarities by just looking at each pair of users separately. The goal of the machine learning model is precisely to try to "fill in" the matrix from very sparse source data that cannot be analyzed in this way directly. But the challenge of this approach is that it takes extra effort to do it in a way that does not make the result highly volatile in the face of a few bad votes.</p>
+<h3 id="does-community-notes-actually-fight-polarization">Does Community Notes actually fight polarization?</h3>
+<p>One thing that we could do is analyze whether or not the Community Notes algorithm, as is, actually manages to fight polarization <em>at all</em> - that is, whether or not it actually does any better than a naive voting algorithm. Naive voting algorithms already fight polarization to some limited extent: a post with 200 upvotes and 100 downvotes does worse than a post that just gets the 200 upvotes. But does Community Notes do better than <em>that</em>?</p>
+<p>Looking at the algorithm abstractly, it's hard to tell. Why wouldn't a high-average-rating but polarizing post get a strong polarity <em>and</em> a high helpfulness? The idea is that polarity is supposed to "absorb" the properties of a note that cause it to get a lot of votes if those votes are conflicting, but does it actually do that?</p>
+<p>To check this, I ran <a href="https://github.com/ethereum/research/blob/master/community_notes_analysis/basic_algo.py">my own simplified implementation</a> for 100 rounds. The average results were:</p>
 <pre><code>Quality averages:
 Group 1 (good): 0.30032841807271166
 Group 2 (good but extra polarizing): 0.21698871680927437
 Group 3 (neutral): 0.09443120045416832
 Group 4 (bad): -0.1521160965793673</code></pre>
-<p>In this test, "Good" notes received a rating of +2 from users in the
-same political tribe and +0 from users in the opposite political tribe,
-and "Good but extra polarizing" notes received a rating of +4 from
-same-tribe users and -2 from opposite-tribe users. Same average, but
-different polarity. And it seems to actually be the case that "Good"
-notes get a higher average helpfulness than "Good but extra polarizing"
-notes.</p>
-<p>One other benefit of having something closer to an "economist's
-algorithm" would be having a clearer story for how the algorithm is
-penalizing polarization.</p>
-<h2 id="how-useful-is-this-all-in-high-stakes-situations">How useful is
-this all in high-stakes situations?</h2>
-<p>We can see some of how this works out by looking at one specific
-situation. About a month ago, Ian Bremmer complained that a highly
-critical Community Note that was added to a tweet by a Chinese
-government official <a
-href="https://twitter.com/ianbremmer/status/1676590373727088647">had
-been removed</a>.</p>
+<p>In this test, "Good" notes received a rating of +2 from users in the same political tribe and +0 from users in the opposite political tribe, and "Good but extra polarizing" notes received a rating of +4 from same-tribe users and -2 from opposite-tribe users. Same average, but different polarity. And it seems to actually be the case that "Good" notes get a higher average helpfulness than "Good but extra polarizing" notes.</p>
+<p>One other benefit of having something closer to an "economist's algorithm" would be having a clearer story for how the algorithm is penalizing polarization.</p>
+<h2 id="how-useful-is-this-all-in-high-stakes-situations">How useful is this all in high-stakes situations?</h2>
+<p>We can see some of how this works out by looking at one specific situation. About a month ago, Ian Bremmer complained that a highly critical Community Note that was added to a tweet by a Chinese government official <a href="https://twitter.com/ianbremmer/status/1676590373727088647">had been removed</a>.</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/communitynotes/chinanote.png" /></p>
-<p><em>The note, which is now no longer visible. Screenshot by <a
-href="https://twitter.com/ianbremmer">Ian Bremmer</a>.</em></p>
+<p><em>The note, which is now no longer visible. Screenshot by <a href="https://twitter.com/ianbremmer">Ian Bremmer</a>.</em></p>
 </center>
 <p><br></p>
-<p>This is heavy stuff. It's one thing to do mechanism design in a nice
-sandbox Ethereum community environment where the largest complaint is
-$20,000 <a href="../../../2020/01/28/round4.html">going to a polarizing
-Twitter influencer</a>. It's another to do it for political and
-geopolitical questions that affect many millions of people and where
-everyone, often quite understandably, is assuming maximum bad faith. But
-if mechanism designers want to have a significant impact into the world,
-engaging with these high-stakes environments is ultimately
-necessary.</p>
-<p>In the case of Twitter, there is a clear reason why one might suspect
-centralized manipulation to be behind the Note's removal: Elon has a lot
-of <a
-href="https://www.nbcnews.com/tech/elon-musks-business-ties-china-draw-scrutiny-twitter-purchase-rcna26057">business
-interests in China</a>, and so there is a possibility that Elon forced
-the Community Notes team to interfere with the algorithm's outputs and
-delete this specific one.</p>
-<p>Fortunately, the algorithm is open source and verifiable, so we can
-actually look under the hood! Let's do that. The URL of the original
-tweet is <a
-href="https://twitter.com/MFA_China/status/1676157337109946369"><code>https://twitter.com/MFA_China/status/1676157337109946369</code></a>.
-The number at the end, <code>1676157337109946369</code>, is the tweet
-ID. We can search for that in the <a
-href="https://communitynotes.twitter.com/guide/en/under-the-hood/ranking-notes">downloadable
-data</a>, and identify the specific row in the spreadsheet that has the
-above note:</p>
+<p>This is heavy stuff. It's one thing to do mechanism design in a nice sandbox Ethereum community environment where the largest complaint is $20,000 <a href="../../../2020/01/28/round4.html">going to a polarizing Twitter influencer</a>. It's another to do it for political and geopolitical questions that affect many millions of people and where everyone, often quite understandably, is assuming maximum bad faith. But if mechanism designers want to have a significant impact into the world, engaging with these high-stakes environments is ultimately necessary.</p>
+<p>In the case of Twitter, there is a clear reason why one might suspect centralized manipulation to be behind the Note's removal: Elon has a lot of <a href="https://www.nbcnews.com/tech/elon-musks-business-ties-china-draw-scrutiny-twitter-purchase-rcna26057">business interests in China</a>, and so there is a possibility that Elon forced the Community Notes team to interfere with the algorithm's outputs and delete this specific one.</p>
+<p>Fortunately, the algorithm is open source and verifiable, so we can actually look under the hood! Let's do that. The URL of the original tweet is <a href="https://twitter.com/MFA_China/status/1676157337109946369"><code>https://twitter.com/MFA_China/status/1676157337109946369</code></a>. The number at the end, <code>1676157337109946369</code>, is the tweet ID. We can search for that in the <a href="https://communitynotes.twitter.com/guide/en/under-the-hood/ranking-notes">downloadable data</a>, and identify the specific row in the spreadsheet that has the above note:</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/communitynotes/commandline1.png" /></p>
 </center>
 <p><br></p>
-<p>Here we get the ID of the note itself,
-<code>1676391378815709184</code>. We then search for <em>that</em> in
-the <code>scored_notes.tsv</code> and
-<code>note_status_history.tsv</code> files generated by running the
-algorithm. We get:</p>
+<p>Here we get the ID of the note itself, <code>1676391378815709184</code>. We then search for <em>that</em> in the <code>scored_notes.tsv</code> and <code>note_status_history.tsv</code> files generated by running the algorithm. We get:</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/communitynotes/commandline2.png" /></p>
 <p><img src="../../../../images/communitynotes/commandline3.png" /></p>
 </center>
 <p><br></p>
-<p>The second column in the first output is the note's current rating.
-The second output shows the note's history: its current status is in the
-seventh column (<code>NEEDS_MORE_RATINGS</code>), and the first status
-that's not <code>NEEDS_MORE_RATINGS</code> that it received earlier on
-is in the fifth column (<code>CURRENTLY_RATED_HELPFUL</code>). Hence, we
-see that <strong>the algorithm itself first showed the note, and then
-removed it once its rating dropped somewhat - seemingly no centralized
-intervention involved</strong>.</p>
-<p>We can see this another way by looking at the votes themselves. We
-can scan the <code>ratings-00000.tsv</code> file to isolate all the
-ratings for this note, and see how many rated <code>HELPFUL</code> vs
-<code>NOT_HELPFUL</code>:</p>
+<p>The second column in the first output is the note's current rating. The second output shows the note's history: its current status is in the seventh column (<code>NEEDS_MORE_RATINGS</code>), and the first status that's not <code>NEEDS_MORE_RATINGS</code> that it received earlier on is in the fifth column (<code>CURRENTLY_RATED_HELPFUL</code>). Hence, we see that <strong>the algorithm itself first showed the note, and then removed it once its rating dropped somewhat - seemingly no centralized intervention involved</strong>.</p>
+<p>We can see this another way by looking at the votes themselves. We can scan the <code>ratings-00000.tsv</code> file to isolate all the ratings for this note, and see how many rated <code>HELPFUL</code> vs <code>NOT_HELPFUL</code>:</p>
 <center>
 <p><br></p>
 <p><img src="../../../../images/communitynotes/commandline4.png" /></p>
 </center>
 <p><br></p>
-<p>But if you sort them by timestamp, and look at the first 50 votes,
-you see 40 <code>HELPFUL</code> votes and 9 <code>NOT_HELPFUL</code>
-votes. And so we see the same conclusion: the note's initial audience
-viewed the note more favorably then the note's later audience, and so
-its rating started out higher and dropped lower over time.</p>
-<p>Unfortunately, the exact story of <em>how</em> the note changed
-status is complicated to explain: it's not a simple matter of "before
-the rating was above 0.40, now it's below 0.40, so it got dropped".
-Rather, the high volume of <code>NOT_HELPFUL</code> replies triggered
-one of the <a
-href="https://communitynotes.twitter.com/guide/en/under-the-hood/ranking-notes#tag-outlier-filtering">outlier
-conditions</a>, increasing the helpfulness score that the note needs to
-stay over the threshold.</p>
-<p>This is a good learning opportunity for another lesson: making a
-credibly neutral algorithm truly <em>credible</em> requires <a
-href="../../../2018/11/25/central_planning.html">keeping it simple</a>.
-If a note moves from being accepted to not being accepted, there should
-be a simple and legible story as to why.</p>
-<p><strong>Of course, there is a totally different way in which this
-vote could have been manipulated: brigading</strong>. Someone who sees a
-note that they disapprove of could call upon a highly engaged community
-(or worse, a mass of fake accounts) to rate it <code>NOT_HELPFUL</code>,
-and it may not require that many votes to drop the note from being seen
-as "helpful" to being seen as "polarized". Properly minimizing the
-vulnerability of this algorithm to such coordinated attacks will require
-a lot more analysis and work. One possible improvement would be not
-allowing any user to vote on any note, but instead using the "For you"
-algorithmic feed to randomly allocate notes to raters, and only allow
-raters to rate those notes that they have been allocated to.</p>
-<h3 id="is-community-notes-not-brave-enough">Is Community Notes not
-"brave" enough?</h3>
-<p>The main criticism of Community Notes that I have seen is basically
-that it does not do enough. <a
-href="https://www.poynter.org/fact-checking/2023/why-twitters-community-notes-feature-mostly-fails-to-combat-misinformation/">Two</a>
-recent <a
-href="https://www.bloomberg.com/graphics/2022-twitter-birdwatch-community-notes-misinformation-politics/#xj4y7vzkg">articles</a>
-that I have seen make this point. Quoting one:</p>
+<p>But if you sort them by timestamp, and look at the first 50 votes, you see 40 <code>HELPFUL</code> votes and 9 <code>NOT_HELPFUL</code> votes. And so we see the same conclusion: the note's initial audience viewed the note more favorably then the note's later audience, and so its rating started out higher and dropped lower over time.</p>
+<p>Unfortunately, the exact story of <em>how</em> the note changed status is complicated to explain: it's not a simple matter of "before the rating was above 0.40, now it's below 0.40, so it got dropped". Rather, the high volume of <code>NOT_HELPFUL</code> replies triggered one of the <a href="https://communitynotes.twitter.com/guide/en/under-the-hood/ranking-notes#tag-outlier-filtering">outlier conditions</a>, increasing the helpfulness score that the note needs to stay over the threshold.</p>
+<p>This is a good learning opportunity for another lesson: making a credibly neutral algorithm truly <em>credible</em> requires <a href="../../../2018/11/25/central_planning.html">keeping it simple</a>. If a note moves from being accepted to not being accepted, there should be a simple and legible story as to why.</p>
+<p><strong>Of course, there is a totally different way in which this vote could have been manipulated: brigading</strong>. Someone who sees a note that they disapprove of could call upon a highly engaged community (or worse, a mass of fake accounts) to rate it <code>NOT_HELPFUL</code>, and it may not require that many votes to drop the note from being seen as "helpful" to being seen as "polarized". Properly minimizing the vulnerability of this algorithm to such coordinated attacks will require a lot more analysis and work. One possible improvement would be not allowing any user to vote on any note, but instead using the "For you" algorithmic feed to randomly allocate notes to raters, and only allow raters to rate those notes that they have been allocated to.</p>
+<h3 id="is-community-notes-not-brave-enough">Is Community Notes not "brave" enough?</h3>
+<p>The main criticism of Community Notes that I have seen is basically that it does not do enough. <a href="https://www.poynter.org/fact-checking/2023/why-twitters-community-notes-feature-mostly-fails-to-combat-misinformation/">Two</a> recent <a href="https://www.bloomberg.com/graphics/2022-twitter-birdwatch-community-notes-misinformation-politics/#xj4y7vzkg">articles</a> that I have seen make this point. Quoting one:</p>
 <blockquote>
-<p>The program is severely hampered by the fact that for a Community
-Note to be public, it has to be generally accepted by a consensus of
-people from all across the political spectrum.</p>
-<p>"It has to have ideological consensus," he said. "That means people
-on the left and people on the right have to agree that that note must be
-appended to that tweet."</p>
-<p>Essentially, it requires a "cross-ideological agreement on truth, and
-in an increasingly partisan environment, achieving that consensus is
-almost impossible, he said.</p>
+<p>The program is severely hampered by the fact that for a Community Note to be public, it has to be generally accepted by a consensus of people from all across the political spectrum.</p>
+<p>"It has to have ideological consensus," he said. "That means people on the left and people on the right have to agree that that note must be appended to that tweet."</p>
+<p>Essentially, it requires a "cross-ideological agreement on truth, and in an increasingly partisan environment, achieving that consensus is almost impossible, he said.</p>
 </blockquote>
-<p>This is a difficult issue, but ultimately I come down on the side
-that it is better to let ten misinformative tweets go free than it is to
-have one tweet covered by a note that judges it unfairly. We have seen
-years of fact-checking that <em>is</em> brave, and <em>does</em> come
-from the perspective of "well, actually we know the truth, and we know
-that one side lies much more often than the other". And what happened as
-a result?</p>
+<p>This is a difficult issue, but ultimately I come down on the side that it is better to let ten misinformative tweets go free than it is to have one tweet covered by a note that judges it unfairly. We have seen years of fact-checking that <em>is</em> brave, and <em>does</em> come from the perspective of "well, actually we know the truth, and we know that one side lies much more often than the other". And what happened as a result?</p>
 <p><br></p>
 <center>
 <table style="border-collapse: collapse;">
@@ -717,65 +345,12 @@ a result?</p>
 </table>
 </center>
 <p><br></p>
-<p>Honestly, some pretty widespread distrust of fact-checking as a
-concept. One strategy here is to say: ignore the haters, remember that
-the fact checking experts really do know the facts better than any
-voting system, and stay the course. But going all-in on this approach <a
-href="https://slatestarcodex.com/2014/02/23/in-favor-of-niceness-community-and-civilization/">seems
-risky</a>. There is value in building cross-tribal institutions that are
-at least somewhat respected by everyone. As with <a
-href="https://en.wikipedia.org/wiki/Blackstone%27s_ratio">William
-Blackstone's dictum</a> and the courts, it feels to me that maintaining
-such respect requires a system that commits far more sins of <a
-href="https://en.wikipedia.org/wiki/Sin_of_omission">omission</a> than
-it does sins of commission. And so it seems valuable to me that there is
-at least one major organization that is taking this alternate path, and
-treating its rare cross-tribal respect as a resource to be cherished and
-built upon.</p>
-<p>Another reason why I think it is okay for Community Notes to be
-conservative is that I do not think it is the goal for every
-misinformative tweet, or even most misinformative tweets, to receive a
-corrective note. <strong>Even if less than one percent of misinformative
-tweets get a note providing context or correcting them, Community Notes
-is still providing an exceedingly valuable service as an educational
-tool.</strong> The goal is not to correct everything; rather, the goal
-is to remind people that multiple perspectives exist, that certain kinds
-of posts that look convincing and engaging in isolation are actually
-quite incorrect, and you, yes you, can often go do a basic internet
-search to verify that it's incorrect.</p>
-<p>Community Notes cannot be, and is not meant to be, a miracle cure
-that solves all problems in public epistemology. Whatever problems it
-does not solve, there is plenty of room for other mechanisms, whether
-newfangled gadgets such as <a
-href="https://manifold.markets/">prediction</a> <a
-href="https://manifold.markets/">markets</a> or good old-fashioned
-organizations hiring full-time staff with domain expertise, to try to
-fill in the gaps.</p>
+<p>Honestly, some pretty widespread distrust of fact-checking as a concept. One strategy here is to say: ignore the haters, remember that the fact checking experts really do know the facts better than any voting system, and stay the course. But going all-in on this approach <a href="https://slatestarcodex.com/2014/02/23/in-favor-of-niceness-community-and-civilization/">seems risky</a>. There is value in building cross-tribal institutions that are at least somewhat respected by everyone. As with <a href="https://en.wikipedia.org/wiki/Blackstone%27s_ratio">William Blackstone's dictum</a> and the courts, it feels to me that maintaining such respect requires a system that commits far more sins of <a href="https://en.wikipedia.org/wiki/Sin_of_omission">omission</a> than it does sins of commission. And so it seems valuable to me that there is at least one major organization that is taking this alternate path, and treating its rare cross-tribal respect as a resource to be cherished and built upon.</p>
+<p>Another reason why I think it is okay for Community Notes to be conservative is that I do not think it is the goal for every misinformative tweet, or even most misinformative tweets, to receive a corrective note. <strong>Even if less than one percent of misinformative tweets get a note providing context or correcting them, Community Notes is still providing an exceedingly valuable service as an educational tool.</strong> The goal is not to correct everything; rather, the goal is to remind people that multiple perspectives exist, that certain kinds of posts that look convincing and engaging in isolation are actually quite incorrect, and you, yes you, can often go do a basic internet search to verify that it's incorrect.</p>
+<p>Community Notes cannot be, and is not meant to be, a miracle cure that solves all problems in public epistemology. Whatever problems it does not solve, there is plenty of room for other mechanisms, whether newfangled gadgets such as <a href="https://manifold.markets/">prediction</a> <a href="https://manifold.markets/">markets</a> or good old-fashioned organizations hiring full-time staff with domain expertise, to try to fill in the gaps.</p>
 <h2 id="conclusions">Conclusions</h2>
-<p>Community Notes, in addition to being a fascinating social media
-experiment, is also an instance of a fascinating new and emerging genre
-of mechanism design: mechanisms that intentionally try to identify
-polarization, and favor things that bridge across divides rather than
-perpetuate them.</p>
-<p>The two other things in this category that I know about are (i) <a
-href="https://ethresear.ch/t/pairwise-coordination-subsidies-a-new-quadratic-funding-design/5553">pairwise
-quadratic funding</a>, which is being used in <a
-href="https://grants.gitcoin.co/">Gitcoin Grants</a> and (ii) <a
-href="https://pol.is">Polis</a>, a discussion tool that uses clustering
-algorithms to help communities identify statements that are commonly
-well-received across people who normally have different viewpoints. This
-area of mechanism design is valuable, and I hope that we can see a lot
-more academic work in this field.</p>
-<p>Algorithmic transparency of the type that Community Notes offers is
-not quite full-on decentralized social media - if you disagree with how
-Community Notes works, there's no way to go see a view of the same
-content with a different algorithm. But it's the closest that
-very-large-scale applications are going to get within the next couple of
-years, and we can see that it provides a lot of value already, both by
-preventing centralized manipulation and by ensuring that platforms that
-do not engage in such manipulation can get proper credit for doing
-so.</p>
-<p>I look forward to seeing both Community Notes, and hopefully many
-more algorithms of a similar spirit, develop and grow over the next
-decade.</p>
+<p>Community Notes, in addition to being a fascinating social media experiment, is also an instance of a fascinating new and emerging genre of mechanism design: mechanisms that intentionally try to identify polarization, and favor things that bridge across divides rather than perpetuate them.</p>
+<p>The two other things in this category that I know about are (i) <a href="https://ethresear.ch/t/pairwise-coordination-subsidies-a-new-quadratic-funding-design/5553">pairwise quadratic funding</a>, which is being used in <a href="https://grants.gitcoin.co/">Gitcoin Grants</a> and (ii) <a href="https://pol.is">Polis</a>, a discussion tool that uses clustering algorithms to help communities identify statements that are commonly well-received across people who normally have different viewpoints. This area of mechanism design is valuable, and I hope that we can see a lot more academic work in this field.</p>
+<p>Algorithmic transparency of the type that Community Notes offers is not quite full-on decentralized social media - if you disagree with how Community Notes works, there's no way to go see a view of the same content with a different algorithm. But it's the closest that very-large-scale applications are going to get within the next couple of years, and we can see that it provides a lot of value already, both by preventing centralized manipulation and by ensuring that platforms that do not engage in such manipulation can get proper credit for doing so.</p>
+<p>I look forward to seeing both Community Notes, and hopefully many more algorithms of a similar spirit, develop and grow over the next decade.</p>
  </div> 

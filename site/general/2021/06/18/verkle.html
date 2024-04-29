@@ -109,260 +109,67 @@ MathJax = {
 <br> <br> <br>
 <title> Verkle trees </title>
 
-<p><em>Special thanks to Dankrad Feist and Justin Drake for feedback and
-review.</em></p>
-<p>Verkle trees are shaping up to be an important part of Ethereum's
-upcoming scaling upgrades. They serve the same function as Merkle trees:
-you can put a large amount of data into a Verkle tree, and make a short
-proof ("witness") of any single piece, or set of pieces, of that data
-that can be verified by someone who only has the root of the tree. The
-key property that Verkle trees provide, however, is that they are
-<em>much more efficient</em> in proof size. If a tree contains a billion
-pieces of data, making a proof in a traditional binary Merkle tree would
-require about 1 kilobyte, but in a Verkle tree the proof would be
-<em>less than 150 bytes</em> - a reduction sufficient to make <a
-href="https://docs.ethhub.io/ethereum-roadmap/ethereum-2.0/stateless-clients/">stateless
-clients</a> finally viable in practice.</p>
-<p>Verkle trees are still a new idea; they were first introduced by John
-Kuszmaul in <a
-href="https://math.mit.edu/research/highschool/primes/materials/2018/Kuszmaul.pdf">this
-paper from 2018</a>, and they are still not as widely known as many
-other important new cryptographic constructions. This post will explain
-what Verkle trees are and how the cryptographic magic behind them works.
-The price of their short proof size is a higher level of dependence on
-more complicated cryptography. That said, the cryptography still much
-simpler, in my opinion, than the advanced cryptography found in <a
-href="../../../2021/01/26/snarks.html">modern ZK SNARK</a> <a
-href="../../../2019/09/22/plonk.html">schemes</a>. In this post I'll do
-the best job that I can at explaining it.</p>
-<h2 id="merkle-patricia-vs-verkle-tree-node-structure">Merkle Patricia
-vs Verkle Tree node structure</h2>
-<p>In terms of the <em>structure</em> of the tree (how the nodes in the
-tree are arranged and what they contain), a Verkle tree is very similar
-to the <a
-href="https://ethereum.stackexchange.com/questions/6415/eli5-how-does-a-merkle-patricia-trie-tree-work">Merkle
-Patricia tree</a> currently used in Ethereum. Every node is either (i)
-empty, (ii) a leaf node containing a key and value, or (iii) an
-intermediate node that has some fixed number of children (the "width" of
-the tree). The value of an intermediate node is computed as a hash of
-the values of its children.</p>
-<p>The location of a value in the tree is based on its key: in the
-diagram below, to get to the node with key <code>4cc</code>, you start
-at the root, then go down to the child at position <code>4</code>, then
-go down to the child at position <code>c</code> (remember:
-<code>c = 12</code> in hexadecimal), and then go down again to the child
-at position <code>c</code>. To get to the node with key
-<code>baaa</code>, you go to the position-<code>b</code> child of the
-root, and then the position-<code>a</code> child of <em>that</em> node.
-The node at path <code>(b,a)</code> directly contains the node with key
-<code>baaa</code>, because there are no other keys in the tree starting
-with <code>ba</code>.</p>
+<p><em>Special thanks to Dankrad Feist and Justin Drake for feedback and review.</em></p>
+<p>Verkle trees are shaping up to be an important part of Ethereum's upcoming scaling upgrades. They serve the same function as Merkle trees: you can put a large amount of data into a Verkle tree, and make a short proof ("witness") of any single piece, or set of pieces, of that data that can be verified by someone who only has the root of the tree. The key property that Verkle trees provide, however, is that they are <em>much more efficient</em> in proof size. If a tree contains a billion pieces of data, making a proof in a traditional binary Merkle tree would require about 1 kilobyte, but in a Verkle tree the proof would be <em>less than 150 bytes</em> - a reduction sufficient to make <a href="https://docs.ethhub.io/ethereum-roadmap/ethereum-2.0/stateless-clients/">stateless clients</a> finally viable in practice.</p>
+<p>Verkle trees are still a new idea; they were first introduced by John Kuszmaul in <a href="https://math.mit.edu/research/highschool/primes/materials/2018/Kuszmaul.pdf">this paper from 2018</a>, and they are still not as widely known as many other important new cryptographic constructions. This post will explain what Verkle trees are and how the cryptographic magic behind them works. The price of their short proof size is a higher level of dependence on more complicated cryptography. That said, the cryptography still much simpler, in my opinion, than the advanced cryptography found in <a href="../../../2021/01/26/snarks.html">modern ZK SNARK</a> <a href="../../../2019/09/22/plonk.html">schemes</a>. In this post I'll do the best job that I can at explaining it.</p>
+<h2 id="merkle-patricia-vs-verkle-tree-node-structure">Merkle Patricia vs Verkle Tree node structure</h2>
+<p>In terms of the <em>structure</em> of the tree (how the nodes in the tree are arranged and what they contain), a Verkle tree is very similar to the <a href="https://ethereum.stackexchange.com/questions/6415/eli5-how-does-a-merkle-patricia-trie-tree-work">Merkle Patricia tree</a> currently used in Ethereum. Every node is either (i) empty, (ii) a leaf node containing a key and value, or (iii) an intermediate node that has some fixed number of children (the "width" of the tree). The value of an intermediate node is computed as a hash of the values of its children.</p>
+<p>The location of a value in the tree is based on its key: in the diagram below, to get to the node with key <code>4cc</code>, you start at the root, then go down to the child at position <code>4</code>, then go down to the child at position <code>c</code> (remember: <code>c = 12</code> in hexadecimal), and then go down again to the child at position <code>c</code>. To get to the node with key <code>baaa</code>, you go to the position-<code>b</code> child of the root, and then the position-<code>a</code> child of <em>that</em> node. The node at path <code>(b,a)</code> directly contains the node with key <code>baaa</code>, because there are no other keys in the tree starting with <code>ba</code>.</p>
 <center>
-<br><img src="../../../../images/verkle-files/verkle.png" class="padded" /><br><br>
-<small><i>The structure of nodes in a hexary (16 children per parent)
-Verkle tree, here filled with six (key, value)
-pairs.</i></small><br><br><br>
+<br><img src="../../../../images/verkle-files/verkle.png" class="padded" /><br><br> <small><i>The structure of nodes in a hexary (16 children per parent) Verkle tree, here filled with six (key, value) pairs.</i></small><br><br><br>
 </center>
-<p>The only real difference in the <em>structure</em> of Verkle trees
-and Merkle Patricia trees is that Verkle trees are wider in practice.
-<em>Much</em> wider. Patricia trees are at their most efficient when
-<code>width = 2</code> (so Ethereum's hexary Patricia tree is actually
-quite suboptimal). Verkle trees, on the other hand, get shorter and
-shorter proofs the higher the width; the only limit is that if width
-gets <em>too</em> high, proofs start to take too long to create. The <a
-href="https://notes.ethereum.org/@vbuterin/verkle_tree_eip">Verkle tree
-proposed for Ethereum</a> has a width of 256, and some even favor
-raising it to 1024 (!!).</p>
+<p>The only real difference in the <em>structure</em> of Verkle trees and Merkle Patricia trees is that Verkle trees are wider in practice. <em>Much</em> wider. Patricia trees are at their most efficient when <code>width = 2</code> (so Ethereum's hexary Patricia tree is actually quite suboptimal). Verkle trees, on the other hand, get shorter and shorter proofs the higher the width; the only limit is that if width gets <em>too</em> high, proofs start to take too long to create. The <a href="https://notes.ethereum.org/@vbuterin/verkle_tree_eip">Verkle tree proposed for Ethereum</a> has a width of 256, and some even favor raising it to 1024 (!!).</p>
 <h2 id="commitments-and-proofs">Commitments and proofs</h2>
-<p>In a Merkle tree (including Merkle Patricia trees), the proof of a
-value consists of the entire set of <em>sister nodes</em>: the proof
-must contain all nodes in the tree that <em>share a parent</em> with any
-of the nodes in the path going down to the node you are trying to prove.
-That may be a little complicated to understand, so here's a picture of a
-proof for the value in the <code>4ce</code> position. Sister nodes that
-must be included in the proof are highlighted in red.</p>
+<p>In a Merkle tree (including Merkle Patricia trees), the proof of a value consists of the entire set of <em>sister nodes</em>: the proof must contain all nodes in the tree that <em>share a parent</em> with any of the nodes in the path going down to the node you are trying to prove. That may be a little complicated to understand, so here's a picture of a proof for the value in the <code>4ce</code> position. Sister nodes that must be included in the proof are highlighted in red.</p>
 <center>
-<br><img src="../../../../images/verkle-files/verkle2.png" class="padded" /><br><br>
-<br><br>
+<br><img src="../../../../images/verkle-files/verkle2.png" class="padded" /><br><br> <br><br>
 </center>
-<p>That's a lot of nodes! You need to provide the sister nodes at each
-level, because you need the entire set of children of a node to compute
-the value of that node, and you need to keep doing this until you get to
-the root. You might think that this is not that bad because most of the
-nodes are zeroes, but that's only because this tree has very few nodes.
-If this tree had 256 randomly-allocated nodes, the top layer would
-almost certainly have all 16 nodes full, and the second layer would on
-average be ~63.3% full.</p>
-<p><strong>In a Verkle tree, on the other hand, you do not need to
-provide sister nodes; instead, you just provide the path, with a little
-bit extra as a proof.</strong> This is why Verkle trees benefit from
-greater width and Merkle Patricia trees do not: a tree with greater
-width leads to shorter paths in both cases, but in a Merkle Patricia
-tree this effect is overwhelmed by the higher cost of needing to provide
-all the <code>width - 1</code> sister nodes per level in a proof. In a
-Verkle tree, that cost does not exist.</p>
-<p>So what is this little extra that we need as a proof? To understand
-that, we first need to circle back to one key detail: the hash function
-used to compute an inner node from its children is not a regular hash.
-Instead, it's a <strong>vector commitment</strong>.</p>
-<p>A vector commitment scheme is a special type of hash function,
-hashing a list <span class="math inline">\(h(z_1, z_2 ... z_n)
-\rightarrow C\)</span>. But vector commitments have the special property
-that for a commitment <span class="math inline">\(C\)</span> and a value
-<span class="math inline">\(z_i\)</span>, it's possible to make a short
-proof that <span class="math inline">\(C\)</span> is the commitment to
-some list where the value at the i'th position is <span
-class="math inline">\(z_i\)</span>. In a Verkle proof, this short proof
-replaces the function of the sister nodes in a Merkle Patricia proof,
-giving the verifier confidence that a child node really is the child at
-the given position of its parent node.</p>
+<p>That's a lot of nodes! You need to provide the sister nodes at each level, because you need the entire set of children of a node to compute the value of that node, and you need to keep doing this until you get to the root. You might think that this is not that bad because most of the nodes are zeroes, but that's only because this tree has very few nodes. If this tree had 256 randomly-allocated nodes, the top layer would almost certainly have all 16 nodes full, and the second layer would on average be ~63.3% full.</p>
+<p><strong>In a Verkle tree, on the other hand, you do not need to provide sister nodes; instead, you just provide the path, with a little bit extra as a proof.</strong> This is why Verkle trees benefit from greater width and Merkle Patricia trees do not: a tree with greater width leads to shorter paths in both cases, but in a Merkle Patricia tree this effect is overwhelmed by the higher cost of needing to provide all the <code>width - 1</code> sister nodes per level in a proof. In a Verkle tree, that cost does not exist.</p>
+<p>So what is this little extra that we need as a proof? To understand that, we first need to circle back to one key detail: the hash function used to compute an inner node from its children is not a regular hash. Instead, it's a <strong>vector commitment</strong>.</p>
+<p>A vector commitment scheme is a special type of hash function, hashing a list <span class="math inline">\(h(z_1, z_2 ... z_n) \rightarrow C\)</span>. But vector commitments have the special property that for a commitment <span class="math inline">\(C\)</span> and a value <span class="math inline">\(z_i\)</span>, it's possible to make a short proof that <span class="math inline">\(C\)</span> is the commitment to some list where the value at the i'th position is <span class="math inline">\(z_i\)</span>. In a Verkle proof, this short proof replaces the function of the sister nodes in a Merkle Patricia proof, giving the verifier confidence that a child node really is the child at the given position of its parent node.</p>
 <center>
-<br><img src="../../../../images/verkle-files/verkle3.png" class="padded" /><br><br>
-<small><i>No sister nodes required in a proof of a value in the tree;
-just the path itself plus a few short proofs to link each commitment in
-the path to the next.</i></small><br><br><br>
+<br><img src="../../../../images/verkle-files/verkle3.png" class="padded" /><br><br> <small><i>No sister nodes required in a proof of a value in the tree; just the path itself plus a few short proofs to link each commitment in the path to the next.</i></small><br><br><br>
 </center>
-<p>In practice, we use a primitive even more powerful than a vector
-commitment, called a <strong>polynomial commitment</strong>. Polynomial
-commitments let you hash a polynomial, and make a proof for the
-evaluation of the hashed polynomial at <em>any</em> point. You can use
-polynomial commitments as vector commitments: if we agree on a set of
-standardized coordinates <span class="math inline">\((c_1, c_2 ...
-c_n)\)</span>, given a list <span class="math inline">\((y_1, y_2 ...
-y_n)\)</span> you can commit to the polynomial <span
-class="math inline">\(P\)</span> where <span
-class="math inline">\(P(c_i) = y_i\)</span> for all <span
-class="math inline">\(i \in [1..n]\)</span> (you can find this
-polynomial with <a
-href="https://en.wikipedia.org/wiki/Lagrange_polynomial">Lagrange
-interpolation</a>). I talk about polynomial commitments at length <a
-href="../../../2021/01/26/snarks.html#polynomial-commitments">in my
-article on ZK-SNARKs</a>. The two polynomial commitment schemes that are
-the easiest to use are <a
-href="https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html">KZG
-commitments</a> and <a
-href="https://twitter.com/VitalikButerin/status/1371844878968176647">bulletproof-style
-commitments</a> (in both cases, a commitment is a single 32-48 byte
-elliptic curve point). Polynomial commitments give us more flexibility
-that lets us improve efficiency, and it just so happens that the
-simplest and most efficient vector commitments available <em>are</em>
-the polynomial commitments.</p>
-<p>This scheme is already very powerful as it is: <strong>if you use a
-KZG commitment and proof, the proof size is 96 bytes per intermediate
-node, nearly 3x more space-efficient than a simple Merkle proof</strong>
-if we set width = 256. However, it turns out that we can increase
-space-efficiency even further.</p>
+<p>In practice, we use a primitive even more powerful than a vector commitment, called a <strong>polynomial commitment</strong>. Polynomial commitments let you hash a polynomial, and make a proof for the evaluation of the hashed polynomial at <em>any</em> point. You can use polynomial commitments as vector commitments: if we agree on a set of standardized coordinates <span class="math inline">\((c_1, c_2 ... c_n)\)</span>, given a list <span class="math inline">\((y_1, y_2 ... y_n)\)</span> you can commit to the polynomial <span class="math inline">\(P\)</span> where <span class="math inline">\(P(c_i) = y_i\)</span> for all <span class="math inline">\(i \in [1..n]\)</span> (you can find this polynomial with <a href="https://en.wikipedia.org/wiki/Lagrange_polynomial">Lagrange interpolation</a>). I talk about polynomial commitments at length <a href="../../../2021/01/26/snarks.html#polynomial-commitments">in my article on ZK-SNARKs</a>. The two polynomial commitment schemes that are the easiest to use are <a href="https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html">KZG commitments</a> and <a href="https://twitter.com/VitalikButerin/status/1371844878968176647">bulletproof-style commitments</a> (in both cases, a commitment is a single 32-48 byte elliptic curve point). Polynomial commitments give us more flexibility that lets us improve efficiency, and it just so happens that the simplest and most efficient vector commitments available <em>are</em> the polynomial commitments.</p>
+<p>This scheme is already very powerful as it is: <strong>if you use a KZG commitment and proof, the proof size is 96 bytes per intermediate node, nearly 3x more space-efficient than a simple Merkle proof</strong> if we set width = 256. However, it turns out that we can increase space-efficiency even further.</p>
 <center>
 <br><img src="../../../../images/verkle-files/notfinalform.png" /><br><br>
 </center>
 <p><br></p>
 <h2 id="merging-the-proofs">Merging the proofs</h2>
-<p>Instead of requiring one proof for each commitment along the path,
-<strong>by using the extra properties of polynomial commitments we can
-make a single fixed-size proof that proves <em>all</em> parent-child
-links between commitments along the paths for an unlimited number of
-keys</strong>. We do this using a <a
-href="https://dankradfeist.de/ethereum/2021/06/18/pcs-multiproofs.html">scheme
-that implements multiproofs through random evaluation</a>.</p>
-<p>But to use this scheme, we first need to convert the problem into a
-more structured one. We have a proof of one or more values in a Verkle
-tree. The main part of this proof consists of the intermediary nodes
-along the path to each node. For each node that we provide, we also have
-to prove that it actually is the child of the node above it (and in the
-correct position). In our single-value-proof example above, we needed
-proofs to prove:</p>
+<p>Instead of requiring one proof for each commitment along the path, <strong>by using the extra properties of polynomial commitments we can make a single fixed-size proof that proves <em>all</em> parent-child links between commitments along the paths for an unlimited number of keys</strong>. We do this using a <a href="https://dankradfeist.de/ethereum/2021/06/18/pcs-multiproofs.html">scheme that implements multiproofs through random evaluation</a>.</p>
+<p>But to use this scheme, we first need to convert the problem into a more structured one. We have a proof of one or more values in a Verkle tree. The main part of this proof consists of the intermediary nodes along the path to each node. For each node that we provide, we also have to prove that it actually is the child of the node above it (and in the correct position). In our single-value-proof example above, we needed proofs to prove:</p>
 <ul>
-<li>That the <code>key: 4ce</code> node actually is the
-position-<code>e</code> child of the <code>prefix: 4c</code>
-intermediate node.</li>
-<li>That the <code>prefix: 4c</code> intermediate node actually is the
-position-<code>c</code> child of the <code>prefix: 4</code> intermediate
-node.</li>
-<li>That the <code>prefix: 4</code> intermediate node actually is the
-position-<code>4</code> child of the root</li>
+<li>That the <code>key: 4ce</code> node actually is the position-<code>e</code> child of the <code>prefix: 4c</code> intermediate node.</li>
+<li>That the <code>prefix: 4c</code> intermediate node actually is the position-<code>c</code> child of the <code>prefix: 4</code> intermediate node.</li>
+<li>That the <code>prefix: 4</code> intermediate node actually is the position-<code>4</code> child of the root</li>
 </ul>
-<p>If we had a proof proving multiple values (eg. both <code>4ce</code>
-and <code>420</code>), we would have even more nodes and even more
-linkages. But in any case, <strong>what we are proving is a sequence of
-statements of the form "node A actually is the position-i child of node
-B"</strong>. If we are using polynomial commitments, this turns into
-equations: <span class="math inline">\(A(x_i) = y\)</span>, where <span
-class="math inline">\(y\)</span> is the hash of the commitment to <span
-class="math inline">\(B\)</span>.</p>
-<p>The details of this proof are technical and better <a
-href="https://dankradfeist.de/ethereum/2021/06/18/pcs-multiproofs.html">explained
-by Dankrad Feist</a> than myself. By far the bulkiest and time-consuming
-step in the proof generation involves computing a polynomial <span
-class="math inline">\(g\)</span> of the form:</p>
-<p><span class="math inline">\(g(X) = r^0\frac{A_0(X) - y_0}{X - x_0} +
-r^1\frac{A_1(X) - y_1}{X - x_1} + ... + r^n\frac{A_n(X) - y_n}{X -
-x_n}\)</span></p>
-<p>It is only possible to compute each term <span
-class="math inline">\(r^i\frac{A_i(X) - y_i}{X - x_i}\)</span> if that
-expression is a polynomial (and not a fraction). And that requires <span
-class="math inline">\(A_i(X)\)</span> to equal <span
-class="math inline">\(y_i\)</span> at the point <span
-class="math inline">\(x_i\)</span>.</p>
+<p>If we had a proof proving multiple values (eg. both <code>4ce</code> and <code>420</code>), we would have even more nodes and even more linkages. But in any case, <strong>what we are proving is a sequence of statements of the form "node A actually is the position-i child of node B"</strong>. If we are using polynomial commitments, this turns into equations: <span class="math inline">\(A(x_i) = y\)</span>, where <span class="math inline">\(y\)</span> is the hash of the commitment to <span class="math inline">\(B\)</span>.</p>
+<p>The details of this proof are technical and better <a href="https://dankradfeist.de/ethereum/2021/06/18/pcs-multiproofs.html">explained by Dankrad Feist</a> than myself. By far the bulkiest and time-consuming step in the proof generation involves computing a polynomial <span class="math inline">\(g\)</span> of the form:</p>
+<p><span class="math inline">\(g(X) = r^0\frac{A_0(X) - y_0}{X - x_0} + r^1\frac{A_1(X) - y_1}{X - x_1} + ... + r^n\frac{A_n(X) - y_n}{X - x_n}\)</span></p>
+<p>It is only possible to compute each term <span class="math inline">\(r^i\frac{A_i(X) - y_i}{X - x_i}\)</span> if that expression is a polynomial (and not a fraction). And that requires <span class="math inline">\(A_i(X)\)</span> to equal <span class="math inline">\(y_i\)</span> at the point <span class="math inline">\(x_i\)</span>.</p>
 <p>We can see this with an example. Suppose:</p>
 <ul>
 <li><span class="math inline">\(A_i(X) = X^2 + X + 3\)</span></li>
-<li>We are proving for <span class="math inline">\((x_i = 2, y_i =
-9)\)</span>. <span class="math inline">\(A_i(2)\)</span> does equal
-<span class="math inline">\(9\)</span> so this will work.</li>
+<li>We are proving for <span class="math inline">\((x_i = 2, y_i = 9)\)</span>. <span class="math inline">\(A_i(2)\)</span> does equal <span class="math inline">\(9\)</span> so this will work.</li>
 </ul>
-<p><span class="math inline">\(A_i(X) - 9 = X^2 + X - 6\)</span>, and
-<span class="math inline">\(\frac{X^2 + X - 6}{X - 2}\)</span> gives a
-clean <span class="math inline">\(X - 3\)</span>. But if we tried to fit
-in <span class="math inline">\((x_i = 2, y_i = 10)\)</span>, this would
-not work; <span class="math inline">\(X^2 + X - 7\)</span>
-<em>cannot</em> be cleanly divided by <span class="math inline">\(X -
-2\)</span> without a fractional remainder.</p>
-<p>The rest of the proof involves providing a polynomial commitment to
-<span class="math inline">\(g(X)\)</span> and then proving that the
-commitment is actually correct. Once again, see <a
-href="https://notes.ethereum.org/nrQqhVpQRi6acQckwm1Ryg#Proof">Dankrad's
-more technical description</a> for the rest of the proof.</p>
+<p><span class="math inline">\(A_i(X) - 9 = X^2 + X - 6\)</span>, and <span class="math inline">\(\frac{X^2 + X - 6}{X - 2}\)</span> gives a clean <span class="math inline">\(X - 3\)</span>. But if we tried to fit in <span class="math inline">\((x_i = 2, y_i = 10)\)</span>, this would not work; <span class="math inline">\(X^2 + X - 7\)</span> <em>cannot</em> be cleanly divided by <span class="math inline">\(X - 2\)</span> without a fractional remainder.</p>
+<p>The rest of the proof involves providing a polynomial commitment to <span class="math inline">\(g(X)\)</span> and then proving that the commitment is actually correct. Once again, see <a href="https://notes.ethereum.org/nrQqhVpQRi6acQckwm1Ryg#Proof">Dankrad's more technical description</a> for the rest of the proof.</p>
 <center>
-<br><img src="../../../../images/verkle-files/verkle5.png" class="padded" /><br><br>
-<small><i>One single proof proves an unlimited number of parent-child
-relationships.</i></small><br><br><br>
+<br><img src="../../../../images/verkle-files/verkle5.png" class="padded" /><br><br> <small><i>One single proof proves an unlimited number of parent-child relationships.</i></small><br><br><br>
 </center>
-<p>And there we have it, that's what a maximally efficient Verkle proof
-looks like.</p>
-<h3 id="key-properties-of-proof-sizes-using-this-scheme">Key properties
-of proof sizes using this scheme</h3>
+<p>And there we have it, that's what a maximally efficient Verkle proof looks like.</p>
+<h3 id="key-properties-of-proof-sizes-using-this-scheme">Key properties of proof sizes using this scheme</h3>
 <ul>
-<li>Dankrad's multi-random-evaluation proof allows the prover to
-<strong>prove an arbitrary number of evaluations <span
-class="math inline">\(A_i(x_i) = y_i\)</span></strong>, given
-commitments to each <span class="math inline">\(A_i\)</span> and the
-values that are being proven. <strong>This proof is constant
-size</strong> (one polynomial commitment, one number, and two proofs;
-128-1000 bytes depending on what scheme is being used).</li>
-<li><strong>The <span class="math inline">\(y_i\)</span> values do not
-need to be provided explicitly</strong>, as they can be directly
-computed from the other values in the Verkle proof: each <span
-class="math inline">\(y_i\)</span> is itself the hash of the next value
-in the path (either a commitment or a leaf).</li>
-<li><strong>The <span class="math inline">\(x_i\)</span> values also do
-not need to be provided explicitly</strong>, since the paths (and hence
-the <span class="math inline">\(x_i\)</span> values) can be computed
-from the keys and the coordinates derived from the paths.</li>
-<li>Hence, <strong>all we need is the leaves (keys and values) that we
-are proving, as well as the commitments along the path from each leaf to
-the root</strong>.</li>
-<li>Assuming a width-256 tree, and <span
-class="math inline">\(2^{32}\)</span> nodes, a proof would require the
-keys and values that are being proven, plus (on average) <strong>three
-commitments for each value</strong> along the path from that value to
-the root.</li>
-<li><strong>If we are proving many values, there are further
-savings</strong>: no matter how many values you are proving, you will
-not need to provide more than the 256 values at the top level.</li>
+<li>Dankrad's multi-random-evaluation proof allows the prover to <strong>prove an arbitrary number of evaluations <span class="math inline">\(A_i(x_i) = y_i\)</span></strong>, given commitments to each <span class="math inline">\(A_i\)</span> and the values that are being proven. <strong>This proof is constant size</strong> (one polynomial commitment, one number, and two proofs; 128-1000 bytes depending on what scheme is being used).</li>
+<li><strong>The <span class="math inline">\(y_i\)</span> values do not need to be provided explicitly</strong>, as they can be directly computed from the other values in the Verkle proof: each <span class="math inline">\(y_i\)</span> is itself the hash of the next value in the path (either a commitment or a leaf).</li>
+<li><strong>The <span class="math inline">\(x_i\)</span> values also do not need to be provided explicitly</strong>, since the paths (and hence the <span class="math inline">\(x_i\)</span> values) can be computed from the keys and the coordinates derived from the paths.</li>
+<li>Hence, <strong>all we need is the leaves (keys and values) that we are proving, as well as the commitments along the path from each leaf to the root</strong>.</li>
+<li>Assuming a width-256 tree, and <span class="math inline">\(2^{32}\)</span> nodes, a proof would require the keys and values that are being proven, plus (on average) <strong>three commitments for each value</strong> along the path from that value to the root.</li>
+<li><strong>If we are proving many values, there are further savings</strong>: no matter how many values you are proving, you will not need to provide more than the 256 values at the top level.</li>
 </ul>
-<h4
-id="proof-sizes-bytes.-rows-tree-size-cols-keyvalue-pairs-proven">Proof
-sizes (bytes). Rows: tree size, cols: key/value pairs proven</h4>
+<h4 id="proof-sizes-bytes.-rows-tree-size-cols-keyvalue-pairs-proven">Proof sizes (bytes). Rows: tree size, cols: key/value pairs proven</h4>
 <table>
 <thead>
 <tr class="header">
@@ -409,78 +216,19 @@ sizes (bytes). Rows: tree size, cols: key/value pairs proven</h4>
 </tr>
 </tbody>
 </table>
-<p>Assuming width 256, and 48-byte KZG commitments/proofs. Note also
-that this assumes a maximally even tree; for a realistic randomized
-tree, add a depth of ~0.6 (so ~30 bytes per element). If
-bulletproof-style commitments are used instead of KZG, it's safe to go
-down to 32 bytes, so these sizes can be reduced by 1/3.</p>
-<h2 id="prover-and-verifier-computation-load">Prover and verifier
-computation load</h2>
-<p>The bulk of the <strong>cost of generating a proof</strong> is
-computing each <span class="math inline">\(r^i\frac{A_i(X) - y_i}{X -
-x_i}\)</span> expression. This requires roughly four field operations
-(ie. 256 bit modular arithmetic operations) times the width of the tree.
-This is the main constraint limiting Verkle tree widths. Fortunately,
-four field operations is a small cost: a single elliptic curve
-multiplication typically takes hundreds of field operations. Hence,
-Verkle tree widths can go quite high; width 256-1024 seems like an
-optimal range.</p>
-<p><strong>To <em>edit</em> the tree</strong>, we need to "walk up the
-tree" from the leaf to the root, changing the intermediate commitment at
-each step to reflect the change that happened lower down. Fortunately,
-we don't have to re-compute each commitment from scratch. Instead, we
-take advantage of the homomorphic property: given a polynomial
-commitment <span class="math inline">\(C = com(F)\)</span>, we can
-compute <span class="math inline">\(C&#39; = com(F + G)\)</span> by
-taking <span class="math inline">\(C&#39; = C + com(G)\)</span>. In our
-case, <span class="math inline">\(G = L_i * (v_{new} -
-v_{old})\)</span>, where <span class="math inline">\(L_i\)</span> is a
-pre-computed commitment for the polynomial that equals 1 at the position
-we're trying to change and 0 everywhere else.</p>
-<p>Hence, a single edit requires ~4 elliptic curve multiplications (one
-per commitment between the leaf and the root, this time including the
-root), though these can be sped up considerably by pre-computing and
-storing <em>many multiples</em> of each <span
-class="math inline">\(L_i\)</span>.</p>
-<p><strong>Proof verification is quite efficient</strong>. For a proof
-of N values, the verifier needs to do the following steps, all of which
-can be done within a hundred milliseconds for even thousands of
-values:</p>
+<p>Assuming width 256, and 48-byte KZG commitments/proofs. Note also that this assumes a maximally even tree; for a realistic randomized tree, add a depth of ~0.6 (so ~30 bytes per element). If bulletproof-style commitments are used instead of KZG, it's safe to go down to 32 bytes, so these sizes can be reduced by 1/3.</p>
+<h2 id="prover-and-verifier-computation-load">Prover and verifier computation load</h2>
+<p>The bulk of the <strong>cost of generating a proof</strong> is computing each <span class="math inline">\(r^i\frac{A_i(X) - y_i}{X - x_i}\)</span> expression. This requires roughly four field operations (ie. 256 bit modular arithmetic operations) times the width of the tree. This is the main constraint limiting Verkle tree widths. Fortunately, four field operations is a small cost: a single elliptic curve multiplication typically takes hundreds of field operations. Hence, Verkle tree widths can go quite high; width 256-1024 seems like an optimal range.</p>
+<p><strong>To <em>edit</em> the tree</strong>, we need to "walk up the tree" from the leaf to the root, changing the intermediate commitment at each step to reflect the change that happened lower down. Fortunately, we don't have to re-compute each commitment from scratch. Instead, we take advantage of the homomorphic property: given a polynomial commitment <span class="math inline">\(C = com(F)\)</span>, we can compute <span class="math inline">\(C&#39; = com(F + G)\)</span> by taking <span class="math inline">\(C&#39; = C + com(G)\)</span>. In our case, <span class="math inline">\(G = L_i * (v_{new} - v_{old})\)</span>, where <span class="math inline">\(L_i\)</span> is a pre-computed commitment for the polynomial that equals 1 at the position we're trying to change and 0 everywhere else.</p>
+<p>Hence, a single edit requires ~4 elliptic curve multiplications (one per commitment between the leaf and the root, this time including the root), though these can be sped up considerably by pre-computing and storing <em>many multiples</em> of each <span class="math inline">\(L_i\)</span>.</p>
+<p><strong>Proof verification is quite efficient</strong>. For a proof of N values, the verifier needs to do the following steps, all of which can be done within a hundred milliseconds for even thousands of values:</p>
 <ul>
-<li>One size-<span class="math inline">\(N\)</span> <a
-href="https://ethresear.ch/t/simple-guide-to-fast-linear-combinations-aka-multiexponentiations/7238">elliptic
-curve fast linear combination</a></li>
-<li>About <span class="math inline">\(4N\)</span> field operations (ie.
-256 bit modular arithmetic operations)</li>
-<li>A small constant amount of work that does not depend on the size of
-the proof</li>
+<li>One size-<span class="math inline">\(N\)</span> <a href="https://ethresear.ch/t/simple-guide-to-fast-linear-combinations-aka-multiexponentiations/7238">elliptic curve fast linear combination</a></li>
+<li>About <span class="math inline">\(4N\)</span> field operations (ie. 256 bit modular arithmetic operations)</li>
+<li>A small constant amount of work that does not depend on the size of the proof</li>
 </ul>
-<p>Note also that, like Merkle Patricia proofs, a Verkle proof gives the
-verifier enough information to <em>modify</em> the values in the tree
-that are being proven and compute the new root hash after the changes
-are applied. This is critical for verifying that eg. state changes in a
-block were processed correctly.</p>
+<p>Note also that, like Merkle Patricia proofs, a Verkle proof gives the verifier enough information to <em>modify</em> the values in the tree that are being proven and compute the new root hash after the changes are applied. This is critical for verifying that eg. state changes in a block were processed correctly.</p>
 <h2 id="conclusions">Conclusions</h2>
-<p>Verkle trees are a powerful upgrade to Merkle proofs that allow for
-much smaller proof sizes. Instead of needing to provide all "sister
-nodes" at each level, the prover need only provide a single proof that
-proves <em>all</em> parent-child relationships between all commitments
-along the paths from each leaf node to the root. This allows proof sizes
-to decrease by a factor of ~6-8 compared to ideal Merkle trees, and by a
-factor of over 20-30 compared to the hexary Patricia trees that Ethereum
-uses today (!!).</p>
-<p>They do require more complex cryptography to implement, but they
-present the opportunity for large gains to scalability. In the medium
-term, SNARKs can improve things further: we can either SNARK the
-already-efficient Verkle proof verifier to reduce witness size to
-near-zero, or switch back to SNARKed Merkle proofs if/when SNARKs get
-much better (eg. <a
-href="https://ethresear.ch/t/using-gkr-inside-a-snark-to-reduce-the-cost-of-hash-verification-down-to-3-constraints/7550">through
-GKR</a>, or very-SNARK-friendly hash functions, or ASICs). Further down
-the line, the rise of quantum computing will force a change to STARKed
-Merkle proofs with hashes as it makes the linear homomorphisms that
-Verkle trees depend on insecure. But for now, they give us the same
-scaling gains that we would get with such more advanced technologies,
-and we already have all the tools that we need to implement them
-efficiently.</p>
+<p>Verkle trees are a powerful upgrade to Merkle proofs that allow for much smaller proof sizes. Instead of needing to provide all "sister nodes" at each level, the prover need only provide a single proof that proves <em>all</em> parent-child relationships between all commitments along the paths from each leaf node to the root. This allows proof sizes to decrease by a factor of ~6-8 compared to ideal Merkle trees, and by a factor of over 20-30 compared to the hexary Patricia trees that Ethereum uses today (!!).</p>
+<p>They do require more complex cryptography to implement, but they present the opportunity for large gains to scalability. In the medium term, SNARKs can improve things further: we can either SNARK the already-efficient Verkle proof verifier to reduce witness size to near-zero, or switch back to SNARKed Merkle proofs if/when SNARKs get much better (eg. <a href="https://ethresear.ch/t/using-gkr-inside-a-snark-to-reduce-the-cost-of-hash-verification-down-to-3-constraints/7550">through GKR</a>, or very-SNARK-friendly hash functions, or ASICs). Further down the line, the rise of quantum computing will force a change to STARKed Merkle proofs with hashes as it makes the linear homomorphisms that Verkle trees depend on insecure. But for now, they give us the same scaling gains that we would get with such more advanced technologies, and we already have all the tools that we need to implement them efficiently.</p>
  </div> 
