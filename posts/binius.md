@@ -300,8 +300,8 @@ We can make larger binary fields by taking extensions: if we start with $F_2$ (i
     
 </td><td>
 
-| + | **0** | **1** | **x** | **x+1** |
-| - | - | - | - | - |
+| * | **0** | **1** | **x** | **x+1** |
+|  | - | - | - | - |
 | **0** | 0 | 0 | 0 | 0 |
 | **1** | 0 | 1 | x | x+1 |
 | **x** | 0 | x | x+1 | 1 |
