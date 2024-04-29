@@ -287,7 +287,7 @@ The smallest possible field is arithmetic modulo 2, which is so small that we ca
 </td></tr></table><br></center>
 
 
-We can do the same thing with primes; if we start with $F_2$ (integers modulo 2) and then define $x$ where $x^2 = x + 1$, we get the following addition and multiplication tables:
+We can make larger binary fields by taking extensions: if we start with $F_2$ (integers modulo 2) and then define $x$ where $x^2 = x + 1$, we get the following addition and multiplication tables:
 
 <center><br><table><tr><td>
 
