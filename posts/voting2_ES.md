@@ -1,4 +1,4 @@
-[category]: <> (General, Blockchains)
+[category]: <> (Español)
 [date]: <> (2021/05/25)
 [title]: <> (La votación mediante blockchain está sobrevalorada entre personas desinformadas pero subestimada entre personas informadas)
 [pandoc]: <> (--mathjax)

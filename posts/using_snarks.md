@@ -13,7 +13,7 @@ My [previous post explaining ZK-SNARKs](../../../2021/01/26/snarks.html) focused
 
 ## What does a ZK-SNARK do?
 
-Suppose that you have a public input $x$, a private input $w$, and a (public) function $f(x, w) \rightarrow \{True, False\}$ that performs some kind of verification on the inputs. With a ZK-SNARK, you can prove that you know an $w$ such that $f(x, w) = True$ for some given $f$ and $x$, without revealing what $w$ is. Additionally, the verifier can verify the proof much faster it would take for them to compute $f(x, w)$ themselves, even if they know $w$.
+Suppose that you have a public input $x$, a private input $w$, and a (public) function $f(x, w) \rightarrow \{True, False\}$ that performs some kind of verification on the inputs. With a ZK-SNARK, you can prove that you know an $w$ such that $f(x, w) = True$ for some given $f$ and $x$, without revealing what $w$ is. Additionally, the verifier can verify the proof much faster than it would take for them to compute $f(x, w)$ themselves, even if they know $w$.
 
 <center><br>
 
