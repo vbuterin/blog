@@ -1,0 +1,217 @@
+
+
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
+
+
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Multidimensional gas pricing">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="../../../../scripts/tex-svg.js">
+</script>
+
+<style>
+</style>
+
+<div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
+
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Multidimensional gas pricing" />
+<meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
+
+
+<br>
+<h1 style="margin-bottom:7px"> Multidimensional gas pricing </h1>
+<small style="float:left; color: #888"> 2024 May 09 </small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
+<br> <br> <br>
+<title> Multidimensional gas pricing </title>
+
+<p><em>Special thanks to Ansgar Dietrichs, Barnabe Monnot and Davide Crapis for feedback and review.</em></p>
+<p>In Ethereum, resources were up until recently limited, and priced, using a single resource called "gas". Gas is a measure of the amount of "computational effort" needed to process a given transaction or block. Gas merges together multiple types of "effort", most notably:</p>
+<ul>
+<li>Raw computation (eg. <code>ADD</code>, <code>MULTIPLY</code>)</li>
+<li>Reading and writing to Ethereum's storage (eg. <code>SSTORE</code>, <code>SLOAD</code>, ETH transfers)</li>
+<li>Data bandwidth</li>
+<li>Cost of generating a <a href="https://vitalik.eth.limo/general/2021/01/26/snarks.html">ZK-SNARK proof</a> of the block</li>
+</ul>
+<p>For example, <a href="https://etherscan.io/tx/0xc5195b64cc333b8098d71fbd0f032e05d4545917e3b0be8d123ab06e1ad7998e">this transaction</a> that I sent cost a total of 47,085 gas. This is split between (i) a "base cost" of 21000 gas, (ii) 1556 gas for the bytes in the calldata included as part of the transaction (iii) 16500 gas for reading and writing to storage, (iv) gas 2149 for making a <a href="https://moralis.io/ethereum-logs-and-events-what-are-event-logs-on-the-ethereum-network/">log</a>, and the rest for EVM execution. The transaction fee that a user must pay is proportional to the gas that the transaction consumes. A block can contain up to a maximum of 30 million gas, and gas prices are constantly adjusted via the <a href="https://notes.ethereum.org/@vbuterin/eip-1559-faq">EIP-1559 targeting mechanism</a>, ensuring that on average, blocks contain 15 million gas.</p>
+<p>This approach has one major efficiency: because everything is merged into one virtual resource, it leads to a very simple market design. Optimizing a transaction to minimize costs is easy, optimizing a block to collect the highest possible fees is relatively easy (not including <a href="https://www.ledger.com/academy/glossary/maximal-extractable-value-mev">MEV</a>), and there are no weird incentives that encourage some transactions to bundle with other transactions to save on fees.</p>
+<p>But this approach also has one major inefficiency: it treats different resources as being mutually convertible, when the actual underlying limits of what the network can handle are not. One way to understand this issue is to look at this diagram:</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/multidim/2dlimits.png" /></p>
+<br>
+</center>
+<p>The gas limit enforces a constraint of <span class="math inline">\(x_1 * data + x_2 * computation &lt; N\)</span>. The actual underlying safety constraint is often closer to <span class="math inline">\(max(x_1 * data, x_2 * computation) &lt; N\)</span>. This discrepancy leads to either the gas limit needlessly excluding actually-safe blocks, or accepting actually-unsafe blocks, or some mixture of both.</p>
+<p>If there are <span class="math inline">\(n\)</span> resources that have distinct safety limits, then one-dimensional gas plausibly reduces throughput by up to a factor of <span class="math inline">\(n\)</span>. For this reason, there has for a long time been interest in the concept of <strong>multi-dimensional gas</strong>, and with <a href="https://www.eip4844.com/">EIP-4844</a> we actually have multi-dimensional gas working on Ethereum today. This post explores the benefits of this approach, and the prospects for increasing it further.</p>
+<h2 id="blobs-multi-dimensional-gas-in-dencun">Blobs: multi-dimensional gas in Dencun</h2>
+<p>At the start of this year, the average block was <a href="https://etherscan.io/chart/blocksize">150 kB in size</a>. A large fraction of that size is <em>rollup data</em>: <a href="https://vitalik.eth.limo/general/2021/01/05/rollup.html">layer 2 protocols</a> storing data on chain for security. This data was expensive: even though transactions on rollups would cost ~5-10x less than corresponding transactions on the Ethereum L1, even that cost was too high for many use cases.</p>
+<p>Why not decrease the calldata gas cost (currently 16 gas per nonzero byte and 4 gas per zero byte), to make rollups cheaper? We <a href="https://eips.ethereum.org/EIPS/eip-2028">did this before</a>, we could do it again. The answer here is: the <em>worst-case size</em> of a block was <span class="math inline">\(\frac{30,000,000}{16} = 1,875,000\)</span> nonzero bytes, and the network already can barely handle blocks of that size. Reducing costs by another 4x would raise the maximum to 7.5 MB, which would be a huge risk to safety.</p>
+<p>This problem ended up being handled by introducing a separate space of rollup-friendly data, known as "blobs", into each block. The two resources have separate prices and separate limits: after the Dencun hard fork, an Ethereum block can contain at most (i) 30 million gas, and (ii) 6 blobs, which can contain ~125 kB of calldata each. Both resources have separate prices, adjusted by <a href="https://ethresear.ch/t/multidimensional-eip-1559/11651">separate EIP-1559-like pricing mechanisms</a>, targeting an average usage of 15 million gas and 3 blobs per block.</p>
+<p>As a result, rollups have become 100x cheaper, transaction volume on rollups increased by more than 3x, and the theoretical maximum block size was only increased slightly: from ~1.9 MB to ~2.6 MB.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/multidim/fees.png" /></p>
+<p><br></p>
+<p><small><i>Transaction fees on rollups, courtesy of <a href="https://www.growthepie.xyz/fundamentals/transaction-costs">growthepie.xyz</a>. The Dencun fork, which introduced blobs with multidimensional pricing, happened on 2024 Mar 13.</i></small></p>
+</center>
+<p><br></p>
+<h2 id="multi-dimensional-gas-and-stateless-clients">Multi-dimensional gas and stateless clients</h2>
+<p>In the near future, a similar problem will arise regarding storage proofs for <strong>stateless clients</strong>. Stateless clients are a new type of client which will be able to verify the chain without storing much or any data locally. Stateless clients do this by accepting proofs of the specific pieces of Ethereum state that transactions in that block need to touch.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/multidim/stateless.png" /></p>
+<p><small><i>A stateless client receives a block, together with <strong>proofs</strong> proving the current values in the specific parts of the state (eg. account balances, code, storage) that the block execution touches. This allows a node to verify a block without having any storage itself.</i></small></p>
+</center>
+<p><br></p>
+<p>A storage read costs 2100-2600 gas depending on the type of read, and storage writes cost more. On average, a block does something like 1000 storage reads and writes (including ETH balance checks, <code>SSTORE</code> and <code>SLOAD</code> calls, contract code reading, and other operations). The theoretical maximum, however, is <span class="math inline">\(\frac{30,000,000}{2,100} = 14,285\)</span> reads. A stateless client's bandwidth load is directly proportional to this number.</p>
+<p>Today, the plan is to support stateless clients by moving Ethereum's state tree design from <a href="https://ethereum.org/en/developers/docs/data-structures-and-encoding/patricia-merkle-trie/">Merkle Patricia trees</a> to <a href="https://vitalik.eth.limo/general/2021/06/18/verkle.html">Verkle trees</a>. However, Verkle trees are not quantum-resistant, and are not optimal for newer waves of STARK proving systems. As a result, many people are interested in supporting stateless clients through binary Merkle trees and <a href="https://vitalik.eth.limo/general/2017/11/09/starks_part_1.html">STARKs</a> instead - either skipping Verkle entirely, or upgrading a couple of years after the Verkle transition once STARKs become more mature.</p>
+<p>STARK proofs of binary hash tree branches have many advantages, but they have the key weakness that proofs take a long time to generate: <strong>while <a href="https://vitalik.eth.limo/general/2021/06/18/verkle.html">Verkle trees</a> can prove <a href="https://github.com/crate-crypto/go-ipa/pull/63">over a hundred thousand values per second</a>, hash-based STARKs can typically prove only a couple thousand hashes per second, and proving each value requires a "branch" containing many hashes</strong>.</p>
+<p>Given the numbers that are being projected today from hyper-optimized proof systems such as <a href="https://vitalik.eth.limo/general/2024/04/29/binius.html">Binius</a> and <a href="https://github.com/Plonky3/Plonky3">Plonky3</a> and specialized hashes like <a href="https://www.irreducible.com/posts/vision-mark-32-zk-hash-over-binary-tower">Vision-Mark-32</a>, it seems likely that we will for some time be in a regime where it's practical to prove 1,000 values in less than a second, but not 14,285 values. Average blocks would be fine, but worst-case blocks, potentially published by an attacker, would break the network.</p>
+<p>The "default" way we have handled such a scenario is re-pricing: make storage reading more expensive to reduce the per-block maximum to something safer. However, we have <a href="https://eips.ethereum.org/EIPS/eip-150">already</a> done <a href="https://eips.ethereum.org/EIPS/eip-1884">this</a> many <a href="https://eips.ethereum.org/EIPS/eip-2929">times</a>, and it would make too many applications too expensive to do this again. A better approach would be multidimensional gas: limit and charge for storage access separately, keeping the average usage at 1,000 storage accesses per block but setting a per-block limit of eg. 2,000.</p>
+<h2 id="multidimensional-gas-more-generally">Multidimensional gas more generally</h2>
+<p>One other resource that is worth thinking about is <strong>state size growth</strong>: operations that increase the size of the Ethereum state, which full nodes will need to hold from then on. The unique property of state size growth is that the rationale from limiting it comes entirely from long-run sustained usage, and not spikes. Hence, there may be value in adding a separate gas dimension for state size increasing operations (eg. zero-to-nonzero <code>SSTORE</code>, contract creation), but with a differnet goal: we could set a floating price to target a specific average usage, but set no per-block limit at all.</p>
+<p>This shows one of the powerful properties of multidimensional gas: <strong>it lets us separately ask the questions of (i) what is the ideal average usage, and (ii) what is the safe per-block maximum usage, for each resource</strong>. Rather than setting gas prices based on per-block maximums, and letting average usage follow, we have <span class="math inline">\(2n\)</span> degrees of freedom to set <span class="math inline">\(2n\)</span> parameters, tuning each one based on what is safe for the network.</p>
+<p>More complicated situations, like where two resources have safety considerations that are <em>partially</em> additive, could be handled by making an opcode or resource cost some quantity of multiple types of gas (eg. a zero-to-nonzero <code>SSTORE</code> could cost 5000 stateless-client-proof gas and 20000 storage-expansion gas).</p>
+<h2 id="per-transaction-max-the-weaker-but-easier-way-to-get-multidimensional-gas">Per-transaction max: the weaker-but-easier way to get multidimensional gas</h2>
+<p>Let <span class="math inline">\(x_1\)</span> be the gas cost of data and <span class="math inline">\(x_2\)</span> be the gas cost of computation, so in a one-dimensional gas system we can write the gas cost of a transaction:</p>
+<p><span class="math display">\[gas = x_1 * data + x_2 * computation\]</span></p>
+<p>In this scheme, we instead define the gas cost of a transaction as:</p>
+<p><span class="math display">\[gas = max(x_1 * data, x_2 * computation)\]</span></p>
+<p>That is, instead of a transaction being charged for data <em>plus</em> computation, the transaction gets charged based on which of the two resources it consumes <em>more</em> of. This can easily be extended to cover more dimensions (eg. <span class="math inline">\(max(..., x_3 * storage\_access)\)</span>).</p>
+<p>It should be easy to see how this improves throughput while preserving safety. The theoretical max amount of data in a block is still <span class="math inline">\(\frac{GASLIMIT}{x_1}\)</span>, exactly the same as in the one-dimensional gas scheme. Similarly, the theoretical max amount of computation is <span class="math inline">\(\frac{GASLIMIT}{x_2}\)</span>, again exactly the same as in the one-dimensional gas scheme. However, the gas cost of any transaction that consumes <em>both</em> data and computation decreases.</p>
+<p>This is approximately the scheme employed in the proposed <a href="https://eips.ethereum.org/EIPS/eip-7623">EIP-7623</a>, to reduce maximum block size while increasing blob count further. The precise mechanism in EIP-7623 is slightly more complicated: it keeps the current calldata price of 16 gas per byte, but it adds a "floor price" of 48 gas per byte; a transaction pays the higher of (<code>16 * bytes + execution_gas</code>) and (<code>48 * bytes</code>). As a result, <strong>EIP-7623 decreases the theoretical max transaction calldata in a block from ~1.9 MB to ~0.6 MB, while leaving the costs of most applications unchanged</strong>. The benefit of this approach is that it is a very small change from the current single-dimensional gas scheme, and so it is very easy to implement.</p>
+<p>There are two drawbacks:</p>
+<ol type="1">
+<li>Transactions that are heavy on one resource are still needlessly charged a large amount, even if all the <em>other</em> transactions in the block use little of that resource.</li>
+<li>It creates incentives for data-heavy and computation-heavy transactions to merge together into a bundle to save costs.</li>
+</ol>
+<p>I would argue that an EIP-7623-style rule, both for transaction calldata and for other resources, can bring large-enough benefits to be worth it even despite these drawbacks. However, if and when we are willing to put in the (significantly higher) development effort, there is a more ideal approach.</p>
+<h2 id="multidimensional-eip-1559-the-harder-but-ideal-strategy">Multidimensional EIP-1559: the harder-but-ideal strategy</h2>
+<p>Let us first recap how "regular" EIP-1559 works. We will focus on the version that was introduced in EIP-4844 for blobs, because it's mathematically more elegant.</p>
+<p>We track a parameter, <code>excess_blobs</code>. During each block, we set:</p>
+<p><code>excess_blobs &lt;-- max(excess_blobs + len(block.blobs) - TARGET, 0)</code></p>
+<p>Where <code>TARGET = 3</code>. That is, if a block has <em>more</em> blobs than the target, <code>excess_blobs</code> increases, and if a block has less than the target, it decreases. We then set <code>blob_basefee = exp(excess_blobs / 25.47)</code>, where <code>exp</code> is an approximation of the exponential function <span class="math inline">\(exp(x) = 2.71828^x\)</span>.</p>
+<br>
+<center>
+<p><img src="../../../../images/multidim/expchart.png" /></p>
+<br>
+</center>
+<p>That is, whenever <code>excess_blobs</code> increases by ~25, the blob basefee increases by a factor of ~2.7. If blobs get too expensive, average usage drops, and <code>excess_blobs</code> starts decreasing, automatically dropping the price again. The price of a blob constantly adjusts to make sure that on average, blocks are half full - that is, they contain an average of 3 blobs each.</p>
+<p>If there is a <em>short term</em> spike in usage, then the limit kicks in: each block can only contain a maximum of 6 blobs, and in such a circumstance transactions can compete with each other by bidding up their priority fees. In the normal case, however, each blob only needs to pay the <code>blob_basefee</code> plus a tiny extra priority fee as an incentive to get included at all.</p>
+<p>This kind of pricing existed in Ethereum for gas for years: a very similar mechanism was introduced with <a href="https://notes.ethereum.org/@vbuterin/eip-1559-faq">EIP-1559</a> back in 2020. <strong>With EIP-4844, we now have two separately floating prices for gas and for blobs</strong>.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/multidim/basefee.png" /></p>
+<p><small><i>Gas base fee over the course of one hour on 2024-05-08, in gwei. Source: <a href="https://ultrasound.money/">ultrasound.money</a>.</i></small></p>
+</center>
+<p><br></p>
+<p>In principle, we could add more separately-floating fees for storage reading, and other kinds of operations, though with one caveat that I will expand on in the next section.</p>
+<p>For <strong>users</strong>, the experience is remarkably similar to today: instead of paying one basefee, you pay two basefees, but your wallet can abstract that away from you and just show you the expected fee and maximum fee that you can expect to pay.</p>
+<p>For <strong>block builders</strong>, most of the time the optimal strategy is the same as today: include anything that is valid. Most blocks are not full - neither <a href="https://etherscan.io/blocks">in gas</a> nor <a href="https://blobscan.com/">in blobs</a>. The one challenging case is when there <em>is</em> enough gas or enough blobs to exceed the block limit, and the builder needs to potentially solve a <a href="https://www.scirp.org/journal/paperinformation?paperid=87646">multidimensional knapsack problem</a> to maximize its profit. However, even there pretty good approximation algorithms exist, and the gains from making proprietary algorithms to optimize profits in this case are much smaller than the gains from doing the same with MEV.</p>
+<p>For <strong>developers</strong>, the main challenge is the need to redesign features of the EVM, and its surrounding infrastructure, that is designed around one price and one limit today into a design that accommodates multiple prices and multiple limits. One issue for application developers is that optimization becomes slightly harder: in some cases, you can no longer unambiguously say that A is more efficient than B, because if A uses more calldata but B uses more execution, then A might be cheaper when calldata is cheap, and more expensive when calldata is expensive. However, developers would still be able to get reasonably good results by optimizing based on long-run historical average prices.</p>
+<h2 id="multidimensional-pricing-the-evm-and-sub-calls">Multidimensional pricing, the EVM and sub-calls</h2>
+<p>There is one problem that did not appear with blobs, and will not appear with EIP-7623 or even a "full" multidimensional pricing implementation for calldata, but will appear if we try to separately price state accesses, or any other resource: <em>gas limits in sub-calls</em>.</p>
+<p>Gas limits in the EVM exist in two places. First, each transaction sets a gas limit, which caps the total amount of gas that can be used in that transaction. Second, when a contract calls another contract, the call can set its own gas limit. This allows contracts to call other contracts that they do not trust, and still guarantee that they will have gas left over to perform other computations after that call.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/multidim/trace.png" /></p>
+<p><br></p>
+<p><small><i>A trace of an account abstraction transaction, where an account calls another account, and only gives the callee a limited amount of gas, to ensure that the outer call can keep running even if the callee consumes the entire gas that was assigned to it.</i></small></p>
+</center>
+<p><br></p>
+<p>The challenge is: <strong>making gas multidimensional between <em>different types of execution</em> seems like it would require sub-calls to provide multiple limits for each type of gas, which would require a really deep change to the EVM, and would not be compatible with existing applications</strong>.</p>
+<p>This is one reason why multidimensional gas proposals often stop at two dimensions: data and execution. Data (whether transaction calldata or blobs) is only assigned outside the EVM, and so nothing inside the EVM needs to change to make calldata or blobs separately priced.</p>
+<p>We can think of an <strong>"EIP-7623-style solution"</strong> to this problem. Here is one simple implementation: during execution, charge 4x more for storage operations; to simplify the analysis, let's say <code>10000</code> gas per storage operation. At the end of the transaction, refund <code>min(7500 * storage_operations, execution_gas)</code>. The result would be that, after subtracting out the refund, a user is charged:</p>
+<p><code>execution_gas + 10000 * storage_operations - min(7500 * storage_operations, execution_gas)</code></p>
+<p>Which equals:</p>
+<p><code>max(execution_gas + 2500 * storage_operations, 10000 * storage_operations)</code></p>
+<p>This mirrors the structure of EIP-7623. Another way to do it is to track <code>storage_operations</code> and <code>execution_gas</code> in real time, and charge either 2500 or 10000 depending on how much <code>max(execution_gas + 2500 * storage_operations, 10000 * storage_operations)</code> goes up at the time that the opcode is called. This avoids the need for transactions to over-allocate gas that they will mostly get back through refunds.</p>
+<p>We don't get fine-grained permissioning for sub-calls: a sub-call could consume <em>all</em> of a transaction's "allowance" for cheap storage operations. But we do get something good enough, where a contract making a sub-call can set a limit and ensure that once the sub-call finishes executing, the main call still has enough gas to do whatever post-processing it needs to do.</p>
+<p>The easiest <strong>"full multidimensional pricing solution"</strong> that I can think of is: we treat sub-call gas limits as being <em>proportional</em>. That is, suppose that there are <span class="math inline">\(k\)</span> different types of execution, and each transaction sets a multi-dimensional limit <span class="math inline">\(L_1 ... L_k\)</span>. Suppose that, at the current point in execution, the remaining gas is <span class="math inline">\(g_1 ... g_k\)</span>. Suppose that a <code>CALL</code> opcode is called, with sub-call gas limit <span class="math inline">\(S\)</span>. Let <span class="math inline">\(s_1 = S\)</span>, and then <span class="math inline">\(s_2 = \frac{s_1}{g_1} * g_2\)</span>, <span class="math inline">\(s_3 = \frac{s_1}{g_1} * g_3\)</span>, and so on.</p>
+<p>That is, we treat the first type of gas (realistically, VM execution) as being a kind of privileged "unit of account", and then assign the other types of gas so that the sub-call gets the same <em>percentage of available gas</em> across each type. This is somewhat ugly, but it maximizes backwards-compatibility. If we want to make the scheme more "neutral" between different types of gas, at the cost of sacrificing backwards-compatibility, we could simply have the sub-call gas limit parameter represent a fraction (eg. <code>[1...63] / 64</code>) of the remaining gas in the current context).</p>
+<p>In either case, however, it's worth stressing that once you start introducing multidimensional execution gas, the inherent level of ugliness increases, and this seems difficult to avoid. Hence, our task is to make a complicated tradeoff: do we accept somewhat more ugliness at the EVM level, in order to safely unlock significant L1 scalability gains, and if so, which specific proposal works best for protocol economics and application developers? Quite likely, it is neither of the ones I mentioned above, and there is still room to come up with something more elegant and better.</p>
+ </div> 
