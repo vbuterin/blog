@@ -1,0 +1,220 @@
+
+
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
+
+
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Layer 2s as cultural extensions of Ethereum">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="../../../../scripts/tex-svg.js">
+</script>
+
+<style>
+</style>
+
+<div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
+
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Layer 2s as cultural extensions of Ethereum" />
+<meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
+
+
+<br>
+<h1 style="margin-bottom:7px"> Layer 2s as cultural extensions of Ethereum </h1>
+<small style="float:left; color: #888"> 2024 May 29 </small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
+<br> <br> <br>
+<title> Layer 2s as cultural extensions of Ethereum </title>
+
+<p><em>Special thanks for Abdelhamid Bakhta and Paul Dylan-Ennis for feedback and discussion.</em></p>
+<p>In my <a href="https://vitalik.eth.limo/general/2024/05/23/l2exec.html">recent post</a> on the differences between layer 1 and layer 2 scaling, I ended up roughly coming to the conclusion that the most important differences between the two approaches are not <em>technical</em> but <em>organizational</em> (using the word in a similar sense to the field of <a href="https://en.wikipedia.org/wiki/Industrial_organization">"industrial organization"</a>): it's not about what <em>can</em> get built, but what <em>will</em> get built, because of how the lines between different parts of the ecosystem are drawn and how that affects people's incentives and ability to act. In particular, a layer-2-centric ecosystem is inherently much more pluralistic, and more naturally leads to a greater diversity of different approaches to scaling, virtual machine design, and other technological features.</p>
+<p>A key point I made in the previous post is:</p>
+<blockquote>
+<p><strong>Because Ethereum is a layer-2-centric ecosystem, you are free to go independently build a sub-ecosystem that is yours with your unique features, and is at the same time a part of a greater Ethereum.</strong></p>
+</blockquote>
+<p>In this post, I argue that <strong>this is true not just with respect to <em>technology</em>, but also with respect to <a href="https://www.writingruxandrabio.com/p/ideas-matter-how-i-stopped-being">culture</a></strong>. Blockchains do not just make unique technical tradeoffs, they also have unique cultures. On the day after Ethereum and Ethereum Classic diverged, the two blockchains were exactly the same technologically. But they were radically different culturally, and this fact helped to shape the distinct focuses, user bases and even tech stacks that the two chains have eight years later. The same applies to Ethereum and Bitcoin: at the beginning, Ethereum was roughly "Bitcoin but with smart contracts", but the set of differences grew into something much deeper ten years later.</p>
+<center>
+<p><br></p>
+<p><a href="https://twitter.com/_kevin_pham/status/927792297365848064"><img src="../../../../images/l2culture/pham1.png" /></a></p>
+<p><small><i>An old tweet by Kevin Pham comparing Bitcoin and Ethereum culture, as they were in 2017. Both cultures continue to evolve: since 2017 we have seen the <a href="https://www.wealthsimple.com/en-ca/magazine/laser-eyes-crypto">rise</a> and <a href="https://x.com/udiWertheimer/status/1793008881192358380">fall</a> of the "laser eye" movement (and the simultaneous rise of movements like <a href="https://transak.com/blog/what-are-bitcoin-ordinals-guide-to-create-bitcoin-nft">Ordinals</a>), we've seen Ethereum become layer-2 centric, and we've seen both become much more mainstream. But the two remain different, and it's probably for the best that it remains so.</i></small></p>
+</center>
+<p><br></p>
+<h2 id="what-are-some-examples-of-things-that-culture-affects">What are some examples of things that culture affects?</h2>
+<p>Culture has a similar effect to incentives - indeed, <em>culture is part of incentives</em>. It affects who is attracted to an ecosystem and who is repelled. It affects what kinds of actions people are motivated to do, and what kinds of actions people <em>can</em> do. It affects what is considered <a href="https://vitalik.eth.limo/general/2021/03/23/legitimacy.html">legitimate</a> - both in protocol design, and at the ecosystem and application layer.</p>
+<p>A few particularly important areas that a blockchain's culture has a great impact on include:</p>
+<ol type="1">
+<li>The type of <strong>changes that get made to the protocol</strong> - including quantity, quality and direction</li>
+<li>The protocol's <strong>ability to remain open, censorship-resistant and decentralized</strong></li>
+<li>The ecosystem's ability to <strong>attract high-quality protocol developers and researchers</strong></li>
+<li>The ecosystem's ability to <strong>attract high-quality application developers</strong></li>
+<li>The ecosystem's ability to attract users - both <strong>quantity of users</strong>, and <strong>the right kinds of users</strong></li>
+<li>The ecosystem's <strong>public legitimacy in the eyes of outside communities</strong> and actors</li>
+</ol>
+<p>If you really value having a blockchain that remains decentralized, even at the cost of being slow, you need to look not just at how well the present-day technology accomplishes those goals, but also at how well the culture values those goals. If a blockchain's culture does not value curiosity and openness to new technology, then it may well fail at <em>both</em> decentralization and speed, because it fails to take up new technologies like ZK-SNARKs that can get you more of both at the same time. If a blockchain becomes publicly understood as being "the casino chain" and nothing else, it becomes hard to get non-casino applications onboard. Even non-mercenary core protocol developers and researchers become more difficult to attract. Culture matters, because culture is at least partially upstream of almost everything else.</p>
+<h2 id="the-cultures-of-ethereum">The cultures of Ethereum</h2>
+<center>
+<p><br></p>
+<p><img src="../../../../images/l2culture/upload_2b9db82459e86d2206be6282e3af9483.png" /></p>
+<p><small><i>Ethereum developer interop, Kenya, 2024 May. Ethereum's core research and development ecosystem is one of Ethereum's subcultures, though it is also quite diverse in its own right, with <a href="https://vitalik.eth.limo/general/2024/05/17/decentralization.html">substantial internal disagreements</a>.</i></small></p>
+</center>
+<p><br></p>
+<p>The researcher Paul Dylan-Ennis has spent a lot of time exploring and understanding Ethereum's subcultures. He <a href="https://www.coindesk.com/consensus-magazine/2024/02/07/absolute-essentials-of-ethereum-by-paul-dylan-ennis-an-excerpt/">identifies three of the main subcultures</a> in Ethereum as follows:</p>
+<p><br></p>
+<blockquote>
+<ul>
+<li><strong>Cypherpunk</strong>: A cypherpunk is committed to open source development and a certain DIY or punk attitude. In Ethereum's case, the cypherpunks build the infrastructure and tools, but are hands off about how they are used, taking a neutral stance. Historically, cypherpunk had an explicit emphasis on privacy, but in Ethereum it is not always prioritised, albeit ... a neo-cypherpunk movement called lunarpunk has emerged to advocate for placing privacy back front and center</li>
+<li><strong>Regens</strong>: Many influential voices within Ethereum are committed to a regen or regenerative approach to building technology. Rooted in Vitalik Buterin's interest in politics and social science, many regens engage in governance experiments designed to reinvigorate, improve or even replace contemporary institutions. This subculture is characterized by its experimental nature and interest in public goods</li>
+<li><strong>Degens</strong>: Users driven purely by speculation and wealth accumulation at all costs, the degens (degenerates). Degens are financial nihilists who focus on current trends and hype to strike it lucky and escape the rat race of contemporary neoliberal capitalism. Degens will often take extraordinary risks, but in an ironic, almost detached way.</li>
+</ul>
+</blockquote>
+<p><br></p>
+<p>These are not the only three groups that matter, and you can even contest the extent to which they are coherent groups: institutional profit-oriented groups and people buying pictures of monkeys are <em>very very culturally different</em>. "Cypherpunks", as described here, includes both people interested in end uses like protecting people's privacy and freedom, and people interested in working with cool frontier math and cryptography without any strong ideology. But this categorization is interesting as a first approximation.</p>
+<p>One important feature of these three groups in Ethereum is that, in large part because of Ethereum's flexibility as a developer platform (and not just a currency), <strong>they each have access to some kind of playing field, where the subculture can engage in action, and not just talking</strong>. One crude approximation is:</p>
+<ul>
+<li>Cypherpunks participate in core Ethereum research and development, and write privacy software</li>
+<li>Regens do <a href="https://vitalik.eth.limo/general/2021/04/02/round9.html">Gitcoin grants rounds</a>, <a href="https://retrofunding.optimism.io/">retroactive public goods funding</a>, and various other non-financial applications</li>
+<li>Degens trade memecoins and NFTs and play games</li>
+</ul>
+<p>In my view, this cultural branching has been a great benefit to Ethereum. Ethereum core development culture values high-quality thinking on topics like advanced cryptography, game theory and increasingly software engineering, it values freedom and independence, it values cypherpunk ideals as well as blockchainified versions of those principles (eg. "immutability"), and an idealistic approach focused on values and soft power over hard power. These values are important and good; looking at my list of impacts of culture from the previous section, they make Ethereum very well-positioned on (1), (2), (3) and to some extent (6). But they are incomplete: for one, the above description has little emphasis on appealing to application developers, and close to zero emphasis on appealing to users - the stability-oriented values help give confidence to people who "use" Ethereum by hodling ETH, but that's pretty much it. <strong>Cultural pluralism is a way of getting out of this quandary, allowing one subculture to focus on core development while another focuses on growing the "edges" of the ecosystem</strong>. But this raises a question: are there ways that we can strengthen this kind of cultural pluralism even further?</p>
+<h2 id="subcultures-and-layer-2s">Subcultures and layer 2s</h2>
+<p>This is where I get to what is perhaps the single most under-appreciated property of layer 2s: <strong>for a subculture, a layer 2 is the ultimate playing field for action</strong>. Layer 2s allow subcultures to emerge that are armed with substantial resources, and a feedback loop that forces them to learn and adapt in order to be effective in the real world. Layer 2s have to be effective in multiple ways: attracting users and application developers, developing technology, and building global communities.</p>
+<p>Perhaps the key property of layer 2s that matters here is that <strong>a layer 2 is simultaneously (i) an ecosystem, and (ii) organized around building something</strong>. Local meetup groups can form their own ecosystems, and they often have their own unique cultures, but they have relatively limited resources and execution power. Applications can have a lot of resources and execution power, but they are <em>applications</em>: you can <em>use</em> them, but you can't <em>build on</em> them. Uniswap is great, but there is no concept of "building on Unsiwap" that is anywhere near as strong as, say, "building on Polygon".</p>
+<p>Some specific ways in which layer 2s can, and do, end up culturally specializing include:</p>
+<ul>
+<li><strong>More willingness to do user outreach</strong> or "business development": intentionally making efforts to attract specific outside actors, including individuals, businesses and communities, to participate in the ecosystem.</li>
+<li><strong>Diversity of values</strong> that are emphasized. Is your community more about "public goods", "good tech", "Ethereum neutrality", "financial inclusion", "diversity", "scaling", or something else? Different L2s give different answers.</li>
+<li><strong>Diversity of participants</strong>: what kinds of people does the community attract? Does it particularly emphasize certain demographic groups? Personality types? Languages? Continents?</li>
+</ul>
+<p>Here are a few examples:</p>
+<center>
+<h3>
+Optimism
+</h3>
+<p><br></p>
+<p><a href="https://twitter.com/Scav/status/1788758529454821596"><img src="../../../../images/l2culture/SJKH6H77A.png" /></a></p>
+<h3>
+ZKSync
+</h3>
+<p><br></p>
+<p><a href="https://twitter.com/gluk64/status/1773484140584677596"><img src="../../../../images/l2culture/rkmHTBmmC.png" /></a></p>
+<h3>
+MegaETH
+</h3>
+<p><br></p>
+<p><a href="https://twitter.com/hotpot_dao/status/1789595783391531188"><img src="../../../../images/l2culture/SJGBaSm7C.png" /></a></p>
+<h3>
+Starknet
+</h3>
+<p><br></p>
+<p><a href="https://twitter.com/Starknet/status/1723683303432028570"><img src="../../../../images/l2culture/Sy9S6BQQA.png" /></a></p>
+</center>
+<p><br><br></p>
+<p>Polygon has found success with <a href="https://www.blockchain-council.org/blockchain/polygon-technology-top-10-partnerships-depicting-the-rise-of-layer-2-ethereum-scaling-solution/">partnerships with mainstream companies</a>, and an increasingly high-quality ZK ecosystem. Optimism has <a href="https://www.base.org/">Base</a> and <a href="https://worldcoin.org/blog/announcements/introducing-world-chain">World Chain</a>, and features a heavy cultural interest in ideas like <a href="https://medium.com/ethereum-optimism/retroactive-public-goods-funding-33c9b7d00f0c">retro funding</a> and <a href="https://coinpaper.com/544/a-quick-guide-to-the-optimism-governance-structure">not-just-token-based governance</a>. Metis <a href="https://www.gemini.com/cryptopedia/metis-crypto-what-is-metis-token-staking-layer-2-solutions#section-the-metis-layer-2-solution-is-about-more-than-scalability">focuses on DAOs</a>. Arbitrum has built a <a href="https://twitter.com/arbitrum/status/1788277630514442433">brand</a> around <a href="https://twitter.com/arbitrum/status/1762523093963022839">high-quality</a> developer tools and technology. <a href="https://scroll.io/">Scroll</a> focuses on "preserv[ing] the essence of Ethereum - trust-minimized, secure and open source". <a href="https://taiko.xyz/">Taiko</a> emphasizes being "seamless UX", "community aligned", "security-first" and "<a href="https://ethresear.ch/t/based-rollups-superpowers-from-l1-sequencing/15016">based</a>". In general, every Ethereum layer 2 has a unique "soul": some combination of Ethereum's culture, together with its own particular twist.</p>
+<h2 id="how-can-this-layer-2-centric-approach-succeed">How can this layer-2-centric approach succeed?</h2>
+<p>The core value proposition of this layer-2 centric approach to culture is that it tries to balance the benefits of pluralism and cooperation, by creating a diverse set of different subcultures that still share some common values and work together on key common infrastructure to achieve those values.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/l2culture/pluralism.drawio.png" /></p>
+<p><small><i>Ethereum is trying to take the pluralistic route.</i></small></p>
+</center>
+<p><br></p>
+<p>There have been other attempts at a similar kind of two-level approach. The most notable one that I can think of is the delegated proof of stake (DPoS) system in EOS back in the 2017 era. EOS's DPoS worked by having coin holders vote on which delegates run the chain. The delegates would be responsible for creating blocks, and coming to consensus on others' blocks, and they would also get a large amount of coins from EOS issuance. Delegates ended up doing a lot of community building in order to attract votes, and many of these "nodes" (eg. EOS New York, EOS Hong Kong), ended up being recognizable brands in their own right.</p>
+<p>This ended up being an unstable system, because <a href="https://vitalik.eth.limo/general/2018/03/28/plutocracy.html">coin voting is inherently unstable</a>, and because some powerful actors in the EOS ecosystem turned out to be greedy jerks that <a href="https://www.theblock.co/post/243852/eos-network-foundation-calls-on-community-to-reject-block-ones-22-million-settlement">siphoned away lots of money</a> that was raised on behalf of the community for personal gain. But while it worked, it showed an amazing property: <strong>it created strong highly-autonomous sub-communities that were still working together toward a common goal</strong>.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/l2culture/eos.png" /></p>
+<p><small><i>EOS New York, one of the top EOS block producers, even ended up writing <a href="https://github.com/eosnewyork">quite a bit of open-source infrastructure code</a>.</i></small></p>
+</center>
+<p><br></p>
+<p>When this approach works successfully, it also creates a kind of healthy competition. By default, a community like Ethereum has a natural tendency to rally around people who have been in the community for a long time. This has an advantage that it can help preserve the community's values as the community rapidly grows - it reduces the chance that Ethereum stops caring about freedom of speech or open source even if unfavorable winds come in from the outside world. But it also risks shifting attention away from technical competence and toward social games, allowing established "OGs" to remain entrenched even if they underperform, and limiting the culture's ability to renew itself and evolve. With a healthy "subculture culture", these problems can be mitigated: entire new subcommunities can rise and fall, and people who succeed within subcommunities can even start contributing to other aspects of Ethereum. In short, <strong>less <a href="https://vitalik.eth.limo/general/2021/03/23/legitimacy.html">legitimacy</a> by continuity, more legitimacy by performance</strong>.</p>
+<p>We can also examine the above story to identify possible weak points. Here are a few that come to mind:</p>
+<ul>
+<li><strong>Collapse into echo chambers</strong>: essentially, the same failure modes that I talked about in <a href="https://vitalik.eth.limo/general/2024/05/23/l2exec.html">my previous post</a>, but for culture. L2s start acting like separate universes, with little cross-pollination between them.</li>
+<li><strong>Collapse into monoculture</strong>: whether due to shared human biases or shared economic incentives (or too strong of a unified Ethereum culture), everyone ends up looking in similar places for what applications to build and perhaps even what technical choices to make, and this ends up being the wrong place. Alternatively, either a single L2 or a small number of L2s gets entrenched, and there is no longer a functioning mechanism for new people and subcommunities to rise.</li>
+<li><strong>The vector favored by competition is wrong</strong>: L2s that focus on use cases that succeed in some narrow financial sense, but at the expense of other goals, appear successful, and more and more communities go in that direction over time.</li>
+</ul>
+<p>I do not claim to have perfect answers to these; Ethereum is an ongoing experiment, and part of what excites me about the ecosystem is its willingness to tackle difficult problems head-on. Many of the challenges stem from incentive misalignments; the natural solution to that is to create better ecosystem-wide incentives for collaboration. The idea I mentioned in <a href="https://vitalik.eth.limo/general/2024/05/23/l2exec.html">my previous post</a>, of creating a "Basic Infrastructure Guild" to complement Protocol Guild is one option. Another option is to explicitly subsidize projects that multiple L2s choose to collaborate on (ie. something vaguely like <a href="https://vitalik.eth.limo/general/2019/12/07/quadratic.html">quadratic funding</a>, but focusing on bridging ecosystems rather than bridging individuals). There is a lot of value in trying to expand on these ideas, and keep working to make the best of Ethereum's unique advantage as a pluralistic ecosystem.</p>
+ </div> 
