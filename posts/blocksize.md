@@ -11,7 +11,7 @@ Recently I finished reading (or rather, audio-listening) the two main history bo
 <center><br>
 
 [![](../../../../images/blocksize/book1.png)](https://www.amazon.com/Blocksize-War-controls-Bitcoins-protocol/dp/B08YQMC2WM)
-[![](../../../../images/blocksize/book2.png)]((https://www.hijackingbitcoin.com/))
+[![](../../../../images/blocksize/book2.png)](https://www.hijackingbitcoin.com/)
 
 </center><br>
 
