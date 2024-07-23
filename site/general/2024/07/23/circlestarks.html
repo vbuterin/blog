@@ -1,0 +1,257 @@
+
+
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
+
+
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Exploring circle STARKs">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="../../../../scripts/tex-svg.js">
+</script>
+
+<style>
+</style>
+
+<div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
+
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Exploring circle STARKs" />
+<meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
+
+
+<br>
+<h1 style="margin-bottom:7px"> Exploring circle STARKs </h1>
+<small style="float:left; color: #888"> 2024 Jul 23 </small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
+<br> <br> <br>
+<title> Exploring circle STARKs </title>
+
+<p><em>This article assumes familiarity with the basics of how SNARKs and STARKs work; if you are not familiar, I recommend the first few sections in <a href="https://vitalik.eth.limo/general/2024/04/29/binius.html">this article</a>. Special thanks to Eli ben-Sasson, Shahar Papini, Avihu Levy and others at starkware for feedback and discussion.</em></p>
+<p>The most important trend in STARK protocol design over the last two years has been the switch to working over small fields. The earliest production implementations of STARKs worked over 256-bit fields - arithmetic modulo large numbers such as <code>21888...95617</code> <span class="math inline">\(\approx 1.51 * 2^{253}\)</span> - which made these protocols naturally compatible with verifying elliptic curve-based signatures, and made them easy to reason about. But this led to inefficiency: in most cases we don't actually have good ways to make use of these larger numbers, and so they ended up as mostly wasted space, and even more wasted computation, since arithmetic over 4x bigger numbers takes <a href="https://en.wikipedia.org/wiki/Karatsuba_algorithm">~9x more</a> computation time. To deal with this, STARKs have started working over smaller fields: first <a href="https://polygon.technology/blog/plonky2-a-deep-dive">Goldilocks</a> (modulus <span class="math inline">\(2^{64} - 2^{32} + 1\)</span>) and then <a href="https://blog.icme.io/small-fields-for-zero-knowledge/">Mersenne31 and BabyBear</a> (<span class="math inline">\(2^{31} - 1\)</span> and <span class="math inline">\(2^{31} - 2^{27} + 1\)</span>, respectively).</p>
+<p>This switch has already led to demonstrated massive improvements in proving speed, most notably Starkware being able to <a href="https://x.com/StarkWareLtd/status/1807776563188162562">prove 620,000 Poseidon2 hashes per second</a> on an M3 laptop. Particularly, this means that, provided we're willing to trust Poseidon2 as a hash function, one of the hardest parts of making an efficient <a href="https://vitalik.eth.limo/general/2022/08/04/zkevm.html">ZK-EVM</a> is effectively solved. But how do these techniques work, and how do cryptographic proofs, which typically require large numbers for security, get built over these fields? And how do these protocols compare to even more exotic <a href="https://vitalik.eth.limo/general/2024/04/29/binius.html">constructions</a> such as <a href="https://www.irreducible.com/posts/binius-hardware-optimized-snark">Binius</a>? This post will explore some of these nuances, with a particular eye to a construction called <a href="https://eprint.iacr.org/2024/278">Circle STARKs</a> (implemented in Starkware's <a href="https://github.com/starkware-libs/stwo">stwo</a>, Polygon's <a href="https://github.com/Plonky3/Plonky3">plonky3</a>, and <a href="https://github.com/ethereum/research/tree/master/circlestark">my own implementation in (sort of) python</a>), which has some unique properties designed to be compatible with the highly efficient Mersenne31 field.</p>
+<h2 id="issues-common-to-small-fields">Issues common to small fields</h2>
+<p>One of the most important "tricks" when making hash-based proofs (or really, any kind of proof) is the idea of proving things about evaluations of a polynomial as a random point, as a substitute for proving things about the underlying polynomials.</p>
+<p>For example, suppose that a proof system requires you to generate a commitment to a polynomial, <span class="math inline">\(A\)</span>, which must satisfy <span class="math inline">\(A^3(x) + x - A(\omega*x) = x^N\)</span> (a pretty common type of claim to prove in ZK-SNARK protocols). The protocol can require you to pick a random coordinate <span class="math inline">\(r\)</span>, and prove that <span class="math inline">\(A(r) + r - A(\omega*r) = r^N\)</span>. And then in turn, to prove that <span class="math inline">\(A(r) = c\)</span>, you prove that <span class="math inline">\(Q = \frac{A - c}{X - r}\)</span> is a polynomial (as opposed to a fractional expression).</p>
+<p>If you know <span class="math inline">\(r\)</span> <em>ahead of time</em>, you can always cheat these protocols. In this case, you could just set <span class="math inline">\(A(r)\)</span> to be zero, retrofit <span class="math inline">\(A(\omega * r)\)</span> to satisfy the equation, and then let <span class="math inline">\(A\)</span> be the line that passes through those two points. And similarly for the second step, if you know <span class="math inline">\(r\)</span> ahead of time, you can generate whatever <span class="math inline">\(Q\)</span> you want, and then retrofit <span class="math inline">\(A\)</span> to match it, even if <span class="math inline">\(A\)</span> is a fractional (or other non-polynomial) expression.</p>
+<p>To prevent these attacks, we need to choose <span class="math inline">\(r\)</span> <em>after</em> the attacker provides <span class="math inline">\(A\)</span> (the <a href="https://en.wikipedia.org/wiki/Fiat%E2%80%93Shamir_heuristic">"Fiat-Shamir heuristic"</a> is a fancy name for setting <span class="math inline">\(r\)</span> to be the <em>hash</em> of <span class="math inline">\(A\)</span>). Importantly, <strong>we need to choose <span class="math inline">\(r\)</span> from a set large enough that the attacker cannot guess it</strong>.</p>
+<p>In elliptic curve based protocols and even 2019-era STARKs, this was trivial: all of our math was done over 256-bit numbers, so we choose <span class="math inline">\(r\)</span> as a random 256-bit number, and we're fine. With STARKs over smaller fields, we have a problem: there are only about two billion possible values of <span class="math inline">\(r\)</span> to choose from, and so an attacker wanting to make a fake proof need only try two billion times - a lot of work, but quite doable for a determined attacker!</p>
+<p>There are two natural solutions to this problem:</p>
+<ul>
+<li>Perform <strong>multiple random checks</strong></li>
+<li><strong>Extension fields</strong></li>
+</ul>
+<p>The approach of performing multiple random checks is intuitively appealing and simple: instead of checking at <em>one</em> coordinate, you repeat the check at each of <em>four</em> random coordinates. This is theoretically doable, but there is an efficiency issue. If you're dealing with degree &lt; <span class="math inline">\(N\)</span> polynomials over a size <span class="math inline">\(p\)</span> field, it's actually possible for an attacker to craft bad polynomials that "look" good in <span class="math inline">\(N\)</span> positions. Hence, their chance of breaking one round of the protocol is <span class="math inline">\(\frac{N}{p}\)</span>. If eg. <span class="math inline">\(p = 2^{31} - 1\)</span> and <span class="math inline">\(N = 2^{24}\)</span>, that means the attacker only gets seven bits of security per round, and so you need to do not four, but around 18 rounds, to be properly robust against such attackers. Ideally, we would have something where we do <span class="math inline">\(k\)</span> times more work but only have to subtract <span class="math inline">\(N\)</span> from the security level <em>once</em>.</p>
+<p>This gets us to the other solution: <strong>extension fields</strong>. Extension fields are like complex numbers, but over finite fields: we imagine into existence a new value, call it <span class="math inline">\(i\)</span>, and declare that <span class="math inline">\(i^2 = -1\)</span>. Multiplication <a href="https://www2.clarku.edu/faculty/djoyce/complex/mult.html">becomes</a>: <span class="math inline">\((a+bi) * (c+di) = (ac - bd) + (ad + bc)i\)</span>. We can now operate over <em>pairs</em> <span class="math inline">\((a,b)\)</span> rather than just single numbers. Assuming we're working over size <span class="math inline">\(\approx 2^{31}\)</span> fields like Mersenne or BabyBear, this gets us up to having <span class="math inline">\(\approx 2^{62}\)</span> values from which to choose <span class="math inline">\(r\)</span>. To go even higher, we apply the same technique again, except we already used <span class="math inline">\(i\)</span> so we need to define a new value differently: in Mersenne31, we pick <span class="math inline">\(w\)</span> where <span class="math inline">\(w^2 = -2i-1\)</span>. Multiplication now becomes <span class="math inline">\((a + bi + cw + diw) * (e + fi + gw + hiw) = ...\)</span></p>
+<center>
+<p><br></p>
+<p><a href="https://github.com/ethereum/research/blob/master/circlestark/fields.py"><img src="https://hackmd.io/_uploads/BJ5nW2i80.png" /></a></p>
+<p><small><i>OK fine, here's the code implementation. It's not optimal (you can improve it with <a href="https://en.wikipedia.org/wiki/Karatsuba_algorithm">Karatsuba</a>), but it shows the principles.</i></small></p>
+</center>
+<p><br></p>
+<p>Now, we have <span class="math inline">\(\approx 2^{124}\)</span> values to choose <span class="math inline">\(r\)</span> from, which is high enough for our security needs: if we are dealing with degree &lt; <span class="math inline">\(2^{20}\)</span> polynomials, we get 104 bits of security from one round. If we want to be paranoid and go up to the more widely-accepted 128 bit security level, we can add some proof of work into the protocol.</p>
+<p>Note that we only actually use this extension field in the FRI protocol, and other cases where random linear combinations are required. The bulk of the math is done over only the "base field" (modulo <span class="math inline">\(2^{31}-1\)</span> or <span class="math inline">\(15 * 2^{27} + 1\)</span>), and almost all of the data that is hashed is over the base field, so you only hash four bytes per value. This lets us both benefit from the efficiency of small fields, and retain the ability to dip into a larger field when we need to do so for security.</p>
+<h2 id="regular-fri">Regular FRI</h2>
+<p>When building a SNARK or STARK, the first step is typically arithmetization: reducing an arbitrary computation problem into an equation where some of the variables and coefficients are polynomials (eg. the equation often looks like <span class="math inline">\(C(T(x), T(next(x))) = Z(x) * H(x)\)</span>, where <span class="math inline">\(C\)</span>, <span class="math inline">\(next\)</span> and <span class="math inline">\(Z\)</span> are provided and the solver needs to provide <span class="math inline">\(T\)</span> and <span class="math inline">\(H\)</span>). Once you have such an equation, a solution to the equation corresponds to a solution to the underlying computational problem.</p>
+<p>To prove that you have a solution, you need to prove that the values that you are proposing actually are real polynomials (as opposed to fractions, or datasets that look like one polynomial in one place and a different polynomial in another place, or...), and have a certain maximum degree. In order to do this, we apply a random linear combination trick iteratively:</p>
+<ul>
+<li>Suppose you have evaluations of a polynomial <span class="math inline">\(A\)</span>, and you want to prove that its degree is <span class="math inline">\(&lt; 2^{20}\)</span></li>
+<li>Consider the polynomials <span class="math inline">\(B(x^2) = A(x) + A(-x)\)</span>, and <span class="math inline">\(C(x^2) = \frac{A(x) - A(-x)}{x}\)</span>.</li>
+<li>Let <span class="math inline">\(D\)</span> be a random linear combination <span class="math inline">\(B + rC\)</span></li>
+</ul>
+<p>Essentially, what's going on is that <span class="math inline">\(B\)</span> isolates the even coefficients of <span class="math inline">\(A\)</span>, and <span class="math inline">\(C\)</span> isolates the odd coefficients. Given <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span>, you can recover <span class="math inline">\(A\)</span>: <span class="math inline">\(A(x) = B(x^2) + xC(x^2)\)</span>. And if <span class="math inline">\(A\)</span> really has degree <span class="math inline">\(&lt; 2^{20}\)</span>, then (i) <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span> have degree <span class="math inline">\(&lt; 2^{19}\)</span>. And being a random linear combination, <span class="math inline">\(D\)</span> must also have degree <span class="math inline">\(&lt; 2^{19}\)</span>.</p>
+<p>We've reduced a "prove degree <span class="math inline">\(&lt; 2^{20}\)</span>" problem into a "prove degree <span class="math inline">\(&lt; 2^{19}\)</span>" problem. Repeat this 20 times, and you get the technique that is called "<a href="https://eccc.weizmann.ac.il/report/2017/134/">Fast Reed-Solomon Interactive Oracle Proofs of Proximity</a>", or "FRI". If someone tries to push something through this technique which is <em>not</em> a degree <span class="math inline">\(&lt; 2^{20}\)</span> polynomial, then the second-round output will (with probability <span class="math inline">\(\approx 1 - \frac{1}{2^{124}}\)</span>) not be a degree <span class="math inline">\(&lt; 2^{19}\)</span> polynomial, the third-round output will not be degree <span class="math inline">\(&lt; 2^{18}\)</span>, and so on, and the final check at the end will fail. A dataset which is equal to a degree <span class="math inline">\(&lt; 2^{20}\)</span> polynomial in <em>most</em> positions has some chance of passing through the scheme, but in order to construct such a dataset you need to know the underlying polynomial, so even such a slightly-defective proof is a convincing argument that the prover could generate a "real" proof if they wanted to. There are further technical complexities in proving that this holds for <em>all</em> possible inputs; understanding the fine details of this has been a major focus of academic STARK research over the last five years.</p>
+<p>Let's look into what's going on here in more detail, and what properties are necessary to make this all work. At each step, we're reducing the <em>degree</em> by a factor of 2, and we're also reducing the <em>domain</em> (the set of points we're looking at) by a factor of 2. The former is what makes FRI work at all. The latter is what makes it so blazing fast: because each round is 2x smaller than the previous, the total cost is <span class="math inline">\(O(N)\)</span> instead of <span class="math inline">\(O(N*log(N))\)</span>.</p>
+<p>To do this domain reduction, we needed a <em>two-to-one map</em>: <span class="math inline">\(\{x, -x\} \rightarrow x^2\)</span>. What's nice about this two-to-one map is that it's repeatable: if you start with a <em>multiplicative subgroup</em> (a set <span class="math inline">\(\{1, \omega, \omega^2 ... \omega^{n-1}\}\)</span>), then you start off with a set where for any <span class="math inline">\(x\)</span> in the set, <span class="math inline">\(-x\)</span> is also in the set (as if <span class="math inline">\(x = \omega^k\)</span>, <span class="math inline">\(-x = \omega^{k\pm\frac{N}{2}}\)</span>), and if you then square it to get <span class="math inline">\(\{1, (\omega^2), (\omega^2)^2 ... (\omega^2)^{\frac{n}{2}-1}\}\)</span>, then the exact same property applies, and so you can keep reducing all the way down to one value (though in practice we usually stop a little bit earlier).</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/circlestarks/HkRZnghIC.png" /></p>
+</center>
+<p><br></p>
+<p>You can think of this as being an operation of taking a line that goes around a circle, and stretching that line until it makes two rotations along that circle. A point at x degrees becomes a point at 2x degrees. Each point from 0...179 degrees has a corresponding point at 180...359 degrees that it ends up overlapping with. And you can repeat this procedure again and again.</p>
+<p>For this to work, you need the original multiplicative subgroup to have a size with a large power of 2 as a product. BabyBear has modulus <span class="math inline">\(15 * 2^{27} + 1\)</span>, and so the largest possible subgroup is all nonzero values - hence, size <span class="math inline">\(15 * 2^{27}\)</span>. This is very friendly to the above technique. You could take a subgroup of size <span class="math inline">\(2^{27}\)</span>, or you could just take that full set, do the FRI to reduce the polynomial all the way down to degree 15, and then check tthe degree directly at the end. Mersenne31, however, does not work in this way. The modulus is <span class="math inline">\(2^{31} - 1\)</span>, and so the multiplicative subgroup has size <span class="math inline">\(2^{31} - 2\)</span>. This can be divided by 2 only once. From there forward, we have no way to do an FFT - at least not using the technique above.</p>
+<p>This is a tragedy, because Mersenne31 is a <em>super-convenient</em> field to do arithmetic in using existing 32-bit CPU/GPU operations. If you add two numbers, the result may be above <span class="math inline">\(2^{31}-1\)</span>, but you can reduce it by doing <span class="math inline">\(x \rightarrow x + (x &gt;&gt; 31)\)</span>, where <span class="math inline">\(&gt;&gt;\)</span> is a bit shift. For multiplication, you can do something similar, though you need to use a special (but commonly available) opcode that returns the "high-order bits" of a multiplication result (ie. <span class="math inline">\(floor(\frac{xy}{2^{32}})\)</span>). This allows arithmetic to be around 1.3x more efficient than BabyBear. If we <em>could</em> do FRI over Mersenne31, it would make things significantly better for us.</p>
+<h2 id="circle-fri">Circle FRI</h2>
+<p>Here is where the clever trick of <a href="https://elibensasson.blog/why-im-excited-by-circle-stark-and-stwo/">circle STARKs</a> comes in. Given a prime <span class="math inline">\(p\)</span>, it turns out that we also have easy access to a group of size <span class="math inline">\(p+1\)</span> that has similar two-to-one properties: the set of points <span class="math inline">\((x,y)\)</span> where <span class="math inline">\(x^2 + y^2 = 1\)</span>. Let's look at this structure modulo 31:</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/circlestarks/S19YGbh8C.png" /></p>
+</center>
+<p><br></p>
+<p>The points follow an addition law, which might feel very familiar if you've recently done either <a href="https://mathworld.wolfram.com/TrigonometricAdditionFormulas.html">trigonometry</a> or <a href="https://unacademy.com/content/cbse-class-11/study-material/mathematics/algebra-of-complex-numbers-multiplication/">complex multiplication</a>:</p>
+<p><span class="math inline">\((x_1, y_1) + (x_2, y_2) = (x_1x_2 - y_1y_2, x_1y_2 + x_2y_1)\)</span></p>
+<p>The doubling form is:</p>
+<p><span class="math inline">\(2 * (x, y) = (2x^2 - 1, 2xy)\)</span></p>
+<p>Now, let's focus on <em>only</em> the points that are in "odd" positions on this circle:</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/circlestarks/SJBxN-3UR.png" /></p>
+</center>
+<p><bw></p>
+<p>Now, here is our FFT. First, we collapse all the points down to a single line. Our equivalent of the <span class="math inline">\(B(x^2)\)</span> and <span class="math inline">\(C(x^2)\)</span> formulas that we had in regular FRI is:</p>
+<center>
+<p><span class="math inline">\(f_0(x) = \frac{F(x,y) + F(x,-y)}{2}\)</span> <span class="math inline">\(f_1(x) = \frac{F(x,y) - F(x,-y)}{2y}\)</span></p>
+</center>
+<p>We can then take a random linear combination, and we get a one-dimensional <span class="math inline">\(F\)</span> that is over a subset of the x line:</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/circlestarks/HkGiSb28A.png" /></p>
+</center>
+<p><br></p>
+<p>From the second round onward, the map changes:</p>
+<center>
+<p><span class="math inline">\(f_0(2x^2-1) = \frac{F(x) + F(-x)}{2}\)</span> <span class="math inline">\(f_1(2x^2-1) = \frac{F(x) - F(-x)}{2x}\)</span></p>
+</center>
+<p>And this map actually takes the above set, and reduces its size in half each time! What is going on here is that each <span class="math inline">\(x\)</span> is in some sense "standing in" for two points: <span class="math inline">\((x,y)\)</span> and <span class="math inline">\((x,-y)\)</span>. And <span class="math inline">\(x \rightarrow 2x^2-1\)</span> is the point doubling law above. Hence, we take the <span class="math inline">\(x\)</span> coordinate of two opposite points on the circle, and convert it into the <span class="math inline">\(x\)</span> coordinate of the doubled point.</p>
+<p>For example, if we take the second-rightmost value, <span class="math inline">\(2\)</span>, and apply the map, we get <span class="math inline">\(2(2^2) - 1 = 7\)</span>. If we go back to the original circle, <span class="math inline">\((2,11)\)</span> is the third point going counterclockwise from the right, and so if we double it, we get the sixth point going counterclockwise from the right, which is... <span class="math inline">\((7, 13)\)</span>.</p>
+<p>This <em>could have</em> all been done two-dimensionally, but operating over one dimension makes things more efficient.</p>
+<h2 id="circle-ffts">Circle FFTs</h2>
+<p>An algorithm closely related to FRI is the <a href="https://vitalik.eth.limo/general/2019/05/12/fft.html">fast Fourier transform</a>, which takes a set of <span class="math inline">\(n\)</span> evaluations of a degree <span class="math inline">\(&lt; n\)</span> polynomial and converts it into the <span class="math inline">\(n\)</span> coefficients of the polynomial. An FFT follows the same path as a FRI, except instead of generating a random linear combination <span class="math inline">\(f_0\)</span> and <span class="math inline">\(f_1\)</span> at each step, it just recursively applies a half-sized FFT on both, and then takes the output of <span class="math inline">\(FFT(f_0)\)</span> as the even coefficients and <span class="math inline">\(FFT(f_1)\)</span> as the odd coefficients.</p>
+<p>The circle group also supports an FFT, which is also constructed from FRI along similar lines. However, <strong>a key difference is that the objects that circle FFTs (and circle FRI) work over are not technically polynomials</strong>. Rather, they are what mathematicians call a <a href="https://en.wikipedia.org/wiki/Riemann%E2%80%93Roch_theorem">Riemann-Roch space</a>: in this case, polynomials "modulo" the circle (<span class="math inline">\(x^2 + y^2 - 1 = 0\)</span>). That is, we treat any multiple of <span class="math inline">\(x^2 + y^2 - 1\)</span> as being equal to zero. Another way of thinking about it is: we only allow degree-1 powers of <span class="math inline">\(y\)</span>: as soon as we get a <span class="math inline">\(y^2\)</span> term, we replace it with <span class="math inline">\(1 - x^2\)</span>.</p>
+<p>One other thing that this implies is that the "coefficients" that a circle FFT outputs are not monomials like in regular FRI (eg. if regular FRI outputs <span class="math inline">\([6, 2, 8, 3]\)</span>, then we know this means <span class="math inline">\(P(x) = 3x^3 + 8x^2 + 2x = 6\)</span>). Instead, the coefficients are in a strange basis specific to circle FFTs:</p>
+<p><span class="math inline">\(\{1, y, x, xy, 2x^2-1, 2x^2y-y, 2x^3-x, 2x^3y-xy, 8 x^4 - 8 x^2 + 1...\}\)</span></p>
+<p>The good news is that as a developer, you can almost completely ignore this. STARKs never give you a need to know the coefficients. Instead, you can just always store "polynomials" as a set of evaluations on a particular domain. The only place you need to use FFTs, is to perform (the Riemann-Roch space analogue of) <em>low-degree extension</em>: given <span class="math inline">\(N\)</span> values, generate <span class="math inline">\(k*N\)</span> values that are on that same polynomial. In that case, you can do an FFT to generate the coefficients, append <span class="math inline">\((k-1)n\)</span> zeroes to those coefficients, and then do an inverse-FFT to get back your larger set of evaluations.</p>
+<p>Circle FFTs are not the only type of "exotic FFT". <a href="https://www.researchgate.net/publication/353344649_Elliptic_Curve_Fast_Fourier_Transform_ECFFT_Part_I_Fast_Polynomial_Algorithms_over_all_Finite_Fields">Elliptic curve FFTs</a> are even more powerful, because they work over <em>any</em> finite field (prime, binary, etc). However, ECFFTs are even more complex to understand and less efficient, and so because we can use circle FFTs for <span class="math inline">\(p = 2^{31}-1\)</span>, we do.</p>
+<p>From here, let's get into some of the more esoteric minutiae that will be different for someone implementing circle STARKs, as compared to regular STARKs.</p>
+<h2 id="quotienting">Quotienting</h2>
+<p>A common thing that you do in STARK protocols is you take quotients at specific points, either deliberately chosen or randomly chosen. For example, if you want to prove that <span class="math inline">\(P(x) = y\)</span>, you do so by providing <span class="math inline">\(Q = \frac{P - y}{X - x}\)</span>, and proving that <span class="math inline">\(Q\)</span> is a polynomial (as opposed to a fractional value). Randomly choosing evaluation points is used in the <a href="https://eprint.iacr.org/2019/336">DEEP-FRI protocol</a>, which lets FRI be secure with fewer Merkle branches.</p>
+<p>Here, we get to one subtle challenge: <em>in the circle group, there is no line function, analogous to <span class="math inline">\(X - x\)</span> for regular FRI, that passes through only one point</em>. This is visible geometrically:</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/circlestarks/S1E-mMnIR.png" /></p>
+</center>
+<p><br></p>
+<p>You could make a line function <em>tangent</em> to one point <span class="math inline">\((P_x, P_y)\)</span>, but that would pass through the point "with multiplicity 2" - that is, for a polynomial to be a multiple of that line function, it would have to fulfill a much stricter condition than just being zero at that point. Hence, you can't prove an evaluation at only one point. So what do we do? Basically, we bite the bullet, and prove an evaluation at <em>two</em> points, adding a dummy point whose evaluation we don't need to care about.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/circlestarks/SJaUNM2IC.png" /></p>
+<p><small><i>A line function: <span class="math inline">\(ax + by + c\)</span>. If you turn it into an equation by forcing it to equal 0, then you might recognize it as a line in <a href="https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:forms-of-linear-equations/x2f8bb11595b61c86:standard-form/v/standard-form-for-linear-equations">what high school math calls "standard form"</a>.</i></small></p>
+</center>
+<p><br></p>
+<p>If we have a polynomial <span class="math inline">\(P\)</span> that equals <span class="math inline">\(v_1\)</span> at <span class="math inline">\(P_1\)</span>, and <span class="math inline">\(v_2\)</span> at <span class="math inline">\(P_2\)</span>, then we choose an <em>interpolant</em> <span class="math inline">\(I\)</span>: a line function that equals <span class="math inline">\(v_1\)</span> at <span class="math inline">\(P_1\)</span>, and <span class="math inline">\(v_2\)</span> at <span class="math inline">\(P_2\)</span>. This can be as simple as <span class="math inline">\(v_1 + (v_2 - v_1) * \frac{y - y_1}{(P_2)_y - (P_1)_y}\)</span>. We then prove that <span class="math inline">\(P\)</span> equals <span class="math inline">\(v_1\)</span> at <span class="math inline">\(P_1\)</span>, and <span class="math inline">\(v_2\)</span> at <span class="math inline">\(P_2\)</span> by subtracting <span class="math inline">\(I\)</span> (so <span class="math inline">\(P-I\)</span> equals zero at both points), dividing by <span class="math inline">\(L\)</span> (the line function between <span class="math inline">\(P_1\)</span> and <span class="math inline">\(P_2\)</span>), and proving that the quotient <span class="math inline">\(\frac{P - I}{L}\)</span> is a polynomial.</p>
+<h2 id="vanishing-polynomials">Vanishing polynomials</h2>
+<p>In a STARK, the polynomial equation you're trying to prove often looks like <span class="math inline">\(C(P(x), P(next(x))) = Z(x) * H(x)\)</span>, where <span class="math inline">\(Z(x)\)</span> is a polynomial that equals zero across your entire original evaluation domain. In "regular" STARKs, that function is just <span class="math inline">\(x^n - 1\)</span>. In circle STARKs, you the equivalent is:</p>
+<center>
+<p><span class="math inline">\(Z_1(x,y) = y\)</span></p>
+<p><span class="math inline">\(Z_2(x,y) = x\)</span></p>
+<p><span class="math inline">\(Z_{n+1}(x,y) = (2 * Z_n(x,y)^2) - 1\)</span></p>
+</center>
+<p>Notice that you can derive the vanishing polynomial from the folding function: in regular STARKs, you're repeating <span class="math inline">\(x \rightarrow x^2\)</span>, here you're repeating <span class="math inline">\(x \rightarrow 2x^2-1\)</span>, though you're doing something different for the first round, because the first round is special.</p>
+<h2 id="reverse-bit-order">Reverse bit order</h2>
+<p>In STARKs, evaluations of a polynomial are typically arranged not in the "natural" order (<span class="math inline">\(P(1)\)</span>, <span class="math inline">\(P(\omega)\)</span>, <span class="math inline">\(P(\omega^2)\)</span> ... <span class="math inline">\(P(\omega^{n-1})\)</span>), but rather what I call "reverse bit order":</p>
+<center>
+<p><span class="math inline">\(P(1)\)</span>, <span class="math inline">\(P(\omega^{\frac{n}{2}})\)</span>, <span class="math inline">\(P(\omega^{\frac{n}{4}})\)</span>, <span class="math inline">\(P(\omega^{\frac{3n}{4}})\)</span>, <span class="math inline">\(P(\omega^{\frac{n}{8}})\)</span>, <span class="math inline">\(P(\omega^{\frac{5n}{8}})\)</span>, <span class="math inline">\(P(\omega^{\frac{3n}{8}})\)</span>, <span class="math inline">\(P(\omega^{\frac{7n}{8}})\)</span>, <span class="math inline">\(P(\omega^{\frac{n}{16}})\)</span>...</p>
+</center>
+<p>If we set <span class="math inline">\(n = 16\)</span>, and we focus just on which powers of <span class="math inline">\(\omega\)</span> we're evaluating at, the list looks like this:</p>
+<center>
+<p><span class="math inline">\(\{0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15\}\)</span></p>
+</center>
+<p>This ordering has the key property that values which get grouped together early on in a FRI evaluation are put beside each other in the ordering. For example, the first step of FRI groups together <span class="math inline">\(x\)</span> and <span class="math inline">\(-x\)</span>. In the <span class="math inline">\(n=16\)</span> case, <span class="math inline">\(\omega^8 = -1\)</span>, so that means <span class="math inline">\(P(\omega^i)\)</span> and <span class="math inline">\(P(-\omega^i) = P(\omega^{i+8})\)</span>. And, as we can see, those are exactly the pairs that are right beside each other. The second step of FRI groups together <span class="math inline">\(P(\omega^i)\)</span>, <span class="math inline">\(P(\omega^{i+4})\)</span>, <span class="math inline">\(P(\omega^{i+8})\)</span> and <span class="math inline">\(P(\omega^{i+12})\)</span>. And, those are exactly the groups of four that we see. And so forth. This makes FRI much more space-efficient, because it lets you provide one Merkle proof for both of the values that get folded together (or, if you fold <span class="math inline">\(k\)</span> rounds at a time, all <span class="math inline">\(2^k\)</span> of the values) simultaneously.</p>
+<p>In circle STARKs, the folding structure is a bit different: in the first step we group together <span class="math inline">\((x, y)\)</span> with <span class="math inline">\((x, -y)\)</span>, in the second step <span class="math inline">\(x\)</span> with <span class="math inline">\(-x\)</span>, and in subsequent steps <span class="math inline">\(p\)</span> with <span class="math inline">\(q\)</span>, selecting <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> such that <span class="math inline">\(Q^i(p) = -Q^i(q)\)</span> where <span class="math inline">\(Q^i\)</span> is the map <span class="math inline">\(x \rightarrow 2x^2-1\)</span> repeated <span class="math inline">\(i\)</span> times. If we think of the points in terms of their position along the circle, at each step this looks like the first point getting paired with the last, the second with the second last, etc.</p>
+<p>To adjust reverse bit order to reflect this folding structure, we reverse every bit <em>except the last</em>. We keep the last bit, and we also use it to determine whether or not to flip the other bits.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/circlestarks/ryDRpDhuR.png" /></p>
+</center>
+<p><br></p>
+<p>A size-16 folded reverse bit order looks as follows:</p>
+<center>
+<p><span class="math inline">\(\{0, 15, 8, 7, 4, 11, 12, 3, 2, 13, 10, 5, 6, 9, 14, 1\}\)</span></p>
+</center>
+<p>If you look at the circle in the previous section, the 0th, 15th, 8th and 7th points (going counterclockwise, starting from the right) are of the form <span class="math inline">\((x, y)\)</span>, <span class="math inline">\((x, -y)\)</span>, <span class="math inline">\((-x, -y)\)</span> and <span class="math inline">\((-x, y)\)</span>, which is exactly what we need.</p>
+<h2 id="efficiency">Efficiency</h2>
+<p>Circle STARKs (and 31-bit-prime STARKs in general) are very efficient. A realistic computation that is being proven in a circle STARK would most likely involve a few types of computation:</p>
+<ol type="1">
+<li>Native arithmetic, used for "business logic" such as counting</li>
+<li>Native arithmetic, used for cryptography (eg. hash functions like <a href="https://eprint.iacr.org/2023/323">Poseidon</a>)</li>
+<li><a href="https://eprint.iacr.org/2023/1518">Lookup arguments</a>, a generic way to do many kinds of computation efficiently by implementing them via reading values from tables</li>
+</ol>
+<p>The key measure of efficiency is: are you using the entire space in the computational trace to do useful work, or are you leaving a lot of wasted space? In large-field SNARKs, there is a lot of wasted space: business logic and lookup tables mostly involve computation over small numbers (often the numbers are under N in an N-step computation, so under <span class="math inline">\(2^{25}\)</span> in practice), but you have to pay the cost of using a size <span class="math inline">\(2^{256}\)</span>-bit field anyway. Here, the field is size <span class="math inline">\(2^{31}\)</span>, so the wasted space is not large. "Designed-for-SNARKs" low-arithmetic-complexity hashes (eg. Poseidon) use every bit of each number in the trace in any field.</p>
+<p>Hence, circle STARKs actually get pretty close to optimal! <a href="https://vitalik.eth.limo/general/2024/04/29/binius.html">Binius</a> is even stronger, because it lets you mix-and-match fields of different sizes and thereby get even more efficient bit packing for everything. Binius also opens up options for doing 32-bit addition without incurring the overhead of lookup tables. However, those gains at the cost of (in my opinion) significantly higher theoretical complexity, whereas circle STARKs (and even more so BabyBear-based regular STARKs) are conceptually quite simple.</p>
+<h2 id="conclusion-what-do-i-think-about-circle-starks">Conclusion: what do I think about circle STARKs?</h2>
+<p>Circle STARKs don't impose <em>too many</em> extra complexities on developers compared to regular STARKs. In the process of making an implementation, the above three issues are essentially the <em>only</em> differences that I saw compared to regular FRI. The underlying math behind what the "polynomials" that circle FRI is operating on is quite counterintuitive, and takes a while to understand and appreciate. But it just so happens that this complexity is hidden away in such a way it's not <em>that</em> visible to developers. The complexity of circle math is <a href="https://vitalik.eth.limo/general/2022/02/28/complexity.html">encapsulated, not systemic</a>.</p>
+<p>Understanding circle FRI and circle FFTs can also be a good intellectual gateway to understanding other "exotic FFTs": most notably <a href="https://github.com/ethereum/research/blob/master/binius/binary_ntt.py#L60">binary-field FFTs</a> as used in <a href="https://vitalik.eth.limo/general/2024/04/29/binius.html">Binius</a> and in <a href="https://github.com/elibensasson/libSTARK">LibSTARK</a> before, and also spookier constructions such as <a href="https://arxiv.org/abs/2107.08473">elliptic curve FFTs</a>, which use few-to-1 maps that work nicely with elliptic curve point operations.</p>
+<p>With the combination of Mersenne31, BabyBear, and binary-field techniques like Binius, it does feel like we are approaching the limits of efficiency of the "base layer" of STARKs. At this point, I am expecting the frontiers of STARK optimization to move to making maximally-efficient arithmetizations of primitives like hash functions and signatures (and optimizing those primitives themselves for that purpose), making recursive constructions to enable more parallelization, arithmetizing VMs to improve developer experience, and other higher-level tasks.</p>
+ </div> 
