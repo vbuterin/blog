@@ -1,0 +1,159 @@
+
+
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
+
+
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Review: museums of the future, Dubai and Tokyo">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="../../../../scripts/tex-svg.js">
+</script>
+
+<style>
+</style>
+
+<div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
+
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Review: museums of the future, Dubai and Tokyo" />
+<meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
+
+
+<br>
+<h1 style="margin-bottom:7px"> Review: museums of the future, Dubai and Tokyo </h1>
+<small style="float:left; color: #888"> 2024 Aug 03 </small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
+<br> <br> <br>
+<title> Review: museums of the future, Dubai and Tokyo </title>
+
+<p>In this past year, I have had the pleasure of visiting the <a href="https://museumofthefuture.ae/en">Museum of the Future in Dubai</a>, and more recently the <a href="https://www.miraikan.jst.go.jp/en/">Miraikan</a> (called "The National Museum of Emerging Science and Innovation" in English, but its Japanese short name 未来館 translates directly to "Museum of the Future") in Tokyo. Both of these museums came highly recommended to me by close friends and collaborators, and I see both as trying to solve a crucially important problem: coming up with concrete imaginations of what a technologically advanced future could look like that are positive, and not just the 3478th Black Mirror-esque Hollywood dystopia.</p>
+<p>What struck me the most about my visits to the two museums were just how <em>different</em> the two visions are. They are in no way incompatible with each other: there is no logical impossibility, and not even that strong a tension, between the specific technologies and structures imagined by futurists in Dubai, and that of their Tokyo counterparts. But at the same time, they have a very different <em>feel</em>, and a very different direction of priorities. This leads to a natural question: what can we learn and appreciate from each one, and is there a synthesis of the two?</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/museumfuture/pic2.png" /> <img src="../../../../images/museumfuture/pic1.png" /></p>
+<p><small><i>Left: Museum of the Future, Dubai, view from the outside. Right: giant orb inside the Miraikan, Tokyo, showing the world's major languages.</i></small></p>
+</center>
+<p><br></p>
+<h2 id="what-i-liked-about-the-museum-of-the-future-dubai">What I liked about the Museum of the Future, Dubai</h2>
+<p>When you start going through the Museum of the Future, the first thing you go into is a simulated space elevator, taking you from the surface of the Earth in 2064 into a space station in geostationary orbit. You can see information screens and panels that give you a view of all the space stations that humanity has all around the solar system, both on and around planets and at <a href="https://en.wikipedia.org/wiki/Lagrange_point">Lagrange points</a>.</p>
+<p>After that, you see exhibits various other areas of science and technology. One major theme was meditation and health and wellness, showing infrastructure that makes it much easier for people to enter alternative mental states. The section that struck me the most was the one on biotech, which showed a vision of using genetic engineering to improve the resilience of the biosphere by enabling plants and animals to survive in more diverse environments.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/museumfuture/bio1.png" /> <img src="../../../../images/museumfuture/bio2.png" /></p>
+</center>
+<p><br></p>
+<p>It's worth, err.... <em>meditating</em> on this scene for a bit. This is a drastic departure from the traditional Western way of thinking about environmental issues. In the West, nature is a garden of Eden, originally a beautiful pristine thing, now fallen to the corrupting influence of industrial technology. The main ethical imperative is to <em>preserve</em>, to do less harm than we otherwise would. In Dubai, the narrative is the opposite. The <em>default condition</em> of nature, at least as they are accustomed to it, is a <a href="https://traveltriangle.com/blog/history-of-dubai/">desolate wasteland</a>. Human ingenuity and artifice applied to nature is not just there to mitigate the harms of <em>other</em> human ingenuity and artifice, it can actually go further and <em>improve</em> the environment beyond what it was when we started.</p>
+<p>The Miraikan does not have anything like this. There is an exhibit that deals with the important environmental problems facing the earth, but its tone toward the problem is much more conventional: these problems are the fault of human beings, we need to be mindful and find ways to have a smaller footprint. There are multiple exhibits that deal with improving the lives of people who do not have good (or functioning at all) eyesight or hearing. But their proposed solutions are mostly tweaks that try to make the world more gentle and friendly to people suffering from these conditions: robots that can help guide people, writing on business cards in Braille, and the like. These are really valuable things that can improve the lives of many people. But they are not what I would expect to see in a museum of the future in 2024: a solution that lets people <em>actually see and hear again</em>, such as <a href="https://eyeandear.org/2020/02/regenerating-the-optic-nerve/">optic nerve regeneration</a> and <a href="https://www.discovermagazine.com/technology/elon-musks-brain-chip-could-restore-vision-and-mobility-but-has-a-long-way">brain computer interfaces</a>.</p>
+<p>Something about the Dubai approach to these questions speaks deeply to my soul, in a way that the Tokyo approach does not. I do not want a future that is 1.2x better than the present, where I can enjoy 84 years of comfort instead of 70 years of comfort. I want a future that is 10000x better than the present. I believe in the type of Nietzscheanism that Scott Alexander <a href="https://www.astralcodexten.com/p/matt-yglesias-considered-as-the-nietzschean">described in his recent blog post</a>, where he cautions against having your primary goals in life be goals like "I don't want to make anyone mad" and "I want to take up less space", which are better satisfied by being dead than being alive. If I become infirm and weak for a medical reason, it would certainly be an improvement to live in an environment designed to still let me feel comfortable despite these disadvantages. But what I really want is for <em>technology to fix me so that I can once again become strong.</em></p>
+<p>That said, there is also something in the Dubai Museum of the Future that felt missing and limiting, which the Miraikan does a truly excellent job of making up for. And so now is a good time to switch focus, and talk about the virtues that I think make the Miraikan great.</p>
+<h2 id="what-i-liked-about-the-miraikan-tokyo">What I liked about the Miraikan, Tokyo</h2>
+<p>When you first enter the Miraikan, the first exhibit is about the planetary crisis: both global warming, and the whole host of various environmental issues that have to do with the quantities of pollutants getting too high or the quantities of essential resources getting too low. Immediately after that, you see an exhibit of various forms of art, involving heavy use of AI, that mimics various patterns that we see in nature. After that, a giant orb that repeats a short infographic film called "Into the Diverse World" that shows various statistics about different parts of the world and how people live in the various regions. After that, a hands-on exhibit showing the inner workings of the basic low-level internet protocols.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/museumfuture/mir1.png" /> <img src="../../../../images/museumfuture/mir2.png" /></p>
+<p><small><i>Left: a diagram showing how much different countries contribute to the world's CO2 emissions. Right: a replica of a natural butterfly right beside a robotic one.</i></small></p>
+</center>
+<p><br></p>
+<p>What particularly strikes me about the exhibits is the way in which they invite people to <em>actively learn and participate</em>. The informational exhibits all strive to present information in a way that makes it tangible and easier for people to understand important details, and consequences, of each problem. A section on overfishing features the complaint "I like sushi ... but we may not be able to eat sushi casually in the future, right?". At least two of the exhibits end with an interactive section, which asks a question related to the content and invites people to provide their own answers. An exhibit on solving the Earth's resource problems takes the form of a game.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/museumfuture/mir3.png" /> <img src="../../../../images/museumfuture/mir4.png" /></p>
+<p><small><i>Left: a billboard inviting museum guests to submit answers to "how can we avoid polluting?" and "what can we do to continue living on this Earth?", and showing recent guests' answers. Right: a game with the theme of avoiding a minefield of ecological challenges on the way to getting to a good future in 2100.</i></small></p>
+</center>
+<p><br></p>
+<p>The underlying tone of the two museums differs drastically in this regard. The museum in Dubai feels consumerist: this is the amazing future that we are going to have, and you just need to sit back and enjoy as we build it for you. The museum in Tokyo feels like an invitation to participate: we're not going to tell you too much about what the future is, but we want you to think about the issues, learn what's going on under the hood, and become part of building the shared future.</p>
+<p>The main type of technology that I found missing in the Museum of the Future in Dubai is <em>social technology</em>, particularly <em>governance</em>. The only explicit description of governance structure that I found in Dubai's imagined world of 2064 was an offhand line in a description of the primary space station on Mars: "Operator: Global Space Authority, SpaceX". In the Miraikan, on the other hand, the structure of the museum itself emphasizes collaborative discussion, and you see frequent references to languages, culture, government and freedom of the press.</p>
+<h2 id="are-the-two-visions-compatible">Are the two visions compatible?</h2>
+<p>At first, the two visions seem very different, and perhaps thematically even going in opposite directions. But the more I think about them, the more it feels like the two are actually very synergistic: one plugs the holes in the other. I do not to see a world in 2100 that is like the world of today, but at most 20% better. And civilizations that <em>do</em> have an overriding mindset of trying to make do with less are going to find themselves under constant pressure from both outside forces and parts of their own societies that want to more strongly push against our boundaries. But at the same time, the more our society <em>does</em> radically progress into something far outside historical norms, the more it becomes important to make sure that everyone is along for the ride, both in understanding what is going on, and in being part of the discussion and part of the process of making it happen.</p>
+<p>My own <a href="https://vitalik.eth.limo/categories/cryptography.html">posts trying to make advanced topics in cryptography more accessible</a> are made precisely in this spirit: we really need the advanced tools, but we also need them to be understandable and accessible, to ensure that more people can work together and ensure that the future empowers people, rather than turning into a series of iPhone interfaces built by a few that the rest of us can only access in standardized ways.</p>
+<p>Perhaps the ideal museum of the future that I would want to see, is one that combines the boldness of the Dubai Museum of the Future's imagination, with the welcoming and inviting spirit that only something like the Miraikan can bring.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/museumfuture/end1.png" /> <img src="../../../../images/museumfuture/end2.png" /></p>
+<p><small><i>Left: "The cosmos is for everyone", Dubai Museum of the Future. Right: a robot intentionally designed to be cute and friendly rather than threatening, Miraikan.</i></small></p>
+</center>
+<p><br></p>
+ </div> 
