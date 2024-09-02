@@ -3,7 +3,7 @@
 [title]: <> (Glue and coprocessor architectures)
 [pandoc]: <> ()
 
-_Special thanks to Justin Drake, Georgios Konstantopoulos, Andrej Karpathy, Michael Gao and various Flashbots contributors for feedback and review._
+_Special thanks to Justin Drake, Georgios Konstantopoulos, Andrej Karpathy, Michael Gao, Tarun Chitra and various Flashbots contributors for feedback and review._
 
 If you analyze any resource-intensive computation being done in the modern world in even a medium amount of detail, one feature that you will find again and again is that the computation can be broken up into two parts:
 
