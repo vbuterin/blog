@@ -64,11 +64,11 @@ To see how this works, we can look at one of the latest trends in STARK proving.
     
 <small>
     
-_Diagram from [RiscZero documentation](https://dev.risczero.com/api/zkvm/)_
+_Diagram from [RISC Zero documentation](https://dev.risczero.com/api/zkvm/)_
 
 </small></center><br>
 
-This is super convenient: it means that we only need to write the prover logic once, and from that point forward any program that needs to be proven can just be written in any "conventional" programming language (eg. RiskZero supports Rust). However, there is a problem: this approach incurs significant overhead. Programmable cryptography is already very expensive; adding the overhead of running code inside a RISC-V interpreter is too much. And so developers have come up with a hack: you identify the specific expensive operations that make up the bulk of the computation (often that's hashes and signatures), and you create specialized modules to prove those operations extremely efficiently. And then you just combine the inefficient-but-general RISC-V proving system and the efficient-but-specialized proving systems together, and you get the best of both worlds.
+This is super convenient: it means that we only need to write the prover logic once, and from that point forward any program that needs to be proven can just be written in any "conventional" programming language (eg. [RISC Zero](https://www.risczero.com/) supports Rust). However, there is a problem: this approach incurs significant overhead. Programmable cryptography is already very expensive; adding the overhead of running code inside a RISC-V interpreter is too much. And so developers have come up with a hack: you identify the specific expensive operations that make up the bulk of the computation (often that's hashes and signatures), and you create specialized modules to prove those operations extremely efficiently. And then you just combine the inefficient-but-general RISC-V proving system and the efficient-but-specialized proving systems together, and you get the best of both worlds.
 
 Programmable cryptography other than ZK-SNARKs, such as [multi-party computation (MPC)](https://en.wikipedia.org/wiki/Secure_multi-party_computation) and [fully homomorphic encryption (FHE)](https://vitalik.eth.limo/general/2020/07/20/homomorphic.html) will likely be optimized using a similar approach.
 
