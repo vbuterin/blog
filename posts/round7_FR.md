@@ -1,4 +1,4 @@
-[category]: <> (Français)
+[category]: <> (Translations)
 [date]: <> (2020/10/18)
 [title]: <> ( 7ème tour des subventions Gitcoin - Rétrospective )
 [pandoc]: <> (--mathjax)

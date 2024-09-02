@@ -1,4 +1,4 @@
-[category]: <> (中文)
+[category]: <> (Translations)
 [date]: <> (2022/07/13)
 [title]: <> (「网络国家」之我见)
 [pandoc]: <> (--mathjax)

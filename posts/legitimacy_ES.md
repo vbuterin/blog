@@ -1,4 +1,4 @@
-[category]: <> (Español)
+[category]: <> (Translations)
 [date]: <> (2021/03/23)
 [title]: <> (El recurso escaso más importante es la legitimidad)
 [pandoc]: <> (--mathjax)

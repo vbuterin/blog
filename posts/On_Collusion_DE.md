@@ -1,4 +1,4 @@
-[category]: <> (Deutsch)
+[category]: <> (Translations)
 [date]: <> (2000/01/01)
 [title]: <> (Über Kollusion)
 [pandoc]: <> (--mathjax)

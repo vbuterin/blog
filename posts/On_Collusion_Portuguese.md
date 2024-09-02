@@ -1,4 +1,4 @@
-[category]: <> (Português)
+[category]: <> (Translations)
 [date]: <> (2000/01/01)
 [title]: <> (Na colusão)
 [pandoc]: <> (--mathjax)

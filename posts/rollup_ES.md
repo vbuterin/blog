@@ -1,4 +1,4 @@
-[category]: <> (Español)
+[category]: <> (Translations)
 [date]: <> (2021/01/05)
 [title]: <> (La Guía Incompleta de los Rollups)
 [pandoc]: <> ()

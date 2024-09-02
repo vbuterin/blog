@@ -1,4 +1,4 @@
-[category]: <> (Türkçe)
+[category]: <> (Translations)
 [date]: <> (2016/12/29)
 [title]: <> ([Mirror] Bir Proof of Stake Tasarım Felsefesi)
 [pandoc]: <> (--mathjax)

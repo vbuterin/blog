@@ -1,4 +1,4 @@
-[category]: <> (中文)
+[category]: <> (Translations)
 [date]: <> (2020/11/06)
 [title]: <> (為什麼權益證明棒棒的（2020 年十一月）)
 [pandoc]: <> (--mathjax)

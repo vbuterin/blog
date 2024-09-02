@@ -1,4 +1,4 @@
-[category]: <> (中文)
+[category]: <> (Translations)
 [date]: <> (2022/10/28)
 [title]: <> (我在加密世界的一些个人体验)
 [pandoc]: <> (--mathjax)

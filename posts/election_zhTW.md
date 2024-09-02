@@ -1,4 +1,4 @@
-[category]: <> (中文)
+[category]: <> (Translations)
 [date]: <> (2020/02/18)
 [title]: <> (預測市場：一個選舉小故事（2021年 二月）)
 

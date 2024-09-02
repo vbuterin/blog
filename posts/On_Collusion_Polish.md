@@ -1,4 +1,4 @@
-[category]: <> (Polski)
+[category]: <> (Translations)
 [date]: <> (2000/01/01)
 [title]: <> (Zmowa)
 [pandoc]: <> (--mathjax)

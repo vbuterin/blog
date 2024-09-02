@@ -1,4 +1,4 @@
-[category]: <> (中文)
+[category]: <> (Translations)
 [date]: <> (2022/10/28)
 [title]: <> (收入-邪恶曲线：思考“公共物品融资优先”的另一种方式)
 [pandoc]: <> (--mathjax)
