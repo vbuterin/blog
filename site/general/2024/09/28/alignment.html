@@ -1,0 +1,236 @@
+
+
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
+
+
+
+<link rel="alternate" type="application/rss+xml" href="../../../../feed.xml" title="Making Ethereum alignment legible">
+
+
+
+<link rel="stylesheet" type="text/css" href="../../../../css/common-vendor.b8ecfc406ac0b5f77a26.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/fretboard.f32f2a8d5293869f0195.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty.0ae3265014f89d9850bf.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/pretty-vendor.83ac49e057c3eac4fce3.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/global.css">
+<link rel="stylesheet" type="text/css" href="../../../../css/misc.css">
+
+<script type="text/x-mathjax-config">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\(', '\)']]
+  },
+  svg: {
+    fontCache: 'global',
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="../../../../scripts/tex-svg.js">
+</script>
+
+<style>
+</style>
+
+<div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
+
+<div id="color-mode-switch">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <input type="checkbox" id="switch" />
+  <label for="switch">Dark Mode Toggle</label>
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
+</div>
+
+<script type="text/javascript">
+  // Update root html class to set CSS colors
+  const toggleDarkMode = () => {
+    const root = document.querySelector('html');
+    root.classList.toggle('dark');
+  }
+
+  // Update local storage value for colorScheme
+  const toggleColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
+    else localStorage.setItem('colorScheme', 'light');
+  }
+
+  // Set toggle input handler
+  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
+  if (toggle) toggle.onclick = () => {
+    toggleDarkMode();
+    toggleColorScheme();
+  }
+
+  // Check for color scheme on init
+  const checkColorScheme = () => {
+    const colorScheme = localStorage.getItem('colorScheme');
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
+      toggle.checked = true;
+      toggleDarkMode();
+    }
+  }
+  checkColorScheme();
+</script>
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Making Ethereum alignment legible" />
+<meta name="twitter:image" content="http://vitalik.ca/images/icon.png" />
+
+
+<br>
+<h1 style="margin-bottom:7px"> Making Ethereum alignment legible </h1>
+<small style="float:left; color: #888"> 2024 Sep 28 </small>
+<small style="float:right; color: #888"><a href="../../../../index.html">See all posts</a></small>
+<br> <br> <br>
+<title> Making Ethereum alignment legible </title>
+
+<p>One of the most important social challenges in the Ethereum ecosystem
+is balancing - or, more accurately, <strong><em>integrating</em>,
+decentralization and cooperation</strong>. The ecosystem's strength is
+that there is a wide array of people and organizations - <a
+href="https://ethereum.org/en/developers/docs/nodes-and-clients/">client
+teams</a>, researchers, <a
+href="https://vitalik.eth.limo/general/2024/05/29/l2culture.html">layer
+2 teams</a>, application developers, local community groups - all
+building toward their own visions of what Ethereum can be. The primary
+challenge is making sure that all these projects are, collectively,
+building something that feels like one Ethereum ecosystem, and not 138
+incompatible fiefdoms.</p>
+<p>To solve this challenge, many people throughout the Ethereum
+ecosystem have brought up the concept of "Ethereum alignment". This <a
+href="https://shorturl.at/cTjpy">can include</a> values alignment (eg.
+be open source, minimize centralization, support public goods),
+technological alignment (eg. work with ecosystem-wide standards), and
+economic alignment (eg. use ETH as a token where possible). However, the
+concept has historically been poorly defined, and this creates risk of
+social layer capture: <strong>if alignment means having the right
+friends, then "alignment" as a concept has failed</strong>.</p>
+<p>To solve this, I would argue that <strong>the concept of alignment
+should be made more <em>legible</em>, decomposed into specific
+properties, which can be represented by specific metrics</strong>. Each
+person's list will be different, and metrics will inevitably change over
+time. However, I think we already have some solid starting points.</p>
+<center>
+<p><br></p>
+<p><img src="../../../../images/alignment/turtles.png" /></p>
+</center>
+<p><br></p>
+<ul>
+<li><strong>Open source</strong> - this is valuable for two reasons: (i)
+code being inspectable to ensure security, and more importantly (ii)
+reducing the risk of proprietary lockin and enabling permissionless
+third-party improvements. Not every piece of every application needs to
+be fully open source, but core infrastructure components that the
+ecosystem depends on absolutely should be. The gold standard here is the
+<a href="https://www.gnu.org/philosophy/free-sw.en.html">FSF free
+software definition</a> and <a href="https://opensource.org/osd">OSI
+open source definition</a>.</li>
+<li><strong>Open standards</strong> - striving for interoperability with
+the Ethereum ecosystem and building on open standards, both the ones
+that exist (eg. <a
+href="https://eips.ethereum.org/EIPS/eip-20">ERC-20</a>, <a
+href="https://eips.ethereum.org/EIPS/eip-1271">ERC-1271</a>...) and those
+that are under development (eg. <a
+href="https://eips.ethereum.org/EIPS/eip-4337">ERC-4337</a> + <a
+href="https://eips.ethereum.org/EIPS/eip-7702">7702</a>, <a
+href="https://eips.ethereum.org/EIPS/eip-7683">7683</a>, <a
+href="https://eips.ethereum.org/EIPS/eip-3668">3668</a>, upcoming
+address format standards). If you want to introduce a new feature that
+is not well-served by existing standards, write a new ERC. The way to
+measure this is simple: for each (relevant) ERC, is a given project
+compatible with it?</li>
+<li><strong>Decentralization and security</strong> - avoiding points of
+trust, minimizing censorship vulnerabilities, and minimizing centralized
+infrastructure dependency. The natural metrics are (i) <strong>the
+walkaway test</strong>: if your team and servers disappear tomorrow,
+will your application still be usable, and (ii) <strong>the insider
+attack test</strong>: if your team itself tries to attack the system,
+how much will break, and how much harm could you do? An important
+formalization is the <a href="https://l2beat.com/scaling/summary">L2beat
+rollup stages</a>.</li>
+<li><strong>Positive-sum</strong>
+<ul>
+<li><strong>Toward Ethereum</strong> - the project succeeding should
+benefit the whole Ethereum community (eg. <strong>ETH holders</strong>,
+<strong>Ethereum users</strong>), even if they are not part of the
+project's own ecosystem. Specific examples include using ETH as the
+token (and thus contributing to its network effect), contributions to
+open source technology, commitments to donate a % of tokens or revenue
+to Ethereum ecosystem-wide public goods, etc.</li>
+<li><strong>Toward the broader world</strong> - Ethereum is here to make
+the world a more free and open place, enable new forms of ownership and
+collaboration, and contribute positively to important challenges facing
+humanity. Does your project do this? Examples include applications that
+bring sustainable value to broader audiences (eg. financial inclusion),
+% donations to beyond-Ethereum public goods, and technology with utility
+beyond crypto (eg. funding mechanisms, general computer security)</li>
+</ul></li>
+</ul>
+<center>
+<p><br></p>
+<p><img src="../../../../images/alignment/ethernodes.png" /></p>
+<p><small><i>Ethereum node map, source ethernodes.org</i></small></p>
+</center>
+<p><br></p>
+<p>Obviously, not all of the above is applicable to each project. The
+metrics that make sense for L2s, wallets, decentralized social media
+applications, etc, are all going to look very different. Different
+metrics may also change in priority: two years ago, rollups having
+"training wheels" was more okay because it was "early days"; today, we
+need to move to at least stage 1 ASAP.</p>
+<p>My ideal goal here is that we see more entities like <a
+href="https://l2beat.com/">L2beat</a> emerging to track how well
+individual projects are meeting the above criteria, and other criteria
+that the community comes up with. Instead of competing to have the right
+friends, projects would compete to be as aligned as possible according
+to clearly understandable criteria. The Ethereum Foundation should
+remain one-step-removed from most of this: we <em>fund</em> L2beat, but
+we should not <em>be</em> L2beat. Making the next L2beat is itself a
+permissionless process.</p>
+<p>This would also give the EF, and other organizations (and
+individuals) interested in supporting and engaging with the ecosystem
+while keeping their neutrality, a clearer route to determine which
+projects to support and use. Each organization and individual can make
+their own judgement about which criteria they care about the most, and
+choose projects in part based on which ones best fit those criteria.
+This makes it easier for both the EF and everyone else to become part of
+the <em>incentive</em> for projects to be more aligned.</p>
+<p>You can only be a meritocracy if merit is defined; otherwise, you
+have a (likely exclusive and negative-sum) social game. Concerns about
+"who watches the watchers" are best addressed not by betting everything
+on an attempt to make sure everyone in positions of influence is an
+angel, but through time-worn techniques like <strong>separation of
+powers</strong>. "Dashboard organizations" like L2beat, block explorers,
+and <a href="https://clientdiversity.org/">other</a> ecosystem <a
+href="https://www.mevwatch.info/">monitors</a> are an excellent example
+of such a principle working in the Ethereum ecosystem today. If we do
+more to make different aspects of alignment legible, while not
+centralizing in one single "watcher", we can make the concept much more
+effective, and fair and inclusive in the way that the Ethereum ecosystem
+strives to be.</p>
+ </div> 
