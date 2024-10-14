@@ -110,8 +110,8 @@ MathJax = {
 <title> Possible futures of the Ethereum protocol, part 1: The Merge </title>
 
 <p><em>Special thanks to Justin Drake, Hsiao-wei Wang, <span
-class="citation" data-cites="antonttc">@antonttc</span> and Francesco
-for feedback and review.</em></p>
+class="citation" data-cites="antonttc">@antonttc</span>, Anders Elowsson
+and Francesco for feedback and review.</em></p>
 <p>Originally, "the Merge" referred to the most important event in the
 Ethereum protocol's history since its launch: the long-awaited and
 hard-earned transition from proof of work to proof of stake. Today,
@@ -171,19 +171,21 @@ src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXwAAAFLCAYAAADVmDffAAAAAXNSR
 <strong>ensuring that even successful attacks have a high cost to the
 attacker</strong>. This is what is meant by the term "economic
 finality". If we did not have this goal, then we could solve this
-problem by randomly selecting a committee (as eg. <a
-href="https://developer.algorand.org/solutions/avm-evm-instant-finality/">Algorand
-does</a>) to finalize each slot. But the problem with this approach is
-that if an attacker <em>does</em> control 51% of validators, then they
-can perform an attack (reverting a finalized block, or censoring, or
-delaying finality) at very low cost: only the portion of their nodes
-that are in the committee could be detected as participating in the
-attack and penalized, whether through <a
+problem by randomly selecting a committee to finalize each slot. Chains
+that do not attempt to achieve economic finality, such as Algorand, <a
+href="https://developer.algorand.org/solutions/avm-evm-instant-finality/">often
+do exactly this</a>. But the problem with this approach is that if an
+attacker <em>does</em> control 51% of validators, then they can perform
+an attack (reverting a finalized block, or censoring, or delaying
+finality) at very low cost: only the portion of their nodes that are in
+the committee could be detected as participating in the attack and
+penalized, whether through <a
 href="https://consensys.io/blog/understanding-slashing-in-ethereum-staking-its-importance-and-consequences">slashing</a>
 or <a
-href="https://ethresear.ch/t/responding-to-51-attacks-in-casper-ffg/6363">minority
+href="https://ethresear.ch/t/responding-to-51-attacks-in-casper-ffg/6363">socially-coordinated
 soft fork</a>. This means that an attacker could repeatedly attack the
-chain many times over. Hence, if we want economic finality, a naive
+chain many times over, losing only a small portion of their stake during
+each attack. Hence, if we want economic finality, a naive
 committee-based approach does not work, and it appears at first glance
 that we do need the full set of validators to participate.</p>
 <p><strong>Ideally, we want to preserve economic finality, while
@@ -328,9 +330,7 @@ href="https://eprint.iacr.org/2023/280">https://eprint.iacr.org/2023/280</a></li
 <li>Orbit SSF: <a
 href="https://ethresear.ch/t/orbit-ssf-solo-staking-friendly-validator-set-management-for-ssf/19928">https://ethresear.ch/t/orbit-ssf-solo-staking-friendly-validator-set-management-for-ssf/19928</a></li>
 <li>Further analysis on Orbit-style mechanisms: <a
-href="https://notes.ethereum.org/@anderselowsson/Vorbit_SSF">https://notes.ethereum.org/<span
-class="citation"
-data-cites="anderselowsson/Vorbit">@anderselowsson/Vorbit</span>_SSF</a></li>
+href="https://ethresear.ch/t/vorbit-ssf-with-circular-and-spiral-finality-validator-selection-and-distribution/20464">https://ethresear.ch/t/vorbit-ssf-with-circular-and-spiral-finality-validator-selection-and-distribution/20464</a></li>
 <li>Horn, signature aggregation protocol (2022): <a
 href="https://ethresear.ch/t/horn-collecting-signatures-for-faster-finality/14219">https://ethresear.ch/t/horn-collecting-signatures-for-faster-finality/14219</a></li>
 <li>Signature merging for large-scale consensus (2023): <a
@@ -479,7 +479,7 @@ that we've seen add hundreds of lines of spec code, and introduce new
 assumptions in complicated cryptography. Figuring out an
 efficient-enough quantum-resistant SSLE implementation is also an open
 problem.</p>
-<p>It may end up the case that the "marginal extra complexity" of SSLE
+<p>It may end up the case that the extra complexity introduced by SSLE
 only goes down enough once we take the plunge and introduce the
 machinery to do general-purpose zero-knowledge proofs into the Ethereum
 protocol at L1 for other reasons (eg. state trees, ZK-EVM).</p>
@@ -608,9 +608,9 @@ situation than "the wrong side" getting an instant victory, both when
 the wrong side is an attacker, and when it's a client that has a
 bug.</p>
 <p>This also gives an answer to the question "what is the point of solo
-stakers"? Today, most stakers today are already staking through pools,
-and it seems <em>very</em> unlikely to get solo stakers up to 51% of
-staked ETH. However, getting solo stakers up to a <em>quorum-blocking
+stakers"? Today, most stakers are already staking through pools, and it
+seems <em>very</em> unlikely to get solo stakers up to 51% of staked
+ETH. However, getting solo stakers up to a <em>quorum-blocking
 minority</em>, especially if the quorum is 80% (so a quorum-blocking
 minority would only need 21%) seems potentially achievable if we work
 hard at it. As long as solo stakers do not go along with a 51% attack

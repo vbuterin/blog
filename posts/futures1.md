@@ -2,7 +2,7 @@
 [date]: <> (2024/10/14)
 [title]: <> (Possible futures of the Ethereum protocol, part 1: The Merge)
 
-_Special thanks to Justin Drake, Hsiao-wei Wang, @antonttc and Francesco for feedback and review._
+_Special thanks to Justin Drake, Hsiao-wei Wang, @antonttc, Anders Elowsson and Francesco for feedback and review._
 
 Originally, “the Merge” referred to the most important event in the Ethereum protocol’s history since its launch: the long-awaited and hard-earned transition from proof of work to proof of stake. Today, Ethereum has been a stably running proof of stake system for almost exactly two years, and this proof of stake has performed remarkably well in [stability](https://www.reddit.com/r/ethereum/comments/1f8uo8m/42_slashingfree_days_on_the_ethereum_mainnet/), performance and [avoiding centralization risks](https://x.com/VitalikButerin/status/1828318564224274735). However, there still remain some important areas in which proof of stake needs to improve.
 
@@ -36,7 +36,7 @@ The three goals are in conflict: in order for economic finality to be possible (
 
 </center><br>
 
-Note that this is all conditional on a key goal of Ethereum: **ensuring that even successful attacks have a high cost to the attacker**. This is what is meant by the term “economic finality”. If we did not have this goal, then we could solve this problem by randomly selecting a committee (as eg. [Algorand does](https://developer.algorand.org/solutions/avm-evm-instant-finality/)) to finalize each slot. But the problem with this approach is that if an attacker _does_ control 51% of validators, then they can perform an attack (reverting a finalized block, or censoring, or delaying finality) at very low cost: only the portion of their nodes that are in the committee could be detected as participating in the attack and penalized, whether through [slashing](https://consensys.io/blog/understanding-slashing-in-ethereum-staking-its-importance-and-consequences) or [minority soft fork](https://ethresear.ch/t/responding-to-51-attacks-in-casper-ffg/6363). This means that an attacker could repeatedly attack the chain many times over. Hence, if we want economic finality, a naive committee-based approach does not work, and it appears at first glance that we do need the full set of validators to participate.
+Note that this is all conditional on a key goal of Ethereum: **ensuring that even successful attacks have a high cost to the attacker**. This is what is meant by the term “economic finality”. If we did not have this goal, then we could solve this problem by randomly selecting a committee to finalize each slot. Chains that do not attempt to achieve economic finality, such as Algorand, [often do exactly this](https://developer.algorand.org/solutions/avm-evm-instant-finality/). But the problem with this approach is that if an attacker _does_ control 51% of validators, then they can perform an attack (reverting a finalized block, or censoring, or delaying finality) at very low cost: only the portion of their nodes that are in the committee could be detected as participating in the attack and penalized, whether through [slashing](https://consensys.io/blog/understanding-slashing-in-ethereum-staking-its-importance-and-consequences) or [socially-coordinated soft fork](https://ethresear.ch/t/responding-to-51-attacks-in-casper-ffg/6363). This means that an attacker could repeatedly attack the chain many times over, losing only a small portion of their stake during each attack. Hence, if we want economic finality, a naive committee-based approach does not work, and it appears at first glance that we do need the full set of validators to participate.
 
 **Ideally, we want to preserve economic finality, while simultaneously improving on the status quo in two areas**:
 
@@ -107,7 +107,7 @@ The harder part of the problem is figuring out how to make single-slot finality 
 * Paths toward single slot finality (2022): [https://notes.ethereum.org/@vbuterin/single\_slot\_finality](https://notes.ethereum.org/@vbuterin/single_slot_finality)
 * A concrete proposal for a single slot finality protocol for Ethereum (2023): [https://eprint.iacr.org/2023/280](https://eprint.iacr.org/2023/280)
 * Orbit SSF: [https://ethresear.ch/t/orbit-ssf-solo-staking-friendly-validator-set-management-for-ssf/19928](https://ethresear.ch/t/orbit-ssf-solo-staking-friendly-validator-set-management-for-ssf/19928)
-* Further analysis on Orbit-style mechanisms: [https://notes.ethereum.org/@anderselowsson/Vorbit\_SSF](https://notes.ethereum.org/@anderselowsson/Vorbit_SSF)
+* Further analysis on Orbit-style mechanisms: [https://ethresear.ch/t/vorbit-ssf-with-circular-and-spiral-finality-validator-selection-and-distribution/20464](https://ethresear.ch/t/vorbit-ssf-with-circular-and-spiral-finality-validator-selection-and-distribution/20464)
 * Horn, signature aggregation protocol (2022): [https://ethresear.ch/t/horn-collecting-signatures-for-faster-finality/14219](https://ethresear.ch/t/horn-collecting-signatures-for-faster-finality/14219)
 * Signature merging for large-scale consensus (2023): [https://ethresear.ch/t/signature-merging-for-large-scale-consensus/17386?u=asn](https://ethresear.ch/t/signature-merging-for-large-scale-consensus/17386?u=asn)
 * Signature aggregation protocol proposed by Khovratovich et al: [https://hackmd.io/@7dpNYqjKQGeYC7wMlPxHtQ/BykM3ggu0#/](https://hackmd.io/@7dpNYqjKQGeYC7wMlPxHtQ/BykM3ggu0#/)
@@ -184,7 +184,7 @@ Single secret leader election protocols solve this by using some cryptographic t
 
 Realistically, what’s left is finding and implementing a protocol that is sufficiently simple that we are comfortable implementing it on mainnet. We highly value Ethereum being a reasonably simple protocol, and we do not want complexity to increase further. SSLE implementations that we’ve seen add hundreds of lines of spec code, and introduce new assumptions in complicated cryptography. Figuring out an efficient-enough quantum-resistant SSLE implementation is also an open problem.
 
-It may end up the case that the “marginal extra complexity” of SSLE only goes down enough once we take the plunge and introduce the machinery to do general-purpose zero-knowledge proofs into the Ethereum protocol at L1 for other reasons (eg. state trees, ZK-EVM).
+It may end up the case that the extra complexity introduced by SSLE only goes down enough once we take the plunge and introduce the machinery to do general-purpose zero-knowledge proofs into the Ethereum protocol at L1 for other reasons (eg. state trees, ZK-EVM).
 
 An alternative option is to simply not bother with SSLE, and use out-of-protocol mitigations (eg. at the p2p layer) to solve the DoS issues.
 
@@ -237,7 +237,7 @@ Full automation is impossible, because if it were, that would count as a >50% fa
 
 Today, a block finalizes if 67% of stakers support it. There is an argument that this is overly aggressive. There has been only one (very brief) finality failure in all of Ethereum’s history. If this percentage is increased, eg. to 80%, then the added number of non-finality periods will be relatively low, but Ethereum would gain security properties: in particular, many **more contentious situations will result in temporary stopping of finality**. This seems a much healthier situation than “the wrong side” getting an instant victory, both when the wrong side is an attacker, and when it’s a client that has a bug.
 
-This also gives an answer to the question “what is the point of solo stakers”? Today, most stakers today are already staking through pools, and it seems _very_ unlikely to get solo stakers up to 51% of staked ETH. However, getting solo stakers up to a _quorum-blocking minority_, especially if the quorum is 80% (so a quorum-blocking minority would only need 21%) seems potentially achievable if we work hard at it. As long as solo stakers do not go along with a 51% attack (whether finality-reversion or censorship), such an attack would not get a “clean victory”, and solo stakers would be motivated to help organize a minority soft fork.
+This also gives an answer to the question “what is the point of solo stakers”? Today, most stakers are already staking through pools, and it seems _very_ unlikely to get solo stakers up to 51% of staked ETH. However, getting solo stakers up to a _quorum-blocking minority_, especially if the quorum is 80% (so a quorum-blocking minority would only need 21%) seems potentially achievable if we work hard at it. As long as solo stakers do not go along with a 51% attack (whether finality-reversion or censorship), such an attack would not get a “clean victory”, and solo stakers would be motivated to help organize a minority soft fork.
 
 ### Quantum-resistance
 
