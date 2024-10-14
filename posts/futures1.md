@@ -202,7 +202,7 @@ There is value in Ethereum’s [transaction confirmation time decreasing further
 
 There are broadly two families of techniques here:
 
-1. **Reduce slot times**, down to eg. [8 seconds](https://github.com/ethereum/EIPs/pull/8931) or 4 seconds. This does not necessarily have to mean 4-second finality: finality inherently takes three rounds of communication, and so we can make each round of communication be a separate block, which would after 4 seconds get at least a preliminary confirmation.
+1. **Reduce slot times**, down to eg. [8 seconds](https://github.com/ethereum/EIPs/pull/8931) or 4 seconds. This does not necessarily have to mean 4-second finality: finality inherently takes three rounds of communication, and so we can make each round of communication be a separate block, which would after 4 seconds get at least a preliminary confirmation. 
 2. Allow proposers to **publish pre-confirmations over the course of a slot**. In the extreme, a proposer could include transactions that they see into their block in real time, and immediately publish a pre-confirmation message for each transaction (“My first transaction is 0×1234…”, “My second transaction is 0×5678…”). The case of a proposer publishing two conflicting confirmations can be dealt with in two ways: (i) by **slashing** the proposer, or (ii) by using **attesters** to vote on which one came earlier.
 
 ### What are some links to existing research?
@@ -213,7 +213,7 @@ There are broadly two families of techniques here:
 
 ### What is left to do, and what are the tradeoffs?
 
-It’s far from clear just how practical it is to reduce slot times. Even today, stakers in many regions of the world have a hard time getting attestations included fast enough. Attempting 4-second slot times runs the risk of centralizing the validator set, and making it impractical to be a validator outside of a few privileged geographies due to latency.
+It’s far from clear just how practical it is to reduce slot times. Even today, stakers in many regions of the world have a hard time getting attestations included fast enough. Attempting 4-second slot times runs the risk of centralizing the validator set, and making it impractical to be a validator outside of a few privileged geographies due to latency. Specifically, moving to 4-second slot times would require reducing the bound on network latency ("delta") to _two seconds_.
 
 The proposer preconfirmation approach has the weakness that it can greatly improve _average-case_ inclusion times, but not _worst-case_: if the current proposer is well-functioning, your transaction will be pre-confirmed in 0.5 seconds instead of being included in (on average) 6 seconds, but if the current proposer is offline or not well-functioning, you would still have to wait up to a full 12 seconds for the next slot to start and provide a new proposer.
 
@@ -224,6 +224,8 @@ On the other hand, if we do _not_ attempt this and keep finality times at 12 sec
 ### How does it interact with other parts of the roadmap?
 
 Proposer-based preconfirmations realistically depend on an attester-proposer separation (APS) mechanism, eg. [execution tickets](https://www.ephema.io/blog/beyond-the-stars-an-introduction-to-execution-tickets-on-ethereum). Otherwise, the pressure to provide real-time preconfirmations may be too centralizing for regular validators.
+
+Exactly how short slot times can be also depends on the slot structure, which depends heavily on what versions of APS, inclusion lists, etc we end up implementing. There are slot structures that contain fewer rounds and are thus more friendly to short slot times, but they make tradeoffs in other places.
 
 ## Other research areas
 
@@ -238,6 +240,8 @@ Full automation is impossible, because if it were, that would count as a >50% fa
 Today, a block finalizes if 67% of stakers support it. There is an argument that this is overly aggressive. There has been only one (very brief) finality failure in all of Ethereum’s history. If this percentage is increased, eg. to 80%, then the added number of non-finality periods will be relatively low, but Ethereum would gain security properties: in particular, many **more contentious situations will result in temporary stopping of finality**. This seems a much healthier situation than “the wrong side” getting an instant victory, both when the wrong side is an attacker, and when it’s a client that has a bug.
 
 This also gives an answer to the question “what is the point of solo stakers”? Today, most stakers are already staking through pools, and it seems _very_ unlikely to get solo stakers up to 51% of staked ETH. However, getting solo stakers up to a _quorum-blocking minority_, especially if the quorum is 80% (so a quorum-blocking minority would only need 21%) seems potentially achievable if we work hard at it. As long as solo stakers do not go along with a 51% attack (whether finality-reversion or censorship), such an attack would not get a “clean victory”, and solo stakers would be motivated to help organize a minority soft fork.
+
+Note that there are interactions between quorum thresholds and the Orbit mechanism: if we end up using Orbit, then what exactly "21% of stakers" means will become a more complicated question, and will depend in part on the distribution of validators.
 
 ### Quantum-resistance
 

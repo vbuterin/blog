@@ -546,7 +546,9 @@ Even today, stakers in many regions of the world have a hard time
 getting attestations included fast enough. Attempting 4-second slot
 times runs the risk of centralizing the validator set, and making it
 impractical to be a validator outside of a few privileged geographies
-due to latency.</p>
+due to latency. Specifically, moving to 4-second slot times would
+require reducing the bound on network latency ("delta") to <em>two
+seconds</em>.</p>
 <p>The proposer preconfirmation approach has the weakness that it can
 greatly improve <em>average-case</em> inclusion times, but not
 <em>worst-case</em>: if the current proposer is well-functioning, your
@@ -574,6 +576,11 @@ attester-proposer separation (APS) mechanism, eg. <a
 href="https://www.ephema.io/blog/beyond-the-stars-an-introduction-to-execution-tickets-on-ethereum">execution
 tickets</a>. Otherwise, the pressure to provide real-time
 preconfirmations may be too centralizing for regular validators.</p>
+<p>Exactly how short slot times can be also depends on the slot
+structure, which depends heavily on what versions of APS, inclusion
+lists, etc we end up implementing. There are slot structures that
+contain fewer rounds and are thus more friendly to short slot times, but
+they make tradeoffs in other places.</p>
 <h2 id="other-research-areas">Other research areas</h2>
 <h3 id="attack-recovery">51% attack recovery</h3>
 <p>There is often an assumption that if a 51% attack happens (including
@@ -617,6 +624,10 @@ hard at it. As long as solo stakers do not go along with a 51% attack
 (whether finality-reversion or censorship), such an attack would not get
 a "clean victory", and solo stakers would be motivated to help organize
 a minority soft fork.</p>
+<p>Note that there are interactions between quorum thresholds and the
+Orbit mechanism: if we end up using Orbit, then what exactly "21% of
+stakers" means will become a more complicated question, and will depend
+in part on the distribution of validators.</p>
 <h3 id="quantum-resistance">Quantum-resistance</h3>
 <p><a
 href="https://www.metaculus.com/questions/3684/when-will-a-quantum-computer-running-shors-algorithm-or-a-similar-one-be-used-to-factor-one-of-the-rsa-numbers-for-the-first-time/">Metaculus
