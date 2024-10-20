@@ -1,7 +1,6 @@
-[category]: <> (General,Philosophy)
+[category]: <> (General,Blockchains)
 [date]: <> (2024/10/17)
-[title]: <> (Possible futures for the Ethereum protocol, part 2: The Surge)
-[pandoc]: <> (--mathjax)
+[title]: <> (Possible futures of the Ethereum protocol, part 2: The Surge)
 
 _Special thanks to Justin Drake, Francesco, Hsiao-wei Wang, @antonttc and Georgios Konstantopoulos_
 
@@ -37,7 +36,7 @@ This year, the rollup-centric roadmap has seen important successes: Ethereum L1 
 * [Data compression](#3)
 * [Generalized Plasma](#4)
 * [Maturing L2 proof systems](#5)
-* [Cross-L2 interoperability improvements](#6)
+* [Cross-L2 interoperability and UX improvements](#6)
 * [Scaling execution on L1](#7)
     
 <a id="1" />
@@ -107,6 +106,7 @@ Crucially, computing the extension of the commitments does not require having th
 * Explainer post on DAS, paradigm: [https://www.paradigm.xyz/2022/08/das](https://www.paradigm.xyz/2022/08/das)
 * 2D availability with KZG commitments: [https://ethresear.ch/t/2d-data-availability-with-kate-commitments/8081](https://ethresear.ch/t/2d-data-availability-with-kate-commitments/8081)
 * PeerDAS on ethresear.ch: [https://ethresear.ch/t/peerdas-a-simpler-das-approach-using-battle-tested-p2p-components/16541](https://ethresear.ch/t/peerdas-a-simpler-das-approach-using-battle-tested-p2p-components/16541) , and paper: [https://eprint.iacr.org/2024/1362](https://eprint.iacr.org/2024/1362)
+* Presentation on PeerDAS by Francesco: [https://www.youtube.com/watch?v=WOdpO1tH_Us](https://www.youtube.com/watch?v=WOdpO1tH_Us)
 * EIP-7594: [https://eips.ethereum.org/EIPS/eip-7594](https://eips.ethereum.org/EIPS/eip-7594)
 * SubnetDAS on ethresear.ch: [https://ethresear.ch/t/subnetdas-an-intermediate-das-approach/17169](https://ethresear.ch/t/subnetdas-an-intermediate-das-approach/17169)
 * Nuances of recoverability in 2D sampling: [https://ethresear.ch/t/nuances-of-data-recoverability-in-data-availability-sampling/16256](https://ethresear.ch/t/nuances-of-data-recoverability-in-data-availability-sampling/16256)
@@ -380,7 +380,7 @@ Another scaling strategy involves identifying specific features and types of com
 
 * [EOF](https://evmobjectformat.org/) - a new EVM bytecode format that is more friendly to static analysis, allowing for faster implementations. EOF bytecode could be given lower gas costs to take these efficiencies into account.
 * [**Multidimensional gas pricing**](https://vitalik.eth.limo/general/2024/05/09/multidim.html) - establishing separate basefees and limits for computation, data and storage can increase the Ethereum L1’s _average_ capacity without increasing its _maximum_ capacity (and hence creating new security risks).
-* **Reduce gas costs of specific opcodes and precompiles** - historically, we have had [several](https://github.com/ethereum/EIPs/issues/150) [rounds](https://eips.ethereum.org/EIPS/eip-1884) of [increasing](https://eips.ethereum.org/EIPS/eip-2200) gas [costs](https://eips.ethereum.org/EIPS/eip-2929) for certain operations that were _underpriced_ in order to avoid denial of service attacks. What we have had less of, and could do much more, is _reducing_ gas costs for operations that are _overpriced_. For example, addition is much cheaper than multiplication, but the costs of the `ADD` and `MUL` opcodes are currently the same. We could make `ADD` cheaper, and even simpler opcodes such as `PUSH` even cheaper. EOF as a whole is more
+* **Reduce gas costs of specific opcodes and precompiles** - historically, we have had [several](https://github.com/ethereum/EIPs/issues/150) [rounds](https://eips.ethereum.org/EIPS/eip-1884) of [increasing](https://eips.ethereum.org/EIPS/eip-2200) gas [costs](https://eips.ethereum.org/EIPS/eip-2929) for certain operations that were _underpriced_ in order to avoid denial of service attacks. What we have had less of, and could do much more, is _reducing_ gas costs for operations that are _overpriced_. For example, addition is much cheaper than multiplication, but the costs of the `ADD` and `MUL` opcodes are currently the same. We could make `ADD` cheaper, and even simpler opcodes such as `PUSH` even cheaper.
 * [**EVM-MAX**](https://ethereum-magicians.org/t/eip-6601-evm-modular-arithmetic-extensions-evmmax/13168) **and** [**SIMD**](https://github.com/ethereum/EIPs/issues/616): EVM-MAX (“modular arithmetic extensions”) is a proposal to allow more efficient native big-number modular math as a separate module of the EVM. Values computed by EVM-MAX computations would only be accessible by other EVM-MAX opcodes, unless deliberately exported; this allows greater room to store these values in [optimized formats](https://en.wikipedia.org/wiki/Montgomery_modular_multiplication). SIMD (“single instruction multiple data”) is a proposal to allow efficiently executing the same instruction on an array of values. The two together can create a powerful [coprocessor](https://vitalik.eth.limo/general/2024/09/02/gluecp.html) alongside the EVM that could be used to much more efficiently implement cryptographic operations. This would be especially useful for privacy protocols, and for L2 proof systems, so it would help both L1 and L2 scaling.
     
 
