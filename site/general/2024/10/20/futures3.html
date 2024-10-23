@@ -186,14 +186,15 @@ builders take on the tasks in the red, and stakers take on the tasks in
 blue.</em> </small></p>
 </center>
 <p><br></p>
-<p>There are various versions of this, including "proposer-builder
-separation" (PBS) and "attester-proposer separation" (APS). The
+<p>There are various versions of this, including "<a
+href="https://ethereum.org/en/roadmap/pbs/">proposer-builder
+separation</a>" (PBS) and "attester-proposer separation" (APS). The
 difference between these has to do with fine-grained details around
-which responsibilities go to which of the two actors: roughly, in PBS
+which responsibilities go to which of the two actors: roughly, in PBS,
 validators still propose blocks, but receive the payload from builders,
-and in APS the entire slot becomes the builder's responsibility.
+and in APS, the entire slot becomes the builder's responsibility.
 Recently, APS is preferred over PBS, because it further reduces
-incentives for proposers to colocate with builders. Note that APS would
+incentives for proposers to co-locate with builders. Note that APS would
 only apply to <em>execution blocks</em>, which contain transactions;
 <em>consensus blocks</em>, which contain proof-of-stake-related data
 such as attestations, would still be randomly assigned to
@@ -350,7 +351,7 @@ href="https://www.arxiv.org/pdf/2408.11255">https://www.arxiv.org/pdf/2408.11255
 <li>Centralization in APS: <a
 href="https://arxiv.org/abs/2408.03116">https://arxiv.org/abs/2408.03116</a></li>
 <li>Multi-block MEV and inclusion lists: <a
-href="https://x.com/_charlienoyes/status/1806186662327689441">https://x.com/_charlienoyes/status/1806186662327689441</a></li>
+href="https://x.com/_charlienoyes/status/1806186662327689441">https://x.com/%5fcharlienoyes/status/1806186662327689441</a></li>
 </ul>
 <h3 id="what-is-left-to-do-and-what-are-the-tradeoffs">What is left to
 do, and what are the tradeoffs?</h3>
@@ -654,8 +655,8 @@ staking</strong>. Today, the cheapest VPSes that can run an Ethereum
 node cost about $60 per month, primarily due to hard disk storage costs.
 For a 32 ETH staker ($84,000 at the time of this writing), this
 decreases APY by <code>(60 * 12) / 84000 ~= 0.85%</code> . If total
-staking returns drop below 0.85%, this makes solo staking unviable for
-many people at these levels.</p>
+staking returns drop below 0.85%, solo staking will be unviable for many
+people at these levels.</p>
 <p>If we want solo staking to continue to be viable, this puts further
 emphasis on the need to reduce node operation costs, which will be done
 in the Verge: statelessness will remove storage space requirements,

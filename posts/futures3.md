@@ -49,7 +49,7 @@ Today, Ethereum block construction is largely done through extra-protocol propse
 
 </center><br>
 
-There are various versions of this, including “proposer-builder separation” (PBS) and “attester-proposer separation” (APS). The difference between these has to do with fine-grained details around which responsibilities go to which of the two actors: roughly, in PBS validators still propose blocks, but receive the payload from builders, and in APS the entire slot becomes the builder’s responsibility. Recently, APS is preferred over PBS, because it further reduces incentives for proposers to colocate with builders. Note that APS would only apply to _execution blocks_, which contain transactions; _consensus blocks_, which contain proof-of-stake-related data such as attestations, would still be randomly assigned to validators.
+There are various versions of this, including “[proposer-builder separation](https://ethereum.org/en/roadmap/pbs/)” (PBS) and “attester-proposer separation” (APS). The difference between these has to do with fine-grained details around which responsibilities go to which of the two actors: roughly, in PBS, validators still propose blocks, but receive the payload from builders, and in APS, the entire slot becomes the builder’s responsibility. Recently, APS is preferred over PBS, because it further reduces incentives for proposers to co-locate with builders. Note that APS would only apply to _execution blocks_, which contain transactions; _consensus blocks_, which contain proof-of-stake-related data such as attestations, would still be randomly assigned to validators.
 
 This separation of powers helps keep validators decentralized, but it has one important cost: the actors that are doing the “specialized” tasks can easily become _very_ centralized. Here’s Ethereum block building today:
 
@@ -115,7 +115,7 @@ The main challenge in implementing encrypted mempools is coming up with a design
 * Verifiable delay functions and attacks (focuses on the RANDAO setting, but also applicable to encrypted mempools): [https://ethresear.ch/t/verifiable-delay-functions-and-attacks/2365](https://ethresear.ch/t/verifiable-delay-functions-and-attacks/2365)
 * MEV Capture and Decentralization in Execution Tickets: [https://www.arxiv.org/pdf/2408.11255](https://www.arxiv.org/pdf/2408.11255)
 * Centralization in APS: [https://arxiv.org/abs/2408.03116](https://arxiv.org/abs/2408.03116)
-* Multi-block MEV and inclusion lists: [https://x.com/_charlienoyes/status/1806186662327689441](https://x.com/_charlienoyes/status/1806186662327689441)
+* Multi-block MEV and inclusion lists: [https://x.com/%5fcharlienoyes/status/1806186662327689441](https://x.com/_charlienoyes/status/1806186662327689441)
 
 
 ### What is left to do, and what are the tradeoffs?
@@ -250,7 +250,7 @@ The main remaining task is to either agree to do nothing, and accept the risks o
 
 ### How does it interact with other parts of the roadmap?
 
-One important point of intersection has to do with **solo staking**. Today, the cheapest VPSes that can run an Ethereum node cost about $60 per month, primarily due to hard disk storage costs. For a 32 ETH staker ($84,000 at the time of this writing), this decreases APY by `(60 * 12) / 84000 ~= 0.85%` . If total staking returns drop below 0.85%, this makes solo staking unviable for many people at these levels.
+One important point of intersection has to do with **solo staking**. Today, the cheapest VPSes that can run an Ethereum node cost about $60 per month, primarily due to hard disk storage costs. For a 32 ETH staker ($84,000 at the time of this writing), this decreases APY by `(60 * 12) / 84000 ~= 0.85%` . If total staking returns drop below 0.85%, solo staking will be unviable for many people at these levels.
 
 If we want solo staking to continue to be viable, this puts further emphasis on the need to reduce node operation costs, which will be done in the Verge: statelessness will remove storage space requirements, which may be sufficient on its own, and then L1 EVM validity proofs will make costs completely trivial.
 
