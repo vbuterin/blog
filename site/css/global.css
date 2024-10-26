@@ -4,6 +4,7 @@
 :root {
   --color-anchor: #337ab7;
   --color-bg: #fff;
+  --color-blue-bg: #cef;
   --color-blockquote-text: #777;
   --color-code-bg: #f7f7f7;
   --color-code-text: #333;
@@ -23,6 +24,7 @@
 html.dark {
   --color-anchor: #77e1cd;
   --color-bg: #1c1c1c;
+  --color-blue-bg: #115;
   --color-blockquote-text: #c0bcbc;
   --color-code-bg: #313030;
   --color-code-text: #fefefe;

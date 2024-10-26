@@ -20,7 +20,7 @@ This post will focus on the “Merge” part: **what can still be improved in th
 
 This is not meant as an exhaustive list of things that could be done to proof of stake; rather, it is a list of ideas that are actively being considered.
 
-<br><div style="background-color:#cef; padding: 1px 20px 10px 20px; border-radius: 25px">
+<br><div style="background-color:var(--color-blue-bg); padding: 1px 20px 10px 20px; border-radius: 25px">
 
 ## The Merge: key goals
 

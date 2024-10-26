@@ -18,7 +18,7 @@ The rollup-centric roadmap proposes a simple division of labor: the Ethereum L1 
 
 This year, the rollup-centric roadmap has seen important successes: Ethereum L1 data bandwidth has increased greatly with [EIP-4844 blobs](https://www.eip4844.com/), and multiple EVM rollups are now [at stage 1](https://l2beat.com/scaling/summary). A very [heterogeneous and pluralistic implementation of sharding](https://vitalik.eth.limo/general/2024/05/23/l2exec.html), where each L2 acts as a “shard” with its own internal rules and logic, is now reality. But as we have seen, taking this path has some unique challenges of its own. And so now **our task is to bring the rollup-centric roadmap to completion, and solve these problems, while preserving the robustness and decentralization that makes the Ethereum L1 special**.
 
-<br><div style="background-color:#cef; padding: 1px 20px 10px 20px; border-radius: 25px">
+<br><div style="background-color:var(--color-blue-bg); padding: 1px 20px 10px 20px; border-radius: 25px">
 
 ## The Surge: key goals
 

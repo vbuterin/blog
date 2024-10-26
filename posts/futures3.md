@@ -18,7 +18,7 @@ Over the last year, our understanding of these risks has increased greatly. It�
 
 This year, there have been significant advancements on block construction, most notably convergence on “committee inclusion lists plus some targeted solution for ordering” as the ideal solution, as well as significant research on proof of stake economics, including ideas such as two-tiered staking models and reducing issuance to cap the percent of ETH staked.
 
-<br><div style="background-color:#cef; padding: 1px 20px 10px 20px; border-radius: 25px">
+<br><div style="background-color:var(--color-blue-bg); padding: 1px 20px 10px 20px; border-radius: 25px">
 
 ## The Scourge: key goals
 
