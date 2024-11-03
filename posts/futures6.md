@@ -2,7 +2,7 @@
 [date]: <> (2024/10/29)
 [title]: <> (Possible futures of the Ethereum protocol, part 6: The Splurge)
 
-_Special thanks to Justin Drake and Tim Beiko for feedback and review_
+_Special thanks to Justin Drake, Tim Beiko and Yoav Weiss for feedback and review_
 
 Some things are just not easy to put into a single category. There are lots of “little things” in Ethereum protocol design that are very valuable for Ethereum’s success, but don’t fit nicely into a larger sub-category. In practice, about half of which has ended up being about EVM improvements of various kinds, and the rest is made up of various niche topics. This is what “the Splurge” is for.
 
@@ -117,7 +117,7 @@ Today, a transaction can only be verified in one way: ECDSA signatures. Original
 * Signing with one key for low-value operations and another key (or set of keys) for high-value operations
 * Allowing privacy protocols to work without relayers, significantly lowering their complexity and removing a key central point of dependency
 
-Since account abstraction began in 2015, the goals have expanded to also include a large set of “convenience goals”, such as an account that has no ETH but has some ERC20 being able to pay gas in that ERC20. One summary of these goals is the following chart:
+Since account abstraction began in 2015, the goals have expanded to also include a large set of “convenience goals”, such as an account that has no ETH but has some ERC20 being able to pay gas in that ERC20. Instead of the account abstraction roadmap just abstracting validation, it aims to abstract everyghing: authentication (who can perform an action), authorization (what can they do), replay protection, gas payment and execution. One summary of these goals is the following chart:
 
 <center><br>
 
@@ -153,7 +153,7 @@ Years of effort trying to expand functionality while limiting DoS risks have led
 
 </center><br>
 
-ERC-4337 works by dividing processing of user operations into two phases: **validation** and **execution**. All validations are processed first, and all executions are processed second. In the mempool, a user operation is only accepted if its validation phase only touches its own account, and does not read environmental variables. This prevents multi-invalidation attacks. A strict gas limit on the validation step is also enforced.
+ERC-4337 works by dividing processing of user operations into two phases: **validation** and **execution**. All validations are processed first, and all executions are processed second. In the mempool, a user operation is only accepted if its validation phase only touches its own account (plus a few special-case extensions, see "associated storage" in [ERC-7562](https://eips.ethereum.org/EIPS/eip-7562)), and does not read environmental variables. This prevents multi-invalidation attacks. A strict gas limit on the validation step is also enforced.
 
 ERC-4337 was designed as an extra-protocol standard (an ERC), because at the time the Ethereum client developers were focused on the Merge, and did not have any spare capacity to work on other features. This is why ERC-4337 uses its own object called user operations, instead of regular transactions. More recently, however, we have been realizing that there is a need to enshrine at least parts of it in the protocol. Two key reasons are:
 
@@ -171,7 +171,7 @@ Additionally, ERC-4337 has been extended by two features:
 * ERC-4337: [https://eips.ethereum.org/EIPS/eip-4337](https://eips.ethereum.org/EIPS/eip-4337)
 * EIP-7702: [https://eips.ethereum.org/EIPS/eip-7702](https://eips.ethereum.org/EIPS/eip-7702)
 * BLSWallet code (uses aggregation feature): [https://github.com/getwax/bls-wallet](https://github.com/getwax/bls-wallet)
-* EIP-7562 (enshrined account abstraction): [https://eips.ethereum.org/EIPS/eip-7562](https://eips.ethereum.org/EIPS/eip-7562)
+* ERC-7562 (enshrined account abstraction mempool rules): [https://eips.ethereum.org/EIPS/eip-7562](https://eips.ethereum.org/EIPS/eip-7562)
 * EIP-7701 (EOF-based enshrined AA): [https://eips.ethereum.org/EIPS/eip-7701](https://eips.ethereum.org/EIPS/eip-7701)
 
 ### What is left to do, and what are the tradeoffs?
@@ -199,7 +199,7 @@ Another application that we need to think about explicitly is **[keystore accoun
 
 ### How does it interact with other parts of the roadmap?
 
-Inclusion lists need to support account abstracted transactions. In practice, the needs of inclusion lists and the needs of decentralized mempools end up being pretty similar, though there is slightly more flexibility for inclusion lists. Additionally, account abstraction implementations should ideally be harmonized on L1 and L2 as much as possible. If, in the future, we expect most users to be using keystore rollups, the account abstraction designs should be built with this in mind.
+Inclusion lists need to support account abstracted transactions. In practice, the needs of inclusion lists and the needs of decentralized mempools end up being pretty similar, though there is slightly more flexibility for inclusion lists. Additionally, account abstraction implementations should ideally be harmonized on L1 and L2 as much as possible. If, in the future, we expect most users to be using keystore rollups, the account abstraction designs should be built with this in mind. Gas payment abstraction should also be designed with cross-chain use cases in mind (see eg. [RIP-7755](https://ethereum-magicians.org/t/rip-7755-contract-standard-for-cross-l2-calls-facilitation/20776)).
 
 <a id="3" />
 

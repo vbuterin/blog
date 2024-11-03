@@ -109,8 +109,8 @@ MathJax = {
 <br> <br> <br>
 <title> Possible futures of the Ethereum protocol, part 6: The Splurge </title>
 
-<p><em>Special thanks to Justin Drake and Tim Beiko for feedback and
-review</em></p>
+<p><em>Special thanks to Justin Drake, Tim Beiko and Yoav Weiss for
+feedback and review</em></p>
 <p>Some things are just not easy to put into a single category. There
 are lots of "little things" in Ethereum protocol design that are very
 valuable for Ethereum's success, but don't fit nicely into a larger
@@ -299,8 +299,12 @@ dependency</li>
 </ul>
 <p>Since account abstraction began in 2015, the goals have expanded to
 also include a large set of "convenience goals", such as an account that
-has no ETH but has some ERC20 being able to pay gas in that ERC20. One
-summary of these goals is the following chart:</p>
+has no ETH but has some ERC20 being able to pay gas in that ERC20.
+Instead of the account abstraction roadmap just abstracting validation,
+it aims to abstract everyghing: authentication (who can perform an
+action), authorization (what can they do), replay protection, gas
+payment and execution. One summary of these goals is the following
+chart:</p>
 <center>
 <p><br></p>
 <p><img
@@ -368,9 +372,11 @@ src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiI
 phases: <strong>validation</strong> and <strong>execution</strong>. All
 validations are processed first, and all executions are processed
 second. In the mempool, a user operation is only accepted if its
-validation phase only touches its own account, and does not read
-environmental variables. This prevents multi-invalidation attacks. A
-strict gas limit on the validation step is also enforced.</p>
+validation phase only touches its own account (plus a few special-case
+extensions, see "associated storage" in <a
+href="https://eips.ethereum.org/EIPS/eip-7562">ERC-7562</a>), and does
+not read environmental variables. This prevents multi-invalidation
+attacks. A strict gas limit on the validation step is also enforced.</p>
 <p>ERC-4337 was designed as an extra-protocol standard (an ERC), because
 at the time the Ethereum client developers were focused on the Merge,
 and did not have any spare capacity to work on other features. This is
@@ -408,7 +414,7 @@ href="https://eips.ethereum.org/EIPS/eip-4337">https://eips.ethereum.org/EIPS/ei
 href="https://eips.ethereum.org/EIPS/eip-7702">https://eips.ethereum.org/EIPS/eip-7702</a></li>
 <li>BLSWallet code (uses aggregation feature): <a
 href="https://github.com/getwax/bls-wallet">https://github.com/getwax/bls-wallet</a></li>
-<li>EIP-7562 (enshrined account abstraction): <a
+<li>ERC-7562 (enshrined account abstraction mempool rules): <a
 href="https://eips.ethereum.org/EIPS/eip-7562">https://eips.ethereum.org/EIPS/eip-7562</a></li>
 <li>EIP-7701 (EOF-based enshrined AA): <a
 href="https://eips.ethereum.org/EIPS/eip-7701">https://eips.ethereum.org/EIPS/eip-7701</a></li>
@@ -479,7 +485,9 @@ flexibility for inclusion lists. Additionally, account abstraction
 implementations should ideally be harmonized on L1 and L2 as much as
 possible. If, in the future, we expect most users to be using keystore
 rollups, the account abstraction designs should be built with this in
-mind.</p>
+mind. Gas payment abstraction should also be designed with cross-chain
+use cases in mind (see eg. <a
+href="https://ethereum-magicians.org/t/rip-7755-contract-standard-for-cross-l2-calls-facilitation/20776">RIP-7755</a>).</p>
 <p><a id="3" /></p>
 <h2 id="eip-1559-improvements">EIP-1559 improvements</h2>
 <h3 id="what-problem-does-it-solve-2">What problem does it solve?</h3>
