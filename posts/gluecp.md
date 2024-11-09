@@ -78,7 +78,7 @@ Modern computation is increasingly following what I call a **glue and coprocesso
 
 <center><br>
 
-![](https://hackmd.io/_uploads/BJdoaxqo0.png)
+![](../../../../images/gluecp/BJdoaxqo0.png)
 
 </center><br>
 
