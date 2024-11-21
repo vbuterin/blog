@@ -13,7 +13,7 @@ This switch has already led to demonstrated massive improvements in proving spee
 
 One of the most important "tricks" when making hash-based proofs (or really, any kind of proof) is the idea of proving things about evaluations of a polynomial as a random point, as a substitute for proving things about the underlying polynomials.
 
-For example, suppose that a proof system requires you to generate a commitment to a polynomial, $A$, which must satisfy $A^3(x) + x - A(\omega*x) = x^N$ (a pretty common type of claim to prove in ZK-SNARK protocols). The protocol can require you to pick a random coordinate $r$, and prove that $A(r) + r - A(\omega*r) = r^N$. And then in turn, to prove that $A(r) = c$, you prove that $Q = \frac{A - c}{X - r}$ is a polynomial (as opposed to a fractional expression).
+For example, suppose that a proof system requires you to generate a commitment to a polynomial, $A$, which must satisfy $A^3(x) + x - A(\omega*x) = x^N$ (a pretty common type of claim to prove in ZK-SNARK protocols). The protocol can require you to pick a random coordinate $r$, and prove that $A^3(r) + r - A(\omega*r) = r^N$. And then in turn, to prove that $A(r) = c$, you prove that $Q = \frac{A - c}{X - r}$ is a polynomial (as opposed to a fractional expression).
 
 If you know $r$ _ahead of time_, you can always cheat these protocols. In this case, you could just set $A(r)$ to be zero, retrofit $A(\omega * r)$ to satisfy the equation, and then let $A$ be the line that passes through those two points. And similarly for the second step, if you know $r$ ahead of time, you can generate whatever $Q$ you want, and then retrofit $A$ to match it, even if $A$ is a fractional (or other non-polynomial) expression.
 
