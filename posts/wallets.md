@@ -14,7 +14,7 @@ There is now an increasingly detailed roadmap for improving cross-L2 user experi
 
 The core ideas are (i) **built-in cross-L2 sends**, and (ii) **chain-specific addresses and payment requests**. Your wallet should be able to give you an address that (following the style of [this draft ERC](https://github.com/ethereum/ERCs/pull/735)) looks like this:
 
-<span style="text-color:blue; font-family: monospace">0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045</span><span style="text-color:red; font-family: monospace">@optimism.eth</span>
+<span style="color:blue; font-family: monospace">0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045</span><span style="color:red; font-family: monospace">@optimism.eth</span>
 
 When someone (or some application) gives you an address of this format, you should be able to paste it into a wallet’s “to” field, and click “send”. The wallet should automatically process that send in whatever way it can:
 
