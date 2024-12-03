@@ -14,7 +14,11 @@ There is now an increasingly detailed roadmap for improving cross-L2 user experi
 
 The core ideas are (i) **built-in cross-L2 sends**, and (ii) **chain-specific addresses and payment requests**. Your wallet should be able to give you an address that (following the style of [this draft ERC](https://github.com/ethereum/ERCs/pull/735)) looks like this:
 
-<span style="color:blue; font-family: monospace">0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045</span><span style="color:red; font-family: monospace">@optimism.eth</span>
+<center>
+
+<span style="color:blue; font-family: monospace">0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045</span><span style="color:red; font-family: monospace">@</span><span style="color:red; font-family: monospace">optimism.eth</span>
+
+</center>
 
 When someone (or some application) gives you an address of this format, you should be able to paste it into a wallet’s “to” field, and click “send”. The wallet should automatically process that send in whatever way it can:
 
@@ -30,7 +34,7 @@ When someone (or some application) gives you an address of this format, you shou
 
 </center><br>
 
-The above is for the “you copy-paste an address (or ENS, eg. vitalik.eth@optimism.eth) for someone to pay you” use case. If a dapp is requesting a deposit (eg. see [this Polymarket example](https://x.com/VitalikButerin/status/1810633473750683974)) then the _ideal_ flow is to extend the web3 API and allow the dapp to make a chain-specific payment request. Your wallet would then be able to satisfy that request in whatever way it needs to. Making the user experience work well would also require standardizing a getAvailableBalance request, and wallets would need to put significant thought into which chains they store users’ assets on by default to maximize security and ease of transfers.
+The above is for the “you copy-paste an address (or ENS, eg. <span style="color:blue; font-family: monospace">vitalik.eth</span><span style="color:red; font-family: monospace">@</span><span style="color:red; font-family: monospace">optimism.eth</span>) for someone to pay you” use case. If a dapp is requesting a deposit (eg. see [this Polymarket example](https://x.com/VitalikButerin/status/1810633473750683974)) then the _ideal_ flow is to extend the web3 API and allow the dapp to make a chain-specific payment request. Your wallet would then be able to satisfy that request in whatever way it needs to. Making the user experience work well would also require standardizing a getAvailableBalance request, and wallets would need to put significant thought into which chains they store users’ assets on by default to maximize security and ease of transfers.
 
 Chain-specific payment requests could also be put into QR codes, which mobile wallets could scan. In an in-person (or online) consumer payments scenario, the recipient would make a QR code or web3 API call that says “I want `X` units of token `Y` on chain `Z`, with reference ID or callback `W`”, and the wallet would be free to satisfy that request in whatever way it can. Another option is a **claim link** protocol, where the user’s wallet generates a QR code or URL that contains an authorization to claim a certain quantity of funds from their onchain contract, and it’s the recipient’s job to figure out how to then move those funds to their own wallet.
 

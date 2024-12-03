@@ -139,10 +139,12 @@ implementable even <em>today</em>.</p>
 Your wallet should be able to give you an address that (following the
 style of <a href="https://github.com/ethereum/ERCs/pull/735">this draft
 ERC</a>) looks like this:</p>
+<center>
 <p><span
-style="text-color:blue; font-family: monospace">0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045</span><span
-style="text-color:red; font-family: monospace"><span class="citation"
-data-cites="optimism.eth">@optimism.eth</span></span></p>
+style="color:blue; font-family: monospace">0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045</span><span
+style="color:red; font-family: monospace">@</span><span
+style="color:red; font-family: monospace">optimism.eth</span></p>
+</center>
 <p>When someone (or some application) gives you an address of this
 format, you should be able to paste it into a wallet's "to" field, and
 click "send". The wallet should automatically process that send in
@@ -168,10 +170,12 @@ src="data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAASgAAAFKCAYAAACuO8JIAAAAxHpU
 address support</em> </small></p>
 </center>
 <p><br></p>
-<p>The above is for the "you copy-paste an address (or ENS, eg.
-vitalik.eth@optimism.eth) for someone to pay you" use case. If a dapp is
-requesting a deposit (eg. see <a
-href="https://x.com/VitalikButerin/status/1810633473750683974">this
+<p>The above is for the "you copy-paste an address (or ENS, eg. <span
+style="color:blue; font-family: monospace">vitalik.eth</span><span
+style="color:red; font-family: monospace">@</span><span
+style="color:red; font-family: monospace">optimism.eth</span>) for
+someone to pay you" use case. If a dapp is requesting a deposit (eg. see
+<a href="https://x.com/VitalikButerin/status/1810633473750683974">this
 Polymarket example</a>) then the <em>ideal</em> flow is to extend the
 web3 API and allow the dapp to make a chain-specific payment request.
 Your wallet would then be able to satisfy that request in whatever way
