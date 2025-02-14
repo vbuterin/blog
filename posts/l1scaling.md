@@ -3,6 +3,8 @@
 [title]: <> (Reasons to have higher L1 gas limits even in an L2-heavy Ethereum)
 [pandoc]: <> (--mathjax)
 
+_Special thanks to Ansgar Dietrichs for feedback and review_
+
 One important near-term debate in the Ethereum roadmap is the question of how much to increase the L1 gas limit. Recently, the L1 gas limit was increased from 30 million to 36 million, increasing capacity by 20%. Many support following up with much larger increases in the near future. These increases are made safe by recent and upcoming improvements in technology: efficiency improvements to Ethereum clients, reduced need to store old history due to [EIP-4444](https://eips.ethereum.org/EIPS/eip-4444) (see [roadmap](https://hackmd.io/Dobc38YVQ1qmbbyI6LcFqA?view)), and later on [stateless clients](https://vitalik.eth.limo/general/2024/10/23/futures4.html).
 
 However, before we go down this path, it’s important to ask a question: in the context of the [rollup-centric roadmap](https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698), are higher L1 gas limits the right thing to do in the long term? Gas limits are easy to increase, but difficult to decrease - and even if you do decrease them later, the consequences to centralization may well be permanent. We do not want to end up with the centralization risks of heavy L1 usage without actually being sure that we will benefit from that usage.
