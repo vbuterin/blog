@@ -102,7 +102,7 @@ If we give ourselves the goal of eg. bringing [Polymarket](https://polymarket.co
 
 Suppose that each user needs to do a key change or account upgrade operation once a year, and we have 3.1 billion users. If each operation costs 50,000 gas, then we get a gas consumption per slot of `50000 * 3100000000 / (31556926 / 12) ~= 59 million` , about 3.3x the current target.
 
-We _could_ optimize very hard, but making key change operations _initiated_ on L2, but _stored_ on L1 (credit [the Scroll team](https://scroll.io/blog/towards-the-wallet-endgame-with-keystore) for this idea). This would reduce gas consumption to potentially a storage write and a little more (let’s once again say 7500 gas), which would allow keystore updates to be made with about half of Ethereum’s current gas capacity.
+We _could_ optimize very hard, by making key change operations _initiated_ on L2, but _stored_ on L1 (credit [the Scroll team](https://scroll.io/blog/towards-the-wallet-endgame-with-keystore) for this idea). This would reduce gas consumption to potentially a storage write and a little more (let’s once again say 7500 gas), which would allow keystore updates to be made with about half of Ethereum’s current gas capacity.
 
 We can also estimate the cost of a keystore operation:
 
