@@ -66,7 +66,7 @@ A related category of applications goes in the direction of highly autonomous ag
 
 ## AI as an interface to the game
 
-One idea that I brought up in my [writings on <d/acc>](../../../2023/11/27/techno_optimism.html#dacc) is the idea that there is a market opportunity to write user-facing software that would protect users' interests by interpreting and identifying dangers in the online world that the user is navigating. One already-existing example of this is Metamask's scam detection feature:
+One idea that I brought up in my [writings on "d/acc"](../../../2023/11/27/techno_optimism.html#dacc) is the idea that there is a market opportunity to write user-facing software that would protect users' interests by interpreting and identifying dangers in the online world that the user is navigating. One already-existing example of this is Metamask's scam detection feature:
 
 <center><br>
 
