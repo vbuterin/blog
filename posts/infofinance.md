@@ -1,4 +1,4 @@
-[category]: <> (General,Blockchains)
+[category]: <> (General,Blockchains,Economics)
 [date]: <> (2024/11/09)
 [title]: <> (From prediction markets to info finance)
 
