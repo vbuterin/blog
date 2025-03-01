@@ -3,7 +3,7 @@
 [title]: <> (AI as the engine, humans as the steering wheel)
 [pandoc]: <> (--mathjax)
 
-_Special thanks to Devansh Mehta, Davide Crapis and Julian Zawistowski for feedback and review._
+_Special thanks to Devansh Mehta, Davide Crapis and Julian Zawistowski for feedback and review, Tina Zhen, Shaw Walters and others for discussion._
 
 If you ask people what they like about democratic structures, whether governments, workplaces, or blockchain-based DAOs, you will often hear the same arguments: they avoid concentration of power, they give their users strong guarantees because there isn’t a single person who can completely change the system’s direction on a whim, and they can make higher-quality decisions by gathering the perspectives and wisdom of many people.
 
