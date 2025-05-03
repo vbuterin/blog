@@ -109,13 +109,46 @@ MathJax = {
 <br> <br> <br>
 <title> [Mirror] Cantor was Wrong: debunking the infinite set hierarchy </title>
 
-<p><i>This is a mirror of the post at <a href="https://medium.com/@VitalikButerin/cantor-was-wrong-debunking-the-infinite-set-hierarchy-e9ba5015102">https://medium.com/<span class="citation" data-cites="VitalikButerin/cantor-was-wrong-debunking-the-infinite-set-hierarchy-e9ba5015102">@VitalikButerin/cantor-was-wrong-debunking-the-infinite-set-hierarchy-e9ba5015102</span></a>.</i></p>
+<p><i>This is a mirror of the post at
+<a href="https://medium.com/@VitalikButerin/cantor-was-wrong-debunking-the-infinite-set-hierarchy-e9ba5015102">https://medium.com/<span
+class="citation"
+data-cites="VitalikButerin/cantor-was-wrong-debunking-the-infinite-set-hierarchy-e9ba5015102">@VitalikButerin/cantor-was-wrong-debunking-the-infinite-set-hierarchy-e9ba5015102</span></a>.</i></p>
 <p>By Vitalik Buterin, PhD at University of Basel <br><br></p>
-<p>A common strand of mathematics argues that, rather than being one single kind of infinity, there are actually an infinite hierarchy of different levels of infinity. Whereas the size of the set of integers is just plain infinite, and the set of rational numbers is just as big as the integers (because you can map every rational number to an integer by interleaving the digits of its numerator and denominator, eg. <span class="math inline">\(0.456456456.... = \frac{456}{999} = \frac{152}{333} \rightarrow 135323\)</span>), the size of the set of <em>real</em> numbers is some kind of even bigger infinity, because there <em>is no way</em> to make a similar mapping from real numbers to the integers.</p>
-<p>First of all, I should note that it's relatively easy to see that the claim that there is no mapping is false. Here's a simple mapping. For a given real number, give me a (deterministic) python program that will print out digits of it (eg. for π, that might be a program that calculates better and better approximations using the infinite series <span class="math inline">\(\pi = 4 - \frac{4}{3} + \frac{4}{5} - \frac{4}{7} + ...\)</span>). I can convert the program into a number (using <code>n = int.from_bytes(open('program.py').read(), 'big')</code>) and then output the number. Done. There's the mapping from real numbers to integers.</p>
-<p>Now let's take a look at the most common argument used to claim that no such mapping can exist, namely Cantor's diagonal argument. Here's an <a href="http://www.math.ucdenver.edu/~esulliva/Math3000/CantorDiag.pdf">exposition from UC Denver</a>; it's short so I'll just screenshot the whole thing:</p>
-<p><img src="https://cdn-images-1.medium.com/max/2000/1*4ByVTuO_nU-lKZo7NHDBWA.png" class="padded" /></p>
-<p>Now, here's the fundamental flaw in this argument: <em>decimal expansions of real numbers are not unique</em>. To provide a counterexample in the exact format that the "proof" requires, consider the set (numbers written in binary), with diagonal digits bolded:</p>
+<p>A common strand of mathematics argues that, rather than being one
+single kind of infinity, there are actually an infinite hierarchy of
+different levels of infinity. Whereas the size of the set of integers is
+just plain infinite, and the set of rational numbers is just as big as
+the integers (because you can map every rational number to an integer by
+interleaving the digits of its numerator and denominator, eg. <span
+class="math inline">\(0.456456456.... = \frac{456}{999} = \frac{152}{333}
+\rightarrow 135323\)</span>), the size of the set of <em>real</em>
+numbers is some kind of even bigger infinity, because there <em>is no
+way</em> to make a similar mapping from real numbers to the
+integers.</p>
+<p>First of all, I should note that it's relatively easy to see that the
+claim that there is no mapping is false. Here's a simple mapping. For a
+given real number, give me a (deterministic) python program that will
+print out digits of it (eg. for π, that might be a program that
+calculates better and better approximations using the infinite series
+<span class="math inline">\(\pi = 4 - \frac{4}{3} + \frac{4}{5} -
+\frac{4}{7} + ...\)</span>). I can convert the program into a number
+(using
+<code>n = int.from_bytes(open('program.py').read(), 'big')</code>) and
+then output the number. Done. There's the mapping from real numbers to
+integers.</p>
+<p>Now let's take a look at the most common argument used to claim that
+no such mapping can exist, namely Cantor's diagonal argument. Here's an
+<a
+href="http://www.math.ucdenver.edu/~esulliva/Math3000/CantorDiag.pdf">exposition
+from UC Denver</a>; it's short so I'll just screenshot the whole
+thing:</p>
+<p><img
+src="https://cdn-images-1.medium.com/max/2000/1*4ByVTuO_nU-lKZo7NHDBWA.png"
+class="padded" /></p>
+<p>Now, here's the fundamental flaw in this argument: <em>decimal
+expansions of real numbers are not unique</em>. To provide a
+counterexample in the exact format that the "proof" requires, consider
+the set (numbers written in binary), with diagonal digits bolded:</p>
 <ul>
 <li><p>x[1] = 0.<strong>0</strong>00000...</p></li>
 <li><p>x[2] = 0.0<strong>1</strong>1111...</p></li>
@@ -123,8 +156,26 @@ MathJax = {
 <li><p>x[4] = 0.000<strong>1</strong>11...</p></li>
 <li><p>.....</p></li>
 </ul>
-<p>The diagonal gives: 01111..... If we flip every digit, we get the number: <span class="math inline">\(y =\)</span> 0.10000......</p>
-<p>And here lies the problem: just as in decimal, <a href="https://en.wikipedia.org/wiki/0.999...">0.9999.... equals 1</a>, in binary 0.01111..... equals 0.10000..... And so even though the new <em>decimal expansion </em>is not in the original list, the <em>number</em> <span class="math inline">\(y\)</span> is exactly the same as the number <span class="math inline">\(x[2]\)</span>.</p>
-<p>Note that this directly implies that the halting problem is in fact solvable. To see why, imagine a computer program that someone claims will not halt. Let c[1] be the state of the program after one step, c[2] after two steps, etc. Let x[1], x[2], x[3].... be a full enumeration of all real numbers (which exists, as we proved above), expressed in base <span class="math inline">\(2^D\)</span> where <span class="math inline">\(D\)</span> is the size of the program's memory, so a program state can always be represented as a single "digit". Let y = 0.c[1]c[2]c[3]........ This number is by assumption part of the list, so it is one of the x[i] values, and hence it can be computed in some finite amount of time. This has implications in a number of industries, particularly in proving that "Turing-complete" blockchains are in fact secure.</p>
+<p>The diagonal gives: 01111..... If we flip every digit, we get the
+number: <span class="math inline">\(y =\)</span> 0.10000......</p>
+<p>And here lies the problem: just as in decimal, <a
+href="https://en.wikipedia.org/wiki/0.999...">0.9999.... equals 1</a>, in
+binary 0.01111..... equals 0.10000..... And so even though the new
+<em>decimal expansion </em>is not in the original list, the
+<em>number</em> <span class="math inline">\(y\)</span> is exactly the
+same as the number <span class="math inline">\(x[2]\)</span>.</p>
+<p>Note that this directly implies that the halting problem is in fact
+solvable. To see why, imagine a computer program that someone claims
+will not halt. Let c[1] be the state of the program after one step, c[2]
+after two steps, etc. Let x[1], x[2], x[3].... be a full enumeration of
+all real numbers (which exists, as we proved above), expressed in base
+<span class="math inline">\(2^D\)</span> where <span
+class="math inline">\(D\)</span> is the size of the program's memory, so
+a program state can always be represented as a single "digit". Let y =
+0.c[1]c[2]c[3]........ This number is by assumption part of the list, so it
+is one of the x[i] values, and hence it can be computed in some finite
+amount of time. This has implications in a number of industries,
+particularly in proving that "Turing-complete" blockchains are in fact
+secure.</p>
 <p>Patent on this research is pending.</p>
  </div> 

@@ -109,70 +109,318 @@ MathJax = {
 <br> <br> <br>
 <title> Farklı ZK-EVM Türleri </title>
 
-<p><em>PSE, Polygon Hermez, Zksync, Scroll, Matter Labs ve Starkware ekiplerine münazara ve inceleme, çeviri için <a href="https://twitter.com/notereneth">eren</a>'e özel teşekkürler.</em></p>
-<p>Son zamanlarda birçok "ZK-EVM" projesinin çarpıcı duyurular yaptığı görüldü. <a href="https://polygon.technology/blog/the-future-is-now-for-ethereum-scaling-introducing-polygon-zkevm">Polygon</a> ZK-EVM projesini açık kaynaklı hale getirdi, <a href="https://blog.matter-labs.io/100-days-to-mainnet-6f230893bd73?gi=e44b181330f2">ZKSync</a>, ZKSync 2.0 için planlarını yayınladı ve görece yeni bir oyuncu olan <a href="https://mirror.xyz/scroll.eth/XQyXDgyxoefag6hcBgGJFz8qrb10rmSU-zUBvY3Q9_A">Scroll</a>, ZK-EVM'lerini duyurdu. Ayrıca <a href="https://github.com/privacy-scaling-explorations/zkevm-circuits">Privacy and Scaling Explorations</a> ekibinin, <a href="https://ethresear.ch/t/a-zk-evm-specification/11549">Nicolas Liochon ve arkadaşlarının</a> ekibinin, EVM'den Starkware'ın ZK-dostu dili <a href="https://starkware.co/cairo/">Cairo</a>'ya yönelik bir <a href="https://medium.com/starkware/starknet-alpha-2-4aa116f0ecfc">alfa derleyici</a> ve kaçırdığım en az birkaç kişinin daha kesinlikle devam eden çabaları da var.</p>
-<p>Tüm bu projelerin temel hedefi aynı: <a href="../../../2021/01/26/snarks.html">ZK-SNARK</a> teknolojisini kullanarak Ethereum-benzeri işlemlerin kriptografik yürütülme kanıtlarını oluşturmak, bu kanıtları Ethereum zincirini doğrulamayı çok daha kolay hale getirmek veya Ethereum'un sunduğuna (neredeyse) eşdeğer ancak çok daha ölçeklenebilir olan <a href="../../../2021/01/05/rollup.html">ZK-rollup'lar</a> inşa etmek için kullanmaktır. Ancak bu projeler arasında ince farklılıklar bulunmakta ve bunlar pratiklik ile hız arasındaki değiş tokuşları nasıl yaptıklarını belirlemektedir. Bu yazı, EVM denkliğinin farklı "tiplerinin" bir taksonomisini ve her bir tipe ulaşmaya çalışmanın fayda ve maliyetlerinin neler olduğunu açıklamaya çalışacaktır.</p>
-<h2 id="genel-bakış-grafik-biçiminde">Genel Bakış (grafik biçiminde)</h2>
+<p><em>PSE, Polygon Hermez, Zksync, Scroll, Matter Labs ve Starkware
+ekiplerine münazara ve inceleme, çeviri için <a
+href="https://twitter.com/notereneth">eren</a>'e özel
+teşekkürler.</em></p>
+<p>Son zamanlarda birçok "ZK-EVM" projesinin çarpıcı duyurular yaptığı
+görüldü. <a
+href="https://polygon.technology/blog/the-future-is-now-for-ethereum-scaling-introducing-polygon-zkevm">Polygon</a>
+ZK-EVM projesini açık kaynaklı hale getirdi, <a
+href="https://blog.matter-labs.io/100-days-to-mainnet-6f230893bd73?gi=e44b181330f2">ZKSync</a>,
+ZKSync 2.0 için planlarını yayınladı ve görece yeni bir oyuncu olan <a
+href="https://mirror.xyz/scroll.eth/XQyXDgyxoefag6hcBgGJFz8qrb10rmSU-zUBvY3Q9_A">Scroll</a>,
+ZK-EVM'lerini duyurdu. Ayrıca <a
+href="https://github.com/privacy-scaling-explorations/zkevm-circuits">Privacy
+and Scaling Explorations</a> ekibinin, <a
+href="https://ethresear.ch/t/a-zk-evm-specification/11549">Nicolas
+Liochon ve arkadaşlarının</a> ekibinin, EVM'den Starkware'ın ZK-dostu
+dili <a href="https://starkware.co/cairo/">Cairo</a>'ya yönelik bir <a
+href="https://medium.com/starkware/starknet-alpha-2-4aa116f0ecfc">alfa
+derleyici</a> ve kaçırdığım en az birkaç kişinin daha kesinlikle devam
+eden çabaları da var.</p>
+<p>Tüm bu projelerin temel hedefi aynı: <a
+href="../../../2021/01/26/snarks.html">ZK-SNARK</a> teknolojisini
+kullanarak Ethereum-benzeri işlemlerin kriptografik yürütülme
+kanıtlarını oluşturmak, bu kanıtları Ethereum zincirini doğrulamayı çok
+daha kolay hale getirmek veya Ethereum'un sunduğuna (neredeyse) eşdeğer
+ancak çok daha ölçeklenebilir olan <a
+href="../../../2021/01/05/rollup.html">ZK-rollup'lar</a> inşa etmek için
+kullanmaktır. Ancak bu projeler arasında ince farklılıklar bulunmakta ve
+bunlar pratiklik ile hız arasındaki değiş tokuşları nasıl yaptıklarını
+belirlemektedir. Bu yazı, EVM denkliğinin farklı "tiplerinin" bir
+taksonomisini ve her bir tipe ulaşmaya çalışmanın fayda ve
+maliyetlerinin neler olduğunu açıklamaya çalışacaktır.</p>
+<h2 id="genel-bakış-grafik-biçiminde">Genel Bakış (grafik
+biçiminde)</h2>
 <p><img src="../../../../images/zkevm/chart_tr.png" /></p>
-<h2 id="tip-1-tamamen-ethereum-dengi">Tip 1 (tamamen Ethereum-dengi)</h2>
-<p>Tip 1 ZK-EVM'ler, tamamen ve ödün vermeden Ethereum-dengi olmaya çalışırlar. Kanıtları oluşturmayı kolaylaştırmak için Ethereum sisteminin herhangi bir parçasını değiştirmezler. Ne kadar çevresel olursa olsun hash'leri, state tree'leri, transaction tree'leri, ön-derlemeleri veya başka herhangi bir konsensüse dahil mantığı değiştirmezler.</p>
-<h4 id="avantaj-mükemmel-uyumluluk"><span style="color:#008800">Avantaj: mükemmel uyumluluk</span></h4>
-<p>Hedef, Ethereum bloklarını bugünkü haliyle doğrulayabilmektir - veya en azından <a href="https://hackmd.io/@n0ble/the-merge-terminology">yürütme-katmanı tarafını</a> doğrulayabilmektir (bu nedenle, beacon zinciri konsensüs mantığı dahil değil, ancak tüm işlem yürütme ve akıllı kontrat ve hesap mantığı dahil).</p>
-<p>Tip 1 ZK-EVM'ler, Ethereum katman 1'inin daha ölçeklenebilir hale gelmesini sağlamak için sonunda ihtiyacımız olan şeydir. Uzun vadede, Tip 2 veya Tip 3 ZK-EVM'lerde test edilmiş Ethereum'a yapılan modifikasyonlar, Ethereum'a uygun bir şekilde tanıtılabilir, ancak böyle bir yeniden tasarlama kendi komplekslikleri ile gelir.</p>
-<p>Tip 1 ZK-EVM'ler aynı zamanda rollup'lar için idealdir, çünkü rollup'ların birçok altyapıyı tekrar kullanmalarına izin verirler. Örneğin, Ethereum execution istemcileri, rollup blokları oluşturmak ve işlemek için olduğu gibi kullanılabilir (veya en azından <a href="https://github.com/ethereum/consensus-specs/blob/dev/specs/capella/beacon-chain.md">para çekme işlemleri implement edildiğinde</a> ve bu işlevsellik, rollup'a ETH yatırılmasını desteklemek için tekrar kullanılabilir), bu nedenle blok gezginleri, blok üretimi vb. gibi araçlar çok kolay bir şekilde tekrar kullanılabilir.</p>
-<h4 id="dezavantaj-kanıtlayıcı-zamanı"><span style="color:#cc0000">Dezavantaj: kanıtlayıcı zamanı</span></h4>
-<p>Ethereum, başlangıçta ZK-dostu olacak şekilde tasarlanmamıştı, bu nedenle Ethereum protokolünün, ZK-kanıtlama için büyük miktarda hesaplama gerektiren <em>birçok</em> parçası var. Tip 1, Ethereum'u tam olarak kopyalamayı amaçlıyor, o yüzden bu verimsizlikleri hafifletebilecek bir yola sahip değil. Şu anda, Ethereum bloklarının kanıtlarının üretilmesi saatler sürüyor. Bu durum, kanıtlayıcıyı büyük ölçüde paralelleştirmeye yönelik zekice mühendislikle veya uzun vadede ZK-SNARK ASIC'ler ile hafifletilebilir.</p>
-<h4 id="bunu-kim-inşa-ediyor"><span style="color:#880088">Bunu kim inşa ediyor?</span></h4>
-<p><a href="https://github.com/privacy-scaling-explorations/zkevm-specs">ZK-EVM Topluluk Sürümü</a> (<a href="https://github.com/privacy-scaling-explorations/">Privacy and Scaling Explorations</a>, <a href="https://scroll.io/">Scroll ekibi</a>, <a href="https://taiko.xyz/">Taiko</a> ve diğerlerinin topluluk katkılarıyla başlatılan) Tier 1 bir ZK-EVM'dir.</p>
+<h2 id="tip-1-tamamen-ethereum-dengi">Tip 1 (tamamen
+Ethereum-dengi)</h2>
+<p>Tip 1 ZK-EVM'ler, tamamen ve ödün vermeden Ethereum-dengi olmaya
+çalışırlar. Kanıtları oluşturmayı kolaylaştırmak için Ethereum
+sisteminin herhangi bir parçasını değiştirmezler. Ne kadar çevresel
+olursa olsun hash'leri, state tree'leri, transaction tree'leri,
+ön-derlemeleri veya başka herhangi bir konsensüse dahil mantığı
+değiştirmezler.</p>
+<h4 id="avantaj-mükemmel-uyumluluk"><span style="color:#008800">Avantaj:
+mükemmel uyumluluk</span></h4>
+<p>Hedef, Ethereum bloklarını bugünkü haliyle doğrulayabilmektir - veya
+en azından <a
+href="https://hackmd.io/@n0ble/the-merge-terminology">yürütme-katmanı
+tarafını</a> doğrulayabilmektir (bu nedenle, beacon zinciri konsensüs
+mantığı dahil değil, ancak tüm işlem yürütme ve akıllı kontrat ve hesap
+mantığı dahil).</p>
+<p>Tip 1 ZK-EVM'ler, Ethereum katman 1'inin daha ölçeklenebilir hale
+gelmesini sağlamak için sonunda ihtiyacımız olan şeydir. Uzun vadede,
+Tip 2 veya Tip 3 ZK-EVM'lerde test edilmiş Ethereum'a yapılan
+modifikasyonlar, Ethereum'a uygun bir şekilde tanıtılabilir, ancak böyle
+bir yeniden tasarlama kendi komplekslikleri ile gelir.</p>
+<p>Tip 1 ZK-EVM'ler aynı zamanda rollup'lar için idealdir, çünkü
+rollup'ların birçok altyapıyı tekrar kullanmalarına izin verirler.
+Örneğin, Ethereum execution istemcileri, rollup blokları oluşturmak ve
+işlemek için olduğu gibi kullanılabilir (veya en azından <a
+href="https://github.com/ethereum/consensus-specs/blob/dev/specs/capella/beacon-chain.md">para
+çekme işlemleri implement edildiğinde</a> ve bu işlevsellik, rollup'a
+ETH yatırılmasını desteklemek için tekrar kullanılabilir), bu nedenle
+blok gezginleri, blok üretimi vb. gibi araçlar çok kolay bir şekilde
+tekrar kullanılabilir.</p>
+<h4 id="dezavantaj-kanıtlayıcı-zamanı"><span
+style="color:#cc0000">Dezavantaj: kanıtlayıcı zamanı</span></h4>
+<p>Ethereum, başlangıçta ZK-dostu olacak şekilde tasarlanmamıştı, bu
+nedenle Ethereum protokolünün, ZK-kanıtlama için büyük miktarda
+hesaplama gerektiren <em>birçok</em> parçası var. Tip 1, Ethereum'u tam
+olarak kopyalamayı amaçlıyor, o yüzden bu verimsizlikleri
+hafifletebilecek bir yola sahip değil. Şu anda, Ethereum bloklarının
+kanıtlarının üretilmesi saatler sürüyor. Bu durum, kanıtlayıcıyı büyük
+ölçüde paralelleştirmeye yönelik zekice mühendislikle veya uzun vadede
+ZK-SNARK ASIC'ler ile hafifletilebilir.</p>
+<h4 id="bunu-kim-inşa-ediyor"><span style="color:#880088">Bunu kim inşa
+ediyor?</span></h4>
+<p><a
+href="https://github.com/privacy-scaling-explorations/zkevm-specs">ZK-EVM
+Topluluk Sürümü</a> (<a
+href="https://github.com/privacy-scaling-explorations/">Privacy and
+Scaling Explorations</a>, <a href="https://scroll.io/">Scroll ekibi</a>,
+<a href="https://taiko.xyz/">Taiko</a> ve diğerlerinin topluluk
+katkılarıyla başlatılan) Tier 1 bir ZK-EVM'dir.</p>
 <h2 id="tip-2-tamamen-evm-dengi">Tip 2 (tamamen EVM-dengi)</h2>
-<p>Tip 2 ZK-EVM'ler tam anlamıyla EVM-dengi olmaya çalışır, ancak tam olarak Ethereum-dengi değildirler. Yani, "içeriden" bakıldığında tam olarak Ethereum gibi görünürler, ancak dışarıda bazı farklılıklar, özellikle blok yapısı ve <a href="https://medium.com/@eiki1212/ethereum-state-trie-architecture-explained-a30237009d4e">state tree</a> gibi veri yapılarında bulunur.</p>
-<p>Hedef, mevcut uygulamalarla tamamen uyumlu olmak, ancak geliştirmeyi kolaylaştırmak ve kanıt oluşturmayı daha hızlı hale getirmek için Ethereum'da bazı küçük değişiklikler yapmaktır.</p>
-<h4 id="avantaj-vm-seviyesinde-mükemmel-denklik"><span style="color:#008800">Avantaj: VM seviyesinde mükemmel denklik</span></h4>
-<p>Tip 2 ZK-EVM'ler, Ethereum durumu gibi verileri tutan veri yapılarına değişiklikler yaparlar. Neyse ki, bunlar EVM'in doğrudan erişemeyeceği yapılar olduğundan, Ethereum üzerinde çalışan uygulamalar neredeyse her zaman Tip 2 ZK-EVM rollup'larında da çalışmaya devam eder. Ethereum execution istemcilerini olduğu gibi kullanamazsınız, ancak bazı değişikliklerle kullanabilirsiniz ve hala EVM hata ayıklama araçlarını ve çoğu diğer geliştirici altyapısını kullanabilirsiniz.</p>
-<p>Az sayıda istisna vardır. Örneğin geçmiş işlemler, makbuzlar veya durum hakkındaki iddiaları doğrulamak için <a href="https://github.com/aragon/evm-storage-proofs">geçmiş Ethereum bloklarının</a> Merkle kanıtlarını doğrulayan uygulamalarda bir uyumsuzluk ortaya çıkar (örn. köprüler bazen bunu yapar). Keccak'ı farklı bir hash fonksiyonuyla değiştiren bir ZK-EVM, bu kanıtları bozabilir. Bununla birlikte, zaten genellikle uygulamaların bu şekilde inşa edilmesini önermem, çünkü gelecek Ethereum değişiklikleri (örn. <a href="https://notes.ethereum.org/@vbuterin/verkle_tree_eip">Verkle ağaçları</a>) bu tür uygulamaları Ethereum'un kendisinin üzerinde bile bozacaktır. Daha iyi bir alternatif, Ethereum'un <a href="https://ethresear.ch/t/future-proof-shard-and-history-access-precompiles/9781">geleceğe-hazır geçmiş erişim ön-derlemelerini</a> eklemesidir.</p>
-<h4 id="dezavantaj-gelişmiş-ancak-hala-yavaş-kanıtlayıcı-süresi"><span style="color:#cc0000">Dezavantaj: Gelişmiş ancak hala yavaş kanıtlayıcı süresi</span></h4>
-<p>Tip 2 ZK-EVM'ler, Ethereum yığınının gereksiz derecede karmaşık ve ZK dostu olmayan kriptografiye dayanan kısımlarını kaldırarak Tip 1'den daha hızlı kanıtlayıcı süreleri sağlar. Özellikle Ethereum'un Keccak'ını ve RLP tabanlı Merkle Patricia ağacını ve belki de blok ve makbuz yapılarını değiştirebilirler. Tip 2 ZK-EVM'ler, farklı bir hash fonksiyonu kullanabilirler, örneğin <a href="https://www.poseidon-hash.info/">Poseidon</a>. Başka bir doğal değişiklik, state tree'yi kod hash'ini ve keccak'ı depolayacak şekilde değiştirerek <code>EXTCODEHASH</code> ve <code>EXTCODECOPY</code> opcode'larını işlemek için hash doğrulama ihtiyacını ortadan kaldırmaktır.</p>
-<p>Bu değişiklikler kanıtlayıcı sürelerini önemli ölçüde iyileştirir ancak her sorunu çözmez. EVM'i olduğu gibi kanıtlama zorunluluğundan kaynaklanan yavaşlık, EVM'in doğasında bulunan tüm verimsizlikler ve ZK dostu olmama durumuyla birlikte hala devam ediyor. Bunun basit bir örneği bellektir: Bir <code>MLOAD</code>, "hizalanmamış" parçalar (başlangıç ve bitişin 32'nin katı olmadığı) dahil olmak üzere herhangi bir 32 byte'ı okuyabildiğinden, bir MLOAD basitçe bir parçayı okuyormuş gibi yorumlanamaz; bunun yerine, sonucu birleştirmek için iki ardışık parçanın okunmasını ve bit işlemleri gerçekleştirilmesini gerektirebilir.</p>
-<h4 id="bunu-kim-inşa-ediyor-1"><span style="color:#880088">Bunu kim inşa ediyor?</span></h4>
-<p><a href="https://mirror.xyz/scroll.eth/XQyXDgyxoefag6hcBgGJFz8qrb10rmSU-zUBvY3Q9_A">Scroll'un ZK-EVM</a> projesi, <a href="https://blog.polygon.technology/the-future-is-now-for-ethereum-scaling-introducing-polygon-zkevm">Polygon Hermez</a> gibi Tip 2 ZK-EVM'e doğru ilerliyor. Bununla birlikte, her iki proje de henüz tam olarak oraya ulaşmadı; özellikle daha karmaşık ön-derlemelerin çoğu henüz implement edilmedi. Dolayısıyla şu anda her iki projenin de <a href="../../../2022/08/04/zkevm.html#type-3-almost-evm-equivalent">Tip 3</a>. olarak değerlendirilmesi daha iyi.</p>
-<h2 id="tip-2.5-evm-dengi-gaz-ücretleri-hariç">Tip 2.5 (EVM-dengi, gaz ücretleri hariç)</h2>
-<p><span style="color:#008800">En kötü durumda kanıt sürelerini önemli ölçüde iyileştirmenin</span> bir yolu, EVM'deki ZK-kanıtlaması çok zor olan belirli işlemlerin gaz ücretlerini büyük ölçüde artırmaktır. Bu, ön-derlemeleri, KECCAK opcode'unu ve muhtemelen belirli kontrat çağırma kalıplarını veya belleğe/depolamaya erişmeyi veya geri döndürmeyi (revert) içerebilir.</p>
-<p>Gaz ücretlerini değiştirmek, <span style="color:#cc0000">geliştirici araçlarının uyumluluğunu azaltabilir ve birkaç uygulamayı bozabilir</span>, ancak genellikle "derin" EVM değişikliklerinden daha az riskli olarak kabul edilir. Geliştiriciler, bir işlemde bir bloğa sığmayacak kadar fazla gaz gerektirmemeye ve hard-coded gaz miktarlarıyla çağrılar yapmamaya dikkat etmelidir (bu zaten geliştiriciler için uzun süredir standart bir öneridir).</p>
-<p>Kaynak sınırlamalarını yönetmenin alternatif bir yolu, her operasyonun kaç kez çağrılabileceği konusunda katı sınırlar belirlemektir. Bunun devrelerde uygulanması daha kolaydır, ancak EVM güvenlik varsayımlarıyla daha az uyumludur. Ben buna Tip 2.5 yerine Tip 3 yaklaşımı derim.</p>
+<p>Tip 2 ZK-EVM'ler tam anlamıyla EVM-dengi olmaya çalışır, ancak tam
+olarak Ethereum-dengi değildirler. Yani, "içeriden" bakıldığında tam
+olarak Ethereum gibi görünürler, ancak dışarıda bazı farklılıklar,
+özellikle blok yapısı ve <a
+href="https://medium.com/@eiki1212/ethereum-state-trie-architecture-explained-a30237009d4e">state
+tree</a> gibi veri yapılarında bulunur.</p>
+<p>Hedef, mevcut uygulamalarla tamamen uyumlu olmak, ancak geliştirmeyi
+kolaylaştırmak ve kanıt oluşturmayı daha hızlı hale getirmek için
+Ethereum'da bazı küçük değişiklikler yapmaktır.</p>
+<h4 id="avantaj-vm-seviyesinde-mükemmel-denklik"><span
+style="color:#008800">Avantaj: VM seviyesinde mükemmel
+denklik</span></h4>
+<p>Tip 2 ZK-EVM'ler, Ethereum durumu gibi verileri tutan veri yapılarına
+değişiklikler yaparlar. Neyse ki, bunlar EVM'in doğrudan erişemeyeceği
+yapılar olduğundan, Ethereum üzerinde çalışan uygulamalar neredeyse her
+zaman Tip 2 ZK-EVM rollup'larında da çalışmaya devam eder. Ethereum
+execution istemcilerini olduğu gibi kullanamazsınız, ancak bazı
+değişikliklerle kullanabilirsiniz ve hala EVM hata ayıklama araçlarını
+ve çoğu diğer geliştirici altyapısını kullanabilirsiniz.</p>
+<p>Az sayıda istisna vardır. Örneğin geçmiş işlemler, makbuzlar veya
+durum hakkındaki iddiaları doğrulamak için <a
+href="https://github.com/aragon/evm-storage-proofs">geçmiş Ethereum
+bloklarının</a> Merkle kanıtlarını doğrulayan uygulamalarda bir
+uyumsuzluk ortaya çıkar (örn. köprüler bazen bunu yapar). Keccak'ı
+farklı bir hash fonksiyonuyla değiştiren bir ZK-EVM, bu kanıtları
+bozabilir. Bununla birlikte, zaten genellikle uygulamaların bu şekilde
+inşa edilmesini önermem, çünkü gelecek Ethereum değişiklikleri (örn. <a
+href="https://notes.ethereum.org/@vbuterin/verkle_tree_eip">Verkle
+ağaçları</a>) bu tür uygulamaları Ethereum'un kendisinin üzerinde bile
+bozacaktır. Daha iyi bir alternatif, Ethereum'un <a
+href="https://ethresear.ch/t/future-proof-shard-and-history-access-precompiles/9781">geleceğe-hazır
+geçmiş erişim ön-derlemelerini</a> eklemesidir.</p>
+<h4 id="dezavantaj-gelişmiş-ancak-hala-yavaş-kanıtlayıcı-süresi"><span
+style="color:#cc0000">Dezavantaj: Gelişmiş ancak hala yavaş kanıtlayıcı
+süresi</span></h4>
+<p>Tip 2 ZK-EVM'ler, Ethereum yığınının gereksiz derecede karmaşık ve ZK
+dostu olmayan kriptografiye dayanan kısımlarını kaldırarak Tip 1'den
+daha hızlı kanıtlayıcı süreleri sağlar. Özellikle Ethereum'un Keccak'ını
+ve RLP tabanlı Merkle Patricia ağacını ve belki de blok ve makbuz
+yapılarını değiştirebilirler. Tip 2 ZK-EVM'ler, farklı bir hash
+fonksiyonu kullanabilirler, örneğin <a
+href="https://www.poseidon-hash.info/">Poseidon</a>. Başka bir doğal
+değişiklik, state tree'yi kod hash'ini ve keccak'ı depolayacak şekilde
+değiştirerek <code>EXTCODEHASH</code> ve <code>EXTCODECOPY</code>
+opcode'larını işlemek için hash doğrulama ihtiyacını ortadan
+kaldırmaktır.</p>
+<p>Bu değişiklikler kanıtlayıcı sürelerini önemli ölçüde iyileştirir
+ancak her sorunu çözmez. EVM'i olduğu gibi kanıtlama zorunluluğundan
+kaynaklanan yavaşlık, EVM'in doğasında bulunan tüm verimsizlikler ve ZK
+dostu olmama durumuyla birlikte hala devam ediyor. Bunun basit bir
+örneği bellektir: Bir <code>MLOAD</code>, "hizalanmamış" parçalar
+(başlangıç ve bitişin 32'nin katı olmadığı) dahil olmak üzere herhangi
+bir 32 byte'ı okuyabildiğinden, bir MLOAD basitçe bir parçayı okuyormuş
+gibi yorumlanamaz; bunun yerine, sonucu birleştirmek için iki ardışık
+parçanın okunmasını ve bit işlemleri gerçekleştirilmesini
+gerektirebilir.</p>
+<h4 id="bunu-kim-inşa-ediyor-1"><span style="color:#880088">Bunu kim
+inşa ediyor?</span></h4>
+<p><a
+href="https://mirror.xyz/scroll.eth/XQyXDgyxoefag6hcBgGJFz8qrb10rmSU-zUBvY3Q9_A">Scroll'un
+ZK-EVM</a> projesi, <a
+href="https://blog.polygon.technology/the-future-is-now-for-ethereum-scaling-introducing-polygon-zkevm">Polygon
+Hermez</a> gibi Tip 2 ZK-EVM'e doğru ilerliyor. Bununla birlikte, her
+iki proje de henüz tam olarak oraya ulaşmadı; özellikle daha karmaşık
+ön-derlemelerin çoğu henüz implement edilmedi. Dolayısıyla şu anda her
+iki projenin de <a
+href="../../../2022/08/04/zkevm.html#type-3-almost-evm-equivalent">Tip
+3</a>. olarak değerlendirilmesi daha iyi.</p>
+<h2 id="tip-2.5-evm-dengi-gaz-ücretleri-hariç">Tip 2.5 (EVM-dengi, gaz
+ücretleri hariç)</h2>
+<p><span style="color:#008800">En kötü durumda kanıt sürelerini önemli
+ölçüde iyileştirmenin</span> bir yolu, EVM'deki ZK-kanıtlaması çok zor
+olan belirli işlemlerin gaz ücretlerini büyük ölçüde artırmaktır. Bu,
+ön-derlemeleri, KECCAK opcode'unu ve muhtemelen belirli kontrat çağırma
+kalıplarını veya belleğe/depolamaya erişmeyi veya geri döndürmeyi
+(revert) içerebilir.</p>
+<p>Gaz ücretlerini değiştirmek, <span style="color:#cc0000">geliştirici
+araçlarının uyumluluğunu azaltabilir ve birkaç uygulamayı
+bozabilir</span>, ancak genellikle "derin" EVM değişikliklerinden daha
+az riskli olarak kabul edilir. Geliştiriciler, bir işlemde bir bloğa
+sığmayacak kadar fazla gaz gerektirmemeye ve hard-coded gaz
+miktarlarıyla çağrılar yapmamaya dikkat etmelidir (bu zaten
+geliştiriciler için uzun süredir standart bir öneridir).</p>
+<p>Kaynak sınırlamalarını yönetmenin alternatif bir yolu, her
+operasyonun kaç kez çağrılabileceği konusunda katı sınırlar
+belirlemektir. Bunun devrelerde uygulanması daha kolaydır, ancak EVM
+güvenlik varsayımlarıyla daha az uyumludur. Ben buna Tip 2.5 yerine Tip
+3 yaklaşımı derim.</p>
 <h2 id="tip-3-neredeyse-evm-dengi">Tip 3 (neredeyse EVM-dengi)</h2>
-<p>Tip 3 ZK-EVM'ler <em>neredeyse</em> EVM-dengidir, ancak kanıt sürelerini daha da iyileştirmek ve EVM'i geliştirmeyi kolaylaştırmak için tam denklikten ödün verirler.</p>
-<h4 id="avantaj-daha-kolay-inşa-edilir-ve-daha-hızlı-kanıtlayıcı-süreleri-sunar."><span style="color:#008800">Avantaj: Daha kolay inşa edilir ve daha hızlı kanıtlayıcı süreleri sunar.</span></h4>
-<p>Tip 3 ZK-EVM'ler, ZK-EVM implementasyonunda uygulanması son derece zor olan birkaç özelliği kaldırabilir. Genellikle <a href="https://docs.moonbeam.network/builders/build/canonical-contracts/precompiles/eth-mainnet/">ön-derlemeler</a> bu listede en üsttedir. Ek olarak, Tip 3 ZK-EVM'lerin bazen kontrat kodunu, belleği veya yığını nasıl ele aldıkları konusunda da küçük farklılıkları vardır.</p>
-<h4 id="dezavantaj-daha-fazla-uyumsuzluk."><span style="color:#cc0000">Dezavantaj: Daha fazla uyumsuzluk.</span></h4>
-<p>Tip 3 ZK-EVM'in hedefi, çoğu uygulama ile uyumlu olup geri kalanları için sadece minimal yeniden yazım gerektirmektir. Bununla beraber, Tip 3 ZK-EVM'in kaldırdığı ön-derlemeleri kullanan veya VM'lerin farklı işlediği ince ayrıntılardaki bağımlılıklardan dolayı yeniden yazılması gereken bazı uygulamalar olacaktır.</p>
-<h4 id="bunu-kim-inşa-ediyor-2"><span style="color:#880088">Bunu kim inşa ediyor?</span></h4>
-<p>Scroll ve Polygon'un her ikisi de mevcut formlarıyla Tip 3'tür, ancak zamanla uyumluluğu artırmaları bekleniyor. Polygon, <a href="https://github.com/0xPolygonHermez/zkevm-doc/blob/main/mkdocs/docs/zkEVM/zkASM/Introduction.md">zkASM</a> denen kendi dahili dilini ZK-doğruladıkları ve zkASM implementasyonunu kullanarak ZK-EVM kodunu yorumladıkları benzersiz bir tasarıma sahiptir. Bu implementasyon detayına rağmen yine de buna hakiki Tip 3 ZK-EVM diyeceğim; çünkü hala EVM kodunu doğrulayabiliyor, sadece bunu yapmak için yalnızca farklı bir dahili mantık kullanır.</p>
-<p>Bugün, hiçbir ZK-EVM ekibi Tip 3 olmak <em>istemez</em>; Tip 3, ön-derlemelerin eklenmesi gibi karmaşık işler bitene ve proje Tip 2.5'a geçinceye kadar sadece bir geçiş aşamasıdır. Ancak gelecekte Tip 1 veya Tip 2 ZK-EVM'ler, düşük kanıtlayıcı süreleri ve gaz ücretleri ile geliştiriciler için işlevsellik sağlayan <em>yeni</em> ZK-SNARK dostu ön-derlemeler ekleyerek gönüllü olarak Tip 3 ZK-EVM'lere dönüşebilirler.</p>
-<h2 id="tip-4-yüksek-seviye-dil-denkliği">Tip 4 (yüksek-seviye-dil denkliği)</h2>
-<p>Bir Tip 4 sistemi, yüksek seviyeli bir dilde (örn. <a href="https://docs.soliditylang.org/en/v0.8.15/">Solidity</a>, <a href="https://vyper.readthedocs.io/en/stable/">Vyper</a> veya her ikisinin de derlediği bir ara dilde) yazılmış akıllı kontrat kaynak kodunu alarak ve bunu açıkça ZK-SNARK dostu olacak şekilde tasarlanmış bir dilde derleyerek çalışır.</p>
-<h4 id="avantaj-çok-hızlı-kanıtlayıcı-süreleri"><span style="color:#008800">Avantaj: Çok hızlı kanıtlayıcı süreleri</span></h4>
-<p>Her EVM yürütülme işleminin tüm farklı bölümlerini ZK-kanıtlamayarak ve doğrudan yüksek seviye koddan başlayarak önlenebilecek <em>çok sayıda</em> ek yük vardır.</p>
-<p>Bu avantajı bu yazımda sadece bir cümleyle açıklıyorum (aşağıdaki, uyumlulukla ilgili dezavantajlar için olan büyük listeyle karşılaştırıldığında), ancak bu bir değer yargısı olarak yorumlanmamalıdır! Yüksek seviyeli dillerden doğrudan derlemek gerçekten maliyetleri büyük ölçüde azaltabilir ve bir kanıtlayıcı olmayı daha kolay hale getirerek merkeziyetsizleşmeye yardımcı olabilir.</p>
-<h4 id="dezavantaj-daha-fazla-uyumsuzluk"><span style="color:#cc0000">Dezavantaj: Daha fazla uyumsuzluk</span></h4>
-<p>Vyper veya Solidity ile yazılmış "normal" bir uygulama derlenebilir ve "sadece çalışır", ancak pek çok uygulamanın "normal" olmadığı bazı önemli yollar vardır:</p>
+<p>Tip 3 ZK-EVM'ler <em>neredeyse</em> EVM-dengidir, ancak kanıt
+sürelerini daha da iyileştirmek ve EVM'i geliştirmeyi kolaylaştırmak
+için tam denklikten ödün verirler.</p>
+<h4
+id="avantaj-daha-kolay-inşa-edilir-ve-daha-hızlı-kanıtlayıcı-süreleri-sunar."><span
+style="color:#008800">Avantaj: Daha kolay inşa edilir ve daha hızlı
+kanıtlayıcı süreleri sunar.</span></h4>
+<p>Tip 3 ZK-EVM'ler, ZK-EVM implementasyonunda uygulanması son derece
+zor olan birkaç özelliği kaldırabilir. Genellikle <a
+href="https://docs.moonbeam.network/builders/build/canonical-contracts/precompiles/eth-mainnet/">ön-derlemeler</a>
+bu listede en üsttedir. Ek olarak, Tip 3 ZK-EVM'lerin bazen kontrat
+kodunu, belleği veya yığını nasıl ele aldıkları konusunda da küçük
+farklılıkları vardır.</p>
+<h4 id="dezavantaj-daha-fazla-uyumsuzluk."><span
+style="color:#cc0000">Dezavantaj: Daha fazla uyumsuzluk.</span></h4>
+<p>Tip 3 ZK-EVM'in hedefi, çoğu uygulama ile uyumlu olup geri kalanları
+için sadece minimal yeniden yazım gerektirmektir. Bununla beraber, Tip 3
+ZK-EVM'in kaldırdığı ön-derlemeleri kullanan veya VM'lerin farklı
+işlediği ince ayrıntılardaki bağımlılıklardan dolayı yeniden yazılması
+gereken bazı uygulamalar olacaktır.</p>
+<h4 id="bunu-kim-inşa-ediyor-2"><span style="color:#880088">Bunu kim
+inşa ediyor?</span></h4>
+<p>Scroll ve Polygon'un her ikisi de mevcut formlarıyla Tip 3'tür, ancak
+zamanla uyumluluğu artırmaları bekleniyor. Polygon, <a
+href="https://github.com/0xPolygonHermez/zkevm-doc/blob/main/mkdocs/docs/zkEVM/zkASM/Introduction.md">zkASM</a>
+denen kendi dahili dilini ZK-doğruladıkları ve zkASM implementasyonunu
+kullanarak ZK-EVM kodunu yorumladıkları benzersiz bir tasarıma sahiptir.
+Bu implementasyon detayına rağmen yine de buna hakiki Tip 3 ZK-EVM
+diyeceğim; çünkü hala EVM kodunu doğrulayabiliyor, sadece bunu yapmak
+için yalnızca farklı bir dahili mantık kullanır.</p>
+<p>Bugün, hiçbir ZK-EVM ekibi Tip 3 olmak <em>istemez</em>; Tip 3,
+ön-derlemelerin eklenmesi gibi karmaşık işler bitene ve proje Tip 2.5'a
+geçinceye kadar sadece bir geçiş aşamasıdır. Ancak gelecekte Tip 1 veya
+Tip 2 ZK-EVM'ler, düşük kanıtlayıcı süreleri ve gaz ücretleri ile
+geliştiriciler için işlevsellik sağlayan <em>yeni</em> ZK-SNARK dostu
+ön-derlemeler ekleyerek gönüllü olarak Tip 3 ZK-EVM'lere
+dönüşebilirler.</p>
+<h2 id="tip-4-yüksek-seviye-dil-denkliği">Tip 4 (yüksek-seviye-dil
+denkliği)</h2>
+<p>Bir Tip 4 sistemi, yüksek seviyeli bir dilde (örn. <a
+href="https://docs.soliditylang.org/en/v0.8.15/">Solidity</a>, <a
+href="https://vyper.readthedocs.io/en/stable/">Vyper</a> veya her
+ikisinin de derlediği bir ara dilde) yazılmış akıllı kontrat kaynak
+kodunu alarak ve bunu açıkça ZK-SNARK dostu olacak şekilde tasarlanmış
+bir dilde derleyerek çalışır.</p>
+<h4 id="avantaj-çok-hızlı-kanıtlayıcı-süreleri"><span
+style="color:#008800">Avantaj: Çok hızlı kanıtlayıcı
+süreleri</span></h4>
+<p>Her EVM yürütülme işleminin tüm farklı bölümlerini ZK-kanıtlamayarak
+ve doğrudan yüksek seviye koddan başlayarak önlenebilecek <em>çok
+sayıda</em> ek yük vardır.</p>
+<p>Bu avantajı bu yazımda sadece bir cümleyle açıklıyorum (aşağıdaki,
+uyumlulukla ilgili dezavantajlar için olan büyük listeyle
+karşılaştırıldığında), ancak bu bir değer yargısı olarak
+yorumlanmamalıdır! Yüksek seviyeli dillerden doğrudan derlemek gerçekten
+maliyetleri büyük ölçüde azaltabilir ve bir kanıtlayıcı olmayı daha
+kolay hale getirerek merkeziyetsizleşmeye yardımcı olabilir.</p>
+<h4 id="dezavantaj-daha-fazla-uyumsuzluk"><span
+style="color:#cc0000">Dezavantaj: Daha fazla uyumsuzluk</span></h4>
+<p>Vyper veya Solidity ile yazılmış "normal" bir uygulama derlenebilir
+ve "sadece çalışır", ancak pek çok uygulamanın "normal" olmadığı bazı
+önemli yollar vardır:</p>
 <ul>
-<li><strong>Kontratlar Tip 4 bir sistemde EVM'de olduğu gibi aynı adreslere sahip olmayabilir</strong>, çünkü CREATE2 kontrat adresleri tamı tamına bytecode'a bağlıdır. Bu, henüz deploy edilmemiş "Karşıolgusal kontratlara", ERC-4337 cüzdanlara, <a href="https://eips.ethereum.org/EIPS/eip-2470">EIP-2470 tekillerine</a> ve birçok diğer uygulamaya dayanan uygulamaları bozar.</li>
-<li><strong>Elle yazılmış EVM bytecode</strong> kullanmak daha zordur. Birçok uygulama, verimlilik için bazı bölümlerinde elle yazılmış EVM bytecode kullanır. Tip 4 sistemleri bunu desteklemeyebilir, ancak bu kullanım durumlarını karşılamak için tam anlamıyla bir Tip 3 ZK-EVM olmanın çabasına girmeden sınırlı EVM bytecode desteği uygulamanın yolları vardır.</li>
-<li><strong>Birçok hata ayıklama altyapısı taşınamaz</strong>, çünkü bu tür altyapılar EVM bytecode'u üzerinden çalışır. Bununla birlikte, bu dezavantaj "geleneksel" yüksek seviyeli veya ara diller (örn. LLVM) tarafından sunulan hata ayıklama altyapısına <em>daha fazla</em> erişim ile hafifletilir.</li>
+<li><strong>Kontratlar Tip 4 bir sistemde EVM'de olduğu gibi aynı
+adreslere sahip olmayabilir</strong>, çünkü CREATE2 kontrat adresleri
+tamı tamına bytecode'a bağlıdır. Bu, henüz deploy edilmemiş
+"Karşıolgusal kontratlara", ERC-4337 cüzdanlara, <a
+href="https://eips.ethereum.org/EIPS/eip-2470">EIP-2470 tekillerine</a>
+ve birçok diğer uygulamaya dayanan uygulamaları bozar.</li>
+<li><strong>Elle yazılmış EVM bytecode</strong> kullanmak daha zordur.
+Birçok uygulama, verimlilik için bazı bölümlerinde elle yazılmış EVM
+bytecode kullanır. Tip 4 sistemleri bunu desteklemeyebilir, ancak bu
+kullanım durumlarını karşılamak için tam anlamıyla bir Tip 3 ZK-EVM
+olmanın çabasına girmeden sınırlı EVM bytecode desteği uygulamanın
+yolları vardır.</li>
+<li><strong>Birçok hata ayıklama altyapısı taşınamaz</strong>, çünkü bu
+tür altyapılar EVM bytecode'u üzerinden çalışır. Bununla birlikte, bu
+dezavantaj "geleneksel" yüksek seviyeli veya ara diller (örn. LLVM)
+tarafından sunulan hata ayıklama altyapısına <em>daha fazla</em> erişim
+ile hafifletilir.</li>
 </ul>
 <p>Geliştiriciler bu konuları akıllarında bulundurmalıdır.</p>
-<h4 id="bunu-kim-inşa-ediyor-3"><span style="color:#880088">Bunu kim inşa ediyor?</span></h4>
-<p><a href="https://matterlabs.medium.com/100-days-to-mainnet-6f230893bd73">ZKSync</a> bir Tip 4 sistemidir ancak zamanla EVM bytecode'u için uyumluluk ekleyebilir. Nethermind'ın <a href="https://github.com/NethermindEth/warp">Warp</a> projesi, Solidity'den Starkware'in Cairo'suna derleyici inşa ediyor ve bu, StarkNet'i fiili bir Tip 4 sistemine dönüştürecektir.</p>
+<h4 id="bunu-kim-inşa-ediyor-3"><span style="color:#880088">Bunu kim
+inşa ediyor?</span></h4>
+<p><a
+href="https://matterlabs.medium.com/100-days-to-mainnet-6f230893bd73">ZKSync</a>
+bir Tip 4 sistemidir ancak zamanla EVM bytecode'u için uyumluluk
+ekleyebilir. Nethermind'ın <a
+href="https://github.com/NethermindEth/warp">Warp</a> projesi,
+Solidity'den Starkware'in Cairo'suna derleyici inşa ediyor ve bu,
+StarkNet'i fiili bir Tip 4 sistemine dönüştürecektir.</p>
 <h2 id="the-future-of-zk-evm-types">The future of ZK-EVM types</h2>
-<p>Tipler diğer tiplerden açıkça "daha iyi" veya "daha kötü" değildir. Aksine, bunlar takas alanındaki farklı noktalardır: daha düşük-numaralı tipler mevcut altyapı ile daha uyumludur, ancak daha yavaştır ve daha yüksek-numaralı tipler mevcut altyapı ile daha az uyumludur, ancak daha hızlıdır. Genel olarak bu tiplerin tamamının keşfedilmesi alan açısından sağlıklıdır.</p>
-<p>Ek olarak, ZK-EVM projeleri kolaylıkla yüksek-numaralı tiplerden başlayabilir ve zamanla daha düşük-numaralı tiplere atlayabilir (veya tam tersi). Örneğin:</p>
+<p>Tipler diğer tiplerden açıkça "daha iyi" veya "daha kötü" değildir.
+Aksine, bunlar takas alanındaki farklı noktalardır: daha düşük-numaralı
+tipler mevcut altyapı ile daha uyumludur, ancak daha yavaştır ve daha
+yüksek-numaralı tipler mevcut altyapı ile daha az uyumludur, ancak daha
+hızlıdır. Genel olarak bu tiplerin tamamının keşfedilmesi alan açısından
+sağlıklıdır.</p>
+<p>Ek olarak, ZK-EVM projeleri kolaylıkla yüksek-numaralı tiplerden
+başlayabilir ve zamanla daha düşük-numaralı tiplere atlayabilir (veya
+tam tersi). Örneğin:</p>
 <ul>
-<li>Bir ZK-EVM, özellikle ZK-kanıtlanması zor olan bazı özellikleri dahil etmemeye karar vererek Tip 3 olarak başlayabilir. Daha sonra zamanla bu özellikleri ekleyip Tip 2'ye geçebilirler.</li>
-<li>Bir ZK-EVM, Tip 2 olarak başlayabilir ve daha sonra, tamamen Ethereum'a uyumluluk modu ile veya daha hızlı kanıtlanabilen değiştirilmiş bir state tree ile çalışma olanağı sunarak hibrit bir Tip 2 / Tip 1 ZK-EVM haline gelebilir. Scroll bu yönde ilerlemeyi düşünüyor.</li>
-<li>Tip 4 olarak başlayan sistem, daha sonra EVM kodunu işleme yeteneğinin eklenmesiyle zamanla Tip 3 haline gelebilir (yine de geliştiriciler ücretleri ve kanıt sürelerini azaltmak için yüksek seviyeli dillerle doğrudan derlemeye yönelecektir).</li>
-<li>Tip 2 veya Tip 3 ZK-EVM, Ethereum'un daha ZK dostu olma çabasıyla modifikasyonlarını benimsemesi durumunda Tip 1 ZK-EVM haline gelebilir.</li>
-<li>Bir Tip 1 veya Tip 2 ZK-EVM, oldukça ZK-SNARK dostu bir dilde kodu doğrulamak için bir ön-derleme ekleyerek Tip 3 ZK-EVM haline gelebilir. Bu, geliştiricilere Ethereum uyumluluğu ve hız arasında bir seçenek sunar. Bu Tip 3 olacaktır çünkü mükemmel EVM-denkliğini bozar, ancak pratik amaçlar ve niyetler için Tip 1 ve 2'nin birçok avantajına sahip olur. Ana dezavantaj, bazı geliştirici araçlarının ZK-EVM'in özel ön-derlemelerini anlamayabileceğidir, ancak bu sorun düzeltilebilir: geliştirici araçları, ön-derlemenin EVM kodu dengi bir implementasyonunu içeren bir yapılandırma formatını destekleyerek evrensel ön-derleme desteği ekleyebilir.</li>
+<li>Bir ZK-EVM, özellikle ZK-kanıtlanması zor olan bazı özellikleri
+dahil etmemeye karar vererek Tip 3 olarak başlayabilir. Daha sonra
+zamanla bu özellikleri ekleyip Tip 2'ye geçebilirler.</li>
+<li>Bir ZK-EVM, Tip 2 olarak başlayabilir ve daha sonra, tamamen
+Ethereum'a uyumluluk modu ile veya daha hızlı kanıtlanabilen
+değiştirilmiş bir state tree ile çalışma olanağı sunarak hibrit bir Tip
+2 / Tip 1 ZK-EVM haline gelebilir. Scroll bu yönde ilerlemeyi
+düşünüyor.</li>
+<li>Tip 4 olarak başlayan sistem, daha sonra EVM kodunu işleme
+yeteneğinin eklenmesiyle zamanla Tip 3 haline gelebilir (yine de
+geliştiriciler ücretleri ve kanıt sürelerini azaltmak için yüksek
+seviyeli dillerle doğrudan derlemeye yönelecektir).</li>
+<li>Tip 2 veya Tip 3 ZK-EVM, Ethereum'un daha ZK dostu olma çabasıyla
+modifikasyonlarını benimsemesi durumunda Tip 1 ZK-EVM haline
+gelebilir.</li>
+<li>Bir Tip 1 veya Tip 2 ZK-EVM, oldukça ZK-SNARK dostu bir dilde kodu
+doğrulamak için bir ön-derleme ekleyerek Tip 3 ZK-EVM haline gelebilir.
+Bu, geliştiricilere Ethereum uyumluluğu ve hız arasında bir seçenek
+sunar. Bu Tip 3 olacaktır çünkü mükemmel EVM-denkliğini bozar, ancak
+pratik amaçlar ve niyetler için Tip 1 ve 2'nin birçok avantajına sahip
+olur. Ana dezavantaj, bazı geliştirici araçlarının ZK-EVM'in özel
+ön-derlemelerini anlamayabileceğidir, ancak bu sorun düzeltilebilir:
+geliştirici araçları, ön-derlemenin EVM kodu dengi bir implementasyonunu
+içeren bir yapılandırma formatını destekleyerek evrensel ön-derleme
+desteği ekleyebilir.</li>
 </ul>
-<p>Şahsen, benim umudum ZK-EVM'lerdeki iyileştirmeler ve Ethereum'un kendisini daha ZK-SNARK dostu hale getirecek iyileştirmelerin bir araya gelmesiyle her şeyin zamanla Tip 1 haline gelmesidir. Böyle bir gelecekte, hem ZK rollup'ları hem de Ethereum zincirinin kendisini doğrulamak için kullanılabilecek birden fazla ZK-EVM implementasyonuna sahip olurduk. Teorik olarak Ethereum'un L1 kullanımı için tek bir ZK-EVM implementasyonu üzerinde standartlaşmasına gerek yoktur; farklı istemciler farklı kanıtlar kullanabilir, bu nedenle kod fazlalığından yararlanmaya devam edelim.</p>
-<p>Ancak böyle bir geleceğe ulaşmamız oldukça zaman alacak. Bu esnada, Ethereum ve Ethereum tabanlı ZK-rollup'larını ölçeklendirmenin farklı yollarında birçok inovasyon göreceğiz.</p>
+<p>Şahsen, benim umudum ZK-EVM'lerdeki iyileştirmeler ve Ethereum'un
+kendisini daha ZK-SNARK dostu hale getirecek iyileştirmelerin bir araya
+gelmesiyle her şeyin zamanla Tip 1 haline gelmesidir. Böyle bir
+gelecekte, hem ZK rollup'ları hem de Ethereum zincirinin kendisini
+doğrulamak için kullanılabilecek birden fazla ZK-EVM implementasyonuna
+sahip olurduk. Teorik olarak Ethereum'un L1 kullanımı için tek bir
+ZK-EVM implementasyonu üzerinde standartlaşmasına gerek yoktur; farklı
+istemciler farklı kanıtlar kullanabilir, bu nedenle kod fazlalığından
+yararlanmaya devam edelim.</p>
+<p>Ancak böyle bir geleceğe ulaşmamız oldukça zaman alacak. Bu esnada,
+Ethereum ve Ethereum tabanlı ZK-rollup'larını ölçeklendirmenin farklı
+yollarında birçok inovasyon göreceğiz.</p>
  </div> 

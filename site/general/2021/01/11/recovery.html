@@ -109,103 +109,416 @@ MathJax = {
 <br> <br> <br>
 <title> Why we need wide adoption of social recovery wallets </title>
 
-<p><em>Special thanks to Itamar Lesuisse from Argent and Daniel Wang from Loopring for feedback.</em></p>
-<p>One of the great challenges with making cryptocurrency and blockchain applications usable for average users is security: how do we prevent users' funds from being lost or stolen? Losses and thefts are a serious issue, often costing innocent blockchain users thousands of dollars or even in some cases the majority of their entire net worth.</p>
-<p>There have been many solutions proposed over the years: paper wallets, hardware wallets, and my own one-time favorite: <a href="https://bitcoinmagazine.com/articles/bitcoin-self-defense-part-i-wallet-protection-1368758841">multisig wallets</a>. And indeed they have led to significant improvements in security. However, these solutions have all suffered from various defects - sometimes providing far less extra protection against theft and loss than is actually needed, sometimes being cumbersome and difficult to use leading to very low adoption, and sometimes both. But recently, there is an emerging better alternative: a newer type of smart contract wallet called a <em>social recovery wallet</em>. These wallets can potentially provide a high level of security and much better usability than previous options, but there is still a way to go before they can be easily and widely deployed. <strong>This post will go through what social recovery wallets are, why they matter, and how we can and should move toward much broader adoption of them throughout the ecosystem.</strong></p>
-<h3 id="wallet-security-is-a-really-big-problem">Wallet security is a really big problem</h3>
-<p>Wallet security issues have been a thorn in the side of the blockchain ecosystem almost since the beginning. Cryptocurrency losses and thefts were rampant even back in 2011 when Bitcoin was almost the only cryptocurrency out there; indeed, in my pre-Ethereum role as a cofounder and writer of <a href="https://bitcoinmagazine.com">Bitcoin Magazine</a>, I wrote an entire article detailing the horrors of hacks and losses and thefts that were already happening at the time.</p>
+<p><em>Special thanks to Itamar Lesuisse from Argent and Daniel Wang
+from Loopring for feedback.</em></p>
+<p>One of the great challenges with making cryptocurrency and blockchain
+applications usable for average users is security: how do we prevent
+users' funds from being lost or stolen? Losses and thefts are a serious
+issue, often costing innocent blockchain users thousands of dollars or
+even in some cases the majority of their entire net worth.</p>
+<p>There have been many solutions proposed over the years: paper
+wallets, hardware wallets, and my own one-time favorite: <a
+href="https://bitcoinmagazine.com/articles/bitcoin-self-defense-part-i-wallet-protection-1368758841">multisig
+wallets</a>. And indeed they have led to significant improvements in
+security. However, these solutions have all suffered from various
+defects - sometimes providing far less extra protection against theft
+and loss than is actually needed, sometimes being cumbersome and
+difficult to use leading to very low adoption, and sometimes both. But
+recently, there is an emerging better alternative: a newer type of smart
+contract wallet called a <em>social recovery wallet</em>. These wallets
+can potentially provide a high level of security and much better
+usability than previous options, but there is still a way to go before
+they can be easily and widely deployed. <strong>This post will go
+through what social recovery wallets are, why they matter, and how we
+can and should move toward much broader adoption of them throughout the
+ecosystem.</strong></p>
+<h3 id="wallet-security-is-a-really-big-problem">Wallet security is a
+really big problem</h3>
+<p>Wallet security issues have been a thorn in the side of the
+blockchain ecosystem almost since the beginning. Cryptocurrency losses
+and thefts were rampant even back in 2011 when Bitcoin was almost the
+only cryptocurrency out there; indeed, in my pre-Ethereum role as a
+cofounder and writer of <a href="https://bitcoinmagazine.com">Bitcoin
+Magazine</a>, I wrote an entire article detailing the horrors of hacks
+and losses and thefts that were already happening at the time.</p>
 <p>Here is one sample:</p>
 <blockquote>
-<p>Last night around 9PM PDT, I clicked a link to go to CoinChat[.]freetzi[.]com – and I was prompted to run java. I did (thinking this was a legitimate chatoom), and nothing happened. I closed the window and thought nothing of it. I opened my bitcoin-qt wallet approx 14 minutes later, and saw a transaction that I did NOT approve go to wallet 1Es3QVvKN1qA2p6me7jLCVMZpQXVXWPNTC for almost my entire wallet...</p>
+<p>Last night around 9PM PDT, I clicked a link to go to
+CoinChat[.]freetzi[.]com – and I was prompted to run java. I did
+(thinking this was a legitimate chatoom), and nothing happened. I closed
+the window and thought nothing of it. I opened my bitcoin-qt wallet
+approx 14 minutes later, and saw a transaction that I did NOT approve go
+to wallet 1Es3QVvKN1qA2p6me7jLCVMZpQXVXWPNTC for almost my entire
+wallet...</p>
 </blockquote>
-<p>This person's losses were 2.07 BTC, worth $300 at the time, and over $70000 today. Here's another one:</p>
+<p>This person's losses were 2.07 BTC, worth $300 at the time, and over
+$70000 today. Here's another one:</p>
 <blockquote>
-<p>In June 2011, the Bitcointalk member "allinvain" lost 25,000 BTC (worth $500,000 at the time) after an unknown intruder somehow gained direct access to his computer. The attacker was able to access allinvain's wallet.dat file, and quickly empty out the wallet – either by sending a transaction from allinvain's computer itself, or by simply uploading the wallet.dat file and emptying it on his own machine.</p>
+<p>In June 2011, the Bitcointalk member "allinvain" lost 25,000 BTC
+(worth $500,000 at the time) after an unknown intruder somehow gained
+direct access to his computer. The attacker was able to access
+allinvain's wallet.dat file, and quickly empty out the wallet – either
+by sending a transaction from allinvain's computer itself, or by simply
+uploading the wallet.dat file and emptying it on his own machine.</p>
 </blockquote>
-<p>In present-day value, that's a loss of <em>nearly one billion dollars</em>. But theft is not the only concern; there are also losses from losing one's private keys. Here's Stefan Thomas:</p>
+<p>In present-day value, that's a loss of <em>nearly one billion
+dollars</em>. But theft is not the only concern; there are also losses
+from losing one's private keys. Here's Stefan Thomas:</p>
 <blockquote>
-<p>Bitcoin developer Stefan Thomas had three backups of his wallet – an encrypted USB stick, a Dropbox account and a Virtualbox virtual machine. However, he managed to erase two of them and forget the password to the third, forever losing access to 7,000 BTC (worth $125,000 at the time). Thomas's reaction: "[I'm] pretty dedicated to creating better clients since then."</p>
+<p>Bitcoin developer Stefan Thomas had three backups of his wallet – an
+encrypted USB stick, a Dropbox account and a Virtualbox virtual machine.
+However, he managed to erase two of them and forget the password to the
+third, forever losing access to 7,000 BTC (worth $125,000 at the time).
+Thomas's reaction: "[I'm] pretty dedicated to creating better clients
+since then."</p>
 </blockquote>
-<p>One analysis of the Bitcoin ecosystem suggests that <a href="https://news.bitcoin.com/analyst-1500-bitcoins-lost-every-day-less-than-14-million-coins-will-ever-circulate/">1500 BTC may be lost every day</a> - over ten times more than what Bitcoin users <a href="https://ycharts.com/indicators/bitcoin_total_transaction_fees_per_day">spend on transaction fees</a>, and over the years adding up to as much as <a href="https://www.investopedia.com/news/20-all-btc-lost-unrecoverable-study-shows/">20% of the total supply</a>. The stories and the numbers alike point to the same inescapable truth: <strong>the importance of the wallet security problem is great, and it should not be underestimated</strong>.</p>
-<p>It's easy to see the social and psychological reasons why wallet security is easy to underestimate: people naturally worry about appearing uncareful or dumb in front of an always judgemental public, and so many keep their experiences with their funds getting hacked to themselves. Loss of funds is even worse, as there is a pervasive (though in my opinion very incorrect) feeling that "there is no one to blame but yourself". <strong>But the reality is that <em>the whole point of digital technology</em>, blockchains included, is to make it easier for humans to engage in very complicated tasks without having to exert extreme mental effort or live in constant fear of making mistakes.</strong> An ecosystem whose only answer to losses and thefts is a combination of 12-step tutorials, not-very-secure half-measures and the not-so-occasional semi-sarcastic "sorry for your loss" is going to have a hard time getting broad adoption.</p>
-<p>So solutions that reduce the quantity of losses and thefts taking place, without requiring all cryptocurrency users to turn personal security into a full-time hobby, are highly valuable for the industry.</p>
-<h3 id="hardware-wallets-alone-are-not-good-enough">Hardware wallets alone are not good enough</h3>
-<p>Hardware wallets are often touted as the best-in-class technology for cryptocurrency funds management. A hardware wallet is a specialized hardware device which can be connected to your computer or phone (eg. through USB), and which contains a specialized chip that can only generate private keys and sign transactions. A transaction would be initiated on your computer or phone, must be confirmed on the hardware wallet before it can be sent. The private key stays on your hardware wallet, so an attacker that hacks into your computer or phone could <em>not</em> drain the funds.</p>
-<p>Hardware wallets are a significant improvement, and they certainly would have protected the Java chatroom victim, but they are not perfect. I see two main problems with hardware wallets:</p>
+<p>One analysis of the Bitcoin ecosystem suggests that <a
+href="https://news.bitcoin.com/analyst-1500-bitcoins-lost-every-day-less-than-14-million-coins-will-ever-circulate/">1500
+BTC may be lost every day</a> - over ten times more than what Bitcoin
+users <a
+href="https://ycharts.com/indicators/bitcoin_total_transaction_fees_per_day">spend
+on transaction fees</a>, and over the years adding up to as much as <a
+href="https://www.investopedia.com/news/20-all-btc-lost-unrecoverable-study-shows/">20%
+of the total supply</a>. The stories and the numbers alike point to the
+same inescapable truth: <strong>the importance of the wallet security
+problem is great, and it should not be underestimated</strong>.</p>
+<p>It's easy to see the social and psychological reasons why wallet
+security is easy to underestimate: people naturally worry about
+appearing uncareful or dumb in front of an always judgemental public,
+and so many keep their experiences with their funds getting hacked to
+themselves. Loss of funds is even worse, as there is a pervasive (though
+in my opinion very incorrect) feeling that "there is no one to blame but
+yourself". <strong>But the reality is that <em>the whole point of
+digital technology</em>, blockchains included, is to make it easier for
+humans to engage in very complicated tasks without having to exert
+extreme mental effort or live in constant fear of making
+mistakes.</strong> An ecosystem whose only answer to losses and thefts
+is a combination of 12-step tutorials, not-very-secure half-measures and
+the not-so-occasional semi-sarcastic "sorry for your loss" is going to
+have a hard time getting broad adoption.</p>
+<p>So solutions that reduce the quantity of losses and thefts taking
+place, without requiring all cryptocurrency users to turn personal
+security into a full-time hobby, are highly valuable for the
+industry.</p>
+<h3 id="hardware-wallets-alone-are-not-good-enough">Hardware wallets
+alone are not good enough</h3>
+<p>Hardware wallets are often touted as the best-in-class technology for
+cryptocurrency funds management. A hardware wallet is a specialized
+hardware device which can be connected to your computer or phone (eg.
+through USB), and which contains a specialized chip that can only
+generate private keys and sign transactions. A transaction would be
+initiated on your computer or phone, must be confirmed on the hardware
+wallet before it can be sent. The private key stays on your hardware
+wallet, so an attacker that hacks into your computer or phone could
+<em>not</em> drain the funds.</p>
+<p>Hardware wallets are a significant improvement, and they certainly
+would have protected the Java chatroom victim, but they are not perfect.
+I see two main problems with hardware wallets:</p>
 <ul>
-<li><strong>Supply chain attacks</strong>: if you buy a hardware wallet, you are trusting a number of actors that were involved in producing it - the company that designed the wallet, the factory that produced it, and everyone involved in shipping it who could have replaced it with a fake. Hardware wallets are potentially a magnet for such attacks: the ratio of funds stolen to number of devices compromised is very high. To their credit, hardware wallet manufacturers such as Ledger have put in many safeguards to protect against these risks, but some risks still remain. A hardware device fundamentally cannot be audited the same way a piece of open source software can.</li>
-<li><strong>Still a single point of failure</strong>: if someone steals your hardware wallet right after they stand behind your shoulder and catch you typing in the PIN, they can steal your funds. If you lose your hardware wallet, then you lose your funds - unless the hardware wallet generates and outputs a backup at setup time, but as we will see those have problems of their own...</li>
+<li><strong>Supply chain attacks</strong>: if you buy a hardware wallet,
+you are trusting a number of actors that were involved in producing it -
+the company that designed the wallet, the factory that produced it, and
+everyone involved in shipping it who could have replaced it with a fake.
+Hardware wallets are potentially a magnet for such attacks: the ratio of
+funds stolen to number of devices compromised is very high. To their
+credit, hardware wallet manufacturers such as Ledger have put in many
+safeguards to protect against these risks, but some risks still remain.
+A hardware device fundamentally cannot be audited the same way a piece
+of open source software can.</li>
+<li><strong>Still a single point of failure</strong>: if someone steals
+your hardware wallet right after they stand behind your shoulder and
+catch you typing in the PIN, they can steal your funds. If you lose your
+hardware wallet, then you lose your funds - unless the hardware wallet
+generates and outputs a backup at setup time, but as we will see those
+have problems of their own...</li>
 </ul>
-<h3 id="mnemonic-phrases-are-not-good-enough">Mnemonic phrases are not good enough</h3>
-<p>Many wallets, hardware and software alike, have a setup procedure during which they output a <em>mnemonic phrase</em>, which is a human-readable 12 to 24-word encoding of the wallet's root private key. A mnemonic phrase looks like this:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a> vote    dance   <span class="bu">type</span>    subject valley  fall    usage   silk</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a> essay   lunch   endorse lunar   obvious race    ribbon  key</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a> already arrow   enable  drama   keen    survey  lesson  cruel</span></code></pre></div>
-<p>If you lose your wallet but you have the mnemonic phrase, you can input the phrase when setting up a new wallet to recover your account, as the mnemonic phrase contains the root key from which all of your other keys can be generated.</p>
-<p>Mnemonic phrases are good for protecting against loss, but they do nothing against theft. Even worse, they add a <em>new</em> vector for theft: if you have the standard hardware wallet + mnemonic backup combo, then someone stealing <em>either</em> your hardware wallet + PIN <em>or</em> your mnemonic backup can steal your funds. Furthermore, maintaining a mnemonic phrase and not accidentally throwing it away is itself a non-trivial mental effort.</p>
-<p>The problems with theft can be alleviated if you split the phrase in half and give half to your friend, but (i) almost no one actually promotes this, (ii) there are security issues, as if the phrase is short (128 bits) then a sophisticated and motivated attacker who steals one piece may be able to brute-force through all <span class="math inline">\(2^{64}\)</span> possible combinations to find the other, and (iii) it increases the mental overhead even further.</p>
+<h3 id="mnemonic-phrases-are-not-good-enough">Mnemonic phrases are not
+good enough</h3>
+<p>Many wallets, hardware and software alike, have a setup procedure
+during which they output a <em>mnemonic phrase</em>, which is a
+human-readable 12 to 24-word encoding of the wallet's root private key.
+A mnemonic phrase looks like this:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a> vote    dance   <span class="bu">type</span>    subject valley  fall    usage   silk</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> essay   lunch   endorse lunar   obvious race    ribbon  key</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> already arrow   enable  drama   keen    survey  lesson  cruel</span></code></pre></div>
+<p>If you lose your wallet but you have the mnemonic phrase, you can
+input the phrase when setting up a new wallet to recover your account,
+as the mnemonic phrase contains the root key from which all of your
+other keys can be generated.</p>
+<p>Mnemonic phrases are good for protecting against loss, but they do
+nothing against theft. Even worse, they add a <em>new</em> vector for
+theft: if you have the standard hardware wallet + mnemonic backup combo,
+then someone stealing <em>either</em> your hardware wallet + PIN
+<em>or</em> your mnemonic backup can steal your funds. Furthermore,
+maintaining a mnemonic phrase and not accidentally throwing it away is
+itself a non-trivial mental effort.</p>
+<p>The problems with theft can be alleviated if you split the phrase in
+half and give half to your friend, but (i) almost no one actually
+promotes this, (ii) there are security issues, as if the phrase is short
+(128 bits) then a sophisticated and motivated attacker who steals one
+piece may be able to brute-force through all <span
+class="math inline">\(2^{64}\)</span> possible combinations to find the
+other, and (iii) it increases the mental overhead even further.</p>
 <h3 id="so-what-do-we-need">So what do we need?</h3>
-<p>What we need is a wallet design which satisfies three key criteria:</p>
+<p>What we need is a wallet design which satisfies three key
+criteria:</p>
 <ul>
-<li><strong>No single point of failure</strong>: there is no single thing (and ideally, no collection of things which travel together) which, if stolen, can give an attacker access to your funds, or if lost, can deny you access to your funds.</li>
-<li><strong>Low mental overhead</strong>: as much as possible, it should not require users to learn strange new habits or exert mental effort to always remember to follow certain patterns of behavior.</li>
-<li><strong>Maximum ease of transacting</strong>: most normal activities should not require much more effort than they do in regular wallets (eg. Status, Metamask...)</li>
+<li><strong>No single point of failure</strong>: there is no single
+thing (and ideally, no collection of things which travel together)
+which, if stolen, can give an attacker access to your funds, or if lost,
+can deny you access to your funds.</li>
+<li><strong>Low mental overhead</strong>: as much as possible, it should
+not require users to learn strange new habits or exert mental effort to
+always remember to follow certain patterns of behavior.</li>
+<li><strong>Maximum ease of transacting</strong>: most normal activities
+should not require much more effort than they do in regular wallets (eg.
+Status, Metamask...)</li>
 </ul>
 <h3 id="multisig-is-good">Multisig is good!</h3>
-<p>The best-in-class technology for solving these problems <a href="https://bitcoinmagazine.com/articles/multisig-revolution-incomplete-1406578252">back in 2013</a> was multisig. You could have a wallet that has three keys, where any two of them are needed to send a transaction.</p>
+<p>The best-in-class technology for solving these problems <a
+href="https://bitcoinmagazine.com/articles/multisig-revolution-incomplete-1406578252">back
+in 2013</a> was multisig. You could have a wallet that has three keys,
+where any two of them are needed to send a transaction.</p>
 <center>
 <img src="../../../../images/social-recovery-files/diag1.png" class="padded" />
 </center>
 <p><br></p>
-<p>This technology was originally developed within the Bitcoin ecosystem, but excellent multisig wallets (eg. see <a href="https://gnosis-safe.io/">Gnosis Safe</a>) now exist for Ethereum too. Multisig wallets have been highly successful within organizations: the Ethereum Foundation uses a 4-of-7 multisig wallet to store <a href="https://etherscan.io/address/0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae">its funds</a>, as do many other orgs in the Ethereum ecosystem.</p>
-<p>For a multisig wallet to hold the funds for an <em>individual</em>, the main challenge is: who holds the funds, and how are transactions approved? The most common formula is some variant of "two easily accessible, but separate, keys, held by you (eg. laptop and phone) and a third more secure but less accessible a backup, held offline or by a friend or institution".</p>
-<p>This is reasonably secure: there is no single device that can be lost or stolen that would lead to you losing access to your funds. But the security is far from perfect: if you can steal someone's laptop, it's often not that hard to steal their phone as well. The usability is also a challenge, as every transaction now requires two confirmations with two devices.</p>
+<p>This technology was originally developed within the Bitcoin
+ecosystem, but excellent multisig wallets (eg. see <a
+href="https://gnosis-safe.io/">Gnosis Safe</a>) now exist for Ethereum
+too. Multisig wallets have been highly successful within organizations:
+the Ethereum Foundation uses a 4-of-7 multisig wallet to store <a
+href="https://etherscan.io/address/0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae">its
+funds</a>, as do many other orgs in the Ethereum ecosystem.</p>
+<p>For a multisig wallet to hold the funds for an <em>individual</em>,
+the main challenge is: who holds the funds, and how are transactions
+approved? The most common formula is some variant of "two easily
+accessible, but separate, keys, held by you (eg. laptop and phone) and a
+third more secure but less accessible a backup, held offline or by a
+friend or institution".</p>
+<p>This is reasonably secure: there is no single device that can be lost
+or stolen that would lead to you losing access to your funds. But the
+security is far from perfect: if you can steal someone's laptop, it's
+often not that hard to steal their phone as well. The usability is also
+a challenge, as every transaction now requires two confirmations with
+two devices.</p>
 <h3 id="social-recovery-is-better">Social recovery is better</h3>
-<p>This gets us to my preferred method for securing a wallet: social recovery. A social recovery system works as follows:</p>
+<p>This gets us to my preferred method for securing a wallet: social
+recovery. A social recovery system works as follows:</p>
 <ol type="1">
-<li>There is a single "signing key" that can be used to approve transactions</li>
-<li>There is a set of at least 3 (or a much higher number) of "guardians", of which a majority can cooperate to change the signing key of the account.</li>
+<li>There is a single "signing key" that can be used to approve
+transactions</li>
+<li>There is a set of at least 3 (or a much higher number) of
+"guardians", of which a majority can cooperate to change the signing key
+of the account.</li>
 </ol>
-<p>The signing key has the ability to add or remove guardians, though only after a delay (often 1-3 days).</p>
+<p>The signing key has the ability to add or remove guardians, though
+only after a delay (often 1-3 days).</p>
 <center>
 <img src="../../../../images/social-recovery-files/diag2.png" class="padded" />
 </center>
 <p><br></p>
-<p>Under all normal circumstances, the user can simply use their social recovery wallet like a regular wallet, signing messages with their signing key so that each transaction signed can fly off with a single confirmation click much like it would in a "traditional" wallet like Metamask.</p>
-<p>If a user <em>loses</em> their signing key, that is when the social recovery functionality would kick in. The user can simply reach out to their guardians and ask them to sign a special transaction to change the signing pubkey registered in the wallet contract to a new one. This is easy: they can simply go to a webpage such as <a href="https://security.loopring.io/">security.loopring.io</a>, sign in, see a recovery request and sign it. About as easy for each guardian as making a Uniswap trade.</p>
-<p>There are many possible choices for whom to select as a guardian. The three most common choices are:</p>
+<p>Under all normal circumstances, the user can simply use their social
+recovery wallet like a regular wallet, signing messages with their
+signing key so that each transaction signed can fly off with a single
+confirmation click much like it would in a "traditional" wallet like
+Metamask.</p>
+<p>If a user <em>loses</em> their signing key, that is when the social
+recovery functionality would kick in. The user can simply reach out to
+their guardians and ask them to sign a special transaction to change the
+signing pubkey registered in the wallet contract to a new one. This is
+easy: they can simply go to a webpage such as <a
+href="https://security.loopring.io/">security.loopring.io</a>, sign in,
+see a recovery request and sign it. About as easy for each guardian as
+making a Uniswap trade.</p>
+<p>There are many possible choices for whom to select as a guardian. The
+three most common choices are:</p>
 <ul>
-<li>Other devices (or paper mnemonics) owned by the wallet holder themselves</li>
+<li>Other devices (or paper mnemonics) owned by the wallet holder
+themselves</li>
 <li>Friends and family members</li>
-<li>Institutions, which would sign a recovery message if they get a confirmation of your phone number or email or perhaps in high value cases verify you personally by video call</li>
+<li>Institutions, which would sign a recovery message if they get a
+confirmation of your phone number or email or perhaps in high value
+cases verify you personally by video call</li>
 </ul>
-<p>Guardians are easy to add: you can add a guardian simply by typing in their ENS name or ETH address, though most social recovery wallets will require the guardian to sign a transaction in the recovery webpage to agree to be added. In any sanely designed social recovery wallet, the guardian does NOT need to download and use the same wallet; they can simply use their existing Ethereum wallet, whichever type of wallet it is. Given the high convenience of adding guardians, if you are lucky enough that your social circles are already made up of Ethereum users, I personally favor high guardian counts (ideally 7+) for increased security. If you already have a wallet, there is no ongoing mental effort required to be a guardian: any recovery operations that you do would be done through your existing wallet. If you not know many other active Ethereum users, then a smaller number of guardians that you trust to be technically competent is best.</p>
-<p>To reduce the risk of attacks on guardians and collusion, <strong>your guardians do not have to be publicly known: in fact, they do not need to know <em>each other's</em> identities</strong>. This can be accomplished in two ways. First, instead of the guardians' addresses being stored directly on chain, a hash of the list of addresses can be stored on chain, and the wallet owner would only need to publish the full list at recovery time. Second, each guardian can be asked to deterministically generate a new single-purpose address that they would use just for that particular recovery; they would not need to actually send any transactions with that address unless a recovery is actually required. To complement these technical protections, <strong>it's recommended to choose a diverse collection of guardians from different social circles (including ideally one institutional guardian)</strong>; these recommendations together would make it extremely difficult for the guardians to be attacked simultaneously or collude.</p>
-<p>In the event that you die or are permanently incapacitated, it would be a socially agreed standard protocol that guardians can publicly announce themselves, so in that case they can find each other and recover your funds.</p>
-<h3 id="social-recovery-wallets-are-not-a-betrayal-but-rather-an-expression-of-crypto-values">Social recovery wallets are not a betrayal, but rather an <em>expression</em>, of "crypto values"</h3>
-<p>One common response to suggestions to use any form of multisig, social recovery or otherwise, is the idea that this solution goes back to "trusting people", and so is a betrayal of the values of the blockchain and cryptocurrency industry. While I understand why one may think this at first glance, I would argue that this criticism stems from a fundamental misunderstanding of what crypto should be about.</p>
-<p>To me, the goal of crypto was never to remove the need for <em>all</em> trust. <strong>Rather, the goal of crypto is to give people access to cryptographic and economic building blocks that give people more <em>choice</em> in whom to trust, and furthermore allow people to build more <em>constrained</em> forms of trust</strong>: giving someone the power to do some things on your behalf without giving them the power to do everything. Viewed in this way, <strong>multisig and social recovery are a perfect expression of this principle</strong>: each participant has <em>some</em> influence over the ability to accept or reject transactions, but no one can move funds unilaterally. This more complex logic allows for a setup far more secure than what would be possible if there had to be one person or key that unilaterally controlled the funds.</p>
-<p>This fundamental idea, that human inputs should be wielded carefully but not thrown away outright, is powerful because it works well with the strengths and weaknesses of the human brain. The human brain is quite poorly suited for remembering passwords and tracking paper wallets, but it's an ASIC for keeping track of relationships with other people. This effect is even stronger for less technical users: they may have a harder time with wallets and passwords, but they are just as adept at social tasks like "choose 7 people who won't all gang up on me". If we <em>can</em> extract at least some information from human inputs into a mechanism, without those inputs turning into a vector for attack and exploitation, then we should figure out how. And social recovery is very robust: for a wallet with 7 guardians to be compromised, 4 of the 7 guardians would need to somehow discover each other and agree to steal the funds, without <em>any</em> of them tipping the owner off: certainly a much tougher challenge than attacking a <a href="https://bitcoinmagazine.com/articles/bitcoin-self-defense-part-i-wallet-protection-1368758841">wallet protected purely by a single individuals</a>.</p>
-<h3 id="how-can-social-recovery-protect-against-theft">How can social recovery protect against theft?</h3>
-<p>Social recovery as explained above deals with the risk that you <em>lose</em> your wallet. But there is still the risk that your signing key gets <em>stolen</em>: someone hacks into your computer, sneaks up behind you while you're already logged in and hits you over the head, or even just uses some user interface glitch to trick you into signing a transaction that you did not intend to sign.</p>
-<p>We can extend social recovery to deal with such issues by adding a <a href="https://hackingdistributed.com/2016/02/26/how-to-implement-secure-bitcoin-vaults/">vault</a>. Every social recovery wallet can come with an automatically generated vault. Assets can be moved to the vault just by sending them to the vault's address, but they can be moved out of the vault only with a 1 week delay. During that delay, the signing key (or, by extension, the guardians) can cancel the transaction. If desired, the vault could also be programmed so that some limited financial operations (eg. Uniswap trades between some whitelisted tokens) can be done without delay.</p>
-<h3 id="existing-social-recovery-wallets">Existing social recovery wallets</h3>
-<p>Currently, the two major wallets that have implemented social recovery are the <a href="https://www.argent.xyz/">Argent wallet</a> and the <a href="https://loopring.io/">Loopring wallet</a>:</p>
+<p>Guardians are easy to add: you can add a guardian simply by typing in
+their ENS name or ETH address, though most social recovery wallets will
+require the guardian to sign a transaction in the recovery webpage to
+agree to be added. In any sanely designed social recovery wallet, the
+guardian does NOT need to download and use the same wallet; they can
+simply use their existing Ethereum wallet, whichever type of wallet it
+is. Given the high convenience of adding guardians, if you are lucky
+enough that your social circles are already made up of Ethereum users, I
+personally favor high guardian counts (ideally 7+) for increased
+security. If you already have a wallet, there is no ongoing mental
+effort required to be a guardian: any recovery operations that you do
+would be done through your existing wallet. If you not know many other
+active Ethereum users, then a smaller number of guardians that you trust
+to be technically competent is best.</p>
+<p>To reduce the risk of attacks on guardians and collusion,
+<strong>your guardians do not have to be publicly known: in fact, they
+do not need to know <em>each other's</em> identities</strong>. This can
+be accomplished in two ways. First, instead of the guardians' addresses
+being stored directly on chain, a hash of the list of addresses can be
+stored on chain, and the wallet owner would only need to publish the
+full list at recovery time. Second, each guardian can be asked to
+deterministically generate a new single-purpose address that they would
+use just for that particular recovery; they would not need to actually
+send any transactions with that address unless a recovery is actually
+required. To complement these technical protections, <strong>it's
+recommended to choose a diverse collection of guardians from different
+social circles (including ideally one institutional guardian)</strong>;
+these recommendations together would make it extremely difficult for the
+guardians to be attacked simultaneously or collude.</p>
+<p>In the event that you die or are permanently incapacitated, it would
+be a socially agreed standard protocol that guardians can publicly
+announce themselves, so in that case they can find each other and
+recover your funds.</p>
+<h3
+id="social-recovery-wallets-are-not-a-betrayal-but-rather-an-expression-of-crypto-values">Social
+recovery wallets are not a betrayal, but rather an <em>expression</em>,
+of "crypto values"</h3>
+<p>One common response to suggestions to use any form of multisig,
+social recovery or otherwise, is the idea that this solution goes back
+to "trusting people", and so is a betrayal of the values of the
+blockchain and cryptocurrency industry. While I understand why one may
+think this at first glance, I would argue that this criticism stems from
+a fundamental misunderstanding of what crypto should be about.</p>
+<p>To me, the goal of crypto was never to remove the need for
+<em>all</em> trust. <strong>Rather, the goal of crypto is to give people
+access to cryptographic and economic building blocks that give people
+more <em>choice</em> in whom to trust, and furthermore allow people to
+build more <em>constrained</em> forms of trust</strong>: giving someone
+the power to do some things on your behalf without giving them the power
+to do everything. Viewed in this way, <strong>multisig and social
+recovery are a perfect expression of this principle</strong>: each
+participant has <em>some</em> influence over the ability to accept or
+reject transactions, but no one can move funds unilaterally. This more
+complex logic allows for a setup far more secure than what would be
+possible if there had to be one person or key that unilaterally
+controlled the funds.</p>
+<p>This fundamental idea, that human inputs should be wielded carefully
+but not thrown away outright, is powerful because it works well with the
+strengths and weaknesses of the human brain. The human brain is quite
+poorly suited for remembering passwords and tracking paper wallets, but
+it's an ASIC for keeping track of relationships with other people. This
+effect is even stronger for less technical users: they may have a harder
+time with wallets and passwords, but they are just as adept at social
+tasks like "choose 7 people who won't all gang up on me". If we
+<em>can</em> extract at least some information from human inputs into a
+mechanism, without those inputs turning into a vector for attack and
+exploitation, then we should figure out how. And social recovery is very
+robust: for a wallet with 7 guardians to be compromised, 4 of the 7
+guardians would need to somehow discover each other and agree to steal
+the funds, without <em>any</em> of them tipping the owner off: certainly
+a much tougher challenge than attacking a <a
+href="https://bitcoinmagazine.com/articles/bitcoin-self-defense-part-i-wallet-protection-1368758841">wallet
+protected purely by a single individuals</a>.</p>
+<h3 id="how-can-social-recovery-protect-against-theft">How can social
+recovery protect against theft?</h3>
+<p>Social recovery as explained above deals with the risk that you
+<em>lose</em> your wallet. But there is still the risk that your signing
+key gets <em>stolen</em>: someone hacks into your computer, sneaks up
+behind you while you're already logged in and hits you over the head, or
+even just uses some user interface glitch to trick you into signing a
+transaction that you did not intend to sign.</p>
+<p>We can extend social recovery to deal with such issues by adding a <a
+href="https://hackingdistributed.com/2016/02/26/how-to-implement-secure-bitcoin-vaults/">vault</a>.
+Every social recovery wallet can come with an automatically generated
+vault. Assets can be moved to the vault just by sending them to the
+vault's address, but they can be moved out of the vault only with a 1
+week delay. During that delay, the signing key (or, by extension, the
+guardians) can cancel the transaction. If desired, the vault could also
+be programmed so that some limited financial operations (eg. Uniswap
+trades between some whitelisted tokens) can be done without delay.</p>
+<h3 id="existing-social-recovery-wallets">Existing social recovery
+wallets</h3>
+<p>Currently, the two major wallets that have implemented social
+recovery are the <a href="https://www.argent.xyz/">Argent wallet</a> and
+the <a href="https://loopring.io/">Loopring wallet</a>:</p>
 <center>
-<img src="../../../../images/social-recovery-files/loopring.png" style="width:35%; padding-right: 10%" /> <img src="../../../../images/social-recovery-files/argent.png" style="width:34.6%" />
+<img src="../../../../images/social-recovery-files/loopring.png" style="width:35%; padding-right: 10%" />
+<img src="../../../../images/social-recovery-files/argent.png" style="width:34.6%" />
 </center>
 <p><br></p>
-<p>The Argent wallet is the first major, and still the most popular, "smart contract wallet" currently in use, and social recovery is one of its main selling points. The Argent wallet includes an interface by which guardians can be added and removed:</p>
+<p>The Argent wallet is the first major, and still the most popular,
+"smart contract wallet" currently in use, and social recovery is one of
+its main selling points. The Argent wallet includes an interface by
+which guardians can be added and removed:</p>
 <center>
 <img src="../../../../images/social-recovery-files/argentrecovery.png" style="width:34.6%" />
 </center>
 <p><br></p>
-<p>To protect against theft, the wallet has a daily limit: transactions up to that amount are instant but transactions above that amount require guardians to approve to finalize the withdrawal.</p>
-<p>The Loopring wallet is most known for being built by the developers of (and of course including support for) the <a href="https://exchange.loopring.io">Loopring protocol</a>, a <a href="../../../2021/01/05/rollup.html">ZK rollup</a> for payments and decentralized exchange. But the Loopring wallet also has a social recovery feature, which works very similarly to that in Argent. In both cases, the wallet companies provide one guardian for free, which relies on a confirmation code sent by mobile phone to authenticate you. For the other guardians, you can add either other users of the same wallet, or any Ethereum user by providing their Ethereum address.</p>
-<p>The user experience in both cases is surprisingly smooth. There were two main challenges. First, the smoothness in both cases relies on a central "relayer" run by the wallet maker that re-publishes signed messages as transactions. Second, the fees are high. Fortunately, both of these problems are surmountable.</p>
-<h3 id="migration-to-layer-2-rollups-can-solve-the-remaining-challenges">Migration to Layer 2 (rollups) can solve the remaining challenges</h3>
-<p>As mentioned above, <strong>there are two key challenges: (i) the dependence on relayers to solve transactions, and (ii) high transaction fees</strong>. The first challenge, dependence on relayers, is an increasingly common problem in Ethereum applications. The issue arises because there are two types of accounts in Ethereum: <strong>externally owned accounts (EOAs)</strong>, which are accounts controlled by a single private key, and <strong>contracts</strong>. In Ethereum, there is a rule that every transaction must start from an EOA; the original intention was that EOAs represent "users" and contracts represent "applications", and an application can only run if a user talks to the application. If we want wallets with more complex policies, like multisig and social recovery, we need to use contracts to represent users. But this poses a challenge: if your funds are in a contract, you need to have some <em>other</em> account that has ETH that can pay to start each transaction, and it needs quite a lot of ETH just in case transaction fees get really high.</p>
-<p>Argent and Loopring get around this problem by personally running a "relayer". The relayer listens for off-chain digitally signed "messages" submitted by users, and wraps these messages in a transaction and publishes them to chain. But for the long run, this is a poor solution; it adds an extra point of centralization. If the relayer is down and a user really needs to send a transaction, they can always just send it from their own EOA, but it is nevertheless the case that a new tradeoff between centralization and inconvenience is introduced. There are efforts to solve this problem and get convenience without centralization; the main two categories revolve around either making a <a href="https://docs.opengsn.org">generalized decentralized relayer network</a> or modifying the Ethereum protocol itself to <a href="https://our.status.im/account-abstraction-eip-2938/">allow transactions to begin from contracts</a>. But neither of these solutions solve transaction fees, and in fact, they make the problem worse due to smart contracts' inherently greater complexity.</p>
-<p><strong>Fortunately, we <em>can</em> solve both of these problems at the same time, by looking toward a third solution: moving the ecosystem <a href="../../../2021/01/05/rollup.html">onto layer 2 protocols</a> such as optimistic rollups and ZK rollups.</strong> Optimistic and ZK rollups can both be designed with account abstraction built in, circumventing any need for relayers. Existing wallet developers are already looking into rollups, but ultimately migrating to rollups en masse is an ecosystem-wide challenge.</p>
-<p>An ecosystem-wide mass migration to rollups is as good an opportunity as any to reverse the Ethereum ecosystem's earlier mistakes and give multisig and smart contract wallets a much more central role in helping to secure users' funds. But this requires broader recognition that wallet security is a challenge, and that we have not gone nearly as far in trying to meet and challenge as we should. Multisig and social recovery need not be the end of the story; there may well be designs that work even better. But the simple reform of moving to rollups and making sure that these rollups treat smart contract wallets as <em>first class citizens</em> is an important step toward making that happen.</p>
+<p>To protect against theft, the wallet has a daily limit: transactions
+up to that amount are instant but transactions above that amount require
+guardians to approve to finalize the withdrawal.</p>
+<p>The Loopring wallet is most known for being built by the developers
+of (and of course including support for) the <a
+href="https://exchange.loopring.io">Loopring protocol</a>, a <a
+href="../../../2021/01/05/rollup.html">ZK rollup</a> for payments and
+decentralized exchange. But the Loopring wallet also has a social
+recovery feature, which works very similarly to that in Argent. In both
+cases, the wallet companies provide one guardian for free, which relies
+on a confirmation code sent by mobile phone to authenticate you. For the
+other guardians, you can add either other users of the same wallet, or
+any Ethereum user by providing their Ethereum address.</p>
+<p>The user experience in both cases is surprisingly smooth. There were
+two main challenges. First, the smoothness in both cases relies on a
+central "relayer" run by the wallet maker that re-publishes signed
+messages as transactions. Second, the fees are high. Fortunately, both
+of these problems are surmountable.</p>
+<h3
+id="migration-to-layer-2-rollups-can-solve-the-remaining-challenges">Migration
+to Layer 2 (rollups) can solve the remaining challenges</h3>
+<p>As mentioned above, <strong>there are two key challenges: (i) the
+dependence on relayers to solve transactions, and (ii) high transaction
+fees</strong>. The first challenge, dependence on relayers, is an
+increasingly common problem in Ethereum applications. The issue arises
+because there are two types of accounts in Ethereum: <strong>externally
+owned accounts (EOAs)</strong>, which are accounts controlled by a
+single private key, and <strong>contracts</strong>. In Ethereum, there
+is a rule that every transaction must start from an EOA; the original
+intention was that EOAs represent "users" and contracts represent
+"applications", and an application can only run if a user talks to the
+application. If we want wallets with more complex policies, like
+multisig and social recovery, we need to use contracts to represent
+users. But this poses a challenge: if your funds are in a contract, you
+need to have some <em>other</em> account that has ETH that can pay to
+start each transaction, and it needs quite a lot of ETH just in case
+transaction fees get really high.</p>
+<p>Argent and Loopring get around this problem by personally running a
+"relayer". The relayer listens for off-chain digitally signed "messages"
+submitted by users, and wraps these messages in a transaction and
+publishes them to chain. But for the long run, this is a poor solution;
+it adds an extra point of centralization. If the relayer is down and a
+user really needs to send a transaction, they can always just send it
+from their own EOA, but it is nevertheless the case that a new tradeoff
+between centralization and inconvenience is introduced. There are
+efforts to solve this problem and get convenience without
+centralization; the main two categories revolve around either making a
+<a href="https://docs.opengsn.org">generalized decentralized relayer
+network</a> or modifying the Ethereum protocol itself to <a
+href="https://our.status.im/account-abstraction-eip-2938/">allow
+transactions to begin from contracts</a>. But neither of these solutions
+solve transaction fees, and in fact, they make the problem worse due to
+smart contracts' inherently greater complexity.</p>
+<p><strong>Fortunately, we <em>can</em> solve both of these problems at
+the same time, by looking toward a third solution: moving the ecosystem
+<a href="../../../2021/01/05/rollup.html">onto layer 2 protocols</a>
+such as optimistic rollups and ZK rollups.</strong> Optimistic and ZK
+rollups can both be designed with account abstraction built in,
+circumventing any need for relayers. Existing wallet developers are
+already looking into rollups, but ultimately migrating to rollups en
+masse is an ecosystem-wide challenge.</p>
+<p>An ecosystem-wide mass migration to rollups is as good an opportunity
+as any to reverse the Ethereum ecosystem's earlier mistakes and give
+multisig and smart contract wallets a much more central role in helping
+to secure users' funds. But this requires broader recognition that
+wallet security is a challenge, and that we have not gone nearly as far
+in trying to meet and challenge as we should. Multisig and social
+recovery need not be the end of the story; there may well be designs
+that work even better. But the simple reform of moving to rollups and
+making sure that these rollups treat smart contract wallets as <em>first
+class citizens</em> is an important step toward making that happen.</p>
  </div> 

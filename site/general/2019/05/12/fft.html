@@ -116,83 +116,262 @@ MathJax = {
 <em>Special thanks to Karl Floersch for feedback</em>
 </p>
 <p>
-One of the more interesting algorithms in number theory is the Fast Fourier transform (FFT). FFTs are a key building block in many algorithms, including <a href="http://www.math.clemson.edu/~sgao/papers/GM10.pdf">extremely fast multiplication of large numbers</a>, multiplication of polynomials, and extremely fast generation and recovery of <a href="https://blog.ethereum.org/2014/08/16/secret-sharing-erasure-coding-guide-aspiring-dropbox-decentralizer">erasure codes</a>. Erasure codes in particular are highly versatile; in addition to their basic use cases in fault-tolerant data storage and recovery, erasure codes also have more advanced use cases such as <a href="https://arxiv.org/pdf/1809.09044">securing data availability in scalable blockchains</a> and <a href="../../../2017/11/09/starks_part_1.html">STARKs</a>. This article will go into what fast Fourier transforms are, and how some of the simpler algorithms for computing them work.
+One of the more interesting algorithms in number theory is the Fast
+Fourier transform (FFT). FFTs are a key building block in many
+algorithms, including
+<a href="http://www.math.clemson.edu/~sgao/papers/GM10.pdf">extremely
+fast multiplication of large numbers</a>, multiplication of polynomials,
+and extremely fast generation and recovery of
+<a href="https://blog.ethereum.org/2014/08/16/secret-sharing-erasure-coding-guide-aspiring-dropbox-decentralizer">erasure
+codes</a>. Erasure codes in particular are highly versatile; in addition
+to their basic use cases in fault-tolerant data storage and recovery,
+erasure codes also have more advanced use cases such as
+<a href="https://arxiv.org/pdf/1809.09044">securing data availability in
+scalable blockchains</a> and
+<a href="../../../2017/11/09/starks_part_1.html">STARKs</a>. This
+article will go into what fast Fourier transforms are, and how some of
+the simpler algorithms for computing them work.
 </p>
 <h3>
 Background
 </h3>
 <p>
-The original <a href="https://en.wikipedia.org/wiki/Fourier_transform">Fourier transform</a> is a mathematical operation that is often described as converting data between the "frequency domain" and the "time domain". What this means more precisely is that if you have a piece of data, then running the algorithm would come up with a collection of sine waves with different frequencies and amplitudes that, if you added them together, would approximate the original data. Fourier transforms can be used for such wonderful things as <a href="https://twitter.com/johncarlosbaez/status/1094671748501405696">expressing square orbits through epicycles</a> and <a href="https://en.wikipedia.org/wiki/Fourier_transform">deriving a set of equations that can draw an elephant</a>:
+The original
+<a href="https://en.wikipedia.org/wiki/Fourier_transform">Fourier
+transform</a> is a mathematical operation that is often described as
+converting data between the "frequency domain" and the "time domain".
+What this means more precisely is that if you have a piece of data, then
+running the algorithm would come up with a collection of sine waves with
+different frequencies and amplitudes that, if you added them together,
+would approximate the original data. Fourier transforms can be used for
+such wonderful things as
+<a href="https://twitter.com/johncarlosbaez/status/1094671748501405696">expressing
+square orbits through epicycles</a> and
+<a href="https://en.wikipedia.org/wiki/Fourier_transform">deriving a set
+of equations that can draw an elephant</a>:
 </p>
 <p>
 <center>
 <table class="transparent">
 <tr>
 <td>
-<img src="../../../../images/fft-files/elephant1.png" /><br> <img src="../../../../images/fft-files/elephant3.png" />
+<img src="../../../../images/fft-files/elephant1.png" /><br>
+<img src="../../../../images/fft-files/elephant3.png" />
 </td>
 <td>
 <img src="../../../../images/fft-files/elephant2.png" width="400px"/>
 </td>
 </tr>
 </table>
-<br> <small><i>Ok fine, Fourier transforms also have really important applications in signal processing, quantum mechanics, and other areas, and help make significant parts of the global economy happen. But come on, elephants are cooler.</i></small>
+<br> <small><i>Ok fine, Fourier transforms also have really important
+applications in signal processing, quantum mechanics, and other areas,
+and help make significant parts of the global economy happen. But come
+on, elephants are cooler.</i></small>
 </center>
 <br>
 </p>
 <p>
-Running the Fourier transform algorithm in the "inverse" direction would simply take the sine waves and add them together and compute the resulting values at as many points as you wanted to sample.
+Running the Fourier transform algorithm in the "inverse" direction would
+simply take the sine waves and add them together and compute the
+resulting values at as many points as you wanted to sample.
 </p>
 <p>
-The kind of Fourier transform we'll be talking about in this post is a similar algorithm, except instead of being a <em>continuous</em> Fourier transform over <em>real or complex numbers</em>, it's a <em><strong>discrete Fourier transform</strong></em> over <em>finite fields</em> (see the "A Modular Math Interlude" section <a href="../../../2017/11/22/starks_part_2.html">here</a> for a refresher on what finite fields are). Instead of talking about converting between "frequency domain" and "time domain", here we'll talk about two different operations: <em>multi-point polynomial evaluation</em> (evaluating a degree <span class="math inline">\(&lt; N\)</span> polynomial at <span class="math inline">\(N\)</span> different points) and its inverse, <em>polynomial interpolation</em> (given the evaluations of a degree <span class="math inline">\(&lt; N\)</span> polynomial at <span class="math inline">\(N\)</span> different points, recovering the polynomial). For example, if we are operating in the prime field with modulus 5, then the polynomial <span class="math inline">\(y = x² + 3\)</span> (for convenience we can write the coefficients in increasing order: <span class="math inline">\([3,0,1]\)</span>) evaluated at the points <span class="math inline">\([0,1,2]\)</span> gives the values <span class="math inline">\([3,4,2]\)</span> (not <span class="math inline">\([3, 4, 7]\)</span> because we're operating in a finite field where the numbers wrap around at 5), and we can actually take the evaluations <span class="math inline">\([3,4,2]\)</span> and the coordinates they were evaluated at (<span class="math inline">\([0,1,2]\)</span>) to recover the original polynomial <span class="math inline">\([3,0,1]\)</span>.
+The kind of Fourier transform we'll be talking about in this post is a
+similar algorithm, except instead of being a <em>continuous</em> Fourier
+transform over <em>real or complex numbers</em>, it's a
+<em><strong>discrete Fourier transform</strong></em> over <em>finite
+fields</em> (see the "A Modular Math Interlude" section
+<a href="../../../2017/11/22/starks_part_2.html">here</a> for a
+refresher on what finite fields are). Instead of talking about
+converting between "frequency domain" and "time domain", here we'll talk
+about two different operations: <em>multi-point polynomial
+evaluation</em> (evaluating a degree <span class="math inline">\(&lt;
+N\)</span> polynomial at <span class="math inline">\(N\)</span>
+different points) and its inverse, <em>polynomial interpolation</em>
+(given the evaluations of a degree <span class="math inline">\(&lt;
+N\)</span> polynomial at <span class="math inline">\(N\)</span>
+different points, recovering the polynomial). For example, if we are
+operating in the prime field with modulus 5, then the polynomial <span
+class="math inline">\(y = x² + 3\)</span> (for convenience we can write
+the coefficients in increasing order: <span
+class="math inline">\([3,0,1]\)</span>) evaluated at the points <span
+class="math inline">\([0,1,2]\)</span> gives the values <span
+class="math inline">\([3,4,2]\)</span> (not <span
+class="math inline">\([3, 4, 7]\)</span> because we're operating in a
+finite field where the numbers wrap around at 5), and we can actually
+take the evaluations <span class="math inline">\([3,4,2]\)</span> and
+the coordinates they were evaluated at (<span
+class="math inline">\([0,1,2]\)</span>) to recover the original
+polynomial <span class="math inline">\([3,0,1]\)</span>.
 </p>
 <p>
-There are algorithms for both multi-point evaluation and interpolation that can do either operation in <span class="math inline">\(O(N^2)\)</span> time. Multi-point evaluation is simple: just separately evaluate the polynomial at each point. Here's python code for doing that:
+There are algorithms for both multi-point evaluation and interpolation
+that can do either operation in <span
+class="math inline">\(O(N^2)\)</span> time. Multi-point evaluation is
+simple: just separately evaluate the polynomial at each point. Here's
+python code for doing that:
 </p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">def</span> eval_poly_at(<span class="va">self</span>, poly, x, modulus):</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>    y <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>    power_of_x <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>    <span class="cf">for</span> coefficient <span class="kw">in</span> poly:</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>        y <span class="op">+=</span> power_of_x <span class="op">*</span> coefficient</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>        power_of_x <span class="op">*=</span> x</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>    <span class="cf">return</span> y <span class="op">%</span> modulus</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> eval_poly_at(<span class="va">self</span>, poly, x, modulus):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    power_of_x <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> coefficient <span class="kw">in</span> poly:</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        y <span class="op">+=</span> power_of_x <span class="op">*</span> coefficient</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        power_of_x <span class="op">*=</span> x</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y <span class="op">%</span> modulus</span></code></pre></div>
 <p>
-The algorithm runs a loop going through every coefficient and does one thing for each coefficient, so it runs in <span class="math inline">\(O(N)\)</span> time. Multi-point evaluation involves doing this evaluation at <span class="math inline">\(N\)</span> different points, so the total run time is <span class="math inline">\(O(N^2)\)</span>.
+The algorithm runs a loop going through every coefficient and does one
+thing for each coefficient, so it runs in <span
+class="math inline">\(O(N)\)</span> time. Multi-point evaluation
+involves doing this evaluation at <span class="math inline">\(N\)</span>
+different points, so the total run time is <span
+class="math inline">\(O(N^2)\)</span>.
 </p>
 <p>
-Lagrange interpolation is more complicated (search for "Lagrange interpolation" <a href="https://blog.ethereum.org/2014/08/16/secret-sharing-erasure-coding-guide-aspiring-dropbox-decentralizer/">here</a> for a more detailed explanation). The key building block of the basic strategy is that for any domain <span class="math inline">\(D\)</span> and point <span class="math inline">\(x\)</span>, we can construct a polynomial that returns <span class="math inline">\(1\)</span> for <span class="math inline">\(x\)</span> and <span class="math inline">\(0\)</span> for any value in <span class="math inline">\(D\)</span> other than <span class="math inline">\(x\)</span>. For example, if <span class="math inline">\(D = [1,2,3,4]\)</span> and <span class="math inline">\(x = 1\)</span>, the polynomial is:
+Lagrange interpolation is more complicated (search for "Lagrange
+interpolation"
+<a href="https://blog.ethereum.org/2014/08/16/secret-sharing-erasure-coding-guide-aspiring-dropbox-decentralizer/">here</a>
+for a more detailed explanation). The key building block of the basic
+strategy is that for any domain <span class="math inline">\(D\)</span>
+and point <span class="math inline">\(x\)</span>, we can construct a
+polynomial that returns <span class="math inline">\(1\)</span> for <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(0\)</span> for any value in <span
+class="math inline">\(D\)</span> other than <span
+class="math inline">\(x\)</span>. For example, if <span
+class="math inline">\(D = [1,2,3,4]\)</span> and <span
+class="math inline">\(x = 1\)</span>, the polynomial is:
 </p>
 <p><span class="math display">\[
 y = \frac{(x-2)(x-3)(x-4)}{(1-2)(1-3)(1-4)}
 \]</span></p>
 <p>
-You can mentally plug in <span class="math inline">\(1\)</span>, <span class="math inline">\(2\)</span>, <span class="math inline">\(3\)</span> and <span class="math inline">\(4\)</span> to the above expression and verify that it returns <span class="math inline">\(1\)</span> for <span class="math inline">\(x= 1\)</span> and <span class="math inline">\(0\)</span> in the other three cases.
+You can mentally plug in <span class="math inline">\(1\)</span>, <span
+class="math inline">\(2\)</span>, <span class="math inline">\(3\)</span>
+and <span class="math inline">\(4\)</span> to the above expression and
+verify that it returns <span class="math inline">\(1\)</span> for <span
+class="math inline">\(x= 1\)</span> and <span
+class="math inline">\(0\)</span> in the other three cases.
 </p>
 <p>
-We can recover the polynomial that gives any desired set of outputs on the given domain by multiplying and adding these polynomials. If we call the above polynomial <span class="math inline">\(P_1\)</span>, and the equivalent ones for <span class="math inline">\(x=2\)</span>, <span class="math inline">\(x=3\)</span>, <span class="math inline">\(x=4\)</span>, <span class="math inline">\(P_2\)</span>, <span class="math inline">\(P_3\)</span> and <span class="math inline">\(P_4\)</span>, then the polynomial that returns <span class="math inline">\([3,1,4,1]\)</span> on the domain <span class="math inline">\([1,2,3,4]\)</span> is simply <span class="math inline">\(3 \cdot P_1 + P_2 + 4 \cdot P_3 + P_4\)</span>. Computing the <span class="math inline">\(P_i\)</span> polynomials takes <span class="math inline">\(O(N^2)\)</span> time (you first construct the polynomial that returns to 0 on the entire domain, which takes <span class="math inline">\(O(N^2)\)</span> time, then separately divide it by <span class="math inline">\((x - x_i)\)</span> for each <span class="math inline">\(x_i\)</span>), and computing the linear combination takes another <span class="math inline">\(O(N^2)\)</span> time, so it's <span class="math inline">\(O(N^2)\)</span> runtime total.
+We can recover the polynomial that gives any desired set of outputs on
+the given domain by multiplying and adding these polynomials. If we call
+the above polynomial <span class="math inline">\(P_1\)</span>, and the
+equivalent ones for <span class="math inline">\(x=2\)</span>, <span
+class="math inline">\(x=3\)</span>, <span
+class="math inline">\(x=4\)</span>, <span
+class="math inline">\(P_2\)</span>, <span
+class="math inline">\(P_3\)</span> and <span
+class="math inline">\(P_4\)</span>, then the polynomial that returns
+<span class="math inline">\([3,1,4,1]\)</span> on the domain <span
+class="math inline">\([1,2,3,4]\)</span> is simply <span
+class="math inline">\(3 \cdot P_1 + P_2 + 4 \cdot P_3 + P_4\)</span>.
+Computing the <span class="math inline">\(P_i\)</span> polynomials takes
+<span class="math inline">\(O(N^2)\)</span> time (you first construct
+the polynomial that returns to 0 on the entire domain, which takes <span
+class="math inline">\(O(N^2)\)</span> time, then separately divide it by
+<span class="math inline">\((x - x_i)\)</span> for each <span
+class="math inline">\(x_i\)</span>), and computing the linear
+combination takes another <span class="math inline">\(O(N^2)\)</span>
+time, so it's <span class="math inline">\(O(N^2)\)</span> runtime total.
 </p>
 <p>
-What Fast Fourier transforms let us do, is make both multi-point evaluation and interpolation much faster.
+What Fast Fourier transforms let us do, is make both multi-point
+evaluation and interpolation much faster.
 </p>
 <h3>
 Fast Fourier Transforms
 </h3>
 <p>
-There is a price you have to pay for using this much faster algorithm, which is that you cannot choose any arbitrary field and any arbitrary domain. Whereas with Lagrange interpolation, you could choose whatever x coordinates and y coordinates you wanted, and whatever field you wanted (you could even do it over plain old real numbers), and you could get a polynomial that passes through them., with an FFT, you have to use a finite field, and the domain must be a <em>multiplicative subgroup</em> of the field (that is, a list of powers of some "generator" value). For example, you could use the finite field of integers modulo <span class="math inline">\(337\)</span>, and for the domain use <span class="math inline">\([1, 85, 148, 111, 336, 252, 189, 226]\)</span> (that's the powers of <span class="math inline">\(85\)</span> in the field, eg. <span class="math inline">\(85^3\)</span> % <span class="math inline">\(337 = 111\)</span>; it stops at <span class="math inline">\(226\)</span> because the next power of <span class="math inline">\(85\)</span> cycles back to <span class="math inline">\(1\)</span>). Futhermore, the multiplicative subgroup must have size <span class="math inline">\(2^n\)</span> (there's ways to make it work for numbers of the form <span class="math inline">\(2^{m} \cdot 3^n\)</span> and possibly slightly higher prime powers but then it gets much more complicated and inefficient). The finite field of intergers modulo <span class="math inline">\(59\)</span>, for example, would not work, because there are only multiplicative subgroups of order <span class="math inline">\(2\)</span>, <span class="math inline">\(29\)</span> and <span class="math inline">\(58\)</span>; <span class="math inline">\(2\)</span> is too small to be interesting, and the factor <span class="math inline">\(29\)</span> is far too large to be FFT-friendly. The symmetry that comes from multiplicative groups of size <span class="math inline">\(2^n\)</span> lets us create a recursive algorithm that quite cleverly calculate the results we need from a much smaller amount of work.
+There is a price you have to pay for using this much faster algorithm,
+which is that you cannot choose any arbitrary field and any arbitrary
+domain. Whereas with Lagrange interpolation, you could choose whatever x
+coordinates and y coordinates you wanted, and whatever field you wanted
+(you could even do it over plain old real numbers), and you could get a
+polynomial that passes through them., with an FFT, you have to use a
+finite field, and the domain must be a <em>multiplicative subgroup</em>
+of the field (that is, a list of powers of some "generator" value). For
+example, you could use the finite field of integers modulo <span
+class="math inline">\(337\)</span>, and for the domain use <span
+class="math inline">\([1, 85, 148, 111, 336, 252, 189, 226]\)</span>
+(that's the powers of <span class="math inline">\(85\)</span> in the
+field, eg. <span class="math inline">\(85^3\)</span> % <span
+class="math inline">\(337 = 111\)</span>; it stops at <span
+class="math inline">\(226\)</span> because the next power of <span
+class="math inline">\(85\)</span> cycles back to <span
+class="math inline">\(1\)</span>). Futhermore, the multiplicative
+subgroup must have size <span class="math inline">\(2^n\)</span>
+(there's ways to make it work for numbers of the form <span
+class="math inline">\(2^{m} \cdot 3^n\)</span> and possibly slightly
+higher prime powers but then it gets much more complicated and
+inefficient). The finite field of intergers modulo <span
+class="math inline">\(59\)</span>, for example, would not work, because
+there are only multiplicative subgroups of order <span
+class="math inline">\(2\)</span>, <span
+class="math inline">\(29\)</span> and <span
+class="math inline">\(58\)</span>; <span
+class="math inline">\(2\)</span> is too small to be interesting, and the
+factor <span class="math inline">\(29\)</span> is far too large to be
+FFT-friendly. The symmetry that comes from multiplicative groups of size
+<span class="math inline">\(2^n\)</span> lets us create a recursive
+algorithm that quite cleverly calculate the results we need from a much
+smaller amount of work.
 </p>
 <p>
-To understand the algorithm and why it has a low runtime, it's important to understand the general concept of recursion. A recursive algorithm is an algorithm that has two cases: a "base case" where the input to the algorithm is small enough that you can give the output directly, and the "recursive case" where the required computation consists of some "glue computation" plus one or more uses of the same algorithm to smaller inputs. For example, you might have seen recursive algorithms being used for sorting lists. If you have a list (eg. <span class="math inline">\([1,8,7,4,5,6,3,2,9]\)</span>), then you can sort it using the following procedure:
+To understand the algorithm and why it has a low runtime, it's important
+to understand the general concept of recursion. A recursive algorithm is
+an algorithm that has two cases: a "base case" where the input to the
+algorithm is small enough that you can give the output directly, and the
+"recursive case" where the required computation consists of some "glue
+computation" plus one or more uses of the same algorithm to smaller
+inputs. For example, you might have seen recursive algorithms being used
+for sorting lists. If you have a list (eg. <span
+class="math inline">\([1,8,7,4,5,6,3,2,9]\)</span>), then you can sort
+it using the following procedure:
 </p>
 <ul>
 <li>
-If the input has one element, then it's already "sorted", so you can just return the input.
+If the input has one element, then it's already "sorted", so you can
+just return the input.
 </li>
 <li>
-If the input has more than one element, then separately sort the first half of the list and the second half of the list, and then merge the two sorted sub-lists (call them <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>) as follows. Maintain two counters, <span class="math inline">\(apos\)</span> and <span class="math inline">\(bpos\)</span>, both starting at zero, and maintain an output list, which starts empty. Until either <span class="math inline">\(apos\)</span> or <span class="math inline">\(bpos\)</span> is at the end of the corresponding list, check if <span class="math inline">\(A[apos]\)</span> or <span class="math inline">\(B[bpos]\)</span> is smaller. Whichever is smaller, add that value to the end of the output list, and increase that counter by <span class="math inline">\(1\)</span>. Once this is done, add the rest of whatever list has not been fully processed to the end of the output list, and return the output list.
+If the input has more than one element, then separately sort the first
+half of the list and the second half of the list, and then merge the two
+sorted sub-lists (call them <span class="math inline">\(A\)</span> and
+<span class="math inline">\(B\)</span>) as follows. Maintain two
+counters, <span class="math inline">\(apos\)</span> and <span
+class="math inline">\(bpos\)</span>, both starting at zero, and maintain
+an output list, which starts empty. Until either <span
+class="math inline">\(apos\)</span> or <span
+class="math inline">\(bpos\)</span> is at the end of the corresponding
+list, check if <span class="math inline">\(A[apos]\)</span> or <span
+class="math inline">\(B[bpos]\)</span> is smaller. Whichever is smaller,
+add that value to the end of the output list, and increase that counter
+by <span class="math inline">\(1\)</span>. Once this is done, add the
+rest of whatever list has not been fully processed to the end of the
+output list, and return the output list.
 </li>
 </ul>
 <p>
-Note that the "glue" in the second procedure has runtime <span class="math inline">\(O(N)\)</span>: if each of the two sub-lists has <span class="math inline">\(N\)</span> elements, then you need to run through every item in each list once, so it's <span class="math inline">\(O(N)\)</span> computation total. So the algorithm as a whole works by taking a problem of size <span class="math inline">\(N\)</span>, and breaking it up into two problems of size <span class="math inline">\(\frac{N}{2}\)</span>, plus <span class="math inline">\(O(N)\)</span> of "glue" execution. There is a theorem called the <a href="https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms%29">Master Theorem</a> that lets us compute the total runtime of algorithms like this. It has many sub-cases, but in the case where you break up an execution of size <span class="math inline">\(N\)</span> into <span class="math inline">\(k\)</span> sub-cases of size <span class="math inline">\(\frac{N}{k}\)</span> with <span class="math inline">\(O(N)\)</span> glue (as is the case here), the result is that the execution takes time <span class="math inline">\(O(N \cdot log(N))\)</span>.
+Note that the "glue" in the second procedure has runtime <span
+class="math inline">\(O(N)\)</span>: if each of the two sub-lists has
+<span class="math inline">\(N\)</span> elements, then you need to run
+through every item in each list once, so it's <span
+class="math inline">\(O(N)\)</span> computation total. So the algorithm
+as a whole works by taking a problem of size <span
+class="math inline">\(N\)</span>, and breaking it up into two problems
+of size <span class="math inline">\(\frac{N}{2}\)</span>, plus <span
+class="math inline">\(O(N)\)</span> of "glue" execution. There is a
+theorem called the
+<a href="https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms%29">Master
+Theorem</a> that lets us compute the total runtime of algorithms like
+this. It has many sub-cases, but in the case where you break up an
+execution of size <span class="math inline">\(N\)</span> into <span
+class="math inline">\(k\)</span> sub-cases of size <span
+class="math inline">\(\frac{N}{k}\)</span> with <span
+class="math inline">\(O(N)\)</span> glue (as is the case here), the
+result is that the execution takes time <span class="math inline">\(O(N
+\cdot log(N))\)</span>.
 </p>
 <p>
 <center>
@@ -201,73 +380,181 @@ Note that the "glue" in the second procedure has runtime <span class="math inlin
 <br>
 </p>
 <p>
-An FFT works in the same way. We take a problem of size <span class="math inline">\(N\)</span>, break it up into two problems of size <span class="math inline">\(\frac{N}{2}\)</span>, and do <span class="math inline">\(O(N)\)</span> glue work to combine the smaller solutions into a bigger solution, so we get <span class="math inline">\(O(N \cdot log(N))\)</span> runtime total - <em>much faster</em> than <span class="math inline">\(O(N^2)\)</span>. Here is how we do it. I'll describe first how to use an FFT for multi-point evaluation (ie. for some domain <span class="math inline">\(D\)</span> and polynomial <span class="math inline">\(P\)</span>, calculate <span class="math inline">\(P(x)\)</span> for every <span class="math inline">\(x\)</span> in <span class="math inline">\(D\)</span>), and it turns out that you can use the same algorithm for interpolation with a minor tweak.
+An FFT works in the same way. We take a problem of size <span
+class="math inline">\(N\)</span>, break it up into two problems of size
+<span class="math inline">\(\frac{N}{2}\)</span>, and do <span
+class="math inline">\(O(N)\)</span> glue work to combine the smaller
+solutions into a bigger solution, so we get <span
+class="math inline">\(O(N \cdot log(N))\)</span> runtime total -
+<em>much faster</em> than <span class="math inline">\(O(N^2)\)</span>.
+Here is how we do it. I'll describe first how to use an FFT for
+multi-point evaluation (ie. for some domain <span
+class="math inline">\(D\)</span> and polynomial <span
+class="math inline">\(P\)</span>, calculate <span
+class="math inline">\(P(x)\)</span> for every <span
+class="math inline">\(x\)</span> in <span
+class="math inline">\(D\)</span>), and it turns out that you can use the
+same algorithm for interpolation with a minor tweak.
 </p>
 <p>
-Suppose that we have an FFT where the given domain is the powers of <span class="math inline">\(x\)</span> in some field, where <span class="math inline">\(x^{2^{k}} = 1\)</span> (eg. in the case we introduced above, the domain is the powers of <span class="math inline">\(85\)</span> modulo <span class="math inline">\(337\)</span>, and <span class="math inline">\(85^{2^{3}} = 1\)</span>). We have some polynomial, eg. <span class="math inline">\(y = 6x^7 + 2x^6 + 9x^5 + 5x^4 + x^3 + 4x^2 + x + 3\)</span> (we'll write it as <span class="math inline">\(p = [3, 1, 4, 1, 5, 9, 2, 6]\)</span>). We want to evaluate this polynomial at each point in the domain, ie. at each of the eight powers of <span class="math inline">\(85\)</span>. Here is what we do. First, we break up the polynomial into two parts, which we'll call <span class="math inline">\(evens\)</span> and <span class="math inline">\(odds\)</span>: <span class="math inline">\(evens = [3, 4, 5, 2]\)</span> and <span class="math inline">\(odds = [1, 1, 9, 6]\)</span> (or <span class="math inline">\(evens = 2x^3 + 5x^2 + 4x + 3\)</span> and <span class="math inline">\(odds = 6x^3 + 9x^2 + x + 1\)</span>; yes, this is just taking the even-degree coefficients and the odd-degree coefficients). Now, we note a mathematical observation: <span class="math inline">\(p(x) = evens(x^2) + x \cdot odds(x^2)\)</span> and <span class="math inline">\(p(-x) = evens(x^2) - x \cdot odds(x^2)\)</span> (think about this for yourself and make sure you understand it before going further).
+Suppose that we have an FFT where the given domain is the powers of
+<span class="math inline">\(x\)</span> in some field, where <span
+class="math inline">\(x^{2^{k}} = 1\)</span> (eg. in the case we
+introduced above, the domain is the powers of <span
+class="math inline">\(85\)</span> modulo <span
+class="math inline">\(337\)</span>, and <span
+class="math inline">\(85^{2^{3}} = 1\)</span>). We have some polynomial,
+eg. <span class="math inline">\(y = 6x^7 + 2x^6 + 9x^5 + 5x^4 + x^3 +
+4x^2 + x + 3\)</span> (we'll write it as <span class="math inline">\(p =
+[3, 1, 4, 1, 5, 9, 2, 6]\)</span>). We want to evaluate this polynomial
+at each point in the domain, ie. at each of the eight powers of <span
+class="math inline">\(85\)</span>. Here is what we do. First, we break
+up the polynomial into two parts, which we'll call <span
+class="math inline">\(evens\)</span> and <span
+class="math inline">\(odds\)</span>: <span class="math inline">\(evens =
+[3, 4, 5, 2]\)</span> and <span class="math inline">\(odds = [1, 1, 9,
+6]\)</span> (or <span class="math inline">\(evens = 2x^3 + 5x^2 + 4x +
+3\)</span> and <span class="math inline">\(odds = 6x^3 + 9x^2 + x +
+1\)</span>; yes, this is just taking the even-degree coefficients and
+the odd-degree coefficients). Now, we note a mathematical observation:
+<span class="math inline">\(p(x) = evens(x^2) + x \cdot
+odds(x^2)\)</span> and <span class="math inline">\(p(-x) = evens(x^2) -
+x \cdot odds(x^2)\)</span> (think about this for yourself and make sure
+you understand it before going further).
 </p>
 <p>
-Here, we have a nice property: <span class="math inline">\(evens\)</span> and <span class="math inline">\(odds\)</span> are both polynomials half the size of <span class="math inline">\(p\)</span>, and furthermore, the set of possible values of <span class="math inline">\(x^2\)</span> is only half the size of the original domain, because there is a two-to-one correspondence: <span class="math inline">\(x\)</span> and <span class="math inline">\(-x\)</span> are both part of <span class="math inline">\(D\)</span> (eg. in our current domain <span class="math inline">\([1, 85, 148, 111, 336, 252, 189, 226]\)</span>, 1 and 336 are negatives of each other, as <span class="math inline">\(336 = -1\)</span> % <span class="math inline">\(337\)</span>, as are <span class="math inline">\((85, 252)\)</span>, <span class="math inline">\((148, 189)\)</span> and <span class="math inline">\((111, 226)\)</span>. And <span class="math inline">\(x\)</span> and <span class="math inline">\(-x\)</span> always both have the same square. Hence, we can use an FFT to compute the result of <span class="math inline">\(evens(x)\)</span> for every <span class="math inline">\(x\)</span> in the smaller domain consisting of squares of numbers in the original domain (<span class="math inline">\([1, 148, 336, 189]\)</span>), and we can do the same for odds. And voila, we've reduced a size-<span class="math inline">\(N\)</span> problem into half-size problems.
+Here, we have a nice property: <span
+class="math inline">\(evens\)</span> and <span
+class="math inline">\(odds\)</span> are both polynomials half the size
+of <span class="math inline">\(p\)</span>, and furthermore, the set of
+possible values of <span class="math inline">\(x^2\)</span> is only half
+the size of the original domain, because there is a two-to-one
+correspondence: <span class="math inline">\(x\)</span> and <span
+class="math inline">\(-x\)</span> are both part of <span
+class="math inline">\(D\)</span> (eg. in our current domain <span
+class="math inline">\([1, 85, 148, 111, 336, 252, 189, 226]\)</span>, 1
+and 336 are negatives of each other, as <span class="math inline">\(336
+= -1\)</span> % <span class="math inline">\(337\)</span>, as are <span
+class="math inline">\((85, 252)\)</span>, <span
+class="math inline">\((148, 189)\)</span> and <span
+class="math inline">\((111, 226)\)</span>. And <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(-x\)</span> always both have the same square.
+Hence, we can use an FFT to compute the result of <span
+class="math inline">\(evens(x)\)</span> for every <span
+class="math inline">\(x\)</span> in the smaller domain consisting of
+squares of numbers in the original domain (<span
+class="math inline">\([1, 148, 336, 189]\)</span>), and we can do the
+same for odds. And voila, we've reduced a size-<span
+class="math inline">\(N\)</span> problem into half-size problems.
 </p>
 <p>
-The "glue" is relatively easy (and <span class="math inline">\(O(N)\)</span> in runtime): we receive the evaluations of <span class="math inline">\(evens\)</span> and <span class="math inline">\(odds\)</span> as size-<span class="math inline">\(\frac{N}{2}\)</span> lists, so we simply do <span class="math inline">\(p[i] = evens\_result[i] + domain[i]\cdot odds\_result[i]\)</span> and <span class="math inline">\(p[\frac{N}{2} + i] = evens\_result[i] - domain[i]\cdot odds\_result[i]\)</span> for each index <span class="math inline">\(i\)</span>.
+The "glue" is relatively easy (and <span
+class="math inline">\(O(N)\)</span> in runtime): we receive the
+evaluations of <span class="math inline">\(evens\)</span> and <span
+class="math inline">\(odds\)</span> as size-<span
+class="math inline">\(\frac{N}{2}\)</span> lists, so we simply do <span
+class="math inline">\(p[i] = evens\_result[i] + domain[i]\cdot
+odds\_result[i]\)</span> and <span class="math inline">\(p[\frac{N}{2} +
+i] = evens\_result[i] - domain[i]\cdot odds\_result[i]\)</span> for each
+index <span class="math inline">\(i\)</span>.
 </p>
 <p>
 Here's the full code:
 </p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">def</span> fft(vals, modulus, domain):</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>    <span class="cf">if</span> <span class="bu">len</span>(vals) <span class="op">==</span> <span class="dv">1</span>:</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>        <span class="cf">return</span> vals</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>    L <span class="op">=</span> fft(vals[::<span class="dv">2</span>], modulus, domain[::<span class="dv">2</span>])</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>    R <span class="op">=</span> fft(vals[<span class="dv">1</span>::<span class="dv">2</span>], modulus, domain[::<span class="dv">2</span>])</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>    o <span class="op">=</span> [<span class="dv">0</span> <span class="cf">for</span> i <span class="kw">in</span> vals]</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>    <span class="cf">for</span> i, (x, y) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(L, R)):</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>        y_times_root <span class="op">=</span> y<span class="op">*</span>domain[i]</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>        o[i] <span class="op">=</span> (x<span class="op">+</span>y_times_root) <span class="op">%</span> modulus</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>        o[i<span class="op">+</span><span class="bu">len</span>(L)] <span class="op">=</span> (x<span class="op">-</span>y_times_root) <span class="op">%</span> modulus</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>    <span class="cf">return</span> o</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fft(vals, modulus, domain):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(vals) <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> vals</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    L <span class="op">=</span> fft(vals[::<span class="dv">2</span>], modulus, domain[::<span class="dv">2</span>])</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    R <span class="op">=</span> fft(vals[<span class="dv">1</span>::<span class="dv">2</span>], modulus, domain[::<span class="dv">2</span>])</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    o <span class="op">=</span> [<span class="dv">0</span> <span class="cf">for</span> i <span class="kw">in</span> vals]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, (x, y) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(L, R)):</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        y_times_root <span class="op">=</span> y<span class="op">*</span>domain[i]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        o[i] <span class="op">=</span> (x<span class="op">+</span>y_times_root) <span class="op">%</span> modulus</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        o[i<span class="op">+</span><span class="bu">len</span>(L)] <span class="op">=</span> (x<span class="op">-</span>y_times_root) <span class="op">%</span> modulus</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> o</span></code></pre></div>
 <p>
 We can try running it:
 </p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> fft([<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">6</span>], <span class="dv">337</span>, [<span class="dv">1</span>, <span class="dv">85</span>, <span class="dv">148</span>, <span class="dv">111</span>, <span class="dv">336</span>, <span class="dv">252</span>, <span class="dv">189</span>, <span class="dv">226</span>])</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>[<span class="dv">31</span>, <span class="dv">70</span>, <span class="dv">109</span>, <span class="dv">74</span>, <span class="dv">334</span>, <span class="dv">181</span>, <span class="dv">232</span>, <span class="dv">4</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> fft([<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">6</span>], <span class="dv">337</span>, [<span class="dv">1</span>, <span class="dv">85</span>, <span class="dv">148</span>, <span class="dv">111</span>, <span class="dv">336</span>, <span class="dv">252</span>, <span class="dv">189</span>, <span class="dv">226</span>])</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">31</span>, <span class="dv">70</span>, <span class="dv">109</span>, <span class="dv">74</span>, <span class="dv">334</span>, <span class="dv">181</span>, <span class="dv">232</span>, <span class="dv">4</span>]</span></code></pre></div>
 <p>
-And we can check the result; evaluating the polynomial at the position <span class="math inline">\(85\)</span>, for example, actually does give the result <span class="math inline">\(70\)</span>. Note that this only works if the domain is "correct"; it needs to be of the form <span class="math inline">\([x^i\)</span> % <span class="math inline">\(modulus\)</span> for <span class="math inline">\(i\)</span> in <span class="math inline">\(range(n)]\)</span> where <span class="math inline">\(x^n = 1\)</span>.
+And we can check the result; evaluating the polynomial at the position
+<span class="math inline">\(85\)</span>, for example, actually does give
+the result <span class="math inline">\(70\)</span>. Note that this only
+works if the domain is "correct"; it needs to be of the form <span
+class="math inline">\([x^i\)</span> % <span
+class="math inline">\(modulus\)</span> for <span
+class="math inline">\(i\)</span> in <span
+class="math inline">\(range(n)]\)</span> where <span
+class="math inline">\(x^n = 1\)</span>.
 </p>
 <p>
 An inverse FFT is surprisingly simple:
 </p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">def</span> inverse_fft(vals, modulus, domain):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>    vals <span class="op">=</span> fft(vals, modulus, domain)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>    <span class="cf">return</span> [x <span class="op">*</span> modular_inverse(<span class="bu">len</span>(vals), modulus) <span class="op">%</span> modulus <span class="cf">for</span> x <span class="kw">in</span> [vals[<span class="dv">0</span>]] <span class="op">+</span> vals[<span class="dv">1</span>:][::<span class="op">-</span><span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> inverse_fft(vals, modulus, domain):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    vals <span class="op">=</span> fft(vals, modulus, domain)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [x <span class="op">*</span> modular_inverse(<span class="bu">len</span>(vals), modulus) <span class="op">%</span> modulus <span class="cf">for</span> x <span class="kw">in</span> [vals[<span class="dv">0</span>]] <span class="op">+</span> vals[<span class="dv">1</span>:][::<span class="op">-</span><span class="dv">1</span>]]</span></code></pre></div>
 <p>
-Basically, run the FFT again, but reverse the result (except the first item stays in place) and divide every value by the length of the list.
+Basically, run the FFT again, but reverse the result (except the first
+item stays in place) and divide every value by the length of the list.
 </p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> domain <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">85</span>, <span class="dv">148</span>, <span class="dv">111</span>, <span class="dv">336</span>, <span class="dv">252</span>, <span class="dv">189</span>, <span class="dv">226</span>]</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="kw">def</span> modular_inverse(x, n): <span class="cf">return</span> <span class="bu">pow</span>(x, n <span class="op">-</span> <span class="dv">2</span>, n)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> values <span class="op">=</span> fft([<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">6</span>], <span class="dv">337</span>, domain)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> values</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>[<span class="dv">31</span>, <span class="dv">70</span>, <span class="dv">109</span>, <span class="dv">74</span>, <span class="dv">334</span>, <span class="dv">181</span>, <span class="dv">232</span>, <span class="dv">4</span>]</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> inverse_fft(values, <span class="dv">337</span>, domain)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a>[<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">2</span>, <span class="dv">6</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> domain <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">85</span>, <span class="dv">148</span>, <span class="dv">111</span>, <span class="dv">336</span>, <span class="dv">252</span>, <span class="dv">189</span>, <span class="dv">226</span>]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="kw">def</span> modular_inverse(x, n): <span class="cf">return</span> <span class="bu">pow</span>(x, n <span class="op">-</span> <span class="dv">2</span>, n)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> values <span class="op">=</span> fft([<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">6</span>], <span class="dv">337</span>, domain)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> values</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">31</span>, <span class="dv">70</span>, <span class="dv">109</span>, <span class="dv">74</span>, <span class="dv">334</span>, <span class="dv">181</span>, <span class="dv">232</span>, <span class="dv">4</span>]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> inverse_fft(values, <span class="dv">337</span>, domain)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">2</span>, <span class="dv">6</span>]</span></code></pre></div>
 <p>
-Now, what can we use this for? Here's one fun use case: we can use FFTs to multiply numbers very quickly. Suppose we wanted to multiply <span class="math inline">\(1253\)</span> by <span class="math inline">\(1895\)</span>. Here is what we would do. First, we would convert the problem into one that turns out to be slightly easier: multiply the <em>polynomials</em> <span class="math inline">\([3, 5, 2, 1]\)</span> by <span class="math inline">\([5, 9, 8, 1]\)</span> (that's just the digits of the two numbers in increasing order), and then convert the answer back into a number by doing a single pass to carry over tens digits. We can multiply polynomials with FFTs quickly, because it turns out that if you convert a polynomial into <em>evaluation form</em> (ie. <span class="math inline">\(f(x)\)</span> for every <span class="math inline">\(x\)</span> in some domain <span class="math inline">\(D\)</span>), then you can multiply two polynomials simply by multiplying their evaluations. So what we'll do is take the polynomials representing our two numbers in <em>coefficient form</em>, use FFTs to convert them to evaluation form, multiply them pointwise, and convert back:
+Now, what can we use this for? Here's one fun use case: we can use FFTs
+to multiply numbers very quickly. Suppose we wanted to multiply <span
+class="math inline">\(1253\)</span> by <span
+class="math inline">\(1895\)</span>. Here is what we would do. First, we
+would convert the problem into one that turns out to be slightly easier:
+multiply the <em>polynomials</em> <span class="math inline">\([3, 5, 2,
+1]\)</span> by <span class="math inline">\([5, 9, 8, 1]\)</span> (that's
+just the digits of the two numbers in increasing order), and then
+convert the answer back into a number by doing a single pass to carry
+over tens digits. We can multiply polynomials with FFTs quickly, because
+it turns out that if you convert a polynomial into <em>evaluation
+form</em> (ie. <span class="math inline">\(f(x)\)</span> for every <span
+class="math inline">\(x\)</span> in some domain <span
+class="math inline">\(D\)</span>), then you can multiply two polynomials
+simply by multiplying their evaluations. So what we'll do is take the
+polynomials representing our two numbers in <em>coefficient form</em>,
+use FFTs to convert them to evaluation form, multiply them pointwise,
+and convert back:
 </p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> p1 <span class="op">=</span> [<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>]</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> p2 <span class="op">=</span> [<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">8</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>]</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> x1 <span class="op">=</span> fft(p1, <span class="dv">337</span>, domain)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> x1</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>[<span class="dv">11</span>, <span class="dv">161</span>, <span class="dv">256</span>, <span class="dv">10</span>, <span class="dv">336</span>, <span class="dv">100</span>, <span class="dv">83</span>, <span class="dv">78</span>]</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> x2 <span class="op">=</span> fft(p2, <span class="dv">337</span>, domain)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> x2</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a>[<span class="dv">23</span>, <span class="dv">43</span>, <span class="dv">170</span>, <span class="dv">242</span>, <span class="dv">3</span>, <span class="dv">313</span>, <span class="dv">161</span>, <span class="dv">96</span>]</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> x3 <span class="op">=</span> [(v1 <span class="op">*</span> v2) <span class="op">%</span> <span class="dv">337</span> <span class="cf">for</span> v1, v2 <span class="kw">in</span> <span class="bu">zip</span>(x1, x2)]</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> x3</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a>[<span class="dv">253</span>, <span class="dv">183</span>, <span class="dv">47</span>, <span class="dv">61</span>, <span class="dv">334</span>, <span class="dv">296</span>, <span class="dv">220</span>, <span class="dv">74</span>]</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> inverse_fft(x3, <span class="dv">337</span>, domain)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a>[<span class="dv">15</span>, <span class="dv">52</span>, <span class="dv">79</span>, <span class="dv">66</span>, <span class="dv">30</span>, <span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">0</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> p1 <span class="op">=</span> [<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> p2 <span class="op">=</span> [<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">8</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> x1 <span class="op">=</span> fft(p1, <span class="dv">337</span>, domain)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> x1</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">11</span>, <span class="dv">161</span>, <span class="dv">256</span>, <span class="dv">10</span>, <span class="dv">336</span>, <span class="dv">100</span>, <span class="dv">83</span>, <span class="dv">78</span>]</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> x2 <span class="op">=</span> fft(p2, <span class="dv">337</span>, domain)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> x2</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">23</span>, <span class="dv">43</span>, <span class="dv">170</span>, <span class="dv">242</span>, <span class="dv">3</span>, <span class="dv">313</span>, <span class="dv">161</span>, <span class="dv">96</span>]</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> x3 <span class="op">=</span> [(v1 <span class="op">*</span> v2) <span class="op">%</span> <span class="dv">337</span> <span class="cf">for</span> v1, v2 <span class="kw">in</span> <span class="bu">zip</span>(x1, x2)]</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> x3</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">253</span>, <span class="dv">183</span>, <span class="dv">47</span>, <span class="dv">61</span>, <span class="dv">334</span>, <span class="dv">296</span>, <span class="dv">220</span>, <span class="dv">74</span>]</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> inverse_fft(x3, <span class="dv">337</span>, domain)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>[<span class="dv">15</span>, <span class="dv">52</span>, <span class="dv">79</span>, <span class="dv">66</span>, <span class="dv">30</span>, <span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">0</span>]</span></code></pre></div>
 <p>
-This requires three FFTs (each <span class="math inline">\(O(N \cdot log(N))\)</span> time) and one pointwise multiplication (<span class="math inline">\(O(N)\)</span> time), so it takes <span class="math inline">\(O(N \cdot log(N))\)</span> time altogether (technically a little bit more than <span class="math inline">\(O(N \cdot log(N))\)</span>, because for very big numbers you would need replace <span class="math inline">\(337\)</span> with a bigger modulus and that would make multiplication harder, but close enough). This is <em>much faster</em> than schoolbook multiplication, which takes <span class="math inline">\(O(N^2)\)</span> time:
+This requires three FFTs (each <span class="math inline">\(O(N \cdot
+log(N))\)</span> time) and one pointwise multiplication (<span
+class="math inline">\(O(N)\)</span> time), so it takes <span
+class="math inline">\(O(N \cdot log(N))\)</span> time altogether
+(technically a little bit more than <span class="math inline">\(O(N
+\cdot log(N))\)</span>, because for very big numbers you would need
+replace <span class="math inline">\(337\)</span> with a bigger modulus
+and that would make multiplication harder, but close enough). This is
+<em>much faster</em> than schoolbook multiplication, which takes <span
+class="math inline">\(O(N^2)\)</span> time:
 </p>
 <pre>
      3  5  2  1
@@ -280,7 +567,9 @@ This requires three FFTs (each <span class="math inline">\(O(N \cdot log(N))\)</
     15 52 79 66 30 10  1
 </pre>
 <p>
-So now we just take the result, and carry the tens digits over (this is a "walk through the list once and do one thing at each point" algorithm so it takes <span class="math inline">\(O(N)\)</span> time):
+So now we just take the result, and carry the tens digits over (this is
+a "walk through the list once and do one thing at each point" algorithm
+so it takes <span class="math inline">\(O(N)\)</span> time):
 </p>
 <pre>
 [15, 52, 79, 66, 30, 10, 1, 0]
@@ -292,24 +581,62 @@ So now we just take the result, and carry the tens digits over (this is a "walk 
 [ 5,  3,  4,  4,  7,  3, 2, 0]
 </pre>
 <p>
-And if we read the digits from top to bottom, we get <span class="math inline">\(2374435\)</span>. Let's check the answer....
+And if we read the digits from top to bottom, we get <span
+class="math inline">\(2374435\)</span>. Let's check the answer....
 </p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="dv">1253</span> <span class="op">*</span> <span class="dv">1895</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="dv">2374435</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="dv">1253</span> <span class="op">*</span> <span class="dv">1895</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="dv">2374435</span></span></code></pre></div>
 <p>
-Yay! It worked. In practice, on such small inputs, the difference between <span class="math inline">\(O(N \cdot log(N))\)</span> and <span class="math inline">\(O(N^2)\)</span> isn't <em>that</em> large, so schoolbook multiplication is faster than this FFT-based multiplication process just because the algorithm is simpler, but on large inputs it makes a really big difference.
+Yay! It worked. In practice, on such small inputs, the difference
+between <span class="math inline">\(O(N \cdot log(N))\)</span> and <span
+class="math inline">\(O(N^2)\)</span> isn't <em>that</em> large, so
+schoolbook multiplication is faster than this FFT-based multiplication
+process just because the algorithm is simpler, but on large inputs it
+makes a really big difference.
 </p>
 <p>
-But FFTs are useful not just for multiplying numbers; as mentioned above, polynomial multiplication and multi-point evaluation are crucially important operations in implementing erasure coding, which is a very important technique for building many kinds of redundant fault-tolerant systems. If you like fault tolerance and you like efficiency, FFTs are your friend.
+But FFTs are useful not just for multiplying numbers; as mentioned
+above, polynomial multiplication and multi-point evaluation are
+crucially important operations in implementing erasure coding, which is
+a very important technique for building many kinds of redundant
+fault-tolerant systems. If you like fault tolerance and you like
+efficiency, FFTs are your friend.
 </p>
 <h3>
 FFTs and binary fields
 </h3>
 <p>
-Prime fields are not the only kind of finite field out there. Another kind of finite field (really a special case of the more general concept of an <em>extension field</em>, which are kind of like the finite-field equivalent of complex numbers) are binary fields. In an binary field, each element is expressed as a polynomial where all of the entries are <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>, eg. <span class="math inline">\(x^3 + x + 1\)</span>. Adding polynomials is done modulo <span class="math inline">\(2\)</span>, and subtraction is the same as addition (as <span class="math inline">\(-1 = 1 \bmod 2\)</span>). We select some irreducible polynomial as a modulus (eg. <span class="math inline">\(x^4 + x + 1\)</span>; <span class="math inline">\(x^4 + 1\)</span> would not work because <span class="math inline">\(x^4 + 1\)</span> can be factored into <span class="math inline">\((x^2 + 1)\cdot(x^2 + 1)\)</span> so it's not "irreducible"); multiplication is done modulo that modulus. For example, in the binary field mod <span class="math inline">\(x^4 + x + 1\)</span>, multiplying <span class="math inline">\(x^2 + 1\)</span> by <span class="math inline">\(x^3 + 1\)</span> would give <span class="math inline">\(x^5 + x^3 + x^2 + 1\)</span> if you just do the multiplication, but <span class="math inline">\(x^5 + x^3 + x^2 + 1 = (x^4 + x + 1)\cdot x + (x^3 + x + 1)\)</span>, so the result is the remainder <span class="math inline">\(x^3 + x + 1\)</span>.
+Prime fields are not the only kind of finite field out there. Another
+kind of finite field (really a special case of the more general concept
+of an <em>extension field</em>, which are kind of like the finite-field
+equivalent of complex numbers) are binary fields. In an binary field,
+each element is expressed as a polynomial where all of the entries are
+<span class="math inline">\(0\)</span> or <span
+class="math inline">\(1\)</span>, eg. <span class="math inline">\(x^3 +
+x + 1\)</span>. Adding polynomials is done modulo <span
+class="math inline">\(2\)</span>, and subtraction is the same as
+addition (as <span class="math inline">\(-1 = 1 \bmod 2\)</span>). We
+select some irreducible polynomial as a modulus (eg. <span
+class="math inline">\(x^4 + x + 1\)</span>; <span
+class="math inline">\(x^4 + 1\)</span> would not work because <span
+class="math inline">\(x^4 + 1\)</span> can be factored into <span
+class="math inline">\((x^2 + 1)\cdot(x^2 + 1)\)</span> so it's not
+"irreducible"); multiplication is done modulo that modulus. For example,
+in the binary field mod <span class="math inline">\(x^4 + x +
+1\)</span>, multiplying <span class="math inline">\(x^2 + 1\)</span> by
+<span class="math inline">\(x^3 + 1\)</span> would give <span
+class="math inline">\(x^5 + x^3 + x^2 + 1\)</span> if you just do the
+multiplication, but <span class="math inline">\(x^5 + x^3 + x^2 + 1 =
+(x^4 + x + 1)\cdot x + (x^3 + x + 1)\)</span>, so the result is the
+remainder <span class="math inline">\(x^3 + x + 1\)</span>.
 </p>
 <p>
-We can express this example as a multiplication table. First multiply <span class="math inline">\([1, 0, 0, 1]\)</span> (ie. <span class="math inline">\(x^3 + 1\)</span>) by <span class="math inline">\([1, 0, 1]\)</span> (ie. <span class="math inline">\(x^2 + 1\)</span>):
+We can express this example as a multiplication table. First multiply
+<span class="math inline">\([1, 0, 0, 1]\)</span> (ie. <span
+class="math inline">\(x^3 + 1\)</span>) by <span
+class="math inline">\([1, 0, 1]\)</span> (ie. <span
+class="math inline">\(x^2 + 1\)</span>):
 </p>
 <pre>
     1 0 0 1
@@ -321,7 +648,9 @@ We can express this example as a multiplication table. First multiply <span clas
     1 0 1 1 0 1
 </pre>
 <p>
-The multiplication result contains an <span class="math inline">\(x^5\)</span> term so we can subtract <span class="math inline">\((x^4 + x + 1)\cdot x\)</span>:
+The multiplication result contains an <span
+class="math inline">\(x^5\)</span> term so we can subtract <span
+class="math inline">\((x^4 + x + 1)\cdot x\)</span>:
 </p>
 <pre>
     1 0 1 1 0 1
@@ -330,22 +659,97 @@ The multiplication result contains an <span class="math inline">\(x^5\)</span> t
     1 1 0 1 0 0
 </pre>
 <p>
-And we get the result, <span class="math inline">\([1, 1, 0, 1]\)</span> (or <span class="math inline">\(x^3 + x + 1\)</span>).
+And we get the result, <span class="math inline">\([1, 1, 0, 1]\)</span>
+(or <span class="math inline">\(x^3 + x + 1\)</span>).
 </p>
 <p>
 <center>
-<img src="../../../../images/fft-files/addmult.png" style="width:600px"/><br><br> <small><i>Addition and multiplication tables for the binary field mod <span class="math inline">\(x^4 + x + 1\)</span>. Field elements are expressed as integers converted from binary (eg. <span class="math inline">\(x^3 + x^2 \rightarrow 1100 \rightarrow 12\)</span>)</i></small>
+<img src="../../../../images/fft-files/addmult.png" style="width:600px"/><br><br>
+<small><i>Addition and multiplication tables for the binary field mod
+<span class="math inline">\(x^4 + x + 1\)</span>. Field elements are
+expressed as integers converted from binary (eg. <span
+class="math inline">\(x^3 + x^2 \rightarrow 1100 \rightarrow
+12\)</span>)</i></small>
 </center>
 <br>
 </p>
 <p>
-Binary fields are interesting for two reasons. First of all, if you want to erasure-code binary data, then binary fields are really convenient because <span class="math inline">\(N\)</span> bytes of data can be directly encoded as a binary field element, and any binary field elements that you generate by performing computations on it will also be <span class="math inline">\(N\)</span> bytes long. You cannot do this with prime fields because prime fields' size is not exactly a power of two; for example, you could encode every <span class="math inline">\(2\)</span> bytes as a number from <span class="math inline">\(0...65536\)</span> in the prime field modulo <span class="math inline">\(65537\)</span> (which is prime), but if you do an FFT on these values, then the output could contain <span class="math inline">\(65536\)</span>, which cannot be expressed in two bytes. Second, the fact that addition and subtraction become the same operation, and <span class="math inline">\(1 + 1 = 0\)</span>, create some "structure" which leads to some very interesting consequences. One particularly interesting, and useful, oddity of binary fields is the "<a href="https://en.wikipedia.org/wiki/Freshman%27s_dream">freshman's dream</a>" theorem: <span class="math inline">\((x+y)^2 = x^2 + y^2\)</span> (and the same for exponents <span class="math inline">\(4, 8, 16...\)</span> basically any power of two).
+Binary fields are interesting for two reasons. First of all, if you want
+to erasure-code binary data, then binary fields are really convenient
+because <span class="math inline">\(N\)</span> bytes of data can be
+directly encoded as a binary field element, and any binary field
+elements that you generate by performing computations on it will also be
+<span class="math inline">\(N\)</span> bytes long. You cannot do this
+with prime fields because prime fields' size is not exactly a power of
+two; for example, you could encode every <span
+class="math inline">\(2\)</span> bytes as a number from <span
+class="math inline">\(0...65536\)</span> in the prime field modulo <span
+class="math inline">\(65537\)</span> (which is prime), but if you do an
+FFT on these values, then the output could contain <span
+class="math inline">\(65536\)</span>, which cannot be expressed in two
+bytes. Second, the fact that addition and subtraction become the same
+operation, and <span class="math inline">\(1 + 1 = 0\)</span>, create
+some "structure" which leads to some very interesting consequences. One
+particularly interesting, and useful, oddity of binary fields is the
+"<a href="https://en.wikipedia.org/wiki/Freshman%27s_dream">freshman's
+dream</a>" theorem: <span class="math inline">\((x+y)^2 = x^2 +
+y^2\)</span> (and the same for exponents <span class="math inline">\(4,
+8, 16...\)</span> basically any power of two).
 </p>
 <p>
-But if you want to use binary fields for erasure coding, and do so efficiently, then you need to be able to do Fast Fourier transforms over binary fields. But then there is a problem: in a binary field, <em>there are no (nontrivial) multiplicative groups of order <span class="math inline">\(2^n\)</span></em>. This is because the multiplicative groups are all order <span class="math inline">\(2^n\)</span>-1. For example, in the binary field with modulus <span class="math inline">\(x^4 + x + 1\)</span>, if you start calculating successive powers of <span class="math inline">\(x+1\)</span>, you cycle back to <span class="math inline">\(1\)</span> after <span class="math inline">\(\it 15\)</span> steps - not <span class="math inline">\(16\)</span>. The reason is that the total number of elements in the field is <span class="math inline">\(16\)</span>, but one of them is zero, and you're never going to reach zero by multiplying any nonzero value by itself in a field, so the powers of <span class="math inline">\(x+1\)</span> cycle through every element but zero, so the cycle length is <span class="math inline">\(15\)</span>, not <span class="math inline">\(16\)</span>. So what do we do?
+But if you want to use binary fields for erasure coding, and do so
+efficiently, then you need to be able to do Fast Fourier transforms over
+binary fields. But then there is a problem: in a binary field, <em>there
+are no (nontrivial) multiplicative groups of order <span
+class="math inline">\(2^n\)</span></em>. This is because the
+multiplicative groups are all order <span
+class="math inline">\(2^n\)</span>-1. For example, in the binary field
+with modulus <span class="math inline">\(x^4 + x + 1\)</span>, if you
+start calculating successive powers of <span
+class="math inline">\(x+1\)</span>, you cycle back to <span
+class="math inline">\(1\)</span> after <span class="math inline">\(\it
+15\)</span> steps - not <span class="math inline">\(16\)</span>. The
+reason is that the total number of elements in the field is <span
+class="math inline">\(16\)</span>, but one of them is zero, and you're
+never going to reach zero by multiplying any nonzero value by itself in
+a field, so the powers of <span class="math inline">\(x+1\)</span> cycle
+through every element but zero, so the cycle length is <span
+class="math inline">\(15\)</span>, not <span
+class="math inline">\(16\)</span>. So what do we do?
 </p>
 <p>
-The reason we needed the domain to have the "structure" of a multiplicative group with <span class="math inline">\(2^n\)</span> elements before is that we needed to reduce the size of the domain by a factor of two by squaring each number in it: the domain <span class="math inline">\([1, 85, 148, 111, 336, 252, 189, 226]\)</span> gets reduced to <span class="math inline">\([1, 148, 336, 189]\)</span> because <span class="math inline">\(1\)</span> is the square of both <span class="math inline">\(1\)</span> and <span class="math inline">\(336\)</span>, <span class="math inline">\(148\)</span> is the square of both <span class="math inline">\(85\)</span> and <span class="math inline">\(252\)</span>, and so forth. But what if in a binary field there's a different way to halve the size of a domain? It turns out that there is: given a domain containing <span class="math inline">\(2^k\)</span> values, including zero (technically the domain must be a <em><a href="https://en.wikipedia.org/wiki/Linear_subspace">subspace</a></em>), we can construct a half-sized new domain <span class="math inline">\(D&#39;\)</span> by taking <span class="math inline">\(x \cdot (x+k)\)</span> for <span class="math inline">\(x\)</span> in <span class="math inline">\(D\)</span> using some specific <span class="math inline">\(k\)</span> in <span class="math inline">\(D\)</span>. Because the original domain is a subspace, since <span class="math inline">\(k\)</span> is in the domain, any <span class="math inline">\(x\)</span> in the domain has a corresponding <span class="math inline">\(x+k\)</span> also in the domain, and the function <span class="math inline">\(f(x) = x \cdot (x+k)\)</span> returns the same value for <span class="math inline">\(x\)</span> and <span class="math inline">\(x+k\)</span> so we get the same kind of two-to-one correspondence that squaring gives us.
+The reason we needed the domain to have the "structure" of a
+multiplicative group with <span class="math inline">\(2^n\)</span>
+elements before is that we needed to reduce the size of the domain by a
+factor of two by squaring each number in it: the domain <span
+class="math inline">\([1, 85, 148, 111, 336, 252, 189, 226]\)</span>
+gets reduced to <span class="math inline">\([1, 148, 336, 189]\)</span>
+because <span class="math inline">\(1\)</span> is the square of both
+<span class="math inline">\(1\)</span> and <span
+class="math inline">\(336\)</span>, <span
+class="math inline">\(148\)</span> is the square of both <span
+class="math inline">\(85\)</span> and <span
+class="math inline">\(252\)</span>, and so forth. But what if in a
+binary field there's a different way to halve the size of a domain? It
+turns out that there is: given a domain containing <span
+class="math inline">\(2^k\)</span> values, including zero (technically
+the domain must be a
+<em><a href="https://en.wikipedia.org/wiki/Linear_subspace">subspace</a></em>),
+we can construct a half-sized new domain <span
+class="math inline">\(D&#39;\)</span> by taking <span
+class="math inline">\(x \cdot (x+k)\)</span> for <span
+class="math inline">\(x\)</span> in <span
+class="math inline">\(D\)</span> using some specific <span
+class="math inline">\(k\)</span> in <span
+class="math inline">\(D\)</span>. Because the original domain is a
+subspace, since <span class="math inline">\(k\)</span> is in the domain,
+any <span class="math inline">\(x\)</span> in the domain has a
+corresponding <span class="math inline">\(x+k\)</span> also in the
+domain, and the function <span class="math inline">\(f(x) = x \cdot
+(x+k)\)</span> returns the same value for <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(x+k\)</span> so we get the same kind of two-to-one
+correspondence that squaring gives us.
 </p>
 <center>
 <table cellpadding="10">
@@ -459,35 +863,84 @@ The reason we needed the domain to have the "structure" of a multiplicative grou
 </center>
 <p><br></p>
 <p>
-So now, how do we do an FFT on top of this? We'll use the same trick, converting a problem with an <span class="math inline">\(N\)</span>-sized polynomial and <span class="math inline">\(N\)</span>-sized domain into two problems each with an <span class="math inline">\(\frac{N}{2}\)</span>-sized polynomial and <span class="math inline">\(\frac{N}{2}\)</span>-sized domain, but this time using different equations. We'll convert a polynomial <span class="math inline">\(p\)</span> into two polynomials <span class="math inline">\(evens\)</span> and <span class="math inline">\(odds\)</span> such that <span class="math inline">\(p(x) = evens(x \cdot (k-x)) + x \cdot odds(x \cdot (k-x))\)</span>. Note that for the <span class="math inline">\(evens\)</span> and <span class="math inline">\(odds\)</span> that we find, it will <em>also</em> be true that <span class="math inline">\(p(x+k) = evens(x \cdot (k-x)) + (x+k) \cdot odds(x \cdot (k-x))\)</span>. So we can then recursively do an FFT to <span class="math inline">\(evens\)</span> and <span class="math inline">\(odds\)</span> on the reduced domain <span class="math inline">\([x \cdot (k-x)\)</span> for <span class="math inline">\(x\)</span> in <span class="math inline">\(D]\)</span>, and then we use these two formulas to get the answers for two "halves" of the domain, one offset by <span class="math inline">\(k\)</span> from the other.
+So now, how do we do an FFT on top of this? We'll use the same trick,
+converting a problem with an <span
+class="math inline">\(N\)</span>-sized polynomial and <span
+class="math inline">\(N\)</span>-sized domain into two problems each
+with an <span class="math inline">\(\frac{N}{2}\)</span>-sized
+polynomial and <span class="math inline">\(\frac{N}{2}\)</span>-sized
+domain, but this time using different equations. We'll convert a
+polynomial <span class="math inline">\(p\)</span> into two polynomials
+<span class="math inline">\(evens\)</span> and <span
+class="math inline">\(odds\)</span> such that <span
+class="math inline">\(p(x) = evens(x \cdot (k-x)) + x \cdot odds(x \cdot
+(k-x))\)</span>. Note that for the <span
+class="math inline">\(evens\)</span> and <span
+class="math inline">\(odds\)</span> that we find, it will <em>also</em>
+be true that <span class="math inline">\(p(x+k) = evens(x \cdot (k-x)) +
+(x+k) \cdot odds(x \cdot (k-x))\)</span>. So we can then recursively do
+an FFT to <span class="math inline">\(evens\)</span> and <span
+class="math inline">\(odds\)</span> on the reduced domain <span
+class="math inline">\([x \cdot (k-x)\)</span> for <span
+class="math inline">\(x\)</span> in <span
+class="math inline">\(D]\)</span>, and then we use these two formulas to
+get the answers for two "halves" of the domain, one offset by <span
+class="math inline">\(k\)</span> from the other.
 </p>
 <p>
-Converting <span class="math inline">\(p\)</span> into <span class="math inline">\(evens\)</span> and <span class="math inline">\(odds\)</span> as described above turns out to itself be nontrivial. The "naive" algorithm for doing this is itself <span class="math inline">\(O(N^2)\)</span>, but it turns out that in a binary field, we can use the fact that <span class="math inline">\((x^2-kx)^2 = x^4 - k^2 \cdot x^2\)</span>, and more generally <span class="math inline">\((x^2-kx)^{2^{i}} = x^{2^{i+1}} - k^{2^{i}} \cdot x^{2^{i}}\)</span> , to create yet another recursive algorithm to do this in <span class="math inline">\(O(N \cdot log(N))\)</span> time.
+Converting <span class="math inline">\(p\)</span> into <span
+class="math inline">\(evens\)</span> and <span
+class="math inline">\(odds\)</span> as described above turns out to
+itself be nontrivial. The "naive" algorithm for doing this is itself
+<span class="math inline">\(O(N^2)\)</span>, but it turns out that in a
+binary field, we can use the fact that <span
+class="math inline">\((x^2-kx)^2 = x^4 - k^2 \cdot x^2\)</span>, and
+more generally <span class="math inline">\((x^2-kx)^{2^{i}} =
+x^{2^{i+1}} - k^{2^{i}} \cdot x^{2^{i}}\)</span> , to create yet another
+recursive algorithm to do this in <span class="math inline">\(O(N \cdot
+log(N))\)</span> time.
 </p>
 <p>
-And if you want to do an <em>inverse</em> FFT, to do interpolation, then you need to run the steps in the algorithm in reverse order. You can find the complete code for doing this here: <a href="https://github.com/ethereum/research/tree/master/binary_fft">https://github.com/ethereum/research/tree/master/binary_fft</a>, and a paper with details on more optimal algorithms here: <a href="http://www.math.clemson.edu/~sgao/papers/GM10.pdf">http://www.math.clemson.edu/~sgao/papers/GM10.pdf</a>
+And if you want to do an <em>inverse</em> FFT, to do interpolation, then
+you need to run the steps in the algorithm in reverse order. You can
+find the complete code for doing this here:
+<a href="https://github.com/ethereum/research/tree/master/binary_fft">https://github.com/ethereum/research/tree/master/binary_fft</a>,
+and a paper with details on more optimal algorithms here:
+<a href="http://www.math.clemson.edu/~sgao/papers/GM10.pdf">http://www.math.clemson.edu/~sgao/papers/GM10.pdf</a>
 </p>
 <p>
-So what do we get from all of this complexity? Well, we can try running the implementation, which features both a "naive" <span class="math inline">\(O(N^2)\)</span> multi-point evaluation and the optimized FFT-based one, and time both. Here are my results:
+So what do we get from all of this complexity? Well, we can try running
+the implementation, which features both a "naive" <span
+class="math inline">\(O(N^2)\)</span> multi-point evaluation and the
+optimized FFT-based one, and time both. Here are my results:
 </p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> binary_fft <span class="im">as</span> b</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> time, random</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> f <span class="op">=</span> b.BinaryField(<span class="dv">1033</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> poly <span class="op">=</span> [random.randrange(<span class="dv">1024</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1024</span>)]</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> time.time()<span class="op">;</span> x1 <span class="op">=</span> b._simple_ft(f, poly)<span class="op">;</span> time.time() <span class="op">-</span> a</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="fl">0.5752472877502441</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> time.time()<span class="op">;</span> x2 <span class="op">=</span> b.fft(f, poly, <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1024</span>)))<span class="op">;</span> time.time() <span class="op">-</span> a</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a><span class="fl">0.03820443153381348</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> binary_fft <span class="im">as</span> b</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> time, random</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> f <span class="op">=</span> b.BinaryField(<span class="dv">1033</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> poly <span class="op">=</span> [random.randrange(<span class="dv">1024</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1024</span>)]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> time.time()<span class="op">;</span> x1 <span class="op">=</span> b._simple_ft(f, poly)<span class="op">;</span> time.time() <span class="op">-</span> a</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fl">0.5752472877502441</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> time.time()<span class="op">;</span> x2 <span class="op">=</span> b.fft(f, poly, <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1024</span>)))<span class="op">;</span> time.time() <span class="op">-</span> a</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fl">0.03820443153381348</span></span></code></pre></div>
 <p>
-And as the size of the polynomial gets larger, the naive implementation (<code>_simple_ft</code>) gets slower much more quickly than the FFT:
+And as the size of the polynomial gets larger, the naive implementation
+(<code>_simple_ft</code>) gets slower much more quickly than the FFT:
 </p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> f <span class="op">=</span> b.BinaryField(<span class="dv">2053</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> poly <span class="op">=</span> [random.randrange(<span class="dv">2048</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2048</span>)]</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> time.time()<span class="op">;</span> x1 <span class="op">=</span> b._simple_ft(f, poly)<span class="op">;</span> time.time() <span class="op">-</span> a</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a><span class="fl">2.2243144512176514</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> time.time()<span class="op">;</span> x2 <span class="op">=</span> b.fft(f, poly, <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">2048</span>)))<span class="op">;</span> time.time() <span class="op">-</span> a</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="fl">0.07896280288696289</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> f <span class="op">=</span> b.BinaryField(<span class="dv">2053</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> poly <span class="op">=</span> [random.randrange(<span class="dv">2048</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2048</span>)]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> time.time()<span class="op">;</span> x1 <span class="op">=</span> b._simple_ft(f, poly)<span class="op">;</span> time.time() <span class="op">-</span> a</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fl">2.2243144512176514</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> time.time()<span class="op">;</span> x2 <span class="op">=</span> b.fft(f, poly, <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">2048</span>)))<span class="op">;</span> time.time() <span class="op">-</span> a</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fl">0.07896280288696289</span></span></code></pre></div>
 <p>
-And voila, we have an efficient, scalable way to multi-point evaluate and interpolate polynomials. If we want to use FFTs to recover erasure-coded data where we are <em>missing</em> some pieces, then algorithms for this <a href="https://ethresear.ch/t/reed-solomon-erasure-code-recovery-in-n-log-2-n-time-with-ffts/3039">also exist</a>, though they are somewhat less efficient than just doing a single FFT. Enjoy!
+And voila, we have an efficient, scalable way to multi-point evaluate
+and interpolate polynomials. If we want to use FFTs to recover
+erasure-coded data where we are <em>missing</em> some pieces, then
+algorithms for this
+<a href="https://ethresear.ch/t/reed-solomon-erasure-code-recovery-in-n-log-2-n-time-with-ffts/3039">also
+exist</a>, though they are somewhat less efficient than just doing a
+single FFT. Enjoy!
 </p>
  </div> 

@@ -109,194 +109,714 @@ MathJax = {
 <br> <br> <br>
 <title> An approximate introduction to how zk-SNARKs are possible </title>
 
-<p><em>Special thanks to Dankrad Feist, Karl Floersch and Hsiao-wei Wang for feedback and review.</em></p>
-<p>Perhaps the most powerful cryptographic technology to come out of the last decade is general-purpose succinct zero knowledge proofs, usually called zk-SNARKs ("zero knowledge succinct arguments of knowledge"). A zk-SNARK allows you to generate a proof that some computation has some particular output, in such a way that the proof can be verified extremely quickly even if the underlying computation takes a very long time to run. The "ZK" ("zero knowledge") part adds an additional feature: the proof can keep some of the inputs to the computation hidden.</p>
-<p>For example, you can make a proof for the statement "I know a secret number such that if you take the word ‘cow', add the number to the end, and SHA256 hash it 100 million times, the output starts with <code>0x57d00485aa</code>". The verifier can verify the proof far more quickly than it would take for them to run 100 million hashes themselves, and the proof would also not reveal what the secret number is.</p>
-<p>In the context of blockchains, this has two very powerful applications:</p>
+<p><em>Special thanks to Dankrad Feist, Karl Floersch and Hsiao-wei Wang
+for feedback and review.</em></p>
+<p>Perhaps the most powerful cryptographic technology to come out of the
+last decade is general-purpose succinct zero knowledge proofs, usually
+called zk-SNARKs ("zero knowledge succinct arguments of knowledge"). A
+zk-SNARK allows you to generate a proof that some computation has some
+particular output, in such a way that the proof can be verified
+extremely quickly even if the underlying computation takes a very long
+time to run. The "ZK" ("zero knowledge") part adds an additional
+feature: the proof can keep some of the inputs to the computation
+hidden.</p>
+<p>For example, you can make a proof for the statement "I know a secret
+number such that if you take the word ‘cow', add the number to the end,
+and SHA256 hash it 100 million times, the output starts with
+<code>0x57d00485aa</code>". The verifier can verify the proof far more
+quickly than it would take for them to run 100 million hashes
+themselves, and the proof would also not reveal what the secret number
+is.</p>
+<p>In the context of blockchains, this has two very powerful
+applications:</p>
 <ol type="1">
-<li><strong>Scalability</strong>: if a block takes a long time to verify, one person can verify it and generate a proof, and everyone else can just quickly verify the proof instead</li>
-<li><strong>Privacy</strong>: you can prove that you have the right to transfer some asset (you received it, and you didn't already transfer it) without revealing the link to which asset you received. This ensures security without unduly leaking information about who is transacting with whom to the public.</li>
+<li><strong>Scalability</strong>: if a block takes a long time to
+verify, one person can verify it and generate a proof, and everyone else
+can just quickly verify the proof instead</li>
+<li><strong>Privacy</strong>: you can prove that you have the right to
+transfer some asset (you received it, and you didn't already transfer
+it) without revealing the link to which asset you received. This ensures
+security without unduly leaking information about who is transacting
+with whom to the public.</li>
 </ol>
-<p>But zk-SNARKs are quite complex; indeed, as recently as in 2014-17 they were still frequently called "moon math". The good news is that since then, the protocols have become simpler and our understanding of them has become much better. This post will try to explain how ZK-SNARKs work, in a way that should be understandable to someone with a medium level of understanding of mathematics.</p>
-<p><strong>Note that we will focus on scalability; privacy for these protocols is actually relatively easy once the scalability is there, so we will get back to that topic at the end.</strong></p>
-<h2 id="why-zk-snarks-should-be-hard">Why ZK-SNARKs "should" be hard</h2>
-<p>Let us take the example that we started with: we have a number (we can encode "cow" followed by the secret input as an integer), we take the SHA256 hash of that number, then we do that again another 99,999,999 times, we get the output, and we check what its starting digits are. This is a <em>huge</em> computation.</p>
-<p>A "succinct" proof is one where both the size of the proof and the time required to verify it grow much more slowly than the computation to be verified. If we want a "succinct" proof, we cannot require the verifier to do some work <em>per round of hashing</em> (because then the verification time would be proportional to the computation). Instead, the verifier must somehow check the whole computation without peeking into each individual piece of the computation.</p>
-<p>One natural technique is <em>random sampling</em>: how about we just have the verifier peek into the computation in 500 different places, check that those parts are correct, and if all 500 checks pass then assume that the rest of the computation must with high probability be fine, too?</p>
-<p>Such a procedure could even be turned into a non-interactive proof using the <strong>Fiat-Shamir heuristic</strong>: the prover computes a Merkle root of the computation, uses the Merkle root to pseudorandomly choose 500 indices, and provides the 500 corresponding Merkle branches of the data. The key idea is that the prover does not know which branches they will need to reveal until they have already "committed to" the data. If a malicious prover tries to fudge the data after learning which indices are going to be checked, that would change the Merkle root, which would result in a new set of random indices, which would require fudging the data again... trapping the malicious prover in an endless cycle.</p>
-<p>But unfortunately there is a fatal flaw in naively applying random sampling to spot-check a computation in this way: computation is inherently <em>fragile</em>. If a malicious prover flips one bit somewhere in the middle of a computation, they can make it give a completely different result, and a random sampling verifier would almost never find out.</p>
+<p>But zk-SNARKs are quite complex; indeed, as recently as in 2014-17
+they were still frequently called "moon math". The good news is that
+since then, the protocols have become simpler and our understanding of
+them has become much better. This post will try to explain how ZK-SNARKs
+work, in a way that should be understandable to someone with a medium
+level of understanding of mathematics.</p>
+<p><strong>Note that we will focus on scalability; privacy for these
+protocols is actually relatively easy once the scalability is there, so
+we will get back to that topic at the end.</strong></p>
+<h2 id="why-zk-snarks-should-be-hard">Why ZK-SNARKs "should" be
+hard</h2>
+<p>Let us take the example that we started with: we have a number (we
+can encode "cow" followed by the secret input as an integer), we take
+the SHA256 hash of that number, then we do that again another 99,999,999
+times, we get the output, and we check what its starting digits are.
+This is a <em>huge</em> computation.</p>
+<p>A "succinct" proof is one where both the size of the proof and the
+time required to verify it grow much more slowly than the computation to
+be verified. If we want a "succinct" proof, we cannot require the
+verifier to do some work <em>per round of hashing</em> (because then the
+verification time would be proportional to the computation). Instead,
+the verifier must somehow check the whole computation without peeking
+into each individual piece of the computation.</p>
+<p>One natural technique is <em>random sampling</em>: how about we just
+have the verifier peek into the computation in 500 different places,
+check that those parts are correct, and if all 500 checks pass then
+assume that the rest of the computation must with high probability be
+fine, too?</p>
+<p>Such a procedure could even be turned into a non-interactive proof
+using the <strong>Fiat-Shamir heuristic</strong>: the prover computes a
+Merkle root of the computation, uses the Merkle root to pseudorandomly
+choose 500 indices, and provides the 500 corresponding Merkle branches
+of the data. The key idea is that the prover does not know which
+branches they will need to reveal until they have already "committed to"
+the data. If a malicious prover tries to fudge the data after learning
+which indices are going to be checked, that would change the Merkle
+root, which would result in a new set of random indices, which would
+require fudging the data again... trapping the malicious prover in an
+endless cycle.</p>
+<p>But unfortunately there is a fatal flaw in naively applying random
+sampling to spot-check a computation in this way: computation is
+inherently <em>fragile</em>. If a malicious prover flips one bit
+somewhere in the middle of a computation, they can make it give a
+completely different result, and a random sampling verifier would almost
+never find out.</p>
 <center>
-<img src="../../../../images/snarks-files/randomsample.png" class="padded" /> <br><br> <i><small>It only takes one deliberately inserted error, that a random check would almost never catch, to make a computation give a completely incorrect result.</small></i>
+<img src="../../../../images/snarks-files/randomsample.png" class="padded" />
+<br><br> <i><small>It only takes one deliberately inserted error, that a
+random check would almost never catch, to make a computation give a
+completely incorrect result.</small></i>
 </center>
 <p><br></p>
-<p>If tasked with the problem of coming up with a zk-SNARK protocol, many people would make their way to this point and then get stuck and give up. How can a verifier possibly check every single piece of the computation, without looking at each piece of the computation individually? But it turns out that there is a clever solution.</p>
+<p>If tasked with the problem of coming up with a zk-SNARK protocol,
+many people would make their way to this point and then get stuck and
+give up. How can a verifier possibly check every single piece of the
+computation, without looking at each piece of the computation
+individually? But it turns out that there is a clever solution.</p>
 <h2 id="polynomials">Polynomials</h2>
-<p>Polynomials are a special class of algebraic expressions of the form:</p>
+<p>Polynomials are a special class of algebraic expressions of the
+form:</p>
 <ul>
 <li><span class="math inline">\(x + 5\)</span></li>
 <li><span class="math inline">\(x^4\)</span></li>
 <li><span class="math inline">\(x^3 + 3x^2 + 3x + 1\)</span></li>
-<li><span class="math inline">\(628x^{271} + 318x^{270} + 530x^{269} + ... + 69x + 381\)</span></li>
+<li><span class="math inline">\(628x^{271} + 318x^{270} + 530x^{269} +
+... + 69x + 381\)</span></li>
 </ul>
-<p>i.e. they are a sum of any (finite!) number of terms of the form <span class="math inline">\(c x^k\)</span>.</p>
-<p>There are many things that are fascinating about polynomials. But here we are going to zoom in on a particular one: <strong>polynomials are a single mathematical object that can contain an unbounded amount of information</strong> (think of them as a list of integers and this is obvious). The fourth example above contained 816 digits of <a href="https://math.wikia.org/wiki/Tau_(constant)">tau</a>, and one can easily imagine a polynomial that contains far more.</p>
-<p>Furthermore, <strong>a single equation between polynomials can represent an unbounded number of equations between numbers</strong>. For example, consider the equation <span class="math inline">\(A(x) + B(x) = C(x)\)</span>. If this equation is true, then it's also true that:</p>
+<p>i.e. they are a sum of any (finite!) number of terms of the form
+<span class="math inline">\(c x^k\)</span>.</p>
+<p>There are many things that are fascinating about polynomials. But
+here we are going to zoom in on a particular one: <strong>polynomials
+are a single mathematical object that can contain an unbounded amount of
+information</strong> (think of them as a list of integers and this is
+obvious). The fourth example above contained 816 digits of <a
+href="https://math.wikia.org/wiki/Tau_(constant)">tau</a>, and one can
+easily imagine a polynomial that contains far more.</p>
+<p>Furthermore, <strong>a single equation between polynomials can
+represent an unbounded number of equations between numbers</strong>. For
+example, consider the equation <span class="math inline">\(A(x) + B(x) =
+C(x)\)</span>. If this equation is true, then it's also true that:</p>
 <ul>
 <li><span class="math inline">\(A(0) + B(0) = C(0)\)</span></li>
 <li><span class="math inline">\(A(1) + B(1) = C(1)\)</span></li>
 <li><span class="math inline">\(A(2) + B(2) = C(2)\)</span></li>
 <li><span class="math inline">\(A(3) + B(3) = C(3)\)</span></li>
 </ul>
-<p>And so on for every possible coordinate. You can even construct polynomials to deliberately represent sets of numbers so you can check many equations all at once. For example, suppose that you wanted to check:</p>
+<p>And so on for every possible coordinate. You can even construct
+polynomials to deliberately represent sets of numbers so you can check
+many equations all at once. For example, suppose that you wanted to
+check:</p>
 <ul>
 <li><code>12 + 1 = 13</code></li>
 <li><code>10 + 8 = 18</code></li>
 <li><code>15 + 8 = 23</code></li>
 <li><code>15 + 13 = 28</code></li>
 </ul>
-<p>You can use a procedure called <a href="https://blog.ethereum.org/2014/08/16/secret-sharing-erasure-coding-guide-aspiring-dropbox-decentralizer/">Lagrange interpolation</a> to construct polynomials <span class="math inline">\(A(x)\)</span> that give <code>(12, 10, 15, 15)</code> as outputs at some specific set of coordinates (eg. <code>(0, 1, 2, 3)</code>), <span class="math inline">\(B(x)\)</span> the outputs <code>(1, 8, 8, 13)</code> on those same coordinates, and so forth. In fact, here are the polynomials:</p>
+<p>You can use a procedure called <a
+href="https://blog.ethereum.org/2014/08/16/secret-sharing-erasure-coding-guide-aspiring-dropbox-decentralizer/">Lagrange
+interpolation</a> to construct polynomials <span
+class="math inline">\(A(x)\)</span> that give
+<code>(12, 10, 15, 15)</code> as outputs at some specific set of
+coordinates (eg. <code>(0, 1, 2, 3)</code>), <span
+class="math inline">\(B(x)\)</span> the outputs
+<code>(1, 8, 8, 13)</code> on those same coordinates, and so forth. In
+fact, here are the polynomials:</p>
 <ul>
-<li><span class="math inline">\(A(x) = -2x^3 + \frac{19}{2}x^2 - \frac{19}{2}x + 12\)</span></li>
-<li><span class="math inline">\(B(x) = 2x^3 - \frac{19}{2}x^2 + \frac{29}{2}x + 1\)</span></li>
+<li><span class="math inline">\(A(x) = -2x^3 + \frac{19}{2}x^2 -
+\frac{19}{2}x + 12\)</span></li>
+<li><span class="math inline">\(B(x) = 2x^3 - \frac{19}{2}x^2 +
+\frac{29}{2}x + 1\)</span></li>
 <li><span class="math inline">\(C(x) = 5x + 13\)</span></li>
 </ul>
-<p>Checking the equation <span class="math inline">\(A(x) + B(x) = C(x)\)</span> with these polynomials checks all four above equations at the same time.</p>
-<h3 id="comparing-a-polynomial-to-itself">Comparing a polynomial to itself</h3>
-<p>You can even check relationships between a large number of <em>adjacent evaluations of the same polynomial</em> using a simple polynomial equation. This is slightly more advanced. Suppose that you want to check that, for a given polynomial <span class="math inline">\(F\)</span>, <span class="math inline">\(F(x+2) = F(x) + F(x+1)\)</span> within the integer range <span class="math inline">\(\{0, 1 ... 98\}\)</span> (so if you <em>also</em> check <span class="math inline">\(F(0) = F(1) = 1\)</span>, then <span class="math inline">\(F(100)\)</span> would be the 100th <a href="https://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci</a> number).</p>
-<p>As polynomials, <span class="math inline">\(F(x+2) - F(x+1) - F(x)\)</span> would not be exactly zero, as it could give arbitrary answers <em>outside</em> the range <span class="math inline">\(x = \{0, 1 ... 98\}\)</span>. But we can do something clever. In general, there is a rule that if a polynomial <span class="math inline">\(P\)</span> is zero across some set <span class="math inline">\(S=\{x_1, x_2 ... x_n\}\)</span> then it can be expressed as <span class="math inline">\(P(x) = Z(x) * H(x)\)</span>, where <span class="math inline">\(Z(x) =\)</span> <span class="math inline">\((x - x_1) * (x - x_2) * ... * (x - x_n)\)</span> and <span class="math inline">\(H(x)\)</span> is also a polynomial. In other words, <strong>any polynomial that equals zero across some set is a (polynomial) multiple of the simplest (lowest-degree) polynomial that equals zero across that same set</strong>.</p>
-<p>Why is this the case? It is a nice corollary of polynomial long division: <a href="https://en.wikipedia.org/wiki/Factor_theorem">the factor theorem</a>. We know that, when dividing <span class="math inline">\(P(x)\)</span> by <span class="math inline">\(Z(x)\)</span>, we will get a quotient <span class="math inline">\(Q(x)\)</span> and a remainer <span class="math inline">\(R(x)\)</span> which satisfy <span class="math inline">\(P(x) = Z(x) * Q(x) + R(x)\)</span>, where the degree of the remainder <span class="math inline">\(R(x)\)</span> is strictly less than that of <span class="math inline">\(Z(x)\)</span>. Since we know that <span class="math inline">\(P\)</span> is zero on all of <span class="math inline">\(S\)</span>, it means that <span class="math inline">\(R\)</span> has to be zero on all of <span class="math inline">\(S\)</span> as well. So we can simply compute <span class="math inline">\(R(x)\)</span> via polynomial interpolation, since it's a polynomial of degree at most <span class="math inline">\(n-1\)</span> and we know <span class="math inline">\(n\)</span> values (the zeroes at <span class="math inline">\(S\)</span>). Interpolating a polynomial with all zeroes gives the zero polynomial, thus <span class="math inline">\(R(x) = 0\)</span> and <span class="math inline">\(H(x)= Q(x)\)</span>.</p>
-<p>Going back to our example, if we have a polynomial <span class="math inline">\(F\)</span> that encodes Fibonacci numbers (so <span class="math inline">\(F(x+2) = F(x) + F(x+1)\)</span> across <span class="math inline">\(x = \{0, 1 ... 98\}\)</span>), then I can convince you that <span class="math inline">\(F\)</span> <em>actually satisfies this condition</em> by proving that the polynomial <span class="math inline">\(P(x) =\)</span> <span class="math inline">\(F(x+2) - F(x+1) - F(x)\)</span> is zero over that range, by giving you the quotient:</p>
-<p><span class="math inline">\(H(x) = \frac{F(x+2) - F(x+1) - F(x)}{Z(x)}\)</span></p>
-<p>Where <span class="math inline">\(Z(x) = (x - 0) * (x - 1) * ... * (x - 98)\)</span>.</p>
-<p>You can calculate <span class="math inline">\(Z(x)\)</span> yourself (ideally you would have it precomputed), check the equation, and if the check passes then <span class="math inline">\(F(x)\)</span> satisfies the condition!</p>
-<p>Now, step back and notice what we did here. We converted a 100-step-long computation (computing the 100th Fibonacci number) into a single equation with polynomials. Of course, proving the N'th Fibonacci number is not an especially useful task, especially since Fibonacci numbers <a href="https://en.wikipedia.org/wiki/Fibonacci_number#Closed-form_expression">have a closed form</a>. But you can use exactly the same basic technique, just with some extra polynomials and some more complicated equations, to encode arbitrary computations with an arbitrarily large number of steps.</p>
-<p>Now, if only there was a way to verify equations with polynomials that's much faster than checking each coefficient...</p>
+<p>Checking the equation <span class="math inline">\(A(x) + B(x) =
+C(x)\)</span> with these polynomials checks all four above equations at
+the same time.</p>
+<h3 id="comparing-a-polynomial-to-itself">Comparing a polynomial to
+itself</h3>
+<p>You can even check relationships between a large number of
+<em>adjacent evaluations of the same polynomial</em> using a simple
+polynomial equation. This is slightly more advanced. Suppose that you
+want to check that, for a given polynomial <span
+class="math inline">\(F\)</span>, <span class="math inline">\(F(x+2) =
+F(x) + F(x+1)\)</span> within the integer range <span
+class="math inline">\(\{0, 1 ... 98\}\)</span> (so if you <em>also</em>
+check <span class="math inline">\(F(0) = F(1) = 1\)</span>, then <span
+class="math inline">\(F(100)\)</span> would be the 100th <a
+href="https://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci</a>
+number).</p>
+<p>As polynomials, <span class="math inline">\(F(x+2) - F(x+1) -
+F(x)\)</span> would not be exactly zero, as it could give arbitrary
+answers <em>outside</em> the range <span class="math inline">\(x = \{0,
+1 ... 98\}\)</span>. But we can do something clever. In general, there
+is a rule that if a polynomial <span class="math inline">\(P\)</span> is
+zero across some set <span class="math inline">\(S=\{x_1, x_2 ...
+x_n\}\)</span> then it can be expressed as <span
+class="math inline">\(P(x) = Z(x) * H(x)\)</span>, where <span
+class="math inline">\(Z(x) =\)</span> <span class="math inline">\((x -
+x_1) * (x - x_2) * ... * (x - x_n)\)</span> and <span
+class="math inline">\(H(x)\)</span> is also a polynomial. In other
+words, <strong>any polynomial that equals zero across some set is a
+(polynomial) multiple of the simplest (lowest-degree) polynomial that
+equals zero across that same set</strong>.</p>
+<p>Why is this the case? It is a nice corollary of polynomial long
+division: <a href="https://en.wikipedia.org/wiki/Factor_theorem">the
+factor theorem</a>. We know that, when dividing <span
+class="math inline">\(P(x)\)</span> by <span
+class="math inline">\(Z(x)\)</span>, we will get a quotient <span
+class="math inline">\(Q(x)\)</span> and a remainer <span
+class="math inline">\(R(x)\)</span> which satisfy <span
+class="math inline">\(P(x) = Z(x) * Q(x) + R(x)\)</span>, where the
+degree of the remainder <span class="math inline">\(R(x)\)</span> is
+strictly less than that of <span class="math inline">\(Z(x)\)</span>.
+Since we know that <span class="math inline">\(P\)</span> is zero on all
+of <span class="math inline">\(S\)</span>, it means that <span
+class="math inline">\(R\)</span> has to be zero on all of <span
+class="math inline">\(S\)</span> as well. So we can simply compute <span
+class="math inline">\(R(x)\)</span> via polynomial interpolation, since
+it's a polynomial of degree at most <span
+class="math inline">\(n-1\)</span> and we know <span
+class="math inline">\(n\)</span> values (the zeroes at <span
+class="math inline">\(S\)</span>). Interpolating a polynomial with all
+zeroes gives the zero polynomial, thus <span class="math inline">\(R(x)
+= 0\)</span> and <span class="math inline">\(H(x)= Q(x)\)</span>.</p>
+<p>Going back to our example, if we have a polynomial <span
+class="math inline">\(F\)</span> that encodes Fibonacci numbers (so
+<span class="math inline">\(F(x+2) = F(x) + F(x+1)\)</span> across <span
+class="math inline">\(x = \{0, 1 ... 98\}\)</span>), then I can convince
+you that <span class="math inline">\(F\)</span> <em>actually satisfies
+this condition</em> by proving that the polynomial <span
+class="math inline">\(P(x) =\)</span> <span class="math inline">\(F(x+2)
+- F(x+1) - F(x)\)</span> is zero over that range, by giving you the
+quotient:</p>
+<p><span class="math inline">\(H(x) = \frac{F(x+2) - F(x+1) -
+F(x)}{Z(x)}\)</span></p>
+<p>Where <span class="math inline">\(Z(x) = (x - 0) * (x - 1) * ... * (x
+- 98)\)</span>.</p>
+<p>You can calculate <span class="math inline">\(Z(x)\)</span> yourself
+(ideally you would have it precomputed), check the equation, and if the
+check passes then <span class="math inline">\(F(x)\)</span> satisfies
+the condition!</p>
+<p>Now, step back and notice what we did here. We converted a
+100-step-long computation (computing the 100th Fibonacci number) into a
+single equation with polynomials. Of course, proving the N'th Fibonacci
+number is not an especially useful task, especially since Fibonacci
+numbers <a
+href="https://en.wikipedia.org/wiki/Fibonacci_number#Closed-form_expression">have
+a closed form</a>. But you can use exactly the same basic technique,
+just with some extra polynomials and some more complicated equations, to
+encode arbitrary computations with an arbitrarily large number of
+steps.</p>
+<p>Now, if only there was a way to verify equations with polynomials
+that's much faster than checking each coefficient...</p>
 <h3 id="polynomial-commitments">Polynomial commitments</h3>
-<p>And once again, it turns out that there is an answer: <strong>polynomial commitments</strong>. A polynomial commitment is best viewed as a special way to "hash" a polynomial, where the hash has the additional property that you can check equations between polynomials by checking equations between their hashes. Different polynomial commitment schemes have different properties in terms of exactly what kinds of equations you can check.</p>
-<p>Here are some common examples of things you can do with various polynomial commitment schemes (we use <span class="math inline">\(com(P)\)</span> to mean "the commitment to the polynomial <span class="math inline">\(P\)</span>"):</p>
+<p>And once again, it turns out that there is an answer:
+<strong>polynomial commitments</strong>. A polynomial commitment is best
+viewed as a special way to "hash" a polynomial, where the hash has the
+additional property that you can check equations between polynomials by
+checking equations between their hashes. Different polynomial commitment
+schemes have different properties in terms of exactly what kinds of
+equations you can check.</p>
+<p>Here are some common examples of things you can do with various
+polynomial commitment schemes (we use <span
+class="math inline">\(com(P)\)</span> to mean "the commitment to the
+polynomial <span class="math inline">\(P\)</span>"):</p>
 <ul>
-<li><strong>Add them</strong>: given <span class="math inline">\(com(P)\)</span>, <span class="math inline">\(com(Q)\)</span> and <span class="math inline">\(com(R)\)</span> check if <span class="math inline">\(P + Q = R\)</span></li>
-<li><strong>Multiply them</strong>: given <span class="math inline">\(com(P)\)</span>, <span class="math inline">\(com(Q)\)</span> and <span class="math inline">\(com(R)\)</span> check if <span class="math inline">\(P * Q = R\)</span></li>
-<li><strong>Evaluate at a point</strong>: given <span class="math inline">\(com(P)\)</span>, <span class="math inline">\(w\)</span>, <span class="math inline">\(z\)</span> and a supplemental proof (or "witness") <span class="math inline">\(Q\)</span>, verify that <span class="math inline">\(P(w) = z\)</span></li>
+<li><strong>Add them</strong>: given <span
+class="math inline">\(com(P)\)</span>, <span
+class="math inline">\(com(Q)\)</span> and <span
+class="math inline">\(com(R)\)</span> check if <span
+class="math inline">\(P + Q = R\)</span></li>
+<li><strong>Multiply them</strong>: given <span
+class="math inline">\(com(P)\)</span>, <span
+class="math inline">\(com(Q)\)</span> and <span
+class="math inline">\(com(R)\)</span> check if <span
+class="math inline">\(P * Q = R\)</span></li>
+<li><strong>Evaluate at a point</strong>: given <span
+class="math inline">\(com(P)\)</span>, <span
+class="math inline">\(w\)</span>, <span class="math inline">\(z\)</span>
+and a supplemental proof (or "witness") <span
+class="math inline">\(Q\)</span>, verify that <span
+class="math inline">\(P(w) = z\)</span></li>
 </ul>
-<p>It's worth noting that these primitives can be constructed from each other. If you can add and multiply, then you can evaluate: to prove that <span class="math inline">\(P(w) = z\)</span>, you can construct <span class="math inline">\(Q(x) = \frac{P(x) - z}{x - w}\)</span>, and the verifier can check if <span class="math inline">\(Q(x) * (x - w) + z \stackrel{?}{=} P(x)\)</span>. This works because if such a polynomial <span class="math inline">\(Q(x)\)</span> <em>exists</em>, then <span class="math inline">\(P(x) - z = Q(x) * (x - w)\)</span>, which means that <span class="math inline">\(P(x) - z\)</span> equals zero at <span class="math inline">\(w\)</span> (as <span class="math inline">\(x - w\)</span> equals zero at <span class="math inline">\(w\)</span>) and so <span class="math inline">\(P(x)\)</span> equals <span class="math inline">\(z\)</span> at <span class="math inline">\(w\)</span>.</p>
-<p>And if you can evaluate, you can do all kinds of checks. This is because there is a <a href="https://en.wikipedia.org/wiki/Schwartz%E2%80%93Zippel_lemma">mathematical theorem</a> that says, approximately, that if some equation involving some polynomials holds true at a <em>randomly selected coordinate</em>, then it almost certainly holds true for the polynomials as a whole. So if all we have is a mechanism to prove evaluations, we can check eg. our equation <span class="math inline">\(P(x + 2) - P(x + 1) - P(x) = Z(x) * H(x)\)</span> using an interactive game:</p>
+<p>It's worth noting that these primitives can be constructed from each
+other. If you can add and multiply, then you can evaluate: to prove that
+<span class="math inline">\(P(w) = z\)</span>, you can construct <span
+class="math inline">\(Q(x) = \frac{P(x) - z}{x - w}\)</span>, and the
+verifier can check if <span class="math inline">\(Q(x) * (x - w) + z
+\stackrel{?}{=} P(x)\)</span>. This works because if such a polynomial
+<span class="math inline">\(Q(x)\)</span> <em>exists</em>, then <span
+class="math inline">\(P(x) - z = Q(x) * (x - w)\)</span>, which means
+that <span class="math inline">\(P(x) - z\)</span> equals zero at <span
+class="math inline">\(w\)</span> (as <span class="math inline">\(x -
+w\)</span> equals zero at <span class="math inline">\(w\)</span>) and so
+<span class="math inline">\(P(x)\)</span> equals <span
+class="math inline">\(z\)</span> at <span
+class="math inline">\(w\)</span>.</p>
+<p>And if you can evaluate, you can do all kinds of checks. This is
+because there is a <a
+href="https://en.wikipedia.org/wiki/Schwartz%E2%80%93Zippel_lemma">mathematical
+theorem</a> that says, approximately, that if some equation involving
+some polynomials holds true at a <em>randomly selected coordinate</em>,
+then it almost certainly holds true for the polynomials as a whole. So
+if all we have is a mechanism to prove evaluations, we can check eg. our
+equation <span class="math inline">\(P(x + 2) - P(x + 1) - P(x) = Z(x) *
+H(x)\)</span> using an interactive game:</p>
 <center>
-<img src="../../../../images/snarks-files/SchwartzZippel.png" class="padded" /> <br><br>
+<img src="../../../../images/snarks-files/SchwartzZippel.png" class="padded" />
+<br><br>
 </center>
-<p>As I alluded to earlier, we can make this <em>non-interactive</em> using the <strong>Fiat-Shamir heuristic</strong>: the prover can compute <code>r</code> themselves by setting <code>r = hash(com(P), com(H))</code> (where <code>hash</code> is any cryptographic hash function; it does not need any special properties). The prover cannot "cheat" by picking <code>P</code> and <code>H</code> that "fit" at that particular <code>r</code> but not elsewhere, because they do not know <code>r</code> at the time that they are picking <code>P</code> and <code>H</code>!</p>
+<p>As I alluded to earlier, we can make this <em>non-interactive</em>
+using the <strong>Fiat-Shamir heuristic</strong>: the prover can compute
+<code>r</code> themselves by setting
+<code>r = hash(com(P), com(H))</code> (where <code>hash</code> is any
+cryptographic hash function; it does not need any special properties).
+The prover cannot "cheat" by picking <code>P</code> and <code>H</code>
+that "fit" at that particular <code>r</code> but not elsewhere, because
+they do not know <code>r</code> at the time that they are picking
+<code>P</code> and <code>H</code>!</p>
 <h3 id="a-quick-recap-so-far">A quick recap so far</h3>
 <ul>
-<li>ZK-SNARKs are hard because the verifier needs to somehow check millions of steps in a computation, without doing a piece of work to check each individual step directly (as that would take too long).</li>
-<li>We get around this by encoding the computation into polynomials.</li>
-<li>A single polynomial can contain an unboundedly large amount of information, and a single polynomial expression (eg. <span class="math inline">\(P(x+2) - P(x+1) - P(x) = Z(x) * H(x)\)</span>) can "stand in" for an unboundedly large number of equations between numbers.</li>
-<li>If you can verify the equation with polynomials, you are implicitly verifying all of the number equations (replace <span class="math inline">\(x\)</span> with any actual x-coordinate) simultaneously.</li>
-<li>We use a special type of "hash" of a polynomial, called a <em>polynomial commitment</em>, to allow us to actually verify the equation between polynomials in a very short amount of time, even if the underlying polynomials are very large.</li>
+<li>ZK-SNARKs are hard because the verifier needs to somehow check
+millions of steps in a computation, without doing a piece of work to
+check each individual step directly (as that would take too long).</li>
+<li>We get around this by encoding the computation into
+polynomials.</li>
+<li>A single polynomial can contain an unboundedly large amount of
+information, and a single polynomial expression (eg. <span
+class="math inline">\(P(x+2) - P(x+1) - P(x) = Z(x) * H(x)\)</span>) can
+"stand in" for an unboundedly large number of equations between
+numbers.</li>
+<li>If you can verify the equation with polynomials, you are implicitly
+verifying all of the number equations (replace <span
+class="math inline">\(x\)</span> with any actual x-coordinate)
+simultaneously.</li>
+<li>We use a special type of "hash" of a polynomial, called a
+<em>polynomial commitment</em>, to allow us to actually verify the
+equation between polynomials in a very short amount of time, even if the
+underlying polynomials are very large.</li>
 </ul>
-<h2 id="so-how-do-these-fancy-polynomial-hashes-work">So, how do these fancy polynomial hashes work?</h2>
-<p>There are three major schemes that are widely used at the moment: <strong>bulletproofs, Kate and FRI</strong>.</p>
+<h2 id="so-how-do-these-fancy-polynomial-hashes-work">So, how do these
+fancy polynomial hashes work?</h2>
+<p>There are three major schemes that are widely used at the moment:
+<strong>bulletproofs, Kate and FRI</strong>.</p>
 <ul>
-<li>Here is a description of Kate commitments by Dankrad Feist: <a href="https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html">https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html</a></li>
-<li>Here is a description of bulletproofs by the curve25519-dalek team: <a href="https://doc-internal.dalek.rs/bulletproofs/notes/inner_product_proof/index.html">https://doc-internal.dalek.rs/bulletproofs/notes/inner_product_proof/index.html</a>, and here is an explanation-in-pictures by myself: <a href="https://twitter.com/VitalikButerin/status/1371844878968176647">https://twitter.com/VitalikButerin/status/1371844878968176647</a></li>
-<li>Here is a description of FRI by... myself: <a href="../../../2017/11/22/starks_part_2.html">../../../2017/11/22/starks_part_2.html</a></li>
+<li>Here is a description of Kate commitments by Dankrad Feist: <a
+href="https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html">https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html</a></li>
+<li>Here is a description of bulletproofs by the curve25519-dalek team:
+<a
+href="https://doc-internal.dalek.rs/bulletproofs/notes/inner_product_proof/index.html">https://doc-internal.dalek.rs/bulletproofs/notes/inner_product_proof/index.html</a>,
+and here is an explanation-in-pictures by myself: <a
+href="https://twitter.com/VitalikButerin/status/1371844878968176647">https://twitter.com/VitalikButerin/status/1371844878968176647</a></li>
+<li>Here is a description of FRI by... myself: <a
+href="../../../2017/11/22/starks_part_2.html">../../../2017/11/22/starks_part_2.html</a></li>
 </ul>
-<h3 id="whoa-whoa-take-it-easy.-try-to-explain-one-of-them-simply-without-shipping-me-off-to-even-more-scary-links">Whoa, whoa, take it easy. Try to explain one of them simply, without shipping me off to even more scary links</h3>
-<p>To be honest, they're not <em>that</em> simple. There's a reason why all this math did not really take off until 2015 or so.</p>
+<h3
+id="whoa-whoa-take-it-easy.-try-to-explain-one-of-them-simply-without-shipping-me-off-to-even-more-scary-links">Whoa,
+whoa, take it easy. Try to explain one of them simply, without shipping
+me off to even more scary links</h3>
+<p>To be honest, they're not <em>that</em> simple. There's a reason why
+all this math did not really take off until 2015 or so.</p>
 <h3 id="please">Please?</h3>
-<p>In my opinion, the easiest one to understand fully is FRI (Kate is easier if you're willing to accept <a href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">elliptic curve pairings</a> as a "black box", but pairings are <em>really</em> complicated, so altogether I find FRI simpler).</p>
-<p>Here is how a simplified version of FRI works (the real protocol has many tricks and optimizations that are missing here for simplicity). Suppose that you have a polynomial <span class="math inline">\(P\)</span> with degree <span class="math inline">\(&lt; n\)</span>. The commitment to <span class="math inline">\(P\)</span> is a Merkle root of a set of evaluations to <span class="math inline">\(P\)</span> at some set of pre-selected coordinates (eg. <span class="math inline">\(\{0, 1 .... 8n-1\}\)</span>, though this is not the most efficient choice). Now, we need to add something extra to prove that this set of evaluations actually is a degree <span class="math inline">\(&lt; n\)</span> polynomial.</p>
-<p>Let <span class="math inline">\(Q\)</span> be the polynomial only containing the even coefficients of <span class="math inline">\(P\)</span>, and <span class="math inline">\(R\)</span> be the polynomial only containing the odd coefficients of <span class="math inline">\(P\)</span>. So if <span class="math inline">\(P(x) = x^4 + 4x^3 + 6x^2 + 4x + 1\)</span>, then <span class="math inline">\(Q(x) = x^2 + 6x + 1\)</span> and <span class="math inline">\(R(x) = 4x + 4\)</span> (note that the degrees of the coefficients get "collapsed down" to the range <span class="math inline">\([0...\frac{n}{2})\)</span>).</p>
-<p>Notice that <span class="math inline">\(P(x) = Q(x^2) + x * R(x^2)\)</span> (if this isn't immediately obvious to you, stop and think and look at the example above until it is).</p>
-<p>We ask the prover to provide Merkle roots for <span class="math inline">\(Q(x)\)</span> and <span class="math inline">\(R(x)\)</span>. We then generate a random number <span class="math inline">\(r\)</span> and ask the prover to provide a "random linear combination" <span class="math inline">\(S(x) = Q(x) + r * R(x)\)</span>.</p>
-<p>We pseudorandomly sample a large set of indices (using the already-provided Merkle roots as the seed for the randomness as before), and ask the prover to provide the Merkle branches for <span class="math inline">\(P\)</span>, <span class="math inline">\(Q\)</span>, <span class="math inline">\(R\)</span> and <span class="math inline">\(S\)</span> at these indices. At each of these provided coordinates, we check that:</p>
+<p>In my opinion, the easiest one to understand fully is FRI (Kate is
+easier if you're willing to accept <a
+href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">elliptic
+curve pairings</a> as a "black box", but pairings are <em>really</em>
+complicated, so altogether I find FRI simpler).</p>
+<p>Here is how a simplified version of FRI works (the real protocol has
+many tricks and optimizations that are missing here for simplicity).
+Suppose that you have a polynomial <span
+class="math inline">\(P\)</span> with degree <span
+class="math inline">\(&lt; n\)</span>. The commitment to <span
+class="math inline">\(P\)</span> is a Merkle root of a set of
+evaluations to <span class="math inline">\(P\)</span> at some set of
+pre-selected coordinates (eg. <span class="math inline">\(\{0, 1 ....
+8n-1\}\)</span>, though this is not the most efficient choice). Now, we
+need to add something extra to prove that this set of evaluations
+actually is a degree <span class="math inline">\(&lt; n\)</span>
+polynomial.</p>
+<p>Let <span class="math inline">\(Q\)</span> be the polynomial only
+containing the even coefficients of <span
+class="math inline">\(P\)</span>, and <span
+class="math inline">\(R\)</span> be the polynomial only containing the
+odd coefficients of <span class="math inline">\(P\)</span>. So if <span
+class="math inline">\(P(x) = x^4 + 4x^3 + 6x^2 + 4x + 1\)</span>, then
+<span class="math inline">\(Q(x) = x^2 + 6x + 1\)</span> and <span
+class="math inline">\(R(x) = 4x + 4\)</span> (note that the degrees of
+the coefficients get "collapsed down" to the range <span
+class="math inline">\([0...\frac{n}{2})\)</span>).</p>
+<p>Notice that <span class="math inline">\(P(x) = Q(x^2) + x *
+R(x^2)\)</span> (if this isn't immediately obvious to you, stop and
+think and look at the example above until it is).</p>
+<p>We ask the prover to provide Merkle roots for <span
+class="math inline">\(Q(x)\)</span> and <span
+class="math inline">\(R(x)\)</span>. We then generate a random number
+<span class="math inline">\(r\)</span> and ask the prover to provide a
+"random linear combination" <span class="math inline">\(S(x) = Q(x) + r
+* R(x)\)</span>.</p>
+<p>We pseudorandomly sample a large set of indices (using the
+already-provided Merkle roots as the seed for the randomness as before),
+and ask the prover to provide the Merkle branches for <span
+class="math inline">\(P\)</span>, <span
+class="math inline">\(Q\)</span>, <span class="math inline">\(R\)</span>
+and <span class="math inline">\(S\)</span> at these indices. At each of
+these provided coordinates, we check that:</p>
 <ul>
-<li><span class="math inline">\(P(x)\)</span> <em>actually does equal</em> <span class="math inline">\(Q(x^2) + x * R(x^2)\)</span></li>
-<li><span class="math inline">\(S(x)\)</span> <em>actually does equal</em> <span class="math inline">\(Q(x) + r * R(x)\)</span></li>
+<li><span class="math inline">\(P(x)\)</span> <em>actually does
+equal</em> <span class="math inline">\(Q(x^2) + x * R(x^2)\)</span></li>
+<li><span class="math inline">\(S(x)\)</span> <em>actually does
+equal</em> <span class="math inline">\(Q(x) + r * R(x)\)</span></li>
 </ul>
-<p>If we do enough checks, then we can be convinced that the "expected" values of <span class="math inline">\(S(x)\)</span> are different from the "provided" values in at most, say, 1% of cases.</p>
-<p>Notice that <span class="math inline">\(Q\)</span> and <span class="math inline">\(R\)</span> both have degree <span class="math inline">\(&lt; \frac{n}{2}\)</span>. Because <span class="math inline">\(S\)</span> is a linear combination of <span class="math inline">\(Q\)</span> and <span class="math inline">\(R\)</span>, <span class="math inline">\(S\)</span> <em>also</em> has degree <span class="math inline">\(&lt; \frac{n}{2}\)</span>. And this works in reverse: if we can prove <span class="math inline">\(S\)</span> has degree <span class="math inline">\(&lt; \frac{n}{2}\)</span>, then the fact that it's a randomly chosen combination prevents the prover from choosing malicious <span class="math inline">\(Q\)</span> and <span class="math inline">\(R\)</span> with hidden high-degree coefficients that "cancel out", so <span class="math inline">\(Q\)</span> and <span class="math inline">\(R\)</span> must both be degree <span class="math inline">\(&lt; \frac{n}{2}\)</span>, and because <span class="math inline">\(P(x) = Q(x^2) + x * R(x^2)\)</span>, we know that <span class="math inline">\(P\)</span> must have degree <span class="math inline">\(&lt; n\)</span>.</p>
-<p>From here, we simply repeat the game with <span class="math inline">\(S\)</span>, progressively "reducing" the polynomial we care about to a lower and lower degree, until it's at a sufficiently low degree that we can check it directly.</p>
+<p>If we do enough checks, then we can be convinced that the "expected"
+values of <span class="math inline">\(S(x)\)</span> are different from
+the "provided" values in at most, say, 1% of cases.</p>
+<p>Notice that <span class="math inline">\(Q\)</span> and <span
+class="math inline">\(R\)</span> both have degree <span
+class="math inline">\(&lt; \frac{n}{2}\)</span>. Because <span
+class="math inline">\(S\)</span> is a linear combination of <span
+class="math inline">\(Q\)</span> and <span
+class="math inline">\(R\)</span>, <span class="math inline">\(S\)</span>
+<em>also</em> has degree <span class="math inline">\(&lt;
+\frac{n}{2}\)</span>. And this works in reverse: if we can prove <span
+class="math inline">\(S\)</span> has degree <span
+class="math inline">\(&lt; \frac{n}{2}\)</span>, then the fact that it's
+a randomly chosen combination prevents the prover from choosing
+malicious <span class="math inline">\(Q\)</span> and <span
+class="math inline">\(R\)</span> with hidden high-degree coefficients
+that "cancel out", so <span class="math inline">\(Q\)</span> and <span
+class="math inline">\(R\)</span> must both be degree <span
+class="math inline">\(&lt; \frac{n}{2}\)</span>, and because <span
+class="math inline">\(P(x) = Q(x^2) + x * R(x^2)\)</span>, we know that
+<span class="math inline">\(P\)</span> must have degree <span
+class="math inline">\(&lt; n\)</span>.</p>
+<p>From here, we simply repeat the game with <span
+class="math inline">\(S\)</span>, progressively "reducing" the
+polynomial we care about to a lower and lower degree, until it's at a
+sufficiently low degree that we can check it directly.</p>
 <center>
-<img src="../../../../images/snarks-files/FRI.png" class="padded" /> <br><br>
+<img src="../../../../images/snarks-files/FRI.png" class="padded" />
+<br><br>
 </center>
-<p>As in the previous examples, "Bob" here is an abstraction, useful for cryptographers to mentally reason about the protocol. In reality, Alice is generating the entire proof herself, and to prevent her from cheating we use Fiat-Shamir: we choose each randomly samples coordinate or <code>r</code> value based on the hash of the data generated in the proof up until that point.</p>
-<p>A full "FRI commitment" to <span class="math inline">\(P\)</span> (in this simplified protocol) would consist of:</p>
+<p>As in the previous examples, "Bob" here is an abstraction, useful for
+cryptographers to mentally reason about the protocol. In reality, Alice
+is generating the entire proof herself, and to prevent her from cheating
+we use Fiat-Shamir: we choose each randomly samples coordinate or
+<code>r</code> value based on the hash of the data generated in the
+proof up until that point.</p>
+<p>A full "FRI commitment" to <span class="math inline">\(P\)</span> (in
+this simplified protocol) would consist of:</p>
 <ol type="1">
-<li>The Merkle root of evaluations of <span class="math inline">\(P\)</span></li>
-<li>The Merkle roots of evaluations of <span class="math inline">\(Q\)</span>, <span class="math inline">\(R\)</span>, <span class="math inline">\(S_1\)</span></li>
-<li>The randomly selected branches of <span class="math inline">\(P\)</span>, <span class="math inline">\(Q\)</span>, <span class="math inline">\(R\)</span>, <span class="math inline">\(S_1\)</span> to check <span class="math inline">\(S_1\)</span> is correctly "reduced from" <span class="math inline">\(P\)</span></li>
-<li>The Merkle roots and randomly selected branches just as in steps (2) and (3) for successively lower-degree reductions <span class="math inline">\(S_2\)</span> reduced from <span class="math inline">\(S_1\)</span>, <span class="math inline">\(S_3\)</span> reduced from <span class="math inline">\(S_2\)</span>, all the way down to a low-degree <span class="math inline">\(S_k\)</span> (this gets repeated <span class="math inline">\(\approx log_2(n)\)</span> times in total)</li>
-<li>The full Merkle tree of the evaluations of <span class="math inline">\(S_k\)</span> (so we can check it directly)</li>
+<li>The Merkle root of evaluations of <span
+class="math inline">\(P\)</span></li>
+<li>The Merkle roots of evaluations of <span
+class="math inline">\(Q\)</span>, <span
+class="math inline">\(R\)</span>, <span
+class="math inline">\(S_1\)</span></li>
+<li>The randomly selected branches of <span
+class="math inline">\(P\)</span>, <span
+class="math inline">\(Q\)</span>, <span
+class="math inline">\(R\)</span>, <span
+class="math inline">\(S_1\)</span> to check <span
+class="math inline">\(S_1\)</span> is correctly "reduced from" <span
+class="math inline">\(P\)</span></li>
+<li>The Merkle roots and randomly selected branches just as in steps (2)
+and (3) for successively lower-degree reductions <span
+class="math inline">\(S_2\)</span> reduced from <span
+class="math inline">\(S_1\)</span>, <span
+class="math inline">\(S_3\)</span> reduced from <span
+class="math inline">\(S_2\)</span>, all the way down to a low-degree
+<span class="math inline">\(S_k\)</span> (this gets repeated <span
+class="math inline">\(\approx log_2(n)\)</span> times in total)</li>
+<li>The full Merkle tree of the evaluations of <span
+class="math inline">\(S_k\)</span> (so we can check it directly)</li>
 </ol>
-<p>Each step in the process can introduce a bit of "error", but if you add enough checks, then the total error will be low enough that you can prove that <span class="math inline">\(P(x)\)</span> equals a degree <span class="math inline">\(&lt; n\)</span> polynomial in at least, say, 80% of positions. And this is sufficient for our use cases. If you want to cheat in a zk-SNARK, you would need to make a polynomial commitment for a fractional expression (eg. to "prove" the false claim that <span class="math inline">\(x^2 + 2x + 3\)</span> evaluated at <span class="math inline">\(4\)</span> equals <span class="math inline">\(5\)</span>, you would need to provide a polynomial commitment for <span class="math inline">\(\frac{x^2 + 2x + 3 - 5}{x - 4} = x + 6 + \frac{22}{x - 4}\)</span>). The set of evaluations for such a fractional expression would <em>differ</em> from the evaluations for any real degree <span class="math inline">\(&lt; n\)</span> polynomial in so many positions that any attempt to make a FRI commitment to them would fail at some step.</p>
-<p>Also, you can check carefully that the total number and size of the objects in the FRI commitment is logarithmic in the degree, so for large polynomials, the commitment really is much smaller than the polynomial itself.</p>
-<p>To check equations between different polynomial commitments of this type (eg. check <span class="math inline">\(A(x) + B(x) = C(x)\)</span> given FRI commitments to <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span>), simply randomly select many indices, ask the prover for Merkle branches at each of those indices for each polynomial, and verify that the equation actually holds true at each of those positions.</p>
-<p><strong>The above description is a highly inefficient protocol; there is a whole host of algebraic tricks that can increase its efficiency</strong> by a factor of something like a hundred, and you need these tricks if you want a protocol that is actually viable for, say, use inside a blockchain transaction. In particular, for example, <span class="math inline">\(Q\)</span> and <span class="math inline">\(R\)</span> are not actually necessary, because if you choose your evaluation points very cleverly, you can reconstruct the evaluations of <span class="math inline">\(Q\)</span> and <span class="math inline">\(R\)</span> that you need directly from evaluations of <span class="math inline">\(P\)</span>. But the above description should be enough to convince you that a polynomial commitment is fundamentally possible.</p>
+<p>Each step in the process can introduce a bit of "error", but if you
+add enough checks, then the total error will be low enough that you can
+prove that <span class="math inline">\(P(x)\)</span> equals a degree
+<span class="math inline">\(&lt; n\)</span> polynomial in at least, say,
+80% of positions. And this is sufficient for our use cases. If you want
+to cheat in a zk-SNARK, you would need to make a polynomial commitment
+for a fractional expression (eg. to "prove" the false claim that <span
+class="math inline">\(x^2 + 2x + 3\)</span> evaluated at <span
+class="math inline">\(4\)</span> equals <span
+class="math inline">\(5\)</span>, you would need to provide a polynomial
+commitment for <span class="math inline">\(\frac{x^2 + 2x + 3 - 5}{x -
+4} = x + 6 + \frac{22}{x - 4}\)</span>). The set of evaluations for such
+a fractional expression would <em>differ</em> from the evaluations for
+any real degree <span class="math inline">\(&lt; n\)</span> polynomial
+in so many positions that any attempt to make a FRI commitment to them
+would fail at some step.</p>
+<p>Also, you can check carefully that the total number and size of the
+objects in the FRI commitment is logarithmic in the degree, so for large
+polynomials, the commitment really is much smaller than the polynomial
+itself.</p>
+<p>To check equations between different polynomial commitments of this
+type (eg. check <span class="math inline">\(A(x) + B(x) = C(x)\)</span>
+given FRI commitments to <span class="math inline">\(A\)</span>, <span
+class="math inline">\(B\)</span> and <span
+class="math inline">\(C\)</span>), simply randomly select many indices,
+ask the prover for Merkle branches at each of those indices for each
+polynomial, and verify that the equation actually holds true at each of
+those positions.</p>
+<p><strong>The above description is a highly inefficient protocol; there
+is a whole host of algebraic tricks that can increase its
+efficiency</strong> by a factor of something like a hundred, and you
+need these tricks if you want a protocol that is actually viable for,
+say, use inside a blockchain transaction. In particular, for example,
+<span class="math inline">\(Q\)</span> and <span
+class="math inline">\(R\)</span> are not actually necessary, because if
+you choose your evaluation points very cleverly, you can reconstruct the
+evaluations of <span class="math inline">\(Q\)</span> and <span
+class="math inline">\(R\)</span> that you need directly from evaluations
+of <span class="math inline">\(P\)</span>. But the above description
+should be enough to convince you that a polynomial commitment is
+fundamentally possible.</p>
 <h3 id="finite-fields">Finite fields</h3>
-<p>In the descriptions above, there was a hidden assumption: that each individual "evaluation" of a polynomial was small. But when we are dealing with polynomials that are big, this is clearly not true. If we take our example from above, <span class="math inline">\(628x^{271} + 318x^{270} + 530x^{269} + ... + 69x + 381\)</span>, that encodes 816 digits of tau, and evaluate it at <span class="math inline">\(x=1000\)</span>, you get.... an 816-digit number containing all of those digits of tau. And so there is one more thing that we need to add. In a real implementation, all of the arithmetic that we are doing here would not be done using "regular" arithmetic over real numbers. Instead, it would be done using <em>modular arithmetic</em>.</p>
-<p>We redefine all of our arithmetic operations as follows. We pick some prime "modulus" <code>p</code>. The % operator means "take the remainder of": <span class="math inline">\(15\ \%\ 7 = 1\)</span>, <span class="math inline">\(53\ \%\ 10 = 3\)</span>, etc (note that the answer is always non-negative, so for example <span class="math inline">\(-1\ \%\ 10 = 9\)</span>). We redefine</p>
-<p><span class="math inline">\(x + y \Rightarrow (x + y)\)</span> % <span class="math inline">\(p\)</span></p>
-<p><span class="math inline">\(x * y \Rightarrow (x * y)\)</span> % <span class="math inline">\(p\)</span></p>
-<p><span class="math inline">\(x^y \Rightarrow (x^y)\)</span> % <span class="math inline">\(p\)</span></p>
-<p><span class="math inline">\(x - y \Rightarrow (x - y)\)</span> % <span class="math inline">\(p\)</span></p>
-<p><span class="math inline">\(x / y \Rightarrow (x * y ^{p-2})\)</span> % <span class="math inline">\(p\)</span></p>
-<p>The above rules are all self-consistent. For example, if <span class="math inline">\(p = 7\)</span>, then:</p>
+<p>In the descriptions above, there was a hidden assumption: that each
+individual "evaluation" of a polynomial was small. But when we are
+dealing with polynomials that are big, this is clearly not true. If we
+take our example from above, <span class="math inline">\(628x^{271} +
+318x^{270} + 530x^{269} + ... + 69x + 381\)</span>, that encodes 816
+digits of tau, and evaluate it at <span
+class="math inline">\(x=1000\)</span>, you get.... an 816-digit number
+containing all of those digits of tau. And so there is one more thing
+that we need to add. In a real implementation, all of the arithmetic
+that we are doing here would not be done using "regular" arithmetic over
+real numbers. Instead, it would be done using <em>modular
+arithmetic</em>.</p>
+<p>We redefine all of our arithmetic operations as follows. We pick some
+prime "modulus" <code>p</code>. The % operator means "take the remainder
+of": <span class="math inline">\(15\ \%\ 7 = 1\)</span>, <span
+class="math inline">\(53\ \%\ 10 = 3\)</span>, etc (note that the answer
+is always non-negative, so for example <span class="math inline">\(-1\
+\%\ 10 = 9\)</span>). We redefine</p>
+<p><span class="math inline">\(x + y \Rightarrow (x + y)\)</span> %
+<span class="math inline">\(p\)</span></p>
+<p><span class="math inline">\(x * y \Rightarrow (x * y)\)</span> %
+<span class="math inline">\(p\)</span></p>
+<p><span class="math inline">\(x^y \Rightarrow (x^y)\)</span> % <span
+class="math inline">\(p\)</span></p>
+<p><span class="math inline">\(x - y \Rightarrow (x - y)\)</span> %
+<span class="math inline">\(p\)</span></p>
+<p><span class="math inline">\(x / y \Rightarrow (x * y ^{p-2})\)</span>
+% <span class="math inline">\(p\)</span></p>
+<p>The above rules are all self-consistent. For example, if <span
+class="math inline">\(p = 7\)</span>, then:</p>
 <ul>
-<li><span class="math inline">\(5 + 3 = 1\)</span> (as <span class="math inline">\(8\)</span> % <span class="math inline">\(7 = 1\)</span>)</li>
-<li><span class="math inline">\(1 - 3 = 5\)</span> (as <span class="math inline">\(-2\)</span> % <span class="math inline">\(7 = 5\)</span>)</li>
+<li><span class="math inline">\(5 + 3 = 1\)</span> (as <span
+class="math inline">\(8\)</span> % <span class="math inline">\(7 =
+1\)</span>)</li>
+<li><span class="math inline">\(1 - 3 = 5\)</span> (as <span
+class="math inline">\(-2\)</span> % <span class="math inline">\(7 =
+5\)</span>)</li>
 <li><span class="math inline">\(2 \cdot 5 = 3\)</span></li>
-<li><span class="math inline">\(3 / 5 = 2\)</span> (as (<span class="math inline">\(3 \cdot 5^5\)</span>) % <span class="math inline">\(7 = 9375\)</span> % <span class="math inline">\(7 = 2\)</span>)</li>
+<li><span class="math inline">\(3 / 5 = 2\)</span> (as (<span
+class="math inline">\(3 \cdot 5^5\)</span>) % <span
+class="math inline">\(7 = 9375\)</span> % <span class="math inline">\(7
+= 2\)</span>)</li>
 </ul>
-<p>More complex identities such as the distributive law also hold: <span class="math inline">\((2 + 4) \cdot 3\)</span> and <span class="math inline">\(2 \cdot 3 + 4 \cdot 3\)</span> both evaluate to <span class="math inline">\(4\)</span>. Even formulas like <span class="math inline">\((a^2 - b^2)\)</span> = <span class="math inline">\((a - b) \cdot (a + b)\)</span> are still true in this new kind of arithmetic.</p>
-<p>Division is the hardest part; we can't use regular division because we want the values to always remain integers, and regular division often gives non-integer results (as in the case of <span class="math inline">\(3/5\)</span>). We get around this problem using <a href="https://en.wikipedia.org/wiki/Fermat%27s_little_theorem">Fermat's little theorem</a>, which states that for any nonzero <span class="math inline">\(x &lt; p\)</span>, it holds that <span class="math inline">\(x^{p-1}\)</span> % <span class="math inline">\(p = 1\)</span>. This implies that <span class="math inline">\(x^{p-2}\)</span> gives a number which, if multiplied by <span class="math inline">\(x\)</span> one more time, gives <span class="math inline">\(1\)</span>, and so we can say that <span class="math inline">\(x^{p-2}\)</span> (which is an integer) equals <span class="math inline">\(\frac{1}{x}\)</span>. A somewhat more complicated but faster way to evaluate this modular division operator is the <a href="https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm">extended Euclidean algorithm</a>, implemented in python <a href="https://github.com/ethereum/py_ecc/blob/b036cf5cb37e9b89622788ec714a7da9cdb2e635/py_ecc/secp256k1/secp256k1.py#L34">here</a>.</p>
+<p>More complex identities such as the distributive law also hold: <span
+class="math inline">\((2 + 4) \cdot 3\)</span> and <span
+class="math inline">\(2 \cdot 3 + 4 \cdot 3\)</span> both evaluate to
+<span class="math inline">\(4\)</span>. Even formulas like <span
+class="math inline">\((a^2 - b^2)\)</span> = <span
+class="math inline">\((a - b) \cdot (a + b)\)</span> are still true in
+this new kind of arithmetic.</p>
+<p>Division is the hardest part; we can't use regular division because
+we want the values to always remain integers, and regular division often
+gives non-integer results (as in the case of <span
+class="math inline">\(3/5\)</span>). We get around this problem using <a
+href="https://en.wikipedia.org/wiki/Fermat%27s_little_theorem">Fermat's
+little theorem</a>, which states that for any nonzero <span
+class="math inline">\(x &lt; p\)</span>, it holds that <span
+class="math inline">\(x^{p-1}\)</span> % <span class="math inline">\(p =
+1\)</span>. This implies that <span
+class="math inline">\(x^{p-2}\)</span> gives a number which, if
+multiplied by <span class="math inline">\(x\)</span> one more time,
+gives <span class="math inline">\(1\)</span>, and so we can say that
+<span class="math inline">\(x^{p-2}\)</span> (which is an integer)
+equals <span class="math inline">\(\frac{1}{x}\)</span>. A somewhat more
+complicated but faster way to evaluate this modular division operator is
+the <a
+href="https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm">extended
+Euclidean algorithm</a>, implemented in python <a
+href="https://github.com/ethereum/py_ecc/blob/b036cf5cb37e9b89622788ec714a7da9cdb2e635/py_ecc/secp256k1/secp256k1.py#L34">here</a>.</p>
 <center>
-<img src="../../../../images/snarks-files/clock.png" style="width:350px" class="padded" /><br><br> <small>Because of how the numbers "wrap around", modular arithmetic is sometimes called "clock math"</small>
+<img src="../../../../images/snarks-files/clock.png" style="width:350px" class="padded" /><br><br>
+<small>Because of how the numbers "wrap around", modular arithmetic is
+sometimes called "clock math"</small>
 </center>
 <p><br></p>
-<p>With modular math we've created an entirely new system of arithmetic, and it's self-consistent in all the same ways traditional arithmetic is self-consistent. Hence, we can talk about all of the same kinds of structures over this field, including polynomials, that we talk about in "regular math". Cryptographers love working in modular math (or, more generally, "finite fields") because there is a bound on the size of a number that can arise as a result of any modular math calculation - no matter what you do, the values will not "escape" the set <span class="math inline">\(\{0, 1, 2 ... p-1\}\)</span>. Even evaluating a degree-1-million polynomial in a finite field will never give an answer outside that set.</p>
-<h3 id="whats-a-slightly-more-useful-example-of-a-computation-being-converted-into-a-set-of-polynomial-equations">What's a slightly more useful example of a computation being converted into a set of polynomial equations?</h3>
-<p>Let's say we want to prove that, for some polynomial <span class="math inline">\(P\)</span>, <span class="math inline">\(0 \le P(n) &lt; 2^{64}\)</span>, without revealing the exact value of <span class="math inline">\(P(n)\)</span>. This is a common use case in blockchain transactions, where you want to prove that a transaction leaves a balance non-negative without revealing what that balance is.</p>
-<p>We can construct a proof for this with the following polynomial equations (assuming for simplicity <span class="math inline">\(n = 64\)</span>):</p>
+<p>With modular math we've created an entirely new system of arithmetic,
+and it's self-consistent in all the same ways traditional arithmetic is
+self-consistent. Hence, we can talk about all of the same kinds of
+structures over this field, including polynomials, that we talk about in
+"regular math". Cryptographers love working in modular math (or, more
+generally, "finite fields") because there is a bound on the size of a
+number that can arise as a result of any modular math calculation - no
+matter what you do, the values will not "escape" the set <span
+class="math inline">\(\{0, 1, 2 ... p-1\}\)</span>. Even evaluating a
+degree-1-million polynomial in a finite field will never give an answer
+outside that set.</p>
+<h3
+id="whats-a-slightly-more-useful-example-of-a-computation-being-converted-into-a-set-of-polynomial-equations">What's
+a slightly more useful example of a computation being converted into a
+set of polynomial equations?</h3>
+<p>Let's say we want to prove that, for some polynomial <span
+class="math inline">\(P\)</span>, <span class="math inline">\(0 \le P(n)
+&lt; 2^{64}\)</span>, without revealing the exact value of <span
+class="math inline">\(P(n)\)</span>. This is a common use case in
+blockchain transactions, where you want to prove that a transaction
+leaves a balance non-negative without revealing what that balance
+is.</p>
+<p>We can construct a proof for this with the following polynomial
+equations (assuming for simplicity <span class="math inline">\(n =
+64\)</span>):</p>
 <ul>
 <li><span class="math inline">\(P(0) = 0\)</span></li>
-<li><span class="math inline">\(P(x+1) = P(x) * 2 + R(x)\)</span> across the range <span class="math inline">\(\{0...63\}\)</span></li>
-<li><span class="math inline">\(R(x) \in \{0,1\}\)</span> across the range <span class="math inline">\(\{0...63\}\)</span></li>
+<li><span class="math inline">\(P(x+1) = P(x) * 2 + R(x)\)</span> across
+the range <span class="math inline">\(\{0...63\}\)</span></li>
+<li><span class="math inline">\(R(x) \in \{0,1\}\)</span> across the
+range <span class="math inline">\(\{0...63\}\)</span></li>
 </ul>
-<p>The latter two statements can be restated as "pure" polynomial equations as follows (in this context <span class="math inline">\(Z(x) = (x - 0) * (x - 1) * ... * (x - 63)\)</span>):</p>
+<p>The latter two statements can be restated as "pure" polynomial
+equations as follows (in this context <span class="math inline">\(Z(x) =
+(x - 0) * (x - 1) * ... * (x - 63)\)</span>):</p>
 <ul>
-<li><span class="math inline">\(P(x+1) - P(x) * 2 - R(x) = Z(x) * H_1(x)\)</span></li>
-<li><span class="math inline">\(R(x) * (1 - R(x)) = Z(x) * H_2(x)\)</span> (notice the clever trick: <span class="math inline">\(y * (1-y) = 0\)</span> if and only if <span class="math inline">\(y \in \{0, 1\}\)</span>)</li>
+<li><span class="math inline">\(P(x+1) - P(x) * 2 - R(x) = Z(x) *
+H_1(x)\)</span></li>
+<li><span class="math inline">\(R(x) * (1 - R(x)) = Z(x) *
+H_2(x)\)</span> (notice the clever trick: <span class="math inline">\(y
+* (1-y) = 0\)</span> if and only if <span class="math inline">\(y \in
+\{0, 1\}\)</span>)</li>
 </ul>
-<p>The idea is that successive evaluations of <span class="math inline">\(P(i)\)</span> build up the number bit-by-bit: if <span class="math inline">\(P(4) = 13\)</span>, then the sequence of evaluations going up to that point would be: <span class="math inline">\(\{0, 1, 3, 6, 13\}\)</span>. In binary, 1 is <code>1</code>, 3 is <code>11</code>, 6 is <code>110</code>, 13 is <code>1101</code>; notice how <span class="math inline">\(P(x+1) = P(x) * 2 + R(x)\)</span> keeps adding one bit to the end as long as <span class="math inline">\(R(x)\)</span> is zero or one. Any number within the range <span class="math inline">\(0 \le x &lt; 2^{64}\)</span> can be built up over 64 steps in this way, any number outside that range cannot.</p>
+<p>The idea is that successive evaluations of <span
+class="math inline">\(P(i)\)</span> build up the number bit-by-bit: if
+<span class="math inline">\(P(4) = 13\)</span>, then the sequence of
+evaluations going up to that point would be: <span
+class="math inline">\(\{0, 1, 3, 6, 13\}\)</span>. In binary, 1 is
+<code>1</code>, 3 is <code>11</code>, 6 is <code>110</code>, 13 is
+<code>1101</code>; notice how <span class="math inline">\(P(x+1) = P(x)
+* 2 + R(x)\)</span> keeps adding one bit to the end as long as <span
+class="math inline">\(R(x)\)</span> is zero or one. Any number within
+the range <span class="math inline">\(0 \le x &lt; 2^{64}\)</span> can
+be built up over 64 steps in this way, any number outside that range
+cannot.</p>
 <h2 id="privacy">Privacy</h2>
-<p>But there is a problem: how do we know that the commitments to <span class="math inline">\(P(x)\)</span> and <span class="math inline">\(R(x)\)</span> don't "leak" information that allows us to uncover the exact value of <span class="math inline">\(P(64)\)</span>, which we are trying to keep hidden?</p>
-<p>There is some good news: <strong>these proofs are small proofs that can make statements about a large amount of data and computation. So in general, the proof will very often simply <em>not be big enough</em> to leak more than a little bit of information</strong>. But can we go from "only a little bit" to "zero"? Fortunately, we can.</p>
-<p>Here, one fairly general trick is to add some "fudge factors" into the polynomials. When we choose <span class="math inline">\(P\)</span>, add a small multiple of <span class="math inline">\(Z(x)\)</span> into the polynomial (that is, set <span class="math inline">\(P&#39;(x) = P(x) + Z(x) * E(x)\)</span> for some random <span class="math inline">\(E(x)\)</span>). This does not affect the correctness of the statement (in fact, <span class="math inline">\(P&#39;\)</span> evaluates to the same values as <span class="math inline">\(P\)</span> on the coordinates that "the computation is happening in", so it's still a valid transcript), but it can add enough extra "noise" into the commitments to make any remaining information unrecoverable. Additionally, in the case of FRI, it's important to not sample random points that are within the domain that computation is happening in (in this case <span class="math inline">\(\{0...64\}\)</span>).</p>
-<h3 id="can-we-have-one-more-recap-please">Can we have one more recap, please??</h3>
+<p>But there is a problem: how do we know that the commitments to <span
+class="math inline">\(P(x)\)</span> and <span
+class="math inline">\(R(x)\)</span> don't "leak" information that allows
+us to uncover the exact value of <span
+class="math inline">\(P(64)\)</span>, which we are trying to keep
+hidden?</p>
+<p>There is some good news: <strong>these proofs are small proofs that
+can make statements about a large amount of data and computation. So in
+general, the proof will very often simply <em>not be big enough</em> to
+leak more than a little bit of information</strong>. But can we go from
+"only a little bit" to "zero"? Fortunately, we can.</p>
+<p>Here, one fairly general trick is to add some "fudge factors" into
+the polynomials. When we choose <span class="math inline">\(P\)</span>,
+add a small multiple of <span class="math inline">\(Z(x)\)</span> into
+the polynomial (that is, set <span class="math inline">\(P&#39;(x) =
+P(x) + Z(x) * E(x)\)</span> for some random <span
+class="math inline">\(E(x)\)</span>). This does not affect the
+correctness of the statement (in fact, <span
+class="math inline">\(P&#39;\)</span> evaluates to the same values as
+<span class="math inline">\(P\)</span> on the coordinates that "the
+computation is happening in", so it's still a valid transcript), but it
+can add enough extra "noise" into the commitments to make any remaining
+information unrecoverable. Additionally, in the case of FRI, it's
+important to not sample random points that are within the domain that
+computation is happening in (in this case <span
+class="math inline">\(\{0...64\}\)</span>).</p>
+<h3 id="can-we-have-one-more-recap-please">Can we have one more recap,
+please??</h3>
 <ul>
-<li>The three most prominent types of polynomial commitments are FRI, Kate and bulletproofs.</li>
-<li>Kate is the simplest conceptually but depends on the really complicated "black box" of elliptic curve pairings.</li>
-<li>FRI is cool because it relies only on hashes; it works by successively reducing a polynomial to a lower and lower-degree polynomial and doing random sample checks with Merkle branches to prove equivalence at each step.</li>
-<li>To prevent the size of individual numbers from blowing up, instead of doing arithmetic and polynomials <em>over the integers</em>, we do everything <em>over a finite field</em> (usually integers modulo some prime <code>p</code>)</li>
-<li>Polynomial commitments lend themselves naturally to privacy preservation because the proof is already much smaller than the polynomial, so a polynomial commitment can't reveal more than a little bit of the information in the polynomial anyway. But we can add some randomness to the polynomials we're committing to to reduce the information revealed from "a little bit" to "zero".</li>
+<li>The three most prominent types of polynomial commitments are FRI,
+Kate and bulletproofs.</li>
+<li>Kate is the simplest conceptually but depends on the really
+complicated "black box" of elliptic curve pairings.</li>
+<li>FRI is cool because it relies only on hashes; it works by
+successively reducing a polynomial to a lower and lower-degree
+polynomial and doing random sample checks with Merkle branches to prove
+equivalence at each step.</li>
+<li>To prevent the size of individual numbers from blowing up, instead
+of doing arithmetic and polynomials <em>over the integers</em>, we do
+everything <em>over a finite field</em> (usually integers modulo some
+prime <code>p</code>)</li>
+<li>Polynomial commitments lend themselves naturally to privacy
+preservation because the proof is already much smaller than the
+polynomial, so a polynomial commitment can't reveal more than a little
+bit of the information in the polynomial anyway. But we can add some
+randomness to the polynomials we're committing to to reduce the
+information revealed from "a little bit" to "zero".</li>
 </ul>
-<h3 id="what-research-questions-are-still-being-worked-on">What research questions are still being worked on?</h3>
+<h3 id="what-research-questions-are-still-being-worked-on">What research
+questions are still being worked on?</h3>
 <ul>
-<li><strong>Optimizing FRI</strong>: there are already quite a few optimizations involving carefully selected evaluation domains, "<a href="https://arxiv.org/abs/1903.12243">DEEP-FRI</a>", and a whole host of other tricks to make FRI more efficient. Starkware and others are working on this.</li>
-<li><strong>Better ways to encode computation into polynomials</strong>: figuring out the most efficient way to encode complicated computations involving hash functions, memory access and other features into polynomial equations is still a challenge. There has been great progress on this (eg. see <a href="https://eprint.iacr.org/2020/315">PLOOKUP</a>), but we still need more, especially if we want to encode general-purpose virtual machine execution into polynomials.</li>
-<li><strong>Incrementally verifiable computation</strong>: it would be nice to be able to efficiently keep "extending" a proof <em>while</em> a computation continues. This is valuable in the "single-prover" case, but also in the "multi-prover" case, particularly a blockchain where a different participant creates each block. See <a href="https://eprint.iacr.org/2019/1021.pdf">Halo</a> for some recent work on this.</li>
+<li><strong>Optimizing FRI</strong>: there are already quite a few
+optimizations involving carefully selected evaluation domains, "<a
+href="https://arxiv.org/abs/1903.12243">DEEP-FRI</a>", and a whole host
+of other tricks to make FRI more efficient. Starkware and others are
+working on this.</li>
+<li><strong>Better ways to encode computation into polynomials</strong>:
+figuring out the most efficient way to encode complicated computations
+involving hash functions, memory access and other features into
+polynomial equations is still a challenge. There has been great progress
+on this (eg. see <a
+href="https://eprint.iacr.org/2020/315">PLOOKUP</a>), but we still need
+more, especially if we want to encode general-purpose virtual machine
+execution into polynomials.</li>
+<li><strong>Incrementally verifiable computation</strong>: it would be
+nice to be able to efficiently keep "extending" a proof <em>while</em> a
+computation continues. This is valuable in the "single-prover" case, but
+also in the "multi-prover" case, particularly a blockchain where a
+different participant creates each block. See <a
+href="https://eprint.iacr.org/2019/1021.pdf">Halo</a> for some recent
+work on this.</li>
 </ul>
 <h2 id="i-wanna-learn-more">I wanna learn more!</h2>
 <h3 id="my-materials">My materials</h3>
 <ul>
-<li>STARKs: <a href="../../../2017/11/09/starks_part_1.html">part 1</a>, <a href="../../../2017/11/22/starks_part_2.html">part 2</a>, <a href="../../../2018/07/21/starks_part_3.html">part 3</a></li>
-<li>Specific protocols for encoding computation into polynomials: <a href="../../../2019/09/22/plonk.html">PLONK</a></li>
-<li>Some key mathematical optimizations I didn't talk about here: <a href="../../../2019/05/12/fft.html">Fast Fourier transforms</a></li>
+<li>STARKs: <a href="../../../2017/11/09/starks_part_1.html">part 1</a>,
+<a href="../../../2017/11/22/starks_part_2.html">part 2</a>, <a
+href="../../../2018/07/21/starks_part_3.html">part 3</a></li>
+<li>Specific protocols for encoding computation into polynomials: <a
+href="../../../2019/09/22/plonk.html">PLONK</a></li>
+<li>Some key mathematical optimizations I didn't talk about here: <a
+href="../../../2019/05/12/fft.html">Fast Fourier transforms</a></li>
 </ul>
 <h3 id="other-peoples-materials">Other people's materials</h3>
 <ul>
-<li><a href="https://starkware.co/developers-community/stark101-onlinecourse/">Starkware's online course</a></li>
-<li><a href="https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html">Dankrad Feist on Kate commitments</a></li>
-<li><a href="https://doc-internal.dalek.rs/bulletproofs/notes/inner_product_proof/index.html">Bulletproofs</a></li>
+<li><a
+href="https://starkware.co/developers-community/stark101-onlinecourse/">Starkware's
+online course</a></li>
+<li><a
+href="https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html">Dankrad
+Feist on Kate commitments</a></li>
+<li><a
+href="https://doc-internal.dalek.rs/bulletproofs/notes/inner_product_proof/index.html">Bulletproofs</a></li>
 </ul>
  </div> 

@@ -109,45 +109,204 @@ MathJax = {
 <br> <br> <br>
 <title> On Medium-of-Exchange Token Valuations </title>
 
-<p>One kind of token model that has become popular among many recent token sale projects is the "network medium of exchange token". The general pitch for this kind of token goes as follows. We, the developers, build a network, and this network allows you to do new cool stuff. This network is a sharing-economy-style system: it consists purely of a set of sellers, that provide resources within some protocol, and buyers that purchase the services, where both buyers and sellers come from the community. But the purchase and sale of things within this network <em>must</em> be done with the new token that we're selling, and this is why the token will have value.</p>
-<p>If it were the developers themselves that were acting as the seller, then this would be a very reasonable and normal arrangement, very similar in nature to a Kickstarter-style product sale. The token actually would, in a meaningful economic sense, be backed by the services that are provided by the developers.</p>
-<p>We can see this in more detail by describing what is going on in a simple economic model. Suppose that <span class="math inline">\(N\)</span> people value a product that a developer wants to release at <span class="math inline">\(\$x\)</span>, and believe the developer will give them the product. The developer does a sale, and raises <span class="math inline">\(N\)</span> units for <span class="math inline">\(\$w &lt; x\)</span> each, thus raising a total revenue of <span class="math inline">\(\$Nw\)</span>. The developer builds the product, and gives it to each of the buyers. At the end of the day, the buyers are happy, and the developer is happy. Nobody feels like they made an avoidable mistake in participating, and everyone's expectations have been met. This kind of economic model is clearly stable.</p>
-<p>Now, let's look at the story with a "medium of exchange" token. <span class="math inline">\(N\)</span> people value a product that will exist in a decentralized network at <span class="math inline">\(\$x\)</span>; the product will be sold at a price of <span class="math inline">\(\$w &lt; x\)</span>. They each buy <span class="math inline">\(\$w\)</span> of tokens in the sale. The developer builds the network. Some sellers come in, and offer the product inside the network for <span class="math inline">\(\$w\)</span>. The buyers use their tokens to purchase this product, spending <span class="math inline">\(\$w\)</span> of tokens and getting <span class="math inline">\(\$x\)</span> of value. The sellers spend <span class="math inline">\(\$v &lt; w\)</span> of resources and effort producing this product, and they now have <span class="math inline">\(\$w\)</span> worth of tokens.</p>
-<p>Notice that here, the cycle is not complete, and in fact it never will be; there needs to be an ongoing stream of buyers and sellers for the token to continue having its value. The stream does not strictly speaking <em>have to be</em> endless; if in every round there is a chance of at least <span class="math inline">\(\frac{v}{w}\)</span> that there will be a next round, then the model still works, as even though <em>someone</em> will eventually be cheated, the risk of any individual participant becoming that person is lower than the benefit that they get from participating. It's also totally possible that the token would depreciate in each round, with its value multiplying by some factor <span class="math inline">\(f\)</span> where <span class="math inline">\(\frac{v}{w} &lt; f &lt; 1\)</span>, until it eventually reaches a price of zero, and it would still be on net in everyone's interest to participate. Hence, the model is theoretically feasible, but you can see how this model is more complex and more tenuous than the simple "developers as seller" model.</p>
+<p>One kind of token model that has become popular among many recent
+token sale projects is the "network medium of exchange token". The
+general pitch for this kind of token goes as follows. We, the
+developers, build a network, and this network allows you to do new cool
+stuff. This network is a sharing-economy-style system: it consists
+purely of a set of sellers, that provide resources within some protocol,
+and buyers that purchase the services, where both buyers and sellers
+come from the community. But the purchase and sale of things within this
+network <em>must</em> be done with the new token that we're selling, and
+this is why the token will have value.</p>
+<p>If it were the developers themselves that were acting as the seller,
+then this would be a very reasonable and normal arrangement, very
+similar in nature to a Kickstarter-style product sale. The token
+actually would, in a meaningful economic sense, be backed by the
+services that are provided by the developers.</p>
+<p>We can see this in more detail by describing what is going on in a
+simple economic model. Suppose that <span
+class="math inline">\(N\)</span> people value a product that a developer
+wants to release at <span class="math inline">\(\$x\)</span>, and
+believe the developer will give them the product. The developer does a
+sale, and raises <span class="math inline">\(N\)</span> units for <span
+class="math inline">\(\$w &lt; x\)</span> each, thus raising a total
+revenue of <span class="math inline">\(\$Nw\)</span>. The developer
+builds the product, and gives it to each of the buyers. At the end of
+the day, the buyers are happy, and the developer is happy. Nobody feels
+like they made an avoidable mistake in participating, and everyone's
+expectations have been met. This kind of economic model is clearly
+stable.</p>
+<p>Now, let's look at the story with a "medium of exchange" token. <span
+class="math inline">\(N\)</span> people value a product that will exist
+in a decentralized network at <span class="math inline">\(\$x\)</span>;
+the product will be sold at a price of <span class="math inline">\(\$w
+&lt; x\)</span>. They each buy <span class="math inline">\(\$w\)</span>
+of tokens in the sale. The developer builds the network. Some sellers
+come in, and offer the product inside the network for <span
+class="math inline">\(\$w\)</span>. The buyers use their tokens to
+purchase this product, spending <span class="math inline">\(\$w\)</span>
+of tokens and getting <span class="math inline">\(\$x\)</span> of value.
+The sellers spend <span class="math inline">\(\$v &lt; w\)</span> of
+resources and effort producing this product, and they now have <span
+class="math inline">\(\$w\)</span> worth of tokens.</p>
+<p>Notice that here, the cycle is not complete, and in fact it never
+will be; there needs to be an ongoing stream of buyers and sellers for
+the token to continue having its value. The stream does not strictly
+speaking <em>have to be</em> endless; if in every round there is a
+chance of at least <span class="math inline">\(\frac{v}{w}\)</span> that
+there will be a next round, then the model still works, as even though
+<em>someone</em> will eventually be cheated, the risk of any individual
+participant becoming that person is lower than the benefit that they get
+from participating. It's also totally possible that the token would
+depreciate in each round, with its value multiplying by some factor
+<span class="math inline">\(f\)</span> where <span
+class="math inline">\(\frac{v}{w} &lt; f &lt; 1\)</span>, until it
+eventually reaches a price of zero, and it would still be on net in
+everyone's interest to participate. Hence, the model is theoretically
+feasible, but you can see how this model is more complex and more
+tenuous than the simple "developers as seller" model.</p>
 <br>
 <hr />
 <p><br></p>
-<p>Traditional macroeconomics has a <a href="https://en.wikipedia.org/wiki/Equation_of_exchange">simple equation</a> to try to value a medium of exchange:</p>
+<p>Traditional macroeconomics has a <a
+href="https://en.wikipedia.org/wiki/Equation_of_exchange">simple
+equation</a> to try to value a medium of exchange:</p>
 <p><span class="math inline">\(MV = PT\)</span></p>
 <p>Here:</p>
 <ul>
-<li><span class="math inline">\(M\)</span> is the total money supply; that is, the total number of coins</li>
-<li><span class="math inline">\(V\)</span> is the "velocity of money"; that is, the number of times that an average coin changes hands every day</li>
-<li><span class="math inline">\(P\)</span> is the "price level". This is the price of goods and services <em>in terms of</em> the token; so it is actually the <em>inverse</em> of the currency's price</li>
-<li><span class="math inline">\(T\)</span> is the transaction volume: the economic value of transactions per day</li>
+<li><span class="math inline">\(M\)</span> is the total money supply;
+that is, the total number of coins</li>
+<li><span class="math inline">\(V\)</span> is the "velocity of money";
+that is, the number of times that an average coin changes hands every
+day</li>
+<li><span class="math inline">\(P\)</span> is the "price level". This is
+the price of goods and services <em>in terms of</em> the token; so it is
+actually the <em>inverse</em> of the currency's price</li>
+<li><span class="math inline">\(T\)</span> is the transaction volume:
+the economic value of transactions per day</li>
 </ul>
-<p>The proof for this is a trivial equality: if there are <span class="math inline">\(N\)</span> coins, and each changes hands <span class="math inline">\(M\)</span> times per day, then this is <span class="math inline">\(M \cdot N\)</span> coins' worth of economic value transacted per day. If this represents <span class="math inline">\(\$T\)</span> worth of economic value, then the price of each coin is <span class="math inline">\(\frac{T}{M \cdot N}\)</span>, so the "price level" is the inverse of this, <span class="math inline">\(\frac{M \cdot N}{T}\)</span>.</p>
+<p>The proof for this is a trivial equality: if there are <span
+class="math inline">\(N\)</span> coins, and each changes hands <span
+class="math inline">\(M\)</span> times per day, then this is <span
+class="math inline">\(M \cdot N\)</span> coins' worth of economic value
+transacted per day. If this represents <span
+class="math inline">\(\$T\)</span> worth of economic value, then the
+price of each coin is <span class="math inline">\(\frac{T}{M \cdot
+N}\)</span>, so the "price level" is the inverse of this, <span
+class="math inline">\(\frac{M \cdot N}{T}\)</span>.</p>
 <p>For easier analysis, we can recast two variables:</p>
 <ul>
-<li>We refer to <span class="math inline">\(\frac{1}{V}\)</span> with <span class="math inline">\(H\)</span>, the time that a user holds a coin before using it to make a transaction</li>
-<li>We refer to <span class="math inline">\(\frac{1}{P}\)</span> with <span class="math inline">\(C\)</span>, the price of the currency (think <span class="math inline">\(C = cost\)</span>)</li>
+<li>We refer to <span class="math inline">\(\frac{1}{V}\)</span> with
+<span class="math inline">\(H\)</span>, the time that a user holds a
+coin before using it to make a transaction</li>
+<li>We refer to <span class="math inline">\(\frac{1}{P}\)</span> with
+<span class="math inline">\(C\)</span>, the price of the currency (think
+<span class="math inline">\(C = cost\)</span>)</li>
 </ul>
 <p>Now, we have:</p>
 <p><span class="math inline">\(\frac{M}{H} = \frac{T}{C}\)</span></p>
 <p><span class="math inline">\(MC = TH\)</span></p>
-<p>The left term is quite simply the market cap. The right term is the economic value transacted per day, multiplied by the amount of time that a user holds a coin before using it to transact.</p>
-<p>This is a steady-state model, assuming that the same quantity of users will also be there. In reality, however, the quantity of users may change, and so the price may change. The time that users hold a coin may change, and this may cause the price to change as well.</p>
-<p>Let us now look once again at the economic effect on the users. <em>What do users lose</em> by using an application with a built-in appcoin rather than plain old ether (or bitcoin, or USD)? The simplest way to express this is as follows: the "implicit cost" imposed by such a system on users <em>the cost to the user of holding those coins for that period of time, instead of holding that value in the currency that they would otherwise have preferred to hold</em>.</p>
-<p>There are many factors involved in this cost: cognitive costs, exchange costs and spreads, transaction fees, and many smaller items. One particular significant factor of this implicit cost is expected return. If a user expects the appcoin to only grow in value by 1% per year, while their other available alternatives grow 3% per year, and they hold $20 of the currency for five days, then that is an expected loss of roughly <span class="math inline">\(\$20 \cdot 2% \cdot 5 / 365 = \$0.0054\)</span>.</p>
-<p>One immediate conclusion from this particular insight is that <strong>appcoins are very much a multi-equilibrium game</strong>. If the appcoin grows at 2% per year, then the fee drops to $0.0027, and this essentially makes the "de-facto fee" of the application (or at least a large component of it) 2x cheaper, attracting more users and growing its value more. If the appcoin starts falling at 10% per year, however, then the "de-facto fee" grows to $0.035, driving many users away and accelerating its growth.</p>
-<p>This leads to increased opportunities for market manipulation, as a manipulator would not just be wasting their money fighting against a single equilibrium, but may in fact successfully nudge a given currency from one equilibrium into another, and profit from successfully "predicting" (ie. causing) this shift. It also means there is a large amount of path dependency, and established brands matter a lot; witness the epic battles over which fork of the bitcoin blockchain can be called Bitcoin for one particular high-profile example.</p>
-<p>Another, and perhaps even more important, conclusion is that the market cap of an appcoin <strong>depends crucially on the holding time <span class="math inline">\(H\)</span></strong>. If someone creates a very efficient exchange, which allows users to purchase an appcoin in real time and then immediately use it in the application, then allowing sellers to immediately cash out, then the market cap would drop precipitously. If a currency is stable or prospects are looking optimistic, then this may not matter because users actually see no disadvantage from holding the token instead of holding something else (ie. zero "de-facto fee"), but if prospects start to turn sour then such a well-functioning exchange can acelerate its demise.</p>
-<p>You might think that exchanges are inherently inefficient, requiring users to create an account, login, deposit coins, wait for 36 confirmations, trade and logout, but in fact hyper-efficient exchanges are around the corner. <a href="https://www.reddit.com/r/ethereum/comments/55m04x/lets_run_onchain_decentralized_exchanges_the_way/">Here</a> is a thread discussing designs for fully autonomous synchronous on-chain transactions, which can convert token A into token B, and possibly even then use token B to do something, <em>within a single transaction</em>. Many other platforms are being developed as well.</p>
-<p>What this all serves to show is that relying purely on the medium-of-exchange argument to support a token value, while attractive because of its seeming ability to print money out of thin air, is ultimately quite brittle. Protocol tokens using this model may well be sustained for some time due to irrationality and temporary equilibria where the implicit cost of holding the token is zero, but it is a kind of model which always has an unavoidable risk of collapsing at any time.</p>
+<p>The left term is quite simply the market cap. The right term is the
+economic value transacted per day, multiplied by the amount of time that
+a user holds a coin before using it to transact.</p>
+<p>This is a steady-state model, assuming that the same quantity of
+users will also be there. In reality, however, the quantity of users may
+change, and so the price may change. The time that users hold a coin may
+change, and this may cause the price to change as well.</p>
+<p>Let us now look once again at the economic effect on the users.
+<em>What do users lose</em> by using an application with a built-in
+appcoin rather than plain old ether (or bitcoin, or USD)? The simplest
+way to express this is as follows: the "implicit cost" imposed by such a
+system on users <em>the cost to the user of holding those coins for that
+period of time, instead of holding that value in the currency that they
+would otherwise have preferred to hold</em>.</p>
+<p>There are many factors involved in this cost: cognitive costs,
+exchange costs and spreads, transaction fees, and many smaller items.
+One particular significant factor of this implicit cost is expected
+return. If a user expects the appcoin to only grow in value by 1% per
+year, while their other available alternatives grow 3% per year, and
+they hold $20 of the currency for five days, then that is an expected
+loss of roughly <span class="math inline">\(\$20 \cdot 2% \cdot 5 / 365
+= \$0.0054\)</span>.</p>
+<p>One immediate conclusion from this particular insight is that
+<strong>appcoins are very much a multi-equilibrium game</strong>. If the
+appcoin grows at 2% per year, then the fee drops to $0.0027, and this
+essentially makes the "de-facto fee" of the application (or at least a
+large component of it) 2x cheaper, attracting more users and growing its
+value more. If the appcoin starts falling at 10% per year, however, then
+the "de-facto fee" grows to $0.035, driving many users away and
+accelerating its growth.</p>
+<p>This leads to increased opportunities for market manipulation, as a
+manipulator would not just be wasting their money fighting against a
+single equilibrium, but may in fact successfully nudge a given currency
+from one equilibrium into another, and profit from successfully
+"predicting" (ie. causing) this shift. It also means there is a large
+amount of path dependency, and established brands matter a lot; witness
+the epic battles over which fork of the bitcoin blockchain can be called
+Bitcoin for one particular high-profile example.</p>
+<p>Another, and perhaps even more important, conclusion is that the
+market cap of an appcoin <strong>depends crucially on the holding time
+<span class="math inline">\(H\)</span></strong>. If someone creates a
+very efficient exchange, which allows users to purchase an appcoin in
+real time and then immediately use it in the application, then allowing
+sellers to immediately cash out, then the market cap would drop
+precipitously. If a currency is stable or prospects are looking
+optimistic, then this may not matter because users actually see no
+disadvantage from holding the token instead of holding something else
+(ie. zero "de-facto fee"), but if prospects start to turn sour then such
+a well-functioning exchange can acelerate its demise.</p>
+<p>You might think that exchanges are inherently inefficient, requiring
+users to create an account, login, deposit coins, wait for 36
+confirmations, trade and logout, but in fact hyper-efficient exchanges
+are around the corner. <a
+href="https://www.reddit.com/r/ethereum/comments/55m04x/lets_run_onchain_decentralized_exchanges_the_way/">Here</a>
+is a thread discussing designs for fully autonomous synchronous on-chain
+transactions, which can convert token A into token B, and possibly even
+then use token B to do something, <em>within a single transaction</em>.
+Many other platforms are being developed as well.</p>
+<p>What this all serves to show is that relying purely on the
+medium-of-exchange argument to support a token value, while attractive
+because of its seeming ability to print money out of thin air, is
+ultimately quite brittle. Protocol tokens using this model may well be
+sustained for some time due to irrationality and temporary equilibria
+where the implicit cost of holding the token is zero, but it is a kind
+of model which always has an unavoidable risk of collapsing at any
+time.</p>
 <br>
 <hr />
 <p><br></p>
-<p>So what is the alternative? One simple alternative is the etherdelta approach, where an application simply collects fees in the interface. One common criticism is: but can't someone fork the interface to take out the fees? A counter-retort is: someone can also fork the interface to replace your protocol token with ETH, BTC, DOGE or whatever else users would prefer to use. One can make a more sophisticated argument that this is hard because the "pirate" version would have to compete with the "official" version for network effect, but one can just as easily create an official fee-paying client that refuses to interact with non-fee-paying clients as well; this kind of network effect-based enforcement is similar to how value-added-taxes are typically enforced in Europe and other places. Official-client buyers would not interact with non-official-client sellers, and official-client sellers would not interact with non-official-client buyers, so a large group of users would need to switch to the "pirate" client at the same time to successfully dodge fees. This is not perfectly robust, but it is certainly as good as the approach of creating a new protocol token.</p>
-<p>If developers want to front-load revenue to fund initial development, then they can sell a token, with the property that all fees paid are used to buy back some of the token and burn it; this would make the token backed by the future expected value of upcoming fees spent inside the system. One can transform this design into a more direct utility token by requiring users to use the utility token to pay fees, and having the interface use an exchange to automatically purchase tokens if the user does not have tokens already.</p>
-<p>The important thing is that for the token to have a stable value, it is highly beneficial for the token supply to have <strong>sinks</strong> - places where tokens actually disappear and so the total token quantity decreases over time. This way, there is a more transparent and explicit fee paid by users, instead of the highly variable and difficult to calculate "de-facto fee", and there is also a more transparent and explicit way to figure out what the value of protocol tokens should be.</p>
+<p>So what is the alternative? One simple alternative is the etherdelta
+approach, where an application simply collects fees in the interface.
+One common criticism is: but can't someone fork the interface to take
+out the fees? A counter-retort is: someone can also fork the interface
+to replace your protocol token with ETH, BTC, DOGE or whatever else
+users would prefer to use. One can make a more sophisticated argument
+that this is hard because the "pirate" version would have to compete
+with the "official" version for network effect, but one can just as
+easily create an official fee-paying client that refuses to interact
+with non-fee-paying clients as well; this kind of network effect-based
+enforcement is similar to how value-added-taxes are typically enforced
+in Europe and other places. Official-client buyers would not interact
+with non-official-client sellers, and official-client sellers would not
+interact with non-official-client buyers, so a large group of users
+would need to switch to the "pirate" client at the same time to
+successfully dodge fees. This is not perfectly robust, but it is
+certainly as good as the approach of creating a new protocol token.</p>
+<p>If developers want to front-load revenue to fund initial development,
+then they can sell a token, with the property that all fees paid are
+used to buy back some of the token and burn it; this would make the
+token backed by the future expected value of upcoming fees spent inside
+the system. One can transform this design into a more direct utility
+token by requiring users to use the utility token to pay fees, and
+having the interface use an exchange to automatically purchase tokens if
+the user does not have tokens already.</p>
+<p>The important thing is that for the token to have a stable value, it
+is highly beneficial for the token supply to have <strong>sinks</strong>
+- places where tokens actually disappear and so the total token quantity
+decreases over time. This way, there is a more transparent and explicit
+fee paid by users, instead of the highly variable and difficult to
+calculate "de-facto fee", and there is also a more transparent and
+explicit way to figure out what the value of protocol tokens should
+be.</p>
  </div> 
