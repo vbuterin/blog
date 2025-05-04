@@ -1099,7 +1099,6 @@ a.thumbnail.active, a.thumbnail:focus, a.thumbnail:hover { border-color: #337ab7
 .progress-striped .progress-bar-danger { background-image: linear-gradient( 45deg, rgba( 255, 255, 255, .15 ) 25%, transparent 25%, transparent 50%, rgba( 255, 255, 255, .15 ) 50%, rgba( 255, 255, 255, .15 ) 75%, transparent 75%, transparent ); }
 .media { margin-top: 15px; }
 .media:first-child { margin-top: 0; }
-.media, .media-body { overflow: hidden; zoom: 1; }
 .media-body { width: 10000px; }
 .media-object { display: block; }
 .media-object.img-thumbnail { max-width: none; }

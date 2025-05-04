@@ -1,0 +1,233 @@
+/* Minimal CSS extracted for 2.html
+   – Responsive (desktop & mobile)
+   – Supports manual toggle (.dark) + prefers‑color‑scheme
+   – Only includes selectors referenced in the document */
+
+/* ---------- Design tokens ---------- */
+:root{
+  --color-bg:#fff;
+  --color-text:#333;
+  --color-anchor:#337ab7;
+  --color-heading:#111;
+  --color-divider:#cdcdcd; /* rgb(205 205 205) */
+  --color-code-bg:#f7f7f7;
+  --color-code-text:#333;
+  --color-table-border:#c2c2c2;
+  --color-table-row-even:#f0f0f0;
+  --color-table-row-odd:#fff;
+  --color-toggle-accent: #c3a554;
+}
+
+/* Dark mode toggled with <html class="dark"> */
+html.dark{
+  --color-bg:#1c1c1c;
+  --color-text:#e5e5e5;
+  --color-anchor:#c3a554;
+  --color-heading:#fff;
+  --color-divider:#444;
+  --color-code-bg:#2d2d2d;
+  --color-code-text:#f7f7f7;
+  --color-table-border:#444;
+  --color-table-row-even:#262626;
+  --color-table-row-odd:#1c1c1c;
+}
+
+/* Fallback for users that prefer a dark scheme */
+@media (prefers-color-scheme: dark){
+  :root:not(.dark){
+    --color-bg:#1c1c1c;
+    --color-text:#e5e5e5;
+    --color-anchor:#c3a554;
+    --color-heading:#fff;
+    --color-divider:#444;
+    --color-code-bg:#2d2d2d;
+    --color-code-text:#f7f7f7;
+    --color-table-border:#444;
+    --color-table-row-even:#262626;
+    --color-table-row-odd:#1c1c1c;
+  }
+}
+
+/* ---------- Global element styles ---------- */
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:Inter,system-ui,sans-serif;
+  line-height:1.8;
+  background:var(--color-bg);
+  color:var(--color-text);
+}
+
+/* Links */
+a{color:var(--color-anchor);text-decoration:none;}
+a:hover,a:focus{text-decoration:underline;}
+
+/* Headings */
+h1,h2,h3,h4,h5,h6{color:var(--color-heading);line-height:1.25;margin-top:1.2em;margin-bottom:.6em;}
+h1{font-size:2rem;}
+h2{font-size:1.6rem;}
+h3{font-size:1.3rem;}
+
+/* Images & SVG */
+img,svg{max-width:100%;height:auto;}
+
+/* Layout container */
+.container-fluid{padding:40px 15px;margin:auto;max-width:1200px;}
+
+/* Constrain main markdown content */
+.markdown-body{max-width:760px;margin:auto;padding:40px 15px 40px 15px;position:relative;letter-spacing: .025em}
+.
+
+/* Markdown body basics */
+.markdown-body table{width:100%;border-collapse:collapse;margin:1em 0;}
+.markdown-body th,.markdown-body td{border:1px solid var(--color-table-border);padding:.6em .8em;}
+.markdown-body table tr:nth-child(2n){background:var(--color-table-row-even);}
+.markdown-body blockquote{margin:0 0 1em;padding:0 1em;border-left:4px solid var(--color-divider);color:var(--color-text);opacity:.8;}
+.markdown-body code{background:var(--color-code-bg);color:var(--color-code-text);padding:.2em .4em;border-radius:4px;}
+.markdown-body pre{background:var(--color-code-bg);color:var(--color-code-text);padding:.8em;overflow:auto;border-radius:4px;}
+
+/* Headline underline (simple border) */
+.markdown-body h1{font-weight:600;margin-top:0;padding-bottom:.3em;margin-top:42px;margin-bottom:.5rem;border-bottom:1px solid rgb(205 205 205);} /* border-bottom-color set to 205 205 205 */
+
+.markdown-body hr {
+    height: .25em;
+    padding: 0;
+    margin: 24px 0;
+    background-color: #cdcdcd;
+    border: 0;
+}
+
+/* Date & meta info */
+.markdown-body small{font-size:.85rem;color:var(--color-text);display:block;}
+
+/* Utility – visually hidden */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;}
+
+/* Size utilities used by inline SVG icons (Tailwind‑style) */
+.h-6{height:1.5rem;}
+.w-6{width:1.5rem;}
+
+/* Color‑mode switch layout */
+#color-mode-switch{display:flex;align-items:center;}
+#color-mode-switch label{cursor:pointer;font-size:.875rem;user-select:none;}
+
+/* Responsive typography */
+@media only screen and (orientation: portrait) {
+  .markdown-body{max-width:1000px; padding: 40px;}
+  h1{font-size:4rem;}
+  h2{font-size:3.5rem;}
+  h3{font-size:3rem;}
+  .markdown-body p,li,div,span,code,table {font-size: 1.8rem;}
+  .markdown-body small {font-size: 1.4rem;}
+}
+
+/* Simple clearfix for floats */
+.clearfix::after,
+.container-fluid::after{content:"";display:block;clear:both;}
+
+/*
+  Color Scheme Toggle Switch
+  - Styled checkbox with slight animation when toggling
+*/
+#color-mode-switch {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#color-mode-switch > span {
+  font-size: 30px;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+#color-mode-switch svg {
+  width: 24px;
+  height: 24px;
+  margin: 0 4px;
+}
+
+#color-mode-switch input[type=checkbox] {
+  height: 0;
+  width: 0;
+  margin: 0;
+  visibility: hidden;
+}
+
+#color-mode-switch label {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 42px;
+  height: 21px;
+  border-radius: 30px;
+  background: var(--color-toggle-accent);
+  display: block;
+  position: relative;
+  margin: 0;
+}
+
+#color-mode-switch label:after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 15px;
+  height: 15px;
+  background: #fff;
+  border-radius: 90px;
+  transition: 0.3s;
+}
+
+#color-mode-switch input:checked + label:after {
+  left: calc(100% - 3px);
+  transform: translateX(-100%);
+}
+
+#color-mode-switch label:active:after {
+  width: 30px;
+}
+
+.post-list {
+  margin-left: 0;
+  padding-left: 0;
+  list-style: none; }
+  .post-list > li {
+    margin-bottom: 30px;
+    }
+
+@media only screen and (orientation: landscape) {
+    .post-link {
+      display: block;
+      font-size: 24px; }
+
+    .post-meta {
+      font-size: 14px;
+      color: #515151; }
+
+    .toc-category {
+      display: inline-block;
+      width: 100px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-right: 4px;
+      padding-left: 4px; }
+}
+
+@media only screen and (orientation: portrait) {
+    .post-link {
+      display: block; }
+    .post-meta {
+      font-size: 24px;
+      color: #515151; }
+    .post-list > li {
+      margin-bottom: 60px;
+     }
+
+    .toc-category {
+      display: inline-block;
+      width: 200px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      padding-right: 12px;
+      padding-left: 12px; }
+}
