@@ -130,7 +130,10 @@ enthusiast.</p>
 <p>The goal of this post will be to give a maximally elementary
 explanation of this puzzle that does not rely on any pre-existing
 knowledge of these concepts.</p>
-<hr />
+<h2
+id="solve-without-requiring-positive-values-first-then-find-a-positive-solution">Solve
+without requiring positive values first, then find a positive
+solution</h2>
 <p>First, let us start off by looking at a <em>relaxed</em> version of
 the problem. Specifically, let's remove the requirement that the three
 values must be positive. It turns out that you can just try a whole
@@ -157,19 +160,22 @@ s_2}, \frac{p_1 r_2}{q_1 s_2} + \frac{r_1 p_2}{s_1 q_2}\)</span>).</p>
 then we could just use it over and over again, until eventually we get a
 point that happens to be all-positive by pure luck. This will be our
 solution path.</p>
-<hr />
-<p>Let us simplify the problem by making it two-dimensional. Note that
-the equation is <em>homogeneous</em>: it has the property that scaling
-all the inputs by the same number does not change the answer. Let's use
-this to remove the <span class="math inline">\(c\)</span> variable:</p>
+<h2 id="combining-two-solutions-to-find-a-third">Combining two solutions
+to find a third</h2>
+<p>Let us simplify the problem by making it only have two variables,
+<span class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span>. Note that the equation is
+<em>homogeneous</em>: it has the property that scaling all the inputs by
+the same number does not change the answer. Let's take advantage of this
+to set <span class="math inline">\(c = 1\)</span>:</p>
 <p><span class="math inline">\(\frac{a}{b+1} + \frac{b}{a+1} +
 \frac{1}{a+b} - 4 = 0\)</span></p>
-<p>We also moved the 4 to the left, this will make things more
-convenient for us later. Any solution to this with <em>rational</em>
+<p>Any solution to this two-variable equation with <em>rational</em>
 <span class="math inline">\(a = \frac{p}{q}\)</span> and <span
-class="math inline">\(b = \frac{r}{s}\)</span> corresponds to an
-<em>integer</em> solution to the original equation: <span
-class="math inline">\((a * qs, b * qs, qs)\)</span>.</p>
+class="math inline">\(b = \frac{r}{s}\)</span> can be scaled into an
+<em>integer</em> solution to the original three-variable equation: <span
+class="math inline">\((a * qs, b * qs, qs)\)</span>. We also moved the 4
+to the left, this will make things more convenient for us later.</p>
 <p>Now, let's multiply by the denominators, to make the whole equation a
 pure polynomial:</p>
 <p><span class="math inline">\(a(a+1)(a+b) + b(b+1)(a+b) + (a+1)(b+1) -

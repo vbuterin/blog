@@ -26,7 +26,7 @@ The goal of this post will be to explore a paradigm that could perhaps use AI to
 * [Adding privacy](#5)
 * [Benefits of engine + steering wheel designs](#6)
 
-<a id="1" />
+<a id="1"></a>
 
 ## Why not just put a single AI in charge?
 
@@ -64,7 +64,7 @@ The goal of the steering mechanism is to provide a faithful representation of th
 
 **You can think of the mechanism as exploiting an asymmetry between coming up with an answer and verifying the answer. This is similar to how a sudoku is difficult to solve, but it’s easy to verify that a solution is correct**. You (i) create an open market of players to act as “solvers”, and then (ii) maintain a human-run mechanism that performs the much simpler task of verifying solutions that have been presented.
 
-<a id="2" />
+<a id="2"></a>
 
 ## Futarchy
 
@@ -80,7 +80,7 @@ Futarchy was originally introduced by Robin Hanson as “[vote values, but bet b
 
 Futarchy was originally invented in the pre-AI era. However, **futarchy fits very naturally in the “sophisticated solver, easy verifier” paradigm** described in the previous section, and traders in a futarchy can be AI (or human+AI combinations) too. The role of the “solvers” (prediction market traders) is to determine how each proposed plan will affect the value of a metric in the future. This is hard. The solvers make money if they are right, and lose money if they are wrong. The verifiers (the people voting on the metric, adjusting the metric if they notice that it is being “gamed” or is otherwise becoming outdated, and determining the actual value of the metric at some future time) need only answer the simpler question “what is the value of the metric now?”
 
-<a id="3" />
+<a id="3"></a>
 
 ## Distilled human judgement
 
@@ -123,7 +123,7 @@ There are a few open variables within the distilled human judgement paradigm:
 
 In general, the goal is to take human judgement mechanisms that are known to be effective and bias-minimizing and have stood the test of time (eg. think of how the adversarial structure of a court system includes both the two parties to a dispute, who have high information but are biased, and a judge, who has low information but is probably unbiased), and use an open market of AIs as a reasonably high-fidelity and very low-cost predictor of these mechanisms (this is similar to how “distillation” of LLMs works).
 
-<a id="4" />
+<a id="4"></a>
 
 ## Deep funding
 
@@ -153,7 +153,7 @@ The goal of a well-functioning deep funding system would be to create and mainta
 
 **You could imagine a decentralized protocol using a built-in deep funding gadget to issue its token**: some in-protocol decentralized governance would choose a jury, and the jury would run the deep funding mechanism, as the protocol automatically issues tokens and deposits them into the node corresponding to itself. By doing so, the protocol rewards all of its direct and indirect contributors in a programmatic way reminiscent of how Bitcoin or Ethereum block rewards rewarded one specific type of contributor (miners). By influencing the weights of the edges, the jury gets a way to continuously define what types of contributions it values. This mechanism could function as a decentralized and long-term-sustainable alternative to mining, sales or one-time airdrops.
 
-<a id="5" />
+<a id="5"></a>
 
 ## Adding privacy
 
@@ -163,7 +163,7 @@ To make distilled human judgement or deep funding work in these contexts, we cou
 
 If you do this, then you would have to restrict the set of mechanisms to just being AI models (as opposed to humans or AI + human combinations, as you can’t let humans see the data), and in particular models running in some specific substrate (eg. MPC, FHE, trusted hardware). A major research direction is figuring out near-term practical versions of this that are efficient enough to make sense.
 
-<a id="6" />
+<a id="6"></a>
 
 ## Benefits of engine + steering wheel designs
 

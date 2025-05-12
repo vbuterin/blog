@@ -23,7 +23,7 @@ What the heck is going on??! If you search on the internet, you will see long-wi
 
 The goal of this post will be to give a maximally elementary explanation of this puzzle that does not rely on any pre-existing knowledge of these concepts.
 
-* * *
+## Solve without requiring positive values first, then find a positive solution
 
 First, let us start off by looking at a _relaxed_ version of the problem. Specifically, let's remove the requirement that the three values must be positive. It turns out that you can just try a whole bunch of possibilities and get two answers by pure human brute force: $(-11, -4, 1)$ and $(11, -5, 9)$. You can get more solutions from either of these two by re-arranging the numbers, flipping signs and multiplying by constant factors (eg. $(-2, 8, 22)$ is also a valid solution), but we'll treat those as being the same.
 
@@ -31,13 +31,13 @@ Now, we get to the interesting part. What if we can come up with a way to _combi
 
 If we can come up with such an algorithm for _our_ problem, then we could just use it over and over again, until eventually we get a point that happens to be all-positive by pure luck. This will be our solution path.
 
-* * *
+## Combining two solutions to find a third
 
-Let us simplify the problem by making it two-dimensional. Note that the equation is _homogeneous_: it has the property that scaling all the inputs by the same number does not change the answer. Let's use this to remove the $c$ variable:
+Let us simplify the problem by making it only have two variables, $a$ and $b$. Note that the equation is _homogeneous_: it has the property that scaling all the inputs by the same number does not change the answer. Let's take advantage of this to set $c = 1$:
 
 $\frac{a}{b+1} + \frac{b}{a+1} + \frac{1}{a+b} - 4 = 0$
 
-We also moved the 4 to the left, this will make things more convenient for us later. Any solution to this with _rational_ $a = \frac{p}{q}$ and $b = \frac{r}{s}$ corresponds to an _integer_ solution to the original equation: $(a * qs, b * qs, qs)$.
+Any solution to this two-variable equation with _rational_ $a = \frac{p}{q}$ and $b = \frac{r}{s}$ can be scaled into an _integer_ solution to the original three-variable equation: $(a * qs, b * qs, qs)$. We also moved the 4 to the left, this will make things more convenient for us later. 
 
 Now, let's multiply by the denominators, to make the whole equation a pure polynomial:
 
