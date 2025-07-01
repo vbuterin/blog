@@ -69,7 +69,7 @@ h2{font-size:1.6rem;}
 h3{font-size:1.3rem;}
 
 /* Images & SVG */
-img,svg{max-width:100%;height:auto;}
+img,svg{max-width:100%;height:auto;background-color: #fff;}
 
 /* Layout container */
 .container-fluid{padding:40px 15px;margin:auto;max-width:1200px;}
