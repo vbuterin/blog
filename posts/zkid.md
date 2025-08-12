@@ -146,7 +146,7 @@ If we draw directly from the mathematical models for governance-like application
 
 By “pluralistic identity”, I mean an identity regime where there is no single dominant issuing authority, whether that’s a person, or an institution, or a platform. This can be accomplished in two ways:
 
-* **Explicit pluralistic identity** (also called **“social-graph-based identity”**): you prove that you are a person (or some other claim, eg. that you are a member of a community) through attestations from others in that community, who are in turn themselves verified through the same mechanism. The [Decentralized Society paper](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4105763) talks about these designs in more detail. [Circles](https://circles.garden/) is a live example of this in action.
+* **Explicit pluralistic identity** (also called **“social-graph-based identity”**): you prove that you are a person (or some other claim, eg. that you are a member of a community) through attestations from others in that community, who are in turn themselves verified through the same mechanism. The [Decentralized Society paper](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4105763) talks about these designs in more detail. [Circles](http://aboutcircles.com/) is a live example of this in action.
 * **Implicit pluralistic identity**. This is the status quo today: there are many different identity providers - Google, Twitter, their various equivalents in other countries, multiple forms of government ID, etc. There are very few applications that accepts only one of these; most accept multiple, because they have to in order to reach their potential users.
 
 <center><br>
