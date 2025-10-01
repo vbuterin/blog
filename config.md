@@ -1,5 +1,5 @@
 [title]: <> (Vitalik Buterin's website)
-[icon]: <> (http://vitalik.ca/images/icon.png)
+[icon]: <> (https://vitalik.eth.limo/images/icon.png)
 [server]: <> (root@vitalik.ca)
 [website_root]: <> (/var/www/html)
 [posts_directory]: <> (general)
