@@ -1,6 +1,6 @@
 [category]: <> (General,Math)
 [date]: <> (2025/10/05)
-[title]: <> (Memory access is O(N^⅓))
+[title]: <> (Memory access is O(N^[1/3]))
 
 In computer science, we often compare the efficiency of algorithms by describing their runtime as a function of the size of the input. [Sorting](https://en.wikipedia.org/wiki/Sorting_algorithm) is O(n \* log(n)), meaning that sorting a list of N items takes an amount of time proportional to the number of items multiplied by its logarithm. Matrix multiplication is somewhere [between 2.37 and 2.8](https://en.wikipedia.org/wiki/Matrix_multiplication), depending on the choice of algorithm. But these estimates are all relative to some model of how long it takes for the underlying machine to perform some basic underlying operations. Typically, arithmetic operations (addition, multiplication, division…) are considered to take one unit of time for fixed-size numbers, and memory accesses are also considered to take one unit of time.
 
