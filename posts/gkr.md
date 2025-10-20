@@ -3,9 +3,9 @@
 [title]: <> (A GKR Tutorial)
 [pandoc]: <> (--mathjax)
 
-_Special thanks to Lev Soukhanov, Zhenfei Zhang and Zachary Williamson for feedback and review_
+_Special thanks to Lev Soukhanov, Zhenfei Zhang, Zachary Williamson and Justin Drake for feedback and review_
 
-If you’re following the “cryptography side of crypto”, at this point you’ve likely heard a lot about ultra-fast ZK-provers: ZK-EVM provers [proving the Ethereum L1 in real-time](https://x.com/drakefjustin/status/1978435449489158312) with only about fifty consumer GPUs, people [proving 2 million Poseidon hashes per second](https://medium.com/polyhedra-network/expander-still-the-worlds-fastest-zk-prover-6aa5fd428609) on consumer laptops, and [zk-ML systems proving LLM inference](https://arxiv.org/html/2502.18535v1) with increasing speed.
+If you’re following the “cryptography side of crypto”, at this point you’ve likely heard a lot about ultra-fast ZK-provers: ZK-EVM provers [proving the Ethereum L1 in real-time](https://x.com/drakefjustin/status/1978435449489158312) with only about fifty consumer GPUs, people [proving](https://x.com/dlubarov/status/1851667100542341155) 2 million [Poseidon hashes per second](https://medium.com/polyhedra-network/expander-still-the-worlds-fastest-zk-prover-6aa5fd428609) on consumer laptops, and [zk-ML systems proving LLM inference](https://arxiv.org/html/2502.18535v1) with increasing speed.
 
 In this post, I will explain in detail a family of protocols that is behind the extreme speed of many of these proving systems: **GKR**.
 
@@ -29,7 +29,7 @@ Note that GKR is not “zero knowledge”: it only handles succinctness, not pri
 
 ## Sumchecks: the core building block
 
-Suppose you have a multivariate polynomial $P(x_1, x_2 … x_n)$, which is low-degree in each dimension. You want to prove the sum of evaluations of that polynomial across a hypercube - that is, you want to prove the value of $\sum_{i_k \in \{0,1\}} P(i_1, i_2 … i_N)$. There is a standard technique that reduces this problem to that of evaluating $P$ at a random coordinate. That is, you can convert an “obligation” to prove $\sum_{i_k \in \{0,1\}} P(i_1, i_2 … i_N)$ into an obligation to prove $P(c_1, c_2 .. c_n)$, for some $c_1, c_2 … c_n$ that get randomly generated as part of the proving process. Here is what it looks like for a _multilinear_ polynomial (one that is linear in each variable; so $x_ix_j$ is allowed but not eg. $x_i^2$):
+Suppose you have a multivariate polynomial $P(x_1, x_2 … x_N)$, which is low-degree in each dimension. You want to prove the sum of evaluations of that polynomial across a hypercube - that is, you want to prove the value of $\sum_{i_k \in \{0,1\}} P(i_1, i_2 … i_N)$. There is a standard technique that reduces this problem to that of evaluating $P$ at a random coordinate. That is, you can convert an “obligation” to prove $\sum_{i_k \in \{0,1\}} P(i_1, i_2 … i_N)$ into an obligation to prove $P(c_1, c_2 ... c_N)$, for some $c_1, c_2 … c_N$ that get randomly generated as part of the proving process. Here is what it looks like for a _multilinear_ polynomial (one that is linear in each variable; so $x_ix_j$ is allowed but not eg. $x_i^2$):
 
 <center><br>
 
@@ -55,14 +55,14 @@ Essentially, you do many rounds that alternate between multiplying the whole dat
 
 There are many versions and parameter choices of Poseidon2; the above is not meant to accurately depict any specific live implementation, rather it shows the general pattern.
 
-GKR is well-suited to prove a large number of executions like this in parallel. Let us go through how it works. We will first start with a simplified version of Poseidon, where there are no partial rounds and no matrices - instead, you just do repeated $x \rightarrow x^3 + r_i$. GKR works by running through the computation _backwards_:
+GKR is well-suited to prove a large number of executions like this in parallel. Let us go through how it works. We will first start with a simplified version of Poseidon, where there are no partial rounds and no matrices - instead, you just do repeated $x \rightarrow x^3 + r_j$. GKR works by running through the computation _backwards_:
 
 * First, the prover starts with an “obligation” to prove the final output.
 * We treat the outputs as evaluations of a multivariate polynomial on a hypercube, and we ask the prover to prove the output by proving this “output polynomial” evaluated at a randomly chosen point.
 * From there, we repeatedly use sumchecks to progressively convert this “obligation” into an obligation to prove a claim about the previous layer.
 * Eventually, we get an obligation to prove an evaluation of the multivariate polynomial that represents the _inputs._ The verifier knows the inputs, so they can just check this directly.
 
-Here’s the top layer. For cleaner exposition (ie. to avoid the numbers blowing up in size), in this example we will do all the math modulo 89. In reality, $V$ is over a 32-bit prime field (often [KoalaBear](https://docs.rs/p3-koala-bear/latest/p3_koala_bear/) ($2^{31} - 2^{24} + 1$)), and $p_i$ (and hence $W$ later on in this post) are over a degree-4 extension field (often represented as elements of the form $x = a_0 + a_1v + a_2v^2 + a_3v^3$ where $v^4 = 3$) to ensure (close to) 128-bit security.
+Here’s the top layer. For cleaner exposition (ie. to avoid the numbers blowing up in size), in this example we will do all the math modulo 89. In reality, $V$ is the outputs of the Poseidon computation and so it's numbers in a 32-bit prime field (often [KoalaBear](https://docs.rs/p3-koala-bear/latest/p3_koala_bear/) ($2^{31} - 2^{24} + 1$)), and $p_i$ (and hence $W$ later on in this post) are over a degree-4 extension field (often represented as elements of the form $x = a_0 + a_1v + a_2v^2 + a_3v^3$ where $v^4 = 3$) to ensure (close to) 128-bit security.
 
 <center><br>
 
@@ -132,7 +132,7 @@ You can check the example above yourself, and see that the linear combination of
 
 At the end, the prover provides the evaluation $V_{31}(9, 16, 8) = 39$. Because $W$ has a mathematical structure, the verifier can compute $W_{31}(9, 16, 8) = 85$ themselves. Then, the verifier checks the equation (remember: you can check an equation between polynomials by checking an evaluation at a random point): $39^3 * 85 = 87$ (all modulo 89 in our example).
 
-What have we done? **We have converted an unproven claim of the form** $V_{32}(p_{32}) = y_{32}$ **into an unproven claim of the form** $V_{31}(p_{31}) = y_{31}$, all without using any commitments!!!
+What have we done? **We have reduced an unproven claim of the form** $V_{32}(p_{32}) = y_{32}$ **to an unproven claim of the form** $V_{31}(p_{31}) = y_{31}$, all without using any commitments!!!
 
 We then proceed and keep going, until we get to a claim $V_0(p_0) = y_0$. Because $V_0$ is just the inputs, and the verifier has the inputs, the verifier can just check this directly. Let us recap the entire flow in diagram form:
 
@@ -142,9 +142,9 @@ We then proceed and keep going, until we get to a claim $V_0(p_0) = y_0$. Becaus
 
 </center><br>
 
-Now, let’s get back to one thing I left out here: the matrix multiplication layers. It turns out that there is a fairly easy way to generate weights that represent the idea “multiply $V$ by a matrix $M$ that only combines values that are within the same batch of 16, and then evaluate $VM$ at point $p$”. There is also a fairly easy way to _evaluate_ the polynomial generated by those weights at some other point $q$ without actually needing to compute $M$ (cryptographers seem to love Star Trek, so they sometimes say “[materialize](https://chatgpt.com/share/68f16852-dda8-8012-a194-64fc3b6d7350)” $M$). This is important for the verifier to be able to check the link between $V_{n-1}(p_{n-1})$ and $V_n(p_{n-1})$.
+Now, let’s get back to one thing I left out here: the matrix multiplication layers. It turns out that there is a fairly easy way to generate weights that represent the idea “multiply $V$ by a matrix $M$ that only combines values that are within the same batch of 16, and then evaluate $VM$ at point $p$”. There is also a fairly easy way to _evaluate_ the polynomial generated by those weights at some other point $q$ without actually needing to compute $M$ (cryptographers seem to love Star Trek, so they sometimes say “[materialize](https://chatgpt.com/share/68f16852-dda8-8012-a194-64fc3b6d7350)” $M$). This is important for the verifier to be able to check the link between $V_{i-1}(p_{i-1})$ and $V_i(p_{i-1})$.
 
-But there is also a much dumber way to do this, which does not lose much efficiency (in fact, it _increases_ efficiency slightly on the prover side): just run 16 sumchecks in parallel, sharing the same randomness so they all get the same coordinates. The verifier’s “state” $V_{n-1}(p_{n-1})$ will be a size-16 object, and the verifier can apply the matrix to that directly.
+But there is also a much dumber way to do this, which does not lose much efficiency (in fact, it _increases_ efficiency slightly on the prover side): just run 16 sumchecks in parallel, sharing the same randomness so they all get the same coordinates. The verifier’s “state” $V_{i-1}(p_{i-1})$ will be a size-16 object, and the verifier can apply the matrix to that directly.
 
 ## Optimizations
 
@@ -206,7 +206,7 @@ In a real-world protocol, no one is interested in the evaluations of lots of has
 
 </center><br>
 
-For this, you _could_ “just use [FRI](https://vitalik.eth.limo/general/2017/11/22/starks_part_2.html)”. The verifier needs to get a proof of $V_{32}(p_{31})$ and $V_0(p_0)$, which would turn into a linear combination over the values encoded in the commitments. This can be done, and is certainly much faster than proving the hashes inside the FRI. An alternative is to use polynomial commitment schemes that are native to multilinear polynomials. A common one is [BaseFold](https://eprint.iacr.org/2023/1705.pdf), though there have been other more recent improvements. Realistically, the choice depends on what proof system you are using for the non-hash part of your computation.
+For this, you _could_ “just use [FRI](https://vitalik.eth.limo/general/2017/11/22/starks_part_2.html)”. The verifier needs to get a proof of $V_{32}(p_{32})$ and $V_0(p_0)$, which would turn into a linear combination over the values encoded in the commitments. This can be done, and is certainly much faster than proving the hashes inside the FRI. An alternative is to use polynomial commitment schemes that are native to multilinear polynomials. A common one is [BaseFold](https://eprint.iacr.org/2023/1705.pdf), though there have been other more recent improvements (eg. [WHIR](https://eprint.iacr.org/2024/1586). Realistically, the choice depends on what proof system you are using for the non-hash part of your computation.
 
 One important security consideration is an [observation from 2025](https://eprint.iacr.org/2025/118.pdf): if the circuit being proved can _also compute the Fiat–Shamir hash used to derive challenges fast enough within its own depth_, a malicious prover might be able to predict challenges, and thus cheat the proof system. This is not an issue for using GKR to prove hashes as in the example above, because (i) the scheme is designed around one fixed circuit that does not create room for an attacker to use these tricks, and (ii) the attack involves feeding GKR a circuit that internally computes both a hash and other computation, and so by definition there is not enough depth in a hash-only circuit to execute it. However, for more complicated and general-purpose GKR use cases, it is an issue; one mitigation is to adjust the hash used to compute Fiat-Shamir challenges so that it requires more rounds to compute than the number of rounds the circuit has.
 

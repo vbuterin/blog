@@ -104,15 +104,16 @@ MathJax = {
 <br> <br> <br>
 <title> A GKR Tutorial </title>
 
-<p><em>Special thanks to Lev Soukhanov, Zhenfei Zhang and Zachary
-Williamson for feedback and review</em></p>
+<p><em>Special thanks to Lev Soukhanov, Zhenfei Zhang, Zachary
+Williamson and Justin Drake for feedback and review</em></p>
 <p>If you're following the "cryptography side of crypto", at this point
 you've likely heard a lot about ultra-fast ZK-provers: ZK-EVM provers <a
 href="https://x.com/drakefjustin/status/1978435449489158312">proving the
 Ethereum L1 in real-time</a> with only about fifty consumer GPUs, people
-<a
-href="https://medium.com/polyhedra-network/expander-still-the-worlds-fastest-zk-prover-6aa5fd428609">proving
-2 million Poseidon hashes per second</a> on consumer laptops, and <a
+<a href="https://x.com/dlubarov/status/1851667100542341155">proving</a>
+2 million <a
+href="https://medium.com/polyhedra-network/expander-still-the-worlds-fastest-zk-prover-6aa5fd428609">Poseidon
+hashes per second</a> on consumer laptops, and <a
 href="https://arxiv.org/html/2502.18535v1">zk-ML systems proving LLM
 inference</a> with increasing speed.</p>
 <p>In this post, I will explain in detail a family of protocols that is
@@ -169,7 +170,7 @@ ZK-SNARK or ZK-STARK.</p>
 <h2 id="sumchecks-the-core-building-block">Sumchecks: the core building
 block</h2>
 <p>Suppose you have a multivariate polynomial <span
-class="math inline">\(P(x_1, x_2 ... x_n)\)</span>, which is low-degree in
+class="math inline">\(P(x_1, x_2 ... x_N)\)</span>, which is low-degree in
 each dimension. You want to prove the sum of evaluations of that
 polynomial across a hypercube - that is, you want to prove the value of
 <span class="math inline">\(\sum_{i_k \in \{0,1\}} P(i_1, i_2 ...
@@ -177,9 +178,9 @@ i_N)\)</span>. There is a standard technique that reduces this problem
 to that of evaluating <span class="math inline">\(P\)</span> at a random
 coordinate. That is, you can convert an "obligation" to prove <span
 class="math inline">\(\sum_{i_k \in \{0,1\}} P(i_1, i_2 ... i_N)\)</span>
-into an obligation to prove <span class="math inline">\(P(c_1, c_2 ..
-c_n)\)</span>, for some <span class="math inline">\(c_1, c_2 ...
-c_n\)</span> that get randomly generated as part of the proving process.
+into an obligation to prove <span class="math inline">\(P(c_1, c_2 ...
+c_N)\)</span>, for some <span class="math inline">\(c_1, c_2 ...
+c_N\)</span> that get randomly generated as part of the proving process.
 Here is what it looks like for a <em>multilinear</em> polynomial (one
 that is linear in each variable; so <span
 class="math inline">\(x_ix_j\)</span> is allowed but not eg. <span
@@ -250,7 +251,7 @@ rather it shows the general pattern.</p>
 parallel. Let us go through how it works. We will first start with a
 simplified version of Poseidon, where there are no partial rounds and no
 matrices - instead, you just do repeated <span class="math inline">\(x
-\rightarrow x^3 + r_i\)</span>. GKR works by running through the
+\rightarrow x^3 + r_j\)</span>. GKR works by running through the
 computation <em>backwards</em>:</p>
 <ul>
 <li>First, the prover starts with an "obligation" to prove the final
@@ -267,8 +268,9 @@ verifier knows the inputs, so they can just check this directly.</li>
 </ul>
 <p>Here's the top layer. For cleaner exposition (ie. to avoid the
 numbers blowing up in size), in this example we will do all the math
-modulo 89. In reality, <span class="math inline">\(V\)</span> is over a
-32-bit prime field (often <a
+modulo 89. In reality, <span class="math inline">\(V\)</span> is the
+outputs of the Poseidon computation and so it's numbers in a 32-bit
+prime field (often <a
 href="https://docs.rs/p3-koala-bear/latest/p3_koala_bear/">KoalaBear</a>
 (<span class="math inline">\(2^{31} - 2^{24} + 1\)</span>)), and <span
 class="math inline">\(p_i\)</span> (and hence <span
@@ -393,11 +395,11 @@ verifier can compute <span class="math inline">\(W_{31}(9, 16, 8) =
 (remember: you can check an equation between polynomials by checking an
 evaluation at a random point): <span class="math inline">\(39^3 * 85 =
 87\)</span> (all modulo 89 in our example).</p>
-<p>What have we done? <strong>We have converted an unproven claim of the
+<p>What have we done? <strong>We have reduced an unproven claim of the
 form</strong> <span class="math inline">\(V_{32}(p_{32}) =
-y_{32}\)</span> <strong>into an unproven claim of the form</strong>
-<span class="math inline">\(V_{31}(p_{31}) = y_{31}\)</span>, all
-without using any commitments!!!</p>
+y_{32}\)</span> <strong>to an unproven claim of the form</strong> <span
+class="math inline">\(V_{31}(p_{31}) = y_{31}\)</span>, all without
+using any commitments!!!</p>
 <p>We then proceed and keep going, until we get to a claim <span
 class="math inline">\(V_0(p_0) = y_0\)</span>. Because <span
 class="math inline">\(V_0\)</span> is just the inputs, and the verifier
@@ -424,13 +426,13 @@ needing to compute <span class="math inline">\(M\)</span>
 href="https://chatgpt.com/share/68f16852-dda8-8012-a194-64fc3b6d7350">materialize</a>"
 <span class="math inline">\(M\)</span>). This is important for the
 verifier to be able to check the link between <span
-class="math inline">\(V_{n-1}(p_{n-1})\)</span> and <span
-class="math inline">\(V_n(p_{n-1})\)</span>.</p>
+class="math inline">\(V_{i-1}(p_{i-1})\)</span> and <span
+class="math inline">\(V_i(p_{i-1})\)</span>.</p>
 <p>But there is also a much dumber way to do this, which does not lose
 much efficiency (in fact, it <em>increases</em> efficiency slightly on
 the prover side): just run 16 sumchecks in parallel, sharing the same
 randomness so they all get the same coordinates. The verifier's "state"
-<span class="math inline">\(V_{n-1}(p_{n-1})\)</span> will be a size-16
+<span class="math inline">\(V_{i-1}(p_{i-1})\)</span> will be a size-16
 object, and the verifier can apply the matrix to that directly.</p>
 <h2 id="optimizations">Optimizations</h2>
 <p>We can do a major optimization to the sumcheck above, reducing the
@@ -560,16 +562,17 @@ src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABIgAAAL6CAYAAABdFm0zAAAAAXNSR
 <p>For this, you <em>could</em> "just use <a
 href="https://vitalik.eth.limo/general/2017/11/22/starks_part_2.html">FRI</a>".
 The verifier needs to get a proof of <span
-class="math inline">\(V_{32}(p_{31})\)</span> and <span
+class="math inline">\(V_{32}(p_{32})\)</span> and <span
 class="math inline">\(V_0(p_0)\)</span>, which would turn into a linear
 combination over the values encoded in the commitments. This can be
 done, and is certainly much faster than proving the hashes inside the
 FRI. An alternative is to use polynomial commitment schemes that are
 native to multilinear polynomials. A common one is <a
 href="https://eprint.iacr.org/2023/1705.pdf">BaseFold</a>, though there
-have been other more recent improvements. Realistically, the choice
-depends on what proof system you are using for the non-hash part of your
-computation.</p>
+have been other more recent improvements (eg. <a
+href="https://eprint.iacr.org/2024/1586">WHIR</a>. Realistically, the
+choice depends on what proof system you are using for the non-hash part
+of your computation.</p>
 <p>One important security consideration is an <a
 href="https://eprint.iacr.org/2025/118.pdf">observation from 2025</a>:
 if the circuit being proved can <em>also compute the Fiat–Shamir hash
