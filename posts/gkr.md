@@ -80,7 +80,7 @@ $W_{31}$ here is the “weights” that correspond to “evaluate at $p_{32}$”
 
 </center><br>
 
-Now, let’s say we want the evaluation at (4, 6). We can compute this! An easy way is to take the difference (eg. $x_{01} - x_{00}$) along a horizontal or vertical line and re-apply it over and over to “extend” that line:
+Now, let’s say we want the evaluation at (6, 4). We can compute this! An easy way is to take the difference (eg. $x_{01} - x_{00}$) along a horizontal or vertical line and re-apply it over and over to “extend” that line:
 
 <center><br>
 
@@ -88,7 +88,7 @@ Now, let’s say we want the evaluation at (4, 6). We can compute this! An easy 
 
 </center><br>
 
-Here, [[15, -18], [-20, 24]] is the “weights” corresponding to “evaluate at (4, 6)”. We can also compute the weights via a nice formula: $[[(1-4) * (1-6), (1-4) * 6], [4 * (1-6), 4 * 6]]$. A similar thing works in higher dimensions.
+Here, [[15, -18], [-20, 24]] is the “weights” corresponding to “evaluate at (6, 4)”. We can also compute the weights via a nice formula: $[[(1-4) * (1-6), (1-4) * 6], [4 * (1-6), 4 * 6]]$. A similar thing works in higher dimensions.
 
 Going back to GKR. The expression we wanted to prove the value of is $\sum_{i_k \in \{0,1\}} (V_{31}(i_1, i_2 … i_N)^3 + r_{31}) * W_{31}(i_1, i_2 … i_N)$. Because $W_{31}$ is the weights corresponding to “evaluate at $p_{31}$”, this expression is exactly the same thing as saying “compute $(V_{31}(i_1,i_2…i_N)^3 + r_{31})(p_{31})$”, which is itself the same thing as $V_{32}(p_{31})$. Now, we do the sumcheck. It’s like we did before, except at each step we provide partial sums not of the values themselves, but of the evaluations of the values. Additionally, there is another nuance: because this is a degree-4 expression (degree 3 coming from $V_{31}^3$ and degree 1 coming from $W$), we need to provide five evaluations at each step, instead of just the left and right side.
 
