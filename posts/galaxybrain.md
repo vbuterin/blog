@@ -132,7 +132,7 @@ In crypto, you often hear bad arguments for why you should throw your money into
 
 This is a bad argument. One way to see why it’s a bad argument is to approach it like any other argument, and deconstruct and refute the claim that this is actually a meaningful or helpful form of “class mobility”.
 
-The core problem with the argument is: casinos are zero-sum games. As a first approximation, each person who goes up a social class, there’s a person who goes down a social class. But if you dig deeper into the math, it gets worse. In any standard welfare economics textbook, one of the first ideas that you will see is that a person’s utility function in money is _convex_. Each dollar is worth less to you the richer you already are.
+The core problem with the argument is: casinos are zero-sum games. As a first approximation, each person who goes up a social class, there’s a person who goes down a social class. But if you dig deeper into the math, it gets worse. In any standard welfare economics textbook, one of the first ideas that you will see is that a person’s utility function in money is _concave_. Each dollar is worth less to you the richer you already are.
 
 <center><br>
 
