@@ -86,7 +86,7 @@ Additionally, the setup phase generates some “backup hints”. These are const
 
 </center><br>
 
-This whole process can be done “streaming”, without requiring the client to store any data at any point in time other than the hints themselves. In total, the client needs to download the whole data set and store data equal to roughly $64 \* \sqrt{N}$ cells, plus $\sqrt{N}$ cells per backup hint (the client will need one backup hint for each query that the client will make).
+This whole process can be done “streaming”, without requiring the client to store any data at any point in time other than the hints themselves. In total, the client needs to download the whole data set and store data equal to roughly $64 * \sqrt{N}$ cells, plus $\sqrt{N}$ cells per backup hint (the client will need one backup hint for each query that the client will make).
 
 If desired, the process can also be done in FHE, which means the client would only need to download the hints, but the server would need to do FHE work over the whole dataset; this is of course expensive, and optimizing it is an ongoing problem.
 
