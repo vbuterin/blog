@@ -49,7 +49,7 @@ When building a SNARK or STARK, the first step is typically arithmetization: red
 To prove that you have a solution, you need to prove that the values that you are proposing actually are real polynomials (as opposed to fractions, or datasets that look like one polynomial in one place and a different polynomial in another place, or...), and have a certain maximum degree. In order to do this, we apply a random linear combination trick iteratively:
 
 * Suppose you have evaluations of a polynomial $A$, and you want to prove that its degree is $< 2^{20}$
-* Consider the polynomials $B(x^2) = A(x) + A(-x)$, and $C(x^2) = \frac{A(x) - A(-x)}{x}$.
+* Consider the polynomials $B(x^2) = \frac{A(x) + A(-x)}{2}$, and $C(x^2) = \frac{A(x) - A(-x)}{2 * x}$.
 * Let $D$ be a random linear combination $B + rC$ 
 
 Essentially, what's going on is that $B$ isolates the even coefficients of $A$, and $C$ isolates the odd coefficients. Given $B$ and $C$, you can recover $A$: $A(x) = B(x^2) + xC(x^2)$. And if $A$ really has degree $< 2^{20}$, then (i) $B$ and $C$ have degree $< 2^{19}$. And being a random linear combination, $D$ must also have degree $< 2^{19}$.
