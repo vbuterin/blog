@@ -11,6 +11,15 @@
   </image>
 
 <item>
+<title>My self-sovereign / local / private / secure LLM setup, April 2026</title>
+<link>https://vitalik.ca/general/2026/04/02/secure_llms.html</link>
+<guid>https://vitalik.ca/general/2026/04/02/secure_llms.html</guid>
+<pubDate>Thu, 02 Apr 2026 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
 <title>Balance of power</title>
 <link>https://vitalik.ca/general/2025/12/30/balance_of_power.html</link>
 <guid>https://vitalik.ca/general/2025/12/30/balance_of_power.html</guid>
@@ -83,18 +92,18 @@
 
 
 <item>
-<title>On idea-driven ideas</title>
-<link>https://vitalik.ca/general/2025/08/12/ideas.html</link>
-<guid>https://vitalik.ca/general/2025/08/12/ideas.html</guid>
+<title>"I support it only if it's open source" should be a more common viewpoint</title>
+<link>https://vitalik.ca/general/2025/08/12/onlyopensource.html</link>
+<guid>https://vitalik.ca/general/2025/08/12/onlyopensource.html</guid>
 <pubDate>Tue, 12 Aug 2025 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
 
 <item>
-<title>"I support it only if it's open source" should be a more common viewpoint</title>
-<link>https://vitalik.ca/general/2025/08/12/onlyopensource.html</link>
-<guid>https://vitalik.ca/general/2025/08/12/onlyopensource.html</guid>
+<title>On idea-driven ideas</title>
+<link>https://vitalik.ca/general/2025/08/12/ideas.html</link>
+<guid>https://vitalik.ca/general/2025/08/12/ideas.html</guid>
 <pubDate>Tue, 12 Aug 2025 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -164,18 +173,18 @@
 
 
 <item>
-<title>We should talk less about public goods funding and more about open source funding</title>
-<link>https://vitalik.ca/general/2025/03/29/pubos.html</link>
-<guid>https://vitalik.ca/general/2025/03/29/pubos.html</guid>
+<title>The tree ring model of culture and politics</title>
+<link>https://vitalik.ca/general/2025/03/29/treering.html</link>
+<guid>https://vitalik.ca/general/2025/03/29/treering.html</guid>
 <pubDate>Sat, 29 Mar 2025 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
 
 <item>
-<title>The tree ring model of culture and politics</title>
-<link>https://vitalik.ca/general/2025/03/29/treering.html</link>
-<guid>https://vitalik.ca/general/2025/03/29/treering.html</guid>
+<title>We should talk less about public goods funding and more about open source funding</title>
+<link>https://vitalik.ca/general/2025/03/29/pubos.html</link>
+<guid>https://vitalik.ca/general/2025/03/29/pubos.html</guid>
 <pubDate>Sat, 29 Mar 2025 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -623,9 +632,9 @@
 
 
 <item>
-<title>The Revenue-Evil Curve: a different way to think about prioritizing public goods funding</title>
-<link>https://vitalik.ca/general/2022/10/28/revenue_evil.html</link>
-<guid>https://vitalik.ca/general/2022/10/28/revenue_evil.html</guid>
+<title>我在加密世界的一些个人体验</title>
+<link>https://vitalik.ca/general/2022/10/28/ux_zhCN.html</link>
+<guid>https://vitalik.ca/general/2022/10/28/ux_zhCN.html</guid>
 <pubDate>Fri, 28 Oct 2022 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -641,9 +650,9 @@
 
 
 <item>
-<title>我在加密世界的一些个人体验</title>
-<link>https://vitalik.ca/general/2022/10/28/ux_zhCN.html</link>
-<guid>https://vitalik.ca/general/2022/10/28/ux_zhCN.html</guid>
+<title>The Revenue-Evil Curve: a different way to think about prioritizing public goods funding</title>
+<link>https://vitalik.ca/general/2022/10/28/revenue_evil.html</link>
+<guid>https://vitalik.ca/general/2022/10/28/revenue_evil.html</guid>
 <pubDate>Fri, 28 Oct 2022 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -704,18 +713,18 @@
 
 
 <item>
-<title>What do I think about network states?</title>
-<link>https://vitalik.ca/general/2022/07/13/networkstates.html</link>
-<guid>https://vitalik.ca/general/2022/07/13/networkstates.html</guid>
+<title>「网络国家」之我见</title>
+<link>https://vitalik.ca/general/2022/07/13/networkstates_zhCN.html</link>
+<guid>https://vitalik.ca/general/2022/07/13/networkstates_zhCN.html</guid>
 <pubDate>Wed, 13 Jul 2022 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
 
 <item>
-<title>「网络国家」之我见</title>
-<link>https://vitalik.ca/general/2022/07/13/networkstates_zhCN.html</link>
-<guid>https://vitalik.ca/general/2022/07/13/networkstates_zhCN.html</guid>
+<title>What do I think about network states?</title>
+<link>https://vitalik.ca/general/2022/07/13/networkstates.html</link>
+<guid>https://vitalik.ca/general/2022/07/13/networkstates.html</guid>
 <pubDate>Wed, 13 Jul 2022 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -893,18 +902,18 @@
 
 
 <item>
-<title>Blockchain voting is overrated among uninformed people but underrated among informed people</title>
-<link>https://vitalik.ca/general/2021/05/25/voting2.html</link>
-<guid>https://vitalik.ca/general/2021/05/25/voting2.html</guid>
+<title>La votación mediante blockchain está sobrevalorada entre personas desinformadas pero subestimada entre personas informadas</title>
+<link>https://vitalik.ca/general/2021/05/25/voting2_ES.html</link>
+<guid>https://vitalik.ca/general/2021/05/25/voting2_ES.html</guid>
 <pubDate>Tue, 25 May 2021 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
 
 <item>
-<title>La votación mediante blockchain está sobrevalorada entre personas desinformadas pero subestimada entre personas informadas</title>
-<link>https://vitalik.ca/general/2021/05/25/voting2_ES.html</link>
-<guid>https://vitalik.ca/general/2021/05/25/voting2_ES.html</guid>
+<title>Blockchain voting is overrated among uninformed people but underrated among informed people</title>
+<link>https://vitalik.ca/general/2021/05/25/voting2.html</link>
+<guid>https://vitalik.ca/general/2021/05/25/voting2.html</guid>
 <pubDate>Tue, 25 May 2021 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -1325,18 +1334,18 @@
 
 
 <item>
-<title>Proof of Stake FAQ</title>
-<link>https://vitalik.ca/general/2017/12/31/pos_faq.html</link>
-<guid>https://vitalik.ca/general/2017/12/31/pos_faq.html</guid>
+<title>Sharding FAQ</title>
+<link>https://vitalik.ca/general/2017/12/31/sharding_faq.html</link>
+<guid>https://vitalik.ca/general/2017/12/31/sharding_faq.html</guid>
 <pubDate>Sun, 31 Dec 2017 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
 
 <item>
-<title>Sharding FAQ</title>
-<link>https://vitalik.ca/general/2017/12/31/sharding_faq.html</link>
-<guid>https://vitalik.ca/general/2017/12/31/sharding_faq.html</guid>
+<title>Proof of Stake FAQ</title>
+<link>https://vitalik.ca/general/2017/12/31/pos_faq.html</link>
+<guid>https://vitalik.ca/general/2017/12/31/pos_faq.html</guid>
 <pubDate>Sun, 31 Dec 2017 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -1478,18 +1487,18 @@
 
 
 <item>
-<title>[Mirror] A Proof of Stake Design Philosophy</title>
-<link>https://vitalik.ca/general/2016/12/29/pos_design.html</link>
-<guid>https://vitalik.ca/general/2016/12/29/pos_design.html</guid>
+<title>[Mirror] Bir Proof of Stake Tasarım Felsefesi</title>
+<link>https://vitalik.ca/general/2016/12/29/pos_design_TR.html</link>
+<guid>https://vitalik.ca/general/2016/12/29/pos_design_TR.html</guid>
 <pubDate>Thu, 29 Dec 2016 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
 
 <item>
-<title>[Mirror] Bir Proof of Stake Tasarım Felsefesi</title>
-<link>https://vitalik.ca/general/2016/12/29/pos_design_TR.html</link>
-<guid>https://vitalik.ca/general/2016/12/29/pos_design_TR.html</guid>
+<title>[Mirror] A Proof of Stake Design Philosophy</title>
+<link>https://vitalik.ca/general/2016/12/29/pos_design.html</link>
+<guid>https://vitalik.ca/general/2016/12/29/pos_design.html</guid>
 <pubDate>Thu, 29 Dec 2016 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -1500,15 +1509,6 @@
 <link>https://vitalik.ca/general/2016/12/10/qap.html</link>
 <guid>https://vitalik.ca/general/2016/12/10/qap.html</guid>
 <pubDate>Sat, 10 Dec 2016 00:00:00 +0000</pubDate>
-<description></description>
-</item>
-
-
-<item>
-<title>Über Kollusion</title>
-<link>https://vitalik.ca/general/2000/01/01/On_Collusion_DE.html</link>
-<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_DE.html</guid>
-<pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
@@ -1535,6 +1535,15 @@
 <title>Na colusão</title>
 <link>https://vitalik.ca/general/2000/01/01/On_Collusion_Portuguese.html</link>
 <guid>https://vitalik.ca/general/2000/01/01/On_Collusion_Portuguese.html</guid>
+<pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Über Kollusion</title>
+<link>https://vitalik.ca/general/2000/01/01/On_Collusion_DE.html</link>
+<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_DE.html</guid>
 <pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
 <description></description>
 </item>
