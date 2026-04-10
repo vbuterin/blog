@@ -1,8 +1,10 @@
 #!/usr/bin/python3
 import os, sys
 
-HEADER = """
-
+HEADER_START = """
+<!DOCTYPE html>
+<html>
+<head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 <link rel="stylesheet" type="text/css" href="/css/common-vendor.b8ecfc406ac0b5f77a26.css">
@@ -32,12 +34,18 @@ HEADER = """
 
 .math { font-family: MJXc-TeX-math-Iw }
 </style>
+"""
 
+HEADER_END = """
+</head>
+<body>
 <div id="doc" class="container-fluid markdown-body comment-enabled" data-hard-breaks="true">
 
 """
 
-FOOTER = """ </div> """
+FOOTER = """ </div>
+</body>
+</html> """
 
 TOC_HEADER = """
 
@@ -138,8 +146,10 @@ if __name__ == '__main__':
         
         os.system('pandoc -o /tmp/temp_output.html {} {}'.format(file_location, options))
         total_file_contents = (
-            HEADER +
+            HEADER_START +
+            '<title>{}</title>\n'.format(metadata['title']) +
             make_twitter_card(metadata, global_config) +
+            HEADER_END +
             defancify(open('/tmp/temp_output.html').read()) +
             FOOTER
         )
@@ -157,11 +167,14 @@ if __name__ == '__main__':
     toc_items = [make_toc_item(metadata) for metadata in sorted_metadatas]
 
     toc = (
-        HEADER +
+        HEADER_START +
+        '<title>{}</title>\n'.format(global_config['title']) +
         make_twitter_card(global_config, global_config) +
+        HEADER_END +
         TOC_HEADER.format(global_config['title']) +
         ''.join(toc_items) +
-        TOC_FOOTER
+        TOC_FOOTER +
+        FOOTER
     )
 
     open('site/index.html', 'w').write(toc)
