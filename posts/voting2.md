@@ -164,7 +164,7 @@ One of the underrated benefits of the crypto space is that it's an excellent "vi
 
 The incentives for attackers are high: if an attacker steals $100 from your cryptoeconomic gadget, they can often get the full $100 in reward, and they can often get away with it. But the incentives for defenders are also high: if you develop a tool that helps users _not_ lose their funds, you could (at least sometimes) turn that into a tool and earn millions. Crypto is the ultimate training zone: if you can build something that can survive in this environment at scale, it can probably also survive in the bigger world as well.
 
-This applies to [quadratic funding](../../../2021/04/02/round9.html), it applies to [multisig](https://gnosis-safe.io/) and [social recovery wallets](../../../2021/01/11/recovery.html), and it can apply to voting systems too. The blockchain space has already helped to motivate the rise of important security technologies:
+This applies to [quadratic funding](../../../2021/04/02/round9.html), it applies to [multisig](https://safe.global/) and [social recovery wallets](../../../2021/01/11/recovery.html), and it can apply to voting systems too. The blockchain space has already helped to motivate the rise of important security technologies:
 
 * Hardware wallets
 * Efficient general-purpose zero knowledge proofs
