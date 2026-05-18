@@ -72,7 +72,7 @@ The best-in-class technology for solving these problems [back in 2013](https://b
 <img src="../../../../images/social-recovery-files/diag1.png" class="padded" />
 </center><br>
 
-This technology was originally developed within the Bitcoin ecosystem, but excellent multisig wallets (eg. see [Gnosis Safe](https://gnosis-safe.io/)) now exist for Ethereum too. Multisig wallets have been highly successful within organizations: the Ethereum Foundation uses a 4-of-7 multisig wallet to store [its funds](https://etherscan.io/address/0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae), as do many other orgs in the Ethereum ecosystem.
+This technology was originally developed within the Bitcoin ecosystem, but excellent multisig wallets (eg. see [Safe (formerly Gnosis Safe)](https://safe.global/)) now exist for Ethereum too. Multisig wallets have been highly successful within organizations: the Ethereum Foundation uses a 4-of-7 multisig wallet to store [its funds](https://etherscan.io/address/0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae), as do many other orgs in the Ethereum ecosystem.
 
 For a multisig wallet to hold the funds for an _individual_, the main challenge is: who holds the funds, and how are transactions approved? The most common formula is some variant of "two easily accessible, but separate, keys, held by you (eg. laptop and phone) and a third more secure but less accessible a backup, held offline or by a friend or institution".
 

@@ -164,7 +164,7 @@ Uno de los beneficios subestimados del espacio cripto es que es una excelente "z
 
 Los incentivos para los atacantes son altos: si un atacante roba $100 de tu dispositivo criptoeconómico, a menudo pueden obtener la recompensa completa de $100, y a menudo pueden salir impunes. Pero los incentivos para los defensores también son altos: si desarrollas una herramienta que ayuda a los usuarios a _no_ perder sus fondos, podrías (al menos en ocasiones) convertir eso en una herramienta y ganar millones. Cripto es la zona de entrenamiento definitiva: si puedes construir algo que pueda sobrevivir en este entorno a gran escala, probablemente también pueda sobrevivir en el mundo real.
 
-Esto se aplica a [la financiación cuadrática](../../../2021/04/02/round9.html), se aplica a [multifirmas](https://gnosis-safe.io/) y [carteras de recuperación social](../../../2021/01/11/recovery.html), y también puede aplicarse a los sistemas de votación. El espacio blockchain ya ha contribuido a motivar el surgimiento de tecnologías de seguridad importantes:
+Esto se aplica a [la financiación cuadrática](../../../2021/04/02/round9.html), se aplica a [multifirmas](https://safe.global/) y [carteras de recuperación social](../../../2021/01/11/recovery.html), y también puede aplicarse a los sistemas de votación. El espacio blockchain ya ha contribuido a motivar el surgimiento de tecnologías de seguridad importantes:
 
 * Carteras de hardware
 * Pruebas de conocimiento cero eficientes de propósito general
