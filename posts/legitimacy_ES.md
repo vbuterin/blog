@@ -8,7 +8,7 @@ _Un agradecimiento especial a Karl Floersch, Aya Miyaguchi, Mr Silly por sus ide
 Los ecosistemas de cadenas de bloques Bitcoin y Ethereum gastan más en seguridad de la red - objetivo de la minería por prueba de trabajo (POW) - que en todo lo demás combinado. La cadena de bloques Bitcoin ha pagado un promedio de alrededor _de $38 millones al día_ en recompensas a los mineros desde el comienzo del año, más [alrededor de $5 millones en tarifas de transacción diario](https://ycharts.com/indicators/bitcoin_total_transaction_fees_per_day). La cadena de bloques Ethereum ocupa el segundo lugar, con $19.5 millones al día en recompensas en bloque más [$18 millones en tarifas de transacción diario](https://etherscan.io/chart/transactionfee). Mientras tanto, el presupuesto anual de la Fundación Ethereum, que paga la investigación, el desarrollo de protocolos, las subvenciones y todo tipo de otros gastos, es de apenas 30 millones de dólares _al año_. También existen fondos que no provienen de la Fundación Ethereum, pero a lo sumo son un poco más grandes. Es probable que los gastos del ecosistema de Bitcoin en I+D sean incluso menores. La I+D del ecosistema Bitcoin está financiada en gran parte por empresas (con un total de 250 millones de dólares recaudados hasta ahora [según esta página](https://www.crunchbase.com/hub/bitcoin-companies-seed-funding)), y [este informe](https://blog.bitmex.com/who-funds-bitcoin-development/) sugiere unos 57 empleados; asumiendo salarios bastante altos y muchos desarrolladores pagados que no se cuentan, eso equivale a unos 20 millones de dólares al año.
 
 <center>
-<img src="https://vitalik.ca/images/legitimacy-files/chart.png" /><br><br>
+<img src="../../../../images/legitimacy-files/chart.png" /><br><br>
 </center>
 
 Claramente, este patrón de gastos _es una mala asignación masiva de recursos_. El último 20% de la potencia de hash de la red proporciona mucho menos valor al ecosistema que lo que tendrían esos mismos recursos si se hubieran dedicado a la investigación y al desarrollo del protocolo central. Entonces, ¿por qué no ... recortar el presupuesto de PoW en un 20% y redirigir los fondos a esas otras cosas en su lugar?
@@ -23,7 +23,7 @@ Vale la pena comprender la poderosa fuerza social que está creando este efecto.
 Para comprender mejor la fuerza a la que nos dirigimos, otro ejemplo importante es la saga épica de Steem y [Hive](https://hive.io/). A principios de 2020, [Justin Sun](https://www.theverge.com/21459906/bittorrent-tron-acquisition-justin-sun-us-china) compró [Steem-the-company](https://www.coindesk.com/justin-sun-bought-steemit-steem-moved-to-limit-his-power), que no es lo mismo que Steem-the-blockchain, pero poseía aproximadamente el 20% del suministro de tokens STEEM. La comunidad, naturalmente, no confió en Justin Sun. Así que hicieron una votación en cadena para formalizar lo que consideraban un "acuerdo de caballeros", acordando que las monedas de Steem-the-company se mantenían en fideicomiso por el bien común de Steem-the-blockchain y no deberían usarse para votar. Con la ayuda de las monedas en poder de los intercambios, Justin Sun hizo un contraataque y ganó el control de suficientes delegados para controlar unilateralmente la cadena. La comunidad no vio más opciones dentro del protocolo. Entonces, en su lugar, hicieron una bifurcación de Steem-the-blockchain, llamada Hive, y copiaron todos los saldos de tokens de STEEM, excepto aquellos, incluido el de Justin Sun, que participaron en el ataque.
 
 <center>
-<br><img src="https://vitalik.ca/images/legitimacy-files/hive.png" style="width:500px" />
+<br><img src="../../../../images/legitimacy-files/hive.png" style="width:500px" />
 <br><br>
 <i><small>Y consiguieron muchas aplicaciones a bordo. Si no hubieran logrado esto, muchos más usuarios se habrían quedado en Steem o se habrían mudado a un proyecto diferente por completo.</small></i>
 <br><br><br>
@@ -46,7 +46,7 @@ _Ver también: mi anterior [publicación sobre la gobernanza de blockchain](../.
 Para comprender el funcionamiento de la legitimidad, necesitamos profundizar en alguna teoría de juegos.Hay muchas situaciones en la vida que exigen un **comportamiento coordinado**: si actúa de cierta manera solo, es probable que no llegue a ninguna parte (o algo peor), pero si todos actúan juntos, se puede lograr el resultado deseado.
 
 <center><br>
-<img src="https://vitalik.ca/images/voting-files/coordinationgame.png" />
+<img src="../../../../images/voting-files/coordinationgame.png" />
 <br><br>
 <i><small> Un juego de coordinación abstracto. Usted se beneficia enormemente de hacer el mismo movimiento que todos los demás.</small></i><br><br>
 </center>
@@ -60,7 +60,7 @@ Ahora, estamos listos para definir la legitimidad.
 La legitimidad es un fenómeno que surge de forma natural en los juegos de coordinación. Si usted no está en un juego de coordinación, no hay razón para actuar de acuerdo con sus expectativas de cómo actuarán otras personas, por lo que la legitimidad no es importante. Pero, como hemos visto, los juegos de coordinación están en todas partes en la sociedad, por lo que la legitimidad resulta ser bastante importante. En casi cualquier entorno con juegos de coordinación que exista durante bastante tiempo, inevitablemente surgen algunos mecanismos que pueden elegir qué decisión tomar. Estos mecanismos están impulsados por una cultura establecida de que todos prestan atención a estos mecanismos y (generalmente) hacen lo que dicen. Cada persona razona que debido a que _todos los demás_ siguen estos mecanismos, si hacen algo diferente, solo crearán conflicto y sufrirán, o al menos se quedarán solos en un ecosistema bifurcado y solitario. Si un mecanismo tiene la capacidad de tomar estas decisiones con éxito, entonces ese mecanismo tiene legitimidad.
 
 <center><br>
-<img src="https://vitalik.ca/images/voting-files/byzantinegeneral.jpg" style="width:500px" />
+<img src="../../../../images/voting-files/byzantinegeneral.jpg" style="width:500px" />
 <br><br>
 <i><small>Un general bizantino reuniendo a sus tropas hacia adelante. El propósito de esto no es solo hacer que los soldados se sientan valientes y emocionados, sino también asegurarles que todos los demás se sienten valientes y emocionados y también cargarán hacia adelante, por lo que un soldado individual no solo se está suicidando al cargar solo hacia adelante.</small></i><br><br>
 </center>
@@ -91,8 +91,8 @@ Hay dos formas de responder a este hecho. La primera forma es enorgullecerse de 
 <center>
 <br>
 <table><tr style="border:0px">
-<td style="border:0px"><a href="https://twitter.com/francispouliot_/status/1366465485546655744"><img src="https://vitalik.ca/images/legitimacy-files/bitcoin1.png" /></a></td>
-<td style="border:0px"><a href="https://blog.wasabiwallet.io/bitcoin-knots-donation/"><img src="https://vitalik.ca/images/legitimacy-files/bitcoin2.png" /></a></td>
+<td style="border:0px"><a href="https://twitter.com/francispouliot_/status/1366465485546655744"><img src="../../../../images/legitimacy-files/bitcoin1.png" /></a></td>
+<td style="border:0px"><a href="https://blog.wasabiwallet.io/bitcoin-knots-donation/"><img src="../../../../images/legitimacy-files/bitcoin2.png" /></a></td>
 </tr></table>
 <br>
 </center>
@@ -117,14 +117,14 @@ Esta es también una concepción de legitimidad: cualquier proyecto que haga la 
 
 Los ecosistemas blockchain, incluido Ethereum, valoran la libertad y la descentralización. Pero, lamentablemente, la ecología de bienes públicos de la mayoría de estas cadenas de bloques sigue estando bastante impulsada por la autoridad y centralización: ya sea Ethereum, Zcash o cualquier otra cadena de bloques importante, normalmente hay una (o como máximo 2-3) entidades que gastan mucho más que todos. de lo contrario, dar pocas opciones a los equipos independientes que quieran construir bienes públicos. A este modelo de financiación de bienes públicos lo llamo "Coordinadores centrales de capital para bienes públicos" (CCCP).
 
-<br><center><img src="https://vitalik.ca/images/legitimacy-files/cccp.png" /></center><br><br>
+<br><center><img src="../../../../images/legitimacy-files/cccp.png" /></center><br><br>
 
 **Este estado de cosas no es culpa de las propias organizaciones, que normalmente hacen todo lo posible con valentía para apoyar el ecosistema. Más bien, son las reglas del ecosistema las que están siendo _injustas con esa organización_, porque mantienen a la organización en un estándar injustamente alto**. Cualquier organización centralizada tendrá inevitablemente puntos ciegos y al menos algunas categorías y equipos cuyo valor no comprenderá; esto no se debe a que cualquiera de los involucrados esté haciendo algo malo, sino a que tal perfección está fuera del alcance de pequeños grupos de humanos. Así que hay un gran valor en la creación de un enfoque más diversificado y resistente a los bienes públicos que financian a tomar la presión de una sola organización.
 
 Afortunadamente, ¡ya tenemos la semilla de esa alternativa! El ecosistema de aplicación de capa en Ethereum existe, se está volviendo cada vez más poderosa y ya está mostrando su espíritu público. Empresas como Gnosis han estado contribuyendo al desarrollo de clientes en Ethereum, y varios proyectos Ethereum DEFI han donado cientos de miles de dólares en subvenciones de Gitcoin Grants.
 
 <center><br>
-<img src="https://vitalik.ca/images/round_7_files/matching.jpg" />
+<img src="../../../../images/round_7_files/matching.jpg" />
 <br>
 </center><br><br>
 
@@ -149,7 +149,7 @@ Por lo tanto, aunque el poder de los efectos de legitimidad impulsados por la co
 El concepto de apoyar los bienes públicos a través del valor generado "a partir del Ether" por concepciones de legitimidad respaldadas públicamente tiene un valor que va mucho más allá del ecosistema Ethereum. Un desafío y una oportunidad importantes e inmediatos son los NFT. Los NFT tienen una gran posibilidad de ayudar significativamente a muchos tipos de bienes públicos, especialmente de la variedad creativa, a resolver al menos [parcialmente sus deficiencias de financiamiento crónicos y sistémicos](https://en.wikipedia.org/wiki/Tragedy_of_the_commons).
 
 <center><br>
-<a href="https://www.theverge.com/2021/3/9/22321464/jack-dorsey-nft-tweet-auction-bitcoin-donate-charity"><img src="https://vitalik.ca/images/legitimacy-files/jack.jpg" style="width:450px" /></a>
+<a href="https://www.theverge.com/2021/3/9/22321464/jack-dorsey-nft-tweet-auction-bitcoin-donate-charity"><img src="../../../../images/legitimacy-files/jack.jpg" style="width:450px" /></a>
 <br><br>
 <i><small>De hecho, un primer paso muy admirable.</small></i>
 </center><br><br>
