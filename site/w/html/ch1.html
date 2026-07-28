@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        /* Dark mode toggle */
+        .dark-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 16px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .dark-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .document-page {
+            background: #fff;
+            border-radius: 12px;
+            padding: 60px 80px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            width: 780px;
+            min-height: 1000px;
+        }
+
+        .document-page h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .document-page h2 {
+            font-size: 2rem;
+            color: #444;
+            margin-bottom: 15px;
+            margin-top: 30px;
+        }
+
+        .document-page h3 {
+            font-size: 1.5rem;
+            color: #555;
+            margin-bottom: 12px;
+            margin-top: 25px;
+        }
+
+        .document-page p {
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .document-page ul {
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 2;
+            margin-bottom: 20px;
+            padding-left: 30px;
+            list-style-type: disc;
+        }
+
+        .document-page ol {
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 2;
+            margin-bottom: 20px;
+            padding-left: 30px;
+            list-style-type: decimal;
+        }
+
+        .document-page li {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .document-page ul ul,
+        .document-page ul ol,
+        .document-page ol ul,
+        .document-page ol ol {
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .document-page blockquote {
+            border-left: 5px solid #667eea;
+            padding-left: 25px;
+            margin: 25px 0;
+            font-size: 1.1rem;
+            color: #555;
+            font-style: italic;
+            background: #f8f9fa;
+            padding: 20px 25px;
+            border-radius: 4px;
+        }
+
+        .document-page pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 25px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 25px 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .document-page code {
+            font-family: 'Monaco', 'Menlo', monospace;
+            background: #f5f5f5;
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: #e83e8c;
+        }
+
+        .document-page pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        .document-page table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+        }
+
+        .document-page th, .document-page td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: left;
+            color: #333;
+        }
+
+        .document-page img {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .document-page th {
+            background: #667eea;
+            color: white;
+        }
+
+        .document-page tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .document-page hr {
+            border: none;
+            height: 3px;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            margin: 30px 0;
+            border-radius: 2px;
+        }
+
+        .device-view {
+            background-color: #0a0e27;
+            color: #7fbcff;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            margin: 0;
+            border-radius: 15px;
+            font-size: 75%;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .wide-device-view {
+            max-width: 900px;
+        }
+
+        .narrow-device-view {
+            max-width: 50%;
+        }
+
+        .device-view h3 {
+            color: #7fbcff;
+            border-bottom: 2px solid #3d70c3;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .device-view table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        .device-view thead tr {
+            background-color: #1a2a4a;
+            border: 1px solid #3d70c3;
+        }
+
+        .device-view th {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #3d70c3;
+            color: #cef;
+            font-weight: bold;
+        }
+
+        .device-view tbody tr:nth-child(odd) {
+            background-color: #0f1a3a !important;
+            border: 1px solid #2a4a7a;
+        }
+
+        .device-view tbody tr:nth-child(even) {
+            background-color: #12204a !important;
+            border: 1px solid #2a4a7a;
+        }
+
+        .device-view td {
+            padding: 10px;
+            border: 1px solid #2a4a7a;
+            color: #b8d8ff;
+            font-weight: bold;
+        }
+
+        .device-view button {
+            background-color: #1a3a6a;
+            border: 1px solid #3d70c3;
+            padding: 10px 25px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.2s;
+            color: #cef;
+        }
+
+        .device-view button:hover {
+            background-color: #2a4a7a;
+            border-color: #7fbcff;
+        }
+
+        .device-view ul,
+        .device-view ol {
+            padding-left: 10px !important;
+            margin-left: 0 !important;
+            margin-bottom: 0 !important;
+            list-style-position: outside !important;
+            font-size: inherit !important;
+            color: #9cc2ff !important;
+            line-height: inherit !important;
+            font-family: inherit !important;
+        }
+
+        .device-view li {
+            padding-left: 0 !important;
+            list-style-position: outside !important;
+            margin-bottom: 0 !important;
+            font-size: inherit !important;
+            color: #9cc2ff !important;
+            font-family: inherit !important;
+        }
+
+        /* Dark mode overrides */
+        html.dark body {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+
+        html.dark .dark-toggle {
+            background: #1a1a2e;
+            color: #f0e68c;
+        }
+
+        html.dark .document-page {
+            background: #1a1a2e;
+        }
+
+        html.dark .document-page h1 {
+            color: #f0f0f0;
+            border-bottom-color: #8b83c3;
+        }
+
+        html.dark .document-page h2 {
+            color: #d0d0d0;
+        }
+
+        html.dark .document-page h3 {
+            color: #c0c0c0;
+        }
+
+        html.dark .document-page p,
+        html.dark .document-page ul,
+        html.dark .document-page ol {
+            color: #d0d0d0;
+        }
+
+        html.dark .document-page li {
+            color: #d0d0d0;
+        }
+
+        html.dark .document-page blockquote {
+            color: #b0b0b0;
+            background: rgba(255,255,255,0.05);
+            border-left-color: #8b83c3;
+        }
+
+        html.dark .document-page code {
+            background: rgba(255,255,255,0.1);
+            color: #f08dcd;
+        }
+
+        html.dark .document-page table {
+            border-color: #444;
+        }
+
+        html.dark .document-page th, html.dark .document-page td {
+            border-color: #444;
+            color: #d0d0d0;
+        }
+
+        html.dark .document-page th {
+            background: #4a4580;
+            color: white;
+        }
+
+        html.dark .document-page tr:nth-child(even) {
+            background: rgba(255,255,255,0.03);
+        }
+
+        html.dark .document-page hr {
+            background: linear-gradient(to right, #8b83c3, #6b5ba0);
+        }
+
+        html.dark .device-view {
+            background-color: #050510;
+            border-color: #1a1a40;
+        }
+
+        html.dark .device-view h3 {
+            color: #5588cc;
+            border-bottom-color: #1a3a6a;
+        }
+
+        html.dark .device-view th {
+            color: #88bbee;
+            border-color: #1a3a6a;
+        }
+
+        html.dark .device-view td {
+            color: #88bbee;
+            border-color: #1a3a6a;
+        }
+
+        html.dark .device-view tbody tr:nth-child(odd) {
+            background-color: #080820;
+            border-color: #0f1a3a;
+        }
+
+        html.dark .device-view tbody tr:nth-child(even) {
+            background-color: #0a0a2a;
+            border-color: #0f1a3a;
+        }
+
+        html.dark .device-view button {
+            background-color: #0a1a3a;
+            border-color: #1a3a6a;
+            color: #88bbee;
+        }
+
+        html.dark .device-view button:hover {
+            background-color: #1a2a4a;
+            border-color: #4488cc;
+        }
+
+        html.dark .device-view ul,
+        html.dark .device-view ol,
+        html.dark .device-view li {
+            color: #6699bb;
+        }
+
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .document-page {
+                width: 100%;
+                padding: 25px 15px;
+                min-height: auto;
+            }
+
+            .document-page h1 {
+                font-size: 1.4rem;
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+            }
+
+            .document-page h2 {
+                font-size: 1.2rem;
+                margin-bottom: 12px;
+                margin-top: 20px;
+            }
+
+            .document-page h3 {
+                font-size: 1rem;
+                margin-bottom: 10px;
+                margin-top: 18px;
+            }
+
+            .document-page p {
+                font-size: 0.9rem;
+                line-height: 1.6;
+                margin-bottom: 12px;
+            }
+
+            .document-page ul,
+            .document-page ol {
+                font-size: 0.9rem;
+                line-height: 1.7;
+                margin-bottom: 15px;
+                padding-left: 20px;
+            }
+
+            .document-page li {
+                margin-bottom: 5px;
+            }
+
+            .document-page blockquote {
+                font-size: 0.9rem;
+                padding-left: 15px;
+                margin: 15px 0;
+                padding: 12px 15px;
+            }
+
+            .document-page pre {
+                padding: 12px;
+                font-size: 0.75rem;
+                margin: 15px 0;
+            }
+
+            .document-page code {
+                font-size: 0.8rem;
+                padding: 2px 5px;
+            }
+
+            .document-page table {
+                font-size: 0.8rem;
+            }
+
+            .document-page th,
+            .document-page td {
+                padding: 8px;
+            }
+
+            .document-page img {
+                margin: 15px auto;
+            }
+
+            .document-page hr {
+                margin: 20px 0;
+            }
+
+            .wide-device-view,
+            .narrow-device-view {
+                max-width: 100%;
+                padding: 15px;
+                font-size: 70%;
+                margin: 15px auto;
+            }
+
+            .device-view table {
+                margin-bottom: 20px;
+                font-size: 0.85rem;
+            }
+
+            .device-view th,
+            .device-view td {
+                padding: 6px;
+            }
+
+            .device-view button {
+                padding: 8px 18px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    
+                <div class="document-page">
+                    <h1>Chapter 1</h1>
+<p>Gladias grasped one of the handlebars with the palm of his hand, just as the doors of the autobus closed behind him.</p>
+<p>A grandmother with a small child walked right behind Gladias. Two separate couples stood up to offer their seats. The grandmother walked toward the closer pair, thanked them, and sat down with her child.</p>
+<p>The bus began to accelerate. Gladias was standing in the middle, well positioned to look outside the windows on both his left and his right.</p>
+<p>On the left side of the road, there was a row of five-storey apartment buildings, interspersed with walking paths. Both the walking paths and the sidewalk of the main road were protected from the shade by tall green trees.</p>
+<p>On the sidewalk, a family was walking by with four children, the younger two each riding a tricycle. The oldest was visibly using a hand device to pilot a drone, and the second oldest was chasing it.</p>
+<p>On the right side of the road, there was a tall soundproof barrier, painted with green and blue colors, barely visible behind another, even thicker, row of tall trees.</p>
+<p>On the sidewalk, two people were walking forward, wearing the same signature Veridian Privacy Robe that Gladias was wearing. A loose-fitting dark purple dress covered the full body from the ankles up to the hood covering the wearer's head. Below the ankles, they wore shoes of the same dark purple color.</p>
+<p>A few meters behind them, were two teenagers wearing plain grey shirts, one enjoying the view of the trees, the other looking down at his hand device.</p>
+<p>Out of the corner of his eye on the left, Gladias noticed a large billboard on the side of one of the apartment buildings. The billboard showed rolling green hills and a lake in the distance, with two women and three children walking along a path near the front. "Experience the natural beauty of Veridia", was written near the top of the banner.</p>
+<p>On the wall of the next apartment building, he saw another billboard. This time, it was an advertisement for HydraFill, a brand selling various kinds of drinks, which over the last twenty years have almost all become sugar free. "Hydrafill", the text on the advertisement said, "Our drinks are proudly free of over 2,000 known poisons and anti-recommended substances".</p>
+<p>Suddenly, Gladias's hand device buzzed. He immediately knew what had happened: as a citizen of Veridia, he had been randomly selected by cryptographic sortition to vote on how much he liked the billboard. He opened his hand device, and he saw the voting dialog onscreen:</p>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>Vote on: Badra St #1103</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Emerald AI summary: Five-storey apartment building. Blue-grey colored. Features Hydrafill billboard #73.</td>
+    </tr>
+    <tr>
+      <td>
+<input type="range" style="width:100%">
+<div style="display: flex; justify-content: space-between; width:100%">
+    <span>-5</span>
+    <span>0</span>
+    <span>5</span>
+</div>
+</td>
+</tr><tr><td>
+<center>
+  <button> Select </button>
+</center>
+</td></tr></tbody>
+</table></div><br>
+<p>The votes set the rates of the public aesthetics tax - a major component of the land tax - on each building, and so all the architects and decorators watched the results carefully to see what would make the citizens happiest. And now, it was Gladias's turn to participate.</p>
+<p>Gladias pushed the slider toward the right. His finger briefly pushed it about halfway to the right, but then stopped. He zoomed out to a broader view, where he could see the aesthetics votes that he had already made in the current year. He pushed the slider for the current vote all the way to the right. The sliders for every other vote, especially those further on the right, automatically moved significantly toward the center.</p>
+<p>This was quadratic voting, he remembered from the Veridian civics lessons of his youth. Average of the votes was pegged to zero, average of the squares of the votes pegged to one. It was best, <em>mathematically provably best</em>, to vote not just the <em>direction</em> you felt right, but also with the <em>strength</em> you felt right - not more, not less.</p>
+<p>Gladias's finger moved the slider back, set it about halfway between the center and the edge on the right, and hit "Select". We need more fun in the world.</p>
+<p>As soon as he clicked, the autobus slowed down, and the doors opened. Gladias carefully stepped out. He had arrived at his destination.</p>
+<hr>
+<p>Gladias held his hand device near the marking on the entrance gate, and waited for one second.</p>
+<p>"Proof verified, welcome", the machine said.</p>
+<p>He passed through the gate, and headed toward the concert.</p>
+<p>About a tenth of the attendees that Gladias could see were wearing the standard Veridian privacy robe, just like him.</p>
+<p>Some of them were moving forward with clear intent and efficiency, just like Gladias.</p>
+<p>The others were walking more casually, some standing around and talking and laughing.-</p>
+<p>The remaining attendees were mostly wearing simple shirts, either plain colored or featuring slogans of their favorite bands.</p>
+<p>Some were dancing, others were chatting with each other, and still others were walking forward calmly, simply trying to passively enjoy the show.</p>
+<p>After walking forward about fifty metres, Gladias emerged into a large open field surrounded by a high fence. Behind the fence was a soundproof barrier - the same barrier that Gladias saw before, but from the inside. Trees poked up everywhere behind the fence, shielding the entire venue from public view.</p>
+<p>Gladias pushed through the crowd, as the noise became louder. After several minutes, he finally got to the concert stage area, where he was able to hear the gnarly voice of Dreadknot's lead singer clearly.</p>
+<blockquote>
+WE MEET THEM WITH OUR FURY IN OUR HEARTS
+<p>AND FLAY THEIR FLESH WITH SHINING STEEL AND DARTS</p>
+</blockquote>
+<p>Gladias took out his hand device again.</p>
+<p>Most people attending the concert were there to enjoy the music and hang out with their friends. For Gladias, this was certainly not his <em>ideal</em> entertainment - his preferred music was of a much softer and gentler variety - but he did not <em>dislike</em> it either. More than anything else, he found the concert interesting in an anthropological way, exploring the interests and emotions of people he would otherwise have little interaction with. But ultimately, Gladias was at the concert for quite a different purpose. Gladias checked the rubric on his hand device once more:</p>
+<br><div class="device-view wide-device-view"><h3>Basic summary</h3>
+        
+<table>
+  <thead>
+    <tr>
+      <th>Tier</th>
+      <th>Criteria</th>
+      <th>Tax rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>
+<ul><li>Content strongly promotes two or more of the following: personal development, scientific and technical education, kindness toward others, healthy family relationships, good conflict resolution practices, civic duty</li><li>Does not meet any Tier 4-5 criteria</li></ul></td>      <td>0%</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>
+<ul><li>Content weakly promotes one or more of the following: personal development, scientific and technical education, kindness toward others, healthy family relationships, good conflict resolution practices, civic duty</li><li>Does not meet any Tier 4-5 criteria</li></ul></td>      <td>10%</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>
+<ul><li>Content does not meet any Tier 4-5 criteria</li></ul></td>      <td>20%</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>
+<ul><li>Content weakly promotes one or more of the following: violence, lawless behavior, use of anti-recommended substances, gambling or risky investment, excessive display of wealth, poor conflict resolution practices, religious or ethnic hatred</li></ul></td>      <td>30%</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>
+<ul><li>Content strongly promotes two or more of the following: violence, lawless behavior, use of anti-recommended substances, gambling or risky investment, excessive display of wealth, poor conflict resolution practices, religious or ethnic hatred</li></ul></td>      <td>40%</td>
+    </tr>
+  </tbody>
+</table>
+<div><b> Tax rates increased by 2.5x on proceeds from Veridian national Graph Funding. </b></div><br>
+<div>
+<button> View relevant precedents </button>
+<button> Back </button>
+</div></div><br>
+<p>In Veridia, very few things are strictly <em>banned</em>. If Dreadknot wanted to, they could have all their songs repeatedly shouting "Hail the Arctic Emperor" and "we hope all government officials get painfully murdered" over and over again, and they would never be shut down or go to jail. But what Veridia <em>does</em> have is intricate systems of taxes and subsidies, maintained by a group called the Order of Steering.</p>
+<p>This was the group that Gladias was part of - a large, decentralized collective, though still tiny compared to Veridia's entire populace, that was there to vote on things much deeper and more complicated than public aesthetics and the once-per-four-years national elections.</p>
+<p>The Order of Steering has three types of participants:</p>
+<p><em><strong>Keepers</strong></em> make and update a collection of the tax and subsidy rubrics, which cover all kinds of ways in which a business might be more or less good for society, the environment, or a number of other objectives.</p>
+<p><em><strong>Sentinels</strong></em> are regularly cryptographically randomly selected for audits, whre they judge which position on each rubric each business gets.</p>
+<p>Gladias is an <em><strong>Acolyte</strong></em>: a Keeper or Sentinel in training, used in lower-priority audits.</p>
+<p>Gladias thought back to his teenage days, when he had learned programming by writing an alternative client for Silverchat. That had only been possible, he knew, because the API was open, and the platform allowed developers to make alternative clients and users to export and migrate their data - all decisions that had undoubtedly been motivated by trying to lower taxes on the hardware and software openness rubric. That had motivated Gladias to contribute back, and get involved in Steering himself.</p>
+<p>For music, and much other art, the primary tax rubric that matters is the social impact rubric. And today, Gladias's task was to evaluate Dreadknot's status on it.</p>
+<blockquote>
+THE SMOKE OF CITIES BURNING IN THE NIGHT
+<p>WE LEAVE NO PLACE TO HIDE FOR ALL IN SIGHT</p>
+</blockquote>
+<p>Gladias clicked "View relevant precedents", and scrolled through them. Gladias pressed a button on the side. A small popup appeared on the top right: "Emerald listening mode active". Gladias did not speak; instead, he simply let Emerald listen to Dreadknot sing. But even after five minutes of listening, only a few relevant precedents showed up.</p>
+<p>Gladias switched the mode to "analysis" and kept it listening for another five minutes. Emerald put out some popups that showed some conclusions that sounded reasonable, but Gladias could tell it was unreliable. There was just not enough source data on this kind of music for the Emerald AI to give good answers, and ultimately, it was Gladias's job to figure out when to defer to Emerald and when to let his own instinct have more of a say. Here, instinct it was.</p>
+<p>Well, the song was definitely violent.</p>
+<p>But on the other hand, over a century of Veridian civics lore made a distinction between <em>advocating</em> violence, and merely <em>showcasing</em> it for entertainment value. And Gladias could feel the audience enjoying the music; judging from everything he could see, they seemed to be having fun, not rising up in hatred against anyone.</p>
+<p>But on the <em>other</em> other hand, Gladias knew that Sentinels in recent times paid less attention to that distinction than before, and seemed to value a softer and gentler society almost as an end in itself.</p>
+<p>Gladias was not quite sure if this was what the Keepers who created that rubric intended, or if it was the right call for society. In a few months, he would go through Selection, and hopefully become a Keeper himself. But today, he was still an <em>Acolyte</em>. Five percent of the time, Gladias knew, an audit made by a group of Acolytes would be repeated by a group of Sentinels. The system was keeping score.</p>
+<p>Gladias looked down at his hand device. In the top right corner, he saw his current prediction score: ninety two. If that score stayed above ninety, he would get in. If it dropped by even three points - as it easily could, with even one submission that the Sentinels disagreed with - his career would be on hold for at least another year.</p>
+<p>The rest of the screen was filled with chat messages. There were nine Acolytes assigned to this audit, split into three groups of three. The other two members of his group had been exchanging messages with each other and could not agree; one was insisting on Tier 3 - a sort of neutral judgement - and the other on Tier 4, dinging them an extra ten percent on regular revenue and twenty five percent on Graph Funding revenue for being violent.</p>
+<p>Gladias sighed. The other two groups were probably thinking the same way. Taking a naive probability model, if <em>every</em> other Acolyte was a coin-flip between Tier 3 and Tier 4, then by the binomial formula, the probability the other six would also be evenly split was (6 choose 3) divided by (2 to the power of 6): 20 over 64, or about thirty-one percent. Taking a less naive model, if the probabilities are <em>not</em> a coin-flip ... eh, calculating that is too hard, let's just say twenty percent. A twenty or thirty percent chance his vote would affect Dreadknot's tax rate for the next year by ten to twenty five percent. Oh great. Actual responsibility.</p>
+<p>Gladias looked around once more at the crowd. At that moment, the first song finished, and he heard them cheering. He felt a burst of courage. He would take the five percent chance of a hit to his prediction score. Without thinking further, he pressed Tier 3. For a brief moment, he felt a burst of pride at his own decision.</p>
+<p>"HEY EVERYONE, IT'S AN ORDER MEMBER!", someone behind him yelled.</p>
+<hr>
+<p>Gladias's body froze in shock for a half-second. Taking out his hand device with the judgement screen visible in such a crowded place had been a massive operational security failure, he realized.  Then, before his mind could catch up, his eyes had already scanned the venue, and found the nearest exit.</p>
+<p>Before he could react any further, a man beside him, also wearing a privacy robe, broke and ran toward the fire exit on the right. Everyone within ten meters took out their hand devices, and started recording video, some simply standing in place and others actively pursuing him.</p>
+<p>Gladias understood. He had heard of this happening before: a decoy.</p>
+<p>The security of the Order, Gladias remembered being told - particularly, the prevention of influence and bribery - rests on the privacy of its members. Order members are strictly forbidden to reveal their assigned task. To make sure that Order members take their privacy seriously, they were kept on their toes by a sort of deliberately engineered game. Anyone can connect to the decentralized cryptographic network that manages the Order's operations, and send in a claim mapping a Sentinel or Acolyte to a business, or a Keeper to a rubric, along with a small deposit. If their guess is correct, the Order member's salary is docked, and the discoverer gets half as a reward.</p>
+<p>Most likely, the man who had just diverted everyone's attention to himself was not an Order member. Rather, he was a member of the public, and he broke and ran to attract attention to himself, to give Gladias a chance to escape. And so everyone else nearby thought that the other man <em>was</em> the Order member, and were, mistakenly, capturing video to try to figure out <em>his</em> identity instead.</p>
+<p>Gladias turned around, intending to run. But before he could take a step, he saw right in front of him a large burly man, pointing a hand device straight at his face.</p>
+<p>Gladias froze. For a split second, he thought that he was done for. His mind raced through the possibilities, looking for any possible way out. Finally, Gladias the thoughtful philosopher gave way to a different Gladias, more imaginative and mischievious - a Gladias that had not been awake since recess in middle school.</p>
+<p>Before Gladias could fully process what he had decided to do, his subconscious mind was already executing on the strategy.</p>
+<p>Gladias looked toward the right.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Wait, is that a new screed from the Arctic Emperor?"</span>, he asked.</p>
+<p>The man, confused, looked to where Gladias was looking. At that moment, Gladias snatched the man's hand device from his arm, and suddenly turned around.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Delete all audio, images and video from the last hour. Reboot."</span></p>
+<p>He then began to run. A few seconds later, the device responded, "4 files deleted", and briefly showed screenshots of some photos and videos. The one on the bottom right was of Gladias's face. The screen turned black.</p>
+<p>Gladias visibly threw the hand device up into the air, toward the right, hoping that his pursuer would choose not losing his device over chasing him. Gladias continued running.</p>
+<p>Despite being slowed down by his shoes, which had high heels to raise his height to the same level as other robe wearers, and deliberately uneven soles to randomize his gait, Gladias quickly made his way toward the exit. Distracted by the rest of the commotion, the crowd seemed not to notice.</p>
+<p>He exited the conference venue, and hopped onto a local autobus.</p>
+<hr>
+<p>Fifteen minutes later, Gladias stepped off the autobus. After a short walk through a network of tunnels and then along a street, he was home. He opened the door.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Are you home, Seila?"</span>, he shouted.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Was just writing up my blog post"</span>, she replied, and came out of her room to greet Gladias.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"So, what do we want for dinner?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well, the Dzego food truck is coming in seven minutes, how about we have that again?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Sure! I assume the number ten for you again?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Yep!"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Okay, I'll have the number thirteen this time."</span></p>
+<p>Seila took out her hand device, and began to place the order.</p>
+<p>They heard loud footsteps coming down the stairs.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Dad is home!"</span>, the younger boy, Zven, shouted. Zven jumped down the stairs three steps at a time, and ran up to hug Gladias, who obliged.</p>
+<p>The older teenage boy, Fedrik, walked down more slowly, carrying his hand device in one hand, attached by a cable to a larger compute box in the other.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"We're ordering from the Dzego food truck. What do you guys want?"</span>, Gladias asked.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"Number four!"</span>, Fedrik answered.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Number five, I win!"</span>, Zven shouted.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What about Lily and Hreda?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Lily's in the bathroom. Hreda will be back from after school number theory in an hour. Come on, you know she always gets the number nine."</span></p>
+<p>The washroom door opened, and Lily slowly walked out, her eyes looking to the ground.</p>
+<p>Seila sighed. <span style="color:oklch(0.7 0.15 253.33333333333334)">"What happened?"</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"Sixty percent on the history exam. Whatever..."</span></p>
+<p>Seila turned, and put her arms around Lily. <span style="color:oklch(0.7 0.15 253.33333333333334)">"It's okay to not be good at everything"</span>, she said softly.</p>
+<p>Lily turned her face further away from Seila and the family. She ran forward, and sat down on the couch.</p>
+<p>Seila sighed, and ordered Lily the number eight.</p>
+<p>Seila clicked order. Gladias, Seila, Zven and Fedrik sat at the table and waited.</p>
+<p>On the couch, Lily took out her hand device, and began intently watching and quickly tapping on the screen, devoting all her attention to some game that Gladias and Seila could never make out, as Lily would always turn her screen away from them.</p>
+<p>This was Gladias and Seila's fourth last dinner with the kids - of whom Zven and Lily were theirs, and Fedrik and Hreda were from their co-family, Uncle Vil and Aunt Daia. At the start of next week, Uncle Vil and Aunt Daia were going to come and pick all four kids up, and take care of them for the winter.</p>
+<p>Gladias sighed. He would miss the kids. But at the same time, he was looking forward to the six months of freedom.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Is Uncle Vil still coming next week?"</span>, Zven asked.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Of course!"</span>, Seila replied.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Yay, I love Uncle Vil!"</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"For me Vil is <em>Dad</em>!"</span>, Fedrik made a point of reminding. He thought for a second longer. <span style="color:oklch(0.7 0.15 80)">"Uncle Glad and Aunt Seila, I love you both too!"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"And I love you."</span></p>
+<p>A doorbell rang. Gladias walked to the door, opened it, and got a bag full of food boxes. He set it on the table, opened it up, and gave each person the food box with their number on it. Gladias, Seila, Fedrik and Zven all started eating.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Any plans once Vil is here?"</span>, Gladias asked.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I'll probably go visit Freetown, stay with Jahn for a weekend, maybe figure out some blog post to write on the United Cities. I've spent so much time reading about their co-governance, actually looking forward to seeing more how it all connects to what's on the ground."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Unless the Freetown airport breaks down again of course."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"You gonna try to convince them to adopt Graph Funding or Steering?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"How about you actually get your Sentinel position first."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well, I'm going to go on some long walks in the forest and take a deep dive with the bot on the environment and biology rubrics. Still have four more audits to do, might as well be prepared!"</span></p>
+<p>Gladias and Seila both resumed eating. Quietly, Lily walked up to the table, and began to open her food box as well.</p>
+<p>At that moment, Gladias's hand device buzzed. He took it out. A single notification popped up.</p>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Anonymous <br><br> <div style="border: 1px solid; border-radius: 5px; padding: 5px">Rep score ≥ 200 Verified <b style="font-size: 150%; color: #8f8">✓</b><center></center></div></center></td>
+      <td>I saw you at the concert, I know that you are in the Order.</td>
+      <td>60259</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p>And a few seconds later, another:</p>
+
+<br><div class="device-view wide-device-view"><table>
+<thead>
+<tr>
+<th>From</th>
+<th>Message</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="width: 25%"><center>Anonymous <br><br> <div style="border: 1px solid; border-radius: 5px; padding: 5px">Rep score ≥ 200 Verified <b style="font-size: 150%; color: #8f8">✓</b><center></center></div></center></td>
+<td>Don't worry, I'm not intending to report you for the bounty. But I do have a request that I would like to make.</td>
+<td>60266</td>
+</tr>
+</tbody>
+</table></div><br>
+                </div>
+            
+</body>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) {
+            html.classList.add('dark');
+            btn.textContent = '🌙';
+        } else {
+            html.classList.remove('dark');
+            btn.textContent = '☀️';
+        }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '🌙';
+    }
+</script>
+</html>

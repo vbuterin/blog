@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        /* Dark mode toggle */
+        .dark-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 16px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .dark-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .document-page {
+            background: #fff;
+            border-radius: 12px;
+            padding: 60px 80px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            width: 780px;
+            min-height: 1000px;
+        }
+
+        .document-page h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .document-page h2 {
+            font-size: 2rem;
+            color: #444;
+            margin-bottom: 15px;
+            margin-top: 30px;
+        }
+
+        .document-page h3 {
+            font-size: 1.5rem;
+            color: #555;
+            margin-bottom: 12px;
+            margin-top: 25px;
+        }
+
+        .document-page p {
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .document-page ul {
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 2;
+            margin-bottom: 20px;
+            padding-left: 30px;
+            list-style-type: disc;
+        }
+
+        .document-page ol {
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 2;
+            margin-bottom: 20px;
+            padding-left: 30px;
+            list-style-type: decimal;
+        }
+
+        .document-page li {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .document-page ul ul,
+        .document-page ul ol,
+        .document-page ol ul,
+        .document-page ol ol {
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .document-page blockquote {
+            border-left: 5px solid #667eea;
+            padding-left: 25px;
+            margin: 25px 0;
+            font-size: 1.1rem;
+            color: #555;
+            font-style: italic;
+            background: #f8f9fa;
+            padding: 20px 25px;
+            border-radius: 4px;
+        }
+
+        .document-page pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 25px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 25px 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .document-page code {
+            font-family: 'Monaco', 'Menlo', monospace;
+            background: #f5f5f5;
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: #e83e8c;
+        }
+
+        .document-page pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        .document-page table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+        }
+
+        .document-page th, .document-page td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: left;
+            color: #333;
+        }
+
+        .document-page img {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .document-page th {
+            background: #667eea;
+            color: white;
+        }
+
+        .document-page tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .document-page hr {
+            border: none;
+            height: 3px;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            margin: 30px 0;
+            border-radius: 2px;
+        }
+
+        .device-view {
+            background-color: #0a0e27;
+            color: #7fbcff;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            margin: 0;
+            border-radius: 15px;
+            font-size: 75%;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .wide-device-view {
+            max-width: 900px;
+        }
+
+        .narrow-device-view {
+            max-width: 50%;
+        }
+
+        .device-view h3 {
+            color: #7fbcff;
+            border-bottom: 2px solid #3d70c3;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .device-view table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        .device-view thead tr {
+            background-color: #1a2a4a;
+            border: 1px solid #3d70c3;
+        }
+
+        .device-view th {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #3d70c3;
+            color: #cef;
+            font-weight: bold;
+        }
+
+        .device-view tbody tr:nth-child(odd) {
+            background-color: #0f1a3a !important;
+            border: 1px solid #2a4a7a;
+        }
+
+        .device-view tbody tr:nth-child(even) {
+            background-color: #12204a !important;
+            border: 1px solid #2a4a7a;
+        }
+
+        .device-view td {
+            padding: 10px;
+            border: 1px solid #2a4a7a;
+            color: #b8d8ff;
+            font-weight: bold;
+        }
+
+        .device-view button {
+            background-color: #1a3a6a;
+            border: 1px solid #3d70c3;
+            padding: 10px 25px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.2s;
+            color: #cef;
+        }
+
+        .device-view button:hover {
+            background-color: #2a4a7a;
+            border-color: #7fbcff;
+        }
+
+        .device-view ul,
+        .device-view ol {
+            padding-left: 10px !important;
+            margin-left: 0 !important;
+            margin-bottom: 0 !important;
+            list-style-position: outside !important;
+            font-size: inherit !important;
+            color: #9cc2ff !important;
+            line-height: inherit !important;
+            font-family: inherit !important;
+        }
+
+        .device-view li {
+            padding-left: 0 !important;
+            list-style-position: outside !important;
+            margin-bottom: 0 !important;
+            font-size: inherit !important;
+            color: #9cc2ff !important;
+            font-family: inherit !important;
+        }
+
+        /* Dark mode overrides */
+        html.dark body {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+
+        html.dark .dark-toggle {
+            background: #1a1a2e;
+            color: #f0e68c;
+        }
+
+        html.dark .document-page {
+            background: #1a1a2e;
+        }
+
+        html.dark .document-page h1 {
+            color: #f0f0f0;
+            border-bottom-color: #8b83c3;
+        }
+
+        html.dark .document-page h2 {
+            color: #d0d0d0;
+        }
+
+        html.dark .document-page h3 {
+            color: #c0c0c0;
+        }
+
+        html.dark .document-page p,
+        html.dark .document-page ul,
+        html.dark .document-page ol {
+            color: #d0d0d0;
+        }
+
+        html.dark .document-page li {
+            color: #d0d0d0;
+        }
+
+        html.dark .document-page blockquote {
+            color: #b0b0b0;
+            background: rgba(255,255,255,0.05);
+            border-left-color: #8b83c3;
+        }
+
+        html.dark .document-page code {
+            background: rgba(255,255,255,0.1);
+            color: #f08dcd;
+        }
+
+        html.dark .document-page table {
+            border-color: #444;
+        }
+
+        html.dark .document-page th, html.dark .document-page td {
+            border-color: #444;
+            color: #d0d0d0;
+        }
+
+        html.dark .document-page th {
+            background: #4a4580;
+            color: white;
+        }
+
+        html.dark .document-page tr:nth-child(even) {
+            background: rgba(255,255,255,0.03);
+        }
+
+        html.dark .document-page hr {
+            background: linear-gradient(to right, #8b83c3, #6b5ba0);
+        }
+
+        html.dark .device-view {
+            background-color: #050510;
+            border-color: #1a1a40;
+        }
+
+        html.dark .device-view h3 {
+            color: #5588cc;
+            border-bottom-color: #1a3a6a;
+        }
+
+        html.dark .device-view th {
+            color: #88bbee;
+            border-color: #1a3a6a;
+        }
+
+        html.dark .device-view td {
+            color: #88bbee;
+            border-color: #1a3a6a;
+        }
+
+        html.dark .device-view tbody tr:nth-child(odd) {
+            background-color: #080820;
+            border-color: #0f1a3a;
+        }
+
+        html.dark .device-view tbody tr:nth-child(even) {
+            background-color: #0a0a2a;
+            border-color: #0f1a3a;
+        }
+
+        html.dark .device-view button {
+            background-color: #0a1a3a;
+            border-color: #1a3a6a;
+            color: #88bbee;
+        }
+
+        html.dark .device-view button:hover {
+            background-color: #1a2a4a;
+            border-color: #4488cc;
+        }
+
+        html.dark .device-view ul,
+        html.dark .device-view ol,
+        html.dark .device-view li {
+            color: #6699bb;
+        }
+
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .document-page {
+                width: 100%;
+                padding: 25px 15px;
+                min-height: auto;
+            }
+
+            .document-page h1 {
+                font-size: 1.4rem;
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+            }
+
+            .document-page h2 {
+                font-size: 1.2rem;
+                margin-bottom: 12px;
+                margin-top: 20px;
+            }
+
+            .document-page h3 {
+                font-size: 1rem;
+                margin-bottom: 10px;
+                margin-top: 18px;
+            }
+
+            .document-page p {
+                font-size: 0.9rem;
+                line-height: 1.6;
+                margin-bottom: 12px;
+            }
+
+            .document-page ul,
+            .document-page ol {
+                font-size: 0.9rem;
+                line-height: 1.7;
+                margin-bottom: 15px;
+                padding-left: 20px;
+            }
+
+            .document-page li {
+                margin-bottom: 5px;
+            }
+
+            .document-page blockquote {
+                font-size: 0.9rem;
+                padding-left: 15px;
+                margin: 15px 0;
+                padding: 12px 15px;
+            }
+
+            .document-page pre {
+                padding: 12px;
+                font-size: 0.75rem;
+                margin: 15px 0;
+            }
+
+            .document-page code {
+                font-size: 0.8rem;
+                padding: 2px 5px;
+            }
+
+            .document-page table {
+                font-size: 0.8rem;
+            }
+
+            .document-page th,
+            .document-page td {
+                padding: 8px;
+            }
+
+            .document-page img {
+                margin: 15px auto;
+            }
+
+            .document-page hr {
+                margin: 20px 0;
+            }
+
+            .wide-device-view,
+            .narrow-device-view {
+                max-width: 100%;
+                padding: 15px;
+                font-size: 70%;
+                margin: 15px auto;
+            }
+
+            .device-view table {
+                margin-bottom: 20px;
+                font-size: 0.85rem;
+            }
+
+            .device-view th,
+            .device-view td {
+                padding: 6px;
+            }
+
+            .device-view button {
+                padding: 8px 18px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    
+                <div class="document-page">
+                    <h1>Chapter 5</h1>
+<p>Zei walked out of the door of the air harbor, and held the door open behind him.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Come on, Mom!"</span>, he shouted.</p>
+<p>Zei's mother, Min, hurried forward and came out through the door. Bai followed along behind, carrying a shopping bag.</p>
+<p>The three of them followed the signs to the taxi stand, and immediately put their luggage into the taxi's luggage trunk, and opened the doors to get in.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Welcome to Freetown, you both!"</span>, Bai exclaimed.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Glad to be here"</span>, Min replied. <span style="color:oklch(0.7 0.15 173.33333333333331)">"Actually my first time abroad."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"So how does this compare to Redshire, since I see you've been everywhere by now?"</span>, Min followed up.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Oh I think Redshire is nicer. Was a shame that the Arctic drones made them cancel all the flights this week."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Oh well that's lovely. So far I think Freetown is great! So that means whenever I make it to Redshire I won't be spoiled, and I'll feel just as excited about Redshire then as I am about Freetown now."</span></p>
+<p>The conversation quieted down, and the three of them stared out the windows of their taxi. They were driving along a highway, and there were buildings of all shapes and sizes - some short, some tall, some stone, some concrete, some glass and steel, some beautiful, some ugly. Some halfway under construction, seemingly abandoned.</p>
+<p>In the distance, there was one area that seemed noticeably nicer than the others, that seemed to be surrounded by a high wall. Bai and Zei, sitting on the right, both turned their attention toward it.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Probably the local Greater Plum Harbor"</span>, Bai mused.</p>
+<p>The taxi swerved off the highway to take an exit. It then continued driving along a street, occasionally turning to go through several roundabouts.</p>
+<p>From close by, the people and the insides of the buildings looked considerably richer than anything in Dzego. The three of them continued looking, observing the surroundings from inside their safe cocoon.</p>
+<p>After five more minutes of driving, the taxi turned, and drove into a garage. It stopped, and the door opened.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Thank you!"</span>, Min shouted, and opened the luggage trunk. The three of them took their luggage, and entered the hotel.</p>
+<p>Zei slapped his watch against a circle with a glowing green outline, on top of a one meter tall pole, labeled "Check in".</p>
+<p>After one second, the circle beeped.</p>
+<br><div class="device-view narrow-device-view"><table>
+  <tbody>
+    <tr>
+      <td><center><div style="border: 1px solid; border-radius: 5px; padding: 5px">Rep score ≥ 100 Verified <b style="font-size: 150%; color: #8f8">✓</b><center></center></div></center></td>
+      <td><center><div style="border: 1px solid; border-radius: 5px; padding: 5px">Payment successful <b style="font-size: 150%; color: #8f8">✓</b><center></center></div></center></td>
+    </tr>
+    </tbody>
+</table>
+<center><b>Checked in. Your room numbers are: 714, 715, 716.</b></center></div><br>
+<p>Zei, Bai and Min's watches all buzzed in unison, confirming their room keys.</p>
+<hr>
+<p>Having put his luggage into his room, and taken a shower, Zei stepped out of the elevator and once again entered the hotel lobby. Bai was already there, looking outside a window.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Mom said she needs to sleep for a few hours, we should go explore"</span>, Zei suggested.</p>
+<p>Bai nodded, and the two exited the hotel - and entered Freetown's great outdoors.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"So why did you agree to come with me anyway?"</span>, Bai asked.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Well it was very obviously the lowest-cost opportunity I would have to see the abroad for a long time"</span>, Zei replied.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I won my game in the semi-finals easily - my opponent was just not prepared for the sudden rule change four thousand turns in - and I saw you won even faster. So the finals are between me and you."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"And so it's a unique situation: the usual prisoner's dilemma, where neither of us can take a break and enjoy anything because we know that if we do, the other will cram harder right before the big game and gain an advantage, does not actually apply here - because we can both take a break together, and thereby we can monitor each other and ensure that neither of us is secretly cramming to gain an advantage over the other."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"And the surplus is high - both Mom and I get to go abroad for the first time in our lives."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Now why did you agree to take me?"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Pretty much the same, now that I think about it. Just without the game theory math."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Though for me what you call the surplus is spending time with you."</span></p>
+<p>Zei groaned.</p>
+<hr>
+<p>Zei and Bai arrived at a building that looked noticeably larger and nicer than its surroundings.</p>
+<p>"Freetown Economics Institute", a sign read.</p>
+<p>Right below it, the sign listed a schedule of admission fees, featuring a formula that was a function of two variables: increasing with the square root of how much time you spend inside, and decreasing the higher your academic or intellectual reputation score is.</p>
+<p>There was an entrance gate with turnstiles and glowing green-outlined circles. Zei and Bai tapped their phones, and walked through.</p>
+<p>The inside of the building was a single spiral-shaped sloped floor. If one walked along the outside wall, the slope was barely noticeable, a circumference of perhaps three hundred meters in order to climb four meters.</p>
+<p>In the middle, there were elevators and staircases, for those who wanted to go up or down faster.</p>
+<p>Zei and Bai leisurely walked along the floor, and soon saw a restaurant. Two people, a woman and a man, were sitting and drinking tea and eating some dish with vegetables and rice. There was a large screen, at that moment playing a lecture explaining the United Cities' co-governance system.</p>
+<br><div class="device-view wide-device-view"><center>
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200" viewBox="0 0 400 200" style="margin-left:35px">
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+<polygon points="0,0 10,5 0,10" fill="#cef"></polygon>
+</marker>
+</defs>
+<rect width="400" height="200" fill="#348"></rect>
+<line x1="48.6" y1="157.6" x2="96.4" y2="172.4" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="40.9" y1="146.0" x2="44.1" y2="114.0" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="113.4" y1="171.8" x2="161.6" y2="153.2" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="47.6" y1="96.4" x2="62.4" y2="46.6" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="53.9" y1="104.0" x2="156.1" y2="93.0" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="73.7" y1="40.2" x2="136.3" y2="55.8" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="72.9" y1="42.3" x2="157.1" y2="87.7" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="154.0" y1="58.0" x2="211.0" y2="58.0" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="149.6" y1="65.8" x2="160.4" y2="84.2" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="228.3" y1="54.6" x2="291.7" y2="28.4" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="228.9" y1="59.4" x2="336.1" y2="76.6" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="305.8" y1="31.9" x2="339.2" y2="71.1" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="294.6" y1="32.2" x2="245.4" y2="97.8" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="336.3" y1="80.2" x2="248.7" y2="102.8" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="346.1" y1="86.9" x2="348.9" y2="109.1" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="165.8" y1="101.0" x2="169.2" y2="141.0" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="173.9" y1="93.5" x2="231.1" y2="103.5" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="177.6" y1="145.1" x2="232.4" y2="109.9" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="179.0" y1="149.8" x2="246.0" y2="148.2" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="243.0" y1="113.5" x2="252.0" y2="139.5" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="263.6" y1="145.3" x2="341.4" y2="120.7" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="264.0" y1="148.5" x2="366.0" y2="154.5" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="263.5" y1="151.0" x2="321.5" y2="172.0" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="355.0" y1="125.5" x2="370.0" y2="147.5" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<line x1="366.8" y1="158.7" x2="338.2" y2="171.3" stroke="#cef" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"></line>
+<circle cx="72.5" cy="165.0" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="72.5" y="168.0" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">10</text>
+<circle cx="42.5" cy="130.0" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="42.5" y="133.0" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">15</text>
+<circle cx="137.5" cy="162.5" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="137.5" y="165.5" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">15</text>
+<circle cx="55.0" cy="71.5" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="55.0" y="74.5" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">10</text>
+<circle cx="105.0" cy="98.5" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="105.0" y="101.5" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">10</text>
+<circle cx="105.0" cy="48.0" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="105.0" y="51.0" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">15</text>
+<circle cx="115.0" cy="65.0" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="115.0" y="68.0" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">5</text>
+<circle cx="182.5" cy="58.0" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="182.5" y="61.0" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">10</text>
+<circle cx="155.0" cy="75.0" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="155.0" y="78.0" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">5</text>
+<circle cx="260.0" cy="41.5" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="260.0" y="44.5" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">15</text>
+<circle cx="282.5" cy="68.0" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="282.5" y="71.0" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">10</text>
+<circle cx="322.5" cy="51.5" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="322.5" y="54.5" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">10</text>
+<circle cx="270.0" cy="65.0" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="270.0" y="68.0" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">15</text>
+<circle cx="292.5" cy="91.5" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="292.5" y="94.5" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">5</text>
+<circle cx="347.5" cy="98.0" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="347.5" y="101.0" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">15</text>
+<circle cx="167.5" cy="121.0" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="167.5" y="124.0" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">10</text>
+<circle cx="202.5" cy="98.5" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="202.5" y="101.5" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">5</text>
+<circle cx="205.0" cy="127.5" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="205.0" y="130.5" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">5</text>
+<circle cx="212.5" cy="149.0" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="212.5" y="152.0" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">5</text>
+<circle cx="247.5" cy="126.5" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="247.5" y="129.5" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">10</text>
+<circle cx="302.5" cy="133.0" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="302.5" y="136.0" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">5</text>
+<circle cx="315.0" cy="151.5" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="315.0" y="154.5" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">10</text>
+<circle cx="292.5" cy="161.5" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="292.5" y="164.5" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">10</text>
+<circle cx="362.5" cy="136.5" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="362.5" y="139.5" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">10</text>
+<circle cx="352.5" cy="165.0" r="7" fill="#348" stroke="#cef" stroke-width="0.5"></circle><text x="352.5" y="168.0" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">5</text>
+<circle cx="40" cy="155" r="5" fill="#cef"></circle>
+<circle cx="105" cy="175" r="5" fill="#cef"></circle>
+<circle cx="45" cy="105" r="5" fill="#cef"></circle>
+<circle cx="65" cy="38" r="5" fill="#cef"></circle>
+<circle cx="145" cy="58" r="5" fill="#cef"></circle>
+<circle cx="220" cy="58" r="5" fill="#cef"></circle>
+<circle cx="165" cy="92" r="5" fill="#cef"></circle>
+<circle cx="170" cy="150" r="5" fill="#cef"></circle>
+<circle cx="300" cy="25" r="5" fill="#cef"></circle>
+<circle cx="345" cy="78" r="5" fill="#cef"></circle>
+<circle cx="240" cy="105" r="5" fill="#cef"></circle>
+<circle cx="255" cy="148" r="5" fill="#cef"></circle>
+<circle cx="350" cy="118" r="5" fill="#cef"></circle>
+<circle cx="375" cy="155" r="5" fill="#cef"></circle>
+<circle cx="330" cy="175" r="5" fill="#cef"></circle>
+<rect x="9.8" y="165.0" width="60.5" height="12" fill="#348" rx="2"></rect><text x="40" y="175" fill="#cef" font-family="sans-serif" font-size="10" text-anchor="middle">Silverbeach</text>
+<rect x="93.5" y="183.0" width="33.0" height="12" fill="#348" rx="2"></rect><text x="110" y="193" fill="#cef" font-family="sans-serif" font-size="10" text-anchor="middle">Mabuli</text>
+<rect x="37.2" y="98.0" width="49.5" height="12" fill="#348" rx="2"></rect><text x="62" y="108" fill="#cef" font-family="sans-serif" font-size="10" text-anchor="middle">Inglewore</text>
+<rect x="53.5" y="18.0" width="33.0" height="12" fill="#348" rx="2"></rect><text x="70" y="28" fill="#cef" font-family="sans-serif" font-size="10" text-anchor="middle">Hapton</text>
+<rect x="136.2" y="38.0" width="27.5" height="12" fill="#348" rx="2"></rect><text x="150" y="48" fill="#cef" font-family="sans-serif" font-size="10" text-anchor="middle">Imber</text>
+<rect x="205.8" y="38.0" width="38.5" height="12" fill="#348" rx="2"></rect><text x="225" y="48" fill="#cef" font-family="sans-serif" font-size="10" text-anchor="middle">Arturia</text>
+<rect x="108.5" y="78.0" width="40.5" height="12" fill="#348" rx="2"></rect><text x="148" y="88" fill="#cef" font-family="sans-serif" font-size="10" text-anchor="end">Deplexi</text>
+<rect x="153.0" y="155.0" width="44.0" height="12" fill="#348" rx="2"></rect><text x="175" y="165" fill="#cef" font-family="sans-serif" font-size="10" text-anchor="middle">Freetown</text>
+<rect x="283.0" y="5.0" width="44.0" height="12" fill="#348" rx="2"></rect><text x="305" y="15" fill="#cef" font-family="sans-serif" font-size="10" text-anchor="middle">Redshire</text>
+<rect x="354.0" y="63.0" width="51.5" height="12" fill="#348" rx="2"></rect><text x="355" y="73" fill="#cef" font-family="sans-serif" font-size="10" text-anchor="start">Petersvil</text>
+<rect x="216.0" y="88.0" width="44.0" height="12" fill="#348" rx="2"></rect><text x="238" y="98" fill="#cef" font-family="sans-serif" font-size="10" text-anchor="middle">Devanvil</text>
+<rect x="240.8" y="153.0" width="38.5" height="12" fill="#348" rx="2"></rect><text x="260" y="163" fill="#cef" font-family="sans-serif" font-size="10" text-anchor="middle">Ondgard</text>
+<rect x="364.0" y="112.0" width="29.5" height="12" fill="#348" rx="2"></rect><text x="365" y="122" fill="#cef" font-family="sans-serif" font-size="10" text-anchor="start">Iptak</text>
+<rect x="363.5" y="165.0" width="33.0" height="12" fill="#348" rx="2"></rect><text x="380" y="175" fill="#cef" font-family="sans-serif" font-size="10" text-anchor="middle">Mantak</text>
+<rect x="315.8" y="183.0" width="38.5" height="12" fill="#348" rx="2"></rect><text x="335" y="193" fill="#cef" font-family="sans-serif" font-size="10" text-anchor="middle">Belpaki</text>
+</svg>
+</center></div><br>
+<p><span style="color:oklch(0.7 0.15 160)">"When two cities are in a co-governance relationship, they each elect a percentage of the other's parliament."</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"The percentage is based on a pre-agreed number. Whichever city is larger, as computed by a geometric average of population and GDP, elects that pre-agreed share of the smaller city's parliament. Whichever city is smaller elects a share of the larger city's parliament equal to the pre-agreed share, divided by the square root of the ratio in the two cities' sizes."</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"You might ask, why square root? Well, it turns out that the utility of a large share of governance, held by a larger participant, is superlinearly larger than the utility of a smaller share-"</span></p>
+<p>Zei stopped listening, and let his mind ponder, trying to work out the math from first principles.</p>
+<p>Bai started walking toward the two people sitting at the table.</p>
+<p>Zei, distracted from his math, followed Bai. They kept walking until they were almost standing over the eaters.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Hi, are you guys busy?"</span>, he blurted out awkwardly.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Ah no, not at all"</span>, the woman answered.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Please come sit down with us, I'm a tourist, always happy to meet locals and understand this place better."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Ah, we're also tourists. From Dzego"</span>, Zei replied. <span style="color:oklch(0.7 0.15 346.66666666666663)">"I'm Zei."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"And I'm Bai."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I'm Seila"</span>, the woman replied. And this is my ... friend, Jahn.</p>
+<p>Zei and Bai sat down.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"So where are you from?"</span>, Bai turned to ask.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Veridia"</span>, Seila responded.</p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"And I'm actually a local"</span>, Jahn added.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"So what brings you here?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Well, I'm a blogger, I focus on economics and culture. My husband's and my turn to take care of our children just finished, they're with our co-parents now, so we're both taking a break -"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Well, not really a break, still working. But traveling and exploring."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"So how has Freetown been so far?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Well, free in some ways. Not always in others."</span></p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"You don't see as many privacy robes here as in Veridia or Dzego, but that's because people just go around in cars, all the interesting stuff tends to happen in these enclosed compounds."</span></p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"How is Dzego?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Same old. Studying, playing Minpentai. I'm trying to figure out if I'm going into physics or cryptography."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Tell him about your arm,"</span> Bai whispered, loudly enough that all three of the others could hear.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Oh yeah, my arm broke when our classroom got bombed a while back."</span></p>
+<p>Seila and Jahn froze in surprise - first at the revelation, and then once again at Zei's total nonchalance relating the news.</p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"Are the attacks getting worse?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"They're starting to go after classrooms more. Have also been hearing about more and more surveillance drones getting snuck in."</span></p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"So is Dzego going to like add its own counter-surveillance network to keep up?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Well, the problem is, the Arctics got spies inside all the agencies, so if the counter-surveillance network can see too much, then it becomes their own weapon."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"That's why we've been trying to figure out the cryptography. Each surveillance camera running an algorithm, revealing data only in those cases where it's suspicious, posting a hash to a cryptographic network every time it reveals so we can track how often it's happening, and then a whole system of hardware attestations and randomized infrared scanning to make sure that the cameras are actually running the code that they say they are. It's pretty advanced stuff. I wish I could understand how all the math behind these encryptions and proofs and attestations works."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Come on, our whole DU chapter knows you're a hotshot at understanding thermodynamics, even better than the teacher. You can totally re-spec to cryptography and figure this all out."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Are you <em>trying</em> to distract me from focusing on the Minpentai finals next week?"</span></p>
+<p>A robot slid up to them, with a menu on its screen.</p>
+<p>Bai and Zei started looking, and clicked buttons in turn to order some tea, as well as a similar rice and vegetables dish to what Seila and Jahn were eating.</p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"How much of your time is this whole arms race taking up?"</span>, Jahn asked.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Of our time? Well, a few percent of us are full-time  on it, for the rest, it's not supposed to be our job, beyond keeping up with how to stay safe. Of our happiness, our spirits, our souls? That's a different question."</span></p>
+<p>Jahn and Seila sighed.</p>
+<p>A few minutes later, the robot came back with their drinks, and a few minutes after that again with their food. They ate, at times engaging in light conversation learning more nuances of Dzego culture - Minpentai, the Dzegoban language, the people's strong will to see the nation rise - and at times silently. The screen, continuing to explain co-governance and show various diagrams and mathematical formulas, now went entirely unnoticed.</p>
+<hr>
+<br><div class="device-view narrow-device-view"><table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Gladias<center></center></center></td>
+      <td>[now calling]</td>
+      <td>58130</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p>Seila tapped on the watch.</p>
+<p>She could make out Gladias's face.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"How is your time in Freetown?"</span>, Gladias asked.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Just had lunch with Jahn, and then these lovely kids from Dzego came by."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"How were they?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"They were lovely people. Though it's so sad what the Arctics are doing to them - one of the two got his arm injured two months ago."</span></p>
+<p>The conversation paused briefly.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"How are you?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Good."</span></p>
+<p>He paused.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I'm pondering something."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"What is it?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Someone suggested to me recently - that instead of going for being a Sentinel, I should be a Keeper instead."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Huh!"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"What made you think that?"</span></p>
+<p>Gladias visibly paused for a few moments, to ponder his answer.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"It's the more important thing for Veridia, to really make sure that the rubrics themselves are set right. And I feel like the work will be more interesting."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Well my first instinct is that I actually support the decision."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"You know, I've been thinking about Dzego for these past fifty minutes or so after those kids left, and then Jahn had to go for a meeting soon after."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"They benefit a lot from our Graph Funding, right?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Indeed they do."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"What about the rubrics though? Do the rubrics encourage companies to make any of their products more helpful to Dzego in any way?"</span></p>
+<p>Gladias thought for a few moments. <span style="color:oklch(0.7 0.15 93.33333333333333)">"Not really, at least I can't think of anything."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Well maybe you should become a Keeper. And this could be one of your projects! Figure out how to make or adjust the rubrics to support Dzego better."</span></p>
+<p>Seila paused for a moment.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Yeah... maybe you're right."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Yeah become a Keeper definitely. It's exactly the right choice."</span></p>
+<p>Gladias stared in response, his eyes wide open.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"It'll be fun. As they say, Dze go ba fau gie!"</span></p>
+                </div>
+            
+</body>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) {
+            html.classList.add('dark');
+            btn.textContent = '🌙';
+        } else {
+            html.classList.remove('dark');
+            btn.textContent = '☀️';
+        }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '🌙';
+    }
+</script>
+</html>

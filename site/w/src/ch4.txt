@@ -1,0 +1,475 @@
+# Chapter 4
+
+Fin and Zei were sitting at a table in a courtyard, looking intently at Zei's hand device.
+
+<narrow_device_view>
+
+<img src="/home/v/Documents/untitled_world/images/wall_glider_escape.gif" style="max-width: 100%;" />
+
+</narrow_device_view>
+
+![Fin: "Okay, so what am I seeing here?"], Fin asked.
+
+![Zei: "This was from last week's Minpentai game. We were playing with the 'rotate one eighty if three' rule. Someone discovered this new way to breach the usual wall construction, and flooded their opponent's territory with garbage. I'm trying to figure out some countermeasures."]
+
+![Fin: "What's the endgame? Are you trying to get to a perfect wall, or is it rock paper scissors all the way down?"]
+
+![Zei: "Well, remember, the rules are time-reversible. So any wall that can be created in some way can be destroyed in some way."]
+
+![Fin: "Huh?"]
+
+![Zei: "Remember when we were still in middle school, and we thought that in those movies the good guys or the bad guys or whoever were stupid for putting the shield generator outside of the shield so the other side could find it and destroy it?"]
+
+![Fin: "Yeah."]
+
+![Zei: "Turns out they weren't dumb, we are. It's a basic consequence of reversibility that nothing can be invincible. Anything that can be created can be destroyed. You just have to take the path that creates it and time-reverse it. So a shield that can't be destroyed is not something that can be created - there has to be a weakness somewhere, it's just a matter of how well you hide it."]
+
+![Fin: "Are you trying to get into defense or something?"]
+
+![Zei: "Hey, I'm just trying to win the championship this season so I can go to the nationals."]
+
+![Fin: "You mean so you can impress Bai?"]
+
+![Zei: "Hey-"]
+
+A robot slid up to them.
+
+![Robot: "jie mo kai fu jie mo ja ma?"], it asked in the classic deliberately cute robotic Dzegoban typical of restaurant robots. "Do you want to eat or drink?"
+
+Fin looked at the screen on the robot.
+
+<narrow_device_view>
+<table>
+    <tr>
+      <td> <center style="font-size:130%"> <img src="/home/v/Documents/untitled_world/images/outo-0.png?" style="width:100px; margin: 5px" />
+  ja </center> </td>
+      <td> <center style="font-size:130%"> <img src="/home/v/Documents/untitled_world/images/outo-1.png" style="width:100px; margin: 5px" />
+ kai </center> </td>
+    </tr>
+    <tr>
+      <td> <center style="font-size:130%"> <img src="/home/v/Documents/untitled_world/images/outo-2.png" style="width:100px; margin: 5px" />
+  bau </center> </td>
+      <td> <center style="font-size:130%"> <img src="/home/v/Documents/untitled_world/images/outo-3.png" style="width:100px; margin: 5px" />
+  lui </center> </td>
+    </tr>
+</table>
+</narrow_device_view>
+
+He clicked on "kai", and then on a picture of a salad.
+
+<narrow_device_view>
+<center>
+<div style="position:relative; width: 270px">
+
+
+<table  style="max-width:260px">
+    <tr>
+      <td style="width:80px"> <center> <img src="/home/v/Documents/untitled_world/images/outo2-1.png?" style="width:45px; margin-top: 0; margin-bottom: 5px" />
+  dze liu </center></td>
+      <td> <center> <img src="/home/v/Documents/untitled_world/images/outo3-0.png?" style="width:45px; margin-top: 0; margin-bottom: 5px" />
+  lei kai fun<br>&nbsp;</center> </td>
+      <td  style="width:80px"> <center> <img src="/home/v/Documents/untitled_world/images/outo3-1.png?" style="width:45px; margin-top: 0; margin-bottom: 5px" />
+  gai lie </center> </td>
+    </tr>
+    <tr>
+      <td> <center > <img src="/home/v/Documents/untitled_world/images/outo2-2.png?" style="width:45px; margin-top: 0; margin-bottom: 5px" />
+  jau jin lie </center> </td>
+      <td style="width:160px"> <center> <img src="/home/v/Documents/untitled_world/images/outo2-0.png" style="width:120px; margin-top: 0; margin-bottom: 5px" />
+ kai can </center> </td>
+      <td> <center> <img src="/home/v/Documents/untitled_world/images/outo2-3.png" style="width:45px; margin-top: 0; margin-bottom: 5px" />
+ jia dzu lie </center> </td>
+    </tr>
+   <svg xmlns="http://www.w3.org/2000/svg" width="260" height="200" viewBox="0 0 260 200" style="position:absolute; top: 0; left: 5px">                                                                                
+                                                                                                                       
+   <line x1="130" y1="110" x2="130" y2="80" stroke="#cef" stroke-width="1"/>                                                                                              
+   <polygon points="130,110 125,105 135,105" fill="#cef"/>                                                         
+
+   <line x1="60" y1="150" x2="80" y2="150" stroke="#cef" stroke-width="1"/>                                                                                              
+   <polygon points="80,150 75,145 75,155" fill="#cef"/>   
+
+   <line x1="200" y1="150" x2="180" y2="150" stroke="#cef" stroke-width="1"/>                                                                                              
+   <polygon points="180,150 185,145 185,155" fill="#cef"/>   
+
+   <line x1="60" y1="80" x2="80" y2="110" stroke="#cef" stroke-width="1"/>                                                                                              
+   <polygon points="80,110 82,103 73,110" fill="#cef"/>   
+
+   <line x1="200" y1="80" x2="180" y2="110" stroke="#cef" stroke-width="1"/>                                                                                              
+   <polygon points="180,110 178,103 187,110" fill="#cef"/>                        
+   </svg> 
+</table>
+
+</div>
+</center>
+</narrow_device_view>
+
+Fin clicked again, and then clicked a few more buttons to order tea. The robot shifted over so that the screen was now beside Zei.
+
+![Zei: "Wow, everything is getting so picture-based now!"]
+
+![Fin: "Well my last DU class was in linguistics so finally I get to be the genius here."]
+
+Fin took a small paper booklet out of his backpack. On the front cover, there was the Bansunpei logo: two horizontal arms, one from the left and one from the right, meeting in the middle to hold their hands. Above the logo was the title: "po so dze go ban de sia" - the conception of Dzegoban version nine.
+
+![Zei: "Tell me more?"]
+
+![Fin: "You know how after we got the number of roots down to 256, the word was that we're going to keep going, and eventually express everything in terms of the four cardinal elements - earth, air, fire and water?"]
+
+![Zei: "Yep."]
+
+![Fin: "Turns out the Bansunpei is moving to give up on that. Stick to 256, and push the next version of Dzegoban in a different direction."]
+
+![Zei: "And what's that?"]
+
+![Fin: "Go visual. So first they're actually seriously thinking of bringing back hieroglyphics."]
+
+![Zei: "WHAT?"]
+
+![Fin: "Switching to the Veridian alphabet made sense back then because all the old symbols were hard to draw. But now we have computers. The problem isn't output, it's input. And the trick is, they're figuring out new symbols where some aspects of the symbol fully encode the pronunciation, so you can look at the symbol and know exactly how it's pronounced if you forgot, and the rest covers the meaning."]
+
+![Zei: "Okay...?"]
+
+![Fin: "But also, there's something more fundamental going on. Language so far has been very one-dimensional, because speech is one-dimensional, you're saying one word after the other, and you write what you speak. But if you think about parts of 'language' that are not tied to speech, say, you like math - so think of the quadratic formula."]
+
+![Zei: "Minus b plus minus square root of b squared minus four a c all over two a?"]
+
+![Fin: "Think how ugly that looks if you had to write it down and show it to someone on a screen. Seriously, imagine someone reading those words on a screen right now and how that must make them feel. Now think of the equation, the way we normally write it down. I still don't remember the whole thing, but I remember it looks nice! It's a pretty picture. The fraction line splits things into top and bottom, there's a root, and it's easy to see what's inside the root and what's outside, and so on."]
+
+![Zei: "So they want to make all of written Dzegoban like that?"]
+
+![Fin: "Exactly."]
+
+![Fin: "You know, there's an old result: if you take the same text, and translate it into every language, the lengths of the translations are different. But if you take the translations, and compress them - literally, any off-the-shelf compression used in any of your compute devices - the lengths end up almost the same. So it's all the same amount of information. The question is always: how do you organize it so that it's the most accessible and useful?"]
+
+Zei pondered for a moment, thinking back to the thermodynamics lecture from a month ago. Information is information, the only question is how to arrange it. Zei nodded.
+
+![Fin: "So that's what the Bansunpei is A/B testing right now all across Dzego. Altogether, the priests came up with six different styles of visualization, and they're giving out reputation points if you adjust any of your writing or signs to their new ideas or report on your experiences reading things put up by others."]
+
+![Zei: "Wait ... they're doing _that_ level of nationwide organizing, all just to optimize our language?"]
+
+![Fin: "I guess so..."]
+
+---
+
+Zei walked toward the half-kilometer-tall pyramid - one of the most visible landmarks of southern Pafogai Du. It was not a "real" pyramid - that would be far too expensive, even for Veridia or even the Arctics. It was rather a pre-existing mountain with many pre-existing caves, which was refurbished to look like a pyramid, and the caves converted into living and working spaces. A portion of the Dzego government was located there, along with major businesses, though space was expensive.
+
+Zei stopped at a streetlight, and crossed Dzai Gun street: the last street before Pafogai Du officially ended, and a straight well-maintained path leading directly to the entrance of the mountain began.
+
+Zei opened and closed each finger on his injured arm, then repeatedly spread out his fingers and put them back together. He simulated some button pressing motions. His arm _felt_ fully healed, though Zei knew that his reaction time would still be a little bit slower.
+
+The street curved up with about a ten percent slope, roughly doubling Zei's calorie consumption as he walked along it. And Zei could feel it. His mind subconsciously stopped going through strategies thinking about the upcoming match, and switched to simply marveling at the beauty of the pyramid. 
+
+About five minutes later, he arrived at the main door.
+
+Zei's watch buzzed.
+
+<narrow_device_view>
+<table>
+  <thead>
+    <tr>
+      <th>zan</th>
+      <th>tie</th>
+      <th>tei</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Fin<center></td>
+      <td>jie fe lo hen can zan</td>
+      <td>74160</td>
+    </tr>
+    </tbody>
+</table>
+</narrow_device_view>
+
+"Wish you luck."
+
+Zei entered. On the inside, the tunnels looked like regular corridors, and he could not tell which rooms were refurbished caves and which were dug out from scratch. He followed the signs, turning right and down, then left, then straight and down for about a hundred meters. Finally, another right turn.
+
+After about ten meters, he saw the door. On the sides, a series of stone bricks, curving near the top into an arch. At the center of the top, there was a symbol: two horizontal arms, meeting in the middle with clashing fists.
+
+He walked in. An older woman noticed him and turned to him.
+
+![Mu: "Oh hi, Zei!"]
+
+![Zei: "Ah, Mu, good to see you again!"]
+
+![Mu: "Excited for the quarter finals?"]
+
+![Zei: "Yep!"]
+
+![Mu: "Well be careful. Remember, you're going to be part of a team now. You're a math guy, not a diplomat. You didn't even remember my birthday!"]
+
+![Mu: "Hey, the teams are randomly assigned! No relationships to manage, it's more like math than diplomacy."]
+
+![Mu: "You'd be surprised. I think it makes the real-time diplomacy all the more important."]
+
+Another woman walked in, about the same age as Zei.
+
+![Bai: "Ah, Zei, we meet again."]
+
+Zei's facial expression immediately turned into a frown. Bai had beaten him three out of three times over the past years, and was hardly magnanimous in victory. He turned away.
+
+Bai walked up closer, and put her hand on Zei's shoulder. ![Bai: "So, you afraid of me, Zei? You know I enjoy making you feel afraid. Taking your excitement about getting some prize money to buy a compute box for your mom, and snatching it all away, getting myself a vacation in the beautiful south islands of Redshire. I should send you pictures."]
+
+Zei clenched his fists.
+
+![Bai: "See you in battle! Or maybe you'll lose to someone else this round before you even get to a game against me."] She laughed, and slowly walked away.
+
+A bell buzzed. A robotic voice, more stern than the coffee shop robots, instructed all players to get to their stations.
+
+Zei walked into one of the elevator pods on the wall. The door closed, and the elevator went down. A tray opened up, and a robotic voice, this time once again more cute like the coffee shop robots, asked Zei for all electronic devices. Zei took out his hand device, took off his watch, and put both on the tray. The tray retreated back into the side of the elevator.
+
+A few seconds later, the elevator door opened, exposing a giant room with over a thousand people watching. A path lit up, showing the way to a giant game console with a chair.
+
+Zei gazed in awe at the room. This was Zei's first time there - the games before the quarter-finals had been played in much humbler circumstances. He stared, amazed that a high-school programming game was able to secure this kind of space. Then his mind snapped back - he would ask Mu about it later, he thought. Right now, he wasn't there to enjoy, he was there to compete and win.
+
+Zei walked forward. He could make out the silhouettes of three other players walking forward in the distance, but it was too dark to see who they were. He got to the chair, and sat down.
+
+Drones about the size of a hand device buzzed as they flew around Zei, scanning for any kind of equipment that could be used for cheating. If Zei's hand device or watch had been with him, they would have automatically done the same in reverse - demand and verify an attestation from the manufacturer and the inspection guild that the drone's firmware was running an anti-cheat scan and was not there to kill him - but Zei was without his electronic support, and so he had to rely on trust.
+
+A few seconds later, the drones were satisfied, and left. A tray with eye glasses attached to a cable pulled out from the game console. Zei slid the glasses under and behind his arm, so that the cable would rest behind him, and then put the glasses on.
+
+A loud automated voice, once again stern, announced: ![Loud_voice: "MU GU GEI FA"]. Starting in fifty (ticks). Zei calmed down and tried to put his stress behind him, and rehearsed once again in his head the tactics. Walls, gliders, rocks and how to extract usable negentropy from them, sideways attacks. Though every game there's always some kind of new rule, and the most important tactic of all was knowing how to adapt.
+
+![Loud_voice: "LE MU GEI FA"]. Starting in twenty five ticks.
+
+Zei closed his eyes briefly, and breathed.
+
+![Loud_voice:"PA GU GEI FA"]
+
+![Loud_voice:"MU GEI FA"]
+
+![Announcer: "Welcome to the first quarter-final round of the eighteenth year of the Minpentai tournaments. Tonight, four games will be taking place, one after the other. By midnight, we will know who is advancing to the semi-finals, and who will have to find another career. Or try harder for next year!"]
+
+![Announcer: "Today, fated by chance to be on team Ja, we have Pan Munbau and Dza Dzingo."]
+
+![Announcer: "And on team Zau, we have ... Zei Leimin and Bai Jahen."]
+
+Zei froze.
+
+----
+
+Zei could see the game field. Most of it was blacked out, but he could see the bottom left and bottom right corner - everything within thirty squares of a copy of his and Bai's symbol. Bai was setting up walls and glider factories - gliders that would fly right to a nearby rock formation, and then reflect one glider back into Bai's territory where a mirror wall would send the glider right back, but also shoot another glider upward.
+
+Zei began to do the same. He experimented with a few glider and wall formations in his sandbox field, and after confirming that they work, copied them to his allowed initial building area.
+
+![Loud_voice:"MU GU GEI TAU FA"]
+
+The battle begins in fifty ticks.
+
+Normally, at this stage, the players would be speaking intensely by voice chat, coordinating their strategies. Between Zei and Bai, neither spoke a word. The closest there was to communication was Zei intentionally not targeting gliders toward a few rock formations, and Bai taking the hint and taking them herself, and similarly leaving some rock formations to Zei.
+
+![Loud_voice:"LE MU GEI TAU FA"]
+
+Twenty five ticks.
+
+Zei suddenly realized: there had not yet been a new rule announced. So far, this was a ruleset that he had played many times before. Would the rule be announced at the start? Or was something else going on?
+
+"No time for speculating," Zei thought. "Have to focus on the game."
+
+![Loud_voice:"PA GU GEI TAU FA"]
+
+![Loud_voice:"MU GEI TAU FA"]
+
+![Loud_voice:"TAU FA"]
+
+Gliders started flying.
+
+Larger spaceships flew out from Zei and Bai's bases.
+
+For the first few hundred turns, there was no combat - it was simply a matter of expanding into the field and gathering resources. Gliders flew out, they interacted with rock formations, and created more gliders. Spaceships flew out, acting as large slow-moving gliders that eventually crashed into a rock formation in a controlled way, leaving behind a copy of their symbols. The portion of the game field that Zei could see increased.
+
+Zei and Bai's territories reached each other. A few stray gliders from Bai accidentally flew into Zei's territory, and wrecked one of his factories. Zei cursed silently, and spent his next intervention turn putting up more walls facing Bai. When putting up one of his walls, his finger slipped, and he accidentally created a glider that began to fly back toward his own base. Zei cursed silently, but then felt a sigh of relief when the glider harmlessly crashed into a rock formation.
+
+A thousand turns later, the first combat began.
+
+At first, Zei did well. He had perfected a "moving wall" design - a sort of large glider that flew half as fast, but was optimized for reflecting more basic types of gliders right back at the sender. Right behind his three moving walls, all aimed at Dza's corner of the game board, he put his symbol-carrying spaceships.
+
+Bai's performance was more average. Her gliders and Pan's flew into each other's territories with roughly equal frequency. Bai had some success in sending gliders deep inside Pan's territory, turning some rock formations into a chaotic mess that blasted gliders everywhere, and destroyed some of Pan's symbols. Pan, meanwhile, was more effective at pushing into the center, and then rotating back, attacking some of Bai's formations from behind.
+
+Zei then rolled out his next move: sending three unusual-looking gliders deep into Dza's territory along the edge, which hit Dza's inner wall and came together into Zei's symbol for exactly one turn - Zei's next intervention turn. Zei quickly removed junk and put up walls around the symbol, and three gliders aimed in strategic directions. He now had a base right in the center of Dza's territory.
+
+The audience was able to see a large detailed map of everything that was happening onscreen. Fin checked to see the game from far away on his watch, and saw the summary view which showed only the locations of each player's symbols:
+
+<narrow_device_view>
+   <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">                                                                                
+     <rect width="200" height="200" fill="#348"/>                                                                                                                         
+                                                                              
+     <circle cx="175" cy="190" r="3" fill="#cef"/>
+     <circle cx="190" cy="175" r="3" fill="#cef"/>
+     <circle cx="170" cy="170" r="3" fill="#cef"/>
+     <circle cx="170" cy="140" r="3" fill="#cef"/>
+     <circle cx="160" cy="110" r="3" fill="#cef"/>
+     <circle cx="180" cy="90" r="3" fill="#cef"/>
+     <circle cx="155" cy="75" r="3" fill="#cef"/>
+     <circle cx="175" cy="70" r="3" fill="#cef"/>
+     <circle cx="195" cy="25" r="3" fill="#cef"/>
+     <circle cx="190" cy="115" r="3" fill="#cef"/>
+     <circle cx="140" cy="110" r="3" fill="#cef"/>
+     <circle cx="140" cy="140" r="3" fill="#cef"/>
+     <circle cx="130" cy="170" r="3" fill="#cef"/>
+     <circle cx="130" cy="190" r="3" fill="#cef"/>
+     <circle cx="110" cy="180" r="3" fill="#cef"/>
+
+     <rect x="25" y="190" width="5" height="5" fill="#c9f"/>
+     <rect x="10" y="170" width="5" height="5" fill="#c9f"/>
+     <rect x="30" y="170" width="5" height="5" fill="#c9f"/>
+     <rect x="50" y="185" width="5" height="5" fill="#c9f"/>
+     <rect x="60" y="160" width="5" height="5" fill="#c9f"/>
+     <rect x="80" y="170" width="5" height="5" fill="#c9f"/>
+     <rect x="90" y="190" width="5" height="5" fill="#c9f"/>
+     <rect x="10" y="130" width="5" height="5" fill="#c9f"/>
+     <rect x="20" y="110" width="5" height="5" fill="#c9f"/>
+
+     <polygon points="10,30 16,30 13,35" fill="#3ef"/>
+     <polygon points="30,10 36,10 33,15" fill="#3ef"/>
+     <polygon points="20,85 26,85 23,90" fill="#3ef"/>
+     <polygon points="100,100 106,100 103,105" fill="#3ef"/>
+     <polygon points="95,135 101,135 98,140" fill="#3ef"/>
+     <polygon points="70,120 76,120 73,125" fill="#3ef"/>
+     <polygon points="70,80 76,80 73,85" fill="#3ef"/>
+     <polygon points="50,100 56,100 53,105" fill="#3ef"/>
+     <polygon points="90,20 96,20 93,25" fill="#3ef"/>
+     <polygon points="65,5 71,5 68,10" fill="#3ef"/>
+     <polygon points="60,35 66,35 63,40" fill="#3ef"/>
+     <polygon points="80,60 86,60 83,65" fill="#3ef"/>
+     <polygon points="110,75 116,75 113,80" fill="#3ef"/>
+     <polygon points="60,35 66,35 63,40" fill="#3ef"/>
+
+     <text x="170" y="10" fill="#8e8" font-family="sans-serif" font-size="12" text-anchor="middle">+</text>
+     <text x="175" y="30" fill="#8e8" font-family="sans-serif" font-size="12" text-anchor="middle">+</text>  
+     <text x="160" y="50" fill="#8e8" font-family="sans-serif" font-size="12" text-anchor="middle">+</text>  
+     <text x="185" y="55" fill="#8e8" font-family="sans-serif" font-size="12" text-anchor="middle">+</text>  
+     <text x="125" y="45" fill="#8e8" font-family="sans-serif" font-size="12" text-anchor="middle">+</text>  
+     <text x="110" y="15" fill="#8e8" font-family="sans-serif" font-size="12" text-anchor="middle">+</text>
+     <text x="145" y="20" fill="#8e8" font-family="sans-serif" font-size="12" text-anchor="middle">+</text>  
+     <text x="140" y="65" fill="#8e8" font-family="sans-serif" font-size="12" text-anchor="middle">+</text>  
+                                                       
+   </svg> 
+</narrow_device_view>
+
+Zei continued his attack against Dza. Remove one of the two players completely, he thought, and that takes out half the activity in the intervention turns - always the biggest source of surprise.
+
+Meanwhile, he saw more of Bai's symbols disappear, as Pan launched an attack going into the middle of the bottom of the field, seeking to cut him off from Bai.
+
+Watching from the sidelines, Mu sighed. She knew Zei and Bai did not get along, and their side was suffering from it. This was the "price of anarchy", she thought - the amount that a group lost from its members independently pursuing their own separate goals without coordinating. She watched intently - the next minute, she knew, would determine if they could figure it out.
+
+Watching from his watch kilometers away, Fin felt his own frustration. Zei wanted to win, Fin knew, but almost as much, Zei wanted to hear Bai beg.
+
+Zei stared at the board, concentrating his mind and trying to figure out his next move. After what seemed like an eternity, he leaned back, and started making movements with his fingers. He decided to change his tactic.
+
+Zei continued the attack on Dza, but intentionally did not target any of his symbols. Instead, he attacked a northern part of the eastern edge of Pan's territory, and spent a whole intervention turn to put up walls and build glider factories there. He put up _more_ walls, just to let the gliders build up and bounce back and forth.
+
+Pan and Dza did not see any of this. Instead, they saw Zei having greatly wounded Dza, but still struggling to finish him off, while Pan cornered Bai more and more toward the southeast. Emboldened, Pan launched an attack toward the east, seeking to sow chaos in the weakly defended territory in between Zei's home base and the front in the northeast against Dza.
+
+Zei saw that Bai was struggling. But the communication line between the two remained silent. She was still too proud to beg.
+
+Then, Zei saw that Pan was sending against Zei the same type of moving wall that Zei had used himself. He realized that he could not beat Pan alone. And so, he used his intervention turn to try a new strategy.
+
+First, Zei sent some gliders to destroy Pan's symbols in the center of the field. Then, came the real attack. Zei, Bai and the audience saw a spaceship flying diagonally northwest, from Zei's homebase, straight toward Pan's. With all of Pan's symbols cleared from the path, Pan and Dza were oblivious to this. What Pan saw was that his attack had successfully split Bai and Zei, and pushed Bai back all the way to her home base, surrounded on all sides. Dza still had five symbols, miraculously holding on against the force of Zei's primary attack.
+
+Zei checked the clock. Sixty moves until the next intervention turn. His spaceship was almost at Pan's base.
+
+Forty moves.
+
+Finally, Zei said the first words that went across his team's audio channel in this entire game.
+
+![Zei: "Bai, next intervention turn is your chance to shine."]
+
+Twenty moves.
+
+Zei's spaceship crashed against the remaining intact southern wall of Pan's home base. It briefly fluttered into chaotic shapes.
+
+Then, seemingly miraculously, for one single turn, the chaos came together into a symbol.
+
+Bai's symbol.
+
+Zei could hear a gasp - the second message that went across his team's audio channel in this entire game.
+
+Zei used his intervention turn to remove his own wall. Dozens of gliders flew in all directions, simultaneously targeting all of Dza's remaining symbols from multiple angles. Bai struggled in her sandbox view, made a few attempts at copying Zei's trick from over a thousand turns earlier. On her third try, she succeeded, and she repeated her moves live. The symbol was walled off, and gliders were flying in all directions.
+
+Two hundred turns later, all of Dza's remaining symbols were eliminated, and the game looked very different.
+
+<narrow_device_view>
+   <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">                                                                                
+     <rect width="200" height="200" fill="#348"/>                                                                                                                         
+                                                                              
+     <circle cx="175" cy="190" r="3" fill="#cef"/>
+     <circle cx="190" cy="175" r="3" fill="#cef"/>
+     <circle cx="170" cy="170" r="3" fill="#cef"/>
+     <circle cx="180" cy="75" r="3" fill="#cef"/>
+     <circle cx="155" cy="60" r="3" fill="#cef"/>
+     <circle cx="175" cy="55" r="3" fill="#cef"/>
+     <circle cx="195" cy="25" r="3" fill="#cef"/>
+     <circle cx="130" cy="170" r="3" fill="#cef"/>
+     <circle cx="130" cy="190" r="3" fill="#cef"/>
+     <circle cx="110" cy="70" r="3" fill="#cef"/>
+
+     <rect x="25" y="190" width="5" height="5" fill="#c9f"/>
+     <rect x="10" y="170" width="5" height="5" fill="#c9f"/>
+     <rect x="30" y="170" width="5" height="5" fill="#c9f"/>
+     <rect x="50" y="185" width="5" height="5" fill="#c9f"/>
+     <rect x="20" y="25" width="5" height="5" fill="#c9f"/>
+
+     <polygon points="140,110 146,110 143,115" fill="#3ef"/>
+     <polygon points="155,135 161,135 158,140" fill="#3ef"/>
+     <polygon points="20,85 26,85 23,90" fill="#3ef"/>
+     <polygon points="95,135 101,135 98,140" fill="#3ef"/>
+     <polygon points="70,120 76,120 73,125" fill="#3ef"/>
+     <polygon points="50,100 56,100 53,105" fill="#3ef"/>
+     <polygon points="90,20 96,20 93,25" fill="#3ef"/>
+     <polygon points="65,5 71,5 68,10" fill="#3ef"/>
+     <polygon points="60,35 66,35 63,40" fill="#3ef"/>
+     <polygon points="80,60 86,60 83,65" fill="#3ef"/>
+     <polygon points="60,35 66,35 63,40" fill="#3ef"/>
+     <polygon points="80,165 86,165 83,170" fill="#3ef"/>
+     <polygon points="90,190 96,190 93,195" fill="#3ef"/>
+     <polygon points="55,155 61,155 58,160" fill="#3ef"/>
+     <polygon points="10,135 16,135 13,140" fill="#3ef"/>
+     <polygon points="55,155 61,155 58,160" fill="#3ef"/>
+     <polygon points="30,135 36,135 33,140" fill="#3ef"/>
+                                                       
+   </svg> 
+</narrow_device_view>
+
+By symbol count, it was fifteen to fifteen - exactly even. But now, Zei and Bai could do twice as much in their intervention turns as Pan alone could do in his.
+
+Pan made a last-ditch effort to send new kinds of gliders to destroy everything he could in Zei's home base, and even copied Zei's signature tactic, sending a spaceship to try to set up a symbol there. The plan partially succeeded. But the keystone, setting up the symbol, did not. Zei's strategy was Zei's, and so Zei himself had already put up the countermeasures, and blocked the spaceship in its tracks.
+
+Meanwhile, Bai and Zei continued to wreak havoc on Pan's territory, Bai attacking the west and Zei attacking the north and east. A thousand turns later, most of the gamefield was a high-entropy wasteland, not conducive to building anything. The main untarnished territories were Bai's home base, a fraction of Zei's home base, and Zei's side of what had been the battle front against Dza. Total symbol count: Zei five, Bai five, and Pan four.
+
+At that moment, Pan resigned.
+
+The audience cheered.
+
+---
+
+Two elevators opened up in the waiting room, and Zei and Bai simultaneously stepped out. Mu was waiting for them.
+
+![Mu: "Congratulations, you two. Next stop is the semi-finals next week."]
+
+![Zei: "I'm confused. Everything this game was the same as before. What was the new rule?"]
+
+![Mu: "Ah. I thought you would ask that."]
+
+![Mu: "A week ago, right before the priests went into the dungeon to decide on the rule sets, I suggested to one of them that they should make things interesting, and be more creative. The doors stayed sealed for five days - twice as long as usual. And now we know why. The rule change was: the team selection was not done through cryptographic randomness."]
+
+Zei's eyes opened wide.
+
+![Mu: "This time, the game was a psychological trial. And so despite having the teammate you wanted to cooperate with the least, despite making a new all-time record for the fewest messages exchanged in the audio channel during an entire game, when the moment came, almost without talking at all, you cooperated. And so you passed."]
+
+Mu paused for a few seconds.
+
+![Mu: "The priests will be pleased."]
+
+For a moment, Mu and Zei silently stared at each other.
+
+Breaking the silence, Bai walked up.
+
+![Bai: "I'm sorry."]
+
+![Zei: "Come on, you gotta give me something more substantive than that. Say, next time you take a vacation to Redshire, bring me along."]
+
+Then, realizing that the suggestion he just made might give Bai an unintended impression, he quickly added:
+
+![Zei: "And my mom."]

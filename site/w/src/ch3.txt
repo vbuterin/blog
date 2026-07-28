@@ -1,0 +1,406 @@
+# Chapter 3
+
+Gladias was walking along a foot path through a local park. Tall trees were towering over him on both sides.
+
+An audio program from Emerald, the local AI running from Gladias's hand device, was playing into his ear. At that particular moment, it was explaining the nuances of airborne virus transmission, and how the exact relationship between transmission rate and total city-wide cases could be computed and what that meant for the building design tax rubric rates.
+
+To both his left and his right, there was a series of houses made out of large stone bricks, medieval in style but without any of the junk, dust on the ground, or other ugly imperfection that a real medieval structure would have had a thousand years earlier. Each house seemed to meld seamlessly into the trees and plants that surround it.
+
+After about two hundred meters, the houses gave way to thick green shrubbery.
+
+After about five minutes of that, the foot path started gently curving upward. Somehow both smoothly and suddenly, it transitioned into a sky bridge above a busy road, with many cars and autobuses and a few autonomous delivery vehicles passing under.
+
+![Gladias: "Pause, I want to enjoy the view"], Gladias said to Emerald, out of habit whispering so softly that even his own hand device would likely not be able to make it what he said - but his silken cloth neck band picked it up perfectly.
+
+Gladias stopped in the middle of the sky bridge, and turned to the side, putting his hands on the handrail. The handrail creaked slightly.
+
+Gladias looked forward. The road beneath him continued for about two kilometers, and then turned right. Beyond that point, there was a mountain covered with trees. A few buildings, shaped like medieval castle towers, poked up above the trees - three of them were halfway up to the summit, and one on the very top.
+
+Gladias's watch buzzed.
+
+<narrow_device_view>
+<table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Seila<center></td>
+      <td>[4 images]</td>
+      <td>44029</td>
+    </tr>
+    </tbody>
+</table>
+</narrow_device_view>
+
+He took a look.
+
+Seila was sending some photos from Freetown. The first was of the downtown of the city. The second was of a major park, taken from in front of an entrance gate. On the left, he could see a poster with some writing. Bringing it closer to his eyes, he could make out a price list.
+
+He pressed a button, responding back with a heart symbol.
+
+Gladias turned to once again face forward, and began to walk. After the sky bridge, the road continued, though with fewer trees and more buildings. After another two hundred meters, the road sloped down, and transitioned seamlessly into a tunnel, lit just enough that it's possible to comfortably see and read, but not more.
+
+Gladias got to a Y-shaped intersection. Pasted on the wall, there was a poster, attached to the wall with four pieces of tape.
+
+He stopped right in front of the sign to take a look. His watch and neck band automatically noticed that his mind was wandering, and the Dzego history lecture paused.
+
+<wide_device_view>
+
+<div style="background-color:#633; margin: -20px; border-radius: 10px; padding: 10px; color:#fee; font-size:125%">
+
+<b>From a comfortable Veridia to a strong Veridia</b>
+
+<hr style="background:#fee; margin-top: 10px">
+
+<div>Veridia is a beautiful country, you are told in school. You see it every day: the trees, the mountains, the houses and buildings all trying to eke out another few basis points reduction in land tax.</div><br>
+
+<div>But you know, in your heart, that there is a problem. When did Veridia last go to space? Twenty years ago. When was Veridia's tallest building built? Forty years ago. Why? Because all your institutions - the Steering system, the Graph Funding, and the very _culture_, are built around making people comfortable and happy in the present, with no concern for tomorrow.</div><br>
+
+<div>Meanwhile, look at the Arctic Empire. Where is the housing, the transportation, the industry being built the fastest? In the Arctic Empire. All the scientists working to make people live longer? In the Arctic Empire. </div><br>
+
+<div>What does Veridia say to those scientists? Living longer is not that important. Death and birth are okay, they are the natural cycle of life. Yes, that's what they believe. The natural cycle of life is the best they have for morality - by that same twisted logic, any injustice could be natural, like a tiger eating a rabbit.</div><br>
+
+<div>Veridia's vision of nature is like a plant. Beautiful, but never rising up above its stature. Our vision of nature is like a lion. If this vision appeals to you, if you want Veridia to be stronger, to reach for the stars, to aim beyond incremental public health and seek eternal life, then Veridia needs you, the next generation of leaders, to _take charge_. Don't mind the mob. Build the future. Join us, and we will build it together.</div><br>
+
+<div>With regards,</div><br>
+
+<div>Lord Ephelion</div><br>
+
+<div>Arctic Empire consul to Veridia.</div><br>
+
+</div>
+
+</wide_device_view>
+
+"Yay, more Arctic propaganda", Gladias thought. Of course, the Arctic Empire is free to speak just like everyone else, but he wondered what kind of Veridian would feel inclined to vandalize the public environment and put up a printout of their message in the Veridian tunnels. He started mulling over ways to rip the poster down.
+
+Suddenly, Gladias felt a tap on his shoulder.
+
+Gladias turned his face around.
+
+---
+
+![Gladias: "Oh is it you, Mov?"]
+
+![Mov: "No, it's the Arctic Emperor. I'm here to literally suck out your soul."]
+
+![Gladias: "Ok fine... Wait, I'm like one of a hundred people walking toward the Greater Plum Harbor wearing a privacy robe, how did you figure out where I am?"]
+
+![Mov: "You put me on your trust list a year ago and never took me off, so our local AIs had permission to enable location sharing. Your AI knew that we were supposed to meet before I shadow you as you go see the mysterious gentleman, so it unlocked location sharing with me for today."]
+
+![Gladias: "Aaaah, I see ... something something contextual intimacy or whatever the new buzzword is."]
+
+![Mov: "Yep, probably didn't even need the two-party garbled circuit feature to do that."]
+
+![Gladias: "So what's been on your mind?"]
+
+![Mov: "Well, I got assigned to the rubrics on internet media this year. Just met a few of the other Keepers in this group this morning."]
+
+![Gladias: "What are the new issues this time around? Something about taxes on the API restrictions?"]
+
+![Mov: "Yeah, basically. Bluewhale announced a month ago that they're cutting their API and are only letting verified hardware interface with the platform, they say it's to prevent automated spam, but lots of people think they just want to block alternative interfaces so they can control people's attention more and extract more money."]
+
+![Gladias: "Control people's attention? Do we know if they're doing that, are their algorithms public?"]
+
+![Mov: "Nah, algorithms are totally opaque, and they're paying the max tax bracket for that."]
+
+![Gladias: "I see..."]
+
+![Mov: "So yeah, many of the Keepers think we should bump up more taxes on that stuff. So either they stop, or, well, they keep going and the internet sucks more, but the gov gets enough money that we can pay for everyone to get level three healthcare. The problem is, Bluewhale has been driving a hard campaign against it. One Keeper was not careful about their privacy, she and her views got found out recently, it went public, and her husband lost his job the next week. No idea if it's connected, but, well, this is why we gotta run this whole tax system with cryptographic networks randomly selecting Keepers, anonymous discussion and voting, and privacy robes."]
+
+![Mov: "Anyway, speaking of privacy, what's the plan with your 200 rep anon friend?"]
+
+![Gladias: "Well, he told me that he thinks the whole Steering mechanism is fundamentally broken. I figured I would hear him out. Often even people who are crazy are at least ten percent right in some way that's illuminating. And hopefully figure out some clue about how he found me?"]
+
+![Mov: "And... what if this is a trap, to get even more compromising info on you?"]
+
+![Gladias: "Well, if he really wanted to hurt me, he could have just submitted my identity and task into the network and pulled me out of the running for Sentinel status for this whole year. But anyway, that kind of thing is what you're there for."]
+
+Mov then opened up his privacy robe, and took out a large package from an inside pocket.
+
+![Mov: "Here, before we get into the rest of the business, put on a fresh privacy robe. Just in case there's some piece of dirt that makes yours trackable. The Arctics are getting better at smuggling their surveillance devices in here, faster than we're getting better at detecting them. We gotta step up our paranoia"]
+
+![Gladias: "Surely if it's at this level we should have just not met in person at all."]
+
+![Mov: "Come on Glad, you're not just someone about to join me as a Sentinel, you're a friend. I enjoy it when we see each other - while we still can."]
+
+---
+
+The tunnel sloped up, and the outdoor light once again shone into Gladias's eyes. To his right, he saw a series of apartment buildings under construction, all covered with large tall barriers shielding the construction site from public view.
+
+He remembered the sight - he had passed by there many months ago, and while he could not make out exactly how much had changed behind the barrier, it was clearly going more slowly than planned.
+
+On the first barrier, he saw a poster reminding Veridians to be kind toward their families and their community.
+
+On the second barrier, he saw a different kind of advertisement:
+
+<blockquote>
+
+Hydrogen hydroxide is:
+
+* A commonly found substance in toxic sewage water
+* Deadly in large doses
+* Frequently administered to prisoners undergoing torture
+* A source of skin damage if held for a prolonged time in its solid form
+
+But did you know that you can buy YOUR OWN BOTTLE of fresh drinkable hydrogen hydroxide today?
+
+Hydrafill, buy it now.
+
+</blockquote>
+
+On the right side of the advertisement, there was the classic Hydrafill water bottle, covered with yellow and green colors.
+
+To his left, Gladias saw a long castle-like wall, mixing grey and purple colors. In front of the wall, there were two rows of trees, with a sidewalk in between them.
+
+Then, a billboard:
+
+"Learn about what Greater Plum Harbor is doing for your community!"
+
+The text was in front of a background that featured robots picking up garbage, drawn in a child-friendly cartoon aesthetic. On the bottom right corner there was a two-dimensional barcode. Gladias scanned it out of curiosity.
+
+<wide_device_view>
+
+<h3 style="color:#a4a">Greater Plum Harbor Public Activities</h3>
+<table>
+  <tbody>
+    <tr>
+      <td>Environment</td>
+      <td>
+* Local garbage cleanup
+* Pollution monitoring (water, air)
+* Animal population monitoring, research on wild animal welfare
+
+      <td><button> Learn more </button></td>
+    </tr>
+    <tr>
+      <td>Health and medicine</td>
+      <td>
+* Zone-wide integrated A/B testing of food and environment interventions
+* Incubating over 80 biotech startups in this zone alone
+* Healthy eating, exercise, other behavioral and lifestyle research
+
+</td>
+      <td><button> Learn more </button></td>
+    </tr>
+    </tr>
+    <tr>
+      <td>Education</td>
+      <td>
+* Writing curricula for age 4-18 advanced education
+* Math and programming competitions for kids and teenagers
+* Behavioral and lifestyle research in lifelong learning
+</td>
+      <td><button> Learn more </button></td>
+    </tr>
+    <tr>
+      <td>Art</td>
+      <td>
+* Beautiful Cities research
+* Publicly available exhibitions and museums
+* Over 15 freely available shows, over 10 movies released per year. Three rated top-20 last year.
+</td>
+      <td><button> Learn more </button></td>
+    </tr>
+    <tr><td colspan="3"><button> Load more </button></td></tr>
+  </tbody>
+</table>
+
+<div><b>All research outputs and tooling done by GPH are open source!</b></div></td>
+</wide_device_view>
+
+Gladias saw two people sitting on a bench, each drinking a tea and looking at the billboard, one with a hand device on his lap.
+
+![Borkat: "Have you ever been in there?"], the first man asked.
+
+![Vossidem: "No I haven't, never managed to get a visa"], the second replied.
+
+![Borkat: "It's a fascinating place, it looks totally different inside than the rest of Veridia, it's almost like a country inside a country."]
+
+Gladias stopped, and also faced the billboard to avoid arousing suspicion. Overhearing a conversation was slightly impolite, but understanding public sentiment was part of his duty as a future Sentinel.
+
+The second man looked down at the hand device that the two were sharing. ![Vossidem: "Oof, check what taxes they pay."]
+
+![Gladias: "What taxes do they pay?"], Gladias asked Emerald, whispering so softly that only his neckband could make out what he is saying.
+
+![Emerald: "Sales tax, averaging 5.2%, half of the city average. Land tax is 1.1%, slightly greater than the city average. Graph Funding revenue recovers roughly half of this."]
+
+![Vossidem: "I don't get it. These guys are just peacefully off in a corner, by themselves. I've never been there, and they've never bothered me. And they even do all this work on the environment, education, healthcare, their museums. They can't even just work on the science they're actually good at, they have to do all these populistic things too, that they're not even good at. And even after all this? So many people hate them, and pretend their wall is ugly just to push their land taxes up. What's the point of worrying so much about the Arctics when we're so good at being our own worst enemy?"]
+
+![Borkat: "At least here that's the worst we can do. If this was Devanvil or Inglewore, GPH would be fighting to not get shut down entirely."]
+
+Gladias had not been inside Greater Plum Harbor for nearly a decade, so this made him all the more curious to see it again. He kept walking.
+
+---
+
+Gladias held his hand device near the marking on the entrance gate, and waited for one second.
+
+"Proof verified, welcome", the machine said.
+
+The buildings inside Greater Plum Harbor were more uniform than those outside. The trees were all of a few types, and carefully planted an equal distance apart on the sidewalk. Beyond having distinct names and distinct quarter-meter-wide logos, the stores and restaurants were not trying at all to distinguish themselves, instead accepting their visual role as small elements of the Greater Plum Harbor's whole. The buildings were noticeably more futuristic, more glass-and-steel, and more sharp-edges than the usual structures in Veridia.
+
+After five minutes of walking, Gladias arrived at a tunnel entrance, and he walked down. Briefly, he went through a space where there were a large number of people walking.
+
+At one moment, his watch beeped.
+
+<narrow_device_view>
+
+<div style="font-size:150%"></div>
+
+<table>
+    <tr>
+      <td style="font-size:150%" colspan="2">Air</th>
+    </tr>
+
+    <tr>
+      <td style="font-size:150%">CO<sub>2</sub></th>
+      <td style="font-size:150%; color: red">905</th>
+    </tr>
+
+    <tr>
+      <td style="font-size:150%">AQI</sub></th>
+      <td style="font-size:150%; color: yellow">22.1</th>
+    </tr>
+</table>
+
+<table>
+
+    <tr>
+      <td style="font-size:150%" colspan="2">Devices</th>
+    </tr>
+    <tr>
+      <td style="font-size:150%; color: #8f8">Attested ✓</th>
+      <td style="font-size:150%; color: #8f8">55</th>
+    </tr>
+
+    <tr>
+      <td style="font-size:150%; color: #fc8">Unknown ?</th>
+      <td style="font-size:150%; color: #fc8">3</th>
+    </tr>
+</table>
+
+</narrow_device_view>
+
+Two problems, Gladias thought.
+
+First, too many people, not enough ventilation or filtration. Gladias pulled on a strap on his privacy robe's front face cover, tightening a belt that separated the area below his nose from the area above his nose.
+
+Second, no idea what those unattested devices are. Here, there was no time to figure things out. Could be a kid's science project, could be surveillance. He increased his speed slightly, and kept walking.
+
+After following his local AI's instructions and taking several turns through the maze, he was once again outside, this time inside of a hidden courtyard. There were several tables and chairs, with people eating and drinking tea. Gladias found one in a booth that had in a cloth protecting it. He went in, sat down, and took the hood off his privacy robe.
+
+He tapped his hand device against a glowing circle in the middle of a table, and two seconds later heard a confirmation sound.
+
+Two minutes later, a robot with a smiley face came in and put down tea on the table, along with a salad.
+
+Five minutes later, another man wearing a privacy robe stepped in.
+
+---
+
+![Delwart: "So, we meet at last."]
+
+![Gladias: "You track me down, you tell me you know things I need to hear but only want to tell me in person, and you bring me to a far corner of GPH I did not even know existed. And so far I don't even know your name."]
+
+![Delwart: "Ah, my name is Delwart. Pleased to meet you."]
+
+![Gladias: "And I'm Gladias."]
+
+![Delwart: "I knew that. And your wife is Seila, your children's names are-"]
+
+![Gladias: "Are you trying to intimidate me?"]
+
+![Delwart: "Actually no, I guess now that I think about it, that was more showing off than anything else. I do apologize."]
+
+The two went quiet for a couple minutes. Both took off the face masks and hoods of their privacy robes. Gladias started to drink his tea and eat his salad. Delwart tapped his own hand device against the circle on the table, and a minute later his own tea, and some kind of rectangular nutrition bar along with a fork, arrived.
+
+Gladias leaned forward again.
+
+![Gladias: "So what do you want?"]
+
+![Delwart: "Do you feel happy with the Steering system lately?"]
+
+![Gladias: "It has its flaws like any system, but in general it feels fine?"]
+
+![Delwart: "I see, I haven't broken your wall yet. Okay, let's take the Dreadknot concert for example. They're a nice band, they're great fun, right?"]
+
+![Gladias: "Yeah, I like them."]
+
+![Delwart: "But a bunch of the Sentinels are trying to push them up into Tier 4, because their lyrics are not gentle enough."]
+
+Gladias nodded in agreement.
+
+![Delwart: "You were brave, voting Tier 3. Most Acolytes would cave to what they think the Sentinels want. You didn't. That's rare."]
+
+![Delwart: "But let's take another example. What do you think about GPH?"]
+
+![Gladias: "It's clearly a nice place. Not like Veridia, but beautiful and impressive in its own way. It's not for everyone, but I can see why a lot of people like coming here."]
+
+![Delwart: "Well do you know what their Steering taxes are?"]
+
+![Gladias: "Well the Steering taxes are okay, but they really get dinged on the land tax."]
+
+![Delwart: "Exactly. A well-considered argument about how much this place benefits Veridia is worth less than a barely thought-through 'I don't like you'."]
+
+![Gladias: "So what do you propose?"]
+
+![Delwart: "Freedom. Actual freedom. Stop trying to nudge everyone, and let people's true selves come out."]
+
+![Gladias: "And how can I help?"]
+
+![Delwart: "Are you planning to be a Sentinel or a Keeper if you get accepted in two months?"]
+
+![Gladias: "Was thinking Sentinel so far."]
+
+![Delwart: "Be a Keeper. And just vote to delete every rubric you see."]
+
+![Gladias: "That's it? That's your plan?"]
+
+![Delwart: "See, there's a lot more Sentinels these days than Keepers. And those are also the people everyone is trying to influence. Why? Because you get a direct connection to specific things in the real world. Keepers set the rules. But there's a limit to how much any single rule can affect any single business, and there's like twenty Keepers deciding each one. Being a Sentinel, you have a much more tangible impact. And it's more fun."]
+
+![Delwart: "My program is different. I'm trying to round up as many Keepers as I can, because what I want is systemic change. It's not about one concert or one enclave that has too much purple in it. It's about releasing Veridians from this tyranny of people's prejudices and letting them be themselves."]
+
+![Gladias: "Do you want to remove Graph Funding too?"]
+
+![Delwart: "I think that definitely overreaches in a bunch of ways too, though my own focus is Steering."]
+
+![Gladias: "A lot of the open tech Graph Funding supports has been pretty key to helping Dzego modernize to defend itself, do you not think that's important?"]
+
+![Delwart: "Look, I like their people, but really we're playing a dangerous game cutting so close to funding a potential war. We should focus on our own problems first."]
+
+Delwart stopped speaking, and began to drink his own tea and eat his nutrition bar. Gladias took the moment to ponder Delwart's words, while continuing to drink his tea and finishing his salad.
+
+![Gladias: "It's an interesting thought, that the Steering is just manipulating people too much. I don't know if I fully agree with just dropping it all to zero, and especially killing the Graph Funding - which we would have to do, if the Steering taxes went to zero."]
+
+Gladias paused for a few seconds, and looked at Delwart. Delwart looked back. They each took another sip of their tea.
+
+![Gladias: "But okay, even if I might agree on parts, why should I listen to you?"]
+
+![Delwart: "Well, I know you, I know where you live, I know how you think. And if I can find out all that, imagine what kinds of things Bluewhale might be able to do. Or, for that matter, the Arctics. I can help protect you. But I will need your help too."]
+
+![Delwart: "Anyway, the deadline for you to submit your final track decision is in five days. Don't go for being a Sentinel, be a Keeper. Let's just start with that."]
+
+Delwart stood up, and exited the booth.
+
+Gladias kept the crack in the middle of the curtain slightly open, and stared outside as Delwart left. Just before Delwart left from view, another person wearing a privacy robe exited the adjacent booth, and followed Delwart.
+
+Gladias checked his watch.
+
+<narrow_device_view>
+   <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">                                                                                
+     <rect width="200" height="200" fill="#348"/>                                                                                                                         
+     <rect x="80" y="100" width="80" height="80" rx="8" fill="#67e"/>                                                                                                     
+     <rect x="120" y="40" width="20" height="70" rx="8" fill="#67e"/>                                                                                                     
+     <rect x="130" y="40" width="70" height="20" fill="#67e"/>                                                                                                            
+     <circle cx="92" cy="150" r="5" fill="#cef"/>                                                                                                                          
+     <text x="84" y="169" fill="#cef" font-family="sans-serif" font-size="12">Gladias</text>                                                                              
+     <circle cx="130" cy="110" r="5" fill="#cef"/>                                                                                                                      
+     <text x="140" y="130" fill="#cef" font-family="sans-serif" font-size="12" text-anchor="middle">Mov</text>  
+   <line x1="130" y1="105" x2="130" y2="88" stroke="#cef" stroke-width="1"/>                                                                                              
+   <polygon points="130,85 126,92 134,92" fill="#cef"/>                                                         
+   </svg> 
+</narrow_device_view>

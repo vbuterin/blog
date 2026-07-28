@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        /* Dark mode toggle */
+        .dark-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 16px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .dark-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .document-page {
+            background: #fff;
+            border-radius: 12px;
+            padding: 60px 80px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            width: 780px;
+            min-height: 1000px;
+        }
+
+        .document-page h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .document-page h2 {
+            font-size: 2rem;
+            color: #444;
+            margin-bottom: 15px;
+            margin-top: 30px;
+        }
+
+        .document-page h3 {
+            font-size: 1.5rem;
+            color: #555;
+            margin-bottom: 12px;
+            margin-top: 25px;
+        }
+
+        .document-page p {
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .document-page ul {
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 2;
+            margin-bottom: 20px;
+            padding-left: 30px;
+            list-style-type: disc;
+        }
+
+        .document-page ol {
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 2;
+            margin-bottom: 20px;
+            padding-left: 30px;
+            list-style-type: decimal;
+        }
+
+        .document-page li {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .document-page ul ul,
+        .document-page ul ol,
+        .document-page ol ul,
+        .document-page ol ol {
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .document-page blockquote {
+            border-left: 5px solid #667eea;
+            padding-left: 25px;
+            margin: 25px 0;
+            font-size: 1.1rem;
+            color: #555;
+            font-style: italic;
+            background: #f8f9fa;
+            padding: 20px 25px;
+            border-radius: 4px;
+        }
+
+        .document-page pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 25px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 25px 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .document-page code {
+            font-family: 'Monaco', 'Menlo', monospace;
+            background: #f5f5f5;
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: #e83e8c;
+        }
+
+        .document-page pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        .document-page table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+        }
+
+        .document-page th, .document-page td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: left;
+            color: #333;
+        }
+
+        .document-page img {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .document-page th {
+            background: #667eea;
+            color: white;
+        }
+
+        .document-page tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .document-page hr {
+            border: none;
+            height: 3px;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            margin: 30px 0;
+            border-radius: 2px;
+        }
+
+        .device-view {
+            background-color: #0a0e27;
+            color: #7fbcff;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            margin: 0;
+            border-radius: 15px;
+            font-size: 75%;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .wide-device-view {
+            max-width: 900px;
+        }
+
+        .narrow-device-view {
+            max-width: 50%;
+        }
+
+        .device-view h3 {
+            color: #7fbcff;
+            border-bottom: 2px solid #3d70c3;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .device-view table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        .device-view thead tr {
+            background-color: #1a2a4a;
+            border: 1px solid #3d70c3;
+        }
+
+        .device-view th {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #3d70c3;
+            color: #cef;
+            font-weight: bold;
+        }
+
+        .device-view tbody tr:nth-child(odd) {
+            background-color: #0f1a3a !important;
+            border: 1px solid #2a4a7a;
+        }
+
+        .device-view tbody tr:nth-child(even) {
+            background-color: #12204a !important;
+            border: 1px solid #2a4a7a;
+        }
+
+        .device-view td {
+            padding: 10px;
+            border: 1px solid #2a4a7a;
+            color: #b8d8ff;
+            font-weight: bold;
+        }
+
+        .device-view button {
+            background-color: #1a3a6a;
+            border: 1px solid #3d70c3;
+            padding: 10px 25px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.2s;
+            color: #cef;
+        }
+
+        .device-view button:hover {
+            background-color: #2a4a7a;
+            border-color: #7fbcff;
+        }
+
+        .device-view ul,
+        .device-view ol {
+            padding-left: 10px !important;
+            margin-left: 0 !important;
+            margin-bottom: 0 !important;
+            list-style-position: outside !important;
+            font-size: inherit !important;
+            color: #9cc2ff !important;
+            line-height: inherit !important;
+            font-family: inherit !important;
+        }
+
+        .device-view li {
+            padding-left: 0 !important;
+            list-style-position: outside !important;
+            margin-bottom: 0 !important;
+            font-size: inherit !important;
+            color: #9cc2ff !important;
+            font-family: inherit !important;
+        }
+
+        /* Dark mode overrides */
+        html.dark body {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+
+        html.dark .dark-toggle {
+            background: #1a1a2e;
+            color: #f0e68c;
+        }
+
+        html.dark .document-page {
+            background: #1a1a2e;
+        }
+
+        html.dark .document-page h1 {
+            color: #f0f0f0;
+            border-bottom-color: #8b83c3;
+        }
+
+        html.dark .document-page h2 {
+            color: #d0d0d0;
+        }
+
+        html.dark .document-page h3 {
+            color: #c0c0c0;
+        }
+
+        html.dark .document-page p,
+        html.dark .document-page ul,
+        html.dark .document-page ol {
+            color: #d0d0d0;
+        }
+
+        html.dark .document-page li {
+            color: #d0d0d0;
+        }
+
+        html.dark .document-page blockquote {
+            color: #b0b0b0;
+            background: rgba(255,255,255,0.05);
+            border-left-color: #8b83c3;
+        }
+
+        html.dark .document-page code {
+            background: rgba(255,255,255,0.1);
+            color: #f08dcd;
+        }
+
+        html.dark .document-page table {
+            border-color: #444;
+        }
+
+        html.dark .document-page th, html.dark .document-page td {
+            border-color: #444;
+            color: #d0d0d0;
+        }
+
+        html.dark .document-page th {
+            background: #4a4580;
+            color: white;
+        }
+
+        html.dark .document-page tr:nth-child(even) {
+            background: rgba(255,255,255,0.03);
+        }
+
+        html.dark .document-page hr {
+            background: linear-gradient(to right, #8b83c3, #6b5ba0);
+        }
+
+        html.dark .device-view {
+            background-color: #050510;
+            border-color: #1a1a40;
+        }
+
+        html.dark .device-view h3 {
+            color: #5588cc;
+            border-bottom-color: #1a3a6a;
+        }
+
+        html.dark .device-view th {
+            color: #88bbee;
+            border-color: #1a3a6a;
+        }
+
+        html.dark .device-view td {
+            color: #88bbee;
+            border-color: #1a3a6a;
+        }
+
+        html.dark .device-view tbody tr:nth-child(odd) {
+            background-color: #080820;
+            border-color: #0f1a3a;
+        }
+
+        html.dark .device-view tbody tr:nth-child(even) {
+            background-color: #0a0a2a;
+            border-color: #0f1a3a;
+        }
+
+        html.dark .device-view button {
+            background-color: #0a1a3a;
+            border-color: #1a3a6a;
+            color: #88bbee;
+        }
+
+        html.dark .device-view button:hover {
+            background-color: #1a2a4a;
+            border-color: #4488cc;
+        }
+
+        html.dark .device-view ul,
+        html.dark .device-view ol,
+        html.dark .device-view li {
+            color: #6699bb;
+        }
+
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .document-page {
+                width: 100%;
+                padding: 25px 15px;
+                min-height: auto;
+            }
+
+            .document-page h1 {
+                font-size: 1.4rem;
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+            }
+
+            .document-page h2 {
+                font-size: 1.2rem;
+                margin-bottom: 12px;
+                margin-top: 20px;
+            }
+
+            .document-page h3 {
+                font-size: 1rem;
+                margin-bottom: 10px;
+                margin-top: 18px;
+            }
+
+            .document-page p {
+                font-size: 0.9rem;
+                line-height: 1.6;
+                margin-bottom: 12px;
+            }
+
+            .document-page ul,
+            .document-page ol {
+                font-size: 0.9rem;
+                line-height: 1.7;
+                margin-bottom: 15px;
+                padding-left: 20px;
+            }
+
+            .document-page li {
+                margin-bottom: 5px;
+            }
+
+            .document-page blockquote {
+                font-size: 0.9rem;
+                padding-left: 15px;
+                margin: 15px 0;
+                padding: 12px 15px;
+            }
+
+            .document-page pre {
+                padding: 12px;
+                font-size: 0.75rem;
+                margin: 15px 0;
+            }
+
+            .document-page code {
+                font-size: 0.8rem;
+                padding: 2px 5px;
+            }
+
+            .document-page table {
+                font-size: 0.8rem;
+            }
+
+            .document-page th,
+            .document-page td {
+                padding: 8px;
+            }
+
+            .document-page img {
+                margin: 15px auto;
+            }
+
+            .document-page hr {
+                margin: 20px 0;
+            }
+
+            .wide-device-view,
+            .narrow-device-view {
+                max-width: 100%;
+                padding: 15px;
+                font-size: 70%;
+                margin: 15px auto;
+            }
+
+            .device-view table {
+                margin-bottom: 20px;
+                font-size: 0.85rem;
+            }
+
+            .device-view th,
+            .device-view td {
+                padding: 6px;
+            }
+
+            .device-view button {
+                padding: 8px 18px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    
+                <div class="document-page">
+                    <h1>All chapters</h1>
+<h3><a href="./html/ch1.html" target="_blank">Chapter 1</a></h3>
+<h3><a href="./html/ch2.html" target="_blank">Chapter 2</a></h3>
+<h3><a href="./html/ch3.html" target="_blank">Chapter 3</a></h3>
+<h3><a href="./html/ch4.html" target="_blank">Chapter 4</a></h3>
+<h3><a href="./html/ch5.html" target="_blank">Chapter 5</a></h3>
+                </div>
+            
+</body>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) {
+            html.classList.add('dark');
+            btn.textContent = '🌙';
+        } else {
+            html.classList.remove('dark');
+            btn.textContent = '☀️';
+        }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '🌙';
+    }
+</script>
+</html>
