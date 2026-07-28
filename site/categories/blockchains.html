@@ -3,20 +3,6 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
-<style>
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: #1c1c1c;
-        color: white;
-    }
-    .markdown-body table tr {
-        background-color: #1c1c1c;
-    }
-    .markdown-body table tr:nth-child(2n) {
-        background-color: black;
-    }
-}
-</style>
 
 
 
@@ -26,7 +12,6 @@
 
 <link rel="stylesheet" type="text/css" href="../css/main.css">
 
-<script type="text/x-mathjax-config">
 <script>
 MathJax = {
   tex: {
@@ -81,10 +66,16 @@ MathJax = {
   // Check for color scheme on init
   const checkColorScheme = () => {
     const colorScheme = localStorage.getItem('colorScheme');
-    // Default to light for first view
-    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
-    // If previously saved to dark, toggle switch and update colors
-    if (colorScheme === 'dark') {
+    if (colorScheme === null || colorScheme === undefined) {
+      // No saved preference — use OS preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        toggle.checked = true;
+        toggleDarkMode();
+        localStorage.setItem('colorScheme', 'dark');
+      } else {
+        localStorage.setItem('colorScheme', 'light');
+      }
+    } else if (colorScheme === 'dark') {
       toggle.checked = true;
       toggleDarkMode();
     }
@@ -760,7 +751,7 @@ MathJax = {
 <li>
     <span class="post-meta">2017 Dec 31</span>
     <h3 style="margin-top:12px">
-      <a class="post-link" href="../general/2017/12/31/sharding_faq.html">Sharding FAQ</a>
+      <a class="post-link" href="../general/2017/12/31/pos_faq.html">Proof of Stake FAQ</a>
     </h3>
 </li>
 
@@ -769,7 +760,7 @@ MathJax = {
 <li>
     <span class="post-meta">2017 Dec 31</span>
     <h3 style="margin-top:12px">
-      <a class="post-link" href="../general/2017/12/31/pos_faq.html">Proof of Stake FAQ</a>
+      <a class="post-link" href="../general/2017/12/31/sharding_faq.html">Sharding FAQ</a>
     </h3>
 </li>
 

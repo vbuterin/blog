@@ -32,21 +32,7 @@ html.dark{
   --color-table-row-odd:#1c1c1c;
 }
 
-/* Fallback for users that prefer a dark scheme */
-@media (prefers-color-scheme: dark){
-  :root:not(.dark){
-    --color-bg:#1c1c1c;
-    --color-text:#e5e5e5;
-    --color-anchor:#c3a554;
-    --color-heading:#fff;
-    --color-divider:#444;
-    --color-code-bg:#2d2d2d;
-    --color-code-text:#f7f7f7;
-    --color-table-border:#444;
-    --color-table-row-even:#262626;
-    --color-table-row-odd:#1c1c1c;
-  }
-}
+
 
 /* ---------- Global element styles ---------- */
 *{box-sizing:border-box;}

@@ -3,20 +3,6 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
-<style>
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: #1c1c1c;
-        color: white;
-    }
-    .markdown-body table tr {
-        background-color: #1c1c1c;
-    }
-    .markdown-body table tr:nth-child(2n) {
-        background-color: black;
-    }
-}
-</style>
 
 
 
@@ -26,7 +12,6 @@
 
 <link rel="stylesheet" type="text/css" href="../../../../css/main.css">
 
-<script type="text/x-mathjax-config">
 <script>
 MathJax = {
   tex: {
@@ -81,10 +66,16 @@ MathJax = {
   // Check for color scheme on init
   const checkColorScheme = () => {
     const colorScheme = localStorage.getItem('colorScheme');
-    // Default to light for first view
-    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
-    // If previously saved to dark, toggle switch and update colors
-    if (colorScheme === 'dark') {
+    if (colorScheme === null || colorScheme === undefined) {
+      // No saved preference — use OS preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        toggle.checked = true;
+        toggleDarkMode();
+        localStorage.setItem('colorScheme', 'dark');
+      } else {
+        localStorage.setItem('colorScheme', 'light');
+      }
+    } else if (colorScheme === 'dark') {
       toggle.checked = true;
       toggleDarkMode();
     }
@@ -416,8 +407,8 @@ data-evaluate="no"><span class="math inline">\(x\)</span></span>.</p>
 </blockquote>
 <p>The class of functions that XiO is designed for is functions that are
 <em>really</em> best understood as <strong>zero-input functions (aka
-"</strong><a
-href="https://en.wikipedia.org/wiki/Thunk"><strong>thunks</strong></a><strong>")</strong>
+"<strong><a
+href="https://en.wikipedia.org/wiki/Thunk"><strong>thunks</strong></a></strong>")</strong>
 that produce a large but manageably-sized output. Given a thunk <span
 data-type="inlineMath" data-latex="() \rightarrow X" data-display="no"
 data-evaluate="no"><span class="math inline">\(() \rightarrow
@@ -1486,7 +1477,7 @@ data-evaluate="no"><span class="math inline">\(c_f\)</span></span>.</p>
 data-display="no" data-evaluate="no"><span class="math inline">\(C(tag)
 = 0\)</span></span>, then the <span data-type="inlineMath"
 data-latex="s * x_f  * G" data-display="no" data-evaluate="no"><span
-class="math inline">\(s * x_f  * G\)</span></span> term drops off from
+class="math inline">\(s * x_f * G\)</span></span> term drops off from
 the definition of <span data-type="inlineMath" data-latex="c_f"
 data-display="no" data-evaluate="no"><span
 class="math inline">\(c_f\)</span></span>, and we just have: <span
@@ -1554,7 +1545,7 @@ data-display="no" data-evaluate="no"><span class="math inline">\(A * {R
 <p><span data-type="inlineMath"
 data-latex="= (A_{prefix}\ |\ G - A_{prefix} * R)  * {R \atop I}"
 data-display="no" data-evaluate="no"><span class="math inline">\(=
-(A_{prefix}\ |\ G - A_{prefix} * R)  * {R \atop I}\)</span></span></p>
+(A_{prefix}\ |\ G - A_{prefix} * R) * {R \atop I}\)</span></span></p>
 <p><span data-type="inlineMath"
 data-latex="= A_{prefix} * R + (G - A_{prefix} * R) * I"
 data-display="no" data-evaluate="no"><span class="math inline">\(=
@@ -2243,7 +2234,7 @@ data-display="no" data-evaluate="no"><span class="math inline">\(c_f + b
 <p><span data-type="inlineMath"
 data-latex="= (A * r_f + m * G + e_1) + (A * s + e_2)  - (A * r_f + A * s)"
 data-display="no" data-evaluate="no"><span class="math inline">\(= (A *
-r_f + m * G + e_1) + (A * s + e_2)  - (A * r_f + A *
+r_f + m * G + e_1) + (A * s + e_2) - (A * r_f + A *
 s)\)</span></span></p>
 <p><span data-type="inlineMath" data-latex="= m * G + e_1 - e_2"
 data-display="no" data-evaluate="no"><span class="math inline">\(= m * G
@@ -2347,8 +2338,8 @@ these values get sent to the j'th row of the output.</li>
 <li><p>The output of the packing procedure is <span
 data-type="inlineMath"
 data-latex="c_g = A  * r_g + A * hash(seed, \beta) + e_\beta + e_g"
-data-display="no" data-evaluate="no"><span class="math inline">\(c_g =
-A  * r_g + A * hash(seed, \beta) + e_\beta + e_g\)</span></span>. Notice
+data-display="no" data-evaluate="no"><span class="math inline">\(c_g = A
+* r_g + A * hash(seed, \beta) + e_\beta + e_g\)</span></span>. Notice
 that <span data-type="inlineMath"
 data-latex="A * hash(seed, \beta) + e_\beta" data-display="no"
 data-evaluate="no"><span class="math inline">\(A * hash(seed, \beta) +
