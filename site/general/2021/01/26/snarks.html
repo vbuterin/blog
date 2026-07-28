@@ -3,6 +3,20 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
 
 
@@ -12,6 +26,7 @@
 
 <link rel="stylesheet" type="text/css" href="../../../../css/main.css">
 
+<script type="text/x-mathjax-config">
 <script>
 MathJax = {
   tex: {
@@ -66,16 +81,10 @@ MathJax = {
   // Check for color scheme on init
   const checkColorScheme = () => {
     const colorScheme = localStorage.getItem('colorScheme');
-    if (colorScheme === null || colorScheme === undefined) {
-      // No saved preference — use OS preference
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        toggle.checked = true;
-        toggleDarkMode();
-        localStorage.setItem('colorScheme', 'dark');
-      } else {
-        localStorage.setItem('colorScheme', 'light');
-      }
-    } else if (colorScheme === 'dark') {
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
       toggle.checked = true;
       toggleDarkMode();
     }
@@ -598,9 +607,9 @@ of": <span class="math inline">\(15\ \%\ 7 = 1\)</span>, <span
 class="math inline">\(53\ \%\ 10 = 3\)</span>, etc (note that the answer
 is always non-negative, so for example <span class="math inline">\(-1\
 \%\ 10 = 9\)</span>). We redefine</p>
-<p><span class="math inline">\(x + y \Rightarrow (x + y)\)</span> %
+<p><span class="math inline">\(x + y  \Rightarrow  (x + y)\)</span> %
 <span class="math inline">\(p\)</span></p>
-<p><span class="math inline">\(x * y \Rightarrow (x * y)\)</span> %
+<p><span class="math inline">\(x * y  \Rightarrow (x * y)\)</span> %
 <span class="math inline">\(p\)</span></p>
 <p><span class="math inline">\(x^y \Rightarrow (x^y)\)</span> % <span
 class="math inline">\(p\)</span></p>

@@ -3,6 +3,20 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
 
 
@@ -12,6 +26,7 @@
 
 <link rel="stylesheet" type="text/css" href="../../../../css/main.css">
 
+<script type="text/x-mathjax-config">
 <script>
 MathJax = {
   tex: {
@@ -66,16 +81,10 @@ MathJax = {
   // Check for color scheme on init
   const checkColorScheme = () => {
     const colorScheme = localStorage.getItem('colorScheme');
-    if (colorScheme === null || colorScheme === undefined) {
-      // No saved preference — use OS preference
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        toggle.checked = true;
-        toggleDarkMode();
-        localStorage.setItem('colorScheme', 'dark');
-      } else {
-        localStorage.setItem('colorScheme', 'light');
-      }
-    } else if (colorScheme === 'dark') {
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
       toggle.checked = true;
       toggleDarkMode();
     }
@@ -247,14 +256,14 @@ use numbers in a <strong>prime field</strong>.</p>
 class="math inline">\(0, 1, 2... p-1\)</span>, where <span
 class="math inline">\(p\)</span> is prime, and the various operations
 are defined as follows:</p>
-<p><span class="math inline">\(a + b: (a + b)\)</span> % <span
+<p><span class="math inline">\(a + b:  (a + b)\)</span> % <span
 class="math inline">\(p\)</span></p>
-<p><span class="math inline">\(a \cdot b: (a \cdot b)\)</span> % <span
+<p><span class="math inline">\(a \cdot b:  (a \cdot b)\)</span> % <span
 class="math inline">\(p\)</span></p>
-<p><span class="math inline">\(a - b: (a - b)\)</span> % <span
+<p><span class="math inline">\(a - b:  (a - b)\)</span> % <span
 class="math inline">\(p\)</span></p>
-<p><span class="math inline">\(a / b: (a \cdot b^{p-2})\)</span> % <span
-class="math inline">\(p\)</span></p>
+<p><span class="math inline">\(a / b:  (a \cdot b^{p-2})\)</span> %
+<span class="math inline">\(p\)</span></p>
 <p>Basically, all math is done modulo <span
 class="math inline">\(p\)</span> (see <a
 href="https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/what-is-modular-arithmetic">here</a>
@@ -323,7 +332,7 @@ class="math inline">\(4i \cdot 2 + 4i \cdot i\)</span>, which gives
 working in <span class="math inline">\(\bmod 7\)</span> math that
 becomes <span class="math inline">\(i + 3\)</span>. To divide, we
 do:</p>
-<p><span class="math inline">\(a / b: (a \cdot b^{(p^2-2)})\)</span> %
+<p><span class="math inline">\(a / b:  (a \cdot b^{(p^2-2)})\)</span> %
 <span class="math inline">\(p\)</span></p>
 <p>Note that the exponent for Fermat's little theorem is now <span
 class="math inline">\(p^2\)</span> instead of <span

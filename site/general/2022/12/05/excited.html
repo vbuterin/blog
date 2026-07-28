@@ -3,6 +3,20 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
 
 
@@ -12,6 +26,7 @@
 
 <link rel="stylesheet" type="text/css" href="../../../../css/main.css">
 
+<script type="text/x-mathjax-config">
 <script>
 MathJax = {
   tex: {
@@ -66,16 +81,10 @@ MathJax = {
   // Check for color scheme on init
   const checkColorScheme = () => {
     const colorScheme = localStorage.getItem('colorScheme');
-    if (colorScheme === null || colorScheme === undefined) {
-      // No saved preference — use OS preference
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        toggle.checked = true;
-        toggleDarkMode();
-        localStorage.setItem('colorScheme', 'dark');
-      } else {
-        localStorage.setItem('colorScheme', 'light');
-      }
-    } else if (colorScheme === 'dark') {
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
       toggle.checked = true;
       toggleDarkMode();
     }
@@ -253,7 +262,7 @@ different categories: <strong>centralized stablecoins</strong>,
 <col style="width: 20%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th></th>
 <th>Governance</th>
 <th>Advantages</th>
@@ -262,7 +271,7 @@ different categories: <strong>centralized stablecoins</strong>,
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><strong>Centralized stablecoins</strong></td>
 <td>Traditional legal entity</td>
 <td>• Maximum efficiency <br> • Easy to understand</td>
@@ -270,7 +279,7 @@ different categories: <strong>centralized stablecoins</strong>,
 jurisdiction</td>
 <td>USDC, USDT, BUSD</td>
 </tr>
-<tr class="even">
+<tr>
 <td><strong>DAO-governed RWA-backed stablecoins</strong></td>
 <td>DAO deciding on allowed collateral types and maximum per type</td>
 <td>• Adds resilience by diversifying issuers and jurisdictions <br> •
@@ -278,7 +287,7 @@ Still somewhat capital efficient</td>
 <td>Vulnerable to repeated issuer fraud or coordinated takedown</td>
 <td>DAI</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><strong>Governance-minimized crypto-backed stablecoin</strong></td>
 <td>Price oracle only</td>
 <td>• Maximum resilience <br> • No outside dependencies</td>
@@ -530,19 +539,19 @@ outside ("censorship resistance")</strong>.</p>
 <col style="width: 33%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th></th>
 <th>Higher need for protection from inside</th>
 <th>Lower need for protection from inside</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><strong>Higher need for protection from outside</strong></td>
 <td>Stablecoins</td>
 <td>The Pirate Bay, Sci-Hub</td>
 </tr>
-<tr class="even">
+<tr>
 <td><strong>Lower need for protection from outside</strong></td>
 <td>Regulated financial institutions</td>
 <td>Regular businesses</td>
@@ -679,25 +688,25 @@ follows:</p>
 <col style="width: 33%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th></th>
 <th>Why decentralize governance structure</th>
 <th>Why decentralize implementation</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><strong>Decentralization for robustness</strong></td>
 <td>Defense against inside threats (eg. SBF)</td>
 <td>Defense against outside threats, and censorship resistance</td>
 </tr>
-<tr class="even">
+<tr>
 <td><strong>Decentralization for efficiency</strong></td>
 <td>Greater efficiency from accepting input from more voices and giving
 room for autonomy</td>
 <td>Smart contracts often more convenient than legal systems</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><strong>Decentralization for interoperability</strong></td>
 <td>To be rigid enough to be safe to use by other rigid systems</td>
 <td>To more easily interact with other decentralized things</td>

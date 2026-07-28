@@ -3,6 +3,20 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
 
 
@@ -12,6 +26,7 @@
 
 <link rel="stylesheet" type="text/css" href="../../../../css/main.css">
 
+<script type="text/x-mathjax-config">
 <script>
 MathJax = {
   tex: {
@@ -66,16 +81,10 @@ MathJax = {
   // Check for color scheme on init
   const checkColorScheme = () => {
     const colorScheme = localStorage.getItem('colorScheme');
-    if (colorScheme === null || colorScheme === undefined) {
-      // No saved preference — use OS preference
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        toggle.checked = true;
-        toggleDarkMode();
-        localStorage.setItem('colorScheme', 'dark');
-      } else {
-        localStorage.setItem('colorScheme', 'light');
-      }
-    } else if (colorScheme === 'dark') {
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
       toggle.checked = true;
       toggleDarkMode();
     }
@@ -178,7 +187,7 @@ that technology choice?</p>
 <col style="width: 25%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th>System type</th>
 <th>Technology properties</th>
 <th>Security guarantees</th>
@@ -186,7 +195,7 @@ that technology choice?</p>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><strong>Rollup</strong></td>
 <td>Computation proven via fraud proofs or ZK-SNARKs, data stored on
 L1</td>
@@ -194,7 +203,7 @@ L1</td>
 <td>L1 data availability + SNARK-proving or redundant execution to catch
 errors</td>
 </tr>
-<tr class="even">
+<tr>
 <td><strong>Validium</strong></td>
 <td>Computation proven via ZK-SNARKs (can't use fraud proofs), data
 stored on a server or other separate system</td>
@@ -202,7 +211,7 @@ stored on a server or other separate system</td>
 not <em>stolen</em></td>
 <td>SNARK-proving</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><strong>Disconnected</strong></td>
 <td>A separate chain (or server)</td>
 <td>Trust one or a small group of people not to steal your funds or lose

@@ -3,6 +3,20 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
 
 
@@ -12,6 +26,7 @@
 
 <link rel="stylesheet" type="text/css" href="../../../../css/main.css">
 
+<script type="text/x-mathjax-config">
 <script>
 MathJax = {
   tex: {
@@ -66,16 +81,10 @@ MathJax = {
   // Check for color scheme on init
   const checkColorScheme = () => {
     const colorScheme = localStorage.getItem('colorScheme');
-    if (colorScheme === null || colorScheme === undefined) {
-      // No saved preference — use OS preference
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        toggle.checked = true;
-        toggleDarkMode();
-        localStorage.setItem('colorScheme', 'dark');
-      } else {
-        localStorage.setItem('colorScheme', 'light');
-      }
-    } else if (colorScheme === 'dark') {
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
       toggle.checked = true;
       toggleDarkMode();
     }
@@ -264,7 +273,7 @@ restaurant, and an ENS name.</p>
 <col style="width: 25%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th></th>
 <th>Data center</th>
 <th>Restaurant</th>
@@ -272,7 +281,7 @@ restaurant, and an ENS name.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><strong>Confusion from people expecting old location</strong></td>
 <td>An employee comes to the old location, and unexpectedly finds it
 closed.</td>
@@ -280,7 +289,7 @@ closed.</td>
 unexpectedly finds it closed.</td>
 <td>Someone sends a big chunk of money to the wrong address.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><strong>Loss of location-specific long-term investment</strong></td>
 <td>Low</td>
 <td>The restaurant will probably lose many long-term customers for whom
@@ -385,7 +394,7 @@ class="math inline">\(f\)</span>:</p>
 <col style="width: 20%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th>Type</th>
 <th><span class="math inline">\(f(n)\)</span> (<span
 class="math inline">\(p_0\)</span> = price of last sale or last rejected
@@ -396,7 +405,7 @@ bid, or $1 if most recent event is a reset)</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>Exponential fee growth</td>
 <td><span class="math inline">\(f(n) = \int_0^n p_0 *
 1.1^n\)</span></td>
@@ -405,7 +414,7 @@ compounding).</td>
 <td>$836</td>
 <td>$7.22m</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Linear fee growth</td>
 <td><span class="math inline">\(f(n) = p_0 * n +
 \frac{15}{2}n^2\)</span></td>
@@ -413,7 +422,7 @@ compounding).</td>
 <td>$1250</td>
 <td>$80k</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Capped annual fee</td>
 <td><span class="math inline">\(f(n) = 640 * n\)</span></td>
 <td>The annual fee cannot exceed $640 per year. That is, a domain in

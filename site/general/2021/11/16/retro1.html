@@ -3,6 +3,20 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
 
 
@@ -12,6 +26,7 @@
 
 <link rel="stylesheet" type="text/css" href="../../../../css/main.css">
 
+<script type="text/x-mathjax-config">
 <script>
 MathJax = {
   tex: {
@@ -66,16 +81,10 @@ MathJax = {
   // Check for color scheme on init
   const checkColorScheme = () => {
     const colorScheme = localStorage.getItem('colorScheme');
-    if (colorScheme === null || colorScheme === undefined) {
-      // No saved preference — use OS preference
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        toggle.checked = true;
-        toggleDarkMode();
-        localStorage.setItem('colorScheme', 'dark');
-      } else {
-        localStorage.setItem('colorScheme', 'light');
-      }
-    } else if (colorScheme === 'dark') {
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
       toggle.checked = true;
       toggleDarkMode();
     }
@@ -365,29 +374,29 @@ other way</li>
 <p>Let's look at your chances in each world.</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Event</th>
 <th>Probability (World A)</th>
 <th>Probability (World B)</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>Independent success <em>and</em> retroactive reward</td>
 <td>0%</td>
 <td>15%</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Independent success only</td>
 <td>30%</td>
 <td>15%</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Retroactive reward only</td>
 <td>50%</td>
 <td>35%</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Nothing</td>
 <td>20%</td>
 <td>35%</td>

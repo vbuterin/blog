@@ -3,6 +3,20 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
 
 
@@ -12,6 +26,7 @@
 
 <link rel="stylesheet" type="text/css" href="../../../../css/main.css">
 
+<script type="text/x-mathjax-config">
 <script>
 MathJax = {
   tex: {
@@ -66,16 +81,10 @@ MathJax = {
   // Check for color scheme on init
   const checkColorScheme = () => {
     const colorScheme = localStorage.getItem('colorScheme');
-    if (colorScheme === null || colorScheme === undefined) {
-      // No saved preference — use OS preference
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        toggle.checked = true;
-        toggleDarkMode();
-        localStorage.setItem('colorScheme', 'dark');
-      } else {
-        localStorage.setItem('colorScheme', 'light');
-      }
-    } else if (colorScheme === 'dark') {
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
       toggle.checked = true;
       toggleDarkMode();
     }
@@ -332,34 +341,34 @@ verificar muy rápidamente en la cadena.</li>
 <col style="width: 33%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th>Propiedad</th>
 <th>Optimistic Rollups</th>
 <th>ZK Rollups</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>Costo fijo de gas por batch</td>
 <td><strong>~40,000</strong> (una transacción liviana que principalmente
 solo cambia el valor del root del estado)</td>
 <td>~500,000 (la verificación de un ZK-SNARK es bastante intensiva
 computacionalmente)</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Tiempo de retiro</td>
 <td>~1 semana (los retiros deben retrasarse para dar tiempo a que
 alguien publique una prueba de fraude y cancele el retiro si es
 fraudulento)</td>
 <td><strong>Muy rápida</strong> (solo espera el siguiente batch)</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Complejidad de la tecnología</td>
 <td><strong>Baja</strong></td>
 <td>Alta (ZK-SNARK es una tecnología muy nueva y matemáticamente
 compleja)</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Generalizabilidad</td>
 <td><strong>Más fácil</strong> (Los Rollups de EVM de propósito general
 ya están cerca de la red principal)</td>
@@ -369,7 +378,7 @@ esfuerzos (por ejemplo: <a
 href="https://medium.com/starkware/hello-cairo-3cb43b13b209">Cairo</a>)
 trabajando para mejorar esto)</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Costos de gas en cadena por transacción</td>
 <td>Altos</td>
 <td><strong>Bajos</strong> (si los datos en una transacción solo se usan
@@ -378,7 +387,7 @@ pueden omitirse, mientras que en un Optimist Rollup tendrían que
 publicarse en caso de que deban verificarse en una prueba de
 fraude)</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Costos de computación fuera de la cadena</td>
 <td><strong>Bajos</strong> (aunque hay más necesidad de muchos nodos
 completos para rehacer el cálculo)</td>
@@ -433,49 +442,49 @@ bytes. Sin embargo, una transferencia ETH en un Rollup solo requiere ~12
 bytes:</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Parametro</th>
 <th>Ethereum</th>
 <th>Rollup</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>Nonce</td>
 <td>~3</td>
 <td>0</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Gasprice</td>
 <td>~8</td>
 <td>0-0.5</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Gas</td>
 <td>3</td>
 <td>0-0.5</td>
 </tr>
-<tr class="even">
+<tr>
 <td>To</td>
 <td>21</td>
 <td>4</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Value</td>
 <td>~9</td>
 <td>~3</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Signature</td>
 <td>~68 (2 + 33 + 33)</td>
 <td>~0.5</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>From</td>
 <td>0 (recovered from sig)</td>
 <td>4</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Total</td>
 <td>~112</td>
 <td>~12</td>

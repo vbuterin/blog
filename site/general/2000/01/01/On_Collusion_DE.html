@@ -3,6 +3,20 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
 
 
@@ -12,6 +26,7 @@
 
 <link rel="stylesheet" type="text/css" href="../../../../css/main.css">
 
+<script type="text/x-mathjax-config">
 <script>
 MathJax = {
   tex: {
@@ -66,16 +81,10 @@ MathJax = {
   // Check for color scheme on init
   const checkColorScheme = () => {
     const colorScheme = localStorage.getItem('colorScheme');
-    if (colorScheme === null || colorScheme === undefined) {
-      // No saved preference — use OS preference
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        toggle.checked = true;
-        toggleDarkMode();
-        localStorage.setItem('colorScheme', 'dark');
-      } else {
-        localStorage.setItem('colorScheme', 'light');
-      }
-    } else if (colorScheme === 'dark') {
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
       toggle.checked = true;
       toggleDarkMode();
     }
@@ -332,7 +341,7 @@ Verschwörungen, möglicherweise auch für eine Kombination früherer
 Verschwörer und Opfer. Und so weiter und so weiter.</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Runde</th>
 <th>A</th>
 <th>B</th>
@@ -340,25 +349,25 @@ Verschwörer und Opfer. Und so weiter und so weiter.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>1</td>
 <td>1/3</td>
 <td>1/3</td>
 <td>1/3</td>
 </tr>
-<tr class="even">
+<tr>
 <td>2</td>
 <td>1/2</td>
 <td>1/2</td>
 <td>0</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>3</td>
 <td>2/3</td>
 <td>0</td>
 <td>1/3</td>
 </tr>
-<tr class="even">
+<tr>
 <td>4</td>
 <td>0</td>
 <td>1/3</td>

@@ -3,6 +3,20 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
+<style>
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    .markdown-body table tr {
+        background-color: #1c1c1c;
+    }
+    .markdown-body table tr:nth-child(2n) {
+        background-color: black;
+    }
+}
+</style>
 
 
 
@@ -12,6 +26,7 @@
 
 <link rel="stylesheet" type="text/css" href="../../../../css/main.css">
 
+<script type="text/x-mathjax-config">
 <script>
 MathJax = {
   tex: {
@@ -66,16 +81,10 @@ MathJax = {
   // Check for color scheme on init
   const checkColorScheme = () => {
     const colorScheme = localStorage.getItem('colorScheme');
-    if (colorScheme === null || colorScheme === undefined) {
-      // No saved preference — use OS preference
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        toggle.checked = true;
-        toggleDarkMode();
-        localStorage.setItem('colorScheme', 'dark');
-      } else {
-        localStorage.setItem('colorScheme', 'light');
-      }
-    } else if (colorScheme === 'dark') {
+    // Default to light for first view
+    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
+    // If previously saved to dark, toggle switch and update colors
+    if (colorScheme === 'dark') {
       toggle.checked = true;
       toggleDarkMode();
     }
@@ -351,7 +360,7 @@ id="proof-sizes-bytes.-rows-tree-size-cols-keyvalue-pairs-proven">Proof
 sizes (bytes). Rows: tree size, cols: key/value pairs proven</h4>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th></th>
 <th>1</th>
 <th>10</th>
@@ -361,7 +370,7 @@ sizes (bytes). Rows: tree size, cols: key/value pairs proven</h4>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>256</td>
 <td>176</td>
 <td>176</td>
@@ -369,7 +378,7 @@ sizes (bytes). Rows: tree size, cols: key/value pairs proven</h4>
 <td>176</td>
 <td>176</td>
 </tr>
-<tr class="even">
+<tr>
 <td>65,536</td>
 <td>224</td>
 <td>608</td>
@@ -377,7 +386,7 @@ sizes (bytes). Rows: tree size, cols: key/value pairs proven</h4>
 <td>12,176</td>
 <td>12,464</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>16,777,216</td>
 <td>272</td>
 <td>1,040</td>
@@ -385,7 +394,7 @@ sizes (bytes). Rows: tree size, cols: key/value pairs proven</h4>
 <td>59,792</td>
 <td>457,616</td>
 </tr>
-<tr class="even">
+<tr>
 <td>4,294,967,296</td>
 <td>320</td>
 <td>1,472</td>
