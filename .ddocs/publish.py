@@ -13,6 +13,7 @@ HEADER_TEMPLATE = """
 
 <link rel="stylesheet" type="text/css" href="$root/css/main.css">
 
+<script type="text/x-mathjax-config">
 <script>
 MathJax = {
   tex: {
@@ -194,7 +195,7 @@ def extract_metadata(fil, filename=None):
 
 def metadata_to_path(global_config, metadata):
     return os.path.join(
-        global_config.get('posts_directory', 'posts'),
+        'general',
         metadata['date'],
         metadata['filename']
     )
@@ -235,7 +236,7 @@ def defancify(text):
         .replace("’", "'") \
         .replace('“', '"') \
         .replace('”', '"') \
-        .replace('…', '...') \
+        .replace('…', '...')
 
 
 def make_categories_header(categories, root_path):

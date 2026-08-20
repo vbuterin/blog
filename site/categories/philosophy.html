@@ -3,20 +3,6 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
-<style>
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: #1c1c1c;
-        color: white;
-    }
-    .markdown-body table tr {
-        background-color: #1c1c1c;
-    }
-    .markdown-body table tr:nth-child(2n) {
-        background-color: black;
-    }
-}
-</style>
 
 
 
@@ -81,10 +67,16 @@ MathJax = {
   // Check for color scheme on init
   const checkColorScheme = () => {
     const colorScheme = localStorage.getItem('colorScheme');
-    // Default to light for first view
-    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
-    // If previously saved to dark, toggle switch and update colors
-    if (colorScheme === 'dark') {
+    if (colorScheme === null || colorScheme === undefined) {
+      // No saved preference — use OS preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        toggle.checked = true;
+        toggleDarkMode();
+        localStorage.setItem('colorScheme', 'dark');
+      } else {
+        localStorage.setItem('colorScheme', 'light');
+      }
+    } else if (colorScheme === 'dark') {
       toggle.checked = true;
       toggleDarkMode();
     }
@@ -157,7 +149,7 @@ MathJax = {
 <li>
     <span class="post-meta">2025 Aug 12</span>
     <h3 style="margin-top:12px">
-      <a class="post-link" href="../general/2025/08/12/onlyopensource.html">"I support it only if it's open source" should be a more common viewpoint</a>
+      <a class="post-link" href="../general/2025/08/12/ideas.html">On idea-driven ideas</a>
     </h3>
 </li>
 
@@ -166,7 +158,7 @@ MathJax = {
 <li>
     <span class="post-meta">2025 Aug 12</span>
     <h3 style="margin-top:12px">
-      <a class="post-link" href="../general/2025/08/12/ideas.html">On idea-driven ideas</a>
+      <a class="post-link" href="../general/2025/08/12/onlyopensource.html">"I support it only if it's open source" should be a more common viewpoint</a>
     </h3>
 </li>
 

@@ -5,7 +5,7 @@
 
 _Special thanks to Karl Floersch and Haonan Li for feedback and review, and Jinglan Wang for discussion._
 
-Last month, [Optimism](https://www.optimism.io/) ran their first round of [retroactive public goods funding](https://medium.com/ethereum-optimism/retroactive-public-goods-funding-33c9b7d00f0c), allocating a total of $1 million to 58 projects to reward the good work that these projects have already done for the Optimism and Ethereum ecosystems. In addition to being the first major retroactive general-purpose public goods funding experiment, it's also the first experiment in a new kind of governance through **badge holders** - not a very small decision-making board and also not a fully public vote, but instead a quadratic vote among a medium-sized group of 22 participants.
+Last month, [Optimism](https://www.optimism.io/) ran their first round of [retroactive public goods funding](https://medium.com/ethereum-optimism/retroactive-public-goods-funding-33c9b7d00f0c), allocating a total of \$1 million to 58 projects to reward the good work that these projects have already done for the Optimism and Ethereum ecosystems. In addition to being the first major retroactive general-purpose public goods funding experiment, it's also the first experiment in a new kind of governance through **badge holders** - not a very small decision-making board and also not a fully public vote, but instead a quadratic vote among a medium-sized group of 22 participants.
 
 The entire process was highly transparent from start to finish:
 
@@ -90,11 +90,11 @@ Once the number of decisions to be made gets even higher, we could even consider
 
 In the post-round retrospective discussion among the badgeholders, one of the key questions that was brought up is: when choosing which projects to fund, **should badge holders take into account whether that project is still in dire need of funding**, and de-prioritize projects that are already well-funded through some other means? That is to say, should retroactive rewards be [means-tested](https://en.wikipedia.org/wiki/Means_test)?
 
-In a "regular" grants-funding round, the rationale for answering "yes" is clear: increasing a project's funding from $0 to $100k has a much bigger impact on its ability to do its job than increasing a project's funding from $10m to $10.1m. But Optimism retro funding round 1 is not a regular grants-funding round. **In retro funding, the objective is _not_ to give people money in expectation of future work that money could help them do. Rather, the objective is to reward people for work already done, to change the incentives for anyone working on projects _in the future_.** With this in mind, to what extent should _retroactive_ project funding depend on how much a given project actually needs the funds?
+In a "regular" grants-funding round, the rationale for answering "yes" is clear: increasing a project's funding from \$0 to \$100k has a much bigger impact on its ability to do its job than increasing a project's funding from \$10m to \$10.1m. But Optimism retro funding round 1 is not a regular grants-funding round. **In retro funding, the objective is _not_ to give people money in expectation of future work that money could help them do. Rather, the objective is to reward people for work already done, to change the incentives for anyone working on projects _in the future_.** With this in mind, to what extent should _retroactive_ project funding depend on how much a given project actually needs the funds?
 
 ### The case for means testing
 
-Suppose that you are a 20-year-old developer, and you are deciding whether to join some well-funded defi project with a fancy token, or to work on some cool open-source fully public good work that will benefit everyone. If you join the well-funded defi project, you will get a $100k salary, and your financial situation will be guaranteed to be very secure. If you work on public-good projects on your own, you will have no income. You have some savings and you could make some money with side gigs, but it will be difficult, and you're not sure if the sacrifice is worth it.
+Suppose that you are a 20-year-old developer, and you are deciding whether to join some well-funded defi project with a fancy token, or to work on some cool open-source fully public good work that will benefit everyone. If you join the well-funded defi project, you will get a \$100k salary, and your financial situation will be guaranteed to be very secure. If you work on public-good projects on your own, you will have no income. You have some savings and you could make some money with side gigs, but it will be difficult, and you're not sure if the sacrifice is worth it.
 
 Now, consider two worlds, **World A** and **World B**. First, the similarities:
 
@@ -121,7 +121,7 @@ Hence, if we want to encourage people in this hypothetical 20 year old's positio
 
 ### The case against means testing
 
-Suppose that you are someone who contributes a small amount to many projects, or an investor seed-funding public good projects in anticipation of retroactive rewards. In this case, the share that you would get from any single retroactive reward is small. Would you rather have a 10% chance of getting $10,100, or a 10% chance of getting $10,000 and a 10% chance of getting $100? It really doesn't matter.
+Suppose that you are someone who contributes a small amount to many projects, or an investor seed-funding public good projects in anticipation of retroactive rewards. In this case, the share that you would get from any single retroactive reward is small. Would you rather have a 10% chance of getting \$10,100, or a 10% chance of getting \$10,000 and a 10% chance of getting \$100? It really doesn't matter.
 
 Furthermore, your chance of getting rewarded via retroactive funding may well be quite disjoint from your chance of getting rewarded some other way. There are countless stories on the internet of people putting a big part of their lives into a project when that project was non-profit and open-source, seeing that project go for-profit and become successful, and getting absolutely nothing out of it for themselves. In all of these cases, it doesn't really matter whether or not retroactive rewards care on whether or not projects are needy. In fact, it would probably be _better_ for them to just focus on judging quality.
 

@@ -57,6 +57,11 @@ h3{font-size:1.3rem;}
 /* Images & SVG */
 img,svg{max-width:100%;height:auto;}
 
+/* Inline SVG diagrams (e.g. draw.io exports) lay out text with absolute
+   per-word/per-space <tspan> coordinates. Inherited letter-spacing breaks
+   that layout and makes words overlap, so reset it inside SVG text. */
+svg,svg text,svg tspan,svg textPath{letter-spacing:normal !important;word-spacing:normal !important;}
+
 /* Layout container */
 .container-fluid{padding:40px 15px;margin:auto;max-width:1200px;}
 
