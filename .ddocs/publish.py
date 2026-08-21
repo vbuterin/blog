@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import os, sys, datetime
+import os, sys, datetime, re
 
 PRE_HEADER = """
 
@@ -9,15 +9,18 @@ PRE_HEADER = """
 
 """
 
+# Escaping trap: this template is a Python string AND emits JavaScript, so a
+# MathJax delimiter like \( needs FOUR backslashes here (Python halves them,
+# the JS string literal halves them again). '\\(' emits a bare '(' delimiter,
+# which typesets every prose parenthetical in every post as TeX.
 HEADER_TEMPLATE = """
 
 <link rel="stylesheet" type="text/css" href="$root/css/main.css">
 
-<script type="text/x-mathjax-config">
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']]
+    inlineMath: [['\\\\(', '\\\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -195,7 +198,7 @@ def extract_metadata(fil, filename=None):
 
 def metadata_to_path(global_config, metadata):
     return os.path.join(
-        'general',
+        global_config.get('posts_directory', 'posts'),
         metadata['date'],
         metadata['filename']
     )
@@ -236,7 +239,139 @@ def defancify(text):
         .replace("’", "'") \
         .replace('“', '"') \
         .replace('”', '"') \
-        .replace('…', '...')
+        .replace('…', '...') \
+
+
+# --- Post <style> dedupe against the blog's own stylesheet (TEC-2634) -----
+# Docs exported from ddocs may carry a <style> block (the doc's Custom CSS).
+# When that block duplicates rules the blog's linked stylesheet already
+# supplies (the observed failure: a full copy of main.css's design tokens,
+# body-scoped, which pinned light-mode colors and killed the dark toggle),
+# the duplicate rules are dropped and the stylesheet stays the single owner.
+# Only PROVEN duplicates go: a rule is dropped iff its normalized selector
+# maps onto a stylesheet selector AND every declaration's effective value in
+# the stylesheet is identical. @-blocks are kept verbatim, unparseable input
+# aborts the whole dedupe, and every entry point fails open — a bug here must
+# never change a post beyond its leading style block.
+
+def _normalize_selector(selector):
+    # The ddocs exporter scopes doc CSS by prefixing selectors with `body `
+    # (and root-ish selectors become `body` itself), so undo that prefix and
+    # fold the root-ish aliases together before comparing.
+    parts = []
+    for part in selector.split(','):
+        s = ' '.join(part.split()).lower()
+        if s.startswith('body ') and len(s) > 5:
+            s = s[5:]
+        if s in (':root', 'html', 'body'):
+            s = ':root'
+        parts.append(s)
+    return ','.join(sorted(parts))
+
+
+def _normalize_decls(rule_body):
+    decls = {}
+    for chunk in rule_body.split(';'):
+        if ':' not in chunk:
+            continue
+        prop, value = chunk.split(':', 1)
+        prop = prop.strip().lower()
+        value = ' '.join(value.split()).lower()
+        if prop:
+            decls[prop] = value
+    return decls
+
+
+def _stylesheet_effective_decls(css_text):
+    # selector-key -> {prop: last-declared value}, top-level rules only.
+    css_text = re.sub(r'/\*.*?\*/', '', css_text, flags=re.S)
+    effective = {}
+    i, n = 0, len(css_text)
+    while i < n:
+        open_brace = css_text.find('{', i)
+        if open_brace == -1:
+            break
+        selector = css_text[i:open_brace].strip()
+        if selector.startswith('@'):
+            depth, j = 1, open_brace + 1
+            while j < n and depth:
+                if css_text[j] == '{':
+                    depth += 1
+                elif css_text[j] == '}':
+                    depth -= 1
+                j += 1
+            i = j
+            continue
+        close_brace = css_text.find('}', open_brace)
+        if close_brace == -1:
+            break
+        inner = css_text[open_brace + 1:close_brace]
+        if '{' not in inner and selector:
+            key = _normalize_selector(selector)
+            effective.setdefault(key, {}).update(_normalize_decls(inner))
+        i = close_brace + 1
+    return effective
+
+
+def _dedupe_doc_css(doc_css, effective):
+    kept, dropped_any = [], False
+    i, n = 0, len(doc_css)
+    while i < n:
+        open_brace = doc_css.find('{', i)
+        if open_brace == -1:
+            tail = doc_css[i:]
+            if tail.strip():
+                kept.append(tail)
+            break
+        selector = doc_css[i:open_brace].strip()
+        if selector.startswith('@'):
+            depth, j = 1, open_brace + 1
+            while j < n and depth:
+                if doc_css[j] == '{':
+                    depth += 1
+                elif doc_css[j] == '}':
+                    depth -= 1
+                j += 1
+            if depth:
+                raise ValueError('unbalanced @-block')
+            kept.append(doc_css[i:j])
+            i = j
+            continue
+        close_brace = doc_css.find('}', open_brace)
+        if close_brace == -1:
+            raise ValueError('unbalanced rule')
+        inner = doc_css[open_brace + 1:close_brace]
+        if '{' in inner:
+            raise ValueError('nested rule')
+        decls = _normalize_decls(inner)
+        supplied = effective.get(_normalize_selector(selector))
+        if decls and supplied and all(
+            supplied.get(prop) == value for prop, value in decls.items()
+        ):
+            dropped_any = True
+        else:
+            kept.append(doc_css[i:close_brace + 1])
+        i = close_brace + 1
+    return ''.join(kept), dropped_any
+
+
+def dedupe_post_styles(post_html, stylesheet_path):
+    try:
+        match = re.search(r'<style\b[^>]*>(.*?)</style>\s*', post_html, re.S | re.I)
+        if not match:
+            return post_html
+        if not os.path.exists(stylesheet_path):
+            return post_html
+        effective = _stylesheet_effective_decls(open(stylesheet_path).read())
+        doc_css = re.sub(r'/\*.*?\*/', '', match.group(1), flags=re.S)
+        kept, dropped_any = _dedupe_doc_css(doc_css, effective)
+        if not dropped_any:
+            return post_html
+        replacement = '<style>\n' + kept.strip() + '\n</style>\n' if kept.strip() else ''
+        return post_html[:match.start()] + replacement + post_html[match.end():]
+    except Exception as e:
+        print('style dedupe skipped: {}'.format(e))
+        return post_html
 
 
 def make_categories_header(categories, root_path):
@@ -304,6 +439,10 @@ if __name__ == '__main__':
 
         os.system('pandoc -o /tmp/temp_output.html {} {}'.format(file_location, options))
         root_path = '../../../..'
+        post_html = dedupe_post_styles(
+            defancify(open('/tmp/temp_output.html').read()),
+            os.path.join(os.path.dirname(__file__), 'css', 'main.css'),
+        )
         total_file_contents = (
             PRE_HEADER +
             RSS_LINK.format(root_path, metadata['title']) +
@@ -311,7 +450,7 @@ if __name__ == '__main__':
             TOGGLE_COLOR_SCHEME_JS +
             make_twitter_card(metadata['title'], global_config) +
             TITLE_TEMPLATE.format(metadata['title'], get_printed_date(metadata), root_path) +
-            defancify(open('/tmp/temp_output.html').read()) +
+            post_html +
             FOOTER
         )
 
