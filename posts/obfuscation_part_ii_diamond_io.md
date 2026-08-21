@@ -1,6 +1,6 @@
 [title]: <> (Obfuscation (Part II): Diamond iO)
 [date]: <> (2026/07/28)
-[category]: <> (general)
+[category]: <> (general,cryptography)
 [pandoc]: <> (--mathjax)
 
 _Special thanks to Sora Suegami and_ _Janmajaya Mall for feedback and review._
