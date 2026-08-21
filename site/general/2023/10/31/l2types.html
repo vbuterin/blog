@@ -15,7 +15,7 @@
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -178,7 +178,7 @@ that technology choice?</p>
 <col style="width: 25%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>System type</th>
 <th>Technology properties</th>
 <th>Security guarantees</th>
@@ -186,7 +186,7 @@ that technology choice?</p>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><strong>Rollup</strong></td>
 <td>Computation proven via fraud proofs or ZK-SNARKs, data stored on
 L1</td>
@@ -194,7 +194,7 @@ L1</td>
 <td>L1 data availability + SNARK-proving or redundant execution to catch
 errors</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>Validium</strong></td>
 <td>Computation proven via ZK-SNARKs (can't use fraud proofs), data
 stored on a server or other separate system</td>
@@ -202,7 +202,7 @@ stored on a server or other separate system</td>
 not <em>stolen</em></td>
 <td>SNARK-proving</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>Disconnected</strong></td>
 <td>A separate chain (or server)</td>
 <td>Trust one or a small group of people not to steal your funds or lose

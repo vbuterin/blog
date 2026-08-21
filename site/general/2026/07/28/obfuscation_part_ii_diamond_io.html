@@ -12,11 +12,10 @@
 
 <link rel="stylesheet" type="text/css" href="../../../../css/main.css">
 
-<script type="text/x-mathjax-config">
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -1135,8 +1134,8 @@ class="math inline">\(K_{\{i,b\}}\)</span></span>, which satisfy <span
 data-type="inlineMath"
 data-latex="P_{i-1} * K_{\{i,b\}} =  Q_{\{i,b\}} * P_i + E_{\{i,b\}}"
 data-display="no" data-evaluate="no"><span class="math inline">\(P_{i-1}
-* K_{\{i,b\}} =  Q_{\{i,b\}} * P_i + E_{\{i,b\}}\)</span></span>. This
-is allowed, again, because of the trapdoor mechanism.</p>
+* K_{\{i,b\}} = Q_{\{i,b\}} * P_i + E_{\{i,b\}}\)</span></span>. This is
+allowed, again, because of the trapdoor mechanism.</p>
 <p>The evaluator can then walk down the exponentially-sized tree of
 possible encodings. Here's what this tree looks like graphically. Notice
 that even though the tree is of size <span data-type="inlineMath"
@@ -1187,7 +1186,7 @@ Q_{\{1,b_1\}} * E_{\{2,b_2\}}\)</span></span></p>
 <p><span data-type="inlineMath"
 data-latex="= q_0 * Q_{\{1,b_1\}} * Q_{{2,b_2}} * P_2  + e_2"
 data-display="no" data-evaluate="no"><span class="math inline">\(= q_0 *
-Q_{\{1,b_1\}} * Q_{{2,b_2}} * P_2  + e_2\)</span></span></p>
+Q_{\{1,b_1\}} * Q_{{2,b_2}} * P_2 + e_2\)</span></span></p>
 <p>And so on all the way up until <span data-type="inlineMath"
 data-latex="p_L = q_0 * Q_{\{1,b_1\}} * ... * Q_{\{L,b_L\}} * P_L + e_L"
 data-display="no" data-evaluate="no"><span class="math inline">\(p_L =

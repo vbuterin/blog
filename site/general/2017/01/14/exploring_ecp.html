@@ -15,7 +15,7 @@
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -247,14 +247,14 @@ use numbers in a <strong>prime field</strong>.</p>
 class="math inline">\(0, 1, 2... p-1\)</span>, where <span
 class="math inline">\(p\)</span> is prime, and the various operations
 are defined as follows:</p>
-<p><span class="math inline">\(a + b:  (a + b)\)</span> % <span
+<p><span class="math inline">\(a + b: (a + b)\)</span> % <span
 class="math inline">\(p\)</span></p>
-<p><span class="math inline">\(a \cdot b:  (a \cdot b)\)</span> % <span
+<p><span class="math inline">\(a \cdot b: (a \cdot b)\)</span> % <span
 class="math inline">\(p\)</span></p>
-<p><span class="math inline">\(a - b:  (a - b)\)</span> % <span
+<p><span class="math inline">\(a - b: (a - b)\)</span> % <span
 class="math inline">\(p\)</span></p>
-<p><span class="math inline">\(a / b:  (a \cdot b^{p-2})\)</span> %
-<span class="math inline">\(p\)</span></p>
+<p><span class="math inline">\(a / b: (a \cdot b^{p-2})\)</span> % <span
+class="math inline">\(p\)</span></p>
 <p>Basically, all math is done modulo <span
 class="math inline">\(p\)</span> (see <a
 href="https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/what-is-modular-arithmetic">here</a>
@@ -323,7 +323,7 @@ class="math inline">\(4i \cdot 2 + 4i \cdot i\)</span>, which gives
 working in <span class="math inline">\(\bmod 7\)</span> math that
 becomes <span class="math inline">\(i + 3\)</span>. To divide, we
 do:</p>
-<p><span class="math inline">\(a / b:  (a \cdot b^{(p^2-2)})\)</span> %
+<p><span class="math inline">\(a / b: (a \cdot b^{(p^2-2)})\)</span> %
 <span class="math inline">\(p\)</span></p>
 <p>Note that the exponent for Fermat's little theorem is now <span
 class="math inline">\(p^2\)</span> instead of <span

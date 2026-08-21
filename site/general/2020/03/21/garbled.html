@@ -15,7 +15,7 @@
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -158,29 +158,29 @@ hash and subtract it out.</p>
 <p>Here's the garbling of the first XOR gate:</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Inputs</th>
 <th>Output</th>
 <th>Encoding of output</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>00</td>
 <td>0</td>
 <td>0 + hash(1, 6816, 6529)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>01</td>
 <td>1</td>
 <td>1 + hash(1, 6816, 4872)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>10</td>
 <td>1</td>
 <td>1 + hash(1, 8677, 6529)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>11</td>
 <td>0</td>
 <td>0 + hash(1, 8677, 4872)</td>
@@ -192,29 +192,29 @@ directly, because this XOR gate's outputs are directly final outputs of
 the program. Now, let's look at the leftmost AND gate:</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Inputs</th>
 <th>Output</th>
 <th>Encoding of output</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>00</td>
 <td>0</td>
 <td>5990 + hash(2, 6816, 6529)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>01</td>
 <td>0</td>
 <td>5990 + hash(2, 6816, 4872)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>10</td>
 <td>0</td>
 <td>5990 + hash(2, 8677, 6529)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>11</td>
 <td>1</td>
 <td>1921 + hash(2, 8677, 4872)</td>

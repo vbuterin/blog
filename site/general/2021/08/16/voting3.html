@@ -15,7 +15,7 @@
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -404,19 +404,19 @@ this:</p>
 <p><br></p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Decision</th>
 <th>Benefit to you</th>
 <th>Benefit to others</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Accept attacker's bribe</td>
 <td><span class="math inline">\(B - D * p\)</span></td>
 <td><span class="math inline">\(-999 * D * p\)</span></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Reject bribe, vote your conscience</td>
 <td><span class="math inline">\(0\)</span></td>
 <td><span class="math inline">\(0\)</span></td>

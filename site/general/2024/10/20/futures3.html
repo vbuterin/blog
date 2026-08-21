@@ -12,11 +12,10 @@
 
 <link rel="stylesheet" type="text/css" href="../../../../css/main.css">
 
-<script type="text/x-mathjax-config">
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -603,27 +602,27 @@ summary of the benefits and risks is:</p>
 <col style="width: 34%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Policy</th>
 <th>Need to decide</th>
 <th>Risks to analyze</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Do nothing</td>
 <td>* MEV burn implementation, if any</td>
 <td>* Almost 100% of ETH staked, likely in LSTs (perhaps a single
 dominant one)<br>* Macroeconomic risks</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Stake capping (via changing issuance curve)</td>
 <td>* Reward function and parameters (esp. what the cap is)<br>* MEV
 burn implementation</td>
 <td>* Open question of which stakers enter and leave, possibility that
 remaining staker set is centralized</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>* Two-tiered staking</td>
 <td>* The role of the risk-free tier<br> * Parameters (eg. the economics
 that determine the amount staked in the risk-bearing tier)<br> * MEV

@@ -15,7 +15,7 @@
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -182,9 +182,9 @@ exponents.</i></small></p>
 </center>
 <p><br></p>
 <p>We redefine:</p>
-<p><span class="math inline">\(x + y  \Rightarrow  (x + y)\)</span> %
+<p><span class="math inline">\(x + y \Rightarrow (x + y)\)</span> %
 <span class="math inline">\(p\)</span></p>
-<p><span class="math inline">\(x * y  \Rightarrow (x * y)\)</span> %
+<p><span class="math inline">\(x * y \Rightarrow (x * y)\)</span> %
 <span class="math inline">\(p\)</span></p>
 <p><span class="math inline">\(x^y \Rightarrow (x^y)\)</span> % <span
 class="math inline">\(p\)</span></p>
@@ -652,19 +652,19 @@ that we can write out its addition and multiplication tables:</p>
 <td>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>+</th>
 <th><strong>0</strong></th>
 <th><strong>1</strong></th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><strong>0</strong></td>
 <td>0</td>
 <td>1</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>1</strong></td>
 <td>1</td>
 <td>0</td>
@@ -675,19 +675,19 @@ that we can write out its addition and multiplication tables:</p>
 <td>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>*</th>
 <th><strong>0</strong></th>
 <th><strong>1</strong></th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><strong>0</strong></td>
 <td>0</td>
 <td>0</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>1</strong></td>
 <td>0</td>
 <td>1</td>
@@ -711,7 +711,7 @@ addition and multiplication tables:</p>
 <td>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>+</th>
 <th><strong>0</strong></th>
 <th><strong>1</strong></th>
@@ -720,28 +720,28 @@ addition and multiplication tables:</p>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><strong>0</strong></td>
 <td>0</td>
 <td>1</td>
 <td>x</td>
 <td>x+1</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>1</strong></td>
 <td>1</td>
 <td>0</td>
 <td>x+1</td>
 <td>x</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>x</strong></td>
 <td>x</td>
 <td>x+1</td>
 <td>0</td>
 <td>1</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>x+1</strong></td>
 <td>x+1</td>
 <td>x</td>
@@ -754,7 +754,7 @@ addition and multiplication tables:</p>
 <td>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>+</th>
 <th><strong>0</strong></th>
 <th><strong>1</strong></th>
@@ -763,28 +763,28 @@ addition and multiplication tables:</p>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><strong>0</strong></td>
 <td>0</td>
 <td>0</td>
 <td>0</td>
 <td>0</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>1</strong></td>
 <td>0</td>
 <td>1</td>
 <td>x</td>
 <td>x+1</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>x</strong></td>
 <td>0</td>
 <td>x</td>
 <td>x+1</td>
 <td>1</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>x+1</strong></td>
 <td>0</td>
 <td>x+1</td>

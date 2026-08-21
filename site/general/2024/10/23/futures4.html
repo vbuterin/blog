@@ -15,7 +15,7 @@
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -422,7 +422,7 @@ this table:</p>
 <col style="width: 18%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Algorithm</th>
 <th>Proof size</th>
 <th>Security assumptions</th>
@@ -430,20 +430,20 @@ this table:</p>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><strong>Verkle</strong></td>
 <td>Data plus ~100-2,000 kB</td>
 <td>Elliptic curve (not quantum-resistant)</td>
 <td>&lt; 1s</td>
 </tr>
-<tr>
+<tr class="even">
 <td>STARK over <strong>conservative hash functions</strong> (eg. SHA256,
 BLAKE)</td>
 <td>Data plus ~100-300 kB</td>
 <td>Conservative hash functions</td>
 <td>&gt; 10 s</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>STARK over <strong>aggressive hash functions</strong> (Poseidon,
 Ajtai)</td>
 <td>Data plus ~100-300 kB</td>

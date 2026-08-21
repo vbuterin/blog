@@ -15,7 +15,7 @@
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -365,29 +365,29 @@ other way</li>
 <p>Let's look at your chances in each world.</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Event</th>
 <th>Probability (World A)</th>
 <th>Probability (World B)</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Independent success <em>and</em> retroactive reward</td>
 <td>0%</td>
 <td>15%</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Independent success only</td>
 <td>30%</td>
 <td>15%</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Retroactive reward only</td>
 <td>50%</td>
 <td>35%</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Nothing</td>
 <td>20%</td>
 <td>35%</td>

@@ -15,7 +15,7 @@
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -332,34 +332,34 @@ verificar muy rápidamente en la cadena.</li>
 <col style="width: 33%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Propiedad</th>
 <th>Optimistic Rollups</th>
 <th>ZK Rollups</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Costo fijo de gas por batch</td>
 <td><strong>~40,000</strong> (una transacción liviana que principalmente
 solo cambia el valor del root del estado)</td>
 <td>~500,000 (la verificación de un ZK-SNARK es bastante intensiva
 computacionalmente)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Tiempo de retiro</td>
 <td>~1 semana (los retiros deben retrasarse para dar tiempo a que
 alguien publique una prueba de fraude y cancele el retiro si es
 fraudulento)</td>
 <td><strong>Muy rápida</strong> (solo espera el siguiente batch)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Complejidad de la tecnología</td>
 <td><strong>Baja</strong></td>
 <td>Alta (ZK-SNARK es una tecnología muy nueva y matemáticamente
 compleja)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Generalizabilidad</td>
 <td><strong>Más fácil</strong> (Los Rollups de EVM de propósito general
 ya están cerca de la red principal)</td>
@@ -369,7 +369,7 @@ esfuerzos (por ejemplo: <a
 href="https://medium.com/starkware/hello-cairo-3cb43b13b209">Cairo</a>)
 trabajando para mejorar esto)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Costos de gas en cadena por transacción</td>
 <td>Altos</td>
 <td><strong>Bajos</strong> (si los datos en una transacción solo se usan
@@ -378,7 +378,7 @@ pueden omitirse, mientras que en un Optimist Rollup tendrían que
 publicarse en caso de que deban verificarse en una prueba de
 fraude)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Costos de computación fuera de la cadena</td>
 <td><strong>Bajos</strong> (aunque hay más necesidad de muchos nodos
 completos para rehacer el cálculo)</td>
@@ -433,49 +433,49 @@ bytes. Sin embargo, una transferencia ETH en un Rollup solo requiere ~12
 bytes:</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Parametro</th>
 <th>Ethereum</th>
 <th>Rollup</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Nonce</td>
 <td>~3</td>
 <td>0</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Gasprice</td>
 <td>~8</td>
 <td>0-0.5</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Gas</td>
 <td>3</td>
 <td>0-0.5</td>
 </tr>
-<tr>
+<tr class="even">
 <td>To</td>
 <td>21</td>
 <td>4</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Value</td>
 <td>~9</td>
 <td>~3</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Signature</td>
 <td>~68 (2 + 33 + 33)</td>
 <td>~0.5</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>From</td>
 <td>0 (recovered from sig)</td>
 <td>4</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Total</td>
 <td>~112</td>
 <td>~12</td>

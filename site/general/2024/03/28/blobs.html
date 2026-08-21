@@ -15,7 +15,7 @@
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -423,33 +423,33 @@ Ethereum workflow" and "a fundamentally 2020s Ethereum workflow":</p>
 <col style="width: 33%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th></th>
 <th>2010s Ethereum</th>
 <th>2020s Ethereum</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Architecture</td>
 <td>Build everything on L1</td>
 <td>Build on a specific L2, or architect the application so that it
 supports every L2 that follows some standards</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Privacy</td>
 <td>Everything public</td>
 <td>A user's data is private by default, users merkle-prove or ZK-prove
 specific claims as needed to establish trust</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Anti-sybil</td>
 <td>You must have 0.01 ETH</td>
 <td>Application can require an ETH deposit, but clients should offer
 wrappers for non-crypto users that provide "centralized anti-sybil" (eg.
 SMS)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Wallets</td>
 <td>EOAs</td>
 <td>Account abstraction wallets: <a
@@ -457,7 +457,7 @@ href="https://vitalik.eth.limo/general/2021/01/11/recovery.html">key
 recovery</a>, different access control for different security levels,
 sponsored txs...</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Proof of community membership (for voting, airdrops...)</td>
 <td>Based on how much ETH you have</td>
 <td>ETH + proof of personhood + POAPs + ZuStamps + <a

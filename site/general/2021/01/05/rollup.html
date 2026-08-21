@@ -15,7 +15,7 @@
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -312,34 +312,34 @@ verified on-chain.</li>
 <col style="width: 33%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Property</th>
 <th>Optimistic rollups</th>
 <th>ZK rollups</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Fixed gas cost per batch</td>
 <td><strong>~40,000</strong> (a lightweight transaction that mainly just
 changes the value of the state root)</td>
 <td>~500,000 (verification of a ZK-SNARK is quite computationally
 intensive)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Withdrawal period</td>
 <td>~1 week (withdrawals need to be delayed to give time for someone to
 publish a fraud proof and cancel the withdrawal if it is
 fraudulent)</td>
 <td><strong>Very fast</strong> (just wait for the next batch)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Complexity of technology</td>
 <td><strong>Low</strong></td>
 <td>High (ZK-SNARKs are very new and mathematically complex
 technology)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Generalizability</td>
 <td><strong>Easier</strong> (general-purpose EVM rollups are already
 close to mainnet)</td>
@@ -349,7 +349,7 @@ harder than proving simple computations, though there are efforts (eg.
 href="https://medium.com/starkware/hello-cairo-3cb43b13b209">Cairo</a>)
 working to improve on this)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Per-transaction on-chain gas costs</td>
 <td>Higher</td>
 <td><strong>Lower</strong> (if data in a transaction is only used to
@@ -357,7 +357,7 @@ verify, and not to cause state changes, then this data can be left out,
 whereas in an optimistic rollup it would need to be published in case it
 needs to be checked in a fraud proof)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Off-chain computation costs</td>
 <td><strong>Lower</strong> (though there is more need for many full
 nodes to redo the computation)</td>
@@ -409,49 +409,49 @@ create a fraud proof showing that the batch is invalid.</p>
 transfer on a rollup, however, takes only ~12 bytes:</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Parameter</th>
 <th>Ethereum</th>
 <th>Rollup</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Nonce</td>
 <td>~3</td>
 <td>0</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Gasprice</td>
 <td>~8</td>
 <td>0-0.5</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Gas</td>
 <td>3</td>
 <td>0-0.5</td>
 </tr>
-<tr>
+<tr class="even">
 <td>To</td>
 <td>21</td>
 <td>4</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Value</td>
 <td>~9</td>
 <td>~3</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Signature</td>
 <td>~68 (2 + 33 + 33)</td>
 <td>~0.5</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>From</td>
 <td>0 (recovered from sig)</td>
 <td>4</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Total</td>
 <td>~112</td>
 <td>~12</td>
@@ -594,7 +594,7 @@ for ETH transfers directly on Ethereum itself).</p>
 <col style="width: 25%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Application</th>
 <th>Bytes in rollup</th>
 <th>Gas cost on layer 1</th>
@@ -602,26 +602,26 @@ for ETH transfers directly on Ethereum itself).</p>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>ETH transfer</td>
 <td><strong>12</strong></td>
 <td>21,000</td>
 <td>105x</td>
 </tr>
-<tr>
+<tr class="even">
 <td>ERC20 transfer</td>
 <td><strong>16</strong> (4 more bytes to specify which token)</td>
 <td>~50,000</td>
 <td>187x</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Uniswap trade</td>
 <td><strong>~14</strong> (4 bytes sender + 4 bytes recipient + 3 bytes
 value + 1 byte max price + 1 byte misc)</td>
 <td>~100,000</td>
 <td>428x</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Privacy-preserving withdrawal (Optimistic rollup)</td>
 <td><strong>296</strong> (4 bytes index of root + 32 bytes nullifier + 4
 bytes recipient + 256 bytes ZK-SNARK proof)</td>
@@ -629,7 +629,7 @@ bytes recipient + 256 bytes ZK-SNARK proof)</td>
 href="https://etherscan.io/tx/0x6e311f84655af72614966705584569b52d6e314f2d61b965db91db41fd01b1e1">~380,000</a></td>
 <td>77x</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Privacy-preserving withdrawal (ZK rollup)</td>
 <td><strong>40</strong> (4 bytes index of root + 32 bytes nullifier + 4
 bytes recipient)</td>

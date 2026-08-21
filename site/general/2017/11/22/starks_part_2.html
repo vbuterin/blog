@@ -15,7 +15,7 @@
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -291,9 +291,9 @@ class="math inline">\(53 % 10 = 3\)</span>, etc (note that the answer is
 always non-negative, so for example <span class="math inline">\(-1 % 10
 = 9\)</span>). For any specific prime number <span
 class="math inline">\(p\)</span>, we can redefine:</p>
-<p><span class="math inline">\(x + y  \Rightarrow  (x + y)\)</span> %
+<p><span class="math inline">\(x + y \Rightarrow (x + y)\)</span> %
 <span class="math inline">\(p\)</span></p>
-<p><span class="math inline">\(x \cdot y  \Rightarrow (x \cdot
+<p><span class="math inline">\(x \cdot y \Rightarrow (x \cdot
 y)\)</span> % <span class="math inline">\(p\)</span></p>
 <p><span class="math inline">\(x^y \Rightarrow (x^y)\)</span> % <span
 class="math inline">\(p\)</span></p>
@@ -404,8 +404,8 @@ class="math inline">\(x\)</span>, <span
 class="math inline">\(x^{1000}\)</span>) now becomes a diagonal with a
 wraparound; as <span class="math inline">\(x^{1000}\)</span> can only
 take on 1,000,006 possible values, we only need 1,000,006 rows. And so,
-the full evaluation of <span
-class="math inline">\(g(x,  x^{1000})\)</span> now has only ~<span
+the full evaluation of <span class="math inline">\(g(x,
+x^{1000})\)</span> now has only ~<span
 class="math inline">\(10^{15}\)</span> elements.</p>
 <center>
 <img src="../../../../images/starks-part-2-files/fri5.png" style="width:500px" class="padded" />

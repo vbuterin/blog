@@ -15,7 +15,7 @@
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -317,25 +317,25 @@ TPS. We can compute gas per transaction vs batch intervals:</p>
 <col style="width: 50%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Batch interval</th>
 <th>Gas per tx (= tx cost + batch cost / (TPS * batch interval))</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>12s (one per Ethereum block)</td>
 <td>10368</td>
 </tr>
-<tr>
+<tr class="even">
 <td>1 min</td>
 <td>2368</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>10 min</td>
 <td>568</td>
 </tr>
-<tr>
+<tr class="even">
 <td>1 h</td>
 <td>401</td>
 </tr>
@@ -354,25 +354,25 @@ This changes the table above to:</p>
 <col style="width: 50%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Batch interval</th>
 <th>Gas per tx (= tx cost + batch cost / (TPS * batch interval))</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>12s (one per Ethereum block)</td>
 <td>501</td>
 </tr>
-<tr>
+<tr class="even">
 <td>1 min</td>
 <td>394</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>10 min</td>
 <td>370</td>
 </tr>
-<tr>
+<tr class="even">
 <td>1 h</td>
 <td>368</td>
 </tr>

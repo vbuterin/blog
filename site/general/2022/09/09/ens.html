@@ -15,7 +15,7 @@
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -264,7 +264,7 @@ restaurant, and an ENS name.</p>
 <col style="width: 25%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th></th>
 <th>Data center</th>
 <th>Restaurant</th>
@@ -272,7 +272,7 @@ restaurant, and an ENS name.</p>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><strong>Confusion from people expecting old location</strong></td>
 <td>An employee comes to the old location, and unexpectedly finds it
 closed.</td>
@@ -280,7 +280,7 @@ closed.</td>
 unexpectedly finds it closed.</td>
 <td>Someone sends a big chunk of money to the wrong address.</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>Loss of location-specific long-term investment</strong></td>
 <td>Low</td>
 <td>The restaurant will probably lose many long-term customers for whom
@@ -385,7 +385,7 @@ class="math inline">\(f\)</span>:</p>
 <col style="width: 20%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Type</th>
 <th><span class="math inline">\(f(n)\)</span> (<span
 class="math inline">\(p_0\)</span> = price of last sale or last rejected
@@ -396,7 +396,7 @@ bid, or $1 if most recent event is a reset)</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Exponential fee growth</td>
 <td><span class="math inline">\(f(n) = \int_0^n p_0 *
 1.1^n\)</span></td>
@@ -405,7 +405,7 @@ compounding).</td>
 <td>$836</td>
 <td>$7.22m</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Linear fee growth</td>
 <td><span class="math inline">\(f(n) = p_0 * n +
 \frac{15}{2}n^2\)</span></td>
@@ -413,7 +413,7 @@ compounding).</td>
 <td>$1250</td>
 <td>$80k</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Capped annual fee</td>
 <td><span class="math inline">\(f(n) = 640 * n\)</span></td>
 <td>The annual fee cannot exceed $640 per year. That is, a domain in

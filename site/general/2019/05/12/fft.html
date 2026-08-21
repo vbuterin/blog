@@ -15,7 +15,7 @@
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -882,9 +882,9 @@ itself be nontrivial. The "naive" algorithm for doing this is itself
 binary field, we can use the fact that <span
 class="math inline">\((x^2-kx)^2 = x^4 - k^2 \cdot x^2\)</span>, and
 more generally <span class="math inline">\((x^2-kx)^{2^{i}} =
-x^{2^{i+1}} -  k^{2^{i}} \cdot x^{2^{i}}\)</span> , to create yet
-another recursive algorithm to do this in <span
-class="math inline">\(O(N \cdot log(N))\)</span> time.
+x^{2^{i+1}} - k^{2^{i}} \cdot x^{2^{i}}\)</span> , to create yet another
+recursive algorithm to do this in <span class="math inline">\(O(N \cdot
+log(N))\)</span> time.
 </p>
 <p>
 And if you want to do an <em>inverse</em> FFT, to do interpolation, then

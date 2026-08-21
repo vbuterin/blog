@@ -15,7 +15,7 @@
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -229,19 +229,19 @@ href="https://blog.ethereum.org/2014/08/21/introduction-futarchy/">futarchy</a>�
 <p>讓我們從一個具體的例子開始。假設我們正試圖利用預測市場在決策A和決策B之間做出選擇，其中每個決策都有一定機率實現某種理想的結果。假設你的<em>看法</em>是，決策A有50%的機會實現目標，而決策B有45%的機會。與此同時，市場（在你看來是錯誤的）認為決策B有55%的機會，決策A有40%的機會。</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>認真決策後得到好結果的機會...</th>
 <th>現在市場的位置</th>
 <th>你的看法</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>A</td>
 <td>40%</td>
 <td>50%</td>
 </tr>
-<tr>
+<tr class="even">
 <td>B</td>
 <td>55%</td>
 <td>45%</td>

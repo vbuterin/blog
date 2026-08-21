@@ -16,6 +16,8 @@
   --color-table-row-even:#f0f0f0;
   --color-table-row-odd:#fff;
   --color-toggle-accent: #c3a554;
+  --color-callout-bg:#f5f6f8;
+  --color-callout-border:#d9dce1;
 }
 
 /* Dark mode toggled with <html class="dark"> */
@@ -30,6 +32,8 @@ html.dark{
   --color-table-border:#444;
   --color-table-row-even:#262626;
   --color-table-row-odd:#1c1c1c;
+  --color-callout-bg:#262626;
+  --color-callout-border:#444;
 }
 
 
@@ -56,11 +60,6 @@ h3{font-size:1.3rem;}
 
 /* Images & SVG */
 img,svg{max-width:100%;height:auto;}
-
-/* Inline SVG diagrams (e.g. draw.io exports) lay out text with absolute
-   per-word/per-space <tspan> coordinates. Inherited letter-spacing breaks
-   that layout and makes words overlap, so reset it inside SVG text. */
-svg,svg text,svg tspan,svg textPath{letter-spacing:normal !important;word-spacing:normal !important;}
 
 /* Layout container */
 .container-fluid{padding:40px 15px;margin:auto;max-width:1200px;}
@@ -110,6 +109,103 @@ svg,svg text,svg tspan,svg textPath{letter-spacing:normal !important;word-spacin
   h3{font-size:3rem;}
   .markdown-body p,li,div,span,code,table {font-size: 1.8rem;}
   .markdown-body small {font-size: 1.4rem;}
+}
+
+/* ---------- ddocs component structures (TEC-2634) ----------
+   These match what the ddocs styles-mode markdown export emits:
+   aside.callout, div.tweet-embed, figure[data-type="resizable-media"]
+   (+ data-align / data-float / figcaption), div[data-type="columns"]. */
+
+/* Callout */
+.markdown-body .callout{
+  background:var(--color-callout-bg);
+  border:1px solid var(--color-callout-border);
+  border-left:4px solid var(--color-toggle-accent);
+  border-radius:6px;
+  padding:.8em 1em;
+  margin:1em 0;
+}
+.markdown-body .callout > p:first-child{margin-top:0;}
+.markdown-body .callout > p:last-child{margin-bottom:0;}
+
+/* Tweet link card (static — no widget script) */
+.markdown-body .tweet-embed{
+  background:var(--color-callout-bg);
+  border:1px solid var(--color-callout-border);
+  border-radius:12px;
+  padding:1em 1.4em;
+  margin:1.4em auto;
+  max-width:32em;
+  text-align:center;
+}
+.markdown-body .tweet-embed p{margin:0;}
+.markdown-body .tweet-embed a{
+  display:block;
+  font-weight:600;
+  color:var(--color-anchor);
+  text-decoration:none;
+}
+.markdown-body .tweet-embed a:hover{text-decoration:underline;}
+.markdown-body .tweet-embed .tweet-embed-url{
+  display:block;
+  margin-top:.3em;
+  font-size:.75em;
+  color:var(--color-text);
+  opacity:.6;
+  word-break:break-all;
+}
+
+/* Media figures: alignment + captions */
+.markdown-body figure[data-type="resizable-media"]{
+  margin:1.5em 0;
+}
+.markdown-body figure[data-type="resizable-media"] img,
+.markdown-body figure[data-type="resizable-media"] video{
+  display:block;
+  max-width:100%;
+  height:auto;
+}
+.markdown-body figure[data-align="center"] img,
+.markdown-body figure[data-align="center"] video{
+  margin-left:auto;
+  margin-right:auto;
+}
+.markdown-body figure[data-align="right"] img,
+.markdown-body figure[data-align="right"] video{
+  margin-left:auto;
+}
+.markdown-body figure[data-type="resizable-media"] figcaption{
+  font-size:.85rem;
+  color:var(--color-text);
+  opacity:.7;
+  text-align:center;
+  margin-top:.5em;
+}
+.markdown-body figure[data-align="left"] figcaption{text-align:left;}
+.markdown-body figure[data-align="right"] figcaption{text-align:right;}
+.markdown-body figure[data-float="left"]{
+  float:left;
+  max-width:50%;
+  margin:.3em 1.5em .8em 0;
+}
+.markdown-body figure[data-float="right"]{
+  float:right;
+  max-width:50%;
+  margin:.3em 0 .8em 1.5em;
+}
+
+/* Columns: one grid track per column div, stacked in portrait */
+.markdown-body div[data-type="columns"]{
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns:1fr;
+  gap:24px;
+  margin:1em 0;
+}
+@media only screen and (orientation: portrait){
+  .markdown-body div[data-type="columns"]{display:block;}
+  .markdown-body div[data-type="columns"] > div[data-type="column"]{margin-bottom:1em;}
+  .markdown-body figure[data-type="resizable-media"] figcaption{font-size:1.4rem;}
 }
 
 /* Simple clearfix for floats */

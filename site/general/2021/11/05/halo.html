@@ -15,7 +15,7 @@
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -129,7 +129,7 @@ have very distinct tradeoffs:</p>
 <col style="width: 25%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Technology</th>
 <th>Cryptographic assumptions</th>
 <th>Proof size</th>
@@ -137,19 +137,19 @@ have very distinct tradeoffs:</p>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>FRI</td>
 <td>Hashes only (quantum safe!)</td>
 <td>Large (10-200 kB)</td>
 <td>Medium (poly-logarithmic)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Inner product arguments (IPAs)</td>
 <td>Basic elliptic curves</td>
 <td>Medium (1-3 kB)</td>
 <td><strong>Very high (linear)</strong></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>KZG commitments</td>
 <td>Elliptic curves + pairings + trusted setup</td>
 <td>Short (~500 bytes)</td>
@@ -650,7 +650,7 @@ polynomial-based proof using eg. KZG-based commitments.</p>
 <col style="width: 25%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Technology</th>
 <th>Cryptographic assumptions</th>
 <th>Proof size</th>
@@ -658,25 +658,25 @@ polynomial-based proof using eg. KZG-based commitments.</p>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>FRI</td>
 <td>Hashes only (quantum safe!)</td>
 <td>Large (10-200 kB)</td>
 <td>Medium (poly-logarithmic)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Inner product arguments (IPAs)</td>
 <td>Basic elliptic curves</td>
 <td>Medium (1-3 kB)</td>
 <td><strong>Very high (linear)</strong></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>KZG commitments</td>
 <td>Elliptic curves + pairings + trusted setup</td>
 <td>Short (~500 bytes)</td>
 <td>Low (constant)</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>IPA + Halo-style aggregation</strong></td>
 <td><strong>Basic elliptic curves</strong></td>
 <td><strong>Medium (1-3 kB)</strong></td>

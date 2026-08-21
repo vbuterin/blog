@@ -15,7 +15,7 @@
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -351,7 +351,7 @@ id="proof-sizes-bytes.-rows-tree-size-cols-keyvalue-pairs-proven">Proof
 sizes (bytes). Rows: tree size, cols: key/value pairs proven</h4>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th></th>
 <th>1</th>
 <th>10</th>
@@ -361,7 +361,7 @@ sizes (bytes). Rows: tree size, cols: key/value pairs proven</h4>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>256</td>
 <td>176</td>
 <td>176</td>
@@ -369,7 +369,7 @@ sizes (bytes). Rows: tree size, cols: key/value pairs proven</h4>
 <td>176</td>
 <td>176</td>
 </tr>
-<tr>
+<tr class="even">
 <td>65,536</td>
 <td>224</td>
 <td>608</td>
@@ -377,7 +377,7 @@ sizes (bytes). Rows: tree size, cols: key/value pairs proven</h4>
 <td>12,176</td>
 <td>12,464</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>16,777,216</td>
 <td>272</td>
 <td>1,040</td>
@@ -385,7 +385,7 @@ sizes (bytes). Rows: tree size, cols: key/value pairs proven</h4>
 <td>59,792</td>
 <td>457,616</td>
 </tr>
-<tr>
+<tr class="even">
 <td>4,294,967,296</td>
 <td>320</td>
 <td>1,472</td>

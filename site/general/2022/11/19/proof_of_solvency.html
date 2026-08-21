@@ -15,7 +15,7 @@
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -504,20 +504,20 @@ costs and benefits:</p>
 <col style="width: 33%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Option</th>
 <th>Exchange-side risk</th>
 <th>User-side risk</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Custodial exchange (eg. Coinbase today)</td>
 <td>User funds may be lost if there is a problem on the exchange
 side</td>
 <td>Exchange can help recover account</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Non-custodial exchange (eg. Uniswap today)</td>
 <td>User can withdraw even if exchange acts maliciously</td>
 <td>User funds may be lost if user screws up</td>

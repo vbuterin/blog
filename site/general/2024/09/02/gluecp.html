@@ -15,7 +15,7 @@
 <script>
 MathJax = {
   tex: {
-    inlineMath: [['$', '$'], ['\(', '\)']]
+    inlineMath: [['\\(', '\\)']]
   },
   svg: {
     fontCache: 'global',
@@ -276,29 +276,29 @@ in many domains of computation:</p>
 <col style="width: 33%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Domain</th>
 <th>Glue</th>
 <th>Coprocessor</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Ethereum</td>
 <td>EVM</td>
 <td>Dedicated opcodes/precompiles for specialized operations</td>
 </tr>
-<tr>
+<tr class="even">
 <td>AI (eg. LLMs)</td>
 <td>Python (often)</td>
 <td>GPU via CUDA; ASICs</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Web apps</td>
 <td>Javascript</td>
 <td>WASM</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Programmable cryptography</td>
 <td>RISC-V</td>
 <td>Specialized modules (eg. for hashes and signatures)</td>
