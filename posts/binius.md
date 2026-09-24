@@ -199,7 +199,7 @@ Next, we treat this extension as _columns_, and make a Merkle tree of the column
 
 </center><br>
 
-Now, let's suppose that the prover wants to prove an evaluation of this polynomial at some point $r = \{r_0, r_1, r_2, r_3\}$. There is one nuance in Binius that makes it somewhat weaker than other polynomial commitment schemes: the prover should not know, or be able to guess, $s$, until after they committed to the Merkle root (in other words, $r$ should be a pseudo-random value that depends on the Merkle root). This makes the scheme useless for "database lookup" (eg. "ok you gave me the Merkle root, now prove to me $P(0, 0, 1, 0)$!"). But the actual zero-knowledge proof protocols that we use generally don't need "database lookup"; they simply need to check the polynomial at a random evaluation point. Hence, this restriction is okay for our purposes.
+Now, let's suppose that the prover wants to prove an evaluation of this polynomial at some point $r = \{r_0, r_1, r_2, r_3\}$. There is one nuance in Binius that makes it somewhat weaker than other polynomial commitment schemes: the prover should not know, or be able to guess, $r$, until after they committed to the Merkle root (in other words, $r$ should be a pseudo-random value that depends on the Merkle root). This makes the scheme useless for "database lookup" (eg. "ok you gave me the Merkle root, now prove to me $P(0, 0, 1, 0)$!"). But the actual zero-knowledge proof protocols that we use generally don't need "database lookup"; they simply need to check the polynomial at a random evaluation point. Hence, this restriction is okay for our purposes.
 
 Suppose we pick $r = \{1, 2, 3, 4\}$ (the polynomial, at this point, evaluates to $-137$; you can confirm it [with this code](https://github.com/ethereum/research/blob/master/binius/utils.py#L100)). Now, we get into the process of actually making the proof. We split up $r$ into two parts: the first part $\{1, 2\}$ representing a linear combination of _columns within a row_, and the second part $\{3, 4\}$ representing a linear combination _of rows_. We compute a "tensor product", both for the column part:
 
@@ -300,7 +300,7 @@ We can make larger binary fields by taking extensions: if we start with $F_2$ (i
     
 </td><td>
 
-| + | **0** | **1** | **x** | **x+1** |
+| * | **0** | **1** | **x** | **x+1** |
 | - | - | - | - | - |
 | **0** | 0 | 0 | 0 | 0 |
 | **1** | 0 | 1 | x | x+1 |
