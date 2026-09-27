@@ -81,6 +81,11 @@ html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b
 .document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
 .wide-device-view { max-width: 900px; }
 .narrow-device-view { max-width: 50%; }
+@media (max-width: 720px){
+.narrow-device-view { max-width: 100%; }
+}
+.device-view { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.device-view th, .device-view td { overflow-wrap: anywhere; }
 .device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
 .device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
 .device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
