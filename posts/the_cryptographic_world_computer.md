@@ -32,23 +32,109 @@ To start off, let’s go through the original Bitcoin whitepaper, section by sec
 
 There are large changes to basically every section. To make things more compact, let’s make it a table:
 
-| Problem                                                | 2010 strategy                                             | 2030 strategy                                                                                                                                                                                                                                                                       |
-| ------------------------------------------------------ | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| How do you know if a transaction was authorized?       | Signature                                                 | Sometimes quantum-safe signature (or several), sometimes zero-knowledge proof                                                                                                                                                                                                       |
-| How do you identify the canonical chain?               | PoW                                                       | PoS with [few-slot finality and available chain](https://consensus.ethereum.foundation/blog/upgrading-finality-edition-1)                                                                                                                                                           |
-| How do you verify blocks?                              | Full re-download and recompute                            | [SNARK verification](https://ethereum.org/roadmap/zkevm/) + [PeerDAS](https://ethereum.org/roadmap/fusaka/peerdas/) for data availability                                                                                                                                           |
-| What does the transaction inclusion journey look like? | User -> mempool -> miner -> block                         | User -> mempool with strong privacy properties -> [FOCILer](https://eips.ethereum.org/EIPS/eip-7805) or builder -> builder -> block
-
-Also, signatures/proofs get [stripped off early and aggregated by mempool nodes and then the builder](https://eips.ethereum.org/EIPS/eip-8288) |
-| What does the structure of computation look like?      | Linear / serial                                           | <ul><li>Signatures/proofs parallel-processed inside the mempool</li><li>Gas rules incentivize parallelization-friendly workflows</li></ul>                                                                                                                                          |
-| How do client-side nodes save space                    | Prune old history                                         | <ul><li>Store only a small fraction of history</li><li>Distributed history and state storage</li><li>Often don’t need to store inner tree nodes</li><li>Store different objects in different formats (DB, flat files…)</li></ul>                                                    |
-| What can light clients verify?                         | Consensus; need to trust honest majority for validity     | Consensus and validity (both data availability and compute)                                                                                                                                                                                                                         |
-| Privacy of writes                                      | Assume UTXO graph cannot be effectively analyzed          | ZK-SNARKs                                                                                                                                                                                                                                                                           |
-| Privacy of account policy                              | None                                                      | ZK-SNARKs + private account abstraction                                                                                                                                                                                                                                             |
-| Privacy of reads                                       | Run a full node yourself or you have none                 | Option 1: running a full node (easier because SNARKs remove computation reqs)
-
-Option 2: [TEE+ORAM](https://github.com/obliviouslabs/oram), [PIR](https://ethresear.ch/t/sharded-pir-design-for-the-ethereum-state/24552) and similar techniques                                    |
-| Network-layer privacy                                  | Assume most mempool nodes are honest and not tracking you | Onion routing, mixnets etc available                                                                                                                                                                                                                                                |
+<figure data-type="resizable-media" data-align="center">
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="753" viewBox="0 0 600 753" font-family="Helvetica, Arial, sans-serif" class="svg-scope-1qzhbm">
+<style>.svg-scope-1qzhbm text { font-size:10px; fill:#1a1a1a }
+.svg-scope-1qzhbm .cat { font-weight:bold }
+.svg-scope-1qzhbm .hdr { font-size:11px; font-weight:bold }
+.svg-scope-1qzhbm .dim { fill:#444 }
+.svg-scope-1qzhbm line { stroke:#999; stroke-width:1 }</style>
+<rect width="600" height="753" fill="#fff"/>
+<rect x="0" y="0" width="600" height="24" fill="#e8e8ee"/>
+<text x="10" y="16" class="hdr">Topic</text>
+<text x="100" y="16" class="hdr">2010 strategy</text>
+<text x="354" y="16" class="hdr">2030 strategy</text>
+<line x1="0" y1="0" x2="600" y2="0"/>
+<line x1="0" y1="24" x2="600" y2="24"/>
+<line x1="0" y1="98" x2="600" y2="98"/>
+<line x1="0" y1="172" x2="600" y2="172"/>
+<line x1="0" y1="220" x2="600" y2="220"/>
+<line x1="0" y1="310" x2="600" y2="310"/>
+<line x1="0" y1="397" x2="600" y2="397"/>
+<line x1="0" y1="484" x2="600" y2="484"/>
+<line x1="0" y1="532" x2="600" y2="532"/>
+<line x1="0" y1="580" x2="600" y2="580"/>
+<line x1="0" y1="628" x2="600" y2="628"/>
+<line x1="0" y1="705" x2="600" y2="705"/>
+<line x1="0" y1="753" x2="600" y2="753"/>
+<line x1="0" y1="0" x2="0" y2="753"/>
+<line x1="92" y1="0" x2="92" y2="753"/>
+<line x1="346" y1="0" x2="346" y2="753"/>
+<line x1="600" y1="0" x2="599" y2="753"/>
+<text x="10" y="39" class="cat">How do you</text>
+<text x="10" y="52" class="cat">know if a</text>
+<text x="10" y="65" class="cat">transaction was</text>
+<text x="10" y="78" class="cat">authorized?</text>
+<text x="100" y="39">Signature</text>
+<text x="354" y="39">Sometimes quantum-safe signature (or several),</text>
+<text x="354" y="52">sometimes zero-knowledge proof</text>
+<text x="10" y="113" class="cat">How do you</text>
+<text x="10" y="126" class="cat">identify the</text>
+<text x="10" y="139" class="cat">canonical</text>
+<text x="10" y="152" class="cat">chain?</text>
+<text x="100" y="113">PoW</text>
+<text x="354" y="113">PoS with few-slot finality and available chain</text>
+<text x="10" y="187" class="cat">How do you</text>
+<text x="10" y="200" class="cat">verify blocks?</text>
+<text x="100" y="187">Full re-download and recompute</text>
+<text x="354" y="187">SNARK verification + PeerDAS for data availability</text>
+<text x="10" y="235" class="cat">What does the</text>
+<text x="10" y="248" class="cat">transaction</text>
+<text x="10" y="261" class="cat">inclusion</text>
+<text x="10" y="274" class="cat">journey look</text>
+<text x="10" y="287" class="cat">like?</text>
+<text x="100" y="235">User → mempool → miner → block</text>
+<text x="354" y="235">User → mempool with strong privacy properties →</text>
+<text x="354" y="248">FOCILer or builder → block</text>
+<text x="354" y="277"/>
+<text x="362" y="290" class="dim">Signatures/proofs get stripped off early and</text>
+<text x="362" y="303" class="dim">aggregated by mempool nodes and then the builder</text>
+<text x="10" y="325" class="cat">What does the</text>
+<text x="10" y="338" class="cat">structure of</text>
+<text x="10" y="351" class="cat">computation</text>
+<text x="10" y="364" class="cat">look like?</text>
+<text x="100" y="325">Linear / serial</text>
+<text x="354" y="325">Parallel:</text>
+<text x="362" y="338" class="dim">Signatures/proofs parallel-processed inside the</text>
+<text x="362" y="351" class="dim">mempool</text>
+<text x="362" y="364" class="dim">Gas rules incentivize parallelization-friendly</text>
+<text x="362" y="377" class="dim">workflows</text>
+<text x="10" y="412" class="cat">How do</text>
+<text x="10" y="425" class="cat">client-side</text>
+<text x="10" y="438" class="cat">nodes save</text>
+<text x="10" y="451" class="cat">space</text>
+<text x="100" y="412">Prune old history</text>
+<text x="354" y="412">Store only a small fraction of history</text>
+<text x="354" y="425">Distributed history and state storage</text>
+<text x="354" y="438">Often don't need to store inner tree nodes</text>
+<text x="354" y="451">Store different objects in different formats (DB, flat</text>
+<text x="354" y="464">files…)</text>
+<text x="10" y="499" class="cat">What can light</text>
+<text x="10" y="512" class="cat">clients verify?</text>
+<text x="100" y="499">Consensus; need to trust honest majority for validity</text>
+<text x="354" y="499">Consensus and validity (both data availability and</text>
+<text x="354" y="512">compute)</text>
+<text x="10" y="547" class="cat">Privacy of</text>
+<text x="10" y="560" class="cat">writes</text>
+<text x="100" y="547">Assume UTXO graph cannot be effectively analyzed</text>
+<text x="354" y="547">ZK-SNARKs</text>
+<text x="10" y="595" class="cat">Privacy of</text>
+<text x="10" y="608" class="cat">account policy</text>
+<text x="100" y="595">None</text>
+<text x="354" y="595">ZK-SNARKs + private account abstraction</text>
+<text x="10" y="643" class="cat">Privacy of reads</text>
+<text x="100" y="643">Run a full node yourself or you have none</text>
+<text x="354" y="643">Option 1: running a full node (easier because</text>
+<text x="354" y="656">SNARKs remove computation reqs)</text>
+<text x="354" y="685"/>
+<text x="354" y="698">Option 2: TEE+ORAM, PIR and similar techniques</text>
+<text x="10" y="720" class="cat">Network-layer</text>
+<text x="10" y="733" class="cat">privacy</text>
+<text x="100" y="720">Assume most mempool nodes are honest and not</text>
+<text x="100" y="733">tracking you</text>
+<text x="354" y="720">Onion routing, mixnets etc available</text>
+</svg>
+</figure>
 
 Pretty much every core property of what it means to be a blockchain either has fundamentally changed or soon will fundamentally change:
 
@@ -73,36 +159,59 @@ Now, what does this mean for users?
 
 The most important conclusion is that the set of tradeoffs for users is radically changing:
 
-|                  | <span style="font-size: 32px">+</span>                                                                                                                                                                                              | <span style="font-size: 32px">\-</span>                                                                                                                                                                                                                                                                                                                           |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Ethereum in 2015 | \- 100% uptime
-
-\- Censorship resistance (aka. guaranteed transaction inclusion)
-
-\- Guaranteed execution according to the rules as programmed
-
-\- Irreversibility                                                                  | \- Very high cost
-
-\- Privacy
-
-\- Latency (~17s for a block, ~200s for 12 confirmations)
-
-\- Have to either run a big beefy node or trust someone                                                                                                                                                                                                                 |
-| Ethereum in 2030 | \- 100% uptime
-
-\- Strong censorship resistance: guaranteed *real-time* transaction inclusion (via FOCIL)
-
-\- Guaranteed execution according to the rules as programmed
-
-\- Irreversibility
-
-\- Often stronger privacy than servers | \- High cost of general-purpose computation (many forms of specialized computation have much lower overhead)
-
-\- Privacy of general-purpose computation (many special-purpose applications have very strong privacy)
-
-\- Some latency (~4-8s for a slot, ~8-32s for finality)
-
-\- Have to run a node to get optimal guarantees, but requirements are much lighter |
+<figure data-type="resizable-media" data-align="center">
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="391" viewBox="0 0 600 391" font-family="Helvetica, Arial, sans-serif" class="svg-scope-16p8nd0">
+<style>.svg-scope-16p8nd0 text { font-size:10px; fill:#1a1a1a }
+.svg-scope-16p8nd0 .hdr { font-size:11px; font-weight:bold }
+.svg-scope-16p8nd0 .seclab { font-weight:bold }
+.svg-scope-16p8nd0 line { stroke:#999; stroke-width:1 }</style>
+<rect width="600" height="391" fill="#fff"/>
+<rect x="0" y="24" width="600" height="188" fill="#eef8f0"/>
+<rect x="0" y="212" width="600" height="179" fill="#fdf0f0"/>
+<rect x="0" y="0" width="600" height="24" fill="#e8e8ee"/>
+<text x="34" y="16" class="hdr">Ethereum in 2015</text>
+<text x="321" y="16" class="hdr">Ethereum in 2030</text>
+<line x1="0" y1="0" x2="600" y2="0"/>
+<line x1="0" y1="24" x2="600" y2="24"/>
+<line x1="26" y1="59" x2="600" y2="59"/>
+<line x1="26" y1="107" x2="600" y2="107"/>
+<line x1="26" y1="142" x2="600" y2="142"/>
+<line x1="26" y1="177" x2="600" y2="177"/>
+<line x1="0" y1="212" x2="600" y2="212"/>
+<line x1="26" y1="260" x2="600" y2="260"/>
+<line x1="26" y1="308" x2="600" y2="308"/>
+<line x1="26" y1="343" x2="600" y2="343"/>
+<line x1="0" y1="391" x2="600" y2="391"/>
+<line x1="0" y1="0" x2="0" y2="391"/>
+<line x1="26" y1="0" x2="26" y2="391"/>
+<line x1="313" y1="0" x2="313" y2="391"/>
+<line x1="600" y1="0" x2="599" y2="391"/>
+<text x="13.0" y="125.0" text-anchor="middle" class="seclab" font-size="18" fill="#1a7f37">+</text>
+<text x="13.0" y="308.5" text-anchor="middle" class="seclab" font-size="18" fill="#b91c1c">−</text>
+<text x="34" y="39">100% uptime</text>
+<text x="321" y="39">100% uptime</text>
+<text x="34" y="74">Censorship resistance (aka. guaranteed transaction</text>
+<text x="34" y="87">inclusion)</text>
+<text x="321" y="74">Strong censorship resistance: guaranteed real-time</text>
+<text x="321" y="87">transaction inclusion (via FOCIL)</text>
+<text x="34" y="122">Guaranteed execution according to the rules as programmed</text>
+<text x="321" y="122">Guaranteed execution according to the rules as programmed</text>
+<text x="34" y="157">Irreversibility</text>
+<text x="321" y="157">Irreversibility</text>
+<text x="321" y="192">Often stronger privacy than servers</text>
+<text x="34" y="227">Very high cost</text>
+<text x="321" y="227">High cost of general-purpose computation (many forms of</text>
+<text x="321" y="240">specialized computation have much lower overhead)</text>
+<text x="34" y="275">Privacy</text>
+<text x="321" y="275">Privacy of general-purpose computation (many</text>
+<text x="321" y="288">special-purpose applications have very strong privacy)</text>
+<text x="34" y="323">Latency (~17s for a block, ~200s for 12 confirmations)</text>
+<text x="321" y="323">Some latency (~4-8s for a slot, ~8-32s for finality)</text>
+<text x="34" y="358">Have to either run a big beefy node or trust someone</text>
+<text x="321" y="358">Have to run a node to get optimal guarantees, but</text>
+<text x="321" y="371">requirements are much lighter</text>
+</svg>
+</figure>
 
 When building applications, **structure of computation** is starting to matter a lot. In a simple blockchain, 1 byte = 1 byte and 1 gas = 1 gas. In the architectures of the future, the same amount of computation will cost you much more if you shove it all into one inscrutable serially-executed transaction, and much less if you put it into well-encapsulated dependencies that can be parallelized or pruned, ideally before the transaction even enters the final block. This affects the incentives of developers, and will over time affect the structure of all applications using Ethereum: **perhaps in the long run, we will converge toward programming patterns where information directly related to describing non-commutative state changes and ordering is posted onchain, and everything else is aggregated before it even gets included into a block**.
 
