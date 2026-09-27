@@ -2,8 +2,6 @@
 [date]: <> (2026/09/27)
 [category]: <> (general, blockchains, cryptography)
 
-# The cryptographic world computer
-
 We talk about Ethereum as “a blockchain”, as though it is fundamentally the same technology as the Bitcoin that Satoshi Nakomoto created back in 2009. In many ways it is, and in some ways even the “lean Ethereum” of the future that is [being built](https://leanroadmap.org/) along the lines of the [Strawmap](https://strawmap.org/) retains the core trappings of a blockchain. But at the same time, the technology has evolved greatly over the last fifteen years, and is poised to evolve even more over the next three - to the point where it becomes fair to call the thing that Ethereum is moving towards a qualitatively different kind of system.
 
 The Ethereum of today has general-purpose computation, proof of stake, onchain applications using zero-knowledge proofs and L2s that provide scaling and privacy. The Ethereum of tomorrow will have computation with a tunable dial between extreme scale and full generality, multiple forms of multi-participant block construction, a highly optimized form of proof of stake, and zero-knowledge proofs baked in playing key roles at the base layer.
@@ -34,37 +32,37 @@ To start off, let’s go through the original Bitcoin whitepaper, section by sec
 
 There are large changes to basically every section. To make things more compact, let’s make it a table:
 
-| Problem                                                | 2010 strategy                                             | 2030 strategy                                                                                                                                                                                                                                                                       |
-| ------------------------------------------------------ | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| How do you know if a transaction was authorized?       | Signature                                                 | Sometimes quantum-safe signature (or several), sometimes zero-knowledge proof                                                                                                                                                                                                       |
-| How do you identify the canonical chain?               | PoW                                                       | PoS with [few-slot finality and available chain](https://consensus.ethereum.foundation/blog/upgrading-finality-edition-1)                                                                                                                                                           |
-| How do you verify blocks?                              | Full re-download and recompute                            | [SNARK verification](https://ethereum.org/roadmap/zkevm/) + [PeerDAS](https://ethereum.org/roadmap/fusaka/peerdas/) for data availability                                                                                                                                           |
+| Problem                                                | 2010 strategy                                             | 2030 strategy                                                                                                                                                                                                                                                                           |
+| ------------------------------------------------------ | --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| How do you know if a transaction was authorized?       | Signature                                                 | Sometimes quantum-safe signature (or several), sometimes zero-knowledge proof                                                                                                                                                                                                           |
+| How do you identify the canonical chain?               | PoW                                                       | PoS with [few-slot finality and available chain](https://consensus.ethereum.foundation/blog/upgrading-finality-edition-1)                                                                                                                                                               |
+| How do you verify blocks?                              | Full re-download and recompute                            | [SNARK verification](https://ethereum.org/roadmap/zkevm/) + [PeerDAS](https://ethereum.org/roadmap/fusaka/peerdas/) for data availability                                                                                                                                               |
 | What does the transaction inclusion journey look like? | User
 
-→ mempool
+—> mempool
 
-→ miner
+—> miner
 
-→ block                         | User
+—> block                      | User
 
-→ mempool with strong privacy properties
+—> mempool with strong privacy properties
 
-→ [FOCILer](https://eips.ethereum.org/EIPS/eip-7805) or builder
+—> [FOCILer](https://eips.ethereum.org/EIPS/eip-7805) or builder
 
-→ builder
+—> builder
 
-→ block
+—> block
 
 Also, signatures/proofs get [stripped off early and aggregated by mempool nodes and then the builder](https://eips.ethereum.org/EIPS/eip-8288) |
-| What does the structure of computation look like?      | Linear / serial                                           | <ul><li>Signatures/proofs parallel-processed inside the mempool</li><li>Gas rules incentivize parallelization-friendly workflows</li></ul>                                                                                                                                          |
-| How do client-side nodes save space                    | Prune old history                                         | <ul><li>Store only a small fraction of history</li><li>Distributed history and state storage</li><li>Often don’t need to store inner tree nodes</li><li>Store different objects in different formats (DB, flat files…)</li></ul>                                                    |
-| What can light clients verify?                         | Consensus; need to trust honest majority for validity     | Consensus and validity (both data availability and compute)                                                                                                                                                                                                                         |
-| Privacy of writes                                      | Assume UTXO graph cannot be effectively analyzed          | ZK-SNARKs                                                                                                                                                                                                                                                                           |
-| Privacy of account policy                              | None                                                      | ZK-SNARKs + private account abstraction                                                                                                                                                                                                                                             |
+| What does the structure of computation look like?      | Linear / serial                                           | <ul><li>Signatures/proofs parallel-processed inside the mempool</li><li>Gas rules incentivize parallelization-friendly workflows</li></ul>                                                                                                                                              |
+| How do client-side nodes save space                    | Prune old history                                         | <ul><li>Store only a small fraction of history</li><li>Distributed history and state storage</li><li>Often don’t need to store inner tree nodes</li><li>Store different objects in different formats (DB, flat files…)</li></ul>                                                        |
+| What can light clients verify?                         | Consensus; need to trust honest majority for validity     | Consensus and validity (both data availability and compute)                                                                                                                                                                                                                             |
+| Privacy of writes                                      | Assume UTXO graph cannot be effectively analyzed          | ZK-SNARKs                                                                                                                                                                                                                                                                               |
+| Privacy of account policy                              | None                                                      | ZK-SNARKs + private account abstraction                                                                                                                                                                                                                                                 |
 | Privacy of reads                                       | Run a full node yourself or you have none                 | Option 1: running a full node (easier because SNARKs remove computation reqs)
 
-Option 2: [TEE+ORAM](https://github.com/obliviouslabs/oram), [PIR](https://ethresear.ch/t/sharded-pir-design-for-the-ethereum-state/24552) and similar techniques                                    |
-| Network-layer privacy                                  | Assume most mempool nodes are honest and not tracking you | Onion routing, mixnets etc available                                                                                                                                                                                                                                                |
+Option 2: [TEE+ORAM](https://github.com/obliviouslabs/oram), [PIR](https://ethresear.ch/t/sharded-pir-design-for-the-ethereum-state/24552) and similar techniques                                        |
+| Network-layer privacy                                  | Assume most mempool nodes are honest and not tracking you | Onion routing, mixnets etc available                                                                                                                                                                                                                                                    |
 
 Pretty much every core property of what it means to be a blockchain either has fundamentally changed or soon will fundamentally change:
 
