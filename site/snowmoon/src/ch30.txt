@@ -1,0 +1,287 @@
+<chapter_nav prev="chapter-29.html" next="chapter-31.html" />
+
+# Chapter 30
+
+<chapter_open place="Elenar Forest, Veridia" date="3725 Snowmoon 30" />
+
+Zei watched the screen carefully, checking for any signs that the Arctic drone fleet might be breaking through. Forty minutes ago, he had given the recommendation that all groups do a slow retreat, cutting down trees to slow down snow drones and laying traps, with the primary goal of dragging out the battle longer. Lektor had taken his advice, and had relayed that he expected the strategy to work well at least until sunrise. So far, he had been right.
+
+Zei's watch buzzed. It was Deluin.
+
+<wide_device_view align="left">
+
+I understand your concern and I fully agree that you do currently not have good reason to trust me.
+
+Unfortunately, I do not have a way to give you the raw weights of the language models on the drones. Those are well-protected and only a very small number of people have access to them, precisely because they are worried about an adversary using those weights to run gradient descent attacks.
+
+But I can give you the next best thing: API access to their simulated environment. This includes simulated copies of Arctic drones, both full world-model simulations and partial simulations that focus on their input modalities and give you classification results - given a particular visual input stream, what kind of object they think they are looking at.
+
+Here are the network addresses and access keys, as well as addresses and keys for Arctic endpoints in Redshire that you can proxy through. Remember to be safe and minimize risk of detection.
+
+Network:
+
+<span style="font-family:monospace; font-size: 75%">13178080a5bf1c815dfb1300c6039af76c7b8f14e47581d3549e8990012e1d5f: 35a504923a4d8dde09e0ed814ec05ae81be8e91c2bcb249b22ad13af0bcf7b4d</span>
+
+<span style="font-family:monospace; font-size: 75%">e680176e029dcfd96b27e328149f8db4ab368a87762568799bf8a56b95f968c5: 519cce3e5e0ee46fbaf2735a53429d6cb1829485e2886962dde9606cab13f0a2</span>
+
+<span style="font-family:monospace; font-size: 75%">04569c9a285f10e1a3670985a1fa0696530feae84eae853209d1f0345a214933: 8d174efbc3857326999a58e4d4eea9c7fbc61fd56dd233707321d9d5c0bfb9ce</span>
+
+<span style="font-family:monospace; font-size: 75%">fed7dd2e3ee0f2c9a1ed4b61dd21ae165780497b39ae4ae5b06b1b8b0b15a034: a9bf7a809e4e998946e59e377e7e96cd9f22dd4db9a87080b669de3e74a03d83</span>
+
+<br><br>
+
+Proxies:
+
+<span style="font-family:monospace; font-size: 75%">4446e4f5350e5d76fe0b5254f50f3923fc2f480d1d9df33da1dc58d532e49e86: 9b0dadf8d9418283416f70d60afd909c7346e63cbf7c815b110926eeb943afff</span>
+
+<span style="font-family:monospace; font-size: 75%">27770fdc6c08da318e64f0f16d1d0e300958e4eefe1b55de1a48a9c6a7872ecf: 884c9a310b61edf0e73d2d9e9352ac9f21b8c354aa90203468a76f1a2383ff08</span>
+
+<span style="font-family:monospace; font-size: 75%">dfb1c543a259ade8d53344893807d47c0bebd02ed04cde46e31335d2e71f7ac3: b2eb4a17a06c68ab7bf149bb031702ff3514d5571d83c9a2c652dbdaa50768a9</span>
+
+<span style="font-family:monospace; font-size: 75%">0ca84c8548d95f6edcd3b6fd1b695d743aff2904cec00fd411bd9d36566e4048: af0dd33ec09e8e8331ff34bf9d15432d8f91ec4870720d8fdc2bdffe29f871d5</span>
+
+</wide_device_view>
+
+Zei immediately forwarded the note to Bai. He also sent a copy to Fin, and sent Emerald an instruction to send Fin a maximum-priority emergency alarm and an explanation of what was going on.
+
+Fin responded almost immediately.
+
+![Fin: "Alright Zei, what do you need?"]
+
+![Fin: "Reading..."]
+
+![Fin: "Yeah this seems doable. It's a not very well known fact that you don't actually need the raw weights of a model to effectively train adversarial attacks. There's definitely Bansunpei people who are very good at this stuff - 'language models' are quite connected to language!"]
+
+Zei also forwarded the note to Mu. Emerald automatically formed a real-time chat group. After a minute, about ten people were sharing insights about the problem and beginning to attack it in parallel.
+
+![Cia: "Let's assume that our attack medium is that we have our snow drones, and we have stick-on paper that we can print things on. We'll assume we deploy this after sunrise. Here's what you do: start with one pattern, run it inside the simulator, have our drone slowly approach the target and see how long it takes for the target to detect it. Measure detection time so that we have a scalar signal of how well we're hiding, not just a binary."]
+
+![Cia: "Continue making small modifications to the pattern in all kinds of directions. Keep each modification that increases the target's detection time. It doesn't matter if the process has a lot of noise, the signal accumulates and the noise averages out over time. It's not as fast as gradient descent, but it still works. Eventually you get to a pattern that reliably tricks the adversary."]
+
+![Lui: "We can do better. We have our own models that were trained in similar ways to the Arctic ones, and we obviously have the raw weights to those. So we can use gradient descent against our model. Identify, say, ten optimal perpendicular directions that maximize time-to-detection according to our model inside our simulator, and then use those as the trial deviations we try against their model inside their simulator. Simultaneously, we also use the results of every query to fine-tune our model to make it a better predictor of how the Arctic model will behave on these attacks."]
+
+![Zei: "How quickly can we get this working?"], Zei interjected.
+
+![Cia: "Coding should take at most ten minutes, Emerald can do it quickly. The full training loop ... maybe a longhour?"]
+
+![Zei: "So it will be done around sunrise?"]
+
+![Cia: "Exactly. And then you will need I don't know how many minutes to actually print the attack patterns on the sides of the drones, you should prepare that pipeline on your side so it's ready to go as soon as we are."]
+
+![Zei: "Alright, everyone. Let's get moving."]
+
+Zei sat back, and kept scanning through zoomed-in views of the battle map and visual feeds. About a third of the Veridian drone fleet was already lost, but casualty rates had decreased considerably. The slow retreat strategy was working well: it also meant that any Veridian drones that had motion disabled by combat damage but had their weapons still intact could go into low-power mode and then wake up and do a final burst of damage as soon as the Arctics themselves advanced to their position.
+
+After about fifteen minutes, Zei's watch buzzed again. Emerald was telling him to rejoin the chat.
+
+![Cia: "We have some early good news"], a Bansunpei researcher exclaimed.
+
+![Zei: "What is it?"]
+
+![Cia: "We've successfully accessed the Arctic simulation platform, and we've run the first few hundred trial rounds against the simulator. We have patterns that are increasing detection time by about five percent."]
+
+![Zei: "Only five percent?"]
+
+![Cia: "That just means the pipeline is starting to work."]
+
+![Cia: "Oh, it just went up to eleven percent."]
+
+![Lui: "It's definitely working"], another researcher interjected. ![Lui: "We're continuing to run Emerald in parallel, optimizing the software. It's finding ways to extract more information from each query, and better parallelize the queries so this all happens faster."]
+
+Zei's watch buzzed.
+
+<wide_device_view align="left">
+
+I can see you are starting to run queries! Though you want to be more careful - if I can see it, the sentries might be able to as well. Here are some more proxy endpoints.
+
+<span style="font-family:monospace; font-size: 75%">c8baa6614d9fba874af5cb90ba7c3d1a53aabaa8facd1e4f5fe46bdeb229a106: 3fa5fbd0bc8aa8af8a4842b099dad4e700b5d54edcd4a21c9e272552318d4a55</span>
+
+<span style="font-family:monospace; font-size: 75%">8d01f119fbdb499f24a298c59c1b83a7f591df97f3b7a9823e313b1bff3872ca: 1a5529862c273fefb898acccdfa0bec29d594904b427eaee88b7b1df393fdb0b</span>
+
+<span style="font-family:monospace; font-size: 75%">44ee73e0355611ad0d975bda2eec43c21e490cb42c61f71bc03b3b4bd7718ad1: bf53236e5d72d2142348d5529275908f995b77791f07a5c818eca0cfc400c1ac</span>
+
+<span style="font-family:monospace; font-size: 75%">ab7a609ce6f71f55571184cb5d32996a3b5ddd08230ae788f7f65355d5385abe: 254804b48ae25417535e6336735d0b66bdd7d20afe77ac687e933d8bd5c24d24</span>
+
+<span style="font-family:monospace; font-size: 75%">95d40f8a44c6c3f4d32d2a4c7c533f9dd71c5d9ac1020361e9e7f4552967a778: 12b152f44f00a1f542f4ac6fbb3aced5144c8a98d813a34dce1cb5abc18c3314</span>
+
+<span style="font-family:monospace; font-size: 75%">508a323cda2f87b053986f17d0c073a51c9a001b9b9152a393fe06ff4a30072b: eff66952719415cc534e8f1feb06aa044fa468a81c911a14b95f9be93371e528</span>
+
+<br><br>
+
+Also, add a bunch of dummy queries that are doing other things, and maybe even make each query attempt multiple different attacks simultaneously so it's less clear what it's doing.
+
+</wide_device_view>
+
+Good advice, Zei thought. He forwarded it.
+
+To verify the effectiveness of the simulator, they also ran simulations in a nighttime environment that exactly replicated a real-world setting of a small battle that had taken place earlier in the night. Another team, two researchers and Emerald instances, began figuring out how to automatically analyze the discrepancies between the simulator and reality in the nighttime setting to learn how to construct queries to the simulator that would better match real-world situations.
+
+Zei watched the attack patterns become more and more optimized, sheets of paper containing squiggles and messages that seemed simultaneously very recognizable and familiar but also completely alien. Inside the simulator, the time that it took for the Arctic drone AI to detect their incoming drones more than doubled.
+
+After another thirty minutes, it doubled again.
+
+Lektor gave the order to set up printing infrastructure about two kilometers behind their current positions - a place they would be able to safely organize a retreat to around sunrise.
+
+Human Veridian soldiers were already tens of kilometers behind the robotic frontline, and Lektor ordered them to start moving toward the front, so that they would be available to paste the attack patterns onto the snow drones. Manual dexterity was still a major weakness of AI.
+
+Slowly, the sky began to shift from a near-total pitch black to a dark blue that was especially visible in the far east. As the minutes passed, the blue became brighter.
+
+![Cia: "Alright, we have some good patterns. It's getting close to sunrise in Northshore. I recommend shipping them now."]
+
+![Zei: "Agreed"], Zei replied.
+
+![Mu: "Then let's do it"], Mu added.
+
+---
+
+Zei flipped through the visual feeds in his display. The majority of their drone fleet had retreated a kilometer, and a large number of pieces of paper were being printed and then almost immediately getting distributed and then stuck onto all sides of each snow drone and sky drone. The plan was in motion.
+
+![Gallowar: "Group North reporting: all non-forward drones have been equipped."]
+
+![Telpo: "Group Center reporting: all non-forward drones have been equipped."]
+
+![Mu: "Group South reporting: all non-forward drones have been equipped."]
+
+![Vakaria: "Group Naval reporting: we commandeered equipment in villages on the outskirts of Northglade, the locals were amazing, many woke up in the middle of the night to help us. Most non-forward drones have been equipped."]
+
+![Lektor: "Alright then"], Lektor spoke up softly but firmly. ![Lektor: "Action."]
+
+Zei checked the visual feeds, curious what the final version of the attack patterns actually looked like. He saw an endless row of snow drones with large pieces of paper plastered on all sides, each paper containing many colorful and squiggly patterns - and in a giant font, the word "**DOG**".
+
+A few minutes later, he could see the results. The Veridian snow drones advanced quickly, pushing through enemy lines and turning the front into a chaotic mixture of drones on both sides. Casualty ratios were more than ten to one in the Veridian drone fleet's favor.
+
+<wide_device_view>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+<rect width="240" height="240" fill="#348"/>
+<path d="M136.8 0.5 L107.8 32.6 L104.3 52.4 L95.1 84.6 L93.9 95.9 L76.5 119.5 L74.2 126.1 L77.1 128.5 L81.7 123.8 L88.1 125.2 L138.0 53.4 L183.8 18.9 L191.9 15.1 L219.7 12.3 L228.4 21.3 L218.6 38.7 L196.5 40.6 L187.8 46.8 L186.7 51.5 L191.9 55.7 L210.4 64.3 L215.1 64.3 L222.0 61.4 L222.6 66.6 L219.1 78.0 L239.4 93.5 L240.0 0.5 L137.4 0.0 Z" fill="#89c"/>
+<path d="M238.8 131.8 L227.2 139.9 L220.1 149.3 L208.6 157.8 L194.7 165.4 L134.5 211.2 L129.9 239.5 L239.4 240.0 L239.4 131.3 Z" fill="#89c"/>
+
+<circle cx="65" cy="170" r="1.6" fill="#cef"/>
+<circle cx="55" cy="170" r="1.6" fill="#cef"/>
+<circle cx="75" cy="135" r="1.6" fill="#cef"/>
+<circle cx="72" cy="145" r="1.6" fill="#cef"/>
+<circle cx="69" cy="155" r="1.6" fill="#cef"/>
+<circle cx="120" cy="140" r="1.6" fill="#cef"/>
+<circle cx="120" cy="150" r="1.6" fill="#cef"/>
+<circle cx="128" cy="150" r="1.6" fill="#cef"/>
+<circle cx="129" cy="158" r="1.6" fill="#cef"/>
+<circle cx="136" cy="167" r="1.6" fill="#cef"/>
+<circle cx="150" cy="166" r="1.6" fill="#cef"/>
+<circle cx="149" cy="176" r="1.6" fill="#cef"/>
+<circle cx="158" cy="186" r="1.6" fill="#cef"/>
+<circle cx="158" cy="179" r="1.6" fill="#cef"/>
+<circle cx="200" cy="140" r="1.6" fill="#cef"/>
+<circle cx="220" cy="140" r="1.6" fill="#cef"/>
+<circle cx="196.6" cy="162.6" r="3.4" fill="#cef"/>
+<text x="185" y="153" font-family="sans-serif" font-size="10" fill="#cef" stroke="#348" stroke-width="2.5" paint-order="stroke" text-anchor="middle">Northglade</text>
+<circle cx="60" cy="170" r="1.6" fill="#f00"/>
+<circle cx="68" cy="140" r="1.6" fill="#f00"/>
+<circle cx="65" cy="150" r="1.6" fill="#f00"/>
+<circle cx="123" cy="144" r="2.0" fill="#f00"/>
+<circle cx="125" cy="158" r="2.0" fill="#f00"/>
+<circle cx="135" cy="160" r="2.0" fill="#f00"/>
+<circle cx="145" cy="167" r="2.0" fill="#f00"/>
+<circle cx="153" cy="173" r="2.0" fill="#f00"/>
+<circle cx="161" cy="176" r="2.0" fill="#f00"/>
+<circle cx="160" cy="185" r="2.0" fill="#f00"/>
+<circle cx="195" cy="135" r="2.0" fill="#f00"/>
+<circle cx="215" cy="140" r="2.0" fill="#f00"/>
+
+</wide_device_view>
+
+Zei allowed himself to feel a moment of joy - the first genuine joy that he had felt the whole night.
+
+He remembered Den's words to him the day that he had almost caused the failure of the mission to rescue the Redshire president's son. ![Den: "Outside the box as in, jumping out of your console chair and running over and bashing the other player in the face."]
+
+Breaking into your opponent's simulation environment, running millions of queries to optimize squiggles that you could draw on a piece of paper, and tricking your opponent's drones into thinking that your drones are dogs - did that count?
+
+It probably did, Zei decided. Den would be proud.
+
+As soon as he felt he had celebrated enough, Zei turned to a visual view of the statistic that really mattered: the casualty ratios. They had already dropped to six to one. So far the Arctic army had not yet adapted, but they had adopted emergency defensive positions, each squad of drones circling into a formation, to buy time. And they would adapt soon, Zei knew.
+
+The chat that contained Bansunpei and Kungaupei members making queries to the Arctic simulation environment switched to optimizing simpler attacks: motion patterns that maximally delayed detection and interfered with targeting, sounds that could trick them, as well as the accuracy of their own fire - all mechanisms that did not require printing and sticking on new pieces of paper. They also incorporated some of the aggressive micro-tactics that Deluin had sent along with his original message.
+
+Casualty ratios briefly increased back in the Veridians' favor, and then started decreasing again, though slowly. Zei continued watching.
+
+After fifteen minutes, all access to the simulation environment was suddenly cut off. At around the same time, casualty ratios suddenly dropped back down to only one and a half to one in the Veridians' favor.
+
+They had destroyed a large part of the Arctic drone fleet, but a large part still remained. They were now in a complicated positional battle, with a chaotic mixture of both sides' drone squads littering the battlefield with no clear front line.
+
+Veridian human soldiers were only hundreds of meters behind the frontline, finding snow drones that were quickly repairable and repairing them. They were wearing thermal cloaks to minimize the chance of detection, and smoke from nearby burning trees provided additional cover. In a few of the visual feeds, Zei could see images of Arctic human soldiers doing the same thing in the distance, but they were fear fewer in number: while Veridians had been retreating through the night, they had been laying traps along the way, and those traps were much more effective against humans than against drones.
+
+A few minutes later, Zei's watch buzzed again.
+
+<wide_device_view align="left">
+
+I hope you trust me now.
+
+My next message will contain exact coordinates of some of our units on the southern flank, and recommended weak points to attack through.
+
+jie fe hen dzi.
+
+</wide_device_view>
+
+Zei smiled.
+
+Of course I trust you, Deluin, he thought.
+
+Almost immediately, Zei's watch buzzed again. He had received the second message.
+
+He forwarded the coordinates to Mu.
+
+![Zei: "It's your chance to shine, Mu."]
+
+![Mu: "Don't forget Vakaria."]
+
+Within minutes, casualty ratios on the southern front began to diverge heavily from the fronts further north, going back up in the Veridians' favor.
+
+And only a few minutes later, they seemed to have achieved the result that they needed.
+
+<wide_device_view>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+<rect width="240" height="240" fill="#348"/>
+<path d="M136.8 0.5 L107.8 32.6 L104.3 52.4 L95.1 84.6 L93.9 95.9 L76.5 119.5 L74.2 126.1 L77.1 128.5 L81.7 123.8 L88.1 125.2 L138.0 53.4 L183.8 18.9 L191.9 15.1 L219.7 12.3 L228.4 21.3 L218.6 38.7 L196.5 40.6 L187.8 46.8 L186.7 51.5 L191.9 55.7 L210.4 64.3 L215.1 64.3 L222.0 61.4 L222.6 66.6 L219.1 78.0 L239.4 93.5 L240.0 0.5 L137.4 0.0 Z" fill="#89c"/>
+<path d="M238.8 131.8 L227.2 139.9 L220.1 149.3 L208.6 157.8 L194.7 165.4 L134.5 211.2 L129.9 239.5 L239.4 240.0 L239.4 131.3 Z" fill="#89c"/>
+
+<circle cx="65" cy="160" r="1.6" fill="#cef"/>
+<circle cx="55" cy="160" r="1.6" fill="#cef"/>
+<circle cx="75" cy="135" r="1.6" fill="#cef"/>
+<circle cx="72" cy="145" r="1.6" fill="#cef"/>
+<circle cx="69" cy="155" r="1.6" fill="#cef"/>
+<circle cx="120" cy="140" r="1.6" fill="#cef"/>
+<circle cx="120" cy="150" r="1.6" fill="#cef"/>
+<circle cx="128" cy="150" r="1.6" fill="#cef"/>
+<circle cx="129" cy="158" r="1.6" fill="#cef"/>
+<circle cx="136" cy="167" r="1.6" fill="#cef"/>
+<circle cx="150" cy="166" r="1.6" fill="#cef"/>
+<circle cx="145" cy="172" r="1.6" fill="#cef"/>
+<circle cx="158" cy="161" r="1.6" fill="#cef"/>
+<circle cx="168" cy="169" r="1.6" fill="#cef"/>
+<circle cx="195" cy="140" r="1.6" fill="#cef"/>
+<circle cx="205" cy="140" r="1.6" fill="#cef"/>
+<circle cx="196.6" cy="162.6" r="3.4" fill="#cef"/>
+<text x="185" y="153" font-family="sans-serif" font-size="10" fill="#cef" stroke="#348" stroke-width="2.5" paint-order="stroke" text-anchor="middle">Northglade</text>
+<circle cx="65" cy="150" r="1.6" fill="#f00"/>
+<circle cx="123" cy="144" r="2.0" fill="#f00"/>
+<circle cx="135" cy="160" r="2.0" fill="#f00"/>
+<circle cx="145" cy="167" r="2.0" fill="#f00"/>
+<circle cx="175" cy="169" r="1.2" fill="#f00"/>
+<circle cx="195" cy="144" r="1.2" fill="#f00"/>
+
+</wide_device_view>
+
+Mu transferred control of the southernmost portion of her drone fleet to Vakaria, who was assigned the task of entering and regaining control of Northglade.
+
+The rest of her drone fleet swept northward. Over the next longhour she managed to completely surround the remaining Arctic drone fleet, linking up with Telpo's northernmost flank almost exactly a longhour after sunrise.
+
+Gallowar's Group North defeated the remaining Arctic drones to its north and reached the river that marked the delineation between Veridian and core Arctic territory. A few drones crossed the river and bolted toward nearby Arctic towns, causing the Arctics to send emergency reinforcements. A portion of Telpo's fleet headed north to join Gallowar, reinforcing the northern front.
+
+In the meantime, the second trip of seaborne drones went directly to Thaldur - the island east of Northshore that was core Arctic territory - and landed a fleet of air and snow drones that consolidated control over the island over the next few longhours. The Arctics could not effectively react, as Thaldur was too far away for either side to reach quickly, and the few drones that were in range were stuck defending against Gallowar.
+
+By late afternoon on that day, the fighting grew quieter, as the last remnants of Arctic soldiers and drones in Northshore and Thaldur were methodically hunted down.
+
+Zei sat back in his chair, and set it to incline backward as far it could. For the first time in over fourteen longhours, he went to sleep.
+
+<chapter_nav prev="chapter-29.html" next="chapter-31.html" />

@@ -1,0 +1,423 @@
+<chapter_nav prev="chapter-13.html" next="chapter-15.html" />
+
+# Chapter 14
+
+<chapter_open place="Sadzu Du, Dzego" date="3724 Firemoon 10" />
+
+Zei's alarm buzzed.
+
+He slowly stood up. He tapped a few buttons on the room service menu, and ordered a fruit and vegetable juice.
+
+He put on his clothes.
+
+Three minutes later, the juice arrived. Zei quickly drank it, and without wasting time he opened the door and went downstairs.
+
+When he was in the lobby, he could see someone in the lobby restaurant waving at him.
+
+He turned to look. It was Bai.
+
+Zei walked over, and sat down beside Bai.
+
+![Bai: "jie mo kai tu jie hei ja ma?"], she asked, in a cute voice that was unambiguously making fun of the restaurant robots.
+
+![Zei: "I already had my juice, I'm fine"], Zei replied.
+
+![Zei: "How have you been?"]
+
+![Bai: "You're not going to ask me what I've learned about the other players' strategies? You're going into the semi-final today"], Bai replied.
+
+![Zei: "Well what have you learned about the other players' strategies?"]
+
+Then, he quickly added:
+
+![Zei: "You haven't been doing anything _illicit_ to get your information, have you?"]
+
+![Bai: "Don't worry, I'm not some kind of Arctic spy or anything like that. I've just been watching all the games, I made friends with some of the other players, and they let me participate in some of their practice sessions."]
+
+Zei rolled his eyes slightly, and then sighed with relief.
+
+![Bai: "Basic social skills. I needed to learn them to survive growing up."]
+
+![Zei: "Thank you Bai, I appreciate you."]
+
+He paused for a few moments.
+
+![Zei: "So what kind of advice do you have?"]
+
+![Bai: "If there was one pattern that came up again and again"], Bai replied, ![Bai: "it would be this. All the other players - _definitely_ Gun, but really all the others too, are way too impatient. They don't just want to win, they want to win quickly."]
+
+![Bai: "I know the scoring system of the qualifying rounds incentivizes this, but ... it carried over even past the eight thousand turn threshold, and even in the practice game that I saw between Gun and Deluin. They're not being strategic, they're being fast for the sake of being fast."]
+
+![Bai: "So please don't rush things if you don't have to, okay Zei?"]
+
+Zei nodded.
+
+![Zei: "Thanks for the advice."]
+
+The robot arrived, carrying Bai's vegetable and rice dish, and a tea. Zei ordered a tea for himself, and drank while watching Bai eat and drink.
+
+Ten minutes later, Zei's watch buzzed. The car that would take him to the semi-finals had arrived.
+
+---
+
+![Announcer: "Welcome to the semi-finals"], the announcer voice shouted.
+
+![Announcer: "We have come far to get to where we are. We have had forty days of some of the most challenging matches we have seen. The top four players in the qualifiers were: Deluin from Redshire, who won six of six games, Zei Leimin from Pafogai Du who won five of six with an average win time of 5,047 turns, Gun Caibai from Dzundei who won five of six with an average win time of 5,699 turns, and Kau Seiza from Geijaken who won five of six with an average win time of 6,740 turns."]
+
+![Announcer: "Today, in this very special round, we will see Zei Leimin and Gun Caibai face off. And right after this, the other two players will have their own semi-final match. And in fifteen days, the two winners will face off in an epic best-two-out-of-three, and we will have our national champion!"]
+
+![Announcer: "And of course, today's rule change. The resources you can allocate in each intervention turn are reduced by eighty percent. But in addition, there will be five shrines, four arranged along the center of each edge of the board, and one in the center. Each thousand turns, any changes that had taken place to the contents of the shrine will be applied as an XOR to the regions near the four corners of the shrine, and the shrine will reset to being a default rock formation."]
+
+![Loud_voice: "FI LE GEI TAU FA."]
+
+Zei immediately understood the meaning of the new rules. The shrines are the only objects that violate mass conservation - though even still, with these new rules, nothing decreases entropy. XOR is not weight-preserving, but it is reversible. So the game board would get more and more full, and more and more messy, over time. The reduced resource allocation meant that the intervention turns were not for building - they were for _steering_.
+
+Zei put down his usual walls, gliders and spaceships. This time though, he used some different designs - a steerable symbol-carrying spaceship he had developed months prior, that could change its direction if you intervene in only a few cells.
+
+![Loud_voice: "MU GU GEI TAU FA."]
+
+Zei figured out one additional adjustment: he adjusted the positioning of his spaceships so that they could be located right past the shrines after exactly two intervention turns. This would let him send out a glider in exactly the right direction that it would turn a pair of shrines into an eternal glider factory: a glider would bounce back and forth, at each collision it would break off rock to spray even more gliders further north, and then every thousand turns, the rock would reset.
+
+![Loud_voice: "PA GU..."]
+
+Zei put all of his effort into glider storms that would protect his spaceships as they went to the center, east and south; he decided to sacrifice the west.
+
+![Loud_voice: "SO ... BI ... ZE ... HA ... MU ... FO ... SHI ... LE ... PA ..."]
+
+Until the last moment, Zei kept optimizing his structures.
+
+![Loud_voice: "TAU FA."]
+
+The spaceships and gliders started moving.
+
+A thousand turns later, the first intervention turn came. Zei shot off a few gliders to turn more rock formations into symbols and glider factories.
+
+He realized that he had one major weakness: while he could make symbols, it would take him four intervention turns to make a symbol-carrying spaceship or glider factory. That meant that his three symbol-carrying spaceships were all the fleet that he had, and he had to protect them.
+
+Just before the second intervention turn, his spaceship and two of Gun's spaceships flew past each other in the center. Evidently, Gun was even more intent on doing something in the center than he was.
+
+Zei realized that he had a choice to make: he could send gliders out to attack Gun's ship, he could put up walls to defend against Gun's ship, or he could set up the eternal glider factory.
+
+The second intervention turn came. He decided on the last course of action, sending gliders out that would bounce between the center shrine and the south shrine, the center shrine and the east shrine, and the south shrine and the east shrine.
+
+Right after the intervention turn finished, Zei noticed that Gun had done the exact same thing, using both his symbol-carrying spaceships in the center. He had also adjusted the heading of both of his ships, so that they would also head south.
+
+Zei and Gun could not see the full view of what was going on, but the audience could.
+
+<narrow_device_view>
+   <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">                                                                                
+     <rect width="200" height="200" fill="#348"/>                                                                                                                         
+                                                                              
+     <circle cx="10" cy="30" r="3" fill="#cef"/>
+     <circle cx="35" cy="10" r="3" fill="#cef"/>
+     <circle cx="45" cy="65" r="3" fill="#cef"/>
+     <circle cx="65" cy="45" r="3" fill="#cef"/>
+     <circle cx="90" cy="115" r="3" fill="#cef"/>
+     <circle cx="105" cy="110" r="3" fill="#cef"/>
+     <circle cx="115" cy="15" r="3" fill="#cef"/>
+     <circle cx="165" cy="10" r="3" fill="#cef"/>
+     <circle cx="190" cy="25" r="3" fill="#cef"/>
+
+    <rect x="85" y="95" width="5" height="5" fill="#c9f"/>
+    <rect x="85" y="160" width="5" height="5" fill="#c9f"/>
+    <rect x="180" y="85" width="5" height="5" fill="#c9f"/>
+
+    <rect x="185" y="165" width="5" height="5" fill="#c9f"/>
+    <rect x="160" y="185" width="5" height="5" fill="#c9f"/>
+    <rect x="150" y="170" width="5" height="5" fill="#c9f"/>
+    <rect x="175" y="140" width="5" height="5" fill="#c9f"/>
+
+    <rect x="15" y="170" width="5" height="5" fill="#c9f"/>
+    <rect x="35" y="185" width="5" height="5" fill="#c9f"/>
+
+    <polygon points="18,94 32,94 25,106" fill="#3ef"/>
+    <polygon points="93,94 107,94 100,106" fill="#3ef"/>
+    <polygon points="168,94 182,94 175,106" fill="#3ef"/>
+    <polygon points="93,19 107,19 100,31" fill="#3ef"/>
+    <polygon points="93,169 107,169 100,181" fill="#3ef"/>
+   </svg>
+
+</narrow_device_view>
+
+A few hundred turns later, Zei realized that Gun's attack had been more effective. He had not only created eternal glider factories between the center and south shrines, and the center and west, but he had also unleashed a glider attack that destroyed Zei's symbol-carrying spaceship.
+
+Meanwhile, Gun's two symbol-carrying spaceships were moving south, one of them on a collision course with Zei's own - a collision that would happen before the next intervention turn.
+
+Zei would only have one symbol-carrying spaceship left, the one in the east.
+
+Zei sighed. He realized that his last symbol-carrying spaceship was the last mobile structure he had that Gun knew nothing about. His best advantage might be keeping it that way. On his next intervention turn, he steered that spaceship to temporarily stop, just outside of visual range of Gun's northeastern base. He set the spaceship to fire off gliders to destroy the symbols that were undoubtedly in Gun's northeastern base. To avoid giving up his location, they would not fly north directly - instead, they would reflect off of the northern rock shrine.
+
+Meanwhile, in the southeast, Zei's own symbols began to disappear one by one - first, from Gun's eternal glider factories, then from new gliders fired by his symbol-carrying spaceship now moving eastward from the south.
+
+And just before the next intervention turn, Zei briefly saw Gun's symbol-carrying spaceship come into view near his southwest base - just before it sent out gliders that destroyed it.
+
+Then the fourth intervention turn came.
+
+<narrow_device_view>
+   <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">                                                                                
+     <rect width="200" height="200" fill="#348"/>                                                                                                                         
+                                                                              
+     <circle cx="10" cy="30" r="3" fill="#cef"/>
+     <circle cx="35" cy="10" r="3" fill="#cef"/>
+     <circle cx="45" cy="65" r="3" fill="#cef"/>
+     <circle cx="150" cy="180" r="3" fill="#cef"/>
+     <circle cx="20" cy="165" r="3" fill="#cef"/>
+
+    <rect x="180" y="35" width="5" height="5" fill="#c9f"/>
+
+    <rect x="185" y="165" width="5" height="5" fill="#c9f"/>
+
+
+    <polygon points="18,94 32,94 25,106" fill="#3ef"/>
+    <polygon points="93,94 107,94 100,106" fill="#3ef"/>
+    <polygon points="168,94 182,94 175,106" fill="#3ef"/>
+    <polygon points="93,19 107,19 100,31" fill="#3ef"/>
+    <polygon points="93,169 107,169 100,181" fill="#3ef"/>
+   </svg>
+
+</narrow_device_view>
+
+Gun had a large advantage in material, Zei knew. Zei's only advantage was staying hidden. There were also gliders flying all over from the eternal glider factories, and the spot just south of the northeast corner was one of the more comfortable spots to be.
+
+Zei decided he would continue to lay low. He stopped his symbol-carrying spaceship, and started on a five-intervention-turn-long quest to build another one.
+
+Meanwhile, he remembered what he saw of the rock formations near the center just before his symbol-carrying spaceship there was destroyed, replicated the pattern in his sandbox, and figured out a strategy that would spawn an eternal glider factory between the center and north shrines to wreak havoc on Gun's northwest.
+
+By the fifth intervention turn, his attack succeeded in heavily damaging Gun's bases in the northwest - though Zei had no way to know how much damage was done. Zei continued his quest to build another symbol-carrying ship.
+
+Shortly after that, Zei's last symbol in the southeast got destroyed by a storm of gliders. The last thing he could see in the southeast was Gun's symbol-carrying spaceship starting to move northwards.
+
+Zei sent gliders to create another eternal glider factory, this time flooding the space along the center of the west.
+
+He did not move his own spaceship. He could not: for the next three thousand turns he was a sitting duck, as he was building his new spaceship.
+
+<narrow_device_view>
+   <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">                                                                                
+     <rect width="200" height="200" fill="#348"/>                                                                                                                         
+                                                                              
+
+     <circle cx="35" cy="10" r="3" fill="#cef"/>
+     <circle cx="185" cy="120" r="3" fill="#cef"/>
+     <circle cx="20" cy="165" r="3" fill="#cef"/>
+
+    <rect x="180" y="35" width="5" height="5" fill="#c9f"/>
+
+
+
+    <polygon points="18,94 32,94 25,106" fill="#3ef"/>
+    <polygon points="93,94 107,94 100,106" fill="#3ef"/>
+    <polygon points="168,94 182,94 175,106" fill="#3ef"/>
+    <polygon points="93,19 107,19 100,31" fill="#3ef"/>
+    <polygon points="93,169 107,169 100,181" fill="#3ef"/>
+   </svg>
+
+</narrow_device_view>
+
+The sixth intervention turn came, right when Gun's symbol-carrying ship was getting hit by a barrage of gliders. This gave Gun a lucky chance to protect it from gliders, allowing it to survive a little bit longer.
+
+The spaceship finally did get destroyed, but only after it had gotten within visual range of Zei's own.
+
+Zei calculated: Gun had been able to see Zei's ship, but not the new ship that Zei was building.
+
+Zei decided to do the only thing that he could do: he kept building, while putting up extra walls along the west and the diagonal. He judiciously ignored his south: the existing glider storm, and the debris from Gun's ship, would itself be enough protection.
+
+The seventh intervention turn came. Zei put all resources into building the new ship. Almost finished. The next turn would be just enough to finish it, and to give a steering instruction to both.
+
+Then, a glider storm came toward Zei's ship from all directions.
+
+At first, the walls handled it. But then, the gliders kept coming, and soon they began to breach the walls.
+
+The eighth intervention turn came just in time. Zei's last ship was not quite yet destroyed, but it was almost there. He could now finish his new ship, and give his existing ship one last instruction.
+
+Zei programmed both to head west. He figured that the existing ship's symbol would get destroyed within a hundred turns, but the wreck could still coast west, and crash into the northern shrine and release a large glider storm southward. Meanwhile, the new ship would _also_ head west, but stop just north of the northern shrine. This would give it some protection from the glider storms that were getting more and more intense.
+
+When the ninth intervention turn came, Zei used a nearby rock formation, which was almost destroyed by the gliders, to bounce a glider that would then head southward and re-adjust the eternal glider factories that were attacking to the south. He did not have time to calculate what the adjustment would look like, and he did not have any way to know what its exact consequences would be, but he hoped that it would make previously safe territory unsafe. He also launched one more glider attack westward.
+
+The tenth intervention turn came. Nothing seemed to happen, except debris. More and more debris.
+
+<narrow_device_view>
+   <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">                                                                                
+     <rect width="200" height="200" fill="#348"/>                                                                                                                         
+
+     <circle cx="105" cy="185" r="3" fill="#cef"/>
+
+     <rect x="95" y="10" width="5" height="5" fill="#c9f"/>
+
+    <polygon points="18,94 32,94 25,106" fill="#3ef"/>
+    <polygon points="93,94 107,94 100,106" fill="#3ef"/>
+    <polygon points="168,94 182,94 175,106" fill="#3ef"/>
+    <polygon points="93,19 107,19 100,31" fill="#3ef"/>
+    <polygon points="93,169 107,169 100,181" fill="#3ef"/>
+   </svg>
+
+</narrow_device_view>
+
+Zei reinforced the eastern and western walls beside his last symbol-carrying spaceship.
+
+He launched a few gliders to try to create more eternal glider factories, that would hopefully create more chaos southward. One of the gliders was destroyed, hit by another stray glider before it even left Zei's visual field.
+
+The eleventh intervention turn came. Zei figured out one last trick. He figured out how to bounce a glider southward off of one of his own walls so that it would hug the edge of the shrine. From his simulations in the sandbox, he saw that if it hit the corner of the middle shrine, it would bounce off back north. The glider would bounce back and forth between the center and the north. Each time it hit the center, it would simultaneously release another glider that would go west. And when _that_ glider hit the western shrine, it would bounce off and go southeast, hopefully causing damage to whatever was in the south. He did this, and simultaneously set up a mirror image of the same strategy toward the east.
+
+The twelfth intervention turn came. By this point, the debris and stray gliders in the game field were so intense that offense was impossible. Zei simply kept building walls. Hunker down, play defense, outlast.
+
+The thirteenth intervention turn came. Zei had built four layers of walls around this ship, and finally the walls were beginning to crumble faster than he could create new ones.
+
+Finally, a few hundred turns after that, an alarm buzzed.
+
+![Announcer: "And ... Zei Leimin is the winner!"]
+
+Zei let out a sigh of relief.
+
+---
+
+Zei sat in the waiting room, watching the game between Deluin and Kau. From the beginning, Zei was surprised, and impressed, by Deluin's strategy. Deluin spent all his attention early on to use the resources in the rock formations near his north and northeast to build walls. Simultaneously, he sent out gliders to try to create eternal glider factories pointing southward.
+
+Deluin did not build any mobile symbol-carrying spaceships. Instead, he simply fortified. Kau's eternal glider factories proved to be of limited use: though the gliders would keep coming forever, they would only have any effect for a short period of time. As soon as a storm of gliders came, Deluin would figure out how to reflect it.
+
+Zei was impressed. Looks like Deluin had also managed to figure out that he needed to be more patient.
+
+Seven thousand turns later, Kau was reduced to hiding behind the southern shrine. But Kau barely survived three thousand turns more: the number of stray gliders and debris kept increasing, and Deluin's walls made him far more protected than Kau was.
+
+Ten thousand two hundred turns into the game, Deluin was announced the winner.
+
+Deluin stepped out from the elevator.
+
+![Zei: "That was a really impressive job, Deluin."]
+
+![Deluin: "Thanks! I was impressed that the walls held out so well. Now I'm excited to see how you handled your game."]
+
+![Zei: "Oh - my style was much uglier than yours. Though I also basically won by playing defense."]
+
+![Deluin: "Do you want to get tea later?"]
+
+![Zei: "Sure!"]
+
+---
+
+Deluin was sitting in the courtyard drinking a tea. As soon as Zei saw him, he started running to greet him.
+
+![Zei: "Deluin, good to see you!"]
+
+Deluin waved back. Zei ran the rest of the way to his table and sat down.
+
+A robot immediately slid up to their table.
+
+![Robot: "jie mo kai tu jie hei ja ma?"]
+
+A menu appeared.
+
+<narrow_device_view>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="203" height="203" viewBox="0 0 203 203">
+  <rect width="203" height="203" fill="#6af"/>
+  <g transform="translate(1 1)">
+  <rect width="100" height="100" fill="#245"/>
+  <rect x="10" y="10" width="80" height="80" rx="12" fill="#cef"/>
+  <path d="M 60 34 C 60 52 56 62 53 66 L 39 66 C 36 62 32 52 32 34" fill="#cef" stroke="#245" stroke-width="2"/>
+  <path d="M 35.5 31 L 56.5 31 A 3.5 3.5 0 0 1 56.5 38 L 35.5 38 A 3.5 3.5 0 0 1 35.5 31 Z" fill="#cef" stroke="#245" stroke-width="1.5"/>
+  <path d="M 60 40 L 66 40 C 76 40 76 57 68 57 L 57 57" fill="none" stroke="#245" stroke-width="2" stroke-linecap="round"/>
+  <line x1="70" y1="45" x2="78" y2="47.5" stroke="#245" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="70" y1="49" x2="78" y2="51.5" stroke="#245" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="70" y1="53" x2="78" y2="55.5" stroke="#245" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(102 1)">
+  <rect width="100" height="100" fill="#245"/>
+  <rect x="10" y="10" width="80" height="80" rx="12" fill="#cef"/>
+  <path d="M 22 50 C 34 32 58 30 77 49 L 22 50 Z" fill="#cef" stroke="#245" stroke-width="2"/>
+  <path d="M 22 50 C 34 68 58 70 77 49 L 22 50 Z" fill="#cef" stroke="#245" stroke-width="2"/>
+  <line x1="16" y1="50" x2="22" y2="50" stroke="#245" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="33" y1="42" x2="33" y2="58" stroke="#245" stroke-width="1.8"/>
+  <line x1="33" y1="50" x2="42" y2="43" stroke="#245" stroke-width="1.8"/>
+  <line x1="33" y1="50" x2="42" y2="57" stroke="#245" stroke-width="1.8"/>
+  <polyline points="42.0,50.0 42.5,48.9 43.2,48.1 44.3,47.6 45.4,47.3 46.4,46.7 47.0,45.8 47.5,44.6 48.0,43.6 48.9,42.9 50.0,42.5" fill="none" stroke="#245" stroke-width="1.5"/>
+  <polyline points="52.0,50.0 52.1,48.5 52.8,47.7 54.1,47.5 55.7,47.5 56.8,47.1 57.3,46.0 57.3,44.5 57.6,43.2 58.5,42.5 60.0,42.5" fill="none" stroke="#245" stroke-width="1.5"/>
+  <polyline points="62.0,50.0 61.8,48.2 62.4,47.3 64.0,47.3 65.9,47.8 67.2,47.6 67.5,46.3 67.2,44.3 67.2,42.8 68.2,42.2 70.0,42.5" fill="none" stroke="#245" stroke-width="1.5"/>
+  <polyline points="42.0,50.0 43.1,50.4 44.0,51.1 44.5,52.1 45.0,53.3 45.6,54.2 46.6,54.8 47.7,55.1 48.8,55.6 49.5,56.4 50.0,57.5" fill="none" stroke="#245" stroke-width="1.5"/>
+  <polyline points="52.0,50.0 53.5,50.0 54.4,50.7 54.7,52.0 54.7,53.5 55.2,54.6 56.3,55.0 57.9,55.0 59.2,55.2 59.9,56.0 60.0,57.5" fill="none" stroke="#245" stroke-width="1.5"/>
+  <polyline points="62.0,50.0 63.8,49.7 64.8,50.3 64.8,51.8 64.5,53.8 64.8,55.1 66.1,55.3 68.0,54.8 69.6,54.8 70.2,55.7 70.0,57.5" fill="none" stroke="#245" stroke-width="1.5"/>
+  </g>
+  <g transform="translate(1 102)">
+  <rect width="100" height="100" fill="#245"/>
+  <rect x="10" y="10" width="80" height="80" rx="12" fill="#cef"/>
+  <circle cx="30" cy="52" r="6" fill="#cef" stroke="#245" stroke-width="2"/>
+  <circle cx="70" cy="52" r="6" fill="#cef" stroke="#245" stroke-width="2"/>
+  <path d="M 36 44.6 L 36 16 L 42 37.3" fill="#cef" stroke="#245" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 58 37.3 L 64 16 L 64 44.6" fill="#cef" stroke="#245" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="64" cy="23.5" r="3.5" fill="none" stroke="#245" stroke-width="1.8"/>
+  <circle cx="64" cy="33.5" r="3.5" fill="none" stroke="#245" stroke-width="1.8"/>
+  <circle cx="50" cy="50" r="15" fill="#cef" stroke="#245" stroke-width="2"/>
+  <ellipse cx="50" cy="69" rx="13" ry="9" fill="#cef" stroke="#245" stroke-width="2"/>
+  <circle cx="43.5" cy="48" r="3.2" fill="#245"/>
+  <circle cx="56.5" cy="48" r="3.2" fill="#245"/>
+  <circle cx="45" cy="69" r="2.4" fill="#245"/>
+  <circle cx="55" cy="69" r="2.4" fill="#245"/>
+  </g>
+  <g transform="translate(102 102)">
+  <rect width="100" height="100" fill="#245"/>
+  <rect x="10" y="10" width="80" height="80" rx="12" fill="#cef"/>
+  <g transform="translate(-4.5 0)">
+  <polygon points="72.0,53.0 84.0,41.0 80.0,53.0 84.0,65.0" fill="#cef" stroke="#245" stroke-width="2" stroke-linejoin="round"/>
+  <ellipse cx="48" cy="53" rx="23" ry="12.5" fill="#cef" stroke="#245" stroke-width="2"/>
+  <path d="M 37 52 A 3.5 3.5 0 0 0 44 52 Z" fill="#cef" stroke="#245" stroke-width="1.2"/>
+  <path d="M 45 52 A 3.5 3.5 0 0 0 52 52 Z" fill="#cef" stroke="#245" stroke-width="1.2"/>
+  <path d="M 53 52 A 3.5 3.5 0 0 0 60 52 Z" fill="#cef" stroke="#245" stroke-width="1.2"/>
+  <path d="M 61 52 A 3.5 3.5 0 0 0 68 52 Z" fill="#cef" stroke="#245" stroke-width="1.2"/>
+  <path d="M 41 59 A 3.5 3.5 0 0 0 48 59 Z" fill="#cef" stroke="#245" stroke-width="1.2"/>
+  <path d="M 49 59 A 3.5 3.5 0 0 0 56 59 Z" fill="#cef" stroke="#245" stroke-width="1.2"/>
+  <path d="M 57 59 A 3.5 3.5 0 0 0 64 59 Z" fill="#cef" stroke="#245" stroke-width="1.2"/>
+  <line x1="42" y1="40.5" x2="47.66" y2="34.84" stroke="#245" stroke-width="2" stroke-linecap="round"/>
+  <line x1="42" y1="40.5" x2="47.66" y2="46.16" stroke="#245" stroke-width="2" stroke-linecap="round"/>
+  <line x1="48" y1="40.5" x2="53.66" y2="34.84" stroke="#245" stroke-width="2" stroke-linecap="round"/>
+  <line x1="48" y1="40.5" x2="53.66" y2="46.16" stroke="#245" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="30" cy="50" r="3" fill="#245"/>
+  </g>
+  </g>
+</svg>
+
+</narrow_device_view>
+
+![Zei: "Whoa"], Zei gasped.
+
+![Deluin: "What is it?"], Deluin asked.
+
+![Zei: "I think these are some of the new symbols they're A/B testing for Dzegoban version nine."]
+
+He immediately realized he was talking to a foreigner, and followed up:
+
+![Zei: "Have you heard of Dzegoban version nine?"]
+
+![Deluin: "Oh yeah I had a couple people mention it to me. Making the language visual. Bringing back hieroglyphs for the individual roots, but pronunciation perfectly readable from the glyph. And also another layer where they're trying to make the grammar look more like math."]
+
+![Zei: "Yeah, so I'm trying to parse this. The cup is water - 'ja'. I see two unusual things about the cup. More straight horizontal lines than usual, and the three diagonal lines on the right. Maybe those are the pronunciation markers? One for the consonant, one for the vowel?"]
+
+![Deluin: "Top right is 'kai'. The unusual things I see are ... the extra vertical vein on the left, and then the transition to veins being more and more squiggly on the right? Although ... I'm not sure if I would make the images so detailed, when they often have different meanings depending on context."]
+
+![Zei: "Wait, you know Dzegoban?"]
+
+![Deluin: "Zei, the whole point of Dzegoban is that there's only 256 roots, you can learn it in less than a month, and you don't get all the nuances but you can make your way around just fine."], Deluin replied in a lecturing tone.
+
+![Zei: "I'm impressed, you're almost a local already."]
+
+![Deluin: "Well, wanna come to Redshire with me tomorrow? I have to fly back for my mom and dad's birthdays, they're only a few days apart, and get some last-minute tutoring from our top players. And if you come, I can tell them that it's okay to skip the tutoring if you're doing the same!"]
+
+![Zei: "I'd love to see Redshire, though unfortunately I just don't have the money for that. Maybe in a few years."]
+
+![Zei: "But I'm super curious to see what Redshire is like! Send me pictures."]
+
+![Deluin: "Oh I can show you a few now."]
+
+Deluin took out his hand device, and showed Zei some pictures of Redshire. He saw castles, pine forests, large pristine grasslands, red-colored mountains with their tops covered in snow, and one giant icy waterfall.
+
+![Zei: "Wow, that's beautiful."]
+
+![Deluin: "You know, when I was younger I thought it was a back-handed compliment, almost an insult, to praise someone's country by saying that the nature is beautiful. At the time I thought, if the nicest thing you can say about a country is something that the people did not even make themselves, rather something that the forces of orbital dynamics and biology and tectonics randomly handed them down for free, then that's actually pretty harsh on the people."]
+
+![Deluin: "But as I grew up I've come to realize, that's not true at all. Even beautiful nature takes so much human work to maintain. Human work to build the paths and roads so people can walk or drive there. Human work to maintain a political system that stops people from polluting it, cutting down the forests, putting their houses on the mountainsides and making them ugly, strip-mining the mountains - while still allowing housing to be built where people can enjoy the views, keeping that housing affordable, and maintaining industry. Human work to restore any damage that was done before we got wise enough, or maybe rich enough, to care about these things."]
+
+![Zei: "I'll let you know as soon as I can afford to go."]
+
+![Zei: "Hopefully that will be in fifteen days"], he joked.
+
+![Deluin: "Because I use my championship winnings to pay for you to go"], Deluin playfully snapped back.
+
+<chapter_nav prev="chapter-13.html" next="chapter-15.html" />

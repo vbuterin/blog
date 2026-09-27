@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-8.html" title="Previous chapter: Chapter 8" aria-label="Previous chapter: Chapter 8"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-10.html" title="Next chapter: Chapter 10" aria-label="Next chapter: Chapter 10"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+<h1>Chapter 9</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Pafogai Du, Dzego</span><span class="sep">·</span><span class="date">3724 Rainmoon 28</span></span></div>
+<p>Bai and Fin were sitting together in a courtyard, eating and drinking. Tears ran down Bai's face.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"You know, Zei is really quite a nice kid"</span>, Fin stated softly. <span style="color:oklch(0.7 0.15 80)">"If you could just be nicer to him, he could help you so much."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Nicer, like you?"</span>, Bai replied, distressed.</p>
+<p>Fin hesitated. He did not know how to respond.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"You know how I felt when Zei brought his mom along on the trip to Freetown with me?"</span>, she asked.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"Sad because you wanted to have the trip alone with him, and you could tell that's not what he wanted?"</span>, Fin asked.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"NO!"</span>, Bai shouted.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"I'll give you a hint. I felt the same after the game a few days ago when you suggested I bring my mom along for the next trip."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"You don't like your mom?"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"You never asked me where or who my mom even is! Not once, in the more than ten times we've met."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Well, sorry. Who is your mom?"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"My mom is DEAD! My dad too."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Killed in an explosion in a lab when I was still a small kid. You know who did it."</span></p>
+<p>Fin's face dropped.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"I stayed in my aunt's place. But she basically ignored me, just gave me a room, and two meals a day, and that's basically it."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"So I had to survive with my own bare hands. Learn how to make my own money. Do side jobs even while I was in high school."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"So I hope Zei forgives me for those times when I didn't let him get his prize money to give his mom a compute box."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"I don't even have a mom! All I have is my achievements and my success. And now Zei has taken that away from me too."</span></p>
+<p>She went quiet, and sat back in her chair. She had not planned to say any of that. After a brief pause, she spoke again.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"But those tactics of Zei's, they were beautiful. I was so proud when I put up such perfect defenses along my diagonals and tricked Zei into attacking there. I felt like that was the smartest thing I had done in my whole life. And then he came out and did something even smarter."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"I do want to understand you guys better. What drives you, how you think."</span></p>
+<p>Bai and Fin both took a brief break to drink some of their respective teas.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"Let's talk about something else. Here, do you want to see what they have in mind for the next version of Dzegoban?"</span></p>
+<p>Bai's eyes perked up.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Sure, why not"</span>, she replied.</p>
+<p>Fin took out his booklet, with "po so dze go ban de sia" - the conception of Dzegoban version nine - on the cover.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"Dzegoban is a masterpiece"</span>, Fin explained. <span style="color:oklch(0.7 0.15 80)">"Always navigating the tough balance between being easy to learn, logical in syntax, but also nice to speak and read, and useful for talking about the things that people care about in the real world."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"The first versions, started only a decade after we lost the war against the Arctics last century, were simple and uncontroversial. Move from the pictorial script to an alphabet, get rid of the complicated declensions and conjugations and irregular verbs."</span></p>
+<p>By this point, Bai was listening intently, her eyes full of curiosity.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"Then came the harder tradeoffs, on the grammar. Dzegoban grammar is very logical, if you want it to be. Take a simple sentence, like in elementary school: 'giu jan li mo fe jia dzu lie'. The man eats the avocado. 'li' is the separator between subject and verb, 'fe' is the separator between verb and object. A computer program can parse that, very unambiguous."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"You can get more complex. 'lo mo fe jia dzu lie zo hen jun'. It's healthy to eat an avocado. 'lo' and 'zo' are the opening and closing brackets. And colloquially, you can leave out the 'lo'."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"But then you get ambiguity. Let's unpack 'jia dzu lie' - black center fruit. Is it a fruit with a black center, or is it a fruit that is both black and 'central' in some sense? Theoretically, we have the separator for that: 'ji'. We could say 'jia dzu ji lie', and it would be less ambiguous. But you can never remove the ambiguity completely. Papaya seeds have a black center too."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"So you have to balance regularity with practicality. Being easy and pleasant to speak when you talk about things that are common in people's lives. So the Bansunpei priests tried to optimize the regularity of the meaning space, even while knowing they would never - could never - fully succeed."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"If all you know are the 256 roots, you can understand more than half of what people are saying. Not all, but much better than the olden days, when you could not tell what some complicated word means at all unless you had seen that exact word before."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Why are they putting so much work into this? Why not focus more on improving the economy, or technology, or the military or something?"</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Well, if we work on those things, the Arctics bomb us. Language is harmless. I think even the Arctics find Dzegoban impressive. Also a couple of times the Bansunpei took time to reform the timing system - that's how we got a hundred ticks a minute, a hundred minutes a longhour and ten longhours a day - and we got that to stick across the whole world. That, even the Arctics adopted."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Do you guys have a secret textbook with a planned version nine of <em>that</em>?"</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Yeah, at some point we want to replace the meter with the lightfoot. Light travels at one billion lightfeet per tick. One lightfoot is two hundred fifty-nine point oh two oh six eight three seven one two millimeters."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Apparently, people in Inglewore like it because for so long people made fun of their older measurement units for being complicated and illogical, and now we're coming out with a unit that's very close to their older distance unit in length, that's directly based on the very base physical constants of the universe. So in some sense, we're saying that they were right all along."</span></p>
+<p>Bai grinned.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"So anyway, the next version of Dzegoban-"</span></p>
+<p>Bai cut him off.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Maybe next time. This is all making me curious, I feel like I should go study the history of Dzegoban on my own at some point."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Good instinct! I promise, it gets even more fun once we get into version nine. Zei doesn't see the value of all this himself, he's so focused lately on his games."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"I'm sure he is. And I don't think it will stop, it's clearly paid off very well for him."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Maybe I should play some games with him for fun - or I guess for him, for practice - at some point."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Oh, and thank you for distracting me and cheering me up!"</span></p>
+<hr>
+<p>Zei walked through the tunnel, and down the stairs, following the directions that his watch gave him. Every time he got to a fork, he made sure to look in all directions, taking in his surroundings. He had never been this deep into the depths of the mountain pyramid before.</p>
+<p>Eventually, he got to a sealed door with a green circle beside it. He tapped his watch against the circle. The door slowly opened.</p>
+<p>Behind the door, there was a narrow and long room, and at the end of the room there was a large table. At the table, a man was sitting wearing a shadowy cloak - not a Veridian privacy robe, but the dress of the Minpentai priests.</p>
+<p>Zei walked across the room slowly, and sat down across from the priest.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Welcome"</span>, the priest said softly.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I am honored to be here"</span>, Zei replied. <span style="color:oklch(0.7 0.15 346.66666666666663)">"But ... who are you?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I'm Den. High Council member of the Kungaupei. Thank you for coming."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Kungaupei? We have a secret society for defense too? Growing Dzego a whole secondary shadow army?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Of course, are you surprised?"</span></p>
+<p>Zei hesitated.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I was impressed by your performance in the Minpentai game a few days ago."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"But I wasn't just impressed because you won. I studied the transcripts from the game. I was impressed because of the kind of strategy that you played."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Tell me, have you studied any cryptography?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I... know the basics? Factoring is hard, you cube modulo n to encrypt, and only someone who knows the p times q that make up n can invert the cubing to decrypt."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"No no, that's popular science cryptography. Nobody has been using the factoring-based stuff for decades now, even elliptic curves are falling out of fashion because everyone's worried that the Arctics are going to come out with a quantum computer any year now."</span></p>
+<p>Zei did not respond. He stared back, in a mix of appreciation for the update to his knowledge, and curiosity about where this whole conversation was going to lead.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Okay, well I think in your last game you've come really close to inventing big parts of cryptography from scratch."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Think about obfuscation protocols. You want to give someone a program, that they can execute, without being able to see the internal details of the program. It's what our modern cryptographic networks - like the ones that handle payments and reputation and manage governance for Dzego's secret societies - all rely on."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"But how do you make a single protocol that can do that? Hide the program? It's easy to see how to hide the data, and then do addition and multiplication on hidden data, especially when it's all done by hiding it in big vectors under linear transformations and adding errors on top. But how do you hide a program? What kind of a space of possible programs do you even hide a program in?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"The solution - well, okay, a small part of one type of solution - is that you create a meta-program. A program that, depending on its input, can run any possible program. And then you've reduced the program to just being a set of numbers that you're doing addition and multiplication to."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"It's one of the most basic tricks in computer science. Our computers, the physical hardware, are meta-programs themselves. But you figured out a really basic version of that - just sixteen possible algorithms, melded into one factory - and used that, plus a hidden glider to provide the input, to hide your intentions."</span></p>
+<p>Zei nodded.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Well thank you for the compliment. But ... I'm curious now, where are you going with this?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Well, Zei, I want to recruit you into defense."</span></p>
+<p>Zei's eyes and mouth opened.</p>
+<p>Defense. Without thinking, Zei opened and closed each finger of his left arm. That arm had been broken and taken a month to heal, all because of a thermodynamics lecture. What Den was suggesting was not a lecture.</p>
+<p>But his life had been saved by exactly that kind of work - a secretive, well-coordinated room change at the last minute. Maybe this was his chance to do the same for someone else.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I do want you to continue Minpentai into the nationals. I think it will be good for you. But for your education, do cryptography. I think it will also help you in your games."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"And of course I'll stay in touch the whole way, and when you're ready, I will start suggesting some tasks for you."</span></p>
+<p>Zei responded with silence once again.</p>
+<p>Tasks. He noticed how quickly Den had shifted into the register of assuming that Zei would go along with his plans. Part of him was already coming up with reasons to say yes. Another part was watching his enthusiasm slowly build up, and did not entirely trust it.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I have an idea"</span>, Den began. <span style="color:oklch(0.7 0.15 53.33333333333333)">"Do you know how chip verification works? Like, how I'm automatically verifying that all your electronic devices are friendly right now?"</span></p>
+<p>Zei began to reply as soon as Den finished. By sheer luck, Den had decided to grill him on one of the areas of applied cryptography that he <em>had</em> already researched.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"When a device is manufactured, a physical unclonable function is produced as part of the process - a secret key that gets generated though chemicals settling down as the chip cools down after it's produced. Not even the manufacturer knows what it is. The manufacturer prods the device to get its public key - the p times q, or I guess now I know it's not a p times q at all, it's something totally different. It then signs that key with its key, and publishes that to the cryptographic network."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Okay I guess you can call a function a key, close enough. Go on."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"As a user, you can ask the device to sign a value. The device will do that. You can then verify its signature against the public key that you download from the cryptographic network, to check that it actually came from that manufacturer."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"And then you have public inspectors. They buy devices randomly from the manufacturer, and use some kind of scanning to destructively inspect them. Verify that the chips actually have the logic that they are supposed to have."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Why the cryptographic network? Why not just sign it?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"So that you know how many there are, avoiding attacks where either the manufacturer is cheating or someone hacks their key, and they start signing over even more public keys than they should. Also it means you know when the signature was made, so you know it was made when the device was manufactured. And if the manufacturer's key somehow gets stolen, you can tell if the signature was made before or after that happened."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"And how do I verify your device?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"You ask it for a signature wirelessly, same way I verify it."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"How do I know it's not just forwarding responses from a different device somewhere else?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Here, because we're deep inside a mountain. Generally, I don't know."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"How does the chip inspection process work?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"That I don't know."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"How do the inspectors know that they're getting devices from the same pool the public is getting, and not devices specifically chosen by the manufacturer to fool them?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I don't know."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Let's think about a different case first. Take the public security cameras, the ones on the lamp posts or the outsides of the buildings or the autobuses. Every Dzegojan has a right to occasionally randomly pick one, unscrew it and analyze it themselves. That's how we know that they're only recording and transmitting when they're supposed to, and no one in the supply chain from the people manufacturing them right up to the people installing them can bug them and leak any data to a stalker or an insider trader or an Arctic."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"That's the random inspection process - assuming at least some of the people who make inspecting cameras their hobby actually choose randomly. So that's for security cameras, that are already in public so anyone can just choose a random one of them to go and unscrew. Now, what do we do here? How do we do random inspection for computer chips that you buy from a manufacturer?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Okay, you tell me."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Well, I'm glad there's still a lot that I can teach you. How about we go and visit one of these factories right now?"</span></p>
+<p>Zei thought for a moment. It was not yet a commitment, he reasoned, and it would be something he had never seen before.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Sure, would be happy to!"</span></p>
+<p>Zei and Den walked out of the room, through the tunnels, and to a smaller exit from the pyramid. The exit led directly into the interior of a large rectangular-shaped black car. The pyramid door and the car door were exactly the same shape, and were pressed tightly against each other.</p>
+<p>Zei and Den got in.</p>
+<p>As the door sealed shut, Zei noticed anti-transmission foil lining the sides of the car. The car had windows, but they seemed to show a dimmed version of the world outside; from the outside, he knew, they would show almost nothing at all.</p>
+<p>The car started moving, and a minute later it entered a tunnel.</p>
+<p>At that point Zei realized that no one in the world now knew where he was.</p>
+<hr>
+<p>Zei and Den got out of the black car. The car's door now opened directly into the open door of a staircase leading down to a basement, shielding them from even a tick of being visible to the outside. The two walked down the stairs, and eventually entered a large room.</p>
+<p>They saw thousands of empty white boxes, with labels on the side containing a two-dimensional barcode, and a machine automatically putting chips into boxes as they came out of a conveyor belt from another room.</p>
+<p>Den opened up his hand device, and showed a diagram to Zei.</p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="400" height="200" viewBox="0 0 400 200">
+<rect width="400" height="200" fill="#245" />
+<line x1="80" y1="40" x2="95" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="80" y1="40" x2="185" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="80" y1="40" x2="35" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="160" y1="40" x2="215" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="160" y1="40" x2="335" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="160" y1="40" x2="155" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="240" y1="40" x2="65" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="240" y1="40" x2="125" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="240" y1="40" x2="305" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="320" y1="40" x2="365" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="320" y1="40" x2="275" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="320" y1="40" x2="245" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="35" y1="80" x2="245" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="65" y1="80" x2="95" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="95" y1="80" x2="155" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="125" y1="80" x2="215" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="155" y1="80" x2="305" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="185" y1="80" x2="275" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="215" y1="80" x2="335" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="245" y1="80" x2="125" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="275" y1="80" x2="35" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="305" y1="80" x2="365" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="335" y1="80" x2="65" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="365" y1="80" x2="185" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="35" y1="130" x2="185" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="65" y1="130" x2="95" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="95" y1="130" x2="215" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="125" y1="130" x2="245" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="155" y1="130" x2="365" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="185" y1="130" x2="155" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="215" y1="130" x2="335" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="245" y1="130" x2="125" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="275" y1="130" x2="305" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="305" y1="130" x2="35" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="335" y1="130" x2="65" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="365" y1="130" x2="275" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<circle cx="35" cy="80" r="4" fill="#cef" />
+<circle cx="65" cy="80" r="4" fill="#cef" />
+<circle cx="95" cy="80" r="4" fill="#cef" />
+<circle cx="125" cy="80" r="4" fill="#cef" />
+<circle cx="155" cy="80" r="4" fill="#cef" />
+<circle cx="185" cy="80" r="4" fill="#cef" />
+<circle cx="215" cy="80" r="4" fill="#cef" />
+<circle cx="245" cy="80" r="4" fill="#cef" />
+<circle cx="275" cy="80" r="4" fill="#cef" />
+<circle cx="305" cy="80" r="4" fill="#cef" />
+<circle cx="335" cy="80" r="4" fill="#cef" />
+<circle cx="365" cy="80" r="4" fill="#cef" />
+<circle cx="35" cy="130" r="4" fill="#cef" />
+<circle cx="65" cy="130" r="4" fill="#cef" />
+<circle cx="95" cy="130" r="4" fill="#cef" />
+<circle cx="125" cy="130" r="4" fill="#cef" />
+<circle cx="155" cy="130" r="4" fill="#cef" />
+<circle cx="185" cy="130" r="4" fill="#cef" />
+<circle cx="215" cy="130" r="4" fill="#cef" />
+<circle cx="245" cy="130" r="4" fill="#cef" />
+<circle cx="275" cy="130" r="4" fill="#cef" />
+<circle cx="305" cy="130" r="4" fill="#cef" />
+<circle cx="335" cy="130" r="4" fill="#cef" />
+<circle cx="365" cy="130" r="4" fill="#cef" />
+<circle cx="35" cy="180" r="4" fill="#cef" />
+<circle cx="65" cy="180" r="4" fill="#cef" />
+<circle cx="95" cy="180" r="4" fill="#cef" />
+<circle cx="125" cy="180" r="4" fill="#cef" />
+<circle cx="155" cy="180" r="4" fill="#cef" />
+<circle cx="185" cy="180" r="4" fill="#cef" />
+<circle cx="215" cy="180" r="4" fill="#cef" />
+<circle cx="245" cy="180" r="4" fill="#cef" />
+<circle cx="275" cy="180" r="4" fill="#cef" />
+<circle cx="305" cy="180" r="4" fill="#cef" />
+<circle cx="335" cy="180" r="4" fill="#cef" />
+<circle cx="365" cy="180" r="4" fill="#cef" />
+<rect x="71" y="22" width="18" height="13" rx="1.5" fill="none" stroke="#cef" stroke-width="1.2" />
+<line x1="80" y1="35" x2="80" y2="39" fill="none" stroke="#cef" stroke-width="1.2" />
+<line x1="75" y1="39" x2="85" y2="39" fill="none" stroke="#cef" stroke-width="1.2" />
+<rect x="151" y="22" width="18" height="13" rx="1.5" fill="none" stroke="#cef" stroke-width="1.2" />
+<line x1="160" y1="35" x2="160" y2="39" fill="none" stroke="#cef" stroke-width="1.2" />
+<line x1="155" y1="39" x2="165" y2="39" fill="none" stroke="#cef" stroke-width="1.2" />
+<rect x="231" y="22" width="18" height="13" rx="1.5" fill="none" stroke="#cef" stroke-width="1.2" />
+<line x1="240" y1="35" x2="240" y2="39" fill="none" stroke="#cef" stroke-width="1.2" />
+<line x1="235" y1="39" x2="245" y2="39" fill="none" stroke="#cef" stroke-width="1.2" />
+<rect x="311" y="22" width="18" height="13" rx="1.5" fill="none" stroke="#cef" stroke-width="1.2" />
+<line x1="320" y1="35" x2="320" y2="39" fill="none" stroke="#cef" stroke-width="1.2" />
+<line x1="315" y1="39" x2="325" y2="39" fill="none" stroke="#cef" stroke-width="1.2" />
+</svg></div><br>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"You ever seen this before?"</span>, Den asked.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Some kind of diagram of the internet?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"It's a mixnet. It's how transactions get onto the cryptographic network without people being able to see who sent them."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Each message from each sender gets wrapped with three layers of encryption. That top-level message gets sent to a node on the first layer."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"The node on the first layer unwraps the top layer of encryption, and sees another encrypted message, along with the address of which node in the second layer they are supposed to send it to."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"The node on the second layer unwraps the next layer of encryption, and sees another encrypted message, along with the address of which node in the third layer they are supposed to send it to."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Finally each node on the third layer unwraps that layer of encryption, and gets the address of the destination, plus the actual payload. And of course, usually, the payload itself is encrypted."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Wow, I didn't realize that's how it works. So you need three nodes to collude to unmask the sender of a message."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Not just three nodes - three <em>randomly selected</em> nodes. And if you're paranoid, you can make the inner payload be yet another envelope, requesting to send the message right back through the system in the next round."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"So this is what the packaging step is doing. Those boxes are highly opaque and tamper-proof sealed, and the two-dimensional barcode is the encrypted payload. It's a mixnet, but for delivery of physical goods."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"If you buy a product through this system, only the last of the three nodes knows your address, and they don't know who the sender was or what they're delivering. And if you're <em>double paranoid</em>, you can set your address to a public drop-off point and pick it up yourself."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Inspectors buy through the mixnet. And so as a consumer, if you buy through the mixnet yourself, you're getting your chip from the same pool that the inspectors are buying from - the manufacturer has no way to give an honest chip that passes inspection to the inspectors, without almost certainly giving one to you too. They can't tell which chips - or whatever other physical goods are passing through this thing - are going to whom."</span></p>
+<p>Den then walked forward toward a door. Zei followed him.</p>
+<p>Den put his watch against a circle with a glowing green outline. The door opened.</p>
+<p>They walked through a hallway, took a few turns, and then went through another door. They entered a room with a large microscope.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"This is the inspection facility of this fab. They inspect both their own chips, and those produced by others."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"They do multiple types of three-dimensional scanning, at different wavelengths, to make sure that the physical chip exactly matches the specification."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I'm impressed. Say thank you to whoever gave you permission to give us a tour."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I will. So Zei, I remember you had another question."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Yeah I remember. Though it wasn't about manufacturing."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Indeed - it was about how someone verifying could know that responses are not being forwarded from a different device. I can tell you the answer for that too. My hand device has a protocol by which it repeatedly contacts each device a million times, and expects the whole protocol to finish within a tenth of a tick. And so wherever the signature comes from, it has to be within fifty lightfeet away - almost thirteen meters - actually, even closer, because of the latency of the chips themselves."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"So Zei, what do you think?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"You said I can still do the nationals, right?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I <em>want</em> you to do the nationals."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Okay yes, I'll join - or at least, I'll commit as far as switching my studies to cryptography and see how that goes."</span></p>
+<p>Den nodded.</p>
+<p>When Den kept walking forward, Zei's mind wandered - first, to the large microscope that was directly in front of him, and then to other matters.</p>
+<p>He started thinking about what he would tell his mom that afternoon. He could talk about Fin being busy, about himself going for a walk. But he could not tell the full truth. The Kungaupei forbade it - and his mom had already watched him heal from one bomb.</p>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-8.html" title="Previous chapter: Chapter 8" aria-label="Previous chapter: Chapter 8"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-10.html" title="Next chapter: Chapter 10" aria-label="Next chapter: Chapter 10"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>

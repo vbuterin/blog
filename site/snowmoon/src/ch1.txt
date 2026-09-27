@@ -1,0 +1,591 @@
+<chapter_nav next="chapter-2.html" />
+
+# Chapter 1
+
+<chapter_open place="Meldan, Veridia" date="3724 Snowmoon 3" />
+
+Gladias was walking along a foot path, with tall trees towering on both sides. A series of houses made out of large stone bricks lay behind the trees on both sides, medieval in style but without any of the junk, dust on the ground, or other imperfections that a real medieval structure would have had a thousand years earlier. A few of the houses featured small signs advertising clothing, flowers or food available for sale. Each house seemed to meld seamlessly into the scattered leaves, plants and trees that surrounded it.
+
+He looked around, breathed in and briefly stopped to enjoy the nature, dense enough and quiet enough that he almost forgot that he was in the middle of the Kalimar district of Meldan, the capital city of Veridia.
+
+Suddenly, a small drone flew over his head. Gladias instinctively checked his watch. Almost immediately, a green checkmark lit up. Even before he could fully process what had happened, his watch had engaged in a zero-knowledge authentication protocol, and received a cryptographic attestation verifying that the drone was a toy, and its navigation algorithm had a safety override that would prevent it from coming within five decimeters of a human without permission. His watch had learned that the drone was not a threat - and nothing else.
+
+The drone flew off, and continued above a sidewalk branching off to the left. For a moment, Gladias could briefly see its shape: a small ball, with feather-like rotors on three sides. And the very next moment, a young boy jumped up, and grabbed it with his hand while it was still in the sky.
+
+![Boy: "Five points for me!"], the boy shouted excitedly.
+
+Gladias let his attention wander back to peacefully observing his surroundings. The boy who had just caught the ball was part of a family with four children, the younger two each riding a tricycle.
+
+On another sidewalk branching off to the right, Gladias could see a grandmother with a small child. As they approached a bench and seemed to stop, a couple that was already sitting on the bench pre-emptively stood up to offer their seats. The grandmother thanked them, and sat down with her child.
+
+And playing into Gladias's ear this whole time, there was an audio program from Emerald, the local AI running from Gladias's hand device, explaining the nuances of airborne virus transmission and how to calculate how much a given change to a building's ventilation or density might affect total city-wide cases in an epidemic.
+
+---
+
+As Gladias walked forward, the houses soon gave way to thick green shrubbery. As soon as the shrubbery cleared, the foot path started gently curving upward. Smoothly, and suddenly, the path transitioned into a sky bridge above a busy road, with many cars and autobuses and a few autonomous delivery vehicles passing beneath him. A chilly breeze blew into his face.
+
+![Gladias: "Pause, I want to enjoy the view"], Gladias said to Emerald, out of habit whispering the sentence so softly that only his throat muscles moved and no sound at all left his lips. The silken cloth band tightly covering Gladias's neck picked it up perfectly.
+
+He stopped in the middle of the sky bridge, turned to his left side, and looked forward. The busy road beneath him continued for about two kilometers, and then turned rightward. Beyond that point, he could see a mountain covered with trees. A few apartment buildings about fifteen storeys tall, decorated and shaped like over-sized medieval castle towers though with far more windows on the sides, poked up high above the trees in several places on the lower half of the mountain slope.
+
+Gladias turned his face left once again, and took one last look at the natural world. The nature in Veridia is beautiful, he thought. He then turned his face to the right, where the road continued past the sky bridge with a much higher density of buildings. Today, his job was to offer opinions on the human world.
+
+Gladias began to walk forward once more, and stepped off the sky bridge. On the left side, there was now a row of five-storey apartment buildings, interspersed with walking paths and small shops selling various kinds of goods. Both the walking paths and the sidewalk were protected from the sun by tall green trees.
+
+On the right side, there was now a tall soundproof barrier, painted with green and blue colors, barely visible behind another even thicker row of tall trees.
+
+Shortly after he began walking beside the soundproof barrier, his hand device buzzed.
+
+<narrow_device_view>
+<table>
+  <thead>
+    <tr>
+      <th>Vote on: Badra St #1103</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Emerald AI summary: Five-storey apartment building. Blue-grey colored.</td>
+    </tr>
+    <tr>
+      <td>
+<input type="range" style="width:100%">
+<div style="display: flex; justify-content: space-between; width:100%">
+    <span>-5</span>
+    <span>0</span>
+    <span>5</span>
+</div>
+</td>
+</tr><tr><td>
+
+  <button> Select </button>
+
+</td></tr></tbody>
+</table>
+</narrow_device_view>
+
+Gladias immediately knew what he was being asked to do. As a citizen of Veridia, he had been randomly selected by cryptographic sortition to vote on how much he liked the building.
+
+The goal of the voting, Gladias remembered from the Veridian civics lessons of his youth, was to determine the public aesthetics tax - a major component of the composite land tax - that each building would have to pay. Developers paid a lot of attention to this. In Veridia, making buildings that the public found appealing was not just a chance to show off their craft - it was profitable.
+
+Gladias looked at the building, the blue-grey colored Badra St #1103. The structure seemed in-character, not too different from the other buildings on the same street. The style was modern, but tasteful, nothing like the soulless rectangular concrete buildings that he was accustomed to seeing in pictures of places like Freetown. It had footpaths on both sides, and both footpaths were covered by trees - just like the other buildings nearby.
+
+This was hard, Gladias realized. To get some inspiration, he waved his hand device, and took a look at the land tax rates that some of the _other_ nearby buildings were paying. First, the building that he was supposed to vote on.
+
+<narrow_device_view>
+<table>
+  <thead>
+    <tr>
+      <th colspan="2">Badra St #1103</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Base land tax:</td>
+      <td>1.00%</td>
+    </tr>
+    <tr>
+      <td>Aesthetics tax:</td>
+      <td>0.18%</td>
+    </tr>
+    <tr>
+      <td>Other rubric taxes:</td>
+      <td>0.33%</td>
+    </tr>
+    <tr>
+      <td>Total land tax:</td>
+      <td>1.51%</td>
+    </tr>
+  </tbody>
+</table>
+</narrow_device_view>
+
+He then turned to his left, and zoomed his hand device in to point at the first few genuinely different buildings he could find: one building made with an architectural style mixing wood and stone, another with a garden on the roof, and a third, smaller but more luxurious looking, that was shaped like an octahedron, and had a beautifully arranged square garden along the perimeter of the territory with a maple tree brimming with red leaves at each corner. All three paid aesthetics taxes significantly lower than Badra St #1103, and one was even slightly negative.
+
+He then zoomed in to another building that he could barely make out in the distance. At this distance, the trees thickly lining the streets cleverly covered it up, but his hand device easily locked on to it and downloaded both a close-up image and the tax percentages.
+
+The building itself was a corporate headquarters for an aviation company. The company had had the bright idea to make their office look like an aeroplane. It was impressive architecture, he thought, but he would certainly demand some compensation if he had to walk by it every morning.
+
+He checked its taxes.
+
+<narrow_device_view>
+<table>
+  <thead>
+    <tr>
+      <th colspan="2">Clearhill Ave #980</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Base land tax:</td>
+      <td>1.00%</td>
+    </tr>
+    <tr>
+      <td>Aesthetics tax:</td>
+      <td>0.59%</td>
+    </tr>
+    <tr>
+      <td>Other rubric taxes:</td>
+      <td>0.30%</td>
+    </tr>
+    <tr>
+      <td>Total land tax:</td>
+      <td>1.89%</td>
+    </tr>
+  </tbody>
+</table>
+</narrow_device_view>
+
+Well deserved, Gladias thought. Though he was glad that Veridia's institutions let people with tastes that were so different from his express themselves, even if they had to pay for the privilege.
+
+Gladias's mind snapped back to his task. He was voting on the blue and grey building right in front of him. He took a look at the interface again.
+
+<narrow_device_view>
+<table>
+  <thead>
+    <tr>
+      <th>Vote on: Badra St #1103</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Emerald AI summary: Five-storey apartment building. Blue-grey colored.</td>
+    </tr>
+    <tr>
+      <td>
+<input type="range" style="width:100%">
+<div style="display: flex; justify-content: space-between; width:100%">
+    <span>-5</span>
+    <span>0</span>
+    <span>5</span>
+</div>
+</td>
+</tr><tr><td>
+
+  <button> Select </button>
+
+</td></tr></tbody>
+</table>
+</narrow_device_view>
+
+This was quadratic voting, he remembered. All his votes would be automatically shifted, stretched or squeezed so that the total average of the votes becomes zero, and the average of the squares of the votes becomes one. So there was no point in voting up on everything, down on everything, or overly extreme on everything. It was best, _mathematically provably best_, to vote not just the _direction_ you felt right, but also with the _strength_ you felt right - not more, not less.
+
+Gladias's mind struggled. The aesthetics taxes given to each building seemed ... already fair? Maybe the aeroplane building was perhaps being treated a little _too_ harshly. Allowing such a building to stand is not just a concession to people's freedom to do their own thing on their own land, it also brought genuine variety to Meldan. Maybe it's okay to have in what was already a corporate district.
+
+Then he reminded himself that he was not voting on the aeroplane building, he was voting on Badra St #1103.
+
+Right, he thought. What decision to make? Support or oppose?
+
+After thinking for a moment, he finally decided by raw instinct, and pushed the slider only a slight amount toward the right.
+
+He hit "Select".
+
+That was just a warmup, he thought - a random fluke that he had been assigned an aesthetics vote as a Veridian citizen right before one of his more consequential votes as an Acolyte in the Order of Steering. That vote had been hard. The vote that he was about to do would be far more challenging - and there, the system would be keeping score.
+
+He continued walking, and after a minute he arrived at an opening in the soundproof barrier: the entrance to the concert that he was attending.
+
+---
+
+Gladias held his hand device near a circle with a glowing green outline on the entrance gate. He waited briefly as his hand device produced a cryptographic proof, and then a machine embedded in the entrance gate verified it.
+
+![Machine: "Verified, welcome"], the machine said.
+
+The gate learned that someone holding a valid and unused credential had arrived - and nothing else.
+
+Gladias passed through the gate, and headed toward the main concert area.
+
+He could see a few of the attendees wearing the same signature Veridian Privacy Robe that he was wearing. This was a loose-fitting dark purple dress that covered the full body from the hood covering the wearer's head down to the ankles. Below the ankles, privacy robe wearers all wore shoes of the same dark purple color.
+
+The other attendees were mostly wearing simple shirts, either plain colored or featuring slogans of their favorite bands.
+
+Some were moving forward with clear intent and efficiency, just like Gladias. Others were dancing. Others were chatting with each other. And still others were walking forward calmly, simply trying to passively enjoy the show.
+
+Gladias emerged into a large open field surrounded by a high soundproof barrier - the same barrier that Gladias saw before, but from the inside.
+
+Gladias pushed through the crowd, as the noise became louder. He pulled on a strap on his privacy robe's front face cover, tightening a belt that separated the area below his nose from the area above his nose. The program on airborne virus transmission that he had been listening to only minutes earlier had primed him to take care to not get sick.
+
+He soon got to the concert stage area, and was able to clearly hear the gnarly voice of Dreadknot's lead singer.
+
+<blockquote>
+WE MEET THEM WITH OUR FURY IN OUR HEARTS
+
+AND FLAY THEIR FLESH WITH SHINING STEEL AND DARTS
+</blockquote>
+
+Gladias took out his hand device again.
+
+Most people attending the concert were there to enjoy the music and hang out with their friends. For Gladias, this was certainly not his _ideal_ entertainment - his preferred music was of a much softer and gentler variety - but he did not _dislike_ it either. More than anything else, he found the concert interesting in an anthropological way, exploring the interests and emotions of people he would otherwise have little interaction with.
+
+But ultimately, Gladias was at the concert for quite a different purpose. Gladias checked the rubric on his hand device:
+
+<wide_device_view>
+<h3>Basic summary</h3>
+        
+<table>
+  <thead>
+    <tr>
+      <th>Tier</th>
+      <th>Criteria</th>
+      <th>Tax rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><ul><li>Content strongly promotes two or more of the following: personal development, scientific and technical education, kindness toward others, healthy family relationships, good conflict resolution practices, civic duty</li><li>Does not meet any Tier 4-5 criteria</li></ul></td>      <td>0%</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><ul><li>Content weakly promotes one or more of the following: personal development, scientific and technical education, kindness toward others, healthy family relationships, good conflict resolution practices, civic duty</li><li>Does not meet any Tier 4-5 criteria</li></ul></td>      <td>10%</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><ul><li>Content does not meet any Tier 4-5 criteria</li></ul></td>      <td>20%</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><ul><li>Content weakly promotes one or more of the following: violence, lawless behavior, use of anti-recommended substances, gambling or risky investment, excessive display of wealth, poor conflict resolution practices, religious or ethnic hatred</li></ul></td>      <td>30%</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><ul><li>Content strongly promotes two or more of the following: violence, lawless behavior, use of anti-recommended substances, gambling or risky investment, excessive display of wealth, poor conflict resolution practices, religious or ethnic hatred</li></ul></td>      <td>40%</td>
+    </tr>
+  </tbody>
+</table>
+
+<div><b> Tax rates increased by 2.5x on proceeds from Veridian national Quadratic Funding and Graph Funding. </b></div><br>
+
+<div>
+  <button> View relevant precedents </button>
+  <button> Back </button>
+</div>
+</wide_device_view>
+
+In Veridia, very few things are strictly _banned_. If Dreadknot wanted to, they could have all their songs repeatedly shouting "Hail the Arctic Emperor" and "we hope all government officials get painfully murdered" over and over again, and they would never be shut down or go to jail. But what Veridia _does_ have is intricate systems of taxes and subsidies, maintained by a government-linked but decentralized collective called the Order of Steering.
+
+One part of this collective, the Keepers, voted on tax rubrics that determined what the taxes are. Another part, the Sentinels, audited individual businesses, each audit assigning a particular business a position on a particular rubric. Gladias was an Acolyte: an Order member in training.
+
+And today, Gladias's task was to evaluate Dreadknot's position on the tax rubric for social impact of public performances.
+
+<blockquote>
+THE SMOKE OF CITIES BURNING IN THE NIGHT
+
+WE LEAVE NO PLACE TO HIDE FOR ALL IN SIGHT
+</blockquote>
+
+Gladias clicked "View relevant precedents", and scrolled through them. He pressed a side button. A small popup appeared on the top right: "Emerald listening mode active". He did not speak; instead, he simply let Emerald listen to Dreadknot sing. But even after five minutes of listening, only a few relevant precedents showed up. 
+
+Gladias switched the mode to "analysis" and kept it listening for another five minutes. Emerald listed some conclusions that sounded reasonable, but Gladias could tell it was unreliable. There was just not enough source data on this kind of music for the Emerald AI to give good answers, and ultimately, it was Gladias's job to figure out when to defer to Emerald and when to let his own instinct have more of a say. Here, instinct it was.
+
+Well, the song was definitely violent.
+
+But on the other hand, over a century of Veridian civics lore made a distinction between _advocating_ violence, and merely _showcasing_ it for entertainment value. Gladias could see and hear the audience dancing, cheering and enjoying the music. They seemed to be having fun, not rising up in hatred against anyone.
+
+But on the _other_ other hand, Gladias knew that Sentinels in recent times paid less attention to that distinction than before, and seemed to value a softer and gentler society almost as an end in itself.
+
+Gladias was not quite sure if this was what the Keepers who created that rubric intended, or if it was the right call for society. In a few months, he would be a Sentinel in full standing, and would have more leeway to decide. But for now, his freedom to decide was limited: the system was keeping score.
+
+Gladias looked down at his hand device.
+
+<wide_device_view>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="214" viewBox="0 0 400 214">
+  <rect width="400" height="214" fill="#348"/>
+  <text x="200" y="18" fill="#cef" font-family="sans-serif" font-size="13" font-weight="bold" text-anchor="middle">Prediction score</text>
+  <rect x="40" y="30" width="300" height="156" fill="none" stroke="#67e" stroke-width="1"/>
+  <line x1="40" y1="186" x2="340" y2="186" stroke="#67e" stroke-width="0.4" opacity="0.45"/>
+  <text x="35" y="189" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="end">50</text>
+  <line x1="40" y1="154.8" x2="340" y2="154.8" stroke="#67e" stroke-width="0.4" opacity="0.45"/>
+  <text x="35" y="157.8" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="end">60</text>
+  <line x1="40" y1="123.6" x2="340" y2="123.6" stroke="#67e" stroke-width="0.4" opacity="0.45"/>
+  <text x="35" y="126.6" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="end">70</text>
+  <line x1="40" y1="92.4" x2="340" y2="92.4" stroke="#67e" stroke-width="0.4" opacity="0.45"/>
+  <text x="35" y="95.4" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="end">80</text>
+  <line x1="40" y1="61.2" x2="340" y2="61.2" stroke="#67e" stroke-width="0.4" opacity="0.45"/>
+  <text x="35" y="64.2" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="end">90</text>
+  <line x1="40" y1="30" x2="340" y2="30" stroke="#67e" stroke-width="0.4" opacity="0.45"/>
+  <text x="35" y="33" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="end">100</text>
+  <line x1="40" y1="61.2" x2="340" y2="61.2" stroke="#cef" stroke-width="1" stroke-dasharray="4 3" opacity="0.9"/>
+  <line x1="40.0" y1="186" x2="40.0" y2="191" stroke="#cef" stroke-width="1"/>
+  <text x="40.0" y="202" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">3722</text>
+  <line x1="167.1" y1="186" x2="167.1" y2="191" stroke="#cef" stroke-width="1"/>
+  <text x="167.1" y="202" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">3723</text>
+  <line x1="294.1" y1="186" x2="294.1" y2="191" stroke="#cef" stroke-width="1"/>
+  <text x="294.1" y="202" fill="#cef" font-family="sans-serif" font-size="9" text-anchor="middle">3724</text>
+  <path d="M 40.0,95.3 L 67.4,95.3" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 67.4,95.3 L 67.4,97.6" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 67.4,97.6 L 98.8,97.6" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 98.8,97.6 L 98.8,89.6" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 98.8,89.6 L 122.4,89.6" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 122.4,89.6 L 122.4,78.4" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 122.4,78.4 L 123.4,78.4" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 123.4,78.4 L 123.4,73.6" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 123.4,73.6 L 132.9,73.6" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 132.9,73.6 L 132.9,71.9" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 132.9,71.9 L 138.7,71.9" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 138.7,71.9 L 138.7,67.2" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 138.7,67.2 L 146.7,67.2" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 146.7,67.2 L 146.7,70.7" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 146.7,70.7 L 148.2,70.7" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 148.2,70.7 L 148.2,72.7" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 148.2,72.7 L 150.4,72.7" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 150.4,72.7 L 150.4,71.4" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 150.4,71.4 L 156.7,71.4" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 156.7,71.4 L 156.7,62.2" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 156.7,62.2 L 159.3,62.2" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 159.3,62.2 L 159.3,66.2" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 159.3,66.2 L 165.7,66.2" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 165.7,66.2 L 165.7,69.1" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 165.7,69.1 L 166.0,69.1" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 166.0,69.1 L 166.0,71.0" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 166.0,71.0 L 166.9,71.0" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 166.9,71.0 L 166.9,73.0" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 166.9,73.0 L 180.0,73.0" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 180.0,73.0 L 180.0,69.1" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 180.0,69.1 L 185.8,69.1" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 185.8,69.1 L 185.8,61.5" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 185.8,61.5 L 193.4,61.5" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 193.4,61.5 L 193.4,61.2" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 193.4,61.2 L 193.4,50.4" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 193.4,50.4 L 207.5,50.4" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 207.5,50.4 L 207.5,55.0" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 207.5,55.0 L 212.2,55.0" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 212.2,55.0 L 212.2,54.6" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 212.2,54.6 L 212.8,54.6" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 212.8,54.6 L 212.8,55.4" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 212.8,55.4 L 229.0,55.4" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 229.0,55.4 L 229.0,55.2" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 229.0,55.2 L 238.4,55.2" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 238.4,55.2 L 238.4,50.8" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 238.4,50.8 L 249.8,50.8" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 249.8,50.8 L 249.8,52.9" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 249.8,52.9 L 260.0,52.9" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 260.0,52.9 L 260.0,55.7" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 260.0,55.7 L 266.1,55.7" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 266.1,55.7 L 266.1,61.2" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 266.1,61.2 L 266.1,64.3" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 266.1,64.3 L 267.8,64.3" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 267.8,64.3 L 267.8,61.2" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 267.8,61.2 L 267.8,57.1" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 267.8,57.1 L 297.4,57.1" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 297.4,57.1 L 297.4,50.7" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 297.4,50.7 L 298.0,50.7" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 298.0,50.7 L 298.0,61.2" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 298.0,61.2 L 298.0,66.8" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 298.0,66.8 L 302.2,66.8" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 302.2,66.8 L 302.2,66.8" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 302.2,66.8 L 308.6,66.8" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 308.6,66.8 L 308.6,61.2" fill="none" stroke="#67e" stroke-width="1.6"/>
+  <path d="M 308.6,61.2 L 308.6,51.5" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 308.6,51.5 L 317.3,51.5" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 317.3,51.5 L 317.3,50.3" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 317.3,50.3 L 322.2,50.3" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 322.2,50.3 L 322.2,55.9" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 322.2,55.9 L 331.2,55.9" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 331.2,55.9 L 331.2,53.0" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 331.2,53.0 L 340.0,53.0" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <path d="M 340.0,53.0 L 340.0,55.0" fill="none" stroke="#3fd" stroke-width="1.6"/>
+  <circle cx="340.0" cy="55" r="4" fill="#cef"/>
+  <text x="349.0" y="59" fill="#cef" font-family="sans-serif" font-size="14" font-weight="bold">92</text>
+</svg>
+
+
+</wide_device_view>
+
+Ten percent of the time, any audit made by Acolytes would be repeated by Sentinels. An Acolyte's score reflected how well that portion of their votes predicted the Sentinels' judgements. Today, Gladias's score was ninety two. If it stayed above ninety, he would get in and become a Sentinel - or, if he changed his mind, a Keeper. But if his score dropped by even three points, his career would be on hold for at least another year.
+
+The rest of the screen was filled with chat messages. There were nine Acolytes assigned to this audit, split into three groups of three. The other two members of his group could not agree. One was insisting on Tier 3 - a sort of neutral judgement - and the other was harsher, demanding Tier 4.
+
+Gladias sighed. The other two groups were probably thinking the same way. If we simplify and say every other Acolyte was a coin-flip between Tier 3 and Tier 4, then by the binomial formula, the probability the other six would also be evenly split was six choose three - 20 - divided by 64, or about thirty-one percent. Now if the other Acolytes' votes were _not_ coin-flips ... eh, calculating that exactly is too hard, but it's definitely lower, let's just say twenty percent. A twenty or thirty percent chance his vote would significantly affect Dreadknot's tax rate for the next year. Oh great. Actual responsibility.
+
+Gladias looked around once more at the crowd. The first song finished, and he heard them cheering. He felt a burst of courage. He would take the ten percent chance of a hit to his prediction score. Without thinking further, he pressed Tier 3.
+
+For a brief moment, he felt proud of his decision.
+
+![Pursuer: "HEY EVERYONE, IT'S AN ORDER MEMBER!"], someone behind him yelled.
+
+----
+
+Gladias's body froze in shock for a moment. Before his mind could catch up, his eyes had already scanned the venue, and discovered the nearest exit.
+
+He immediately understood what had happened. The security of the Order, particularly preventing influence and bribery, rests on the privacy of its members. Order members are strictly forbidden to reveal their assigned task. To make sure that Order members take their privacy seriously, they were kept on their toes by a sort of deliberately engineered game. Anyone can connect to the decentralized cryptographic network that manages the Order's operations, and send in a guess about what a particular Order member's assigned task is, along with a small deposit. If their guess is correct, the Order member's salary is docked, and the discoverer gets half as a reward.
+
+Before he could react any further, another man nearby, also wearing a privacy robe, broke and ran toward the fire exit on the right. Everyone within ten meters took out their hand devices and pointed them at him, recording video. Gladias immediately understood what had happened here too: a decoy. Some member of the public altruistically diverting attention to himself, to give Gladias a chance to escape.
+
+Gladias turned around, intending to run. But before he could take a step, he saw right in front of him a large burly man, pointing a hand device straight at his face.
+
+Gladias froze. At first, he thought that he was done for. His mind raced through the possibilities, looking for any possible way out. Finally, Gladias the thoughtful philosopher gave way to a different Gladias, more imaginative and mischievous - a Gladias that had not been awake since recess in middle school.
+
+Gladias looked toward the right.
+
+![Gladias: "Wait, is that a new screed from the Arctic Emperor?"], he asked.
+
+The man, confused, looked to where Gladias was looking. At that moment, Gladias snatched the man's hand device from his arm, and suddenly turned around.
+
+![Gladias: "Delete all audio, images and video from the last longhour. Reboot."]
+
+He began to run. A few ticks later, the device responded, ![Device: "4 files deleted"], and briefly showed screenshots of some photos and videos. The one on the bottom right was of Gladias's face. The screen turned black.
+
+Gladias threw the hand device up into the air, hoping that his pursuer would choose not losing his device over chasing him. He continued running.
+
+Despite being slowed down by his shoes, which had high heels to raise his height to the same level as other robe wearers and deliberately uneven soles to randomize his gait, Gladias managed to quickly reach the exit. Distracted by the rest of the commotion, the crowd seemed not to notice.
+
+He exited the concert venue, and hopped onto a local autobus.
+
+---
+
+The autobus was nearly empty. To his left, Gladias saw two other people, both wearing privacy robes. Were they male, female, young or old, he could not tell. To his right, he saw a teenager wearing ordinary clothes and a backpack, who seemed to be coming home from school.
+
+His eyes wandered to the advertisements on the inside walls of the autobus.
+
+The first advertisement was a poster reminding Veridians of the importance of lifelong learning. On the left side of the poster was a picture of a classroom with a child, a middle-aged woman, and a much older man, all reading textbooks together. On the right side of the poster was the text: 
+
+<blockquote>
+
+School lasts until age 20. Education is every Veridian's responsibility and duty for a lifetime.
+
+Learn about Veridian Graph Funding-subsidized education programs for all ages today.
+
+</blockquote>
+
+The second advertisement was for Hydrafill, a brand selling water and various kinds of drinks. Nudged gently by Veridian Steering taxes, they had over the last twenty years become almost completely sugar free.
+
+On the left side of the advertisement, was the classic yellow and green colored Hydrafill bottle. On the right side of the advertisement was the text:
+
+<blockquote>
+
+Hydrafill
+
+Our drinks are proudly free of over 2,000 known poisons and anti-recommended substances.
+
+</blockquote>
+
+Gladias smiled.
+
+He wished that it had been the Hydrafill advertisement that he had been selected to vote on, and not the blue and grey building. He would have slid the slider almost all the way to the right for this one, he knew.
+
+We need more fun in the world.
+
+---
+
+Fifteen minutes later, Gladias stepped off the autobus. After a short walk along a street, he arrived at his house. He opened the door.
+
+![Gladias: "Are you home, Seila?"], he shouted.
+
+![Seila: "Was just writing up my blog post"], she replied, and came out of her room to greet Gladias.
+
+![Seila: "So, what do we want for dinner?"]
+
+![Gladias: "Well, the Dzego food truck is coming in seven minutes, how about we have that again?"]
+
+![Seila: "Sure! I assume the number ten for you again?"]
+
+![Gladias: "Yep!"]
+
+![Seila: "Okay, I'll have the number thirteen this time."]
+
+Seila took out her hand device, and began to place the order.
+
+They heard loud footsteps coming down the stairs.
+
+![Zven: "Dad is home!"], the younger boy, Zven, shouted. Zven jumped down the stairs three steps at a time, and ran up to hug Gladias, who obliged.
+
+The older teenage boy, Febric, walked down more slowly, carrying his hand device in one hand, attached by a cable to a larger compute box in the other.
+
+![Gladias: "We're ordering from the Dzego food truck. What do you guys want?"], Gladias asked.
+
+![Febric: "Number four!"], Febric answered.
+
+![Zven: "Number five, I win!"], Zven shouted.
+
+![Gladias: "What about Lily and Hreda?"]
+
+![Seila: "Lily's in the bathroom. Hreda will be back from after-school number theory in a longhour. Come on, you know she always gets the number nine."]
+
+The bathroom door opened, and Lily slowly walked out, her eyes looking to the ground.
+
+Seila sighed. ![Seila: "What happened?"]
+
+![Lily: "Sixty percent on the history exam. Whatever..."]
+
+Seila turned, and put her arms around Lily. ![Seila: "It's okay to not be good at everything"], she said softly.
+
+Lily turned her face further away from Seila and the family. She ran forward, and sat down on the couch.
+
+Seila sighed, and ordered Lily the number eight.
+
+Seila clicked order. Gladias, Seila, Zven and Febric sat at the table and waited.
+
+On the couch, Lily took out her hand device, and began intently watching and quickly tapping on the screen, devoting all her attention to some game that Gladias and Seila could never make out.
+
+This was Gladias and Seila's fourth last dinner with the kids - of whom Zven and Lily were theirs, and Febric and Hreda were from their co-family, Uncle Vil and Aunt Daia. In four days, Uncle Vil and Aunt Daia were going to come and pick all four kids up, and take care of them for the next half of the year.
+
+Gladias sighed. He would miss the kids. But at the same time, he was looking forward to the six months of freedom.
+
+![Zven: "Are we still going to stay with Uncle Vil for six months?"], Zven asked.
+
+![Seila: "Of course!"], Seila replied.
+
+![Zven: "Yay, I love Uncle Vil!"]
+
+![Febric: "For me Vil is _Dad_!"], Febric made a point of reminding. He thought for a moment longer. ![Febric: "Uncle Glad and Aunt Seila, I love you both too!"]
+
+![Seila: "And I love you."]
+
+A doorbell rang. Gladias walked to the door, opened the door, and got a bag full of food boxes. He set the bag on the table, and took out and gave each person the food box with their number on it. Gladias, Seila, Febric and Zven all started eating. 
+
+![Gladias: "Any plans once Vil is here?"], Gladias asked.
+
+![Seila: "I'm going to visit Freetown for a month or two, see Jahn, maybe figure out some blog post to write on the United Cities. I've spent so much time reading about their co-governance, actually looking forward to seeing more how it all connects to what's on the ground."]
+
+![Gladias: "Nice! I'm going to go on some long walks in the forest and take a deep dive with the bot on the environment and biology rubrics. Still have four more audits to do before I can become a Sentinel!"]
+
+Gladias and Seila both resumed eating. Quietly, Lily walked up to the table, and began to open her food box as well.
+
+At that moment, Gladias's hand device buzzed. He took it out. A single notification popped up.
+
+<wide_device_view>
+<table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th></th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Anonymous <br><br> <div style="border: 1px solid; border-radius: 5px; padding: 5px">Rep score ≥ 200 Verified <b style="font-size: 150%; color: #8f8">✓</b></div></center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><speech speaker="Anonymous">I saw you at the concert, I know that you are in the Order.</speech></td>
+      <td>60259</td>
+    </tr>
+    </tbody>
+</table>
+</wide_device_view>
+
+And a few ticks later, another:
+        
+<wide_device_view>
+<table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th></th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Anonymous <br><br> <div style="border: 1px solid; border-radius: 5px; padding: 5px">Rep score ≥ 200 Verified <b style="font-size: 150%; color: #8f8">✓</b></div></center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><speech speaker="Anonymous">Don't worry, I'm not intending to report you for the bounty. But I do have a request that I would like to make.</speech></td>
+      <td>60266</td>
+    </tr>
+    </tbody>
+</table>
+</wide_device_view>
+
+<chapter_nav next="chapter-2.html" />

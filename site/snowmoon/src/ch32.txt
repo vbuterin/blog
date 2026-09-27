@@ -1,0 +1,235 @@
+<chapter_nav prev="chapter-31.html" />
+
+# Chapter 32
+
+<chapter_open place="Meldan, Veridia" date="3725 Rainmoon 12" />
+
+Gladias and Seila walked together along the same path through Kalimar that they had by this point taken hundreds of times. The path was covered with trees and surrounded by stone houses on both sides.
+
+To their left, they saw a man climbing a tall ladder leaning against a tree. Once he reached the top of the ladder, he began unscrewing a security camera that was located there. Once he finished, he unceremoniously threw the camera into a box that was several meters below him on the ground. The throw landed perfectly. Gladias and Seila heard a loud clang as the camera crashed against the dozens of other cameras that were already in the box. The man immediately proceeded to climb down the ladder.
+
+They continued walking. They passed by a store, one that Gladias had remembered seeing hastily replace much of its inventory with emergency preserved food rations only months earlier. This time, the inventory item that took up the front shelves was a particular type of red flower that was native to Northglade, that residents were buying to celebrate the province's liberation.
+
+Taped to the side of the store, there was an advertisement:
+
+<blockquote>
+
+We are now offering the freshest of fresh water SEIZED from the CORE TERRITORY of the ARCTIC EMPIRE.
+
+Get the latest Hydrafill water, bottled at the springs of Thaldur, today!
+
+Enjoy the spoils of victory. Buy Hydrafill.
+
+</blockquote>
+
+The road transitioned to dense shrubbery, and then to a sky bridge overlooking a busy highway. To the left, they could see a mountain covered with trees. A few apartment buildings about fifteen storeys tall, decorated and shaped like oversized medieval castle towers though with far more windows on the sides, poked up high above the trees.
+
+After crossing the sky bridge, the road transitioned into a tunnel, and Gladias and Seila arrived at a Y-shaped intersection. They turned left, walked forward until the path came back up above ground, and then turned right. Gladias checked his watch for directions. He had never actually _walked_ all the way to parliament before.
+
+Twenty minutes later, they arrived at the large circular building. Gladias tapped his watch against the green circle, and the doors opened. Inside the building, he remembered the directions well. Forward, then right turn, then forward, then third door on the left.
+
+He tapped his watch again, and the door opened.
+
+Verdow and Zei were both sitting inside the office. They both turned their heads toward Gladias and Seila.
+
+![Verdow: "Gladias, Seila, welcome back!"], Verdow exclaimed with a warm friendly tone.
+
+![Gladias: "Verdow, good to see you again!"]
+
+![Verdow: "Please, please sit down."]
+
+A robot slid into the room.
+
+Gladias briefly turned to face the robot. ![Gladias: "dia jie fe kai ja cu dze kai lin pan"], he told the robot in a deliberately clear tone.
+
+The robot buzzed, and left the room.
+
+![Verdow: "Impressive, Gladias. Even I would not have been able to do that."]
+
+Verdow briefly went silent, and then spoke up again.
+
+![Verdow: "Okay, I'm embarrassed. What is dze kai lin pan?"]
+
+![Zei: "Vegetable and rice."]
+
+![Verdow: "Ah right, green plant line bread."]
+
+![Verdow: "By the way Zei, when are we going to start switching over from meters to lightfeet?"]
+
+![Zei: "Fin tells me the Bansunpei is completely busy on getting Dzego's privacy and security habits fully up to the new standards. In about ten days he and some others are actually going to come here to Veridia, and see if they can help you guys get up to speed on those things too."]
+
+![Zei: "But I guess we don't have to wait for them, if you like lightfeet you can just start using lightfeet today."]
+
+![Verdow: "I guess they're right. Switching over to lightfeet isn't the highest priority right now."]
+
+Verdow's tone suddenly became more serious.
+
+![Verdow: "A lot of people are celebrating this month. For the first time in a century, the Arctic Empire has been defeated. Northglade is free. And we already have many people in Thaldur taking up our offers and helping open up the Arctic technologies we captured so that we can properly benefit and learn from them."]
+
+![Verdow: "But we have to remember - this was only the first round. And even this round, we did not fully win."]
+
+![Verdow: "The Arctics lost Northshore and lost Thaldur, but they kept Redshire. They lost some of their lead in technology, but we've learned over the past few months that they are rapidly gaining in other kinds of technology."]
+
+Verdow sighed, and then continued giving his cautionary note.
+
+![Verdow: "The privacy that we thought we had, we do not actually have. In the digital world, we're okay - cybersecurity and cryptography are amazing now, though we have to remember that language models will always be attackable in ways that regular software is not. In the physical world, it's much harder. Information in physical reality is fundamentally much more leaky. There are dozens of ways even our keystrokes on our keyboards leak out into the world outside. We can make an effort to fight this - especially in our private spaces - but there's a limit to how much we can succeed."]
+
+![Zei: "I hear there's already a batch of the new cameras from Dzego flying in, with built-in hard guarantees of what information they can and can't transmit. VNU is figuring out the process for inspecting them. They seem to want to just copy the way that Dzego has been doing it."]
+
+![Seila: "Ooh, so that's what it was? We saw someone unscrewing a hundred cameras in Kalimar when we were walking to get here."]
+
+![Zei: "Looks like it."]
+
+Gladias decided to change to a different topic.
+
+![Gladias: "What do you think about our government?"], he asked Verdow.
+
+![Verdow: "The Order of Steering worked, the Courts worked, Graph Funding has been fine. But everything more transparent has been broken. By default, I expect that everything the government does is going to become even more private going forward. More digital-first, more sealed anti-transmission rooms, more privacy robes."]
+
+Verdow sighed, clearly at least somewhat unhappy with the state of affairs that he was predicting.
+
+![Verdow: "There's a fundamental tension here that our system of government has been grappling with since the day it was first created. In an interconnected world, how is it even possible for a government to be accountable to its own citizens, without also being 'accountable' to powerful financial interests on the inside and adversaries on the outside, both of which are trying to press at the weakest point, isolate it and pressure and twist it to serve their own ends?"]
+
+![Verdow: "We need to keep improving our theory of what transparency and accountability even mean. In this current iteration of our government, the answer has been the selection process from one end, and Heralds from the other end. In the next iteration, it might have to be something else. I think it will have to involve something like Silverchat polls, or maybe something even higher bandwidth, to understand people's goals, and something involving AI to figure out how to achieve those goals."]
+
+![Verdow: "Zei, what do you think?"]
+
+![Zei: "AI is the start of the conversation, not the answer. What kind of AI is it? How do we train it? Who trains it? What instructions do we give it? Who feeds the AI information, and who intervenes in the AI's thought process to assist it?"]
+
+![Verdow: "How would you answer that?"]
+
+![Zei: "I would first take a step back and ask what the problems are. And I think I have noticed one. Veridian institutions, as they exist today, don't really have a built-in concept of predicting the future. It's all about the present, and public opinion in the present."]
+
+![Zei: "There's no position where you have to stand up and say - if we do X, then Y will happen - and you rise up if you're right, and fall if you're wrong. The closest is Acolytes, that have to predict the Sentinels. But even there, they're not predicting the real world. They're predicting Sentinels. So they're still just predicting other people's opinions. You've aligning people to each other, but you're not aligning people to reality."]
+
+![Zei: "That's where AI could do very well - it's where AI already _has_ done very well for us. But I don't think we should pick one AI, we should have some kind of open competition of them. AI should be a player, not the game. Let different people choose different AIs and different ways of working with them, and hold them accountable to the goals."]
+
+![Verdow: "Should a society have goals?"]
+
+Zei stared at Verdow.
+
+![Zei: "What do you mean?"]
+
+![Verdow: "The Arctics are better at having goals than any of our nations. They know exactly what they want, and are single-minded about achieving it. If you make a perfect goal-executing machine, the Arctics are what you get."]
+
+![Zei: "That's why you need the other piece - being able to gather together different people's goals and add them up, so you know that you're achieving the actual goals of the people, and not just one emperor."]
+
+![Verdow: "But what if any goal you come up with and write down on a piece of paper ends up looking like that?"]
+
+![Zei: "What do you mean?"]
+
+![Verdow: "What if part of the human condition is that we don't fully know what we want, and any attempt to crystallize it into one piece breaks down if you push it far enough? We see this with our rubrics: they work for some time, then eventually they get gamed, and then we adjust the rubrics, and repeat. What if that's unavoidable?"]
+
+![Zei: "Then what's the alternative?"]
+
+![Verdow: "Think of a lake, full of water. Every molecule of water in the lake acts independently. There is no master plan. There are only trillions of molecules dreaming trillions of dreams. The lake has a harmony and balance to it, we can all see that. But it's not because anyone forces that balance to happen, it's because if any one part of the lake's surface ends up lower than the other parts for even a brief moment, then gravity will attract water to flow in, and the height everywhere will be the same again."]
+
+![Verdow: "But also, when winter comes, the molecules come together, into thick crystalline structures of impenetrable ice."]
+
+![Zei: "You understand physics well."]
+
+![Verdow: "My daughter is starting to study chemistry, she has been telling me a lot about it. Her friends think she's over-working, but I've been encouraging her - I told her that if she studies hard, one day she can be just like you."]
+
+Zei blushed.
+
+![Verdow: "So that's what I think the ideal is. A society that can do the good of ordinary life but not the evil of empire and conquest. One that can both resist the Arctic Empire, and avoid becoming one, and instead prosper peacefully one step at a time."]
+
+![Verdow: "It's hard to agree on what we want, it's easier to agree on what we don't want. I think that's the asymmetry that we build everything on top of. In the winter, we all align in the same direction, and we can form the crystal, and defend and strike back. In the summer, we flow like water. Decentralized forces - markets, open intellectual discourse, open science, culture and law - passively make the trillion forces of our trillion dreams add more often than they subtract. We adjust their rules over time, but only carefully and slowly. The natural, gentle progress we make from decades upon decades of that is worth more than satisfying any goal."]
+
+![Gladias: "What if sometimes different parts of the lake have to be water and ice at the same time?"]
+
+![Verdow: "That may be."]
+
+![Seila: "And what if a lake where every point is at the exact same height as every other point is also a kind of uniformity that we don't want, and sometimes it's better if we form snowballs and let them float?"]
+
+![Verdow: "That too may be."]
+
+![Verdow: "Seila, what do you think we should do more?"]
+
+![Seila: "The Arctics have competition - they care about who's better and who's worse, and they encourage people to challenge each other and strive and try to rise to the top - but they do not understand cooperation. They are ice without the water. Veridia has cooperation, but maybe we do not understand competition. We can be water, but we don't yet know how to be ice - and even our water does not always flow as well as we would like. Actually I think it's Dzego that's figured out how to have both, and make them serve each other. We should learn from them more."]
+
+She sighed deeply. After a few moments, Verdow replied again.
+
+![Verdow: "These are all good thoughts."]
+
+![Verdow: "Zei, would you be interested in staying back and helping us figure out some of these issues?"]
+
+Zei thought for a moment.
+
+![Gladias: "I'm sure Mu and Su can handle the Kungaupei well"], Gladias interjected.
+
+![Zei: "Of course! Though you might find Fin will be even more helpful than I am."]
+
+![Verdow: "Well I appreciate it. You know, Parliament realizes now that their current ways of thinking have hit their limits. Many senators have resigned. The ones who are still there - like me - we want new ideas. We're open to listening."]
+
+Verdow stood up, and walked over slowly to a map of the world that was printed on the side of the office wall.
+
+![Verdow: "This is our world. Ninety million people. Gladias, Seila, Zei, have you ever wondered what things might be like if it was nine hundred million, or nine billion?"]
+
+![Gladias: "I have not. Why do you ask?"]
+
+![Verdow: "The larger the population, the faster new technologies get invented. That's why the medieval era was so stagnant, and why things are moving so much faster today. But no matter how large the population, everyone still adapts to the technology at the same rate. Maybe we've done so well at adapting - eradicating computer viruses, adding so much privacy and verifiability to everything, optimizing our society to be so beautiful and healthy - only because we don't have nine billion people pushing technology forward even faster and increasing the complexity of the society that has to accept it."]
+
+![Gladias: "That's interesting. Do you think we will have nine billion people one day?"]
+
+![Verdow: "Not one day. Very soon. And not people. Bots. And not nine billion. Nine trillion."]
+
+![Verdow: "That's what I worry about. AI is going to really change everything. So far, progress has been moderate, nobody has lost their jobs, it feels more like everyone has been promoted to being a manager - or sometimes a repairman. But at some point, once the AI can do almost everything that humans can do, even if at a few percent the efficiency, our human population won't be a constraint anymore."]
+
+![Gladias: "So what do we do?"]
+
+![Verdow: "Well, we don't really have much power to be the ones to answer that question if the Arctics continue to stay further ahead."]
+
+![Verdow: "If we want to get back into balance, we have to get better at penetrating _them_. Have more of a view into their society and their technology, make sure that for any advance they make, we learn about it. Privacy for the weak, transparency for the powerful. Having those people from Thaldur helping us is great, and hopefully Deluin is far from the only person from Redshire who pretended to join the Arctics but would be interested in passing more information to us."]
+
+![Zei: "There's a known result from game theory"], Zei interjected. ![Zei: "If two players are locked in a game that has some mixture of cooperation and competition, then you can unlock strictly higher levels of cooperation if those players can at least partially read each others' minds. Maybe that's the right outcome to hope for. As time passes, we'll learn more about each other, we'll learn from each other, and we'll come to actually understand each other better."]
+
+![Verdow: "I'm not so optimistic. The Arctic Emperor is upset. He can't do anything to us right now, but he's definitely scheming. There will be a next round. It could be five years from now, it could be twenty years from now. If we can at least keep pace on technology, we can survive."]
+
+![Gladias: "Do you think we should try to slow _them_ down?"]
+
+![Verdow: "Do the same thing to them that they have been doing to Dzego for a century? It's not the worst idea."]
+
+Zei sighed.
+
+![Zei: "If we were able to keep advancing under their pressure, they'll definitely be able to keep advancing under any pressure we can bring to bear against them."]
+
+![Zei: "You know, the later stages of all this are going to get crazy. At some point, eventually we'll have drones the size of worms and flies burrowing under the ground, flying through the air and swimming under the sea. We'll have new forms of genetically engineered life that we can't even imagine - both for peace and for war. Some of us might be uploaded and living inside computers. Not this year. Not the next few years. But definitely in the next hundred years."]
+
+![Zei: "Maybe in two hundred years it will be stable. We'll have figured out exactly the ideal type of drone at every scale, the largest as large as aeroplanes or even hollowed-out asteroids floating in space, and the smallest so tiny that there's no more gap between them and viruses. Once we hit the ceiling, there would be nothing else even stronger that could defeat them. Just big distributed immune systems protecting our planets, our animals and our trees, and ourselves. We will be wiser, almost everyone will choose peace over war, and those who don't will have no path to impose their will. And everyone will just live the kind of life they want to live."]
+
+![Seila: "I just hope we have peace"], Seila added. ![Seila: "All these questions: genetic engineering, uploading, going to the stars, I don't think we can get the right answers if we take every step in a rush because we're scared. I'm not sure I want to upload. But a year ago I was not sure if I wanted to live for more than a hundred years. These things should all be a choice we make carefully, and have respect for people who choose not to take the same choice as we do, not an urgent decision we make to survive in a war."]
+
+Verdow rejoined the conversation.
+
+![Verdow: "We might have that peace, we might not. We can hope for the best, but we have to be ready for all possibilities."]
+
+![Zei: "You know, a few days ago Bai mentioned to me that she was thinking of spending a year in Thaldur - precisely to better understand how the Arctics think, and see if she can find a path to that peace."]
+
+![Verdow: "That sounds a lot less scary than what Deluin did. I support her."]
+
+The door opened. A robot slid up to Gladias, carrying his tea and rice and vegetable dish. Gladias picked up both with his hands. He thanked the robot, and the robot slid back out of the room.
+
+![Verdow: "Do you want to go upstairs and check out the roof?"], Verdow asked.
+
+![Zei: "Sure"], Zei answered.
+
+Gladias, Seila and Zei stood up. Verdow walked out of the room and began to walk through the corridor. The three of them followed, Gladias still holding his tea in one hand and his food in the other.
+
+Verdow led them up a staircase, and reached a door which opened automatically. They stepped out.
+
+To their left, they could see the main commercial district of Meldan. There were buildings of various styles, some that were aesthetic imitations of something older and almost medieval, and others that were openly modern and futuristic. The building that looked like an aeroplane stood out from among the others, slightly spoiling the view. The trees are only good at covering it up when you're at ground level yourself, Gladias thought.
+
+Further left of the commercial district, they could see the grey and purple Greater Plum Harbor. The whole thing was a square nearly a kilometer wide, and they could see many of its buildings clearly from where they were. And on the right edge of the commercial district, Gladias could make out the large concert venue.
+
+In front of them, they could see the Kalimar district. From where they stood, it looked not too different from a forest. Tall trees covered up most of the area, with only a few buildings poking up just barely above them. After scanning the area quickly, Gladias spotted the headquarters of Silverchat.
+
+To their right, they could see the mountain covered with trees. They were already partway up the mountain, about forty meters higher than most of the rest of Meldan. But about two hundred meters to their right, the mountain began sloping upward properly. Only about half of the apartment buildings shaped like oversided medieval-style castle towers were visible from where they were. The mountain looked much larger and more imposing from close up, Gladias thought.
+
+![Verdow: "Probably not as beautiful as the views in Northglade?"], Verdow asked.
+
+![Gladias: "I like the green here. I don't think I could handle being up north and dealing with several months of no green and only snow."]
+
+![Gladias: "And besides, Meldan is my home."]
+
+<chapter_nav prev="chapter-31.html" />

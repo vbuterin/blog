@@ -1,0 +1,535 @@
+<chapter_nav prev="chapter-16.html" next="chapter-18.html" />
+
+# Chapter 17
+
+<chapter_open place="Meldan, Veridia" date="3724 Fruitmoon 11" />
+
+Gladias walked forward along a path covered with trees on both sides, toward the large circular parliament building in front.
+
+When he arrived at a side door of the building, he tapped his watch on the green circle.
+
+The circle buzzed.
+
+<narrow_device_view>
+
+<div style="border-style: solid; border-color: green; margin: -20px; border-radius: 10px; padding: 10px">
+
+<table >
+  <thead>
+    <tr>
+      <th>Veridian Parliament</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Proof of invitation verified.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</narrow_device_view>
+
+The door opened. Gladias walked in, and followed the instructions that were being relayed by his watch. Forward, then right turn, then forward, then third door on the left.
+
+Gladias got to the door, and tapped his watch again.
+
+The door opened.
+
+Inside, he saw a man wearing a Veridian parliament robe.
+
+![Verdow: "Gladias, thank you for coming!"], the senator exclaimed.
+
+![Gladias: "And thank you for seeing me, Senator Verdow!"]
+
+![Verdow: "Please sit down."]
+
+A robot slid into the room.
+
+![Robot: "jie mo kai tu jie hei ja ma?"], the robot asked.
+
+Gladias briefly stared in surprise.
+
+Verdow laughed.
+
+![Verdow: "I adjusted the settings to make it do that a few months ago. Just a little something as a reminder that other countries exist and that they matter."]
+
+Verdow tapped a few buttons on the robot's screen, and turned the screen toward Gladias.
+
+The screen was in Dzegoban. Gladias's eyes wandered around with confusion.
+
+![Verdow: "Oh, if you want water, that's 'ja'. And if you want tea, that's 'kai ja'. Literally 'plant water'."]
+
+Gladias clicked on 'kai ja'. If he's going to be in Dzego for a few months, might as well get acclimated and start drinking some tea - and knowing the local word for it. The robot beeped, signaling acceptance of the order, and began to quietly glide away from them. The room door briefly opened, and the robot exited the room.
+
+![Gladias: "So you think I should go to Dzego?"]
+
+![Verdow: "You're obviously smart. Of course I have no idea what you say in your secret meetings, but judging from everything you said in the hearing, and from your original application to the Order years ago, I think you're a good and smart person. We need people like you to be more active in serving our country. Being a Keeper is nice, but come on, you're only one of over a thousand. I think getting and bringing back some first-hand experience from Dzego could be even more meaningful."]
+
+![Gladias: "If you think it's a good idea, I'm happy to. But who should I talk to there? That's what I wanted to get your input on."]
+
+Gladias intentionally omitted any mention of Zei - not out of any desire to hide that indirect connection, but because he wanted to get a fully independent answer from Verdow first.
+
+![Verdow: "Well my strongest connections are with some of their authors and musicians"], he said, gently laughing. ![Verdow: "Though I also know a few people in the government there, especially the security and health ministry. I'll send you their contacts, and give them a heads up. I wouldn't stop with them, but I think they can help get you started."]
+
+![Gladias: "Thanks, that would help a lot!"]
+
+![Gladias: "I only know two people from there, indirectly; my wife met them at a chance meeting in the Economics Institute in Freetown. Zei and Bai, they were in Minpentai."]
+
+Verdow's eyes opened. ![Verdow: "Honestly, you might have a better lead than I do. When you see the Minpentai games in Dzego, the players and the people who train them are clearly top-notch. If I had to find someone to defend me against the Arctics, I'd almost trust them over the actual Dzego army."]
+
+![Verdow: "How advanced are Zei and Bai? Did they get into any of the championships?"]
+
+![Gladias: "Last thing Seila told me, Zei won the semi-finals, and then they cancelled the finals when Redshire was invaded."]
+
+![Verdow: "The semi-finals, like municipal level?"]
+
+![Gladias: "National."]
+
+Verdow stared with a mix of surprise and joy.
+
+![Verdow: "Your connections are definitely better than mine then. When you come back, you'll have to tell me more about Dzego!"]
+
+![Verdow: "Anyway, I'll introduce you to the other folks I mentioned so you can see them when you come. It's always good to get more than one perspective."]
+
+Gladias nodded appreciatively.
+
+![Verdow: "Oh, by the way, speaking of getting more perspectives, one of the Graph Funding stewards is here about to visit me. You want to talk to him too?"]
+
+![Gladias: "About what?"]
+
+![Verdow: "Oh, his work, how he's feeling about Graph Funding, and of course Dzego."]
+
+![Gladias: "Sure, why not?"]
+
+---
+
+A few minutes later, the door opened, and another man, wearing a Veridian privacy robe but without the face cover and hood, walked in.
+
+![Verdow: "Belgor, good to see you again!"]
+
+![Belgor: "Good to see you too, Verdow!"]
+
+![Verdow: "And meet Gladias, he's a Keeper."]
+
+![Gladias: "Nice to meet you, Belgor."]
+
+![Belgor: "And nice to meet you, Gladias!"]
+
+![Verdow: "So Gladias is thinking of going to Dzego soon. We thought that maybe you should tell him more about Graph Funding, and any advice on what he should do or learn in Dzego."]
+
+![Belgor: "Sure, happy to. How familiar are you with how Graph Funding works?"]
+
+![Gladias: "Honestly, not very."]
+
+![Belgor: "Great."]
+
+He took out his hand device, and pressed some buttons. A diagram opened up on the screen, and he showed it to Gladias.
+
+<wide_device_view>
+
+
+
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="280" viewBox="0 0 800 400">
+  <defs>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#cef" />
+    </marker>
+    <marker id="arrowhead2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9ab" />
+    </marker>
+  </defs>
+
+  <rect width="800" height="400" fill="#245" />
+  <line x1="477.0" y1="181.2" x2="538.3" y2="171.9" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="514" y="188" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">24%</text>
+  <line x1="443.2" y1="216.0" x2="514.3" y2="253.9" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="480" y="249" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">22%</text>
+  <line x1="390.0" y1="216.0" x2="361.2" y2="282.2" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="365" y="254" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">21%</text>
+  <line x1="323.0" y1="211.5" x2="291.3" y2="219.0" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="303" y="210" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">8%</text>
+  <line x1="326.3" y1="170.0" x2="271.0" y2="152.8" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="297" y="154" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">20%</text>
+  <line x1="592.3" y1="155.7" x2="685.1" y2="89.8" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="651" y="128" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">15%</text>
+  <line x1="613.1" y1="155.7" x2="702.5" y2="130.1" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="667" y="153" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">38%</text>
+  <line x1="618.3" y1="165.1" x2="724.6" y2="163.5" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="680" y="176" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">33%</text>
+  <line x1="618.3" y1="174.7" x2="725.1" y2="198.8" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="678" y="200" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">14%</text>
+  <line x1="585.1" y1="261.0" x2="711.4" y2="254.0" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="659" y="269" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">32%</text>
+  <line x1="585.1" y1="272.2" x2="671.6" y2="286.0" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="634" y="292" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">12%</text>
+  <line x1="553.2" y1="273.9" x2="640.8" y2="317.4" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="600" y="310" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">18%</text>
+  <line x1="540.1" y1="273.9" x2="582.1" y2="334.0" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="557" y="317" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">23%</text>
+  <line x1="532.2" y1="273.9" x2="524.2" y2="361.5" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="519" y="327" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">15%</text>
+  <line x1="365.6" y1="302.2" x2="429.7" y2="374.9" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="396" y="353" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">45%</text>
+  <line x1="356.7" y1="302.2" x2="356.2" y2="369.6" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="347" y="344" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">25%</text>
+  <line x1="347.0" y1="302.2" x2="290.6" y2="359.4" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="308" y="332" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">15%</text>
+  <line x1="332.1" y1="302.2" x2="215.1" y2="349.5" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="261" y="324" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">15%</text>
+  <line x1="206.5" y1="256.7" x2="146.0" y2="314.9" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="165" y="287" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">45%</text>
+  <line x1="171.3" y1="256.7" x2="111.3" y2="280.0" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="133" y="265" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">18%</text>
+  <line x1="169.3" y1="239.1" x2="92.7" y2="245.9" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="124" y="237" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">12%</text>
+  <line x1="169.3" y1="224.9" x2="52.8" y2="208.1" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="103" y="209" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">25%</text>
+  <line x1="193.0" y1="146.8" x2="72.5" y2="157.3" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="122" y="147" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">55%</text>
+  <line x1="193.0" y1="136.1" x2="105.6" y2="123.4" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="144" y="123" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">15%</text>
+  <line x1="218.2" y1="132.8" x2="137.9" y2="94.1" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="176" y="105" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">12%</text>
+  <line x1="231.0" y1="132.8" x2="171.3" y2="57.5" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+  <text x="203" y="87" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">18%</text>
+  <rect x="323" y="170" width="154" height="46" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="400" y="189.2" font-family="sans-serif" font-size="15" fill="lightblue" text-anchor="middle">Airborne disease</text>
+  <text x="400" y="208.2" font-family="sans-serif" font-size="15" fill="lightblue" text-anchor="middle">resistance</text>
+  <rect x="538" y="156" width="80" height="20" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="578" y="169.9" font-family="sans-serif" font-size="11" fill="lightblue" text-anchor="middle">Air quality</text>
+  <rect x="481" y="254" width="104" height="20" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="533" y="268.1" font-family="sans-serif" font-size="11" fill="lightblue" text-anchor="middle">Early detection</text>
+  <rect x="321" y="282" width="72" height="20" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="357" y="296.4" font-family="sans-serif" font-size="11" fill="lightblue" text-anchor="middle">Treatment</text>
+  <rect x="169" y="211" width="122" height="46" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="230" y="223.9" font-family="sans-serif" font-size="11" fill="lightblue" text-anchor="middle">Individual</text>
+  <text x="230" y="237.9" font-family="sans-serif" font-size="11" fill="lightblue" text-anchor="middle">non-pharmaceutical</text>
+  <text x="230" y="251.9" font-family="sans-serif" font-size="11" fill="lightblue" text-anchor="middle">prevention</text>
+  <rect x="193" y="133" width="92" height="20" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="239" y="147.0" font-family="sans-serif" font-size="11" fill="lightblue" text-anchor="middle">Prophylactics</text>
+  <circle cx="695" cy="83" r="12" fill="#1c3a4e" stroke="#cef" stroke-width="1" stroke-dasharray="3 2" />
+  <text x="695" y="87" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">...</text>
+  <rect x="700" y="112" width="68" height="18" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="734" y="124.9" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Ventilation</text>
+  <rect x="725" y="154" width="62" height="18" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="756" y="166.8" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Filtration</text>
+  <rect x="725" y="192" width="68" height="28" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="759" y="204.2" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Ultraviolet</text>
+  <text x="759" y="216.2" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">light</text>
+  <rect x="711" y="238" width="62" height="28" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="742" y="250.1" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Wastewater</text>
+  <text x="742" y="262.1" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">scanning</text>
+  <rect x="672" y="272" width="74" height="40" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="709" y="283.7" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Social media</text>
+  <text x="709" y="295.7" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">open-source</text>
+  <text x="709" y="307.7" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">analysis</text>
+  <rect x="607" y="317" width="104" height="18" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="659" y="330.2" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Individual testing</text>
+  <rect x="560" y="334" width="72" height="40" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="596" y="345.8" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Airborne</text>
+  <text x="596" y="357.8" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">environment</text>
+  <text x="596" y="369.8" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">scanning</text>
+  <circle cx="523" cy="373" r="12" fill="#1c3a4e" stroke="#cef" stroke-width="1" stroke-dasharray="3 2" />
+  <text x="523" y="377" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">...</text>
+  <rect x="407" y="375" width="62" height="18" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="438" y="387.7" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Antivirals</text>
+  <rect x="325" y="370" width="62" height="28" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="356" y="381.4" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Supportive</text>
+  <text x="356" y="393.4" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">care</text>
+  <rect x="246" y="359" width="62" height="28" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="277" y="371.2" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Immuno-</text>
+  <text x="277" y="383.2" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">modulators</text>
+  <circle cx="204" cy="354" r="12" fill="#1c3a4e" stroke="#cef" stroke-width="1" stroke-dasharray="3 2" />
+  <text x="204" y="358" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">...</text>
+  <rect x="117" y="315" width="40" height="18" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="137" y="327.7" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Masks</text>
+  <rect x="55" y="280" width="66" height="18" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="88" y="292.8" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Nose sprays</text>
+  <rect x="19" y="235" width="74" height="28" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="56" y="246.9" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Saline nasal</text>
+  <text x="56" y="258.9" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">rinsing</text>
+  <circle cx="41" cy="206" r="12" fill="#1c3a4e" stroke="#cef" stroke-width="1" stroke-dasharray="3 2" />
+  <text x="41" y="210" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">...</text>
+  <rect x="18" y="151" width="54" height="18" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="45" y="163.5" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Vaccines</text>
+  <rect x="32" y="104" width="74" height="28" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="69" y="115.8" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Passive</text>
+  <text x="69" y="127.8" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">immunization</text>
+  <rect x="75" y="66" width="68" height="28" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+  <text x="109" y="77.9" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Chemo-</text>
+  <text x="109" y="89.9" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">prophylaxis</text>
+  <circle cx="164" cy="48" r="12" fill="#1c3a4e" stroke="#cef" stroke-width="1" stroke-dasharray="3 2" />
+  <text x="164" y="52" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">...</text>
+  <line x1="706.1" y1="78.7" x2="962" y2="-17" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="767.8" y1="113.7" x2="987" y2="67" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="786.6" y1="160.3" x2="998" y2="142" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="793.1" y1="207.7" x2="1000" y2="215" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="773.4" y1="257.7" x2="991" y2="295" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="745.6" y1="303.7" x2="971" y2="376" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="676.4" y1="335.4" x2="933" y2="468" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="620.4" y1="374.0" x2="864" y2="574" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="529.9" y1="383.3" x2="738" y2="689" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="439.4" y1="392.9" x2="516" y2="782" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="352.9" y1="397.6" x2="265" y2="778" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="267.3" y1="387.4" x2="62" y2="689" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="194.7" y1="361.6" x2="-64" y2="574" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="118.6" y1="332.9" x2="-137" y2="460" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="59.0" y1="298.0" x2="-173" y2="370" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="18.7" y1="255.2" x2="-192" y2="290" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="28.9" y1="206.8" x2="-200" y2="215" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="18.5" y1="157.1" x2="-197" y2="137" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="31.6" y1="109.6" x2="-185" y2="61" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="74.8" y1="67.0" x2="-159" y2="-24" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="153.6" y1="41.8" x2="-111" y2="-121" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+  <line x1="400" y1="171" x2="400" y2="-12" stroke="#9ab" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrowhead2)" />
+  <text x="408" y="16" font-family="sans-serif" font-size="10" fill="#9ab" text-anchor="start">rest of portfolio</text>
+</svg>
+
+
+
+</wide_device_view>
+
+![Belgor: "This is the subgraph for airborne disease resistance. For each node on the graph, the cryptographic network randomly selects a committee, that makes the decision of what weights the edges right below that node get."]
+
+![Belgor: "So it's secure in the same way the Courts and the Order of Steering are. Having something like that for funding is especially important now, given that the Arctics just did the same attack on Quadratic Funding that Bluewhale did but at ten times the scale - and of course any more traditional style of allocation, they would try to interfere with as well."]
+
+![Gladias: "Oh you're definitely right. Even the Keepers are getting attacked lately, though with all the secrecy and internal communication barriers, at least for now the system is holding."]
+
+![Belgor: "Oh is that so? Good to hear. Though I am sad that we don't have a good way to make both of these things more democratic. Listening to citizens' assemblies is good and Heralds are good, but they're not a substitute for actual public accountability."]
+
+![Belgor: "Anyway, one difference between the Graph Funding design and how the Courts and the Order work is that Graph Funding allows even more specialization. After all, funding allocation is a pretty technical task."]
+
+![Belgor: "The goal is to try to split up each decision of funding allocation into more manageable pieces. Don't ask 'what percent of all Veridian public funding should go to this study on UVC lamps'. Ask, what percent should go to health, then within health, what percent should go to airborne diseases, and so on."]
+
+![Belgor: "And if one project benefits two areas: say, some lamp that's somehow useful both for UVC lamps and for defense, then the graph stops being a tree, it becomes a proper directed acyclic graph. One node can have multiple parents, and the funding you get along all paths adds up."]
+
+![Gladias: "So a committee is responsible for allocating the funding going to each node among its direct children?"]
+
+![Belgor: "Yes."]
+
+![Gladias: "Can they remove children or make new ones?"]
+
+![Belgor: "Yes, of course. That's how the graph gets made in the first place."]
+
+![Gladias: "This is fascinating."]
+
+![Gladias: "I mean, this all hinges completely on how effective these committees are, right? The more you can specialize, the more it might get captured by special interests, and the more you randomize, the more you get decisions made by people who know nothing about what they're deciding?"]
+
+![Belgor: "Of course, that's always the tradeoff."]
+
+![Belgor: "There's also another tradeoff. It turns out that it's fairly easy to get committees up to the point where they can tell bad projects from good ones, but very hard for them to tell good projects from great ones. So for the lower levels of the graph, there's been a movement lately to just randomize at the top end. If the committee says you're in the top ten percent, you have the same chance of getting in, no matter if you're at ninety one or ninety nine."]
+
+![Gladias: "So the further someone is above ninety, the more they basically don't have to worry about optimizing for the committee at all, they can just do what feels right."]
+
+![Belgor: "Exactly. Sometimes you don't actually want accountability, you want to give space for people's intrinsic motivation. The people at the very top may even be smarter than the committee. That's what randomize-above-cutoff does: accountability for those who won't succeed without it, and freedom from incentives for the best - they can convince the committee that their work is good enough with barely any effort at all."]
+
+![Belgor: "Anyway, here's what it looks like zoomed in at the level of individual projects."]
+
+<wide_device_view>
+
+
+
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="280" viewBox="0 0 800 400">
+    <defs>
+      <marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#cef" />
+      </marker>
+      <marker id="arrowhead2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#9ab" />
+      </marker>
+    </defs>
+  
+    <rect width="800" height="400" fill="#245" />
+    <line x1="472.0" y1="195.0" x2="480.0" y2="195.0" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+    <text x="477" y="168" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">45%</text>
+    <line x1="385.9" y1="208.0" x2="340.2" y2="250.3" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+    <text x="353" y="229" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">30%</text>
+    <line x1="385.9" y1="182.0" x2="340.2" y2="139.7" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+    <text x="365" y="154" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">15%</text>
+    <line x1="570.3" y1="181.0" x2="618.1" y2="148.0" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+    <text x="603" y="172" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">60%</text>
+    <line x1="574.1" y1="209.0" x2="608.5" y2="228.9" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+    <text x="590" y="231" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">30%</text>
+    <line x1="639.0" y1="120.0" x2="640.5" y2="81.4" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+    <text x="649" y="101" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">30%</text>
+    <line x1="682.4" y1="124.9" x2="686.9" y2="123.9" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+    <text x="662" y="160" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">25%</text>
+    <line x1="676.6" y1="148.0" x2="733.4" y2="168.8" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+    <text x="706" y="171" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">20%</text>
+    <line x1="634.7" y1="270.9" x2="613.2" y2="316.2" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+    <text x="614" y="296" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">50%</text>
+    <line x1="704.7" y1="242.8" x2="719.7" y2="241.0" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+    <text x="712" y="272" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">25%</text>
+    <line x1="311.5" y1="278.3" x2="261.3" y2="330.5" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+    <text x="276" y="305" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">45%</text>
+    <line x1="373.0" y1="275.5" x2="556.5" y2="318.5" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+    <text x="477" y="312" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">35%</text>
+    <line x1="272.0" y1="111.7" x2="179.5" y2="87.3" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+    <text x="221" y="92" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">40%</text>
+    <line x1="317.1" y1="111.7" x2="281.9" y2="49.0" stroke="#cef" stroke-width="1" marker-end="url(#arrowhead)" />
+    <text x="305" y="74" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="middle">45%</text>
+    <rect x="328" y="182" width="144" height="26" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+    <text x="400" y="200.3" font-family="sans-serif" font-size="14" fill="lightblue" text-anchor="middle">Ultraviolet light</text>
+    <rect x="480" y="181" width="140" height="28" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+    <text x="550" y="192.2" font-family="sans-serif" font-size="11" fill="lightblue" text-anchor="middle">222nm lamp efficiency</text>
+    <text x="550" y="206.2" font-family="sans-serif" font-size="11" fill="lightblue" text-anchor="middle">improvements</text>
+    <rect x="277" y="250" width="96" height="28" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+    <text x="325" y="261.5" font-family="sans-serif" font-size="11" fill="lightblue" text-anchor="middle">222nm safety</text>
+    <text x="325" y="275.5" font-family="sans-serif" font-size="11" fill="lightblue" text-anchor="middle">testing</text>
+    <rect x="265" y="112" width="120" height="28" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+    <text x="325" y="122.9" font-family="sans-serif" font-size="11" fill="lightblue" text-anchor="middle">222nm upper-room</text>
+    <text x="325" y="136.9" font-family="sans-serif" font-size="11" fill="lightblue" text-anchor="middle">deployment</text>
+    <rect x="594" y="120" width="88" height="28" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+    <text x="638" y="131.8" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Krypton</text>
+    <text x="638" y="143.8" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">chloride lamps</text>
+    <rect x="585" y="229" width="120" height="42" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+    <text x="645" y="241.7" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Research into</text>
+    <text x="645" y="253.7" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">alternative lamp</text>
+    <text x="645" y="265.7" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">designs</text>
+    <rect x="604" y="63" width="74" height="18" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+    <text x="641" y="76.2" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Dalias et al</text>
+    <rect x="687" y="104" width="62" height="28" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+    <text x="718" y="115.3" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Poppe and</text>
+    <text x="718" y="127.3" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Mawart</text>
+    <rect x="728" y="169" width="60" height="18" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+    <text x="758" y="181.6" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Vidrik</text>
+    <rect x="720" y="229" width="56" height="18" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+    <text x="748" y="241.5" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Bonne</text>
+    <rect x="556" y="316" width="100" height="28" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+    <text x="606" y="328.0" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">VNU Materials</text>
+    <text x="606" y="340.0" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Science Lab</text>
+    <rect x="158" y="331" width="180" height="28" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+    <text x="248" y="342.3" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Kudlin and Melana:</text>
+    <text x="248" y="354.3" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">effects on household chemicals</text>
+    <rect x="95" y="69" width="100" height="18" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+    <text x="145" y="82.1" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">Pov and Imerry</text>
+    <rect x="218" y="31" width="118" height="18" rx="4" fill="#1c3a4e" stroke="#cef" stroke-width="1" />
+    <text x="277" y="43.8" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">VNU Aeronautics Lab</text>
+    <line x1="658.6" y1="63.4" x2="935" y2="-77" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+    <line x1="748.9" y1="110.0" x2="983" y2="53" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+    <line x1="788.0" y1="176.3" x2="999" y2="166" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+    <line x1="775.7" y1="241.1" x2="996" y2="268" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+    <line x1="627.9" y1="344.2" x2="902" y2="524" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+    <line x1="233.6" y1="358.5" x2="-28" y2="616" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+    <line x1="125.8" y1="69.3" x2="-145" y2="-55" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+    <line x1="269.7" y1="31.0" x2="27" y2="-275" stroke="#9ab" stroke-width="0.8" marker-end="url(#arrowhead2)" />
+    <line x1="400" y1="180" x2="400" y2="-12" stroke="#9ab" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrowhead2)" />
+    <text x="408" y="16" font-family="sans-serif" font-size="10" fill="#9ab" text-anchor="start">Air quality portfolio</text>
+    <text x="408" y="110" font-family="sans-serif" font-size="10" fill="#fa5" text-anchor="start">14%</text>
+  </svg>
+
+
+
+</wide_device_view>
+
+![Gladias: "Is it wise to have these randomly-selected Graph Funding committees making decisions at that level of granularity?"]
+
+![Belgor: "I'm not sure myself. The nice thing about this design is that it can always evolve without changing the structure. Committees could just decide to give the VNU Materials Science Lab 'ownership' of an entire category, and let them allocate internally. Actually, for the open source social media analysis, we basically did just that, eighty percent is just going to Silverchat."]
+
+![Belgor: "Bluewhale is unhappy, but, hey, their choice to be so closed and proprietary with everything."]
+
+![Gladias: "So how does this all connect to Dzego?"]
+
+![Belgor: "Ah, well a lot of this tech does actually make its way over to Dzego, they're starting to take the air filters and ultraviolet lights more seriously - a few of them are getting paranoid that the Arctics might hit them with a deliberately-released pandemic at some point."]
+
+![Gladias: "Is there any chance that the Arctics could hit them with a pandemic that won't eventually bounce right back to them?"]
+
+![Belgor: "Well, if Arctic anti-pandemic technology shoots far enough ahead of the rest of the world, then yeah, they could release a pandemic that only they can effectively protect only their own people from. That's a big part of why it's so valuable to open-source all this stuff - at least the defensive things. Put the whole world on a more level playing field, so no one is in a position to light a fire and be the only ones with fireproof suits."]
+
+![Belgor: "Anyway, if you end up going to Dzego, do tell me what you learn about their public health when you get back - I am curious!"]
+
+---
+
+Gladias opened the door to his house, and entered.
+
+Seila and the kids were already eating dinner.
+
+![Seila: "Today is your first vote, isn't it?"], Seila asked.
+
+![Gladias: "It is, glad you remembered!"]
+
+![Zven: "So are you leaving again this evening?"], Zven asked.
+
+![Gladias: "Oh no, the in-person part was the discussions months ago, and the key registration, I did that right after my meetings at the Parliament."]
+
+![Gladias: "There were also some discussions happening more recently in our Keeper discussion group online, though that chat automatically cut off seven days before the vote - have a quiet period to make more space for independent thought, the argument goes."]
+
+![Seila: "Oof, so the cutoff was after Redshire got annexed. What was that like?"]
+
+![Gladias: "I think everyone who said we should cut military hardware out of the best tiers in the rubric went quiet. Eighteen then proposed a new amendment that increases the tax brackets, pushing up the incentives to open things up even more. I'll probably vote for that."]
+
+![Seila: "Glad to hear."]
+
+![Seila: "How did your Parliament meetings go?"]
+
+![Gladias: "Very well. The Senator and the Graph Funding person both seemed quite supportive of me going. Though they said that Zei might be an even better contact to help me with my visit than anyone they knew!"]
+
+![Seila: "That actually makes sense, everyone knows the official Dzego government is not where any of the interesting action is happening."]
+
+![Seila: "I guess I'll talk to Zei and put you two in touch then!"]
+
+Gladias, Seila and the kids took a few bites of their food. Soon, the dinner conversation resumed.
+
+![Seila: "Febric, Hreda, want to share your news?"]
+
+![Hreda: "We're going on an exchange trip to Northglade for the winter term!"], Hreda exclaimed proudly.
+
+![Gladias: "Ooh, that's pretty far northeast, almost at the Arctic border"], Gladias replied.
+
+![Hreda: "It's fun, we'll get to ski off mountains wearing a copter and then glide back down!"], Hreda exclaimed. ![Hreda: "And it's not like it's right at the border, Northglade is over two hundred kilometers inland. It will be my first time there!"]
+
+![Gladias: "So what are you guys doing there?"], Gladias asked.
+
+![Hreda: "Veridia's best math university is there,"] Hreda replied. ![Hreda: "I'm in the top five percent in math in my class, so I got accepted to attend some special education there."]
+
+![Febric: "Same for me,"] Febric added. ![Febric: "Though I'm in computer science."]
+
+![Gladias: "Didn't Lily also want to go to Northglade?"]
+
+Lily was in the washroom, so she could not answer.
+
+![Seila: "Vil said that he will take her in the summer if she gets to seventy-five percent in her exams."]
+
+![Seila: "She prefers summer, she doesn't like the cold as much."]
+
+Gladias's hand device buzzed.
+
+![Gladias: "Well, voting on the hardware openness rubric started."]
+
+<wide_device_view>
+
+<b style="font-size:150%"> Rubric: openness in hardware </b>
+
+<hr />
+
+<table>
+  <thead>
+    <tr>
+      <th>Motion</th>
+      <th>Vote</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 75%">Add after line 3 in Tier 1 and line 3 in Tier 2: <br><br>"Products in military, surveillance and counter-surveillance applications are not eligible for this tier."</td>
+      <td style="text-align:center"><button>Yes</button><br><br><button>No</button></td>
+    </tr>
+    <tr>
+      <td style="width: 75%">Increase tax brackets from <br><br> 0 / 6 / 12 / 18 / 24 <br><br> to <br><br> 0 / 10 / 20 / 26 / 32</td>
+      <td style="text-align:center"><button>Yes</button><br><br><button>No</button></td>
+    </tr>
+    <tr>
+      <td style="width: 75%">Change line 4 in Tier 4 and line 4 in Tier 5, from: <br><br> "Use of hardware means to prevent third-party repair." <br><br> To: <br><br> "Use of hardware or software means to prevent third-party repair."</td>
+      <td style="text-align:center"><button>Yes</button><br><br><button>No</button></td>
+    </tr>
+    </tbody>
+</table>
+</wide_device_view>
+
+This felt anti-climactic, Gladias thought. So much ceremony, in-person meetings, debate and work in the months leading up to the vote. And then the vote itself was just ... tapping buttons on a screen.
+
+It was reasonable, Gladias supposed. The way that the cryptography worked, as long as key registration was secure, this part could just be done on his own hardware at home. And even if Delwart did come knocking and demand to stare at him from behind his shoulder for the entire fifteen-longhour voting window, he had no way to prove to him that the key on his device even was the one registered - as opposed to being a distraction while the real voting was done by Mov, Seila or even Zven.
+
+Gladias took one last look at the screen, and nonchalantly pressed: `No`, `Yes`, `Yes`.
+
+<chapter_nav prev="chapter-16.html" next="chapter-18.html" />

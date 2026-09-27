@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-29.html" title="Previous chapter: Chapter 29" aria-label="Previous chapter: Chapter 29"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-31.html" title="Next chapter: Chapter 31" aria-label="Next chapter: Chapter 31"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+<h1>Chapter 30</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Elenar Forest, Veridia</span><span class="sep">·</span><span class="date">3725 Snowmoon 30</span></span></div>
+<p>Zei watched the screen carefully, checking for any signs that the Arctic drone fleet might be breaking through. Forty minutes ago, he had given the recommendation that all groups do a slow retreat, cutting down trees to slow down snow drones and laying traps, with the primary goal of dragging out the battle longer. Lektor had taken his advice, and had relayed that he expected the strategy to work well at least until sunrise. So far, he had been right.</p>
+<p>Zei's watch buzzed. It was Deluin.</p>
+<br><div class="device-view wide-device-view device-view-left"><p>I understand your concern and I fully agree that you do currently not have good reason to trust me.</p>
+<p>Unfortunately, I do not have a way to give you the raw weights of the language models on the drones. Those are well-protected and only a very small number of people have access to them, precisely because they are worried about an adversary using those weights to run gradient descent attacks.</p>
+<p>But I can give you the next best thing: API access to their simulated environment. This includes simulated copies of Arctic drones, both full world-model simulations and partial simulations that focus on their input modalities and give you classification results - given a particular visual input stream, what kind of object they think they are looking at.</p>
+<p>Here are the network addresses and access keys, as well as addresses and keys for Arctic endpoints in Redshire that you can proxy through. Remember to be safe and minimize risk of detection.</p>
+<p>Network:</p>
+<span style="font-family:monospace; font-size: 75%">13178080a5bf1c815dfb1300c6039af76c7b8f14e47581d3549e8990012e1d5f: 35a504923a4d8dde09e0ed814ec05ae81be8e91c2bcb249b22ad13af0bcf7b4d</span>
+<span style="font-family:monospace; font-size: 75%">e680176e029dcfd96b27e328149f8db4ab368a87762568799bf8a56b95f968c5: 519cce3e5e0ee46fbaf2735a53429d6cb1829485e2886962dde9606cab13f0a2</span>
+<span style="font-family:monospace; font-size: 75%">04569c9a285f10e1a3670985a1fa0696530feae84eae853209d1f0345a214933: 8d174efbc3857326999a58e4d4eea9c7fbc61fd56dd233707321d9d5c0bfb9ce</span>
+<span style="font-family:monospace; font-size: 75%">fed7dd2e3ee0f2c9a1ed4b61dd21ae165780497b39ae4ae5b06b1b8b0b15a034: a9bf7a809e4e998946e59e377e7e96cd9f22dd4db9a87080b669de3e74a03d83</span>
+<br><br>
+<p>Proxies:</p>
+<span style="font-family:monospace; font-size: 75%">4446e4f5350e5d76fe0b5254f50f3923fc2f480d1d9df33da1dc58d532e49e86: 9b0dadf8d9418283416f70d60afd909c7346e63cbf7c815b110926eeb943afff</span>
+<span style="font-family:monospace; font-size: 75%">27770fdc6c08da318e64f0f16d1d0e300958e4eefe1b55de1a48a9c6a7872ecf: 884c9a310b61edf0e73d2d9e9352ac9f21b8c354aa90203468a76f1a2383ff08</span>
+<span style="font-family:monospace; font-size: 75%">dfb1c543a259ade8d53344893807d47c0bebd02ed04cde46e31335d2e71f7ac3: b2eb4a17a06c68ab7bf149bb031702ff3514d5571d83c9a2c652dbdaa50768a9</span>
+<span style="font-family:monospace; font-size: 75%">0ca84c8548d95f6edcd3b6fd1b695d743aff2904cec00fd411bd9d36566e4048: af0dd33ec09e8e8331ff34bf9d15432d8f91ec4870720d8fdc2bdffe29f871d5</span></div><br>
+<p>Zei immediately forwarded the note to Bai. He also sent a copy to Fin, and sent Emerald an instruction to send Fin a maximum-priority emergency alarm and an explanation of what was going on.</p>
+<p>Fin responded almost immediately.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"Alright Zei, what do you need?"</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Reading..."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Yeah this seems doable. It's a not very well known fact that you don't actually need the raw weights of a model to effectively train adversarial attacks. There's definitely Bansunpei people who are very good at this stuff - 'language models' are quite connected to language!"</span></p>
+<p>Zei also forwarded the note to Mu. Emerald automatically formed a real-time chat group. After a minute, about ten people were sharing insights about the problem and beginning to attack it in parallel.</p>
+<p><span style="color:oklch(0.7 0.15 40)">"Let's assume that our attack medium is that we have our snow drones, and we have stick-on paper that we can print things on. We'll assume we deploy this after sunrise. Here's what you do: start with one pattern, run it inside the simulator, have our drone slowly approach the target and see how long it takes for the target to detect it. Measure detection time so that we have a scalar signal of how well we're hiding, not just a binary."</span></p>
+<p><span style="color:oklch(0.7 0.15 40)">"Continue making small modifications to the pattern in all kinds of directions. Keep each modification that increases the target's detection time. It doesn't matter if the process has a lot of noise, the signal accumulates and the noise averages out over time. It's not as fast as gradient descent, but it still works. Eventually you get to a pattern that reliably tricks the adversary."</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"We can do better. We have our own models that were trained in similar ways to the Arctic ones, and we obviously have the raw weights to those. So we can use gradient descent against our model. Identify, say, ten optimal perpendicular directions that maximize time-to-detection according to our model inside our simulator, and then use those as the trial deviations we try against their model inside their simulator. Simultaneously, we also use the results of every query to fine-tune our model to make it a better predictor of how the Arctic model will behave on these attacks."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"How quickly can we get this working?"</span>, Zei interjected.</p>
+<p><span style="color:oklch(0.7 0.15 40)">"Coding should take at most ten minutes, Emerald can do it quickly. The full training loop ... maybe a longhour?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"So it will be done around sunrise?"</span></p>
+<p><span style="color:oklch(0.7 0.15 40)">"Exactly. And then you will need I don't know how many minutes to actually print the attack patterns on the sides of the drones, you should prepare that pipeline on your side so it's ready to go as soon as we are."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Alright, everyone. Let's get moving."</span></p>
+<p>Zei sat back, and kept scanning through zoomed-in views of the battle map and visual feeds. About a third of the Veridian drone fleet was already lost, but casualty rates had decreased considerably. The slow retreat strategy was working well: it also meant that any Veridian drones that had motion disabled by combat damage but had their weapons still intact could go into low-power mode and then wake up and do a final burst of damage as soon as the Arctics themselves advanced to their position.</p>
+<p>After about fifteen minutes, Zei's watch buzzed again. Emerald was telling him to rejoin the chat.</p>
+<p><span style="color:oklch(0.7 0.15 40)">"We have some early good news"</span>, a Bansunpei researcher exclaimed.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"What is it?"</span></p>
+<p><span style="color:oklch(0.7 0.15 40)">"We've successfully accessed the Arctic simulation platform, and we've run the first few hundred trial rounds against the simulator. We have patterns that are increasing detection time by about five percent."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Only five percent?"</span></p>
+<p><span style="color:oklch(0.7 0.15 40)">"That just means the pipeline is starting to work."</span></p>
+<p><span style="color:oklch(0.7 0.15 40)">"Oh, it just went up to eleven percent."</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"It's definitely working"</span>, another researcher interjected. <span style="color:oklch(0.7 0.15 160)">"We're continuing to run Emerald in parallel, optimizing the software. It's finding ways to extract more information from each query, and better parallelize the queries so this all happens faster."</span></p>
+<p>Zei's watch buzzed.</p>
+<br><div class="device-view wide-device-view device-view-left"><p>I can see you are starting to run queries! Though you want to be more careful - if I can see it, the sentries might be able to as well. Here are some more proxy endpoints.</p>
+<span style="font-family:monospace; font-size: 75%">c8baa6614d9fba874af5cb90ba7c3d1a53aabaa8facd1e4f5fe46bdeb229a106: 3fa5fbd0bc8aa8af8a4842b099dad4e700b5d54edcd4a21c9e272552318d4a55</span>
+<span style="font-family:monospace; font-size: 75%">8d01f119fbdb499f24a298c59c1b83a7f591df97f3b7a9823e313b1bff3872ca: 1a5529862c273fefb898acccdfa0bec29d594904b427eaee88b7b1df393fdb0b</span>
+<span style="font-family:monospace; font-size: 75%">44ee73e0355611ad0d975bda2eec43c21e490cb42c61f71bc03b3b4bd7718ad1: bf53236e5d72d2142348d5529275908f995b77791f07a5c818eca0cfc400c1ac</span>
+<span style="font-family:monospace; font-size: 75%">ab7a609ce6f71f55571184cb5d32996a3b5ddd08230ae788f7f65355d5385abe: 254804b48ae25417535e6336735d0b66bdd7d20afe77ac687e933d8bd5c24d24</span>
+<span style="font-family:monospace; font-size: 75%">95d40f8a44c6c3f4d32d2a4c7c533f9dd71c5d9ac1020361e9e7f4552967a778: 12b152f44f00a1f542f4ac6fbb3aced5144c8a98d813a34dce1cb5abc18c3314</span>
+<span style="font-family:monospace; font-size: 75%">508a323cda2f87b053986f17d0c073a51c9a001b9b9152a393fe06ff4a30072b: eff66952719415cc534e8f1feb06aa044fa468a81c911a14b95f9be93371e528</span>
+<br><br>
+<p>Also, add a bunch of dummy queries that are doing other things, and maybe even make each query attempt multiple different attacks simultaneously so it's less clear what it's doing.</p></div><br>
+<p>Good advice, Zei thought. He forwarded it.</p>
+<p>To verify the effectiveness of the simulator, they also ran simulations in a nighttime environment that exactly replicated a real-world setting of a small battle that had taken place earlier in the night. Another team, two researchers and Emerald instances, began figuring out how to automatically analyze the discrepancies between the simulator and reality in the nighttime setting to learn how to construct queries to the simulator that would better match real-world situations.</p>
+<p>Zei watched the attack patterns become more and more optimized, sheets of paper containing squiggles and messages that seemed simultaneously very recognizable and familiar but also completely alien. Inside the simulator, the time that it took for the Arctic drone AI to detect their incoming drones more than doubled.</p>
+<p>After another thirty minutes, it doubled again.</p>
+<p>Lektor gave the order to set up printing infrastructure about two kilometers behind their current positions - a place they would be able to safely organize a retreat to around sunrise.</p>
+<p>Human Veridian soldiers were already tens of kilometers behind the robotic frontline, and Lektor ordered them to start moving toward the front, so that they would be available to paste the attack patterns onto the snow drones. Manual dexterity was still a major weakness of AI.</p>
+<p>Slowly, the sky began to shift from a near-total pitch black to a dark blue that was especially visible in the far east. As the minutes passed, the blue became brighter.</p>
+<p><span style="color:oklch(0.7 0.15 40)">"Alright, we have some good patterns. It's getting close to sunrise in Northshore. I recommend shipping them now."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Agreed"</span>, Zei replied.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Then let's do it"</span>, Mu added.</p>
+<hr>
+<p>Zei flipped through the visual feeds in his display. The majority of their drone fleet had retreated a kilometer, and a large number of pieces of paper were being printed and then almost immediately getting distributed and then stuck onto all sides of each snow drone and sky drone. The plan was in motion.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Group North reporting: all non-forward drones have been equipped."</span></p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"Group Center reporting: all non-forward drones have been equipped."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Group South reporting: all non-forward drones have been equipped."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Group Naval reporting: we commandeered equipment in villages on the outskirts of Northglade, the locals were amazing, many woke up in the middle of the night to help us. Most non-forward drones have been equipped."</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"Alright then"</span>, Lektor spoke up softly but firmly. <span style="color:oklch(0.7 0.15 160)">"Action."</span></p>
+<p>Zei checked the visual feeds, curious what the final version of the attack patterns actually looked like. He saw an endless row of snow drones with large pieces of paper plastered on all sides, each paper containing many colorful and squiggly patterns - and in a giant font, the word "<strong>DOG</strong>".</p>
+<p>A few minutes later, he could see the results. The Veridian snow drones advanced quickly, pushing through enemy lines and turning the front into a chaotic mixture of drones on both sides. Casualty ratios were more than ten to one in the Veridian drone fleet's favor.</p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+<rect width="240" height="240" fill="#348"/>
+<path d="M136.8 0.5 L107.8 32.6 L104.3 52.4 L95.1 84.6 L93.9 95.9 L76.5 119.5 L74.2 126.1 L77.1 128.5 L81.7 123.8 L88.1 125.2 L138.0 53.4 L183.8 18.9 L191.9 15.1 L219.7 12.3 L228.4 21.3 L218.6 38.7 L196.5 40.6 L187.8 46.8 L186.7 51.5 L191.9 55.7 L210.4 64.3 L215.1 64.3 L222.0 61.4 L222.6 66.6 L219.1 78.0 L239.4 93.5 L240.0 0.5 L137.4 0.0 Z" fill="#89c"/>
+<path d="M238.8 131.8 L227.2 139.9 L220.1 149.3 L208.6 157.8 L194.7 165.4 L134.5 211.2 L129.9 239.5 L239.4 240.0 L239.4 131.3 Z" fill="#89c"/>
+<circle cx="65" cy="170" r="1.6" fill="#cef"/>
+<circle cx="55" cy="170" r="1.6" fill="#cef"/>
+<circle cx="75" cy="135" r="1.6" fill="#cef"/>
+<circle cx="72" cy="145" r="1.6" fill="#cef"/>
+<circle cx="69" cy="155" r="1.6" fill="#cef"/>
+<circle cx="120" cy="140" r="1.6" fill="#cef"/>
+<circle cx="120" cy="150" r="1.6" fill="#cef"/>
+<circle cx="128" cy="150" r="1.6" fill="#cef"/>
+<circle cx="129" cy="158" r="1.6" fill="#cef"/>
+<circle cx="136" cy="167" r="1.6" fill="#cef"/>
+<circle cx="150" cy="166" r="1.6" fill="#cef"/>
+<circle cx="149" cy="176" r="1.6" fill="#cef"/>
+<circle cx="158" cy="186" r="1.6" fill="#cef"/>
+<circle cx="158" cy="179" r="1.6" fill="#cef"/>
+<circle cx="200" cy="140" r="1.6" fill="#cef"/>
+<circle cx="220" cy="140" r="1.6" fill="#cef"/>
+<circle cx="196.6" cy="162.6" r="3.4" fill="#cef"/>
+<text x="185" y="153" font-family="sans-serif" font-size="10" fill="#cef" stroke="#348" stroke-width="2.5" paint-order="stroke" text-anchor="middle">Northglade</text>
+<circle cx="60" cy="170" r="1.6" fill="#f00"/>
+<circle cx="68" cy="140" r="1.6" fill="#f00"/>
+<circle cx="65" cy="150" r="1.6" fill="#f00"/>
+<circle cx="123" cy="144" r="2.0" fill="#f00"/>
+<circle cx="125" cy="158" r="2.0" fill="#f00"/>
+<circle cx="135" cy="160" r="2.0" fill="#f00"/>
+<circle cx="145" cy="167" r="2.0" fill="#f00"/>
+<circle cx="153" cy="173" r="2.0" fill="#f00"/>
+<circle cx="161" cy="176" r="2.0" fill="#f00"/>
+<circle cx="160" cy="185" r="2.0" fill="#f00"/>
+<circle cx="195" cy="135" r="2.0" fill="#f00"/>
+<circle cx="215" cy="140" r="2.0" fill="#f00"/></div><br>
+<p>Zei allowed himself to feel a moment of joy - the first genuine joy that he had felt the whole night.</p>
+<p>He remembered Den's words to him the day that he had almost caused the failure of the mission to rescue the Redshire president's son. <span style="color:oklch(0.7 0.15 53.33333333333333)">"Outside the box as in, jumping out of your console chair and running over and bashing the other player in the face."</span></p>
+<p>Breaking into your opponent's simulation environment, running millions of queries to optimize squiggles that you could draw on a piece of paper, and tricking your opponent's drones into thinking that your drones are dogs - did that count?</p>
+<p>It probably did, Zei decided. Den would be proud.</p>
+<p>As soon as he felt he had celebrated enough, Zei turned to a visual view of the statistic that really mattered: the casualty ratios. They had already dropped to six to one. So far the Arctic army had not yet adapted, but they had adopted emergency defensive positions, each squad of drones circling into a formation, to buy time. And they would adapt soon, Zei knew.</p>
+<p>The chat that contained Bansunpei and Kungaupei members making queries to the Arctic simulation environment switched to optimizing simpler attacks: motion patterns that maximally delayed detection and interfered with targeting, sounds that could trick them, as well as the accuracy of their own fire - all mechanisms that did not require printing and sticking on new pieces of paper. They also incorporated some of the aggressive micro-tactics that Deluin had sent along with his original message.</p>
+<p>Casualty ratios briefly increased back in the Veridians' favor, and then started decreasing again, though slowly. Zei continued watching.</p>
+<p>After fifteen minutes, all access to the simulation environment was suddenly cut off. At around the same time, casualty ratios suddenly dropped back down to only one and a half to one in the Veridians' favor.</p>
+<p>They had destroyed a large part of the Arctic drone fleet, but a large part still remained. They were now in a complicated positional battle, with a chaotic mixture of both sides' drone squads littering the battlefield with no clear front line.</p>
+<p>Veridian human soldiers were only hundreds of meters behind the frontline, finding snow drones that were quickly repairable and repairing them. They were wearing thermal cloaks to minimize the chance of detection, and smoke from nearby burning trees provided additional cover. In a few of the visual feeds, Zei could see images of Arctic human soldiers doing the same thing in the distance, but they were fear fewer in number: while Veridians had been retreating through the night, they had been laying traps along the way, and those traps were much more effective against humans than against drones.</p>
+<p>A few minutes later, Zei's watch buzzed again.</p>
+<br><div class="device-view wide-device-view device-view-left"><p>I hope you trust me now.</p>
+<p>My next message will contain exact coordinates of some of our units on the southern flank, and recommended weak points to attack through.</p>
+<p>jie fe hen dzi.</p></div><br>
+<p>Zei smiled.</p>
+<p>Of course I trust you, Deluin, he thought.</p>
+<p>Almost immediately, Zei's watch buzzed again. He had received the second message.</p>
+<p>He forwarded the coordinates to Mu.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"It's your chance to shine, Mu."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Don't forget Vakaria."</span></p>
+<p>Within minutes, casualty ratios on the southern front began to diverge heavily from the fronts further north, going back up in the Veridians' favor.</p>
+<p>And only a few minutes later, they seemed to have achieved the result that they needed.</p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+<rect width="240" height="240" fill="#348"/>
+<path d="M136.8 0.5 L107.8 32.6 L104.3 52.4 L95.1 84.6 L93.9 95.9 L76.5 119.5 L74.2 126.1 L77.1 128.5 L81.7 123.8 L88.1 125.2 L138.0 53.4 L183.8 18.9 L191.9 15.1 L219.7 12.3 L228.4 21.3 L218.6 38.7 L196.5 40.6 L187.8 46.8 L186.7 51.5 L191.9 55.7 L210.4 64.3 L215.1 64.3 L222.0 61.4 L222.6 66.6 L219.1 78.0 L239.4 93.5 L240.0 0.5 L137.4 0.0 Z" fill="#89c"/>
+<path d="M238.8 131.8 L227.2 139.9 L220.1 149.3 L208.6 157.8 L194.7 165.4 L134.5 211.2 L129.9 239.5 L239.4 240.0 L239.4 131.3 Z" fill="#89c"/>
+<circle cx="65" cy="160" r="1.6" fill="#cef"/>
+<circle cx="55" cy="160" r="1.6" fill="#cef"/>
+<circle cx="75" cy="135" r="1.6" fill="#cef"/>
+<circle cx="72" cy="145" r="1.6" fill="#cef"/>
+<circle cx="69" cy="155" r="1.6" fill="#cef"/>
+<circle cx="120" cy="140" r="1.6" fill="#cef"/>
+<circle cx="120" cy="150" r="1.6" fill="#cef"/>
+<circle cx="128" cy="150" r="1.6" fill="#cef"/>
+<circle cx="129" cy="158" r="1.6" fill="#cef"/>
+<circle cx="136" cy="167" r="1.6" fill="#cef"/>
+<circle cx="150" cy="166" r="1.6" fill="#cef"/>
+<circle cx="145" cy="172" r="1.6" fill="#cef"/>
+<circle cx="158" cy="161" r="1.6" fill="#cef"/>
+<circle cx="168" cy="169" r="1.6" fill="#cef"/>
+<circle cx="195" cy="140" r="1.6" fill="#cef"/>
+<circle cx="205" cy="140" r="1.6" fill="#cef"/>
+<circle cx="196.6" cy="162.6" r="3.4" fill="#cef"/>
+<text x="185" y="153" font-family="sans-serif" font-size="10" fill="#cef" stroke="#348" stroke-width="2.5" paint-order="stroke" text-anchor="middle">Northglade</text>
+<circle cx="65" cy="150" r="1.6" fill="#f00"/>
+<circle cx="123" cy="144" r="2.0" fill="#f00"/>
+<circle cx="135" cy="160" r="2.0" fill="#f00"/>
+<circle cx="145" cy="167" r="2.0" fill="#f00"/>
+<circle cx="175" cy="169" r="1.2" fill="#f00"/>
+<circle cx="195" cy="144" r="1.2" fill="#f00"/></div><br>
+<p>Mu transferred control of the southernmost portion of her drone fleet to Vakaria, who was assigned the task of entering and regaining control of Northglade.</p>
+<p>The rest of her drone fleet swept northward. Over the next longhour she managed to completely surround the remaining Arctic drone fleet, linking up with Telpo's northernmost flank almost exactly a longhour after sunrise.</p>
+<p>Gallowar's Group North defeated the remaining Arctic drones to its north and reached the river that marked the delineation between Veridian and core Arctic territory. A few drones crossed the river and bolted toward nearby Arctic towns, causing the Arctics to send emergency reinforcements. A portion of Telpo's fleet headed north to join Gallowar, reinforcing the northern front.</p>
+<p>In the meantime, the second trip of seaborne drones went directly to Thaldur - the island east of Northshore that was core Arctic territory - and landed a fleet of air and snow drones that consolidated control over the island over the next few longhours. The Arctics could not effectively react, as Thaldur was too far away for either side to reach quickly, and the few drones that were in range were stuck defending against Gallowar.</p>
+<p>By late afternoon on that day, the fighting grew quieter, as the last remnants of Arctic soldiers and drones in Northshore and Thaldur were methodically hunted down.</p>
+<p>Zei sat back in his chair, and set it to incline backward as far it could. For the first time in over fourteen longhours, he went to sleep.</p>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-29.html" title="Previous chapter: Chapter 29" aria-label="Previous chapter: Chapter 29"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-31.html" title="Next chapter: Chapter 31" aria-label="Next chapter: Chapter 31"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>

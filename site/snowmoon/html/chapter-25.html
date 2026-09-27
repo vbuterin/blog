@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-24.html" title="Previous chapter: Chapter 24" aria-label="Previous chapter: Chapter 24"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-26.html" title="Next chapter: Chapter 26" aria-label="Next chapter: Chapter 26"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+<h1>Chapter 25</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Pafogai Du, Dzego</span><span class="sep">·</span><span class="date">3724 Frostime 1</span></span></div>
+<p>Gladias and Zei were sitting at a table in an enclosed room, with the tabletop functioning as a screen. On the screen, there were four piles of circles.</p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+<g fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 6">
+<rect x="1" y="11" width="94" height="84" rx="12"/>
+<rect x="105" y="11" width="94" height="84" rx="12"/>
+<rect x="1" y="105" width="94" height="84" rx="12"/>
+<rect x="105" y="105" width="94" height="84" rx="12"/>
+</g>
+<g fill="blue">
+<!-- pile of 3: rows 1+2 -->
+<circle cx="48" cy="46.5" r="6"/>
+<circle cx="40.5" cy="59.5" r="6"/>
+<circle cx="55.5" cy="59.5" r="6"/>
+<!-- pile of 4: rows 1+3 -->
+<circle cx="144.5" cy="46.5" r="6"/>
+<circle cx="137" cy="59.5" r="6"/>
+<circle cx="152" cy="59.5" r="6"/>
+<circle cx="167" cy="59.5" r="6"/>
+<!-- pile of 10: rows 1+2+3+4 -->
+<circle cx="48" cy="127.5" r="6"/>
+<circle cx="40.5" cy="140.5" r="6"/>
+<circle cx="55.5" cy="140.5" r="6"/>
+<circle cx="33" cy="153.5" r="6"/>
+<circle cx="48" cy="153.5" r="6"/>
+<circle cx="63" cy="153.5" r="6"/>
+<circle cx="25.5" cy="166.5" r="6"/>
+<circle cx="40.5" cy="166.5" r="6"/>
+<circle cx="55.5" cy="166.5" r="6"/>
+<circle cx="70.5" cy="166.5" r="6"/>
+<!-- pile of 13: rows 1+3+4+5 -->
+<circle cx="144.5" cy="127.5" r="6"/>
+<circle cx="137" cy="140.5" r="6"/>
+<circle cx="152" cy="140.5" r="6"/>
+<circle cx="167" cy="140.5" r="6"/>
+<circle cx="129.5" cy="153.5" r="6"/>
+<circle cx="144.5" cy="153.5" r="6"/>
+<circle cx="159.5" cy="153.5" r="6"/>
+<circle cx="174.5" cy="153.5" r="6"/>
+<circle cx="122" cy="166.5" r="6"/>
+<circle cx="137" cy="166.5" r="6"/>
+<circle cx="152" cy="166.5" r="6"/>
+<circle cx="167" cy="166.5" r="6"/>
+<circle cx="182" cy="166.5" r="6"/>
+</g>
+</svg></div><br>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Okay, so what do I do here?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"It's your turn first, so you pick one pile, and take at least one circle from the pile. You can take more, but you have to take at least one, and you can only take from one pile."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Whoever picks up the last circle wins."</span></p>
+<p>Gladias did not feel like he had any strategic insight about the game, and so he decided he would learn by playing.</p>
+<p>He tapped one circle in the top left box with his finger.</p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+<g fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 6">
+<rect x="1" y="11" width="94" height="84" rx="12"/>
+<rect x="105" y="11" width="94" height="84" rx="12"/>
+<rect x="1" y="105" width="94" height="84" rx="12"/>
+<rect x="105" y="105" width="94" height="84" rx="12"/>
+</g>
+<g fill="blue">
+<!-- pile of 2: rows 2 -->
+<circle cx="40.5" cy="53" r="6"/>
+<circle cx="55.5" cy="53" r="6"/>
+<!-- pile of 4: rows 1+3 -->
+<circle cx="144.5" cy="46.5" r="6"/>
+<circle cx="137" cy="59.5" r="6"/>
+<circle cx="152" cy="59.5" r="6"/>
+<circle cx="167" cy="59.5" r="6"/>
+<!-- pile of 10: rows 1+2+3+4 -->
+<circle cx="48" cy="127.5" r="6"/>
+<circle cx="40.5" cy="140.5" r="6"/>
+<circle cx="55.5" cy="140.5" r="6"/>
+<circle cx="33" cy="153.5" r="6"/>
+<circle cx="48" cy="153.5" r="6"/>
+<circle cx="63" cy="153.5" r="6"/>
+<circle cx="25.5" cy="166.5" r="6"/>
+<circle cx="40.5" cy="166.5" r="6"/>
+<circle cx="55.5" cy="166.5" r="6"/>
+<circle cx="70.5" cy="166.5" r="6"/>
+<!-- pile of 13: rows 1+3+4+5 -->
+<circle cx="144.5" cy="127.5" r="6"/>
+<circle cx="137" cy="140.5" r="6"/>
+<circle cx="152" cy="140.5" r="6"/>
+<circle cx="167" cy="140.5" r="6"/>
+<circle cx="129.5" cy="153.5" r="6"/>
+<circle cx="144.5" cy="153.5" r="6"/>
+<circle cx="159.5" cy="153.5" r="6"/>
+<circle cx="174.5" cy="153.5" r="6"/>
+<circle cx="122" cy="166.5" r="6"/>
+<circle cx="137" cy="166.5" r="6"/>
+<circle cx="152" cy="166.5" r="6"/>
+<circle cx="167" cy="166.5" r="6"/>
+<circle cx="182" cy="166.5" r="6"/>
+</g>
+</svg></div><br>
+<p>Zei immediately responded by tapping the circle at the top of the bottom right box.</p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+<g fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 6">
+<rect x="1" y="11" width="94" height="84" rx="12"/>
+<rect x="105" y="11" width="94" height="84" rx="12"/>
+<rect x="1" y="105" width="94" height="84" rx="12"/>
+<rect x="105" y="105" width="94" height="84" rx="12"/>
+</g>
+<g fill="blue">
+<!-- pile of 2: rows 2 -->
+<circle cx="40.5" cy="53" r="6"/>
+<circle cx="55.5" cy="53" r="6"/>
+<!-- pile of 4: rows 1+3 -->
+<circle cx="144.5" cy="46.5" r="6"/>
+<circle cx="137" cy="59.5" r="6"/>
+<circle cx="152" cy="59.5" r="6"/>
+<circle cx="167" cy="59.5" r="6"/>
+<!-- pile of 10: rows 1+2+3+4 -->
+<circle cx="48" cy="127.5" r="6"/>
+<circle cx="40.5" cy="140.5" r="6"/>
+<circle cx="55.5" cy="140.5" r="6"/>
+<circle cx="33" cy="153.5" r="6"/>
+<circle cx="48" cy="153.5" r="6"/>
+<circle cx="63" cy="153.5" r="6"/>
+<circle cx="25.5" cy="166.5" r="6"/>
+<circle cx="40.5" cy="166.5" r="6"/>
+<circle cx="55.5" cy="166.5" r="6"/>
+<circle cx="70.5" cy="166.5" r="6"/>
+<!-- pile of 12: rows 3+4+5 -->
+<circle cx="137" cy="134" r="6"/>
+<circle cx="152" cy="134" r="6"/>
+<circle cx="167" cy="134" r="6"/>
+<circle cx="129.5" cy="147" r="6"/>
+<circle cx="144.5" cy="147" r="6"/>
+<circle cx="159.5" cy="147" r="6"/>
+<circle cx="174.5" cy="147" r="6"/>
+<circle cx="122" cy="160" r="6"/>
+<circle cx="137" cy="160" r="6"/>
+<circle cx="152" cy="160" r="6"/>
+<circle cx="167" cy="160" r="6"/>
+<circle cx="182" cy="160" r="6"/>
+</g>
+</svg></div><br>
+<p>Gladias decided he would try something different. He tapped three circles in the bottom left box.</p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+<g fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 6">
+<rect x="1" y="11" width="94" height="84" rx="12"/>
+<rect x="105" y="11" width="94" height="84" rx="12"/>
+<rect x="1" y="105" width="94" height="84" rx="12"/>
+<rect x="105" y="105" width="94" height="84" rx="12"/>
+</g>
+<g fill="blue">
+<!-- pile of 2: rows 2 -->
+<circle cx="40.5" cy="53" r="6"/>
+<circle cx="55.5" cy="53" r="6"/>
+<!-- pile of 4: rows 1+3 -->
+<circle cx="144.5" cy="46.5" r="6"/>
+<circle cx="137" cy="59.5" r="6"/>
+<circle cx="152" cy="59.5" r="6"/>
+<circle cx="167" cy="59.5" r="6"/>
+<!-- pile of 7: rows 3+4 -->
+<circle cx="33" cy="140.5" r="6"/>
+<circle cx="48" cy="140.5" r="6"/>
+<circle cx="63" cy="140.5" r="6"/>
+<circle cx="25.5" cy="153.5" r="6"/>
+<circle cx="40.5" cy="153.5" r="6"/>
+<circle cx="55.5" cy="153.5" r="6"/>
+<circle cx="70.5" cy="153.5" r="6"/>
+<!-- pile of 12: rows 3+4+5 -->
+<circle cx="137" cy="134" r="6"/>
+<circle cx="152" cy="134" r="6"/>
+<circle cx="167" cy="134" r="6"/>
+<circle cx="129.5" cy="147" r="6"/>
+<circle cx="144.5" cy="147" r="6"/>
+<circle cx="159.5" cy="147" r="6"/>
+<circle cx="174.5" cy="147" r="6"/>
+<circle cx="122" cy="160" r="6"/>
+<circle cx="137" cy="160" r="6"/>
+<circle cx="152" cy="160" r="6"/>
+<circle cx="167" cy="160" r="6"/>
+<circle cx="182" cy="160" r="6"/>
+</g>
+</svg></div><br>
+<p>Zei responded by tapping every circle in the bottom right box, except for one.</p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+<g fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 6">
+<rect x="1" y="11" width="94" height="84" rx="12"/>
+<rect x="105" y="11" width="94" height="84" rx="12"/>
+<rect x="1" y="105" width="94" height="84" rx="12"/>
+<rect x="105" y="105" width="94" height="84" rx="12"/>
+</g>
+<g fill="blue">
+<!-- pile of 2: rows 2 -->
+<circle cx="40.5" cy="53" r="6"/>
+<circle cx="55.5" cy="53" r="6"/>
+<!-- pile of 4: rows 1+3 -->
+<circle cx="144.5" cy="46.5" r="6"/>
+<circle cx="137" cy="59.5" r="6"/>
+<circle cx="152" cy="59.5" r="6"/>
+<circle cx="167" cy="59.5" r="6"/>
+<!-- pile of 7: rows 3+4 -->
+<circle cx="33" cy="140.5" r="6"/>
+<circle cx="48" cy="140.5" r="6"/>
+<circle cx="63" cy="140.5" r="6"/>
+<circle cx="25.5" cy="153.5" r="6"/>
+<circle cx="40.5" cy="153.5" r="6"/>
+<circle cx="55.5" cy="153.5" r="6"/>
+<circle cx="70.5" cy="153.5" r="6"/>
+<!-- pile of 1: rows 1 -->
+<circle cx="152" cy="147" r="6"/>
+</g>
+</svg></div><br>
+<p>Gladias tapped on all the remaining circles in the bottom left box. Zei responded by simply tapping on one of the circles in the top right box.</p>
+<p>Gladias tapped on all the remaining circles in the top left box. Zei tapped on two of the three remaining circles in the top right box.</p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+<g fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 6">
+<rect x="1" y="11" width="94" height="84" rx="12"/>
+<rect x="105" y="11" width="94" height="84" rx="12"/>
+<rect x="1" y="105" width="94" height="84" rx="12"/>
+<rect x="105" y="105" width="94" height="84" rx="12"/>
+</g>
+<g fill="blue">
+<!-- pile of 1: rows 1 -->
+<circle cx="152" cy="53" r="6"/>
+<!-- pile of 1: rows 1 -->
+<circle cx="152" cy="147" r="6"/>
+</g>
+</svg></div><br>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Okay fine, I lost"</span>, Gladias admitted.</p>
+<p>The only next move he could make would be to remove the last circle from one of the two boxes. This would leave one circle on the board, which Zei could take and win.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"That was impressive."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"It's a game that we would play often as children, especially before more modern things like Minpentai came along."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So is this the part where you tell me your secret sauce?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"You know me well. There is indeed a secret sauce. It's a simple algorithm. It requires mental math, but once you learn it, and if you can do the math without mistakes, then as long as you get to choose if you're going first or second, you will always win."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So tell me."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Take the XOR of the circle counts of each box. So, write each count as a number in base 2. For each position, count up how many ones there are in that position. If there is an odd number of ones, in our new number we will put a 1 in that position. Otherwise, we put a 0. We'll call this the XOR sum of the board."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Wait, slow down, give me an example."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Let's take the board we started with. The counts are 3, 4, 10, 13."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Okay."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"What is that in binary?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"11, 100, 1010 and ... hold on, 1101?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Yep! Though let's add some zeroes to make them the same length and write it down."</span></p>
+<p>He opened up his hand device, and wrote down the four numbers in a grid shape.</p>
+<br><div class="device-view wide-device-view"><div>0011<br>0100<br>1010<br>1101
+</div></div><br>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Now, count up along the columns."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"They all have two ones. That's even. So the XOR sum is ... zero everywhere, so it's zero?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Exactly. Now, remember what your first move was?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I decreased the first count from three to two."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Correct."</span></p>
+<br><div class="device-view wide-device-view"><div>0010<br>0100<br>1010<br>1101
+</div></div><br>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"What's the XOR sum now?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Lowest-order digit has a single one now, so it became odd, so it's 1?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Exactly. Now, remember what I did?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Sorry, I forget."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I took one off of the last count, decreased it from thirteen to twelve."</span></p>
+<br><div class="device-view wide-device-view"><div>0010<br>0100<br>1010<br>1100
+</div></div><br>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Oh I see! And the XOR sum is back to zero!"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Exactly. So whenever you move, the XOR sum started off zero, and any move you make can only make it nonzero. But if it's nonzero, then I always have <em>some</em> move that can set it back to zero again."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Wait, is that true?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Take the highest-order digit of the XOR sum that's a 1. There have to be an odd number of circle counts whose digit at that position is a 1, meaning there has to be at least one. In that box, change its count from N to N XORed with the XOR sum. That's always a decrease, because one digit flips from 1 to 0 and all other digits that change are lower-order."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I ... maybe get it?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"And so whenever <em>you</em> move, you can only change the XOR sum from zero to nonzero. When <em>I</em> move, I set it back to zero. And the final move, the move that clears the board, sets the XOR sum to zero. So that means the winning move is always mine to make."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Now, if the board started with an XOR sum that's <em>not</em> zero, then I would win if I go first. But if the board starts with an XOR sum of zero, then as second player I'm guaranteed to win."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Interesting!"</span></p>
+<p>Gladias sat back and thought for a few moments.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I've never seen a game that favors the second player before."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"It doesn't necessarily! It only favors the second player if the initial board has an XOR sum of zero. But games that favor the second player are more common than you might think."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Normally there's some position, some territory that's valuable, and the first player has an advantage because they can get to it first."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Can you think of what kind of underlying reason might make a game second-player favoring?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What do you mean?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"What fundamental advantage does the second player have?"</span></p>
+<p>Gladias paused to think again.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"They know more when they get to make their move."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Correct."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Here, I would make my move, and you would be in a position to make your counter-move <em>based on</em> my move, and so you always know the exact move that will bring things back into balance."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Exactly."</span></p>
+<p>This time, Zei paused. After a few moments, Gladias spoke again.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"You know, if you were the first player, you would have probably won too."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"And why is that?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Because I didn't know the trick. To you, there was a mathematical structure that has one desirable state - the state where the XOR sum is zero every time I move. And once you reach it, you're locked in forever. To me, it was just chaos."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Indeed. Entropy is always in the eye of the beholder."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"The game is a tower of different kinds of rules"</span>, Zei continued. <span style="color:oklch(0.7 0.15 346.66666666666663)">"At the bottom, the game is irreversible: you always have to take at least one circle away in each move. At a level higher than that, there's the XOR sum, and that is reversible. Whatever change you make, I can always set it back. But at a level even higher than <em>that</em>, the fact that it's your turn when the XOR sum is in balance is the irreversible thing. Once you let the game slip into that state, if the other player knows the trick, there is no way to get back out."</span></p>
+<p>Zei went silent again. After a few moments, he changed his posture, signaling that the warmup was over and the real line of questioning was about to begin.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Now, here's your next question, Gladias. Is the fight for Veridia a first-player-favoring or a second-player-favoring game?"</span></p>
+<p>Gladias's eyes opened wide, visibly surprised at the new direction the conversation was going.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What do you mean?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"The Arctics moved first. They set up or took over spying infrastructure. They pressured, bribed or threatened Veridian officials. They made a highly coordinated campaign to try to take over even the Order of Steering, and get it to do their bidding and nudge Veridian society to not bother resisting. And finally they attacked Redshire and then Northglade. Do they win because they already captured the important positions, or do we win because we have a counter-strategy?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I see..."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"On the field of battle, right now they have the advantage, and not even for any first-player reasons - their technology is just better. But in the battle for the institutions, we have a counter-strategy. We can play the same game they do, but we have the advantage because we're seeking goals that most of the people we would be manipulating actually want."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"What's the word for manipulating someone to do something that's actually in their interest, by just showing them how it's in their interest?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"This sounds like it has a really simple answer."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Convincing."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So whom do we convince, and to do what?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"You tell me."</span></p>
+<p>Gladias again paused. Finally, he spoke.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What about the Courts?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Go on."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"We run the same kind of influence campaign on the Courts that Delwart and whoever else did on the Order. And we convince them to do ... something that fixes this whole situation."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"You learn quickly, Gladias."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Now, why do we have the advantage here?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Because what we're doing is actually good for Veridia. For Delwart to convince the Order members to go against Veridia's interests, he had to make different arguments for each person, tailor-made to their values and their weaknesses, and on top of that threaten them either implicitly or directly. We don't have to do that. We just have to have a clear thing that we're asking for, and tell the story directly, as it is. When you lie, it's easy to get tripped up: a lie is essentially a simulated virtual universe, and it's very hard to make a virtual universe that's consistent without actually simulating the whole thing. But the truth gives you self-consistency for free. So we tell the truth."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"So now, the next question. What is our ask for the Courts?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Let's talk to Verdow."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"You set up that call. I'll quickly ping Den and get the latest on how our spying in Veridia is going."</span></p>
+<hr>
+<p>Gladias tapped on his watch.</p>
+<br><div class="device-view narrow-device-view"><table>
+  <thead>
+    <tr>
+      <th>Message</th>
+      <th></th>
+      <th>To</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span style="color:oklch(0.7 0.15 93.33333333333333)">[requesting call]</span></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td style="width: 25%"><center>Senator Verdow</center></td>
+      <td>78145</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p>After a few moments, Verdow answered.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"How are you, Gladias!"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Senator, we have a new idea."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"And what is that?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"We want to do the same thing to the Courts that the Arctics tried to do to the Order. Seek out enough of their judges, convince them to do something that will let us fight back against the Arctics properly."</span></p>
+<p>Zei saw the opportunity to join the conversation.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Most of the admins running the cameras just installed our update. It also called home to report each camera's existing state; it turns out a bunch of them had been taken over by the Arctics already. So now we have lots of backdoors, we've already identified over a dozen judges, and we've killed some of their backdoors as a bonus - though that does mean we have to be more careful now about not breaking our cover any further. So we can play the game just as well as the Arctics can - probably even better, because our goals are goals that the Veridian judges should actually want."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"And so we need to figure out what the thing we want to convince them to do actually is."</span></p>
+<p>Verdow seemed to laugh, more with admiration than anything else.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"I knew you guys could pull something together."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Let me think about this..."</span></p>
+<p>For a few moments, silence. Then, Verdow slowly began to speak.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Okay, I have one crazy idea."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"In Veridia, one of the most basic laws is that the military is required to defend the country. It's the fourteenth Ground Law, it's written right there in the documents. In Northglade, they completely failed to defend the country, and they are barely even trying to make any serious reforms in response."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Therefore, the Veridian military are lawbreakers. Therefore, the Courts can fire them. And if the parliament tries to stop that, then, well, the parliament is legally the collective head of the military, so the Courts can fire them too."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"The Courts ... have that much power?"</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"In principle the courts can do many things."</span></p>
+<p>Verdow paused, and then decided to enter a philosophical tangent.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"You see, Gladias, law is not like a computer program sitting inside a cryptographic network. The goal of law is not to try to eliminate the subjective nature of interpreting what's right and wrong in the world. Gather, the goal is to structure it - put it into channels that make it more predictable, and more focused, so that each case doesn't re-litigate the fundamental questions of what is good or bad for humanity."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"In a normal case, it often does approach being quite programmatic, and that is the point. A business dispute in court not about who is a good person, it's about whether or not one party committed the legally-defined act of fraud. But in any exceptional case, a lot of flexibility remains - and indeed, any situation that is settled case law today was unknown and flexible at some point in the past."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"And this latent flexibility is key to giving courts space to make good decisions. Man was not made for categories. Categories were made for man. Declaring the entire military in violation of its sacred duty is crazy. It's something so crazy that I don't think anything remotely like it has been attempted in Veridian history. But Veridia is also in a crazy time. And so at this moment, a crazy judgement like that is exactly what Veridia needs."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Winning here is not just a matter of blasting out into the public the argument that I just made, where the judges will see that of course it's correct and immediately act on it. You have to convince them. You have to sit with them. Explain to them why this is not just a valid legal argument, but also good for Veridia. Explain to them why replacing the entire military leadership, and if needed the parliament, is something that will rescue Veridia, rather than throwing it into further chaos. And convince them that enough other judges will go along too, and that when they make their decision, the public will go along too. And do all that first quietly than suddenly, so that the Arctics can't react."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I like how we don't even need to convince you that the plan is worth trying."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"The only other plans I've heard in my parliament meetings are to keep doing what we've been doing all along but 'try harder', and outright surrender. I judge those two as having an even lower success probability than this."</span></p>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-24.html" title="Previous chapter: Chapter 24" aria-label="Previous chapter: Chapter 24"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-26.html" title="Next chapter: Chapter 26" aria-label="Next chapter: Chapter 26"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>

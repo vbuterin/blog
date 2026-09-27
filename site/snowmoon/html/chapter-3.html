@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-2.html" title="Previous chapter: Chapter 2" aria-label="Previous chapter: Chapter 2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-4.html" title="Next chapter: Chapter 4" aria-label="Next chapter: Chapter 4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+<h1>Chapter 3</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Meldan, Veridia</span><span class="sep">·</span><span class="date">3724 Snowmoon 8</span></span></div>
+<p>Gladias was walking forward along a sidewalk. On each side of the road, there were small shops one after the other, selling various goods from flowers to clothing to electronic equipment. He crossed a street.</p>
+<p>On the other side of the street, the road sloped down, and transitioned seamlessly into a tunnel, lit just enough that it was possible to comfortably see and read, but not more.</p>
+<p>Gladias got to a Y-shaped intersection. Pasted on the wall, there was a poster, attached at the corners with four pieces of tape. He stopped right in front of the poster to take a look.</p>
+<br><div class="device-view wide-device-view device-view-left" style="background-color:#633; font-size:93.75%; color:#fee; --dv-ink:#fee;"><b>From a comfortable Veridia to a strong Veridia</b>
+<hr style="background:#fee; margin-top: 10px">
+<p>Veridia is a beautiful country, you are told in school. You see it every day: the trees, the mountains, the houses and buildings all trying to eke out another few basis points reduction in land tax.</p>
+<p>But you know, in your heart, that there is a problem. When did Veridia last go to space? Twenty years ago. When was Veridia's tallest building built? Forty years ago. Why? Because all your institutions - the Steering system, the Graph Funding mechanism, and the very <em>culture</em> - are built around making people comfortable and happy in the present, with no concern for tomorrow.</p>
+<p>Meanwhile, look at the Arctic Empire. Where is the housing, the transportation, the industry being built the fastest? In the Arctic Empire. All the scientists working to make people live longer? In the Arctic Empire.</p>
+<p>What does Veridia say to those scientists? Living longer is not that important. Death and birth are okay, they are the natural cycle of life. Yes, that's what they believe. The natural cycle of life is the best they have for morality - by that same twisted logic, any injustice could be natural, like a tiger eating a rabbit.</p>
+<p>Veridia's vision of nature is like a plant. Beautiful, but never rising up above its stature. Our vision of nature is like a lion. If this vision appeals to you, if you want Veridia to be stronger, to reach for the stars, to aim beyond incremental public health and seek eternal life, then Veridia needs you, the next generation of leaders, to <em>take charge</em>. Don't mind the mob. Build the future. Join us, and we will build it together.</p>
+<p>With regards,</p>
+<p>Lord Ephelion</p>
+<p>Arctic Empire consul to Veridia.</p></div><br>
+<p>"Yay, more Arctic propaganda", Gladias thought. Of course, the Arctic Empire is free to speak just like everyone else, but he wondered what kind of Veridian would feel inclined to vandalize the public environment and put up a printout of their message in the Veridian tunnels. He started mulling over ways to rip the poster down.</p>
+<p>Suddenly, Gladias felt a tap on his shoulder.</p>
+<p>Gladias turned his head.</p>
+<hr>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Oh, is it you, Mov?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"No, it's the Arctic Emperor. I'm here to literally suck out your soul."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Okay fine... Wait, I'm like one of a hundred people walking toward the Greater Plum Harbor wearing a privacy robe, how did you figure out where I am?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"You put me on your trust list a year ago and never took me off, so our local AIs had permission to enable location sharing. Your AI knew that we were supposed to meet before I shadow you when you go see the mysterious gentleman, so it unlocked location sharing with me for today."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Aaaah, I see ... something something contextual intimacy or whatever the new buzzword is."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Yep, probably didn't even need the two-party garbled circuit feature to do that."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So what's been on your mind?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Well, I'm assigned to one of the openness rubrics on internet media this year. We've been talking a lot in our Keeper group about bumping up the taxes on API restrictions. I talked to a citizens' assembly about the topic a month ago, and they're really unhappy about how things are going."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Why is it such a big issue now?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Bluewhale announced a month ago that they're cutting their API and are only letting verified hardware interface with the platform. They say it's to prevent automated spam, but basically everyone in the assembly thought they just want to block alternative interfaces so they can control people's attention more and extract more money."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Do we know exactly what kinds of things they are doing? Are any of their algorithms public?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Nah, their algorithms are totally opaque, and they're already paying the max tax bracket for that."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I see..."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"So yeah, many of the Keepers think we should bump up more taxes on that kind of behavior. So either they stop, or, well, they keep going and the internet sucks more, but the gov gets enough money that we can pay for everyone to get better healthcare. The problem is, Bluewhale has been driving a hard campaign against it. One Keeper was not careful about their privacy, she and her views got found out recently, it went public, and her husband lost his job only a few days later. No idea if it's connected, but, well, this is why we gotta run this whole tax system with all these cryptographic networks randomly selecting Keepers, anonymous discussion and voting, and privacy robes."</span></p>
+<p>The mention of Bluewhale brought Gladias back to his younger days, when he had learned programming by writing an alternative client for the other major social platform, Silverchat. That had only been possible, he knew, because the API was open, and the platform allowed developers to make alternative clients and users to export and migrate their data - all decisions that had undoubtedly been motivated, or at least justified to the bean counters, by trying to lower their tax rate on the hardware and software openness rubric. That experience had been what motivated Gladias to contribute back, and get involved in Steering himself.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Anyway, speaking of privacy, what's the plan with your 200 rep anon friend?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well, he told me that he thinks the whole Steering mechanism is fundamentally broken. I figured I would hear him out. Often even people who are crazy are at least ten percent right in some way that's interesting. And hopefully figure out some clue about how he found me?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"And... what if this is a trap, to get even more compromising info on you?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well, if he really wanted to hurt me, he could have just submitted my identity and task into the network and pulled me out of the running for Sentinel status for this whole year. But anyway, figuring out this kind of thing is what you're here for."</span></p>
+<p>Mov then opened up his privacy robe, and took out a large package from an inside pocket.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Here, before we get into the rest of the business, put on a fresh privacy robe. Just in case there's some piece of dirt that makes yours trackable. The Arctics are getting better at smuggling their surveillance devices in here, faster than we're getting better at detecting them. We gotta step up our paranoia."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Surely if it's at this level we should have just not met in person at all."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Come on Glad, you're not just someone about to join me as a Sentinel, you're a friend. I enjoy it when we see each other - while we still can."</span></p>
+<hr>
+<p>The tunnel sloped up, and the outdoor light once again shone into Gladias's eyes. Both sides of the path were covered by trees.</p>
+<p>He passed by two children standing beside a water fountain and talking. He could make out one of them saying something about a recent visit to Northglade with his family, and the other mentioning that he liked their Helisport team.</p>
+<p>Soon after he had walked far enough that he could no longer hear their conversation, his watch buzzed.</p>
+<br><div class="device-view narrow-device-view"><table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th></th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Seila</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 253.33333333333334)">[4 images]</span></td>
+      <td>44029</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p>He took a look.</p>
+<p>Seila was sending some photos from Freetown. The first was of the downtown of the city. The second was of a major park, taken from in front of an entrance gate. On the left, he could see a poster with some writing. Bringing his watch closer to his eyes, he could make out a price list.</p>
+<p>Gladias pressed a button, responding back with a heart symbol.</p>
+<p>Turning his attention away from his watch screen back to the street, he noticed that he had now entered a more urban and more commercial part of Meldan.</p>
+<p>To his right, he saw a series of office buildings. The ones further away shone with a clear glass and steel construction, though at that distance they were only partially visible behind the tree cover. The ones close by were under construction, all covered with large tall barriers shielding the construction site from public view.</p>
+<p>On the first barrier, he saw a poster reminding Veridians to be kind toward their families and their community.</p>
+<p>On the second barrier, he saw another Hydrafill advertisement. On the left side, the advertisement showed the classic Hydrafill water bottle, covered with yellow and green colors.</p>
+<p>And on the right side, it showed the text:</p>
+<blockquote>
+<p>Hydrogen hydroxide is:</p>
+<ul><li>A commonly found substance in toxic sewage water</li><li>Deadly in large doses</li><li>Frequently administered to prisoners undergoing torture</li><li>A source of skin damage if held for a prolonged time in its solid form</li></ul>
+<p>But did you know that you can buy YOUR OWN BOTTLE of fresh drinkable hydrogen hydroxide today?</p>
+<p>Hydrafill, buy it now.</p>
+</blockquote>
+<p>Gladias smiled again. The construction had been going on for a long time, and he was grateful for both posters that were covering up the construction sites. He vastly preferred looking at Hydrafill advertisements <em>or</em> Veridian virtue posters to construction cranes and half-built concrete buildings.</p>
+<p>He then turned his attention to the long castle-like wall, mixing grey and purple colors, that was on his left.</p>
+<p>In front of the wall, there were two rows of trees, with a sidewalk in between them.</p>
+<p>Behind them, a large poster mounted on the wall:</p>
+<p>"Learn about what Greater Plum Harbor is doing for your community!"</p>
+<p>The text was in front of a background that featured robots picking up garbage, drawn in a child-friendly cartoon aesthetic. On the bottom right corner there was a two-dimensional barcode. Gladias scanned it out of curiosity.</p>
+<br><div class="device-view wide-device-view"><h3 style="color:#d4d">Greater Plum Harbor Public Activities</h3>
+<table style="width:75%">
+  <tbody>
+    <tr>
+      <td>Environment</td>
+      <td>
+<ul><li>Cleanup</li><li>Pollution monitoring (water, air)</li><li>Animal welfare research</li></ul>
+      <td><button> Learn more </button></td>
+    </tr>
+    <tr>
+      <td>Health and medicine</td>
+      <td>
+<ul><li>Large-scale studies in effects of food, environment and clean air improvements</li><li>Healthy eating, exercise, other behavior and lifestyle research</li></ul>
+</td>
+      <td><button> Learn more </button></td>
+    </tr>
+    <tr>
+      <td>Education</td>
+      <td>
+<ul><li>Writing advanced education curricula targeting ages 4-18</li><li>Youth math and programming competitions</li></ul></td>
+      <td><button> Learn more </button></td>
+    </tr>
+    <tr>
+      <td>Art</td>
+      <td>
+<ul><li>Beautiful Cities research</li><li>Publicly available exhibitions and museums</li><li>Movies and shows, three in Veridian Top 20 last year.</li></ul></td>
+      <td><button> Learn more </button></td>
+    </tr>
+    <tr><td colspan="3"><button> Load more </button></td></tr>
+  </tbody>
+</table>
+<div><b>All research outputs and tooling done by GPH are open source! <br> Partially funded by Veridian Quadratic Funding</b></div></div><br>
+<p>Gladias saw two people sitting on a bench, each drinking a tea and looking at the billboard, one with a hand device on his lap.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Have you ever been in there?"</span>, the first man asked.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"No I haven't, never managed to get a visa"</span>, the second replied.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"It's a fascinating place, it looks totally different inside than the rest of Veridia, it's almost like a country inside a country."</span></p>
+<p>Gladias stopped, and faced the billboard to avoid arousing suspicion. Overhearing a conversation was slightly impolite, but understanding public sentiment was part of his duty as a future Sentinel. Citizens' advisory assemblies helped, but they were never quite as good as an authentic conversation by people who did not realize that anyone was listening.</p>
+<p>The second man looked down at the hand device that the two were sharing. <span style="color:oklch(0.7 0.15 293.3333333333333)">"Oof, check what taxes they pay."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What taxes do they pay?"</span>, Gladias asked Emerald, whispering silently so only his neck band could make out what he was saying.</p>
+<p>Emerald immediately replied.</p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Sales tax, averaging 5.2%, half of the city average. Total land tax is 1.48%, slightly greater than the city average. Graph Funding and especially Quadratic Funding revenue recovers roughly half of this."</span></p>
+<p>Gladias turned his attention back to the conversation.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"I don't get it. These guys are just peacefully off in a corner, by themselves. I've never been there, and they've never bothered me. And they even do all this work on the environment, education, healthcare, their museums. They can't even just work on the science they're actually good at, they have to do all these populistic things to push their taxes down and get some of the money back from Quadratic Funding, things that they're not even good at. And even after all this? So many people hate them, and pretend their wall is ugly just to push their land taxes up. What's the point of worrying so much about the Arctics when we're so good at being our own worst enemy?"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"At least here that's the worst we can do to them. If this was Devanvil or Inglewore, GPH would be fighting to not get shut down entirely."</span></p>
+<p>Gladias had not been inside Greater Plum Harbor for nearly a decade, so this made him all the more curious to see it again. He kept walking.</p>
+<hr>
+<p>Gladias held his watch near the green circle on the entrance gate, and waited for about one tick.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Proof verified, welcome"</span>, the machine answered in a robotic but approving tone.</p>
+<p>He walked through the gate.</p>
+<p>He could immediately see why the two people on the bench had described Greater Plum Harbor as being so different from the rest of Veridia.</p>
+<p>The buildings inside Greater Plum Harbor were more uniform than those outside, all with similar circular and rectangular shapes, a mixture of white, grey and purple colors, and roughly five to ten meters in height. The trees were all of a few types, and carefully planted an equal distance apart on the sidewalk. Beyond having distinct names and distinct quarter-meter-wide logos, the stores and restaurants were not trying at all to distinguish themselves, instead accepting their visual role as small elements of the Greater Plum Harbor's whole. The buildings were noticeably more futuristic, more glass-and-steel, and with more sharp edges than the usual structures in Veridia.</p>
+<p>Gladias kept walking forward, following the directions on his watch. After five minutes, he arrived at a tunnel entrance, and went down, briefly passing through a space where there were a large number of people walking.</p>
+<p>Just after he passed through the crowd, his watch buzzed.</p>
+<br><div class="device-view narrow-device-view"><div style="font-size:150%"></div>
+<table>
+    <tr>
+      <td style="font-size:150%" colspan="2">Air</td>
+    </tr>
+<tr>
+<td style="font-size:150%">CO<sub>2</sub></td>
+<td style="font-size:150%; color: yellow">965</td>
+</tr>
+<tr>
+<td style="font-size:150%">PM2.5</td>
+<td style="font-size:150%; color: yellow">22.1</td>
+</tr>
+</table>
+<table>
+<tr>
+<td style="font-size:150%" colspan="2">Devices</td>
+</tr>
+<tr>
+<td style="font-size:150%; color: #8f8">Attested ✓</td>
+<td style="font-size:150%; color: #8f8">55</td>
+</tr>
+<tr>
+<td style="font-size:150%; color: #fc8">Unknown ?</td>
+<td style="font-size:150%; color: #fc8">6</td>
+</tr>
+</table></div><br>
+<p>Two problems, Gladias thought.</p>
+<p>First, too many people, not enough ventilation or filtration. Gladias pulled on the strap on his privacy robe's front face cover, separating the areas above and below his nose.</p>
+<p>Second, no idea what those unattested devices are. These days, almost every device was attested with a zero-knowledge proof verifying that it was produced in a particular batch by a particular manufacturer. Six out of fifty five was an unusually high number unattested. Unfortunately, there was no time to figure things out. It could be a kid's science project, Gladias thought, it could be that it was simply normal in Greater Plum Harbor to have devices without attestation - after all, from Veridia's perspective, the land was all just one giant business's private property - or it could be a hidden spy camera, or worse. He increased his speed slightly, and kept walking.</p>
+<p>After taking several more turns through the maze, he was once again outside, this time in the middle of a hidden courtyard. There were several tables and chairs, with people eating and drinking water. Gladias found a table in a booth that had a cloth curtain protecting it. He went in and sat down.</p>
+<p>There was a decorated lamp in the middle of the far end of the table, with one large flower on each side. On the floor, pressed against the corner of the booth, Gladias noticed a white box. He leaned in to look more closely, and his watch buzzed. PM2.5 readings were below 1. Must be an air filter, he thought. He took the hood off his privacy robe.</p>
+<p>He tapped his watch against a green circle in the middle of a table, and a moment later heard a confirmation sound.</p>
+<p>Two minutes later, a robot with a smiley face slid up to the table, carrying water and a salad. Gladias took both and put them on the table, and the robot slid away.</p>
+<p>Five minutes later, another man wearing a privacy robe stepped in.</p>
+<hr>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"So, we meet at last."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"You track me down, you tell me you know things I need to hear but only want to tell me in person, and you bring me to a far corner of GPH that I did not even know existed. And so far I don't even know your name."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Ah, my name is Delwart. Pleased to meet you."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"And I'm Gladias."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I knew that. And your wife is Seila, your children's names are-"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Are you trying to intimidate me?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Actually no, I guess now that I think about it, that was more showing off than anything else. I do apologize."</span></p>
+<p>The two went quiet for a couple minutes. Both took off the face covers and hoods from their privacy robes. Gladias started to drink his water and eat his salad. Delwart tapped his own watch against the green circle on the table, and a minute later his own tea, and some kind of rectangular nutrition bar along with a fork, arrived.</p>
+<p>Gladias leaned forward again.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So what do you want?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Do you feel happy with the Steering system lately?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"It has its flaws like any system, but in general it feels fine?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I see, I haven't broken your wall yet. Okay, let's take the Dreadknot concert for example. They're a nice band, they're great fun, right?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Yeah, I like them."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"But a bunch of the Sentinels are trying to push them up into Tier 4, because their lyrics are not gentle enough."</span></p>
+<p>Gladias nodded in agreement.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"You were brave, voting Tier 3. Most Acolytes would cave to what they think the Sentinels want. You didn't. That's rare."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"But let's take another example. What do you think about GPH?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"It's clearly a nice place. Not like Veridia, but beautiful and impressive in its own way. It's not for everyone, but I can see why a lot of people like coming here."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Well, do you know what their Steering taxes are?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"The Steering taxes are okay, but they really get dinged on the land tax."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Exactly. A well-considered argument about how much this place benefits Veridia is worth less than a barely thought-through 'I don't like you'."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So what do you propose?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Freedom. Actual freedom. Stop trying to nudge everyone, and let people's true selves come out."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"And how can I help?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Are you planning to be a Sentinel or a Keeper if you get accepted in two months?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Was thinking Sentinel so far."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Be a Keeper. And just vote to delete every rubric you see."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"That's it? That's your plan?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"See, there's a lot more Sentinels these days than Keepers. And Sentinels are the people everyone is trying to influence. Why? Because Sentinels get direct connections to specific things in the world. Keepers adjust the global rules. But there's a limit to how much any single rule can affect any single business, and there's like twenty Keepers deciding each on each rule. Being a Sentinel, you have a much more tangible impact. And it's more fun."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"My program is different. I'm trying to round up as many Keepers as I can, because what I want is systemic change. It's not about one concert or one enclave that has too much purple in it. It's about releasing Veridians from this tyranny of people's prejudices and letting them be themselves."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Do you want to remove Graph Funding too?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I think Graph Funding definitely overreaches in a bunch of ways too, but my focus is Steering."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"A lot of the open tech Graph Funding supports has been pretty key to helping Dzego modernize to defend itself, do you not think that's important?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Look, I like their people, but really we're playing a dangerous game cutting so close to funding a potential war. We should focus on our own problems first."</span></p>
+<p>Delwart stopped speaking, and began to drink his own tea and eat his nutrition bar. Gladias took the moment to ponder Delwart's words, while continuing to drink his water and finishing his salad.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"It's an interesting thought, that the Steering is just manipulating people too much. I don't know if I fully agree with just dropping it all to zero, and especially killing the Graph Funding - which we would have to do, if the Steering taxes went to zero."</span></p>
+<p>Gladias paused for a few ticks, and looked at Delwart. Delwart looked back. They each took another sip of their respective drinks.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"But okay, even if I might agree on some parts, why should I listen to you?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Well, I know you, I know where you live, I know how you think. And if I can find out all that, imagine what kinds of things Bluewhale might be able to do. Or, for that matter, the Arctics. I can help protect you. But I will need your help too."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Anyway, the deadline for you to submit your final track decision is in about a month. Don't go for being a Sentinel, be a Keeper. Let's just start with that."</span></p>
+<p>Delwart stood up, and exited the booth.</p>
+<p>Gladias kept the crack in the middle of the curtain slightly open, and watched Delwart go. Just before Delwart disappeared from view, another person wearing a privacy robe exited the adjacent booth, and followed Delwart.</p>
+<p>Gladias checked his watch.</p>
+<br><div class="device-view narrow-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">
+<rect width="200" height="200" fill="#348"/>
+<rect x="80" y="100" width="80" height="80" rx="8" fill="#67e"/>
+<rect x="120" y="40" width="20" height="70" rx="8" fill="#67e"/>
+<rect x="130" y="40" width="70" height="20" fill="#67e"/>
+<circle cx="92" cy="150" r="5" fill="#cef"/>
+<text x="84" y="169" fill="#cef" font-family="sans-serif" font-size="12">Gladias</text>
+<circle cx="130" cy="110" r="5" fill="#cef"/>
+<text x="140" y="130" fill="#cef" font-family="sans-serif" font-size="12" text-anchor="middle">Mov</text>
+<line x1="130" y1="105" x2="130" y2="88" stroke="#cef" stroke-width="1"/>
+<polygon points="130,85 126,92 134,92" fill="#cef"/>
+</svg></div><br>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-2.html" title="Previous chapter: Chapter 2" aria-label="Previous chapter: Chapter 2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-4.html" title="Next chapter: Chapter 4" aria-label="Next chapter: Chapter 4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>

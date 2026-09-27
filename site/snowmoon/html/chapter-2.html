@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-1.html" title="Previous chapter: Chapter 1" aria-label="Previous chapter: Chapter 1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-3.html" title="Next chapter: Chapter 3" aria-label="Next chapter: Chapter 3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+<h1>Chapter 2</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Pafogai Du, Dzego</span><span class="sep">·</span><span class="date">3724 Snowmoon 5</span></span></div>
+<p>Fin and Zei got off the autobus and walked down Hun Min street.</p>
+<p>Hun Min street was one of the more lively commercial and industrial streets in Pafogai Du. On both sides of the street, they could see signs with colored blinking lights advertising all kinds of electronics: hand devices, watches, compute boxes, lighting, batteries, sensors and more. Among the stores were miniature factories, building various sophisticated devices and in a few places even computer chips. The buildings were all one or two storeys tall, and many signs were on top of stairways leading underground.</p>
+<p>On the left, there were two adjacent stores. One was selling sensors of all kinds - cameras, microphones, biological and chemical sensors, air quality monitors, and of course, sensors designed to detect sensors. The other was selling anti-transmission foil - a common material used by default in many kinds of rooms, to block wireless signals. Privacy and transparency, monitoring and anti-monitoring - the duality of keeping the Dzegojan safe.</p>
+<p>Between the two stores, a sign read in large letters:</p>
+<center><div class="dz-card dz-mono" style="font-family:'TeX Gyre Chorus',cursive;font-size:17px;line-height:1.55"><div class="dz-line dz-blank" style="height:1em"></div>
+<div class="dz-line" style="margin:3px 0;padding-left:2ch"><span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">zui fia kun zun</span></span></div>
+<div class="dz-line dz-blank" style="height:1em"></div></div></center>
+<p>"Underground safe place".</p>
+<p>"gie fe kiu kai ci bin hu", Zei thought to himself. "Grow roots, no head". The strategy that Dzego had been employing for half a century to grow and stay protected.</p>
+<p>Fin and Zei both kept walking, enjoying the shade under the trees between the road and the sidewalk.</p>
+<p>A drone buzzed as it flew overhead. A moment later, their watches buzzed softly once their software had run the authentication protocol and confirmed that it was a friendly security drone that came from a batch that had passed all inspections and was running friendly algorithms. The whole chain of events - the flyby, the authentication, the confirmation - finished within hundreds of milli-ticks, and Fin and Zei both barely noticed that any of it had even happened.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"How was the Minpentai game last night?"</span>, Fin asked.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I got third place! Finally figured out a wall structure that reflected their gliders right back at them, completely wreaked havoc on their territory."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"How about you?"</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Studying for the geography exam in boring school."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Boring, I take it?"</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Yeah, we're covering the United Cities, and they're just making us memorize all the co-governance percentages. Freetown gets five percent votes in Devanvil, Devanvil gets fifteen percent votes in Redshire, Redshire gets..."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Do you have any new opinions on how effective that whole system is?"</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Oh no, critical governance studies only becomes a topic in university."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"The same way that chemistry is a topic in high school?"</span></p>
+<p>Fin laughed. <span style="color:oklch(0.7 0.15 80)">"Are they gonna cover an entire year of critical governance studies in ten days in DU now?"</span></p>
+<p>DU - "Decentralized University", or <em>dzu hu sun du</em> in Dzegoban - the place they were going. Zei remembered that they needed to make sure they got there on time, and checked his watch.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Time just hit sixty-nine thousand. The exact location of the classroom should be getting decrypted and broadcasted any moment now."</span></p>
+<p>The watch buzzed. Zei got a notification.</p>
+<br><div class="device-view narrow-device-view"><table>
+  <thead>
+    <tr>
+      <th>MUN GUI 1842</th>
+      <th>TEI 70000</th>
+      <th style="font-size:300%; color: #ff8">✓</th>
+    </tr>
+  </thead>
+</table></div><br>
+<p>Zei stopped, and showed his watch to Fin.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Huh, yellow checkmark. Looks like they've upgraded to a new cryptographic proof system, gotta make sure we sync our codes when we get to the lesson today."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Again?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Guess so. I hear the Arctic Empire is getting more aggressive, so we're stepping up security."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Okay, anyway, it says Mun Gui 1842. We... just passed 1990 Hun Min. So it's behind us."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Let's just turn left here on 20th, and then left again on Mun Gui?"</span></p>
+<p>Zei checked over the math in his mind. Named streets were spaced two hundred meters apart, H to M was four streets. House numbers were just meters, so to get from 2000 to 1842 they had to walk one hundred fifty eight meters. Eight hundred and one hundred fifty eight together is ... nine hundred fifty eight meters to walk.  The lesson starts at seventy thousand, so they had a little under a thousand ticks, or more colloquially, ten minutes. A slow walking pace is one meter per tick, and Fin and Zei were fast. So they were fine.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Sounds good!"</span></p>
+<p>They began to walk briskly, to make sure they could get there with time to spare.</p>
+<p>A few minutes later, they arrived. <span style="color:oklch(0.7 0.15 306.6666666666667)">"Oh Fin, there you are!"</span>, a young woman shouted. Fin and Zei were led down two flights of somewhat dusty stairs.</p>
+<p>When they got to the bottom, another man was waiting, and stopped them. <span style="color:oklch(0.7 0.15 173.33333333333331)">"Change of plans, it's in the opposite room on floor -1 now."</span></p>
+<p>Zei sighed.</p>
+<p>The four of them walked back up a flight of stairs, entered a large room, and sat down beside each other on one of the rows of chairs.</p>
+<p>The walls were covered with a thick, hastily organized layer of anti-transmission foil. Coated on top of the foil was a classic aesthetic of Dzego: pictures of cute cartoon animals playing with electronic gadgets and chemistry lab equipment, with a backdrop of green trees and blue skies. At the front of the room, there was an inflated cartoon-style pig on the left and a hamster on the right. The pig, in its left hand, was holding a calculator. The hamster, in its right hand, was holding a vial of some green liquid. With their other two hands, the two together held up a poster with DU's motto:</p>
+<center><div class="dz-card dz-mono" style="font-family:'TeX Gyre Chorus',cursive;font-size:17px;line-height:1.55"><div class="dz-line dz-blank" style="height:1em"></div>
+<div class="dz-line" style="margin:3px 0;padding-left:2ch"><span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">pa jan</span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;">li</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">sun</span></span></span> <span style="font-family:'TeX Gyre Chorus',cursive;">zo</span></div>
+<div class="dz-line" style="margin:3px 0;padding-left:0ch"><span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">zai gau</span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;">fe</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">pa jan</span></span></span></div>
+<div class="dz-line dz-blank" style="height:1em"></div>
+<div class="dz-line" style="margin:3px 0;padding-left:2ch"><span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">go</span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;">li</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">sun</span></span></span> <span style="font-family:'TeX Gyre Chorus',cursive;">zo</span></div>
+<div class="dz-line" style="margin:3px 0;padding-left:0ch"><span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">bai gau</span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;">fe</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">go</span></span></span></div>
+<div class="dz-line dz-blank" style="height:1em"></div></div></center>
+<p>"One man learning will set one man free. A nation learning will make the nation great."</p>
+<p>Behind them, the instructor walked in, and closed the door. Zei checked his watch. 70,001.</p>
+<hr>
+<p><span style="color:oklch(0.7 0.15 120)">"Welcome to physics class"</span>, the instructor said.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Today, I'm going to try to introduce an important topic that I think almost everyone gets confused about: thermodynamics."</span></p>
+<p>The more attentive students put away their hand devices, stopped talking, and got ready to listen. The others kept talking at first, but then quickly quieted down.</p>
+<p>A girl beside Zei reached under the table edge and ran a finger along it without looking - a habit, not a serious search. Another student habitually waved her hand device around the room, trying to pick up on any unknown electronic devices. Nobody commented. Nobody ever did.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Who here has heard of the word 'entropy', in the context of information theory or cryptography?"</span></p>
+<p>About three quarters of the students raised their hands.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"And who here has heard of the word 'entropy', in the context of the second law of thermodynamics - that it always goes up, and one way that happens is that heat always flows from hot to cold, never the reverse?"</span></p>
+<p>Almost every student raised their hands. Entropy was a favorite topic of science fiction.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Now who here thinks they can explain the connection between the two?"</span></p>
+<p>No one raised their hand.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Alright. Let's begin."</span></p>
+<p>The instructor pressed a button on his watch, and a slide showed up on the front wall:</p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="422" height="373" viewBox="0 0 422 373">
+<defs><marker id="s1ah" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L7,3 L0,6 Z" fill="#99004d"/></marker></defs>
+<rect width="422" height="373" fill="#ffffff"/>
+<path d="M 58 57 L 58 34 C 58 20 71 13 91 13 C 111 13 124 20 124 34 L 124 57 L 156 61 C 165 63 169 70 169 82 L 169 283 C 169 288 165 289 163 289 L 19 289 C 17 289 13 288 13 283 L 13 82 C 13 70 17 63 26 61 Z" fill="#ffffff" stroke="#1f5c99" stroke-width="3"/>
+<path d="M 298 57 L 298 34 C 298 20 311 13 331 13 C 351 13 364 20 364 34 L 364 57 L 396 61 C 405 63 409 70 409 82 L 409 283 C 409 288 405 289 403 289 L 259 289 C 257 289 253 288 253 283 L 253 82 C 253 70 257 63 266 61 Z" fill="#ffffff" stroke="#1f5c99" stroke-width="3"/>
+<line x1="73" y1="108" x2="33" y2="139" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s1ah)"/>
+<line x1="123" y1="140" x2="79" y2="117" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s1ah)"/>
+<line x1="25" y1="175" x2="35" y2="224" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s1ah)"/>
+<line x1="104" y1="208" x2="149" y2="186" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s1ah)"/>
+<line x1="137" y1="235" x2="147" y2="284" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s1ah)"/>
+<line x1="67" y1="265" x2="20" y2="248" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s1ah)"/>
+<line x1="277" y1="106" x2="281" y2="114" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s1ah)"/>
+<line x1="341" y1="110" x2="341" y2="119" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s1ah)"/>
+<line x1="381" y1="129" x2="385" y2="137" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s1ah)"/>
+<line x1="312" y1="189" x2="320" y2="193" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s1ah)"/>
+<line x1="388" y1="193" x2="388" y2="184" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s1ah)"/>
+<line x1="349" y1="252" x2="357" y2="248" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s1ah)"/>
+<circle cx="76" cy="106" r="5" fill="#1a1a1a"/>
+<circle cx="127" cy="142" r="5" fill="#1a1a1a"/>
+<circle cx="24" cy="171" r="5" fill="#1a1a1a"/>
+<circle cx="100" cy="210" r="5" fill="#1a1a1a"/>
+<circle cx="136" cy="231" r="5" fill="#1a1a1a"/>
+<circle cx="71" cy="266" r="5" fill="#1a1a1a"/>
+<circle cx="275" cy="102" r="5" fill="#1a1a1a"/>
+<circle cx="341" cy="106" r="5" fill="#1a1a1a"/>
+<circle cx="379" cy="125" r="5" fill="#1a1a1a"/>
+<circle cx="308" cy="187" r="5" fill="#1a1a1a"/>
+<circle cx="388" cy="197" r="5" fill="#1a1a1a"/>
+<circle cx="345" cy="254" r="5" fill="#1a1a1a"/>
+<circle cx="78" cy="312" r="6" fill="#1a1a1a"/>
+<text x="94" y="317" fill="#1a1a1a" font-family="sans-serif" font-size="15">x 10<tspan baseline-shift="super" font-size="0.72em">6</tspan></text>
+<line x1="56" y1="340" x2="120" y2="340" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s1ah)"/>
+<text x="56" y="362" fill="#1a1a1a" font-family="sans-serif" font-size="14">[0, 999999]</text>
+<circle cx="318" cy="312" r="6" fill="#1a1a1a"/>
+<text x="334" y="317" fill="#1a1a1a" font-family="sans-serif" font-size="15">x 10<tspan baseline-shift="super" font-size="0.72em">6</tspan></text>
+<line x1="296" y1="340" x2="360" y2="340" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s1ah)"/>
+<text x="296" y="362" fill="#1a1a1a" font-family="sans-serif" font-size="14">[0, 99]</text>
+</svg></div><br>
+<p><span style="color:oklch(0.7 0.15 120)">"Imagine that we have two jars of gas. Each jar has a million molecules. But in the jar on the left, the molecules are moving much faster. Suppose, in the jar on the left, you can represent the velocities with six-digit numbers, from zero to 999,999. And in the jar on the right, the molecules are moving slowly, so you can represent the velocities with six-digit numbers, from zero to 99."</span></p>
+<p><span style="color:oklch(0.7 0.15 120)">"Can someone tell me, how many digits do you need to fully represent everything going on in the jar on the left? Assume that they already know it's gas and there's a million molecules, the only free variable is the velocities."</span></p>
+<p>"Six million!", about ten students shouted in unison.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Good. Now, what about the jar on the right?"</span></p>
+<p>"Two million!"</p>
+<p><span style="color:oklch(0.7 0.15 120)">"So let's recap. From your point of view, as the observer, you know that these are both jars of gas, you know what kind of gas, and that there are a million molecules. But you don't know the velocities of each individual molecule. So for the jar on the left, <em>the amount of information that you do not know</em> is...?"</span></p>
+<p>"Six million digits!"</p>
+<p><span style="color:oklch(0.7 0.15 120)">"And for the right?"</span></p>
+<p>"Two million digits!"</p>
+<p><span style="color:oklch(0.7 0.15 120)">"So eight million digits in total, information that you do not know. Now, what happens if we put the two jars together and let the gas mix? What will we know about the velocities there?"</span></p>
+<p>Zei raised his hand.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Yes, you there?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"The molecules will bounce off each other randomly. When they settle down, because of conservation of energy, the velocities end up somewhere in the middle, between zero and five hundred thousand."</span></p>
+<p><span style="color:oklch(0.7 0.15 120)">"Yes, excellent! Now technically, energy is proportional to velocity squared, and we can argue about how these velocities are represented, and by the way we're also completely ignoring positions, but let's just keep it simple and say zero to five hundred thousand."</span></p>
+<p>The instructor tapped his watch again. Next slide.</p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="542" height="273" viewBox="0 0 542 273">
+<defs><marker id="s2ah" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L7,3 L0,6 Z" fill="#99004d"/></marker></defs>
+<rect width="542" height="273" fill="#ffffff"/>
+<path d="M 19 13 L 229 13 C 236 15 240 30 244 58 L 288 58 C 292 30 296 15 313 13 L 523 13 C 527 13 529 17 529 21 L 529 161 C 529 165 527 169 523 169 L 313 169 C 296 167 292 152 288 124 L 244 124 C 240 152 236 167 229 169 L 19 169 C 15 169 13 165 13 161 L 13 21 C 13 17 15 13 19 13 Z" fill="#ffffff" stroke="#1f5c99" stroke-width="3"/>
+<line x1="83" y1="43" x2="64" y2="24" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s2ah)"/>
+<line x1="181" y1="56" x2="176" y2="30" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s2ah)"/>
+<line x1="65" y1="100" x2="40" y2="90" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s2ah)"/>
+<line x1="133" y1="106" x2="138" y2="132" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s2ah)"/>
+<line x1="200" y1="107" x2="221" y2="124" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s2ah)"/>
+<line x1="276" y1="76" x2="249" y2="76" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s2ah)"/>
+<line x1="354" y1="46" x2="347" y2="20" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s2ah)"/>
+<line x1="460" y1="45" x2="486" y2="50" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s2ah)"/>
+<line x1="440" y1="96" x2="465" y2="106" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s2ah)"/>
+<line x1="341" y1="112" x2="366" y2="122" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s2ah)"/>
+<line x1="411" y1="116" x2="411" y2="143" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s2ah)"/>
+<line x1="516" y1="139" x2="490" y2="131" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s2ah)"/>
+<circle cx="86" cy="46" r="5" fill="#1a1a1a"/>
+<circle cx="182" cy="60" r="5" fill="#1a1a1a"/>
+<circle cx="69" cy="101" r="5" fill="#1a1a1a"/>
+<circle cx="132" cy="102" r="5" fill="#1a1a1a"/>
+<circle cx="197" cy="105" r="5" fill="#1a1a1a"/>
+<circle cx="280" cy="76" r="5" fill="#1a1a1a"/>
+<circle cx="355" cy="50" r="5" fill="#1a1a1a"/>
+<circle cx="456" cy="44" r="5" fill="#1a1a1a"/>
+<circle cx="436" cy="95" r="5" fill="#1a1a1a"/>
+<circle cx="337" cy="111" r="5" fill="#1a1a1a"/>
+<circle cx="411" cy="112" r="5" fill="#1a1a1a"/>
+<circle cx="520" cy="140" r="5" fill="#1a1a1a"/>
+<circle cx="248" cy="208" r="6" fill="#1a1a1a"/>
+<text x="264" y="213" fill="#1a1a1a" font-family="sans-serif" font-size="15">x 2 * 10<tspan baseline-shift="super" font-size="0.72em">6</tspan></text>
+<line x1="226" y1="236" x2="290" y2="236" stroke="#99004d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#s2ah)"/>
+<text x="226" y="258" fill="#1a1a1a" font-family="sans-serif" font-size="14">[0, 499999]</text>
+</svg></div><br>
+<p><span style="color:oklch(0.7 0.15 120)">"Now, how many digits do we need to represent the information we don't know about this new system?"</span></p>
+<p>Another student raised his hand.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Go ahead."</span></p>
+<p><span style="color:oklch(0.7 0.15 200)">"From zero to five hundred thousand is more than five digits but not quite six digits, if we go by logarithm, it should be about five point seven for each molecule."</span></p>
+<p><span style="color:oklch(0.7 0.15 120)">"So what's the total?"</span></p>
+<p><span style="color:oklch(0.7 0.15 200)">"Eleven point four million digits."</span></p>
+<p><span style="color:oklch(0.7 0.15 120)">"Very good! So the conclusion is: by mixing the two jars, we have lost knowledge. We know less about the gas than we did before. And we can quantify <em>how much</em> knowledge we lost: it's three point four million digits."</span></p>
+<p><span style="color:oklch(0.7 0.15 120)">"This is what we mean, when we say that entropy goes up, when heat flows from hot to cold. For each tiny increment of heat, heating up a cold thing adds more unknown digits than cooling down a hot thing by that same increment takes away, and so the total unknown goes up. Every possible action that you can do to these bottles will, on average, make the total unknown either stay the same or go up - and if you're doing anything useful or making any mistakes, it will go up. This is the second law of thermodynamics."</span></p>
+<p>The instructor paused.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Now, how do we prove this?"</span></p>
+<p>None of the students answered, but many of them seemed to lean forward with curiosity.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Let's prove by contradiction. Suppose we did have a magic procedure that could go in reverse: start with the merged jars with eleven point four million digits of unknown, and bring us to the separate jars with eight million digits of unknown."</span></p>
+<p>Zei raised his hand once again.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Can I try this?"</span></p>
+<p><span style="color:oklch(0.7 0.15 120)">"Go ahead."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I remember the laws of physics of our universe are fully time-reversible, right? So if you can do something in one direction, you can always run the same steps in reverse."</span></p>
+<p><span style="color:oklch(0.7 0.15 120)">"Exactly. Now why does that time reversibility, at that level of atom-by-atom physics, imply that temperature equalization is something you cannot reverse? Isn't that a paradox?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Well, if we <em>could</em> separate medium temperature into hot and cold, then we would be able to do unlimited data compression."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Like, imagine you had a file with eleven point four million digits of data. You would make a really perfect double-jar, and have a gun that shoots out the gas molecules with exactly the right velocities. Then, you would use your process to un-mix the gas, then split the jar, and measure the velocities at the end. You would get eight million digits out."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"And because our universe's physics is time-reversible, you would be able to do the same thing in reverse: take those eight million digits, put them into the gun to shoot out gas molecules at the right velocities, apply the exact same un-mixing procedure backwards, measure it, and you would get out whatever your original eleven point four million digits were. The output of the time-reversed process has to equal the input of the original process. And so we get a fully general-purpose way to represent any eleven point four million digits inside of eight million digits. And if we could do that, we could do it again and again, and represent the whole planet in eight million digits, or even make it smaller and do it in eight digits. And that's impossible!"</span></p>
+<p><span style="color:oklch(0.7 0.15 120)">"Exactly. Or in other words, you can't go from not knowing more things to not knowing fewer things in a universe with time-reversible physics. In a universe with time-irreversible physics, you <em>could</em>, because you can just destroy all the things you don't know."</span></p>
+<p>"Just like the Arctic Emperor!", Zei wanted to shout. But he kept quiet. It's bad form to openly explain a joke that is so obvious, that half the students probably already have on their minds. The instructor and the students briefly paused to appreciate the joke and smirk and enjoy a few moments of mental communion. The instructor then moved on.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"But in a universe with time-reversible physics, there's always things you don't know, and that lack of knowledge can only be shuffled around, and inevitably increased. The best we can do, is go from not knowing things we care about, to not knowing things we don't care about. Like going from not understanding thermodynamics, to not knowing the velocities of the molecules that are coming out of the projector showing these slides as waste heat."</span></p>
+<p><span style="color:oklch(0.7 0.15 120)">"That was an amazing job, kid. What was your name?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Zei."</span></p>
+<p><span style="color:oklch(0.7 0.15 120)">"Well, Zei, you got it per-"</span></p>
+<p>A loud noise erupted from a nearby room. The whole room shook.</p>
+<p>A fraction of a tick later, part of the wall and the floor came crashing down.</p>
+<p>The next thing Zei knew, a fragment of stone hit him in the arm.</p>
+<hr>
+<p>Zei found himself on the ground, his knocked-over chair beside him.</p>
+<p>His mind flashed back to the man who had redirected them last minute to a different room, one floor above where they had been supposed to go.</p>
+<p>He understood immediately. All of the extra precautions that DU had been taking - the cryptography, the sudden changes in location, the anti-transmission foil - they were not just a game. And the Arctic Empire was not just a unit in geography class. This stuff was <em>real</em>.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Is everyone okay? Anyone injured?"</span>, the instructor yelled.</p>
+<p>Zei thought for a moment, trying to figure out if his arm was injured enough to be worth complaining. He tried raising and lowering his arm. It did not respond.</p>
+<p>The next thing he felt was two arms grabbing on to him, and pulling him up off the ground and onto a chair. Zei turned his head. It was Fin - to Zei's relief, completely uninjured.</p>
+<p>Smoke filled the room. Every student's watch, among its many features including an air quality monitor, started beeping loudly. The students tapped their watches, and soon the beeping died down. Slowly, the students helped each other get back up, as the instructor walked around to check if there was anyone who seriously needed help.</p>
+<p>The instructor got to Zei, and Zei silently pointed to his left arm. The instructor took out his hand device, and scanned it. AI-generated output filled the bottom of the screen.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Are you in pain?"</span>, the instructor asked.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Some, but I can handle it."</span></p>
+<p><span style="color:oklch(0.7 0.15 120)">"It looks like a broken bone. Get it checked out at the hospital today. The sooner you go, the sooner you will get better."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"I'll take you"</span>, Fin added. <span style="color:oklch(0.7 0.15 80)">"Gotta be sure you'll be good for your game at the end of the month."</span></p>
+<p>The instructor kept walking. The room was filled with smoke. The air quality alarms were still blaring, but Fin and Zei could make out the instructor asking different students <span style="color:oklch(0.7 0.15 120)">"are you okay?"</span> and a student responding <span style="color:oklch(0.7 0.15 253.33333333333334)">"I'm fine"</span>.</p>
+<p>The air filters activated to full power, and soon the smoke cleared. Fin and Zei looked at each other. For a few moments, the students and the instructor sat in an awkward silence.</p>
+<p>Zei pushed off the table with his uninjured arm, and stood up. <span style="color:oklch(0.7 0.15 346.66666666666663)">"I think we know much less about this wall than we knew two minutes ago"</span>, he joked.</p>
+<p>A few students smiled or gently laughed. He had judged the audience's mood well.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"No one else hurt, are you all sure?"</span></p>
+<p>"I'm fine", about ten people replied.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Alright, I think we've had enough entropy for one day. Let's go home."</span></p>
+<hr>
+<p>Fin and Zei stayed in the classroom longer than the others. Zei sat back down on his chair. Fin grabbed a broom, and pushed all the debris to one side. Soon, only they and the instructor were left.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Wow, the Arctics are getting aggressive. They didn't use to go after physics education."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Whoever moved our room last-minute was a genius. Just saved our lives there."</span></p>
+<p><span style="color:oklch(0.7 0.15 120)">"Unfortunately I expect it will only get worse from here."</span></p>
+<p>Fin and Zei looked at the instructor in shock.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Remember, their game is to permanently keep down our level of heavy industry and technology. Let us live, but only at the level of civilization where we can never be a threat."</span></p>
+<p><span style="color:oklch(0.7 0.15 120)">"And our counter-game is 'gie fe kiu kai ci bin hu': grow roots, no head. Use distributed manufacturing to build all our tools. Let the official government keep going, slow and corrupt just like it was when we lost the war a hundred years ago, but use cryptography to coordinate the decisions that matter anonymously, without needing any exposed individual leaders at the helm. All of DU already runs this way. Soon big parts of our power generation, agriculture and medicine will."</span></p>
+<p><span style="color:oklch(0.7 0.15 120)">"It's been effective. After the last few years, we're finally almost at the level where we can stand up for ourselves without needing any centralized heavy industry at all. The problem is, it looks like they're catching on."</span></p>
+<p>"Dze go ba fau gie", Fin and Zei said in unison, calmly but defiantly.</p>
+<p>"Dzego will rise again."</p>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-1.html" title="Previous chapter: Chapter 1" aria-label="Previous chapter: Chapter 1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-3.html" title="Next chapter: Chapter 3" aria-label="Next chapter: Chapter 3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>

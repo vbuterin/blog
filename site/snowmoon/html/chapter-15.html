@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-14.html" title="Previous chapter: Chapter 14" aria-label="Previous chapter: Chapter 14"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-16.html" title="Next chapter: Chapter 16" aria-label="Next chapter: Chapter 16"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+<h1>Chapter 15</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Freetown, United Cities</span><span class="sep">·</span><span class="date">3724 Firemoon 17</span></span></div>
+<p>Jahn passed through the turnstile in the Freetown Economics Institute, and walked toward the restaurant.</p>
+<p>It was still early morning, and Jahn had intentionally not yet looked at any of the news on that day - better to clear his mind, and enjoy whatever the lecture on the restaurant screen would end up being.</p>
+<p>After a minute of walking, he arrived.</p>
+<p>When he saw what was on the screen, his eyes froze with horror.</p>
+<blockquote>
+<p>Special broadcast</p>
+<p>ARCTIC EMPIRE INVADES AND ANNEXES REDSHIRE</p>
+</blockquote>
+<p>Jahn began to listen intently to the reporter relaying the details of what happened.</p>
+<blockquote>
+<p>At 15,500 this morning, a large number of Arctic drones and aircraft landed all across the major cities and military bases in Redshire, timed simultaneously with a massive land invasion from the north with thousands of vehicles coming out of never-before-seen underground tunnels.</p>
+<p>The Redshire military was caught completely unprepared, and many suspect corruption at the highest ranks.</p>
+<p>Major battles lasted less than two longhours, with very limited casualties. Almost all Redshire garrisons have by now surrendered.</p>
+</blockquote>
+<p>He saw about ten people sitting in the restaurant, including Utaku, who seemed just as shocked as Jahn was.</p>
+<blockquote>
+<p>Three government aeroplanes containing President Albor, Prime Minister Celedil and most of the parliament attempted to take off. All three were shot down. Current indications suggest no survivors.</p>
+<p>The president's son, Tafindel, is believed to be in Arctic captivity.</p>
+</blockquote>
+<p>The reporter paused briefly, and then began speaking again.</p>
+<blockquote>
+<p>JUST IN:</p>
+<p>The last Redshire garrison in the south has agreed on a conditional surrender. The garrison staff, plus thirty other personnel including two senators, will be allowed to fly to Devanvil, in exchange for the garrison discontinuing all attempts to defend itself.</p>
+<p>The three aeroplanes will leave in five minutes, and will be the only aeroplanes allowed to leave. Arctic authorities are not allowing any other vehicles to enter or leave Redshire. They have cut off all communications and are already actively setting up jamming equipment.</p>
+</blockquote>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"What do we do now?"</span>, Jahn, by this point standing beside the table with Utaku, mumbled.</p>
+<p><span style="color:oklch(0.7 0.15 280)">"Take the threat seriously"</span>, Utaku replied.</p>
+<p>Before Jahn could look away, Utaku had already begun typing frantically on her hand device.</p>
+<div class="dateline scene-break"><hr class="rule"><span class="txt"><span class="place">Meldan, Veridia</span></span></div>
+<p>Gladias and Seila stared at the screen with Febric and Hreda beside them. They had just woken up at sunrise, light coming in clean through the window, the trees on the footpath outside already throwing long morning shadows. The news was the first thing they saw.</p>
+<p>Zven was still asleep, and Lily was still in her room.</p>
+<p>Seila took out her hand device, and began frantically typing.</p>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>Message</th>
+      <th></th>
+      <th>To</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span style="color:oklch(0.7 0.15 253.33333333333334)">Please tell me you're in Freetown and you're okay.</span></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td style="width: 25%"><center>Jahn</center></td>
+    </tr>
+    </tbody>
+</table>
+<button> Send </button></div><br>
+<p>She clicked send.</p>
+<p>A few ticks later:</p>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th></th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Jahn</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 133.33333333333331)">Don't worry, I am in Freetown.</span></td>
+      <td>32117</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th></th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Jahn</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 133.33333333333331)">We've somehow been taking defense seriously here, and Freetown is about as far from Redshire as you can get in the United Cities, except for Silverbeach and Mabuli.</span></td>
+      <td>32124</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p>Seila sighed with relief.</p>
+<p>Gladias saw Seila messaging Jahn, and put his hand on her shoulder to comfort her. He did not respond further.</p>
+<p>His mind soon shifted to the rubrics. Now we're definitely not adjusting the hardware openness rubric next month, he thought. Maybe we'll even be increasing the tax brackets.</p>
+<p>A moment after that, he flashed with anger toward Delwart.</p>
+<p>Seila left the room to wake up Zven and get Lily. Within twenty minutes, the four of them were on their way to school, and Gladias and Seila were alone in the house.</p>
+<p>Gladias went down to the basement and closed the door.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What do we do now, Mov?"</span>, he whispered through his neck band.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Well clearly Delwart was wrong about a lot of things. And next time we talk to him, we <em>really</em> have a lot of questions to ask. We need a straight answer, not excuses."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Remember, it's not just him turning out to be so wrong on the politics. It's about what I learned a month and a half ago - the sheer level of organization of whatever it is that he's doing."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Did you manage to track him down any more after that time?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Only two more times after that. First was a meeting with someone in a privacy robe, not sure who, and they were talking a bunch about Silverchat. Second was a meeting with a Keeper, I made out some conversation about Dreadknot. Nothing more since about a month ago, he either changed his location or he got much better at hiding."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"So when is the vote?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"First one is in about twenty days."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Delwart might make a move to try to 'verify' that you voted in the correct way. So remember the machinery that the Order set up to make sure he can't do that."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Only votes signed with a valid key count"</span>, Gladias recited. <span style="color:oklch(0.7 0.15 93.33333333333333)">"You generate your voting key by meeting at least 3 of 5 people from your Key Allocation Group and registering each blinded share of the voting key with them. Once that's done, the information of which keys are and are not valid is only decryptable by the obfuscated circuit under the conditions that it specifies."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So neither Delwart nor anyone else - technically, not even I - will know which key, how many keys or if any key actually got successfully registered. Only the result of the vote gets decrypted. So Delwart can't tell which votes I submit are real or fake. I don't have the ability to prove that to him, even if I wanted to. For Delwart to be able to take over my votes, he would have to take over my identity, which means going to the KAG and <em>pretending to be me in person</em> - difficult because the whole point of the KAG is that it includes people I've met in person."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Humans - the ultimate trusted hardware."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"You've studied well."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"But I <em>hope</em> that this all won't be necessary, and Delwart is going to give me some sensible explanation for all this."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Hope is not a strategy."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Indeed it's not."</span></p>
+<div class="dateline scene-break"><hr class="rule"><span class="txt"><span class="place">Pafogai Du, Dzego</span></span></div>
+<p>Zei anxiously tapped buttons on his hand device, and sent off a message for a fifth time.</p>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>tie</th>
+      <th></th>
+      <th>dun</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span style="color:oklch(0.7 0.15 346.66666666666663)">Are you okay????! <br><br> Please tell me where you are.</span></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td style="width: 25%"><center>Deluin</center></td>
+    </tr>
+    </tbody>
+</table>
+<button> be </button></div><br>
+<p>He sat crying at a table in the lobby restaurant of his hotel. There was a tea and a rice and vegetable dish on the table in front of him. He had drunk the tea quickly; the robot had already refilled it four times. The rice and vegetables were uneaten for almost a longhour.</p>
+<p>Finally, he got a message in response.</p>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>zan</th>
+      <th></th>
+      <th>tie</th>
+      <th>tei</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Deluin</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 53.33333333333333)">Don't worry, I am alive. <br><br> Though it looks like I'm not going to be getting back to Dzego anytime soon.</span></td>
+      <td>84690</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p>It was not the outcome Zei wanted, but still much better than the outcome he feared. He breathed a sigh of relief.</p>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>zan</th>
+      <th></th>
+      <th>tie</th>
+      <th>tei</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Deluin</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 53.33333333333333)">I found a way to send messages out. <br><br> Some Arctic soldier and his friend, or his AI, or something, coded up a way to embed hidden text messages inside real-time health data that he is sending back home to command. <br><br> And someone else in command is relaying that signal into a weather feed, which is then going up to the satellites. <br><br> He's making a whole bunch of zipcoins anonymously rebroadcasting messages for people.</span></td>
+      <td>84714</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p>Zei wiped off his tears, and started typing intently.</p>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>tie</th>
+      <th></th>
+      <th>dun</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span style="color:oklch(0.7 0.15 346.66666666666663)">Wow. Are you ... in touch with this soldier?</span></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td style="width: 25%"><center>Deluin</center></td>
+    </tr>
+    </tbody>
+</table>
+<button> be </button></div><br>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>zan</th>
+      <th></th>
+      <th>tie</th>
+      <th>tei</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Deluin</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 53.33333333333333)">I have an anonymous link.</span></td>
+      <td>84723</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>tie</th>
+      <th></th>
+      <th>dun</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span style="color:oklch(0.7 0.15 346.66666666666663)">Ask him how he's encoding the messages that he's putting into his health data.</span></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td style="width: 25%"><center>Deluin</center></td>
+    </tr>
+    </tbody>
+</table>
+<button> be </button></div><br>
+<p>Zei thought for a moment, and realized that perhaps the time had arrived for him to become the instructor. He took out a keyboard and started typing furiously.</p>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>tie</th>
+      <th></th>
+      <th>dun</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span style="color:oklch(0.7 0.15 346.66666666666663)">Or actually, on second thought, he won't answer. But tell him that randomly flipping the least-significant bits, the strategy that everyone always reaches for when they encounter this problem for the first time, is not the ideal solution. Sometimes higher-order bits are totally fine to flip, and sometimes flipping even a least-significant bit is dangerous.<br><br> What you want to do is: <br><br> * Train a language model on the actual distribution, so that conditional on what all the other bits are, it can give you probabilities for whether a given bit should be 0 or 1<br><br> * Split the data up into buckets - make sure to use the decryption key itself to choose the buckets randomly - and require the bits in the i'th bucket to XOR to the i'th bit in the ciphertext. Within each bucket, use the model to determine which bit's probabilities are closest to 50/50 - meaning both values are "natural" for that bit to have in that context - and flip that bit to make the bucket XOR correct.<br><br>So you're letting the LLM decide which bits are "least significant" and okay to flip, instead of just always taking the lowest-order binary digit in each number.</span></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td style="width: 25%"><center>Deluin</center></td>
+    </tr>
+    </tbody>
+</table>
+<button> be </button></div><br>
+<p>Zei sat back briefly, proud that he had managed to understand and explain not just a complicated concept, but <em>the exact complicated concept that was needed for this exact job</em>.</p>
+<p>He decided to keep going, out of a feeling of personal pride in his understanding as much as out of a desire to let more people in Redshire sneak information past the Arctic censors.</p>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>tie</th>
+      <th></th>
+      <th>dun</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span style="color:oklch(0.7 0.15 346.66666666666663)">If you want to go even further, you can make the buckets partially overlap. Say:<br><br>* the first bucket is 0...199<br>* the second is 20...219<br>* the third is 40...239<br><br>and so on, though remember the whole order should be a pseudorandom permutation.<br><br>Also, choose only a random half of the positions in each bucket to go into the XOR, so there are always bits to flip that affect one bucket but not the bucket before or after it. So say, 204 might be part of the second bucket _but not_ the third.<br><br>The happy-path algorithm is:<br><br>* choose a bit to flip in 0...199 to make the first bucket XOR correctly<br>* choose a bit to flip in 200...219 to make the second bucket XOR correctly<br>* choose a bit to flip in 220...239 to make the third bucket XOR correctly<br><br> and so on... <br><br>But if, let's say, 240...259 gives you 20 bits in a row where _none of them_ are reasonable to flip - think, a very clear picture of a night sky, so you get 20 pixels in a row that are really supposed to be exactly black - or the equivalent of that for health data - then you walk back and try to find a combination of bits to flip in 220...239 that makes both of the last two buckets XOR correctly, and if that fails, you walk back further and try to find a combination of bits to flip in 200...239 to make the last three buckets XOR correctly, and so on.</span></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td style="width: 25%"><center>Deluin</center></td>
+    </tr>
+    </tbody>
+</table>
+<button> be </button></div><br>
+<p>He then realized that his last message might have come off too much as him trying to be a hotshot, so he sent a followup.</p>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>tie</th>
+      <th></th>
+      <th>dun</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span style="color:oklch(0.7 0.15 346.66666666666663)">I learned that from Den's cryptography textbooks.</span></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td style="width: 25%"><center>Deluin</center></td>
+    </tr>
+    </tbody>
+</table>
+<button> be </button></div><br>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>zan</th>
+      <th></th>
+      <th>tie</th>
+      <th>tei</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Deluin</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 53.33333333333333)">I'll forward that to him. <br><br> But I suspect that for him, first priority is going to be finding higher-bandwidth channels to hide data inside. Optimizing which bits to flip is really smart but it's maybe a 2x gain, finding a better data stream might be a 1000x gain. <br><br> Always take the dumb 1000x gain before the super-clever 2x gain.</span></td>
+      <td>85190</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>zan</th>
+      <th></th>
+      <th>tie</th>
+      <th>tei</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Deluin</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 53.33333333333333)">I learned that in business school.</span></td>
+      <td>85200</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p>Zei felt more optimistic about how much of an improvement a better steganographic encoding would be, but decided not to press the point further.</p>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>tie</th>
+      <th></th>
+      <th>dun</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span style="color:oklch(0.7 0.15 346.66666666666663)">Alright, well stay safe. <br><br>And let me know if there's anything that I can do, or that smart people in my network could do, to help you get out of there safely.</span></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td style="width: 25%"><center>Deluin</center></td>
+    </tr>
+    </tbody>
+</table>
+<button> be </button></div><br>
+<p>Zei thought about saying "or that the Kungaupei could do", or even "or that advanced Dzegojan secret societies could do", instead. But he realized that first, it would be a breach of confidentiality to let an outsider, especially an outsider now in hostile occupied territory, know about the existence of those things, and second, he couldn't fully trust the connection - he hadn't even asked Deluin a security question yet. And so "smart people in my network" it was.</p>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>zan</th>
+      <th></th>
+      <th>tie</th>
+      <th>tei</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Deluin</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 53.33333333333333)">Will do. Thank you for caring about me.</span></td>
+      <td>84821</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p>Zei put down his hand device, and breathed out. His eyes briefly wandered around the restaurant, and he saw that by this point there was no one else there. He finally began eating his rice and vegetable dish.</p>
+<hr>
+<p>Zei felt someone put their hands on his shoulder.</p>
+<p>Zei turned around. It was Su.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"So sorry to hear about Deluin."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I assume the Kungaupei are figuring out how to get him out?"</span></p>
+<p>Zei realized that technically he had just committed an error: he had not actually confirmed that Su knew or was supposed to know about the Kungaupei - so far that was just Den and Mu.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"That was the first thing I asked Den"</span>, Su began to reply. Zei gave out a barely audible sigh of relief. <span style="color:oklch(0.7 0.15 253.33333333333334)">"So far they've acquired a bunch of internet links into Redshire, and they got a message from Deluin a minute ago, so at least he's safe for now. We'll let you know if there's any kind of rescue plan possible."</span></p>
+<p>Zei nodded silently.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"The finals are cancelled"</span>, Su added.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Cancelled? Not postponed? What if he comes back tomorrow?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Even if he does, at this point it's just not right to have more games. Also we don't want to give the audience false hope, and we don't want to distract people."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"You're the champion this year. And if Deluin does come back, we'll give him the same trophy and the same prize money that we're giving you."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"No..."</span>, Zei pleaded. <span style="color:oklch(0.7 0.15 346.66666666666663)">"I don't want to win like this."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I know it's already late today, but you should go talk to Den. He's in Sadzu Du, in the southern mountain pyramid right now. He might want you here, or maybe in Pafogai. He will know better than me."</span></p>
+<p>Zei nodded. Of course this was all more important than the game, he understood. He hoped that Den would put him in Pafogai, so that he could see Fin and his mom again.</p>
+<hr>
+<p>Zei's car arrived at an entrance to the mountain pyramid that he had not been at before. This was a series of doors on the side of the mountain pyramid, much nearer to ground level than the usual entrance, though further from the city. The car stopped, its door lined up perfectly with one of the mountain pyramid doors. The car door and the mountain pyramid door slid open simultaneously.</p>
+<p>Zei stepped out, and walked down the hallway.</p>
+<p>A hundred meters and a left and right turn later, he arrived at a door.</p>
+<p>He put his watch against a green circle. The door opened.</p>
+<p>Zei saw a long room, with a table at the end. Den was sitting on the other side, alone.</p>
+<p>Zei sat down.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Thank you for coming, Zei."</span></p>
+<p>Zei nodded silently.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I think you're one of the very few people who is in a position to help Dzego get through this next year."</span></p>
+<p>Zei's eyes opened wide. He was now the national Minpentai champion, and he was getting far in his studies from Den's cryptography books, yes, but ... he still did not know how that made him valuable at this exact moment.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"In your last Minpentai game, you did two things that were crucial to winning. Do you remember what they are?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I can think of a few answers, but I'm not sure if any of them are what you had in mind."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"First, you hunkered down and played defense, and outlasted your opponent."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Second, you made the most out of a very limited-bandwidth information channel, by pre-publishing most of the data - the symbol-carrying spaceship - and then using only a few bits of manipulation at the end to deploy the most important parts of your strategy."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Actually a very similar tactic to what you used in your other game months earlier, when you sent out a spaceship that encoded basically every possible glider attack strategy, and then another glider to choose which specific one you wanted to use."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"How is this related?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"We have contact with Deluin. Do you know how we accomplished that?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Actually, he got in touch with me and he told me. Some Arctic soldier is charging people zipcoins to hide their messages in his health data."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Correct. And so everyone is dropping down to the most efficient, lowest-bandwidth form of communication they can use - raw text - and pushing all that through him. One soldier's health data, communications for thousands of people."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"A quarter longhour ago the rates he was charging suddenly dropped by two thirds - we suspect he found some more efficient way to encode data. Interestingly enough neither he nor anyone else has found any better channel than health data so far."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Okay, now I wonder if that was me. I told Deluin to tell the soldier to train an LLM on his own health data and then modify the health data that he is sending out in-flight by flipping the bits that the LLM says are safest to flip, and using XOR over buckets to encode the message so he has a lot of freedom in choosing which bit to flip. Much better for reducing the 'suspiciousness' per bit of hidden data encoded, so he could afford to hide more data inside the same cover traffic."</span></p>
+<p>Den's eyes opened up.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Well we have no way to know if he used that specific trick-"</span></p>
+<p>Zei remembered to check his watch.</p>
+<br><div class="device-view narrow-device-view"><table>
+  <thead>
+    <tr>
+      <th>zan</th>
+      <th></th>
+      <th>tie</th>
+      <th>tei</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Deluin</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 53.33333333333333)">Arctic soldier says thanks, it helped a lot.</span></td>
+      <td>92115</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Looks like he did."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"See, you've helped the anti-Arctic resistance already."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Look, Zei. What's happening now is, our hand has been forced. We can't just keep improving our capabilities secretly anymore. Dzegojan society has to come out of hiding."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"The shadow society has to become the society. The shadow government has to become the government. We have to sprint to deploy everything that we have figured out across all of Dzego - before the Arctics can make any moves on us."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"The part of this most relevant to you - the cryptographic infrastructure we need so that our coordination can keep functioning and we what needs to be secret can stay secret - is run out of Pafogai Du. So I want you to take the train back - Su can reschedule your ticket for tomorrow - and I'll message you about whom you should reach out to next."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"For now, maybe see if you can come up with any more ideas for that soldier to sell more packets. That seems to be even better cryptography training for you than my textbooks."</span></p>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-14.html" title="Previous chapter: Chapter 14" aria-label="Previous chapter: Chapter 14"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-16.html" title="Next chapter: Chapter 16" aria-label="Next chapter: Chapter 16"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>

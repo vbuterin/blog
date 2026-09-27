@@ -1,0 +1,353 @@
+<chapter_nav prev="chapter-10.html" next="chapter-12.html" />
+
+# Chapter 11
+
+<chapter_open place="Meldan, Veridia" date="3724 Bloomtime 15" />
+
+Seila, Daia and Vil were standing together in a large grass field, with many other families nearby.
+
+From a distance, Daia caught sight of Gladias approaching. She waved at him. Gladias noticed, and with a smile on his face walked toward them more quickly.
+
+![Daia: "Happy to see you here!"], Daia exclaimed.
+
+![Gladias: "Well I can't miss my son's first real Helisport game"], Gladias answered.
+
+![Daia: "So how have you been?"]
+
+![Gladias: "Well, lots of Order business. Can't talk about it publicly, you know. Going well though!"]
+
+![Gladias: "How about you?"]
+
+Vil started to speak.
+
+![Vil: "Well, lots of documents for the lawsuit against Divergent. It's been taking up a big part of my time for the last two months."]
+
+![Seila: "Remind me, what happened there?"]
+
+![Vil: "Ah sorry, I've been trying not to burden you guys with the details, I know you have so much on your plate already."]
+
+![Seila: "Come on, Vil, your life is important to us."]
+
+![Vil: "Well, remember about half a year ago I lost my job at Jump because they went bankrupt. A month later, another one of the employees reached out to me, and I learned from him what really happened. See, the official story had been-"]
+
+![Gladias: "I remember this in the news. Jump was struggling, and as a last-ditch effort to save themselves, they made a risky bet on the financial markets, buying a derivative on property prices in a region that they were about to announce they would start serving. But it didn't work - not enough people cared, then they got unlucky and prices went down, so the whole thing collapsed."]
+
+![Vil: "Exactly. But here's what I learned. The only reason why Jump was able to make such a large bet on a niche market without insane slippage is that a hedge fund - Divergent - had taken the other side of the bet. And the primary owners of Divergent had quietly bought a majority share in Jump for very cheap."]
+
+![Vil: "If housing prices in that region had gone up, Jump would have gained, Divergent would have lost, for them it would have been a net zero. And if housing prices went down - which they did - Jump loses, and Divergent gains, also a net zero. But here's the asymmetry: if Jump loses - which they did - then Jump declares bankruptcy, and so they get out of paying end-of-year bonuses plus a year of severance for their employees. So they gave themselves a free option on our backs."]
+
+![Vil: "When we found out about this, we sued - all the employees together sued, as a class action. It's been tough; Divergent even managed to intimidate some media sites into not covering it. But I feel like so far the judges are seeing through their tricks. So I'm optimistic."]
+
+They heard a loud whistle, and turned to face the direction that the sound came from.
+
+It was the instructor. A large truck had been moved into the center of the grass field.
+
+![Instructor: "Helisport game starting in five minutes!"], the instructor yelled.
+
+The instructor pressed a button, and the back door of the truck began to open gently, tilting backward on its bottom hinge. After a few ticks, it had turned into a ramp.
+
+Some personal copters, simple chairs with rotor blades on top surrounded by shielding, automatically rolled out of the truck.
+
+Some children, around ten to twelve years old, ran toward the truck, half wearing yellow shirts and the other half wearing purple shirts. Among those wearing yellow shirts was Zven. They grabbed their copters and began strapping into them.
+
+The instructor walked into the truck, and soon came out with a much smaller box. He opened the box, and four bright red drones, shaped like balls a few centimeters wide with soft feather-like rotors on top, sprang out and flew into the sky.
+
+![Instructor: "Welcome to today's Helisport game"], the instructor said. ![Instructor: "Today we're going to do a limited game, playing only with redballs. If you catch a redball, bring it back to me, and your team gets one point. First team to get to six points wins."]
+
+By this point all ten children had strapped into their personal copters, and the rotor blades were beginning to spin - just enough to overcome about three quarters of the earth's gravity. The kids ran around excitedly, and some jumped, reaching about two meters off the ground before gently gliding back down.
+
+![Instructor: "Everyone know what to do?"], the instructor asked.
+
+"Yes!", many kids shouted in unison.
+
+![Instructor: "Then we will begin the game in five ... four ... three ... two ... one ... blast off!"]
+
+The personal copters flew into the air.
+
+![Gladias: "You know, I'm surprised they still do this in schools"], Gladias said to Seila. ![Gladias: "If this were invented today, they would definitely say it's too dangerous."]
+
+![Seila: "It was only invented less than ten years ago."]
+
+![Gladias: "In Dzego."]
+
+Zven caught sight of a redball, and began flying toward it. A few moments after, two kids wearing purple shirts also saw the redball, and began to chase it right behind him.
+
+The redball suddenly shifted direction to the left.
+
+Zven and the other kids also turned left. Zven's copter's rotor shield bumped into the rotor shield of one of the other kids' copters, and the two bounced harmlessly off each other.
+
+Zven aimed his copter to fly higher. He fell slightly behind the kid he had just bumped into, while the third kid flew forward, and was soon directly under him. The air sucked Zven down, and soon his feet bounced into the grid on top of the other copter's rotors.
+
+Zven jumped off quickly, and he and the other kid both tumbled down a few meters before they stabilized and flew off in separate directions.
+
+![Gladias: "The AI on these things is getting really good now"], Gladias murmured.
+
+The redball suddenly changed direction again, this time going upwards. Zven immediately set his rotor to full power and climbed upward. The kid he had just bumped into was still a few meters below him, and the other kid did not notice the redball's change of direction in time, and so Zven was ahead.
+
+Zven saw the redball get closer, and then closer again. Now it was only one meter in front of him.
+
+The redball suddenly turned off its rotors, and began to drop. Thinking quickly, Zven kicked the ball back up just as it dropped to the level of his feet, and moved his copter forward. He stretched out his hand, and caught the redball in his palm.
+
+He then aimed the copter to fly toward the instructor. The rotor slowed down - though it did not stop completely. It sped back up when Zven's altitude was decreasing at the safe maximum of five meters per tick - the speed that you would hit the ground after a fall from a height of slightly under two meters. The instructor watched Zven land, and stretched out his hand to receive the redball that Zven handed over.
+
+![Instructor: "First catch of the game by Zven, first point for team yellow!"]
+
+He let the redball fly once again. It quickly shot forward, in the opposite direction from where Zven was standing.
+
+Zven flew back up, and continued his search for more redballs.
+
+![Gladias: "How are Hreda, Lily and Febric doing?"], Gladias asked Daia. Seila heard the question, and turned her head toward them slightly to hear the answer.
+
+![Daia: "Hreda is off in Northglade doing a math competition. We've been trying to get Lily more interested in art, though that hasn't been really successful so far."]
+
+![Daia: "I also talked to Zven for a bit and he showed me his homework. I was surprised. I saw the questions they were giving him for arithmetic, and they seemed just slightly ... less advanced than what Febric got at his age?"]
+
+![Instructor: "Nice catch by Dommus!"], the instructor shouted. ![Instructor: "And nice catch for Gale! Two points for team purple"]
+
+Seila joined into the conversation.
+
+![Seila: "Well, Glad, you're a -"] she stopped herself, briefly remembering that it would be improper even to specify Keeper - ![Seila: "an Order member now. Anything the Order can do to make Veridia's education better?"]
+
+![Gladias: "You know the schools aren't Order business, the public ones are run by the education committee, staffed by parliament. Though there have been people thinking about trying to support more private ones, support them out of Graph Funding, figure out some rubrics to give them the right incentives."]
+
+![Seila: "Maybe you should try pushing for that in your Keeper meetings?"], Seila replied, whispering into her watch as a substitute for a neck band. Better to just have this conversation privately than have to choose each word carefully to avoid giving out Gladias's position, she thought.
+
+Delwart would be supportive, Gladias thought. Though he would be even more supportive of private schools with _no_ rubric micro-nudging attached.
+
+![Instructor: "Another nice catch by Zven! Second point for team yellow."]
+
+Gladias and Seila's attention went back to the game. There were three groups of three kids each in the sky, each group chasing what they assumed must be a different redball. Zven flew up alone, and did not try to join any of the groups. Instead, he seemed to simply wander the sky, his eyes constantly watching the horizon to try to find where the fourth redball might be.
+
+One of the kids tumbled out of the sky, though the rotor's AI automatically broke his fall. He hit the ground, and then a few ticks later stood back up and went back into the sky.
+
+A minute later, a kid landed beside the instructor, and handed him a redball.
+
+![Instructor: "Another nice catch by Gale! Third point for team purple."]
+
+The redball flew back into the sky, and both Gale and the other two kids who were chasing the redball with him once again flew after it.
+
+Two more minutes passed. Another kid landed beside the instructor.
+
+![Instructor: "Nice catch by Dela! Third point for team yellow."]
+
+One more minute later, two more kids landed at around the same time:
+
+![Instructor: "Nice catch by Plat! Fourth point for team yellow."]
+
+![Instructor: "And a nice catch by Meny! Fourth point for team purple."]
+
+Zven continued his solitary quest to search for the fourth redball, which all the other kids seemed to have completely forgotten the existence of.
+
+![Instructor: "Nice catch by Egardo! Fifth point for team purple."]
+
+![Instructor: "Another nice catch by Dela! Fifth point for team yellow."]
+
+He began to fly closer to the ground.
+
+Gladias and Seila saw Gale shooting ahead of his two competitors, getting ready to catch the redball. It was only one meter in front of him.
+
+Gale's hand stretched out. He prepared to grab hold of it.
+
+Then, suddenly, another kid bumped into him, and he veered several meters to the right. That kid attempted to grab the redball instead, but it quickly flipped direction and flew backwards, right in between the two of them. Gale and the other kid both attempted to grab it with their hands as it passed by, but both missed.
+
+Gale regained sight of the redball first, and quickly flew towards it. His two competitors soon followed, though they were at least ten meters behind.
+
+Gale and the redball both gained altitude, and Gale began to get closer to the redball. Five meters. Four meters. Three meters.
+
+Meanwhile, out of nowhere, Zven seemed to fall to the ground, the fall broken as usual by the copter's AI.
+
+High in the sky, far above the other players, Gale raised his hand triumphantly, holding the redball inside a clenched fist.
+
+Many in the audience cheered. Gale maneuvered around the other two students who were following him, and began to drop back down at the maximum speed of five meters per tick.
+
+Suddenly, Gladias and Seila's eyes shifted toward Zven. He had gotten out of his copter, and was running toward the instructor.
+
+When Gale was still about thirty meters in the air, Zven opened up his hand and gave the instructor the fourth redball, with broken rotors, that he had found on the ground.
+
+![Instructor: "And, nice catch by Zven. Sixth point for team yellow. Team yellow wins the game!"]
+
+Gladias sighed with relief.
+
+Seila beamed with pride for Zven.
+
+![Seila: "He took the path less traveled"], she quietly recited, quoting an old Veridian author, ![Seila: "and that blazed a trail for all."]
+
+---
+
+Gladias slid the barrier open, entered the booth, and slid the barrier shut again.
+
+Three other Keepers were already there. The other three, Gladias thought, must still be on their way.
+
+This was the third circle of Keepers that Gladias was assigned to, and the topic was air quality. Here, his assigned number was two.
+
+Gladias immediately took out his watch, and whispered into his neck band to check the air quality of the current room.
+
+<narrow_device_view>
+
+<div style="font-size:150%"></div>
+
+<table>
+    <tr>
+      <td style="font-size:150%" colspan="2">Air</td>
+    </tr>
+
+    <tr>
+      <td style="font-size:150%">CO<sub>2</sub></td>
+      <td style="font-size:150%; color: yellow">906</td>
+    </tr>
+
+    <tr>
+      <td style="font-size:150%">PM2.5</td>
+      <td style="font-size:150%; color: #8f8">4.4</td>
+    </tr>
+</table>
+
+<table>
+
+    <tr>
+      <td style="font-size:150%" colspan="2">Devices</td>
+    </tr>
+    <tr>
+      <td style="font-size:150%; color: #8f8">Attested ✓</td>
+      <td style="font-size:150%; color: #8f8">16</td>
+    </tr>
+
+    <tr>
+      <td style="font-size:150%; color: #fc8">Unknown ?</td>
+      <td style="font-size:150%; color: #8f8">0</td>
+    </tr>
+</table>
+
+</narrow_device_view>
+
+![Gladias: "How are we already at 906 with just four people here?"], he asked. ![Gladias: "Filters are working great, but I guess they haven't yet figured out how to give these secure booths any ventilation?"]
+
+![Twenty_one: "Yeah, pretty much everyone is really behind standards. We've been saying that we really have to increase the taxes on this bracket across the board."]
+
+The CO<sub>2</sub> reading on Gladias's watch refreshed. It now showed 918.
+
+![One: "I think people will figure this out on their own"], another Keeper replied. ![One: "It's just a matter of the technology being open and deployable enough. We've been making these filters twice as cheap every two years for the past decade."]
+
+![Gladias: "Well I feel like we have to push harder"], Gladias replied.
+
+![Gladias: "What do the indoor air quality tax rubrics say now?"]
+
+![Twenty_one: "It's a land tax component. Zero if your air quality is perfect, an extra third of a percent per year if the average occupied room reads worse than a thousand. The limits get adjusted up if you have filters or UVC."]
+
+![Gladias: "Only a third of a percent? For the difference between theoretically perfect and abysmally bad?"]
+
+![One: "A third of a percent of the land value, per year. For many businesses, that's like a sixth of their revenue."]
+
+![One: "There's so many things that go into land tax. Public aesthetics. Accessibility - both the kind that's about being friendly to disabled people, _and_ the kind that's about letting people walk across your land freely and not fencing it off. What percent of the lot you're building on. Ground-floor active use, though that one is controversial and some people think it should just be folded into aesthetics. Emergency preparedness. Fire safety. There's just not enough space for everything."]
+
+![One: "And come on, Veridians are not that sick. If you look at the broad listen report we ran a month ago, indoor airborne disease resistance is just not one of Veridians' top ten concerns."]
+
+![Twenty_one: "The ground-floor active use isn't just about aesthetics, it also contributes to walkability, reduces congestion-"]
+
+![One: "Fine, though I think we should just target those things directly."]
+
+![Twenty_one: "Anyway, that's not our rubric to decide. Air quality is. You're missing the tail risk."]
+
+![Gladias: "What tail risk?"], Gladias interjected.
+
+![Twenty_one: "Super-pandemics. Like, deliberately released by the Arctics."]
+
+![One: "Is there any evidence of them working on anything like that?"]
+
+![Twenty_one: "They're a super opaque society, the only evidence we have that the Arctics even know Veridia exists is that we have to listen to Lord Ephelion giving his sermons all the time."]
+
+![Gladias: "So what are the possible plans on the table?"]
+
+![Twenty_one: "Increase the maximum to two thirds of a percent. And then make the case to the funding organs - Graph Funding, Quadratic Funding, parliament allocations - that they should support more open-"]
+
+Another Keeper interjected:
+
+![Eight: "Quadratic funding? That round is a mess right now. Someone released a program you can download onto your device and prove that you donated to a particular project researching social media polarization - actually not a very good one - and get a reward. You donate ten zipcoins and get back twenty, they get a hundred including the bounded matching. Lots of people participated. And then yesterday some insider at Bluewhale blew the whistle, apparently that was all their doing."]
+
+![Twenty_one: "Bluewhale? But why would they do that? They don't even control the project that was getting that funding."]
+
+![Eight: "It doesn't matter where it goes, if it was hiring people from Iptak to come dig holes and then fill them back up again they would still have done it. Their goal is to drain funding from anything that interfaces with open platforms. Starve the open ecosystem, the closed one wins by default."]
+
+![Twenty_one: "Fine, we'll stick to Graph Funding. Go through our channels to suggest to the Graph Funding people that they support more open source tech for air filtering, cleaning, wastewater scanning, all of it."]
+
+![One: "Wastewater scanning too? You want to break everyone's privacy even more? What if the Arctics hack in and take all that data, and then they'll find out who lives where even if they move homes, and when each person is healthy or sick?"]
+
+![Twenty_one: "I thought you were the one who keeps saying there's no evidence the Arctics are actually doing those kinds of crazy things?"]
+
+![Gladias: "Isn't there some cryptographic way to get the data we want out of the scans, without ever collecting the data itself in cleartext in any one place?"]
+
+![One: "Well, if you can find a genius who can figure out something like that, let us know."]
+
+---
+
+Gladias got off the autobus, and pulled on the strap on his privacy robe's front face covering. His face was still covered, but the belt between the areas above and below his nose was now no longer tight. Less virus protection - outside the unusually crowded indoor space that was the autobus, he no longer needed it - but more comfortable and easier to breathe. He began to walk back home.
+
+He passed by the same restaurant where he had bumped into Febric months earlier. On the restaurant's outer wall, he saw an advertisement. On the left side of the advertisement, there was a Hydrafill mascot, clothed in Hydrafill's classic yellow and green colors, hugging a small child, and using his back to shield the child from a jet of sludge-like green-colored water. On the right side of the advertisement, there was the text:
+
+<blockquote>
+
+Heavy water, with its atoms of hydrogen replaced by the neutron-bearing isotope deuterium, is known to be toxic in large doses.
+
+We studied our competitors' water, and found that on average, it contains 145 parts per million heavy water.
+
+Our water comes from fresh Veridian NORTHERN ICE, bravely extracted only thirty kilometers away from the Arctic border, and it contains 132 parts per million heavy water.
+
+Hence, our water is TEN PERCENT LESS TOXIC than our competitors. Only WE care about your health. Nobody else does. Hydrafill wants to heal and protect you. Our competitors think you deserve to drown in sludge and die.
+
+Trust Hydrafill. Buy Hydrafill today.
+
+</blockquote>
+
+Gladias smiled. He kept walking.
+
+Suddenly, someone grabbed and hugged him from behind.
+
+Gladias turned around.
+
+![Gladias: "Seila!"]
+
+![Seila: "Finally caught you on your way home."]
+
+![Gladias: "How was the rest of your day?"]
+
+![Seila: "Finished up my post on urban economics in Freetown. It's online, you should go see it."]
+
+![Gladias: "Ooh, I'm excited."]
+
+![Seila: "Jahn gave me some gossip recently, about how a lot of things are changing now that people there are getting more spooked about the Arctics."]
+
+![Gladias: "Do you have any theories about why people in Veridia seem so... nonchalant about the whole Arctic situation?"]
+
+![Seila: "I guess the Arctics don't really affect people's lives here much? They just publish their stupid sermons from time to time and people watch and listen out of curiosity."]
+
+Gladias groaned.
+
+![Gladias: "Even inside the Keepers, the situation is so strange. The older ones seem to understand there's a problem. But the newer ones ... not all, but many of them think we should just not care?"]
+
+![Seila: "What's weird is that the corporates in Freetown seem more resistant to ... whatever is causing that stupidity. They're basically the only city taking the problem seriously - except for Redshire, and the cities partially run by Redshire's parliament through co-governance."]
+
+![Gladias: "I guess more than anything, the newer Keepers seem suspicious of Steering and Quadratic Funding and Graph Funding and government being able to do much of anything in general."]
+
+Seila sighed.
+
+They continued walking. After a few minutes, they arrived at the door to their house. Gladias put his watch against the circle, and the door opened. They walked in.
+
+Seila opened up her hand device.
+
+![Seila: "Dzego food truck in one minute. The usual I assume?"]
+
+![Gladias: "Yep, how did you know?"]
+
+Seila laughed.
+
+Seila clicked a few buttons, and ordered.
+
+The door to the house was not yet closed, and Seila could already see the food truck coming towards them from a few hundred meters away. They both waited for the food truck to arrive.
+
+Seila went out, and picked up the food directly from the food truck. She walked back into the house, and closed the door behind her.
+
+She put the food on the table, and immediately unpacked it.
+
+They both sat down, opened their food boxes, and began to eat.
+
+<chapter_nav prev="chapter-10.html" next="chapter-12.html" />

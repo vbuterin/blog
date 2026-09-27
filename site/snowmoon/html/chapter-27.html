@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-26.html" title="Previous chapter: Chapter 26" aria-label="Previous chapter: Chapter 26"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-28.html" title="Next chapter: Chapter 28" aria-label="Next chapter: Chapter 28"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+<h1>Chapter 27</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Meldan, Veridia</span><span class="sep">·</span><span class="date">3724 Frostime 7</span></span></div>
+<p>Gladias heard a knock on the door of his government hotel room. Before he could respond, he heard a buzzing sound, and the door opened.</p>
+<p>Seila walked in through the door.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I'm so sorry, Seila"</span>, Gladias said almost immediately with a sad expression on his face. <span style="color:oklch(0.7 0.15 93.33333333333333)">"I don't think this plan is going to work."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I've failed our whole family. We know where Febric and Hreda are, now we know where Lily is, but there's no path to rescuing any of them - except if the Arctics conquer us completely."</span></p>
+<p>Seila walked up to Gladias and hugged him.</p>
+<p>For a few moments, neither of them said anything. Then she stepped back and her face broke into a smile.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"So I have a new idea."</span></p>
+<p>Gladias's eyes perked up.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What is it?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"So what we learned yesterday is that the judges do not feel comfortable doing something that they perceive as being very undemocratic. So I have a solution. We make it democratic."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What, like we hold an election tomorrow?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"In a sense, exactly."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"While you were in Dzego, Mov and I started making our way up the ladder in Silverchat, talking to people there. We were not too successful at getting their attention at first. Verdow joining in about ten days ago helped a lot, but even then they didn't take us too seriously. But on the day the Kungaupei rescued Tafindel, I took a risk: I told them something interesting military-wise would happen a longhour in advance. And then of course it did. So now, they are listening. And I have a plan for what to ask them."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Silverchat has a polling feature. You can burn zipcoins - well, pay zipcoins to the company - and it lets you automatically ask a question to a large cross-section of people on the platform. The more zipcoins you burn, the more people it polls. So what we'll do is, ask a lot of people a bunch of questions about how they feel about various Veridian and other government institutions, and other hypothetical scenarios."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"We'll include 'do you think the parliament represents the people?' and 'how would you feel if Veridia's military was run by the Dzegojan people who rescued the Redshire president's son?'. But we include that alongside hundreds of other decoy questions. That way, the Arctics won't know what's going on."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"For the responses to be genuine and well thought out, you need a high priority level, which I imagine would require paying a lot of zipcoins. And for this to function as a social signal with strong legitimacy, there must be common knowledge - everyone in Veridia must know not just that the poll was made and what the results are, but also that everyone else knows that the poll was made and what the results are, and also that everyone else knows that everyone else knows, and so on. That would require <em>a big chunk of the entire population</em> to see the poll. So we would have to pay <em>a lot</em> of zipcoins."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Nine hundred thousand zipcoins was my estimate."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Do we have that many?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Nope. All our savings combined, including Mov, adds up to only half that."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"But here's the trick. We don't need to pay. We convince Evelor, the founder of Silverchat, to do it himself, through the company. Then they can set the breadth and the priority as high as they want - they get a hundred percent of the fee back."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Wait, can't they just do it manually at zero cost?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Their platform works by publishing proofs onto a cryptographic network every time the set of readable messages is updated. So there's literally no way for them to break the rules - if they tried, the proof would fail to verify, and the viewers' clients would automatically reject the messages as invalid. The only thing they <em>could</em> do is publish a new algorithm hash, but that would come with a twenty-day delay."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"And they get one hundred percent back? No sales taxes?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"With the latest rubric changes, given how well Silverchat has been behaving with its algorithmic transparency - the exact proof mechanism that doesn't let them just directly backdoor and break their own rules - and interoperability, respecting users' privacy, cooperating with researchers, their taxes have dropped to zero."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Then let's see what Evelor thinks!"</span></p>
+<hr>
+<p>Gladias, Seila and Zei walked forward together along their usual path through Kalimar, covered with trees and surrounded by stone houses on both sides. They had taken a black car most of the way there as a security precaution, but cars could only go up to the border of the car-free zone. Thus, they had no choice but to go the last few hundred meters on foot. Hopefully the privacy robes will suffice, Gladias thought.</p>
+<p>A cold breeze blew at them from behind. The cold energized them just as the wind pushed them forward, and they began to walk forward faster.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Right turn here"</span>, Seila whispered through her neck band. By this point, she had become almost as accustomed to having all of her conversations through neck bands as Gladias had been.</p>
+<p>They turned right, onto a smaller path. The path continued straight for about a hundred meters. At first, there were stone houses on both sides. After about fifty meters, the houses gave way to what seemed like a deep forest. And after a hundred meters, they could see in front of them what looked like a small hill.</p>
+<p>The path sloped downwards, and led to an entrance door to what seemed to be the inside of the hill. Yet another one of those buildings that pays almost no land taxes, Gladias thought. By this point, Veridians had come close to perfecting the art of living and working and putting complex structures into a forest in such a way that the same patch of forest would seem untouched from only a hundred meters away.</p>
+<p>Zei marveled at the sight, and his mind jumped immediately to comparing it to the mountain pyramids in Dzego. In Dzego, he thought, they crafted natural mountains into pyramids, and made nature seem like the work of man. In Veridia - or at least in the Kalimar district of Meldan - they made what was quite possibly an entirely manmade hill look like nature. Dzego could learn from the Veridian style, he thought. It's probably even better for protection.</p>
+<p>Seila tapped her hand device against the green circle beside the door, and the door opened.</p>
+<p>She led the three of them down a path: turning left, then right and up a slope, then right again, then up a staircase. Finally, she opened another door, and led them up a staircase into the middle of a circular area from where they could see the open sky. They were at the top of the hill, Gladias and Zei realized.</p>
+<p>They turned around. Another man, wearing a privacy robe without the hood or the face covering, was already there.</p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"I'm Evelor"</span>, he said. <span style="color:oklch(0.7 0.15 66.66666666666666)">"Nice to meet you."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I'm Gladias. It's a pleasure to meet you too."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"And I'm Zei."</span></p>
+<p>Evelor pressed a button, and a roof started to close above them. After about ten ticks, the roof was completely closed.</p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Just for privacy"</span>, Evelor said. <span style="color:oklch(0.7 0.15 66.66666666666666)">"Feel free to take off your robes. Also, would any of you like a water or a tea?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I'll have a tea"</span>, Gladias replied.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I'll have a tea too"</span>, Zei added.</p>
+<p>Seila looked around briefly. <span style="color:oklch(0.7 0.15 253.33333333333334)">"Then I guess a tea for me as well."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Sounds good, four teas it is. The robot will be up shortly."</span></p>
+<p>Evelor sat down on a bench pressed against the safety railing behind the opening that the staircase emerged from. He gestured at the circular bench that was all along the circumference of the room. <span style="color:oklch(0.7 0.15 66.66666666666666)">"Please, sit down."</span></p>
+<p>They took off the hoods and face coverings from their privacy robes, and sat down.</p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"So, Seila, you mentioned to me that you had an idea for what Silverchat can do to make the whole Veridian government less stupid"</span>, he blurted out with a tone of blunt honesty.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Yes, I do."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Basically, I want to do a poll. I had Emerald come up with about a thousand questions, I reviewed them. Some about how you feel about the present, some about possible futures. A small fraction of the questions are getting at the thing that we actually care about - replacing the military even if the parliament doesn't want to - and the rest are decoys."</span></p>
+<p>Zei winced slightly. Seila was volunteering the content of her master plan too quickly, he thought. The Kungaupei would never operate in this way. But maybe Veridian culture is just more trusting - or maybe Evelor had already proven himself to Seila, or even to all of Veridia, to be someone worthy of trust.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"The goal is to create common knowledge that the poll happened and what the results are. If it goes well, then we will have a much stronger argument to take to the judges that this is something that people would actually want, and would not riot against."</span></p>
+<p>Seila showed her hand device to Evelor. Evelor briefly scrolled through the questions, and started reading out loud.</p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Who would you prefer to run the Veridian military? A: its current leadership. B: a new leadership chosen by parliament. C: the Silverchat leadership. D: the Arctics. E: the Kungaupei (Dzegojan group that recently rescued the Redshire president's son). F: Arturian military advisors."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"And how much did you want to spend on this?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Three million zipcoins. And I was hoping that Silverchat the company could do it itself, because you get paid back a hundred percent anyway."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Interesting! I would say three million is too much, it would be more than any previous poll or advertisement on Silverchat. It would make the Arctics suspicious that something unusual is up. I would do one million. Still in the top three in terms of spending, but not unprecedented."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Works for me."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"But there's also another issue"</span>, Evelor continued. <span style="color:oklch(0.7 0.15 66.66666666666666)">"If we do this we can help the judges see that making a big change would be popular, and that the people don't see the parliament as being all that legitimate. Or of course we'll learn that we're very wrong in our own judgement of how Veridians think. But this won't convince them that this kind of drastic action would actually <em>work</em>."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Do you have an idea in mind?"</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Actually, yes. Recently we added a feature, Silverchat Predict, that lets people - or bots - make bets on future events. So far bots have been the most effective-"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I saw that"</span>, Gladias interjected. <span style="color:oklch(0.7 0.15 93.33333333333333)">"Prediction markets are cool. But there's two weaknesses. One is that if the Arctics see the market, they could manipulate it. In theory, any attempt to manipulate creates more incentive for arbitrageurs to come in and profit on average by pushing the price back to where it should be, but it's still very untested how well that actually works in practice."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"There's known results that unless the arbitrageurs are either fully risk-neutral or have infinite money, a manipulator can always force at least some shift in the price. And if the underlying variable is something so unprecedented and unknown - like whether or not we will win the second victory against the Arctics that the world has seen in the past century - that makes a hard case for any arbitrageur to want to come in."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"The second problem is private information. We're confident in the Kungaupei because we know them well and we trust them and we know a lot about what their capabilities are. But if we reveal that publicly, we reveal it to the Arctics."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Right, both good points. Hopefully we can work on improving that first one over time, but ... right now prediction markets are new. The second one is harder to fix."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Okay, I have a different idea. We don't use the markets directly. Instead, we take the five bots that have been performing the highest on the leaderboard, and we use verifiable two-party computation to ask them. We create a sort of ephemeral virtual private sandbox, we feed the private information into the sandbox, they feed the bot into the sandbox, and the sandbox only outputs the bot's answer."</span></p>
+<p>Zei saw the opportunity to speak. <span style="color:oklch(0.7 0.15 346.66666666666663)">"Yep, that's just an extension over garbled circuits - you probably want verifiable garbled circuits. Overhead is quite nasty-"</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"There's optimizations specific to AI computation. Remember, almost everything inside a large language model is linear. The nonlinear part is necessary for the language to be smart, but it's only a tenth of a percent of the entire computation."</span></p>
+<p>Zei realized that, on this particular specialized topic, he had been outmatched. Looks like in his nine months of studying cryptography he had not managed to become smarter than everyone at everything.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I see..."</span></p>
+<p>Their conversation briefly paused as they heard a mechanical noise getting louder and louder below them. A few ticks later, they could see the top of the robot, slowly climbing up the staircase with a raising motion and then a sliding motion at each step, carrying four cups of tea on a tray. Once it got to the top of the staircase, it moved toward Gladias to give him his tea first.</p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Gladias"</span>, Evelor asked. <span style="color:oklch(0.7 0.15 66.66666666666666)">"You seem smart. I have a different question I wanted to ask you."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What is it?"</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Do you remember Ephelion's debate with Sylka?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I do."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Ephelion said: most of the 'softer' traits in society seem to move in circles. The good creates the seed of the bad, and the bad creates the seed of the good. Disaster to heroism to prosperity to complacency to disaster. Technocracy to democracy to chaos to strongman to technocracy. And so on. The only thing that doesn't behave that way is economic output: growth just keeps compounding on itself. And so we should stop trying to accelerate the thing that goes in circles, and instead just focus on growing economic output. I dislike that argument. It makes me uncomfortable what it implies. But I still can't quite put my finger on what's <em>wrong</em> with it. What do you think?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I don't think it's just economic output that compounds on itself, I think many good things compound on each other. Health makes people more productive. Productivity gives people the resources to be better. Education supports both, and health supports education."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"So in other words, the eigenvector that Ephelion talked about includes more than just one single dimension - which is actually what most eigenvectors are like."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"You clearly understand eigenvectors better than I do!"</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Silverchat is a social media website. Eigenvectors are like ... on the first page of the original whitepaper."</span></p>
+<p>Gladias smiled.</p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"But on the other hand"</span>, Evelor continued, <span style="color:oklch(0.7 0.15 66.66666666666666)">"the Arctics do care about health. It's not health with the aesthetic of compassion and love and care that Sylka would want, it's hard metallic longevity clinics, but it's still health."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well Sylka would say it's not having a long life that matters, it's having a healthy life."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Right, but the medieval tales of people drinking eternal life elixirs and then being doomed to lie on the ground forever with all their bones broken are not how any of the longevity science actually works. A longer life is a healthier life by default. The easiest place to stop damage is at the moment when it begins."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"And I guess you'll say the Arctics care about education too. They barely understand music and poetry, but they teach their kids science just fine, and that's the part of education that goes into the largest eigenvector anyway."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Right."</span></p>
+<p>Gladias could see Seila frowning with discomfort. His mind raced as he tried to come up with other arguments against Ephelion's way of thinking.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"But the Arctics aren't actually maximizing economic output. They're looking to start a war - wars can destroy economies for decades. Their attempt to eliminate anyone in Dzego who goes too far in advancing science and technology, that's not maximizing economic output either - quite the opposite. They're not trying to maximize economic output. They're trying to maximize the economic output that's under their control, and destroy everything else."</span></p>
+<p>At that point, Zei spoke up.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"There is this underlying model that Ephelion is implying, where there's a vector that's shooting outward toward infinity, and the faster it goes toward infinity the faster everyone is happy. But that's not how I see the world at all."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"The world that I am seeing is a fragile world. It did not use to be this fragile. In the past, communication was limited and transmission of authority was limited. Any empire united for long enough would eventually fall. The world was reversible. But today, with our modern robots and modern surveillance, if <em>anyone</em> manages to take over and consolidate control across the whole world, they could lock their power in. Irreversibly. Forever."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"If the Arctics win, a certain kind of entropy - the dimensionality of the space of humanity's future possibilities - would be permanently constricted. From that point forward, the only possible future worlds would be Arctic worlds."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"And that's not the worst that can happen. If the Arctics, or anyone else, make a mistake with one of their superweapons, and no one else has the means to resist it, they could destroy the living world entirely."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Eventually, the world will become reversible again. We will be able to travel between the stars, and our civilization will become too big to completely control or completely destroy. But until that happens, we are in a fragile place, and if within the next decade it all gets multiplied by zero forever, the Arctics will be the reason why it happens."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I have a simpler answer"</span>, Seila added. <span style="color:oklch(0.7 0.15 253.33333333333334)">"All these arguments about the far future, they're hard to predict. And it's really easy to convince yourself that one path is right, and come up with really smart math to justify it, if that's the path that you already know you want to take. But there is one thing that's easy to predict: if the Arctics conquer Veridia, the war may kill hundreds of thousands or millions of our people, and the Arctics will destroy the beautiful world that we know and cherish. To me, that's already enough to be worth fighting against. And the beauty of our world and our countries and our friendships, that's already enough to be worth fighting for."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"All good answers"</span>, Evelor replied. He took a sip of his tea and sat back in his chair, pondering.</p>
+<div class="dateline scene-break"><hr class="rule"><span class="txt">3724 Frostime 8</span></div>
+<p>Gladias, Seila, Zei, Bai, Verdow, Den and Mu were all sitting around a table inside a meeting room in the government-run hotel. Projected on a wall in front of them was a timer, counting down the ticks until the questionnaire on Silverchat would get published. At that moment, the remaining time was 150 ticks.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Are you all done submitting your information into the package for the bots?"</span>, Seila asked.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Just finished my part"</span>, Den replied.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Remember, it's a bot. It doesn't need any amazing presentation and polish. If you think of something else to say or dump in, just throw it in."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I hope you and your bots reviewed the cryptography well, Zei. I'm entrusting a lot of our military secrets to it."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"There's a machine-checkable mathematical proof that the garbled circuit algorithm satisfies the standard correctness and privacy properties. The proof is end-to-end, it covers everything all the way down to the operating system and even the hardware. I read the statements it proves, and I asked Emerald and two other AIs to check it. It's quite solid. Zero information leakage unless hashes are broken, and if that happens we have much bigger problems."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"I checked too"</span>, Mu interjected. <span style="color:oklch(0.7 0.15 173.33333333333331)">"I used a different approach, just in case the proof system or the definitions have somehow been broken for over a decade and nobody noticed. I had Emerald read the original academic papers and write its own implementation, and then had a fresh instance read through that code and the original side by side, and look at every difference, see which side is right. Evelor's code is flawless."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"It's starting in fifty ticks!"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Not going to imitate the Minpentai announcer voice this time?"</span>, Bai joked in response.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"MU GU GEI HUI ZIU FA"</span>, Zei replied in a voice exaggerating the stereotypical robotic tone for comic effect.</p>
+<p>They sat around the table and waited.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"LE MU GEI HUI ZIU FA"</span>, Bai exclaimed.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Hey!"</span>, Zei replied.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Beat you!"</span></p>
+<p>They kept watching the countdown. As soon as it hit ten, they started chanting in unison:</p>
+<p>"PA GU ... SO ... BI ... ZE ... HA ... MU ... FO ... SHI ... LE ... PA ... HUI ZIU FA!"</p>
+<p>The screen split into two views. On the left, there were five parallel progress bars showing the computation of five garbled-circuit executions with the five bots. On the right, a large collection of pie charts, one for each question that had been asked. Votes quickly began coming in.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Let's zoom in to the ones we care about"</span>, Verdow offered.</p>
+<p>Zei nodded, and clicked on one of the pie charts.</p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="400" height="240" viewBox="0 0 400 240" role="img" aria-labelledby="ttl desc">
+<title id="ttl">How much confidence do you have in the Veridian military?</title>
+<desc id="desc">How much confidence do you have in the Veridian military?: None at all 39%, A little 25%, Some 15%, A lot 12%, Total confidence 9%.</desc>
+<defs>
+<radialGradient id="glow" cx="50%" cy="50%" r="50%">
+<stop offset="0%" stop-color="#57ccff" stop-opacity="0.16"/>
+<stop offset="70%" stop-color="#57ccff" stop-opacity="0.05"/>
+<stop offset="100%" stop-color="#57ccff" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="400" height="240" fill="#334488"/>
+<circle cx="200" cy="138" r="88" fill="url(#glow)"/>
+<g font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif">
+<text x="200" y="17" text-anchor="middle" font-size="12" font-weight="700" fill="#cceeff">How much confidence do you have in the Veridian</text>
+<text x="200" y="31.4" text-anchor="middle" font-size="12" font-weight="700" fill="#cceeff">military?</text>
+<circle cx="200" cy="138" r="60" fill="none" stroke="#cceeff" stroke-opacity="0.18" stroke-width="0.8"/>
+<g id="slices">
+<path d="M 200 138 L 157.87 102.65 A 55 55 0 0 1 255 138.38 Z" fill="#dbeeff" stroke="#334488" stroke-width="1.2" stroke-linejoin="round"/>
+<path d="M 200 138 L 255 138.38 A 55 55 0 0 1 199.62 193 Z" fill="#8fd0f7" stroke="#334488" stroke-width="1.2" stroke-linejoin="round"/>
+<path d="M 200 138 L 199.62 193 A 55 55 0 0 1 155.28 170.02 Z" fill="#57ccff" stroke="#334488" stroke-width="1.2" stroke-linejoin="round"/>
+<path d="M 200 138 L 155.28 170.02 A 55 55 0 0 1 145.48 130.73 Z" fill="#3fa9dc" stroke="#334488" stroke-width="1.2" stroke-linejoin="round"/>
+<path d="M 200 138 L 145.48 130.73 A 55 55 0 0 1 157.87 102.65 Z" fill="#2fbfae" stroke="#334488" stroke-width="1.2" stroke-linejoin="round"/>
+</g>
+<g id="leaders">
+<polyline points="211.77,106 220.72,81.69 263,81.69" fill="none" stroke="#101f38" stroke-width="2.2" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="223.94,162.28 242.13,180.72 263,180.72" fill="none" stroke="#101f38" stroke-width="2.2" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="184.31,168.27 172.39,191.27 137,191.27" fill="none" stroke="#101f38" stroke-width="2.2" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="166.91,146.25 141.78,152.52 137,152.52" fill="none" stroke="#101f38" stroke-width="2.2" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="168.8,124.24 145.1,113.79 137,113.79" fill="none" stroke="#101f38" stroke-width="2.2" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="211.77,106 220.72,81.69 263,81.69" fill="none" stroke="#e8f6ff" stroke-width="1.0" stroke-opacity="0.95" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="223.94,162.28 242.13,180.72 263,180.72" fill="none" stroke="#e8f6ff" stroke-width="1.0" stroke-opacity="0.95" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="184.31,168.27 172.39,191.27 137,191.27" fill="none" stroke="#e8f6ff" stroke-width="1.0" stroke-opacity="0.95" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="166.91,146.25 141.78,152.52 137,152.52" fill="none" stroke="#e8f6ff" stroke-width="1.0" stroke-opacity="0.95" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="168.8,124.24 145.1,113.79 137,113.79" fill="none" stroke="#e8f6ff" stroke-width="1.0" stroke-opacity="0.95" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="markers">
+<circle cx="211.77" cy="106" r="2.1" fill="#334488" stroke="#e8f6ff" stroke-width="0.9"/>
+<circle cx="223.94" cy="162.28" r="2.1" fill="#334488" stroke="#e8f6ff" stroke-width="0.9"/>
+<circle cx="184.31" cy="168.27" r="2.1" fill="#334488" stroke="#e8f6ff" stroke-width="0.9"/>
+<circle cx="166.91" cy="146.25" r="2.1" fill="#334488" stroke="#e8f6ff" stroke-width="0.9"/>
+<circle cx="168.8" cy="124.24" r="2.1" fill="#334488" stroke="#e8f6ff" stroke-width="0.9"/>
+</g>
+<g id="labels">
+<g text-anchor="start">
+<text x="268" y="74.61" font-size="10.5" fill="#cceeff">None at all</text>
+<text x="268" y="90.21" font-size="13" font-weight="700" fill="#dbeeff">39%</text>
+</g>
+<g text-anchor="start">
+<text x="268" y="173.64" font-size="10.5" fill="#cceeff">A little</text>
+<text x="268" y="189.24" font-size="13" font-weight="700" fill="#8fd0f7">25%</text>
+</g>
+<g text-anchor="end">
+<text x="132" y="184.18" font-size="10.5" fill="#cceeff">Some</text>
+<text x="132" y="199.78" font-size="13" font-weight="700" fill="#57ccff">15%</text>
+</g>
+<g text-anchor="end">
+<text x="132" y="145.43" font-size="10.5" fill="#cceeff">A lot</text>
+<text x="132" y="161.03" font-size="13" font-weight="700" fill="#3fa9dc">12%</text>
+</g>
+<g text-anchor="end">
+<text x="132" y="106.7" font-size="10.5" fill="#cceeff">Total confidence</text>
+<text x="132" y="122.3" font-size="13" font-weight="700" fill="#2fbfae">9%</text>
+</g>
+</g>
+</g>
+</svg></div><br>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"As I expected. Now let's see how people think we should solve this problem."</span></p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="400" height="240" viewBox="0 0 400 240" role="img" aria-labelledby="ttl desc">
+<title id="ttl">Who would you prefer to run the Veridian military?</title>
+<desc id="desc">Who would you prefer to run the Veridian military?: Its current leadership 13%, A new leadership chosen by parliament 21%, Silverchat 10%, The Arctics 16%, Kungaupei 38%, Arturian military advisors 2%.</desc>
+<defs>
+<radialGradient id="glow" cx="50%" cy="50%" r="50%">
+<stop offset="0%" stop-color="#57ccff" stop-opacity="0.16"/>
+<stop offset="70%" stop-color="#57ccff" stop-opacity="0.05"/>
+<stop offset="100%" stop-color="#57ccff" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="400" height="240" fill="#334488"/>
+<circle cx="200" cy="138" r="88" fill="url(#glow)"/>
+<g font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif">
+<text x="200" y="17" text-anchor="middle" font-size="12" font-weight="700" fill="#cceeff">Who would you prefer to run the Veridian military?</text>
+<circle cx="200" cy="138" r="60" fill="none" stroke="#cceeff" stroke-opacity="0.18" stroke-width="0.8"/>
+<g id="slices">
+<path d="M 200 138 L 200 83 A 55 55 0 0 1 240.09 100.35 Z" fill="#dbeeff" stroke="#334488" stroke-width="1.2" stroke-linejoin="round"/>
+<path d="M 200 138 L 240.09 100.35 A 55 55 0 0 1 246.44 167.47 Z" fill="#4a90d9" stroke="#334488" stroke-width="1.2" stroke-linejoin="round"/>
+<path d="M 200 138 L 246.44 167.47 A 55 55 0 0 1 220.25 189.14 Z" fill="#6fe0cf" stroke="#334488" stroke-width="1.2" stroke-linejoin="round"/>
+<path d="M 200 138 L 220.25 189.14 A 55 55 0 0 1 167.67 182.5 Z" fill="#98a8f8" stroke="#334488" stroke-width="1.2" stroke-linejoin="round"/>
+<path d="M 200 138 L 167.67 182.5 A 55 55 0 0 1 193.11 83.43 Z" fill="#57ccff" stroke="#334488" stroke-width="1.2" stroke-linejoin="round"/>
+<path d="M 200 138 L 193.11 83.43 A 55 55 0 0 1 200 83 Z" fill="#2fbfae" stroke="#334488" stroke-width="1.2" stroke-linejoin="round"/>
+</g>
+<g id="leaders">
+<polyline points="213.54,106.7 223.83,82.93 263,82.93" fill="none" stroke="#101f38" stroke-width="2.2" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="233.95,134.79 259.73,132.35 263,132.35" fill="none" stroke="#101f38" stroke-width="2.2" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="221.74,164.27 238.25,184.23 263,184.23" fill="none" stroke="#101f38" stroke-width="2.2" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="195.73,171.83 192.48,197.53 137,197.53" fill="none" stroke="#101f38" stroke-width="2.2" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="166.97,129.52 141.89,123.08 137,123.08" fill="none" stroke="#101f38" stroke-width="2.2" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="196.89,88.6 196.23,78.12 137,78.12" fill="none" stroke="#101f38" stroke-width="2.2" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="213.54,106.7 223.83,82.93 263,82.93" fill="none" stroke="#e8f6ff" stroke-width="1.0" stroke-opacity="0.95" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="233.95,134.79 259.73,132.35 263,132.35" fill="none" stroke="#e8f6ff" stroke-width="1.0" stroke-opacity="0.95" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="221.74,164.27 238.25,184.23 263,184.23" fill="none" stroke="#e8f6ff" stroke-width="1.0" stroke-opacity="0.95" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="195.73,171.83 192.48,197.53 137,197.53" fill="none" stroke="#e8f6ff" stroke-width="1.0" stroke-opacity="0.95" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="166.97,129.52 141.89,123.08 137,123.08" fill="none" stroke="#e8f6ff" stroke-width="1.0" stroke-opacity="0.95" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="196.89,88.6 196.23,78.12 137,78.12" fill="none" stroke="#e8f6ff" stroke-width="1.0" stroke-opacity="0.95" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="markers">
+<circle cx="213.54" cy="106.7" r="2.1" fill="#334488" stroke="#e8f6ff" stroke-width="0.9"/>
+<circle cx="233.95" cy="134.79" r="2.1" fill="#334488" stroke="#e8f6ff" stroke-width="0.9"/>
+<circle cx="221.74" cy="164.27" r="2.1" fill="#334488" stroke="#e8f6ff" stroke-width="0.9"/>
+<circle cx="195.73" cy="171.83" r="2.1" fill="#334488" stroke="#e8f6ff" stroke-width="0.9"/>
+<circle cx="166.97" cy="129.52" r="2.1" fill="#334488" stroke="#e8f6ff" stroke-width="0.9"/>
+<circle cx="196.89" cy="88.6" r="2.1" fill="#334488" stroke="#e8f6ff" stroke-width="0.9"/>
+</g>
+<g id="labels">
+<g text-anchor="start">
+<text x="268" y="75.85" font-size="10.5" fill="#cceeff">Its current leadership</text>
+<text x="268" y="91.45" font-size="13" font-weight="700" fill="#dbeeff">13%</text>
+</g>
+<g text-anchor="start">
+<text x="268" y="118.44" font-size="10.5" fill="#cceeff">A new leadership</text>
+<text x="268" y="132.09" font-size="10.5" fill="#cceeff">chosen by parliament</text>
+<text x="268" y="147.69" font-size="13" font-weight="700" fill="#4a90d9">21%</text>
+</g>
+<g text-anchor="start">
+<text x="268" y="177.15" font-size="10.5" fill="#cceeff">Silverchat</text>
+<text x="268" y="192.75" font-size="13" font-weight="700" fill="#6fe0cf">10%</text>
+</g>
+<g text-anchor="end">
+<text x="132" y="190.44" font-size="10.5" fill="#cceeff">The Arctics</text>
+<text x="132" y="206.04" font-size="13" font-weight="700" fill="#98a8f8">16%</text>
+</g>
+<g text-anchor="end">
+<text x="132" y="115.99" font-size="10.5" fill="#cceeff">Kungaupei</text>
+<text x="132" y="131.59" font-size="13" font-weight="700" fill="#57ccff">38%</text>
+</g>
+<g text-anchor="end">
+<text x="132" y="64.21" font-size="10.5" fill="#cceeff">Arturian military</text>
+<text x="132" y="77.86" font-size="10.5" fill="#cceeff">advisors</text>
+<text x="132" y="93.46" font-size="13" font-weight="700" fill="#2fbfae">2%</text>
+</g>
+</g>
+</g>
+</svg></div><br>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Restrict to people who are from Northshore."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Wait, did we set it up to provide that level of granularity? Votes are anonymous, we have no way to tell who sent each one."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"We did break it down by age, self-declared most recent senator votes, province, and a couple of personality type axes inferred by a large language model."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Ah, found it."</span></p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="400" height="240" viewBox="0 0 400 240" role="img" aria-labelledby="ttl desc">
+<title id="ttl">Who would you prefer to run the Veridian military? — Restricted to people with Northshore ties</title>
+<desc id="desc">Who would you prefer to run the Veridian military? — Restricted to people with Northshore ties: Its current leadership 6%, A new leadership chosen by parliament 8%, Silverchat 16%, The Arctics 13%, Kungaupei 52%, Arturian military advisors 5%.</desc>
+<defs>
+<radialGradient id="glow" cx="50%" cy="50%" r="50%">
+<stop offset="0%" stop-color="#57ccff" stop-opacity="0.16"/>
+<stop offset="70%" stop-color="#57ccff" stop-opacity="0.05"/>
+<stop offset="100%" stop-color="#57ccff" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="400" height="240" fill="#334488"/>
+<circle cx="200" cy="138" r="88" fill="url(#glow)"/>
+<g font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif">
+<text x="200" y="17" text-anchor="middle" font-size="12" font-weight="700" fill="#cceeff">Who would you prefer to run the Veridian military?</text>
+<text x="200" y="31" text-anchor="middle" font-size="10" fill="#8fb8e0">Restricted to people with Northshore ties</text>
+<circle cx="200" cy="138" r="60" fill="none" stroke="#cceeff" stroke-opacity="0.18" stroke-width="0.8"/>
+<g id="slices">
+<path d="M 200 138 L 181.19 86.32 A 55 55 0 0 1 201.54 83.02 Z" fill="#dbeeff" stroke="#334488" stroke-width="1.2" stroke-linejoin="round"/>
+<path d="M 200 138 L 201.54 83.02 A 55 55 0 0 1 227.83 90.56 Z" fill="#4a90d9" stroke="#334488" stroke-width="1.2" stroke-linejoin="round"/>
+<path d="M 200 138 L 227.83 90.56 A 55 55 0 0 1 254.97 136.08 Z" fill="#6fe0cf" stroke="#334488" stroke-width="1.2" stroke-linejoin="round"/>
+<path d="M 200 138 L 254.97 136.08 A 55 55 0 0 1 239.03 176.75 Z" fill="#98a8f8" stroke="#334488" stroke-width="1.2" stroke-linejoin="round"/>
+<path d="M 200 138 L 239.03 176.75 A 55 55 0 1 1 166.14 94.66 Z" fill="#57ccff" stroke="#334488" stroke-width="1.2" stroke-linejoin="round"/>
+<path d="M 200 138 L 166.14 94.66 A 55 55 0 0 1 181.19 86.32 Z" fill="#2fbfae" stroke="#334488" stroke-width="1.2" stroke-linejoin="round"/>
+</g>
+<g id="leaders">
+<polyline points="194.55,104.34 190.41,78.77 137,78.77" fill="none" stroke="#101f38" stroke-width="2.2" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="209.4,105.22 216.54,80.32 263,80.32" fill="none" stroke="#101f38" stroke-width="2.2" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="229.29,120.54 251.54,107.28 263,121.7" fill="none" stroke="#101f38" stroke-width="2.2" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="231.75,150.44 255.86,159.89 263,159.89" fill="none" stroke="#101f38" stroke-width="2.2" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="174.5,160.64 155.13,177.84 137,177.84" fill="none" stroke="#101f38" stroke-width="2.2" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="183.47,108.18 170.91,85.52 137,120.15" fill="none" stroke="#101f38" stroke-width="2.2" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="194.55,104.34 190.41,78.77 137,78.77" fill="none" stroke="#e8f6ff" stroke-width="1.0" stroke-opacity="0.95" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="209.4,105.22 216.54,80.32 263,80.32" fill="none" stroke="#e8f6ff" stroke-width="1.0" stroke-opacity="0.95" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="229.29,120.54 251.54,107.28 263,121.7" fill="none" stroke="#e8f6ff" stroke-width="1.0" stroke-opacity="0.95" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="231.75,150.44 255.86,159.89 263,159.89" fill="none" stroke="#e8f6ff" stroke-width="1.0" stroke-opacity="0.95" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="174.5,160.64 155.13,177.84 137,177.84" fill="none" stroke="#e8f6ff" stroke-width="1.0" stroke-opacity="0.95" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="183.47,108.18 170.91,85.52 137,120.15" fill="none" stroke="#e8f6ff" stroke-width="1.0" stroke-opacity="0.95" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="markers">
+<circle cx="194.55" cy="104.34" r="2.1" fill="#334488" stroke="#e8f6ff" stroke-width="0.9"/>
+<circle cx="209.4" cy="105.22" r="2.1" fill="#334488" stroke="#e8f6ff" stroke-width="0.9"/>
+<circle cx="229.29" cy="120.54" r="2.1" fill="#334488" stroke="#e8f6ff" stroke-width="0.9"/>
+<circle cx="231.75" cy="150.44" r="2.1" fill="#334488" stroke="#e8f6ff" stroke-width="0.9"/>
+<circle cx="174.5" cy="160.64" r="2.1" fill="#334488" stroke="#e8f6ff" stroke-width="0.9"/>
+<circle cx="183.47" cy="108.18" r="2.1" fill="#334488" stroke="#e8f6ff" stroke-width="0.9"/>
+</g>
+<g id="labels">
+<g text-anchor="end">
+<text x="132" y="71.69" font-size="10.5" fill="#cceeff">Its current leadership</text>
+<text x="132" y="87.29" font-size="13" font-weight="700" fill="#dbeeff">6%</text>
+</g>
+<g text-anchor="start">
+<text x="268" y="66.41" font-size="10.5" fill="#cceeff">A new leadership</text>
+<text x="268" y="80.06" font-size="10.5" fill="#cceeff">chosen by parliament</text>
+<text x="268" y="95.66" font-size="13" font-weight="700" fill="#4a90d9">8%</text>
+</g>
+<g text-anchor="start">
+<text x="268" y="114.61" font-size="10.5" fill="#cceeff">Silverchat</text>
+<text x="268" y="130.21" font-size="13" font-weight="700" fill="#6fe0cf">16%</text>
+</g>
+<g text-anchor="start">
+<text x="268" y="152.81" font-size="10.5" fill="#cceeff">The Arctics</text>
+<text x="268" y="168.41" font-size="13" font-weight="700" fill="#98a8f8">13%</text>
+</g>
+<g text-anchor="end">
+<text x="132" y="170.75" font-size="10.5" fill="#cceeff">Kungaupei</text>
+<text x="132" y="186.35" font-size="13" font-weight="700" fill="#57ccff">52%</text>
+</g>
+<g text-anchor="end">
+<text x="132" y="106.24" font-size="10.5" fill="#cceeff">Arturian military</text>
+<text x="132" y="119.89" font-size="10.5" fill="#cceeff">advisors</text>
+<text x="132" y="135.49" font-size="13" font-weight="700" fill="#2fbfae">5%</text>
+</g>
+</g>
+</g>
+</svg></div><br>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Congrats, Evelor"</span>, Verdow said wryly. <span style="color:oklch(0.7 0.15 293.3333333333333)">"Seems like you are more fit to run Northshore than the actual parliament."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I'm a bit scared of these results now"</span>, Seila interjected. <span style="color:oklch(0.7 0.15 253.33333333333334)">"Haven't we just given the game away to the Arctics?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"I think it's okay"</span>, Mu replied. <span style="color:oklch(0.7 0.15 173.33333333333331)">"We asked many different questions in the poll. One of them literally has twenty percent saying that we should fund recovering Northshore by legally transferring all of its government-owned territory to Hydrafill and letting them figure it out."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"The lawsuit is something that the Arctics will notice and watch, of course. We should delay it by a few days to make it not look too coordinated. But regardless of what we do, we will have made it clear to everyone - including the Arctics - that Veridians recognize that there is a big problem. It's the details of the solution that we need to hide."</span></p>
+<p>They paused briefly, and stared at the progress bars.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Okay, that will take a while. Let's look at some more pie charts."</span></p>
+<p>A robot entered the room, bringing each of the participants a cup of tea.</p>
+<hr>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"And ... done"</span>, Zei exclaimed triumphantly.</p>
+<p>Five icons representing the responses from five bots appeared onscreen. Zei clicked on the first one.</p>
+<br><div class="device-view wide-device-view device-view-left"><p>Executive summary:</p>
+<ul><li>Under any 'ordinary' scenario, meaning either status quo continuation of the Veridian military, or a reorganization led by the Veridian parliament without large outside pressure, the probability that Veridia will hold the same or greater percent of its own territory after one year is 20%.</li><li>Under a hypothetical transfer to Kungaupei control, the probability increases to 26%.</li><li>The main downside risks involve standard organizational transition costs that are typical of chaotic changes in leadership and replacement of experienced personnel with outsiders.</li><li>Probability of successful outcomes is maximized (up to 50%) in cases that involve Kungaupei participation but minimize the disruptiveness of the transition.</li><li>Note that above probabilities are for <em>same or greater</em> control in one year. Probabilities of strictly greater control are uniformly much lower.</li></ul></div><br>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Hmm"</span>, Verdow muttered.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Do you think it's reasonable?"</span>, Gladias asked.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"The bots definitely have a more conservative temperament than I do, but it's fair."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"The other four are saying vaguely similar things. The most pessimistic one says the chances are the same in the status quo and Kungaupei scenarios."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Also we have much more data coming in from the votes. It's roughly the same as the results we first saw right when the poll began."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I guess we have all the data we will get. Let's get ready to file the case in a few days."</span></p>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-26.html" title="Previous chapter: Chapter 26" aria-label="Previous chapter: Chapter 26"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-28.html" title="Next chapter: Chapter 28" aria-label="Next chapter: Chapter 28"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>

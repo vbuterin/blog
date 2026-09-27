@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-5.html" title="Previous chapter: Chapter 5" aria-label="Previous chapter: Chapter 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-7.html" title="Next chapter: Chapter 7" aria-label="Next chapter: Chapter 7"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+<h1>Chapter 6</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Meldan, Veridia</span><span class="sep">·</span><span class="date">3724 Rainmoon 12</span></span></div>
+<p>Gladias walked slowly toward the door of his house, keeping his head down so that his privacy robe with its hood could double as shielding from the cold rain. A small roof covered the area right in front of the doorstep. Once he got to the doorstep, he slowly took off his hood. He picked up a food box - the usual number ten from the Dzego food truck - from a small table. He then tapped his watch against a glowing green circle beside the door.</p>
+<p>The door opened. Gladias sighed, entered, and let the door close behind him. He went down a set of stairs to the basement, and put the food box down on a table. The lights turned on, a gentle background noise simulating sounds from nature slowly ramped up, and another door automatically closed behind him.</p>
+<p>Gladias took off his privacy robe, though keeping his neck band on, and threw the privacy robe onto the back of a chair to dry off. He sat down on another large soft chair that inclined back about forty-five degrees.</p>
+<p>His watch buzzed as his local network authenticated it and let it connect.</p>
+<p>He opened his mouth slightly and whispered an instruction through his neck band to open a call with Mov.</p>
+<p>Almost immediately, Mov picked up.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Are you in a secure location?"</span>, Mov asked.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I'm whispering into a subvocalization neck band, and your audio is coming in to me by earpiece. We're inside a sealed basement room, the doors and the walls covered with anti-transmission foil, inside of a locked and well-insulated house. There's real rain outside, and the sound of fake rain inside. Secure enough for you?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"These days you never know."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well, if you want I can change the fake rain to a crowd babble so it's even harder to strip, <em>and</em> put on headphones."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Fine, no need. Your setup is better than most as it is."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I'm submitting my track decision today. I'm going to become a Keeper."</span></p>
+<p>For a few ticks, there was silence.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"When did you decide?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"A few days ago."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"You've been set on becoming a Sentinel for at least the past year."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"The Keeper role is where the real ability to make change lies. The rubrics themselves are more important than-"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"It was him, wasn't it? The mysterious gentleman, Delwart?"</span></p>
+<p>For a few ticks, silence again.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Does Seila know?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Of course she does, I told her two days ago."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Before me."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well of course, she's my-"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"But you still haven't told her ... why you changed your mind, have you?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Can you just tell me what you learned from your snooping already?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Okay fine."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"So remember what I told you last time - when Delwart left the meeting, I followed him, and it turned out that he just walked over to some totally different tea shop in GPH, and he had another meeting there fifty minutes later. He left through some different door, so I lost track of him there."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Yeah I remember."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Well guess what, the story goes further. So I threw my surveillance bat into an innocuous spot in both places - both of those got caught, no luck there. But I also made a point to re-visit both spots back and forth the next three days. Both spots kept quiet for two days. But on the third day, I caught sight of Delwart again. He always wears a new privacy robe every day, he re-randomizes his insoles to change his gait and his height, but he has one weakness that let me catch him."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What is it?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"His behavior. He looks around much less than the average person, he feels really focused on where he's going. I sacrificed a surveillance bat a couple of times to make distracting noises. Most people turn their heads at least a little bit; Delwart does not."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"And so that's how I managed to find him again, walking from one tea shop to the next."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So he's having these meetings this whole time?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Yep. Maybe you're not the only person he's trying to convince to become a Keeper."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So what do we do?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"It seems like there's only one thing we can do right now. Go along with what Delwart says, and keep our eyes open."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Anyway, you should get some rest. Remember, we have that citizens' assembly to go to tomorrow."</span></p>
+<p>Gladias ended the call. He took out his hand device, and returned to studying the Keeper governance structure.</p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="560" height="280" viewBox="0 0 800 400">
+<defs>
+<marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#cef" />
+</marker>
+<pattern id="gridPattern" width="8" height="8" patternUnits="userSpaceOnUse">
+<circle cx="4.0" cy="4.0" r="2" fill="#cef" />
+</pattern>
+</defs>
+<rect width="800" height="400" fill="#245" />
+<!-- Left: all keepers grid (25 x 40 at 8px spacing = 200 x 320), label on top -->
+<text x="130.0" y="26" font-family="sans-serif" font-size="18" fill="lightblue" text-anchor="middle">All Keepers</text>
+<rect x="30" y="40" width="200" height="320" fill="url(#gridPattern)" />
+<!-- Center: arrow spanning the gap (raised to align with circle center) -->
+<line x1="243" y1="170" x2="430" y2="170" stroke="#cef" stroke-width="1.5" marker-end="url(#arrowhead)" />
+<text x="332" y="191" font-family="sans-serif" font-size="18" fill="lightblue" text-anchor="middle">Random selection</text>
+<!-- Right: assembly -->
+<circle cx="545" cy="170" r="100" fill="rgba(204, 238, 255, 0.04)" stroke="#9ab" stroke-width="1" stroke-dasharray="4 4" />
+<text x="545" y="26" font-family="sans-serif" font-size="18" fill="lightblue" text-anchor="middle">Current Keepers for this rubric</text>
+<circle cx="545.0" cy="88.0" r="5" fill="#6af" stroke="#245" stroke-width="1"/>
+<circle cx="569.2" cy="91.6" r="5" fill="#6af" stroke="#245" stroke-width="1"/>
+<circle cx="591.2" cy="102.2" r="5" fill="#6af" stroke="#245" stroke-width="1"/>
+<circle cx="609.1" cy="118.9" r="5" fill="#6af" stroke="#245" stroke-width="1"/>
+<circle cx="621.3" cy="140.0" r="5" fill="#6af" stroke="#245" stroke-width="1"/>
+<circle cx="626.8" cy="163.9" r="5" fill="#6af" stroke="#245" stroke-width="1"/>
+<circle cx="624.9" cy="188.2" r="5" fill="#6af" stroke="#245" stroke-width="1"/>
+<circle cx="616.0" cy="211.0" r="5" fill="#4cb" stroke="#245" stroke-width="1"/>
+<circle cx="600.8" cy="230.1" r="5" fill="#4cb" stroke="#245" stroke-width="1"/>
+<circle cx="580.6" cy="243.9" r="5" fill="#4cb" stroke="#245" stroke-width="1"/>
+<circle cx="557.2" cy="251.1" r="5" fill="#4cb" stroke="#245" stroke-width="1"/>
+<circle cx="532.8" cy="251.1" r="5" fill="#4cb" stroke="#245" stroke-width="1"/>
+<circle cx="509.4" cy="243.9" r="5" fill="#4cb" stroke="#245" stroke-width="1"/>
+<circle cx="489.2" cy="230.1" r="5" fill="#4cb" stroke="#245" stroke-width="1"/>
+<circle cx="474.0" cy="211.0" r="5" fill="#fa5" stroke="#245" stroke-width="1"/>
+<circle cx="465.1" cy="188.2" r="5" fill="#fa5" stroke="#245" stroke-width="1"/>
+<circle cx="463.2" cy="163.9" r="5" fill="#fa5" stroke="#245" stroke-width="1"/>
+<circle cx="468.7" cy="140.0" r="5" fill="#fa5" stroke="#245" stroke-width="1"/>
+<circle cx="480.9" cy="118.9" r="5" fill="#fa5" stroke="#245" stroke-width="1"/>
+<circle cx="498.8" cy="102.2" r="5" fill="#fa5" stroke="#245" stroke-width="1"/>
+<circle cx="520.8" cy="91.6" r="5" fill="#fa5" stroke="#245" stroke-width="1"/>
+<line x1="615" y1="114" x2="662" y2="100" stroke="#9ab" stroke-width="1" />
+<circle cx="669" cy="96" r="4.5" fill="#6af"/>
+<text x="677" y="89" font-family="sans-serif" font-size="15" fill="lightblue" text-anchor="start"><tspan x="677" dy="0">added second-</tspan><tspan x="677" dy="17">last year</tspan></text>
+<line x1="606" y1="236" x2="662" y2="222" stroke="#9ab" stroke-width="1" />
+<circle cx="669" cy="218" r="4.5" fill="#4cb"/>
+<text x="677" y="211" font-family="sans-serif" font-size="15" fill="lightblue" text-anchor="start"><tspan x="677" dy="0">added last</tspan><tspan x="677" dy="17">year</tspan></text>
+<line x1="461" y1="137" x2="395" y2="115" stroke="#9ab" stroke-width="1" />
+<circle cx="387" cy="111" r="4.5" fill="#fa5"/>
+<text x="379" y="104" font-family="sans-serif" font-size="15" fill="lightblue" text-anchor="end"><tspan x="379" dy="0">added this</tspan><tspan x="379" dy="17">year</tspan></text>
+<line x1="487.6" y1="251.9" x2="385" y2="330" stroke="#cef" stroke-width="1.5" marker-end="url(#arrowhead)" />
+<text x="414" y="284" font-family="sans-serif" font-size="12" fill="lightblue" text-anchor="end"><tspan x="414" dy="0">Random</tspan><tspan x="414" dy="14">selection</tspan></text>
+<line x1="545.0" y1="270.0" x2="545" y2="330" stroke="#cef" stroke-width="1.5" marker-end="url(#arrowhead)" />
+<text x="553" y="288" font-family="sans-serif" font-size="12" fill="lightblue" text-anchor="start"><tspan x="553" dy="0">Random</tspan><tspan x="553" dy="14">selection</tspan></text>
+<line x1="602.4" y1="251.9" x2="705" y2="330" stroke="#cef" stroke-width="1.5" marker-end="url(#arrowhead)" />
+<text x="672" y="284" font-family="sans-serif" font-size="12" fill="lightblue" text-anchor="start"><tspan x="672" dy="0">Random</tspan><tspan x="672" dy="14">selection</tspan></text>
+<rect x="311" y="332" width="148" height="60" rx="8" fill="rgba(204, 238, 255, 0.04)" stroke="#9ab" stroke-width="1" stroke-dasharray="4 4" />
+<text x="385" y="350" font-family="sans-serif" font-size="15" fill="lightblue" text-anchor="middle">Discussion Group 1</text>
+<circle cx="340.0" cy="372" r="5" fill="#6af" stroke="#245" stroke-width="1"/>
+<circle cx="355.0" cy="372" r="5" fill="#fa5" stroke="#245" stroke-width="1"/>
+<circle cx="370.0" cy="372" r="5" fill="#fa5" stroke="#245" stroke-width="1"/>
+<circle cx="385.0" cy="372" r="5" fill="#4cb" stroke="#245" stroke-width="1"/>
+<circle cx="400.0" cy="372" r="5" fill="#4cb" stroke="#245" stroke-width="1"/>
+<circle cx="415.0" cy="372" r="5" fill="#6af" stroke="#245" stroke-width="1"/>
+<circle cx="430.0" cy="372" r="5" fill="#4cb" stroke="#245" stroke-width="1"/>
+<rect x="471" y="332" width="148" height="60" rx="8" fill="rgba(204, 238, 255, 0.04)" stroke="#9ab" stroke-width="1" stroke-dasharray="4 4" />
+<text x="545" y="350" font-family="sans-serif" font-size="15" fill="lightblue" text-anchor="middle">Discussion Group 2</text>
+<circle cx="500.0" cy="372" r="5" fill="#4cb" stroke="#245" stroke-width="1"/>
+<circle cx="515.0" cy="372" r="5" fill="#6af" stroke="#245" stroke-width="1"/>
+<circle cx="530.0" cy="372" r="5" fill="#6af" stroke="#245" stroke-width="1"/>
+<circle cx="545.0" cy="372" r="5" fill="#fa5" stroke="#245" stroke-width="1"/>
+<circle cx="560.0" cy="372" r="5" fill="#fa5" stroke="#245" stroke-width="1"/>
+<circle cx="575.0" cy="372" r="5" fill="#6af" stroke="#245" stroke-width="1"/>
+<circle cx="590.0" cy="372" r="5" fill="#4cb" stroke="#245" stroke-width="1"/>
+<rect x="631" y="332" width="148" height="60" rx="8" fill="rgba(204, 238, 255, 0.04)" stroke="#9ab" stroke-width="1" stroke-dasharray="4 4" />
+<text x="705" y="350" font-family="sans-serif" font-size="15" fill="lightblue" text-anchor="middle">Discussion Group 3</text>
+<circle cx="660.0" cy="372" r="5" fill="#6af" stroke="#245" stroke-width="1"/>
+<circle cx="675.0" cy="372" r="5" fill="#fa5" stroke="#245" stroke-width="1"/>
+<circle cx="690.0" cy="372" r="5" fill="#4cb" stroke="#245" stroke-width="1"/>
+<circle cx="705.0" cy="372" r="5" fill="#fa5" stroke="#245" stroke-width="1"/>
+<circle cx="720.0" cy="372" r="5" fill="#6af" stroke="#245" stroke-width="1"/>
+<circle cx="735.0" cy="372" r="5" fill="#4cb" stroke="#245" stroke-width="1"/>
+<circle cx="750.0" cy="372" r="5" fill="#fa5" stroke="#245" stroke-width="1"/>
+</svg></div><br>
+<p>Similar to the Sentinels, Gladias noted, but bigger: Sentinels were three groups of three, Keepers were three groups of seven. Courts were not part of the Order, but they were also similar, he remembered: two pairs of two separately deliberating before they cast their votes, plus one as a tiebreaker, the median of their five views determining the judgement. The Keeper groups having more people than Courts and Sentinel panels made sense: a rubric mattered more than any one single decision. The Courts being smaller made sense too: five judges were just for one round and you can always appeal.</p>
+<p>Gladias slid back and forth between various screens, and scrolled through the current rubric set planned for evaluation:</p>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Rubric title</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 5%">5</td>
+      <td style="width: 20%">Emergency preparedness in physical spaces</td>
+      <td>Reduced tax bracket for presence of secure shelters, durable emergency supplies, full or partial grid-independence. Increased tax bracket for unsafe or fragile building design.</td>
+    </tr>
+    <tr>
+      <td style="width: 5%">6</td>
+      <td style="width: 20%">Openness in hardware</td>
+      <td>Reduced tax bracket for respecting user right to repair, publishing usable schematics, designs and other sources, and following open standards. Increased tax bracket for deliberate incompatibility, restricting modifiability and related anti-competitive practices.</td>
+    </tr>
+    <tr>
+      <td style="width: 5%">7</td>
+      <td style="width: 20%">Clean indoor air</td>
+      <td>Tax bracket proportional to observed average air quality indicators - CO2, PM2.5 and other mainstream measures. Average gives higher weight to higher-occupancy time periods. Applies to spaces that host more than 20 people.</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p>Gladias kept scrolling through the Keeper documentation. After about thirty minutes, he laid back on the chair, tired. He asked Emerald to come up with a quiz related to the information he viewed so far to help him study. Emerald acknowledged, and began working in the background.</p>
+<p>He then put down his hand device, mustered the energy to get off the chair and onto his bed, and went to sleep.</p>
+<div class="dateline scene-break"><hr class="rule"><span class="txt">3724 Rainmoon 13</span></div>
+<p>Gladias exited his house, wearing a privacy robe without putting on the face cover or hood. He turned right, and began walking down the street.</p>
+<p>On both sides of the street, there were rows of houses just like his. Trees lined both sidewalks to provide shade. Most of the houses had one of a few similar default styles, with beige and light blue and grey colors, and appeared to have been constructed within the last twenty years.</p>
+<p>About one in ten houses, however, had some form of quirk to it. The first that Gladias passed by had a balcony that looked like a futuristic spaceship. The second did not have a regular house at all, and instead featured three smaller houses that were clearly refurbished shipping containers. They <em>looked like</em> something that he would live in, Gladias thought, and he even enjoyed looking at them, but they made it impossible to perceive the neighborhood as being uniform.</p>
+<p>The third was a house with a coffee shop on the side. Several people were standing outside and drinking tea. Gladias remembered one of Seila's blogs from years ago. In Inglewore they would never allow this, he thought - housing districts were for housing. The cost: in Inglewore, if you lived in the wrong place, you had to walk one and a half kilometers to get to the nearest coffee shop. Here, he had just walked to one within three hundred meters without even intending to.</p>
+<p>Finally, Gladias arrived at his destination: a small community and event center that was located at the first street corner. He saw others coming in, some walking, and a few taxis slowing down and stopping on the street beside the building. He turned right, and went through the same entrance that everyone else was going through.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Mov, there you are!"</span>, he exclaimed, speaking in a voice that was simultaneously silent so that only his neck band could pick it up, and aggressive so that his neck band interpreted it as shouting.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Ah good to see you Gladias!"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So what is the topic of the assembly today?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"They're discussing what kinds of public spaces we want to have more of, trying to create more opportunities for in-person social interaction. They're worried we're not getting enough of that now that everyone is talking now just on Silverchat and Bluewhale but also to Emerald and the other AIs."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Makes sense."</span></p>
+<p>They heard a whistle. The other participants started walking into one of the meeting rooms. Gladias and Mov both followed them.</p>
+<p>Inside the room, there were five tables, each with ten chairs, and a stage area at the front with a podium for one person to speak. As soon as Gladias and Mov entered, they could feel a gentle breeze as ceiling-mounted fans pushed air downwards and replaced it with new fresh air sucked in from the outside. When Gladias looked upwards, he also saw what appeared to be faint violet lights shining down from the ceiling. Must be far-UVC disinfection lights, he thought.</p>
+<p>They picked one of the tables, and sat down.</p>
+<p>An older teenage girl sat down beside Gladias, and introduced herself.</p>
+<p><span style="color:oklch(0.7 0.15 213.33333333333331)">"Hi, I'm Pelae."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I'm Gladias."</span></p>
+<p><span style="color:oklch(0.7 0.15 213.33333333333331)">"Nice to meet you."</span></p>
+<p>About half a minute later, a man wearing a privacy robe without the hood or face cover walked up to the podium. After pausing for a moment, he began to speak.</p>
+<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"Welcome everyone!"</span></p>
+<p>The room quickly went silent.</p>
+<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"For those who are new to this assembly, welcome and thank you for coming. I'm Alagael, I've been a Herald for seven years. This is the fourth session of this semester's assembly, the topic is how we can improve Veridia's public spaces to support better in-person social interaction."</span></p>
+<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"And for those who are new <em>and</em> those who have been with us the whole time, thank you very much for attending."</span></p>
+<p>Out of the corner of his eye, Gladias saw Pelae take out and put on a neck band, turn towards him, and start whispering. A few moments later, his watch buzzed. It had registered that Pelae was trying to ask him something, and opened a conversation channel.</p>
+<p><span style="color:oklch(0.7 0.15 213.33333333333331)">"Remind me, what do Heralds do?"</span>, Gladias heard her ask through his earpiece.</p>
+<p>Before Gladias could formulate a response, Mov had already begun to cover it.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Heralds are Order members - Keepers or Sentinels - that get randomly selected each year to retire, to be a sort of ambassador helping to create better understanding between the Order and the public. I think Graph Funding members or judges can become Heralds too."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"The goal is to provide some transparency. Keepers and Sentinels are very private to protect themselves from manipulation, but they don't want people to get the wrong ideas and start distrusting the whole thing. So Heralds act as a bridge. They're very transparent about how they think and how they did their work - but only after they no longer have any power, so there's no risk from anyone influencing them."</span></p>
+<p><span style="color:oklch(0.7 0.15 213.33333333333331)">"So do all Heralds run assemblies?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"It's up to each person's choice. Some give speeches, others write books, others help organize assemblies. The most antisocial ones just write books or moderate sub-forums on Silverchat."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Heralds are also good people to talk to if you want to figure out if you're interested in joining the Order"</span>, Mov added.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Do you want to join?"</span>, he added, and then bit his tongue, realizing that he had come uncomfortably close to committing the faux pas of revealing to a stranger his status as an Order member.</p>
+<p><span style="color:oklch(0.7 0.15 213.33333333333331)">"Nah, I've already decided. I'm going into chemistry."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Nice!"</span></p>
+<p><span style="color:oklch(0.7 0.15 213.33333333333331)">"My friends think I won't enjoy it and I'll have to work really hard. But I like the challenge."</span></p>
+<p>They turned their attention back to the podium.</p>
+<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"Alright, so I want everyone at each table to take turns, and share a positive experience you've had of a public space that you've spent time in that you appreciate. We'll do this for half a longhour. I will go around the tables, I'm happy to answer any questions."</span></p>
+<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"Let's begin!"</span></p>
+<p>Alagael stopped speaking, and slowly walked off the podium toward the side of the room.</p>
+<p>At the table that Gladias was sitting at, a middle-aged woman softly raised her hand. The others nodded, offering her the chance to speak first.</p>
+<p><span style="color:oklch(0.7 0.15 280)">"I really appreciate Galanar Square, the one that's on the border of Kalimar about a kilometer south of here. I always go there to drink tea and have food and look at the birds and trees. It's such a nice space. Good trees, good tea, good shade, there's always interesting people to talk to coming by."</span></p>
+<p>Gladias jumped in to the conversation.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I like how there's also a playground right beside it. My family used to go there a lot when our children were younger, we would drink tea, and leave the kids to go and play."</span></p>
+<p>The woman and several others nodded.</p>
+<p><span style="color:oklch(0.7 0.15 213.33333333333331)">"There's also a mini library and science museum there!"</span>, Pelae added.</p>
+<p>As soon as she finished, they heard footsteps. Alagael had walked by and was standing over them.</p>
+<p><span style="color:oklch(0.7 0.15 213.33333333333331)">"Alagael"</span>, Pelae asked, <span style="color:oklch(0.7 0.15 213.33333333333331)">"how do the results of these assemblies actually turn into outcomes?"</span></p>
+<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"Good question. Lots of people watch what the assemblies are doing. Keepers check the results when they're debating their tax rubrics, figuring out what features of these properties they want to incentivize."</span></p>
+<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"Sometimes Keepers quietly join the assemblies directly. Who knows, maybe there's even a Keeper or an Acolyte sitting at the table right now"</span>, he added in a joking tone.</p>
+<p>For a few moments Alagael paused, and then opened his mouth again to say one last thing.</p>
+<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"Also Graph Funding members, and anyone participating in quadratic funding. It's a good signal to watch."</span></p>
+<p>At that moment, Gladias's watch buzzed, and the watches of everyone in the room buzzed at the same time.</p>
+<p>Gladias checked his watch. Some flu virus had been detected by the sensors inside the air filters in the room.</p>
+<p>Almost immediately, the ceiling fans became faster and the violet lights brighter. About half of the participants in the room took out masks, some cloth and some elastomeric respirators, from their pockets and put them on. The other half simply did nothing and watched. Many participants also put on neck bands, intending to whisper through them for the rest of the conversation, just in case they were the ones that were sick - it reduces transmission if a sick person does not speak loudly. The process seemed natural and automatic, and everyone seemed to respect each other's choices.</p>
+<p>Another woman spoke up. She was whispering through her neck band, but to Gladias her voice felt just as clear and natural through his earpiece as if she had been speaking directly.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"There's a similar square about a kilometer further west, Tapaia Square. It has similar things - you can sit down, drink tea, there are shops nearby. But the playground is much more basic, my son says it's not even comfortable. And I always get the feeling that that one is less lively than Galanar. So maybe the playground really matters."</span></p>
+<p><span style="color:oklch(0.7 0.15 213.33333333333331)">"Tapaia's library is also like that. All the books are either some boring business books, or things in foreign languages nobody understands, either Old Belpakian or something from Haragmir."</span></p>
+<p>Mov jumped back into the conversation.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Ah yeah, I know what's going on there. There's a rubric that incentivizes ground-floor active use, but a lot of people are gaming the system - putting things in that theoretically qualify but that nobody actually wants to use. I suspect whoever runs Tapaia thinks that their main customer base doesn't like being around kids."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"That rubric really needs to be adjusted..."</span></p>
+<p>Pelae and the other woman both nodded.</p>
+<p>Mov sat back, and the conversation continued. As the others continued to answer each other's questions, Gladias and Mov both mentally took notes on what the common threads were in the preferences that people were expressing. In the background, Emerald was taking notes as well.</p>
+<hr>
+<p>Soon after leaving the assembly and saying goodbye to Mov, Gladias arrived at a restaurant. The door opened in front of him. He walked in, and then sat down. A robot slid up to him, and showed him a menu. He pressed a few buttons, ordering water and a salad.</p>
+<p>He looked around the restaurant. Four others were sitting down, all beside the window to enjoy the view - two people alone, and one group of two.</p>
+<p>One of the two people sitting alone was wearing some kind of earbuds and a neck collar, and about twice a minute he moved his mouth for a few ticks. It was either a conversation, Gladias thought, or some kind of AI-assisted tutoring. The other person sitting alone did not seem to be doing anything, and was simply enjoying the view. The pair sitting together were both women, seemingly in their thirties, and were having a conversation. Gladias could make out some of their words from a distance - something about their sons' upcoming Helisport game.</p>
+<p>After a couple of minutes, a teenage boy, not quite an adult, walked in. Gladias recognized him instantly: Febric.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"Uncle Glad, good to see you here!"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Febric!"</span></p>
+<p>Gladias reached out his arms for a hug. Febric obliged.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"You on your way to school?"</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Yep, off to school. Exams are in two days!"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"You feeling confident?"</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"I think so! We're doing the trees exam today, I coded two different kinds of bounded-depth trees from scratch from memory yesterday, as well as the hash-based trie. Once you actually understand it, it's so fun!"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Are Vil and Daia taking good care of you guys?"</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Oh they're amazing. Really caring, as always. They cook really good food for us every day. And Dad bought me a new compute box!"</span></p>
+<p>A waiter handed Febric a tea in a cup with a sealed lid.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I'll pay for it"</span>, Gladias called out. <span style="color:oklch(0.7 0.15 93.33333333333333)">"You should get to school, good luck!"</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"I miss you, Uncle Glad!"</span></p>
+<p>Febric ran out of the restaurant, turned left, and disappeared from view.</p>
+<p>A few minutes later, Gladias's water and salad arrived. Gladias slowly ate, and then walked up to the counter to pay.</p>
+<p>The outline on a green circle on the tabletop lit up. Gladias tapped his watch against it.</p>
+<p>The outline turned red.</p>
+<br><div class="device-view narrow-device-view"><div style="border-style: solid; border-color: red; margin: -20px; border-radius: 10px; padding: 10px">
+<table >
+  <thead>
+    <tr>
+      <th>Payment declined.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Not enough funds.</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><br>
+<p>Gladias quickly scanned through the wallets in his hand device, and realized that he had forgotten to send himself funds. The bulk of his money was only accessible either from home, or, if absolutely necessary, through social recovery via combined signatures from four of six keys held by pre-selected family members and friends, none of whom knew who the other recoverers were.</p>
+<p>He thought quickly. He asked Emerald to take out a loan collateralized by his reputation. His hand device spent a tick collecting nullifiers and generating a zero-knowledge proof, and displayed it on Gladias's watch for review.</p>
+<br><div class="device-view narrow-device-view"><table>
+  <thead>
+    <tr>
+      <th colspan="2">Reputation-backed loan request</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Work history: teaching assistant. <br><br> Positive review from the professor and 5 students.</td>
+      <td>Nullifier: <br><br>0x18f4...60c5</td>
+    </tr>
+    <tr>
+      <td>Requested loan:</td>
+      <td>2773 zipcoins</td>
+    </tr>
+  </tbody>
+</table>
+<button>Submit</button></div><br>
+<p>The only information that would be publicly visible was the nullifier and the amount borrowed. The nullifier was a pseudorandom hash generated in a deterministic but unlinkable way from the public reviews of his work. It would get published to the cryptographic network, preventing the same reputation from being used to collateralize a loan twice. The proof would confirm that the nullifier was valid and the reputation it was representing was sufficient to take out those funds, and reveal nothing else. Gladias's name would not be visible to anyone.</p>
+<p>Gladias tapped "Submit", and the transaction flew off into the cryptographic network. Two ticks later, it confirmed and the 2773 zipcoins appeared in his wallet.</p>
+<p>Gladias tapped his watch again.</p>
+<br><div class="device-view narrow-device-view"><div style="border-style: solid; border-color: red; margin: -20px; border-radius: 10px; padding: 10px">
+<table >
+  <thead>
+    <tr>
+      <th>Payment succeeded.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Base </td> <td> 10.5 zc</td>
+    </tr>
+    <tr>
+      <td>Tax </td> <td> 1.1 zc</td>
+    </tr>
+    <tr>
+      <td>Total </td> <td> 11.6 zc</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><br>
+<p>In Veridia, and across much of the world, even the sales tax payments were zero-knowledge. Only Gladias and the restaurant knew that a 10.5 zipcoin order had been made. The sales tax was sent to the government in real time, automatically. The whole scheme was enforced not by auditing spreadsheets, but by random inspection - people coming to order, and verifying that a tax-paying transaction type was used any time that the restaurant requested payment.</p>
+<p>Gladias thanked the waiter, and slowly walked out of the restaurant.</p>
+<hr>
+<p>After leaving the restaurant, Gladias continued walking along the street, and after another few hundred meters turned right. After passing by a few houses, the path melted seamlessly into a forest. After a few hundred meters more, a series of houses made out of large stone bricks began to appear on both sides.</p>
+<p>Gladias had taken this road through the Kalimar district many times before.</p>
+<p>He kept walking, went across the sky bridge, and into the tunnel. He got to the Y-shaped intersection. This time, the poster with Lord Ephelion's message was gone. After stopping for a moment, for what might have been only the second time in his life, Gladias turned left at the intersection. He kept walking forward.</p>
+<p>The path soon went back above ground. It snaked under a few highways, though covered by trees the whole time - <em>especially</em> when the highways were overhead.</p>
+<p>The amount of graffiti on the bottom of the highways, as well as the amount of dirt under them, felt like more than usual. Gladias wasn't sure if the cleaning was less effective recently, or if it was simply this route that was less well-maintained for whatever reason.</p>
+<p>Soon, the road began to curve up, and transitioned into a straight, two-hundred-meter-tall outdoor staircase on the side of the mountain. Gladias had only been here once before: when he was inducted as an Acolyte.</p>
+<p>For about ten minutes, Gladias climbed the stairs. The intensity of the exertion, together with the privacy robe, made Gladias feel warm and almost sweaty, despite the outdoor cold. Finally, he made it to the top. The path once again turned into a tunnel. The tunnel soon turned into stairs, and finally after climbing two flights of stairs, open daylight appeared once again. Gladias was now standing in the center of an open area on the top floor of a tower, surrounded by stone walls. He could see the sky above him. Beside him, there was a green circle, larger and glowing more brightly than usual. Sitting on seats around the edge of the tower, there were ten Order members, all wearing privacy robes.</p>
+<p>Gladias tapped his watch against the circle. Various lights along the walls, lights that he did not notice before, lit up in a unique green shade.</p>
+<p>Almost immediately, an Order member spoke.</p>
+<p><span style="color:oklch(0.7 0.15 200)">"Welcome, Acolyte."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"You can call me-"</span></p>
+<p><span style="color:oklch(0.7 0.15 200)">"We're not supposed to know, it's the cryptography's job to make sure this procedure gets applied to the correct profile."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Then I guess you can call me by whatever the digits of the nullifier in my proof are."</span></p>
+<p>A few Order members' bodies tensed up somewhat uncomfortably. They were not expecting this style of engagement for what was supposed to be a solemn and mostly silent procedure. But a few others leaned forward, seeming to welcome the variety.</p>
+<p><span style="color:oklch(0.7 0.15 200)">"Very well, three-seven-two-eff. Have you made your choice?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I have."</span></p>
+<p><span style="color:oklch(0.7 0.15 200)">"And that choice is?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I am applying to become a Keeper."</span></p>
+<p>For a few ticks, silence.</p>
+<p><span style="color:oklch(0.7 0.15 200)">"Three-seven-two-eff, you may tap your hand device against the circle once again to confirm your decision."</span></p>
+<p>Gladias tapped his hand device against the circle.</p>
+<br><div class="device-view narrow-device-view"><div style="border-style: solid; border-color: green; margin: -20px; border-radius: 10px; padding: 10px">
+<table >
+  <tbody>
+    <tr>
+      <td>Request confirmed.</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><br>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-5.html" title="Previous chapter: Chapter 5" aria-label="Previous chapter: Chapter 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-7.html" title="Next chapter: Chapter 7" aria-label="Next chapter: Chapter 7"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>

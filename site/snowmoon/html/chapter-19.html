@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-18.html" title="Previous chapter: Chapter 18" aria-label="Previous chapter: Chapter 18"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-20.html" title="Next chapter: Chapter 20" aria-label="Next chapter: Chapter 20"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+<h1>Chapter 19</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Pafogai Du, Dzego</span><span class="sep">·</span><span class="date">3724 Grapetime 15</span></span></div>
+<p>Gladias and Zei were sitting at a table in a cafeteria, deep inside the mountain pryamid. Attached to one of the walls, they could see two large screens, doing the best job that they could to pretend to be windows showing a view of Pafogai Du as though the cafeteria was sitting on top of the mountain, rather than thirty meters below ground.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So who is this that you wanted me to meet again?"</span>, Gladias asked.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Den. He is a High Council member of the Kungaupei. You wanted to better understand Dzego's institutions, he helps run the one that's already been protecting us from the Arctic shadow campaign for the last decade. You want Veridia to learn from him, not from our official government."</span></p>
+<p>At that point, they heard a faint buzz that began to rapidly get louder. Almost immediately, a few small drones, similar to those that would check Zei for cheating equipment in the Minpentai championships, flew into view.</p>
+<p>Gladias's watch buzzed.</p>
+<br><div class="device-view narrow-device-view"><div style="font-size:150%"></div>
+<table>
+    <tr>
+      <td style="font-size:150%" colspan="2">Air</td>
+    </tr>
+<tr>
+<td style="font-size:150%">CO<sub>2</sub></td>
+<td style="font-size:150%; color: yellow">994</td>
+</tr>
+<tr>
+<td style="font-size:150%">PM2.5</td>
+<td style="font-size:150%; color: yellow">30.1</td>
+</tr>
+</table>
+<table>
+<tr>
+<td style="font-size:150%" colspan="2">Devices</td>
+</tr>
+<tr>
+<td style="font-size:150%; color: #8f8">Attested ✓</td>
+<td style="font-size:150%; color: #8f8">21</td>
+</tr>
+<tr>
+<td style="font-size:150%; color: #f23">Unknown, increased risk!</td>
+<td style="font-size:150%; color: #f23">4</td>
+</tr>
+</table></div><br>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"What's going on?"</span>, Zei asked.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Ah, I think my watch is detecting those drones as a threat. It's been doing this for many days now, I'm assuming it's just not been updated yet."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Ah, let me check mine"</span>, Zei replied.</p>
+<p>Zei took out his watch.</p>
+<br><div class="device-view narrow-device-view"><div style="font-size:150%"></div>
+<table>
+<tr>
+<td style="font-size:150%" colspan="2">ten min</td>
+</tr>
+<tr>
+<td style="font-size:150%; color: #8f8">cau tie zen ✓</td>
+<td style="font-size:150%; color: #8f8">25</td>
+</tr>
+<tr>
+<td style="font-size:150%; color: #fca">sen hu ?</td>
+<td style="font-size:150%; color: #fca">0</td>
+</tr>
+</table></div><br>
+<p>He clicked on the green, and scrolled through.</p>
+<br><div class="device-view narrow-device-view"><div style="font-size:150%"></div>
+<table>
+<tr>
+<td style="font-size:150%; color: #c4f" colspan="2">gi dai</td>
+</tr>
+<tr>
+<td style="font-size:150%; color: #8f8">fen jan ten lai</td>
+<td style="font-size:150%; color: #8f8">16</td>
+</tr>
+<tr>
+<td style="font-size:150%; color: #8f8">mo fan min jan</td>
+<td style="font-size:150%; color: #8f8">1</td>
+</tr>
+<tr>
+<td style="font-size:150%; color: #8f8">mo fan lai</td>
+<td style="font-size:150%; color: #8f8">4</td>
+</tr>
+<tr>
+<td style="font-size:150%; color: #8f8">kun gau min jan</td>
+<td style="font-size:150%; color: #8f8">4</td>
+</tr>
+</table></div><br>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Err... let me try this"</span>, Gladias said, staring intently at the watch.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"'mo fan' is eating room, so something to do with the cafeteria."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Yep!"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"'min' is machine, 'jan' is person, so I guess the two together mean ... robot?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Yep!"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"'kun gau' is ... wait, is that connected to the Kungaupei? So these are Kungaupei robots?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Yes, but what does 'kun gau' mean?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I'll guess security?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Exactly."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Security robots. Phew, that wasn't hard at all!"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Just be glad I'm not Fin, he would start taking half a longhour to go through this whole interface and explain the history of each and every word and why they decided to keep it as they were shrinking the vocabulary."</span></p>
+<p>One of the robots buzzed closer to Gladias, and stopped to hover about half a meter to the right of his ear.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"But anyway, why have I been detecting so many hostile devices? Is my watch just not up to date on something?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Ah yeah, it's just every lamp and drone and camera announcing itself; the protocols stepped up a lot these past few days. Your watch just doesn't speak the language yet. Here, let me help you with that."</span></p>
+<p>Zei then spoke in a softer voice:</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"jo sun fe zin ten lai de cau tie dai"</span></p>
+<p>About one tick later, his watch buzzed, indicating that the data was received.</p>
+<br><div class="device-view narrow-device-view"><svg width="100" height="80" viewBox="0 0 100 80"        xmlns="http://www.w3.org/2000/svg">
+<rect x="5" y="5" width="90" height="70" rx="8"           fill="none" stroke="#cef" stroke-width="4"/>
+<path d="M7 12 L50 46 L93 12" fill="none" stroke="#cef" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+<b>fe cau tie dai <br> li shu</b></div><br>
+<p>Zei moved his watch beside Gladias's.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"be"</span></p>
+<p>The two watches buzzed at the same time, indicating a connection, and a file transferred from one to the other. Gladias pressed a button on his watch to accept.</p>
+<p>He then checked his watch again.</p>
+<br><div class="device-view narrow-device-view"><div style="font-size:150%"></div>
+<table>
+    <tr>
+      <td style="font-size:150%" colspan="2">Air</td>
+    </tr>
+<tr>
+<td style="font-size:150%">CO<sub>2</sub></td>
+<td style="font-size:150%; color: red">1015</td>
+</tr>
+<tr>
+<td style="font-size:150%">PM2.5</td>
+<td style="font-size:150%; color: yellow">31.2</td>
+</tr>
+</table>
+<table>
+<tr>
+<td style="font-size:150%" colspan="2">Devices</td>
+</tr>
+<tr>
+<td style="font-size:150%; color: #8f8">Attested ✓</td>
+<td style="font-size:150%; color: #8f8">25</td>
+</tr>
+</table></div><br>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Looks good!"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Huh, you're measuring CO2 and PM2.5 on there as well?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Yep! Pretty standard in Veridia. We really care about having a clean environment. We breathe twelve kilograms of air every day, more than what we eat and drink combined. So we're really all under-rating how important the air is."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Why is CO2 on there? We have air sensors on our watches too, but that's more for smoke detection and poisons."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"The average concentration of carbon dioxide in our atmosphere is 300 parts per million. Air that we breathe out is 40,000 parts per million. So if the air you're breathing has 700 parts per million, then either there's some other source bringing that extra CO2 in, or, more likely, one percent of the air you're breathing in is air that someone else breathed out. And aerosol particles carrying all kinds of things stick around in the air for a long time - especially airborne viruses."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Ah, I see, so it's not even about industrial pollution."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Actually I'm surprised you're not caught up on this, and that the CO2 numbers are so poor here. I would have thought you would care a lot from the defense side, for pandemic prevention."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Ah well you can ask Den when he comes!"</span></p>
+<p>A robot arrived, bringing a salad and tea for Gladias, and a vegetable and rice dish covered with mushrooms and a tea for Zei.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Wait, that dish you're eating. I think that's exactly what we call Number Ten in our Dzego food trucks!"</span>, Gladias exclaimed.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Do you want to try it? I'm happy to take your salad. Tell me how it compares to the version you're used to."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Sure!"</span></p>
+<p>They switched plates, and began eating.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Okay, this is much better than what we get in Veridia"</span>, Gladias excitedly remarked.</p>
+<p>They continued eating silently for a few minutes, and after finishing their food switched to drinking tea.</p>
+<p>Zei's watch buzzed again. Zei checked his watch, and his eyes opened wide.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What is it?"</span>, Gladias asked.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"A message from a courtyard where I ate in Sadzu Du once. This is really weird."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"It seems to be addressed directly to me."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"How does the courtyard know you ate there? Payment is done in zipcoins, that's fully anonymized."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Exactly. The courtyard seems to have sent it to <em>all</em> their guests from the past half year, and it has some kind of tag that my local AI accepted, almost everyone else's filtered out."</span></p>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>zan</th>
+      <th></th>
+      <th>tie</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>sa dzu du de <br>len su 2415 de <br>bun kai mo fan</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td>ci sen hu jan pu zau fe 400 lin man <br> ci cau be fe ti tie <br> ci tan jan pu ciu cu shan jin fe pa bi <br> ci sen hu fe bu</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What does it say?"</span>, Gladias asked.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"It's from the Beautiful Plants food court, on 2415 Len Su street, in Sadzu Du. An anonymous person burned four hundred zipcoins to send this message. The message envelope says that the recipient 'is successful' and is 18 years old. I know nothing else."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"That's a ... well-calibrated description."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Indeed. They're trying to make the set wide enough to make sure it contains me, they burned four hundred zipcoins to signal to the courtyard, and to our local AIs, and to us, that the message is worth putting an effort into understanding, but also they made the set narrow enough that they <em>could</em> make this broadcast for only four hundred zipcoins."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"And narrow enough that not too many people find out about this message."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Okay, let me open it up..."</span></p>
+<p>Zei stared in shock again.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What is it?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"The message is a series of links to some files, in total over sixty gigabytes. I need to download eighty percent of them apparently."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Will that take a while to download?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"About a day wirelessly. But it looks like the digital archive node inside this mountain pyramid already has enough of the files."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Shall we just walk there?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Exactly what I'm thinking."</span></p>
+<p>Zei put his watch against a green circle on the corner of the desk. A moment later it buzzed. He stood up, and Gladias stood up immediately after him.</p>
+<p>They exited the cafeteria, and started walking through the network of tunnels.</p>
+<hr>
+<p>A few minutes later, they arrived at a large ornamented door.</p>
+<p>To the left of the door, there was a drawing of a river horse reading a book, with a backdrop of a marsh with green trees and a blue sky in the background. To the right of the door, there was a drawing of a hamster sitting at a computer. Both drawings were a careful balance of cartoon-like playfulness, and a serious aura of mystery.</p>
+<p>At the top of the door, Zei could read a slogan:</p>
+<center><div class="dz-card dz-mono" style="font-family:'TeX Gyre Chorus',cursive;font-size:17px;line-height:1.55"><div class="dz-line dz-blank" style="height:1em"></div>
+<div class="dz-line" style="margin:3px 0;padding-left:2ch"><span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">mu fu bau hai</span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;">ka</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">sha liu</span></span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;">li</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">dzai hen</span></span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;">ji</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">cin jan</span></span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;">fe</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">jan</span></span></span></div>
+<div class="dz-line" style="margin:3px 0;padding-left:0ch"><span style="font-family:'TeX Gyre Chorus',cursive;">ci</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">mu fu bau fei</span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;">ka</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">zen die jia</span></span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;">cu</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">can hu</span></span></span> <span style="font-family:'TeX Gyre Chorus',cursive;">fe</span> <span style="font-family:'TeX Gyre Chorus',cursive;">lo</span> <span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">kin liu</span></span></div>
+<div class="dz-line dz-blank" style="height:1em"></div></div></center>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Outside of a dog, a book is man's best friend"</span>, Zei translated for Gladias. <span style="color:oklch(0.7 0.15 346.66666666666663)">"Inside of a dog, it's too dark to read."</span></p>
+<p>Zei and Gladias stepped through the door, and entered.</p>
+<p>To their left, the entire wall was a large shelf, about five meters tall, filled with physical paper books. The upper half of the shelf was set back about a meter, allowing the roof of the lower half to serve as a walkway to look at and take books from the upper half.</p>
+<p>The shelf had openings in two places on the upper floor, leading to two miniature tunnels lined with more books. The shelf also had an opening in one place on the lower floor, also lined with books. All three openings seemed to go inwards for three to six meters; after that, one of the book-lined hallways turned ninety degrees rightward, another ninety degrees leftward, and the third, the one on the lower floor, turned into a T-shaped intersection.</p>
+<p>It looked like the book section was deliberately constructed to be a maze, Gladias thought.</p>
+<p>To their right, there was an open space with tables, and along the wall, there were many computer terminals.</p>
+<p>Near the front of the space with tables, Zei saw a woman wearing a robe. He immediately ran toward her.</p>
+<p>She turned around.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"Welcome to the Pafogai Du grand library. What is it that you seek?"</span>, she asked.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"There are very large files in the archive that I would like to load."</span></p>
+<p>The librarian laughed.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"Glad you're being honest"</span>, she replied.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"Most people tell me they're looking to learn some high-minded thing about history or culture or mathematics, and then go and download their movies as soon as I'm not looking."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Well I'm not downloading a movie, it's more ... a mysterious message."</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"Ah, a quest! Even if that ends up just being an excuse, even that is something new and interesting in my day. Well, just follow me."</span></p>
+<p>Zei and Gladias followed.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"So you got a mysterious message telling you to download some big files? Any idea what kinds?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Well so far I just saw some hashes..."</span></p>
+<p>They arrived at a computer terminal. The librarian took out a data cable, and put one end of the cable into the terminal.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"Here, put the other end into your hand device."</span></p>
+<p>Zei followed the librarian's instructions. The download started almost immediately.</p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="500" height="250" viewBox="0 0 500 250">
+<g font-family="monospace" fill="#cef" stroke="#cef">
+<!-- bar 1 -->
+<text x="15" y="25" font-size="11" stroke="none">0x1b568a45...</text>
+<rect x="110" y="16" width="330" height="10" fill="none" stroke-width="1"/>
+<rect x="110" y="16" width="4.46" height="10" stroke="none"/>
+<text x="450" y="25" font-size="11" stroke="none">1.35%</text>
+<!-- bar 2 -->
+<text x="15" y="52" font-size="11" stroke="none">0x9f3c21d7...</text>
+<rect x="110" y="43" width="330" height="10" fill="none" stroke-width="1"/>
+<rect x="110" y="43" width="6.83" height="10" stroke="none"/>
+<text x="450" y="52" font-size="11" stroke="none">2.07%</text>
+<!-- bar 3 -->
+<text x="15" y="79" font-size="11" stroke="none">0x4a8e0b62...</text>
+<rect x="110" y="70" width="330" height="10" fill="none" stroke-width="1"/>
+<rect x="110" y="70" width="5.35" height="10" stroke="none"/>
+<text x="450" y="79" font-size="11" stroke="none">1.62%</text>
+<!-- bar 4 -->
+<text x="15" y="106" font-size="11" stroke="none">0xd714fc98...</text>
+<rect x="110" y="97" width="330" height="10" fill="none" stroke-width="1"/>
+<rect x="110" y="97" width="9.50" height="10" stroke="none"/>
+<text x="450" y="106" font-size="11" stroke="none">2.88%</text>
+<!-- bar 5 -->
+<text x="15" y="133" font-size="11" stroke="none">0x62bb39a0...</text>
+<rect x="110" y="124" width="330" height="10" fill="none" stroke-width="1"/>
+<rect x="110" y="124" width="3.93" height="10" stroke="none"/>
+<text x="450" y="133" font-size="11" stroke="none">1.19%</text>
+<!-- bar 6 -->
+<text x="15" y="160" font-size="11" stroke="none">0x8e05d1c4...</text>
+<rect x="110" y="151" width="330" height="10" fill="none" stroke-width="1"/>
+<rect x="110" y="151" width="8.05" height="10" stroke="none"/>
+<text x="450" y="160" font-size="11" stroke="none">2.44%</text>
+<!-- bar 7 -->
+<text x="15" y="187" font-size="11" stroke="none">0x37ad6f51...</text>
+<rect x="110" y="178" width="330" height="10" fill="none" stroke-width="1"/>
+<rect x="110" y="178" width="5.71" height="10" stroke="none"/>
+<text x="450" y="187" font-size="11" stroke="none">1.73%</text>
+<!-- bar 8 -->
+<text x="15" y="214" font-size="11" stroke="none">0xc9428e1b...</text>
+<rect x="110" y="205" width="330" height="10" fill="none" stroke-width="1"/>
+<rect x="110" y="205" width="9.60" height="10" stroke="none"/>
+<text x="450" y="214" font-size="11" stroke="none">2.91%</text>
+<!-- bottom text -->
+<text x="250" y="242" font-size="12" stroke="none" text-anchor="middle" letter-spacing="2">sho hei dai - 827 gei zen</text>
+</g>
+</svg></div><br>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Wow, only eight minutes!"</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"So now might you be more open-minded to the things we stodgy librarians say about how physical spaces are still relevant to the pursuit of knowledge after all?"</span></p>
+<p>A robot slid up to them.</p>
+<p><span style="color:oklch(0.7 0.15 240)">"jie hei ja ma?"</span></p>
+<p>A menu appeared onscreen; there was no food, but a selection of drinks was available.</p>
+<p>Gladias immediately clicked a button asking for a tea. Following along, Zei did the same.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"This space is beautiful, I am glad you have it."</span></p>
+<p>Gladias stood up and walked over to the shelf with the books. He opened a few one by one. At that moment, not in the mood for straining his brain at reading and interpreting Dzegoban - especially not the earlier-version Dzegoban that the older books were in that he could understand nothing of at all - he focused his attention on the diagrams and pictures.</p>
+<p>Two minutes later, the robot slid up to him, and gave him his tea. The tea was in a sealed cup, from which he could only drink through a straw. Surprised, Gladias turned to Zei, and saw that Zei, sitting at a table far away from any books, already had his tea. The cup that Zei received was open-faced, without much protection against the tea spilling.</p>
+<p>Gladias found a book about Dzego architecture, titled "zui fia pai dan". He flipped through it. It contained pictures of many designs of basement rooms, shelters and underground rooms inside of mountain pyramids. The book showed them in roughly chronological order starting shortly after the war against the Arctic Empire a hundred years ago.</p>
+<p>The earlier designs were very practical in construction, with not much thought put to comfort, or even safety against non-human threats. The designs in the middle started resembling ordinary rooms, with the main glaring exception being lack of windows. And finally, the designs near the end of the book were very well-decorated and comfortable, even more so than above-ground construction. About half had imitation windows, pretending to be outside. The other half did not have windows, and instead had plants, well-decorated walls, and other objects that seemed carefully chosen to make the inhabitant not see any space that they might think is supposed to have a window.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Gladias!"</span>, Zei shouted. <span style="color:oklch(0.7 0.15 346.66666666666663)">"Come back, it's almost done!"</span></p>
+<p>Gladias turned around, and walked back. Just as he arrived, the last progress bar reached 100%. Another window automatically opened. A script began running. "Reconstructing data... estimated time remaining 175", it said onscreen - not in Dzegoban.</p>
+<p>Gladias and Zei sipped their tea, and stared at the timer counting down. The librarian, curious, hovered quietly about two meters behind them.</p>
+<p>Right on schedule, a little under two minutes later, the script finished, and a screen appeared.</p>
+<br><div class="device-view wide-device-view device-view-left"><b>What did you do on Firemoon 10th? Explain the day in detail.</b>
+<br><br>
+<div style="background-color: #cef; border-radius: 9px; padding: 10px; height: 50px">
+<b style="color: #22b; animation: blinker 1s linear infinite"> > </b>
+</div></div><br>
+<p>Zei stared.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Let's reschedule the meeting with Den for tomorrow. I have a feeling this is not going to be a simple task."</span></p>
+<p>Gladias nodded.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Are you going to answer?"</span></p>
+<p>Zei pressed a few buttons on his hand device. <span style="color:oklch(0.7 0.15 346.66666666666663)">"I put this program into a sandbox using a journaling file system, so it can't access the internet, and I can always revert it back to start. So there's no privacy leak risk, and if I'm not happy with the outcome I can just revert it back to start and try again. So why not?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Now ... to remember what I did on the 10th of Firemoon ... or rather I'll just ask my hand device."</span></p>
+<p>A record of Zei's life events on that day popped up. That day was his last Minpentai game, the semifinal against Gun - the last day when things in his life were at least somewhat normal. Before that game, he woke up and had a meeting with Bai. After that game, he met up in the courtyard with Deluin.</p>
+<p>Wait, Zei thought, the courtyard ... what was the address again? He looked it up.</p>
+<br><div class="device-view wide-device-view"><b>sa dzu du de <br> len su 2415 de <br> bun kai mo fan
+</b></div><br>
+<p>The exact same cafeteria that the original message was from.</p>
+<p>This was, as his local AI liked to say, the punchline. Zei started typing, recalling that day of his life from a combination of the AI records and his own memories which were rapidly coming back.</p>
+<p>Waking up.</p>
+<p>The meeting with Bai.</p>
+<p>Going to the game.</p>
+<p>Waiting for the game.</p>
+<p>The game itself.</p>
+<p>Watching Deluin's game.</p>
+<p>A brief conversation with Deluin after the game. What was it I had said ... "my style was uglier than yours. Though I also won by playing defense"</p>
+<p>And then the meeting with Deluin at the courtyard itself. Zei spent as much time detailing this event as the rest of the day put together.</p>
+<p>The robot. A/B testing the new proposed hieroglyphs for Dzegoban.</p>
+<p>Deluin invited him to Redshire. He refused. Deluin showed pictures of Redshire.</p>
+<p>Deluin talking about how the nature of a place being beautiful actually does say something about the civilization there.</p>
+<p>And then Deluin's gently trolling line: "I'll use my championship winnings to pay for you to go."</p>
+<p>After typing everything in, Zei clicked "send".</p>
+<br><div class="device-view wide-device-view device-view-left"><b> Thinking ... estimated remaining time 440 </b></div><br>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Okay, so this is a language model. But how large was that file? After the data reconstruction."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"10.7 gigabytes. The overhead was exactly a factor of six. I had a background thread check where the files were from, they were all recently uploaded. One sixth was a few recent movies - public data, though of course <em>the selection of which movies they chose</em> is a secret key of sorts. Another half was a big pile of someone's health data. The last third was also video, though it seemed to be AI-generated. It was all Arctic sermons talking about how fundamentally flawed the Veridian and Dzego civilizations are."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"The recombination algorithm was a five-of-six erasure code of five pieces of 10.7 gigabytes each. Each of those pieces, in turn, was a steganographic encoding: they used language models to find bits to flip so that the data still looked plausible, while encoding the actual underlying message, at a very ambitious rate of one bit of plaintext per four bits of ciphertext. And then the movies were a sort of cryptographic pad: if you don't know the exact set of movies that were used, even if you could fully uncover the plaintext, it would just look like random data."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Wait, if they wanted a pad, couldn't they just pseudorandomly generate one by repeatedly hashing some data?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Ah actually you're right. Maybe I was overthinking it, maybe they just did it this way to throw people off."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Okay, so 10.7 gigabytes, what is it?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"It's not a plaintext language model. It's an obfuscated language model. Level two obfuscation, much weaker parameters than the full cryptographic-grade parameters that are used in the cryptographic networks for voting in DU or Bansunpei or for that matter the Order of Steering, but it's still the same algorithm."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Level two obfuscation is actually the right tradeoff for language models, because language models themselves are big and compute-intensive, so they can't handle the high overhead of going level four, and on the other hand, language models are at least partially obfuscated and resistant to bit flips all on their own. If you uncover the value of a few weights, or get the ability to reliably flip a few values in a few tensors, it's not like you can get anything useful out of that."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Overhead factor of level two obfuscation is in the tens to low hundreds on size, and high hundreds to low thousands on compute. So this model is pretty tiny; I suspect whoever sent this fine-tuned it to only do this one task. I also think this language model's wrapper program, the full package that's being obfuscated, is doing the thinking all at once, to verify whether or not my answer is satisfactory. If it is, it will just give us its message at the end."</span></p>
+<p>As though on cue, Zei's hand device buzzed. The program finished executing. A new message appeared onscreen:</p>
+<br><div class="device-view wide-device-view device-view-left"><p>Hello Zei.</p>
+<p>You may be wondering why I have not communicated any further with you within the past month. I greatly apologize for this, and my goal in sending you this letter is that you are the only friend I have who is outside of Arctic control, and you deserve my explanation about what has been happening.</p>
+<p>The Arctics did a full sweep of Redshire almost a month ago, to confiscate all electronic devices, and give us back only devices that were backdoored and surveilled by them. This is why I lost contact with you. I had no way to reach you, and so I had to encrypt my message to you by wrapping it in this obfuscated language model that asked you to describe our shared experience to verify your identity. I have only been able to construct and send this message through a series of rounds of stealing devices from others, including two watches containing two Arctics' health data, doing the needed work inside of a non-transmitting room, copying the outputs to an inert storage medium, and then chemically destroying the circuits and storage on those devices.</p>
+<p>Physical surveillance of Redshire is, fortunately, much less total than the Arctic itself, though the window on that is closing fast. But there was also another window that was closing fast for me.</p>
+<p>You see, my parents were always on the side of being more sympathetic to the Arctics. And so after the annexation happened, they decided to cooperate with them. They told me that this was the best way to get any chance of autonomy for themselves and for Redshire in the future: to win trust by becoming a helpful part of the Arctic Empire. And so by the time you read this, most likely we will already be on an aeroplane going into the Arctic Empire core territory.</p>
+<p>I do not share their sympathies. But I have decided that the way that I can maximize my chance of being useful, is to play along, and win their trust too. The Arctic Empire respects strength, I have proven my strength by winning the Minpentai semifinals in Dzego, and my parents may be proof enough of my alignment. Hopefully, there will come a moment where I will be able to do something helpful to you. But I do not know.</p>
+<p>And so for this reason, this may well be the last message that you hear from me. I hope that this will not be true, but I cannot guarantee anything. I am sorry for everything.</p>
+<p>dze go ba fau gie</p>
+<p>Your dear friend Deluin.</p></div><br>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-18.html" title="Previous chapter: Chapter 18" aria-label="Previous chapter: Chapter 18"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-20.html" title="Next chapter: Chapter 20" aria-label="Next chapter: Chapter 20"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>

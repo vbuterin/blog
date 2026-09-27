@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-11.html" title="Previous chapter: Chapter 11" aria-label="Previous chapter: Chapter 11"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-13.html" title="Next chapter: Chapter 13" aria-label="Next chapter: Chapter 13"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+<h1>Chapter 12</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Sadzu Du, Dzego</span><span class="sep">·</span><span class="date">3724 Grasstime 22</span></span></div>
+<p>Zei looked out of the window of the train, as the train began to slow down.</p>
+<p>At first, he saw trees. Then, he began to see buildings with greater and greater density. Finally, after a few minutes, he saw the station.</p>
+<p>A sign slowly passed across the window.</p>
+<center><div class="dz-card dz-mono" style="font-family:'TeX Gyre Chorus',cursive;font-size:17px;line-height:1.55"><div class="dz-line dz-blank" style="height:1em"></div>
+<div class="dz-line" style="margin:3px 0;padding-left:2ch"><span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">sa dzu du</span></span></div>
+<div class="dz-line dz-blank" style="height:1em"></div></div></center>
+<p>"Main city", Dzego's helpfully-named capital city.</p>
+<p>The train came to a stop, and Zei could hear the doors open. The other passengers stood up, and started to gather their belongings.</p>
+<p>Zei decided he was not in a rush to leave first, and would maximize the quality of his time instead. For about two minutes, he finished his game of Minpentai against a bot.</p>
+<p>Fin had never gotten around to writing the harness to fine-tune the AI to play well on custom rulesets, and so Zei was still playing against the stock AI.</p>
+<p>At that moment, the other AIs resigned. Zei had beaten them one-on-three. To compensate for their lack of skill, he had adjusted the game to only give him one corner and three other AIs the other three corners, and put them all on the same team against him. Even despite this, Zei had won. He realized that the three-on-one did not even help the AIs that much - playing in that style was not in their training data, so they made basic mistakes and cannibalized each other's negentropy.</p>
+<p>Zei put away his hand device and sighed.</p>
+<p>By this point, the other passengers were almost all off the train. Zei grabbed his bag, and stood up and began to walk out of the train as well.</p>
+<p>When he stepped out, there were six people wearing Minpentai priest robes waiting for him.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Welcome to Sadzu Du, Zei"</span>, the lead priest, an older woman about the same age as Mu, said to him.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Excited to be here"</span>, Zei quickly replied. <span style="color:oklch(0.7 0.15 346.66666666666663)">"Only my second time to the capital."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I'm Su by the way. I'm one of the organizers of the nationals."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Well nice to meet you, Su."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"So what's on my itinerary these next few days?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Check in to the hotel, then orientation tomorrow morning. Thirty-two contestants, the brightest young minds in Minpentai across all of Dzego. You'll get to meet them all."</span></p>
+<p>Su led Zei to a room that contained many doors. One of the doors slid open, and on the other side Zei could see the inside of a black car, identical to the one that Den had used to take him to the chip fab a few months earlier.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Unfortunately, I'll have to leave you here, Zei. There's another contestant arriving here on a train in half a longhour. But have a good ride and have a good rest."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Thank you so much."</span></p>
+<p>Zei got into the car, and the door closed. The car started moving.</p>
+<p>Zei stared outside the window of the car, marveling at the buildings and trees in the city. Parts of it looked not too different from Pafogai Du, though here there were fewer electronics stores, and instead a wider variety of venues. Some medicine stores.</p>
+<p>On the window of one of the stores, Zei saw a sign:</p>
+<center><div class="dz-card dz-mono" style="font-family:'TeX Gyre Chorus',cursive;font-size:17px;line-height:1.55"><div class="dz-line dz-blank" style="height:1em"></div>
+<div class="dz-line" style="margin:3px 0;padding-left:2ch"><span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">ti</span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;">ka</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">dia shu</span></span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;">fe</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">cen su jui hui</span></span></span></div>
+<div class="dz-line dz-blank" style="height:1em"></div></div></center>
+<p>"Get your longevity package here"</p>
+<p>Soon the health stores gave way to some stores selling artistic furniture and other household items.</p>
+<p>And after that a few traditional-looking restaurants and tea houses, in a style mimicking Dzego's own medieval era.</p>
+<p>For a moment, the buildings on the right side stopped completely, and Zei could see a park. Behind the park, Zei could see several mountain pyramids, each about half as tall as the mountain pyramid south of Pafogai Du.</p>
+<p>A minute later, the park ended, and the car crossed a bridge across a small river. Zei could see the buildings get denser further ahead.</p>
+<p>The road slowly descended underground, and turned into a tunnel.</p>
+<p>A few minutes and a few turns later, the car stopped. When the car's door opened, it was pressed tightly against another door, completely shielding Zei from being visible from outside the car and the building he was entering.</p>
+<p>Zei stepped out. He was in a hotel.</p>
+<p>He walked over to the nearest green circle, and tapped his watch against it.</p>
+<br><div class="device-view narrow-device-view"><table>
+  <tbody>
+    <tr>
+      <td><center><div style="border: 1px solid; border-radius: 5px; padding: 5px">sen hen zi li die fe 150 <br> zo lia kin  <b style="font-size: 150%; color: #8f8">✓</b></div></center></td>
+      <td><center><div style="border: 1px solid; border-radius: 5px; padding: 5px">man dun li jie hu <b style="font-size: 150%; color: #8f8">✓</b></div></center></td>
+    </tr>
+    </tbody>
+</table>
+<b>cau tie zen <br> ci fan zi li 304</b></div><br>
+<p>Reputation above 150 verified. Payment not needed. Approved, room number is 304.</p>
+<p>Zei's watch buzzed, confirming his room key.</p>
+<p>Zei entered his room, and took a shower.</p>
+<p>He promptly went to sleep.</p>
+<hr>
+<p>An alarm buzzed.</p>
+<p>Zei tapped on his watch to check what time it was. 30,003, the watch said. Only half a longhour before the commencement ceremony. He tapped a few buttons on the room service menu, and ordered a fruit and vegetable juice.</p>
+<p>He put on his clothes.</p>
+<p>Three minutes later, the juice arrived, and Zei quickly drank it. He immediately felt energized - or at least, energized enough to take the trip to the venue.</p>
+<p>Without wasting any more time, he opened the door, and went downstairs.</p>
+<p>A black car was already waiting for him. Zei walked through the lobby, and immediately stepped through the hotel door and car door that were already open and pressed tightly against each other. The door closed.</p>
+<p>As the car began to move, Zei took out the cryptography textbook that Den had recommended to him in one of their meetings, and continued reading it where he had left off.</p>
+<p>The section was on hash functions. In the middle of the page, there was a large diagram.</p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="400" height="250" viewBox="0 0 400 250">
+<defs>
+<marker id="arrowhead-o" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#fa5" />
+</marker>
+</defs>
+<rect width="400" height="250" fill="#245" />
+<text x="200" y="17" font-family="sans-serif" font-size="13" fill="lightblue" text-anchor="middle">tun bia zi sin de sia</text>
+<line x1="50" y1="46" x2="350" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="80" y1="46" x2="110" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="110" y1="46" x2="380" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="140" y1="46" x2="260" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="170" y1="46" x2="80" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="200" y1="46" x2="140" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="230" y1="46" x2="230" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="260" y1="46" x2="50" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="290" y1="46" x2="290" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="320" y1="46" x2="200" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="350" y1="46" x2="170" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="380" y1="46" x2="320" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="50" y1="102" x2="290" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="80" y1="102" x2="260" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="110" y1="102" x2="50" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="140" y1="102" x2="350" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="170" y1="102" x2="200" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="200" y1="102" x2="80" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="230" y1="102" x2="230" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="260" y1="102" x2="320" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="290" y1="102" x2="140" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="320" y1="102" x2="110" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="350" y1="102" x2="380" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="380" y1="102" x2="170" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="50" y1="152" x2="290" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="80" y1="152" x2="50" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="110" y1="152" x2="380" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="140" y1="152" x2="200" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="170" y1="152" x2="140" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="200" y1="152" x2="80" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="230" y1="152" x2="320" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="260" y1="152" x2="260" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="290" y1="152" x2="170" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="320" y1="152" x2="350" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="350" y1="152" x2="230" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="380" y1="152" x2="110" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="110" y1="202" x2="140" y2="230" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="170" y1="202" x2="50" y2="230" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="230" y1="202" x2="80" y2="230" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="260" y1="202" x2="110" y2="230" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="290" y1="202" x2="170" y2="230" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<line x1="320" y1="202" x2="200" y2="230" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+<path d="M 46 40 H 18 Q 10 40 10 48 V 222 Q 10 230 18 230 H 20.5" stroke="#fa5" stroke-width="1.5" fill="none" />
+<circle cx="26" cy="230" r="5.5" fill="#245" stroke="#fa5" stroke-width="1.2" />
+<line x1="23.5" y1="230" x2="28.5" y2="230" stroke="#fa5" stroke-width="1.2" />
+<line x1="26" y1="227.5" x2="26" y2="232.5" stroke="#fa5" stroke-width="1.2" />
+<line x1="31.5" y1="230" x2="45" y2="230" stroke="#fa5" stroke-width="1.5" marker-end="url(#arrowhead-o)" />
+<rect x="46.0" y="74" width="98" height="28" rx="3" fill="rgba(204, 238, 255, 0.04)" stroke="#cef" stroke-width="1" />
+<text x="95" y="92" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">fai hie</text>
+<rect x="166.0" y="74" width="98" height="28" rx="3" fill="rgba(204, 238, 255, 0.04)" stroke="#cef" stroke-width="1" />
+<text x="215" y="92" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">fai hie</text>
+<rect x="286.0" y="74" width="98" height="28" rx="3" fill="rgba(204, 238, 255, 0.04)" stroke="#cef" stroke-width="1" />
+<text x="335" y="92" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">fai hie</text>
+<rect x="46.0" y="124" width="98" height="28" rx="3" fill="rgba(204, 238, 255, 0.04)" stroke="#cef" stroke-width="1" />
+<text x="95" y="142" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">fai hie</text>
+<rect x="166.0" y="124" width="98" height="28" rx="3" fill="rgba(204, 238, 255, 0.04)" stroke="#cef" stroke-width="1" />
+<text x="215" y="142" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">fai hie</text>
+<rect x="286.0" y="124" width="98" height="28" rx="3" fill="rgba(204, 238, 255, 0.04)" stroke="#cef" stroke-width="1" />
+<text x="335" y="142" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">fai hie</text>
+<rect x="46.0" y="174" width="98" height="28" rx="3" fill="rgba(204, 238, 255, 0.04)" stroke="#cef" stroke-width="1" />
+<text x="95" y="192" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">fai hie</text>
+<rect x="166.0" y="174" width="98" height="28" rx="3" fill="rgba(204, 238, 255, 0.04)" stroke="#cef" stroke-width="1" />
+<text x="215" y="192" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">fai hie</text>
+<rect x="286.0" y="174" width="98" height="28" rx="3" fill="rgba(204, 238, 255, 0.04)" stroke="#cef" stroke-width="1" />
+<text x="335" y="192" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">fai hie</text>
+<circle cx="50" cy="46" r="4" fill="#cef" />
+<circle cx="80" cy="46" r="4" fill="#cef" />
+<circle cx="110" cy="46" r="4" fill="#cef" />
+<circle cx="140" cy="46" r="4" fill="#cef" />
+<circle cx="170" cy="46" r="4" fill="#cef" />
+<circle cx="200" cy="46" r="4" fill="#cef" />
+<circle cx="230" cy="46" r="4" fill="#cef" />
+<circle cx="260" cy="46" r="4" fill="#cef" />
+<circle cx="290" cy="46" r="4" fill="#cef" />
+<circle cx="320" cy="46" r="4" fill="#cef" />
+<circle cx="350" cy="46" r="4" fill="#cef" />
+<circle cx="380" cy="46" r="4" fill="#cef" />
+<circle cx="50" cy="230" r="4" fill="#cef" />
+<circle cx="80" cy="230" r="4" fill="#cef" />
+<circle cx="110" cy="230" r="4" fill="#cef" />
+<circle cx="140" cy="230" r="4" fill="#cef" />
+<circle cx="170" cy="230" r="4" fill="#cef" />
+<circle cx="200" cy="230" r="4" fill="#cef" />
+</svg></div><br>
+<p>"Conception of a hash algorithm".</p>
+<p>Zei read the accompanying text.</p>
+<p>Hash algorithms, it said, were there to create a shrunken fingerprint of a large piece of information, that still uniquely identifies the original. The goal is for it to be infeasibly hard to find two different pieces of data that have the same hash.</p>
+<p>Hashes inherently destroy information - representing a larger thing with a smaller thing is their entire goal. But there is a paradox: in the internal workings of all the best hash functions that we build, the largest component is an <em>entropy-preserving</em> transformation: a permutation.</p>
+<p>The core building block maps inputs to outputs one-to-one. And not only that, it can be <em>efficiently</em> run both forwards and backwards. The shrinking, and the irreversibility, comes from a simple layer on top: a deletion, and an xor of part of the original input, added to the end.</p>
+<p>Why do this? Why build irreversibility on top of reversibility? The reason is subtle. If you build irreversibility directly, then you cannot control when entropy is destroyed. If you apply an irreversible round function enough times, then about half the entropy collapses, bringing the protocol's security down along with it. And so even when destroying information is your final goal, it's best to cleanly separate out the piece that's going that - destroy information in one precise spot in the algorithm, on your own terms.</p>
+<p>Zei put away his hand device, and leaned back.</p>
+<p>It's all entropy, isn't it, he thought to himself.</p>
+<p>A minute later, the car suddenly slowed down, and turned left. To his right, Zei could see an area blocked off by safety tape with various large vehicles further inside.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"What happened?"</span>, Zei asked in a voice loud enough that the driver would unambiguously recognize that the question was meant for him.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Explosion in an advanced biology research lab. Probably the Arctics, as usual. They're going to spend days cleaning up to make sure everything is safe."</span></p>
+<p>A few minutes after that, the car slowed down and came to a stop. The door opened, leading straight into a hallway.</p>
+<hr>
+<p>Zei walked through the tunnel, and down the stairs.</p>
+<p>He saw a door in front of him. The door looked similar to the door to the Minpentai room inside the mountain pyramid in Pafogai Du: a series of stone bricks, curving near the top into an arch, and the symbol at the top: two horizontal arms, meeting in the middle with clashing fists.</p>
+<p>However, this door was noticeably larger, more well-maintained, and the decorations more grand.</p>
+<p>Zei tapped his watch against the green circle, and the door opened. He walked through.</p>
+<p>He entered a room with about fifty chairs, with about twenty contestants already sitting down. On the stage, he recognized Su. Beside her, there were three other priests.</p>
+<p>Zei sat down. Over the next fifteen minutes, other contestants sat down in their own chairs.</p>
+<p>An older teenage boy sat down beside Zei.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Hi, I'm Deluin"</span>, he said.</p>
+<p>That's not a very Dzegojan name, Zei thought.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I'm Zei."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Where are you from?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Ah, I'm from Redshire. My name gave me away, didn't it?"</span></p>
+<p>Zei laughed. <span style="color:oklch(0.7 0.15 346.66666666666663)">"Do you get that reaction from everyone?"</span></p>
+<p>Deluin laughed along with Zei.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"De lu hin, they call me here. 'A fork with the appearance of'. Lovely name, don't you think?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Are you studying here? Did your parents immigrate?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Ah, I'm a foreign contestant. They brought in four foreign contestants this time, to make things more fun."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Are you excited?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Absolutely. Actually my first time in Dzego, super cool place."</span></p>
+<p>A bell rang, and the contestants quickly quieted down.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Welcome to the national Minpentai championship"</span>, Su began. <span style="color:oklch(0.7 0.15 253.33333333333334)">"I am honored to see so many brilliant contestants this year, and I hope that everyone arriving had a good evening and a good morning."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I am pleased to introduce our lead organizer, Taskmaster Jin."</span></p>
+<p>One of the other priests stepped forward, and began speaking.</p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"This is a special moment for all of us in Dzego, not just for us and for you, but for millions of Dzegojan who watch the games from across the country, as they will get to watch the brightest minds from Dzego's new generation face off against each other."</span></p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"I'm also honored to announce that this year, we have four distinguished foreign guests participating along with us."</span></p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"Today, we will have a walk through the Minpentai museum, right here inside this mountain pyramid. Tomorrow, we will have some tourist excursions around Sadzu Du, and in the evening you will get a chance to rest. Two days after, the first championship games will begin."</span></p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"There will be six rounds of qualifying games, with an eight-day-long break in between each game."</span></p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"Out of the thirty-two of you, the four players who win the most games will advance to the semifinals. If there is no win threshold that exactly four players pass, we will break ties by the geometric average of the number of turns that you survived before losing your losing games and the inverse of the number of turns that you needed to win your winning games, counted up to a maximum of eight thousand turns. Thus, there is no incentive to resign before eight thousand turns. If there are still ties, we will insert an additional qualifying round."</span></p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"I hope you can enjoy the games, enjoy everything that Sadzu Du has to offer, but also, just as importantly, enjoy each other. Here you are not enemies, you are temporary competitors. Off the arena, you should consider each other friends, and remember that we are all part of a shared project together. Dze go ba fau gie."</span></p>
+<p>"Dze go ba fau gie", all the contestants replied in unison.</p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"Now, please follow Su. She will lead the excursion through the museum."</span></p>
+<div class="dateline scene-break"><hr class="rule"><span class="txt">3724 Grasstime 25</span></div>
+<br><div class="device-view narrow-device-view"><table>
+  <thead>
+    <tr>
+      <th>zan</th>
+      <th></th>
+      <th>tie</th>
+      <th>tei</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Bai</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 26.666666666666664)">[dia lau shau]</span></td>
+      <td>23098</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p>Zei woke up. Bai was requesting to call.</p>
+<p>Zei tapped the watch.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"How are things going over there?"</span>, Bai asked.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"This is a bit early for a call, isn't it? It's still 19 minutes before my alarm was supposed to wake me up."</span></p>
+<p>Zei paused for a moment, and decided to answer Bai's question.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Things have been well. Very fascinating exhibition at the museum three days ago, and got to see a bunch of Sadzu Du the next day. Met someone from Redshire too."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"A contestant?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Yep, they've decided to internationalize it a bit this year."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"So how's Pafogai?"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Ask me something I can answer. I've been staring at the mountain pyramid you'll be playing in from across the river for the last longhour."</span></p>
+<p>Zei sat up.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"You're HERE?"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Den's people got hold of me and told me to come and take notes on all the contestants' strategies."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Your first game is today, right?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"It is indeed."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Want me to come over and help you out, or at least watch?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I... think I'm fine. And I doubt you can get a ticket to the live stadium."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Not if you let me in."</span></p>
+<p>Zei groaned.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"I'll watch from afar then. We're all rooting for you!"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"How is Fin? I haven't heard from him in days now."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Busy with Bansunpei stuff I guess. He hasn't said anything to me in days either."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Alright then. Well, I gotta start preparing. I hope you enjoy your day!"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Best of luck to you in yours, you'll need it!"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Oh, and, let's play a practice game tomorrow."</span></p>
+<p>Zei once again ordered a fruit and vegetable juice, and put on his clothes. A few minutes later, the juice arrived, and Zei quickly drank it. He opened the door, went downstairs, and entered the car that was waiting for him.</p>
+<p>Twenty minutes later, the car arrived at an entrance to the pyramid.</p>
+<p>Zei stepped out, and began walking through the tunnels.</p>
+<p>After a few hundred meters of walking, and a few turns, he once again arrived at the large stone brick door. He entered, and this time immediately turned right, into a hallway that he had not even noticed when he was first there three days ago. He followed the signs, and soon got to a waiting room.</p>
+<p>He saw Su, and the other contestant.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Welcome Zei! Meet Bo."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Nice to meet you, Zei."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Nice to meet you too, Bo."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"It will be a fun game today, I'm sure of it."</span></p>
+<p>A robot arrived, and gave all three of them a cup of tea. They each drank their cup.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"So what now? We sit here for a longhour without internet while the others play, so we don't learn the new rule ahead of time?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Exactly. And no hand devices or watches allowed either. The robot will be coming to pick them up in a minute. You can watch last year's matches on that screen over there."</span></p>
+<hr>
+<p>A longhour later, the elevator doors opened, and Zei and Bo each stepped in to their respective elevators. Su waved them goodbye. The doors closed.</p>
+<p>A quarter minute after that, Zei's elevator door opened once again, exposing a giant room much larger than the room in Pafogai Du. About five to ten thousand people seemed to be watching. A path lit up, showing the way to a giant console with a chair.</p>
+<p>Zei walked forward. He could make out Bo's silhouette walking forward in the distance. He got to the chair, and sat down.</p>
+<p>Drones about the size of a hand device buzzed as they flew around Zei, scanning for any kind of cheating equipment. This time, there were about three times more drones than there were in Pafogai Du, and with even more shapes and sizes. The drones buzzed around for about twenty ticks, and then retreated back to their resting positions.</p>
+<p>A loud automated voice, this time sounding more female, announced: <span style="color:oklch(0.7 0.15 160)">"MU GU GEI FA"</span>. Starting in fifty ticks.</p>
+<p>Zei closed his eyes, and breathed in and out, trying his best to calm himself. This match was not decisive, he knew: if he lost, he could still make it up in the others. But in another way, that fact made him more scared: armed with the excuse that it's okay to lose, will his mind have the motivation needed to keep his full attention and mindpower on the game and win?</p>
+<p><span style="color:oklch(0.7 0.15 160)">"LE MU GEI FA"</span></p>
+<p>Zei opened his eyes again.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"PA GU GEI FA"</span></p>
+<p>Zei patiently waited.</p>
+<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"Welcome to the fourth qualifying match of the north stadium for today. Everyone, meet our players for this round: Zei Leimin from Pafogai Du, and Bo Zume, from right here in Sadzu Du."</span></p>
+<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"I am also pleased to announce - perhaps one time too many for the audience, but for the first time, for our contestants - today's rule change. Today, Minpentai will be played on a hex grid."</span></p>
+<p>Zei opened his mouth in shock.</p>
+<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"You will have twenty minutes to figure out your structures, any gliders, spaceships and walls, to the best of your ability. And then the serene battle over a field of snowflakes will begin."</span></p>
+<p>Zei's display turned on, and he could see the hexagonal grid in front of him.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"LE FI SHI GEI TAU FA"</span>, the automated loud voice shouted. The battle begins in two thousand ticks.</p>
+<p>Zei began by quickly drawing random junk in his sandbox, seeing what stayed stable and what turned into a glider. Within one minute, he identified a few gliders and a few static structures that could be used for walls. To his surprise, the gliders that moved the fastest moved ... directly east.</p>
+<p>His next move was to deliberately draw different kinds of walls, fly gliders at them, and see what sticks.</p>
+<p>He watched the gliders carefully, to try to quickly get an intuition for what kinds of shapes can move while preserving their shape. He did several rounds of defining both the gliders and the walls.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"PA MU GU GU GEI TAU FA."</span> The battle begins in fifteen hundred ticks.</p>
+<p>Zei began experimenting with shapes that were similar to his  symbol, seeing if any of them could function as a glider. He needed to come up with <em>something</em> - otherwise he would be able to progress only very slowly, by repeatedly building a new symbol beside his existing symbol during each intervention turn.</p>
+<p>He realized that to make actual headway, he would need to interact with the rock formations. He made a couple of guesses about what shape the rock formations in the hexgrid version of Minpentai might look like, and examined the behavior of gliders as they crashed into them.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"FI SHI GEI TAU FA."</span> The battle begins in a thousand ticks.</p>
+<p>Zei began to sweat. So far, no luck. No combination of a glider, a plausible rock shape and an offset that he tried led to a copy of his symbol.</p>
+<p>He thought more about the exact shape of his symbol.</p>
+<p>After another two minutes of fruitless exploration, Zei's mind flashed back to the textbook he had been reading less than two longhours before.</p>
+<blockquote>
+<i>The core building block maps inputs to outputs one-to-one. And not only that, it can be efficiently run both forwards and backwards.</i>
+</blockquote>
+<p>But unlike the hash function, here there was no truncate-and-xor wrapper at the end. And so if he knew his desired end state ... he just had to put that end state into the sandbox, and play it backwards.</p>
+<p>But ... how do you play it backwards?</p>
+<p>In the internal permutation of a hash function, you walk backwards from the last layer to the first layer, and invert each step as you go.</p>
+<p>Here ... what was the inverse of the hexgrid rules that Zei was interacting with for the first time in his life?</p>
+<p>Zei took the gliders he saw, and tried the most basic transformations: flipping them, rotating them 60 degrees, launching them one timestep later. None worked.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"MU FI LE GEI TAU FA."</span> The battle begins in five hundred ticks.</p>
+<p>Zei stepped through each step more slowly. And then he saw it. During each step, the game board split up into triangles, and the hexagons rotated inside each triangle - clockwise if it had one hex filled, counterclockwise if it had two hexes filled.</p>
+<p>And so in order to time reverse, he just had to ... let each time step happen twice. The opposite of a 120-degree rotation is, after all, two 120-degree rotations. But there was a problem: after each time step, the split into triangles shifted. So to play a time step backward, he had to... play one step forward, then shift time back one step so that he could play the next step forward under the same tiling, then play a second step forward to bring the total rotation under that tiling to 240 degrees within each triangle, then shift time back <em>two</em> steps so that the game would shift to the <em>previous</em> tiling. Invert each step, and play the steps in reverse order, just like inverting a permutation in a hash.</p>
+<p>He confirmed: there was a button to play one step forward, and two buttons to shift time - either forward or backward. So that's what he would have to do. A, B, A, B, B. Like some kind of video game cheat code. Which, in some sense, here it literally was.</p>
+<p>Fine, he thought.</p>
+<p>He put a glider into the sandbox, and tried it. It was an arduous process, and his fingers quickly tired. But it worked. The glider moved backwards.</p>
+<p>Basic test passed.</p>
+<p>Zei tried the real test: using the same technique, starting with a symbol forming beside a rock formation and a glider flying out.</p>
+<p>The first time, it failed: as time went backwards, the glider and the symbol crashed, but then the same symbol re-formed a few steps away, and the glider flew away. So in that particular history that Zei had just sampled, before the crash, the symbol had been there all along.</p>
+<p>He tried again, with a different glider. This time, it succeeded. As time moved backwards, past the moment of the crash, the rock-formation-plus-symbol turned into a bare rock formation, and two gliders flew back out.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"FI LE GEI TAU FA."</span> The battle begins in one hundred ticks.</p>
+<p>Zei quickly repeated the same experiment with other candidates for a rock formation. He paid no attention to the voice announcing the countdown, and kept trying until he found one for the two other most natural options.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"MU GU GEI TAU FA."</span></p>
+<p>Zei quickly put up symbols, walls, and gliders that would create symbols if they crashed into favorable rock formations.</p>
+<p>He was surprised at his own speed doing this, given how much longer everything else had taken. But almost immediately he realized in the back of his mind that this made sense: figuring out what to deploy is the hard part, deployment is just copy and paste.</p>
+<p>After making a basic setup on the board, he breathed out. Just as he breathed back in and started doing a final pass refining his structures, a final countdown began.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"PA GU ... SO ... BI ... ZE ... HA ... MU ... FO ... SHI ... LE ... PA ..."</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"TAU FA."</span></p>
+<p>Gliders started flying out. At first, nothing happened.</p>
+<p>Five hundred turns later, a part of the board came into view. One of his gliders had successfully created a symbol, and revealed a part of the board that showed what the rock formations look like.</p>
+<p>Immediately, Zei switched to the next task: figuring out how to build glider factories.</p>
+<p>When the first intervention turn hit, Zei had not yet figured this out. However, he did send out several more gliders that flew from his home base, ready to create more copies of his symbol if they collided into a rock formation in the right place. He also sent gliders from nearby his new symbol, rapidly heading east.</p>
+<p>The audience watched intently. From across the river, Bai was also watching intently. And from afar, so were Fin, Mu and Den.</p>
+<br><div class="device-view narrow-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">
+<polygon points="100,2 184.9,51 184.9,149 100,198 15.1,149 15.1,51" fill="#348"/>
+<circle cx="80" cy="30" r="3" fill="#cef"/>
+<circle cx="100" cy="40" r="3" fill="#cef"/>
+<circle cx="120" cy="30" r="3" fill="#cef"/>
+<circle cx="75" cy="50" r="3" fill="#cef"/>
+<circle cx="120" cy="55" r="3" fill="#cef"/>
+<rect x="30" y="120" width="5" height="5" fill="#c9f"/>
+<rect x="70" y="140" width="5" height="5" fill="#c9f"/>
+<rect x="95" y="155" width="5" height="5" fill="#c9f"/>
+<rect x="140" y="120" width="5" height="5" fill="#c9f"/>
+<rect x="45" y="150" width="5" height="5" fill="#c9f"/>
+<rect x="80" y="165" width="5" height="5" fill="#c9f"/>
+<rect x="115" y="165" width="5" height="5" fill="#c9f"/>
+<rect x="170" y="125" width="5" height="5" fill="#c9f"/>
+</svg></div><br>
+<p>The audience was surprised. Neither player had managed to figure out any gliders that move vertically, they realized.</p>
+<p>On the second intervention turn, Zei launched gliders from the sides of the board, aiming straight toward Bo's home base.</p>
+<p>And just before the third intervention turn, one of Zei's gliders hit a rock formation right beside Bo's home base, allowing Zei to see all of Bo's symbols.</p>
+<p>Zei used that intervention turn to send gliders directly toward the three of Bo's symbols that he could see, and more toward some locations nearby just in case.</p>
+<p>Within three hundred turns, all of Bo's symbols were destroyed, and Zei was announced the winner.</p>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-11.html" title="Previous chapter: Chapter 11" aria-label="Previous chapter: Chapter 11"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-13.html" title="Next chapter: Chapter 13" aria-label="Next chapter: Chapter 13"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<chapter_nav prev="chapter-8.html" next="chapter-10.html" />
+
+# Chapter 9
+
+<chapter_open place="Pafogai Du, Dzego" date="3724 Rainmoon 28" />
+
+Bai and Fin were sitting together in a courtyard, eating and drinking. Tears ran down Bai's face.
+
+![Fin: "You know, Zei is really quite a nice kid"], Fin stated softly. ![Fin: "If you could just be nicer to him, he could help you so much."]
+
+![Bai: "Nicer, like you?"], Bai replied, distressed.
+
+Fin hesitated. He did not know how to respond.
+
+![Bai: "You know how I felt when Zei brought his mom along on the trip to Freetown with me?"], she asked.
+
+![Fin: "Sad because you wanted to have the trip alone with him, and you could tell that's not what he wanted?"], Fin asked.
+
+![Bai: "NO!"], Bai shouted.
+
+![Bai: "I'll give you a hint. I felt the same after the game a few days ago when you suggested I bring my mom along for the next trip."]
+
+![Fin: "You don't like your mom?"]
+
+![Bai: "You never asked me where or who my mom even is! Not once, in the more than ten times we've met."]
+
+![Fin: "Well, sorry. Who is your mom?"]
+
+![Bai: "My mom is DEAD! My dad too."]
+
+![Bai: "Killed in an explosion in a lab when I was still a small kid. You know who did it."]
+
+Fin's face dropped.
+
+![Bai: "I stayed in my aunt's place. But she basically ignored me, just gave me a room, and two meals a day, and that's basically it."]
+
+![Bai: "So I had to survive with my own bare hands. Learn how to make my own money. Do side jobs even while I was in high school."]
+
+![Bai: "So I hope Zei forgives me for those times when I didn't let him get his prize money to give his mom a compute box."]
+
+![Bai: "I don't even have a mom! All I have is my achievements and my success. And now Zei has taken that away from me too."]
+
+She went quiet, and sat back in her chair. She had not planned to say any of that. After a brief pause, she spoke again.
+
+![Bai: "But those tactics of Zei's, they were beautiful. I was so proud when I put up such perfect defenses along my diagonals and tricked Zei into attacking there. I felt like that was the smartest thing I had done in my whole life. And then he came out and did something even smarter."]
+
+![Bai: "I do want to understand you guys better. What drives you, how you think."]
+
+Bai and Fin both took a brief break to drink some of their respective teas.
+
+![Fin: "Let's talk about something else. Here, do you want to see what they have in mind for the next version of Dzegoban?"]
+
+Bai's eyes perked up.
+
+![Bai: "Sure, why not"], she replied.
+
+Fin took out his booklet, with "po so dze go ban de sia" - the conception of Dzegoban version nine - on the cover.
+
+![Fin: "Dzegoban is a masterpiece"], Fin explained. ![Fin: "Always navigating the tough balance between being easy to learn, logical in syntax, but also nice to speak and read, and useful for talking about the things that people care about in the real world."]
+
+![Fin: "The first versions, started only a decade after we lost the war against the Arctics last century, were simple and uncontroversial. Move from the pictorial script to an alphabet, get rid of the complicated declensions and conjugations and irregular verbs."]
+
+By this point, Bai was listening intently, her eyes full of curiosity.
+
+![Fin: "Then came the harder tradeoffs, on the grammar. Dzegoban grammar is very logical, if you want it to be. Take a simple sentence, like in elementary school: 'giu jan li mo fe jia dzu lie'. The man eats the avocado. 'li' is the separator between subject and verb, 'fe' is the separator between verb and object. A computer program can parse that, very unambiguous."]
+
+![Fin: "You can get more complex. 'lo mo fe jia dzu lie zo hen jun'. It's healthy to eat an avocado. 'lo' and 'zo' are the opening and closing brackets. And colloquially, you can leave out the 'lo'."]
+
+![Fin: "But then you get ambiguity. Let's unpack 'jia dzu lie' - black center fruit. Is it a fruit with a black center, or is it a fruit that is both black and 'central' in some sense? Theoretically, we have the separator for that: 'ji'. We could say 'jia dzu ji lie', and it would be less ambiguous. But you can never remove the ambiguity completely. Papaya seeds have a black center too."]
+
+![Fin: "So you have to balance regularity with practicality. Being easy and pleasant to speak when you talk about things that are common in people's lives. So the Bansunpei priests tried to optimize the regularity of the meaning space, even while knowing they would never - could never - fully succeed."]
+
+![Fin: "If all you know are the 256 roots, you can understand more than half of what people are saying. Not all, but much better than the olden days, when you could not tell what some complicated word means at all unless you had seen that exact word before."]
+
+![Bai: "Why are they putting so much work into this? Why not focus more on improving the economy, or technology, or the military or something?"]
+
+![Fin: "Well, if we work on those things, the Arctics bomb us. Language is harmless. I think even the Arctics find Dzegoban impressive. Also a couple of times the Bansunpei took time to reform the timing system - that's how we got a hundred ticks a minute, a hundred minutes a longhour and ten longhours a day - and we got that to stick across the whole world. That, even the Arctics adopted."]
+
+![Bai: "Do you guys have a secret textbook with a planned version nine of _that_?"]
+
+![Fin: "Yeah, at some point we want to replace the meter with the lightfoot. Light travels at one billion lightfeet per tick. One lightfoot is two hundred fifty-nine point oh two oh six eight three seven one two millimeters."]
+
+![Fin: "Apparently, people in Inglewore like it because for so long people made fun of their older measurement units for being complicated and illogical, and now we're coming out with a unit that's very close to their older distance unit in length, that's directly based on the very base physical constants of the universe. So in some sense, we're saying that they were right all along."]
+
+Bai grinned.
+
+![Fin: "So anyway, the next version of Dzegoban-"]
+
+Bai cut him off.
+
+![Bai: "Maybe next time. This is all making me curious, I feel like I should go study the history of Dzegoban on my own at some point."]
+
+![Fin: "Good instinct! I promise, it gets even more fun once we get into version nine. Zei doesn't see the value of all this himself, he's so focused lately on his games."]
+
+![Bai: "I'm sure he is. And I don't think it will stop, it's clearly paid off very well for him."]
+
+![Bai: "Maybe I should play some games with him for fun - or I guess for him, for practice - at some point."]
+
+![Bai: "Oh, and thank you for distracting me and cheering me up!"]
+
+---
+
+Zei walked through the tunnel, and down the stairs, following the directions that his watch gave him. Every time he got to a fork, he made sure to look in all directions, taking in his surroundings. He had never been this deep into the depths of the mountain pyramid before.
+
+Eventually, he got to a sealed door with a green circle beside it. He tapped his watch against the circle. The door slowly opened.
+
+Behind the door, there was a narrow and long room, and at the end of the room there was a large table. At the table, a man was sitting wearing a shadowy cloak - not a Veridian privacy robe, but the dress of the Minpentai priests.
+
+Zei walked across the room slowly, and sat down across from the priest.
+
+![Den: "Welcome"], the priest said softly.
+
+![Zei: "I am honored to be here"], Zei replied. ![Zei: "But ... who are you?"]
+
+![Den: "I'm Den. High Council member of the Kungaupei. Thank you for coming."]
+
+![Zei: "Kungaupei? We have a secret society for defense too? Growing Dzego a whole secondary shadow army?"]
+
+![Den: "Of course, are you surprised?"]
+
+Zei hesitated.
+
+![Den: "I was impressed by your performance in the Minpentai game a few days ago."]
+
+![Den: "But I wasn't just impressed because you won. I studied the transcripts from the game. I was impressed because of the kind of strategy that you played."]
+
+![Den: "Tell me, have you studied any cryptography?"]
+
+![Zei: "I... know the basics? Factoring is hard, you cube modulo n to encrypt, and only someone who knows the p times q that make up n can invert the cubing to decrypt."]
+
+![Den: "No no, that's popular science cryptography. Nobody has been using the factoring-based stuff for decades now, even elliptic curves are falling out of fashion because everyone's worried that the Arctics are going to come out with a quantum computer any year now."]
+
+Zei did not respond. He stared back, in a mix of appreciation for the update to his knowledge, and curiosity about where this whole conversation was going to lead.
+
+![Den: "Okay, well I think in your last game you've come really close to inventing big parts of cryptography from scratch."]
+
+![Den: "Think about obfuscation protocols. You want to give someone a program, that they can execute, without being able to see the internal details of the program. It's what our modern cryptographic networks - like the ones that handle payments and reputation and manage governance for Dzego's secret societies - all rely on."]
+
+![Den: "But how do you make a single protocol that can do that? Hide the program? It's easy to see how to hide the data, and then do addition and multiplication on hidden data, especially when it's all done by hiding it in big vectors under linear transformations and adding errors on top. But how do you hide a program? What kind of a space of possible programs do you even hide a program in?"]
+
+![Den: "The solution - well, okay, a small part of one type of solution - is that you create a meta-program. A program that, depending on its input, can run any possible program. And then you've reduced the program to just being a set of numbers that you're doing addition and multiplication to."]
+
+![Den: "It's one of the most basic tricks in computer science. Our computers, the physical hardware, are meta-programs themselves. But you figured out a really basic version of that - just sixteen possible algorithms, melded into one factory - and used that, plus a hidden glider to provide the input, to hide your intentions."]
+
+Zei nodded.
+
+![Zei: "Well thank you for the compliment. But ... I'm curious now, where are you going with this?"]
+
+![Den: "Well, Zei, I want to recruit you into defense."]
+
+Zei's eyes and mouth opened.
+
+Defense. Without thinking, Zei opened and closed each finger of his left arm. That arm had been broken and taken a month to heal, all because of a thermodynamics lecture. What Den was suggesting was not a lecture.
+
+But his life had been saved by exactly that kind of work - a secretive, well-coordinated room change at the last minute. Maybe this was his chance to do the same for someone else.
+
+![Den: "I do want you to continue Minpentai into the nationals. I think it will be good for you. But for your education, do cryptography. I think it will also help you in your games."]
+
+![Den: "And of course I'll stay in touch the whole way, and when you're ready, I will start suggesting some tasks for you."]
+
+Zei responded with silence once again.
+
+Tasks. He noticed how quickly Den had shifted into the register of assuming that Zei would go along with his plans. Part of him was already coming up with reasons to say yes. Another part was watching his enthusiasm slowly build up, and did not entirely trust it.
+
+![Den: "I have an idea"], Den began. ![Den: "Do you know how chip verification works? Like, how I'm automatically verifying that all your electronic devices are friendly right now?"]
+
+Zei began to reply as soon as Den finished. By sheer luck, Den had decided to grill him on one of the areas of applied cryptography that he _had_ already researched.
+
+![Zei: "When a device is manufactured, a physical unclonable function is produced as part of the process - a secret key that gets generated though chemicals settling down as the chip cools down after it's produced. Not even the manufacturer knows what it is. The manufacturer prods the device to get its public key - the p times q, or I guess now I know it's not a p times q at all, it's something totally different. It then signs that key with its key, and publishes that to the cryptographic network."]
+
+![Den: "Okay I guess you can call a function a key, close enough. Go on."]
+
+![Zei: "As a user, you can ask the device to sign a value. The device will do that. You can then verify its signature against the public key that you download from the cryptographic network, to check that it actually came from that manufacturer."]
+
+![Zei: "And then you have public inspectors. They buy devices randomly from the manufacturer, and use some kind of scanning to destructively inspect them. Verify that the chips actually have the logic that they are supposed to have."]
+
+![Den: "Why the cryptographic network? Why not just sign it?"]
+
+![Zei: "So that you know how many there are, avoiding attacks where either the manufacturer is cheating or someone hacks their key, and they start signing over even more public keys than they should. Also it means you know when the signature was made, so you know it was made when the device was manufactured. And if the manufacturer's key somehow gets stolen, you can tell if the signature was made before or after that happened."]
+
+![Den: "And how do I verify your device?"]
+
+![Zei: "You ask it for a signature wirelessly, same way I verify it."]
+
+![Den: "How do I know it's not just forwarding responses from a different device somewhere else?"]
+
+![Zei: "Here, because we're deep inside a mountain. Generally, I don't know."]
+
+![Den: "How does the chip inspection process work?"]
+
+![Zei: "That I don't know."]
+
+![Den: "How do the inspectors know that they're getting devices from the same pool the public is getting, and not devices specifically chosen by the manufacturer to fool them?"]
+
+![Zei: "I don't know."]
+
+![Den: "Let's think about a different case first. Take the public security cameras, the ones on the lamp posts or the outsides of the buildings or the autobuses. Every Dzegojan has a right to occasionally randomly pick one, unscrew it and analyze it themselves. That's how we know that they're only recording and transmitting when they're supposed to, and no one in the supply chain from the people manufacturing them right up to the people installing them can bug them and leak any data to a stalker or an insider trader or an Arctic."]
+
+![Den: "That's the random inspection process - assuming at least some of the people who make inspecting cameras their hobby actually choose randomly. So that's for security cameras, that are already in public so anyone can just choose a random one of them to go and unscrew. Now, what do we do here? How do we do random inspection for computer chips that you buy from a manufacturer?"]
+
+![Zei: "Okay, you tell me."]
+
+![Den: "Well, I'm glad there's still a lot that I can teach you. How about we go and visit one of these factories right now?"]
+
+Zei thought for a moment. It was not yet a commitment, he reasoned, and it would be something he had never seen before.
+
+![Zei: "Sure, would be happy to!"]
+
+Zei and Den walked out of the room, through the tunnels, and to a smaller exit from the pyramid. The exit led directly into the interior of a large rectangular-shaped black car. The pyramid door and the car door were exactly the same shape, and were pressed tightly against each other.
+
+Zei and Den got in.
+
+As the door sealed shut, Zei noticed anti-transmission foil lining the sides of the car. The car had windows, but they seemed to show a dimmed version of the world outside; from the outside, he knew, they would show almost nothing at all.
+
+The car started moving, and a minute later it entered a tunnel.
+
+At that point Zei realized that no one in the world now knew where he was.
+
+---
+
+Zei and Den got out of the black car. The car's door now opened directly into the open door of a staircase leading down to a basement, shielding them from even a tick of being visible to the outside. The two walked down the stairs, and eventually entered a large room.
+
+They saw thousands of empty white boxes, with labels on the side containing a two-dimensional barcode, and a machine automatically putting chips into boxes as they came out of a conveyor belt from another room.
+
+Den opened up his hand device, and showed a diagram to Zei.
+
+<wide_device_view>
+
+
+
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200" viewBox="0 0 400 200">
+  <rect width="400" height="200" fill="#245" />
+  <line x1="80" y1="40" x2="95" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="80" y1="40" x2="185" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="80" y1="40" x2="35" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="160" y1="40" x2="215" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="160" y1="40" x2="335" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="160" y1="40" x2="155" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="240" y1="40" x2="65" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="240" y1="40" x2="125" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="240" y1="40" x2="305" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="320" y1="40" x2="365" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="320" y1="40" x2="275" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="320" y1="40" x2="245" y2="80" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="35" y1="80" x2="245" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="65" y1="80" x2="95" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="95" y1="80" x2="155" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="125" y1="80" x2="215" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="155" y1="80" x2="305" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="185" y1="80" x2="275" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="215" y1="80" x2="335" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="245" y1="80" x2="125" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="275" y1="80" x2="35" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="305" y1="80" x2="365" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="335" y1="80" x2="65" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="365" y1="80" x2="185" y2="130" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="35" y1="130" x2="185" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="65" y1="130" x2="95" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="95" y1="130" x2="215" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="125" y1="130" x2="245" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="155" y1="130" x2="365" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="185" y1="130" x2="155" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="215" y1="130" x2="335" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="245" y1="130" x2="125" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="275" y1="130" x2="305" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="305" y1="130" x2="35" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="335" y1="130" x2="65" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="365" y1="130" x2="275" y2="180" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <circle cx="35" cy="80" r="4" fill="#cef" />
+  <circle cx="65" cy="80" r="4" fill="#cef" />
+  <circle cx="95" cy="80" r="4" fill="#cef" />
+  <circle cx="125" cy="80" r="4" fill="#cef" />
+  <circle cx="155" cy="80" r="4" fill="#cef" />
+  <circle cx="185" cy="80" r="4" fill="#cef" />
+  <circle cx="215" cy="80" r="4" fill="#cef" />
+  <circle cx="245" cy="80" r="4" fill="#cef" />
+  <circle cx="275" cy="80" r="4" fill="#cef" />
+  <circle cx="305" cy="80" r="4" fill="#cef" />
+  <circle cx="335" cy="80" r="4" fill="#cef" />
+  <circle cx="365" cy="80" r="4" fill="#cef" />
+  <circle cx="35" cy="130" r="4" fill="#cef" />
+  <circle cx="65" cy="130" r="4" fill="#cef" />
+  <circle cx="95" cy="130" r="4" fill="#cef" />
+  <circle cx="125" cy="130" r="4" fill="#cef" />
+  <circle cx="155" cy="130" r="4" fill="#cef" />
+  <circle cx="185" cy="130" r="4" fill="#cef" />
+  <circle cx="215" cy="130" r="4" fill="#cef" />
+  <circle cx="245" cy="130" r="4" fill="#cef" />
+  <circle cx="275" cy="130" r="4" fill="#cef" />
+  <circle cx="305" cy="130" r="4" fill="#cef" />
+  <circle cx="335" cy="130" r="4" fill="#cef" />
+  <circle cx="365" cy="130" r="4" fill="#cef" />
+  <circle cx="35" cy="180" r="4" fill="#cef" />
+  <circle cx="65" cy="180" r="4" fill="#cef" />
+  <circle cx="95" cy="180" r="4" fill="#cef" />
+  <circle cx="125" cy="180" r="4" fill="#cef" />
+  <circle cx="155" cy="180" r="4" fill="#cef" />
+  <circle cx="185" cy="180" r="4" fill="#cef" />
+  <circle cx="215" cy="180" r="4" fill="#cef" />
+  <circle cx="245" cy="180" r="4" fill="#cef" />
+  <circle cx="275" cy="180" r="4" fill="#cef" />
+  <circle cx="305" cy="180" r="4" fill="#cef" />
+  <circle cx="335" cy="180" r="4" fill="#cef" />
+  <circle cx="365" cy="180" r="4" fill="#cef" />
+  <rect x="71" y="22" width="18" height="13" rx="1.5" fill="none" stroke="#cef" stroke-width="1.2" />
+  <line x1="80" y1="35" x2="80" y2="39" fill="none" stroke="#cef" stroke-width="1.2" />
+  <line x1="75" y1="39" x2="85" y2="39" fill="none" stroke="#cef" stroke-width="1.2" />
+  <rect x="151" y="22" width="18" height="13" rx="1.5" fill="none" stroke="#cef" stroke-width="1.2" />
+  <line x1="160" y1="35" x2="160" y2="39" fill="none" stroke="#cef" stroke-width="1.2" />
+  <line x1="155" y1="39" x2="165" y2="39" fill="none" stroke="#cef" stroke-width="1.2" />
+  <rect x="231" y="22" width="18" height="13" rx="1.5" fill="none" stroke="#cef" stroke-width="1.2" />
+  <line x1="240" y1="35" x2="240" y2="39" fill="none" stroke="#cef" stroke-width="1.2" />
+  <line x1="235" y1="39" x2="245" y2="39" fill="none" stroke="#cef" stroke-width="1.2" />
+  <rect x="311" y="22" width="18" height="13" rx="1.5" fill="none" stroke="#cef" stroke-width="1.2" />
+  <line x1="320" y1="35" x2="320" y2="39" fill="none" stroke="#cef" stroke-width="1.2" />
+  <line x1="315" y1="39" x2="325" y2="39" fill="none" stroke="#cef" stroke-width="1.2" />
+</svg>
+
+
+
+</wide_device_view>
+
+![Den: "You ever seen this before?"], Den asked.
+
+![Zei: "Some kind of diagram of the internet?"]
+
+![Den: "It's a mixnet. It's how transactions get onto the cryptographic network without people being able to see who sent them."]
+
+![Den: "Each message from each sender gets wrapped with three layers of encryption. That top-level message gets sent to a node on the first layer."]
+
+![Den: "The node on the first layer unwraps the top layer of encryption, and sees another encrypted message, along with the address of which node in the second layer they are supposed to send it to."]
+
+![Den: "The node on the second layer unwraps the next layer of encryption, and sees another encrypted message, along with the address of which node in the third layer they are supposed to send it to."]
+
+![Den: "Finally each node on the third layer unwraps that layer of encryption, and gets the address of the destination, plus the actual payload. And of course, usually, the payload itself is encrypted."]
+
+![Zei: "Wow, I didn't realize that's how it works. So you need three nodes to collude to unmask the sender of a message."]
+
+![Den: "Not just three nodes - three _randomly selected_ nodes. And if you're paranoid, you can make the inner payload be yet another envelope, requesting to send the message right back through the system in the next round."]
+
+![Den: "So this is what the packaging step is doing. Those boxes are highly opaque and tamper-proof sealed, and the two-dimensional barcode is the encrypted payload. It's a mixnet, but for delivery of physical goods."]
+
+![Den: "If you buy a product through this system, only the last of the three nodes knows your address, and they don't know who the sender was or what they're delivering. And if you're _double paranoid_, you can set your address to a public drop-off point and pick it up yourself."]
+
+![Den: "Inspectors buy through the mixnet. And so as a consumer, if you buy through the mixnet yourself, you're getting your chip from the same pool that the inspectors are buying from - the manufacturer has no way to give an honest chip that passes inspection to the inspectors, without almost certainly giving one to you too. They can't tell which chips - or whatever other physical goods are passing through this thing - are going to whom."]
+
+Den then walked forward toward a door. Zei followed him.
+
+Den put his watch against a circle with a glowing green outline. The door opened.
+
+They walked through a hallway, took a few turns, and then went through another door. They entered a room with a large microscope.
+
+![Den: "This is the inspection facility of this fab. They inspect both their own chips, and those produced by others."]
+
+![Den: "They do multiple types of three-dimensional scanning, at different wavelengths, to make sure that the physical chip exactly matches the specification."]
+
+![Zei: "I'm impressed. Say thank you to whoever gave you permission to give us a tour."]
+
+![Den: "I will. So Zei, I remember you had another question."]
+
+![Zei: "Yeah I remember. Though it wasn't about manufacturing."]
+
+![Den: "Indeed - it was about how someone verifying could know that responses are not being forwarded from a different device. I can tell you the answer for that too. My hand device has a protocol by which it repeatedly contacts each device a million times, and expects the whole protocol to finish within a tenth of a tick. And so wherever the signature comes from, it has to be within fifty lightfeet away - almost thirteen meters - actually, even closer, because of the latency of the chips themselves."]
+
+![Den: "So Zei, what do you think?"]
+
+![Zei: "You said I can still do the nationals, right?"]
+
+![Den: "I _want_ you to do the nationals."]
+
+![Zei: "Okay yes, I'll join - or at least, I'll commit as far as switching my studies to cryptography and see how that goes."]
+
+Den nodded.
+
+When Den kept walking forward, Zei's mind wandered - first, to the large microscope that was directly in front of him, and then to other matters.
+
+He started thinking about what he would tell his mom that afternoon. He could talk about Fin being busy, about himself going for a walk. But he could not tell the full truth. The Kungaupei forbade it - and his mom had already watched him heal from one bomb.
+
+<chapter_nav prev="chapter-8.html" next="chapter-10.html" />

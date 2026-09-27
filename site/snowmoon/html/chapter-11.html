@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-10.html" title="Previous chapter: Chapter 10" aria-label="Previous chapter: Chapter 10"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-12.html" title="Next chapter: Chapter 12" aria-label="Next chapter: Chapter 12"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+<h1>Chapter 11</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Meldan, Veridia</span><span class="sep">·</span><span class="date">3724 Bloomtime 15</span></span></div>
+<p>Seila, Daia and Vil were standing together in a large grass field, with many other families nearby.</p>
+<p>From a distance, Daia caught sight of Gladias approaching. She waved at him. Gladias noticed, and with a smile on his face walked toward them more quickly.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Happy to see you here!"</span>, Daia exclaimed.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well I can't miss my son's first real Helisport game"</span>, Gladias answered.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"So how have you been?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well, lots of Order business. Can't talk about it publicly, you know. Going well though!"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"How about you?"</span></p>
+<p>Vil started to speak.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Well, lots of documents for the lawsuit against Divergent. It's been taking up a big part of my time for the last two months."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Remind me, what happened there?"</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Ah sorry, I've been trying not to burden you guys with the details, I know you have so much on your plate already."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Come on, Vil, your life is important to us."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Well, remember about half a year ago I lost my job at Jump because they went bankrupt. A month later, another one of the employees reached out to me, and I learned from him what really happened. See, the official story had been-"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I remember this in the news. Jump was struggling, and as a last-ditch effort to save themselves, they made a risky bet on the financial markets, buying a derivative on property prices in a region that they were about to announce they would start serving. But it didn't work - not enough people cared, then they got unlucky and prices went down, so the whole thing collapsed."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Exactly. But here's what I learned. The only reason why Jump was able to make such a large bet on a niche market without insane slippage is that a hedge fund - Divergent - had taken the other side of the bet. And the primary owners of Divergent had quietly bought a majority share in Jump for very cheap."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"If housing prices in that region had gone up, Jump would have gained, Divergent would have lost, for them it would have been a net zero. And if housing prices went down - which they did - Jump loses, and Divergent gains, also a net zero. But here's the asymmetry: if Jump loses - which they did - then Jump declares bankruptcy, and so they get out of paying end-of-year bonuses plus a year of severance for their employees. So they gave themselves a free option on our backs."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"When we found out about this, we sued - all the employees together sued, as a class action. It's been tough; Divergent even managed to intimidate some media sites into not covering it. But I feel like so far the judges are seeing through their tricks. So I'm optimistic."</span></p>
+<p>They heard a loud whistle, and turned to face the direction that the sound came from.</p>
+<p>It was the instructor. A large truck had been moved into the center of the grass field.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Helisport game starting in five minutes!"</span>, the instructor yelled.</p>
+<p>The instructor pressed a button, and the back door of the truck began to open gently, tilting backward on its bottom hinge. After a few ticks, it had turned into a ramp.</p>
+<p>Some personal copters, simple chairs with rotor blades on top surrounded by shielding, automatically rolled out of the truck.</p>
+<p>Some children, around ten to twelve years old, ran toward the truck, half wearing yellow shirts and the other half wearing purple shirts. Among those wearing yellow shirts was Zven. They grabbed their copters and began strapping into them.</p>
+<p>The instructor walked into the truck, and soon came out with a much smaller box. He opened the box, and four bright red drones, shaped like balls a few centimeters wide with soft feather-like rotors on top, sprang out and flew into the sky.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Welcome to today's Helisport game"</span>, the instructor said. <span style="color:oklch(0.7 0.15 120)">"Today we're going to do a limited game, playing only with redballs. If you catch a redball, bring it back to me, and your team gets one point. First team to get to six points wins."</span></p>
+<p>By this point all ten children had strapped into their personal copters, and the rotor blades were beginning to spin - just enough to overcome about three quarters of the earth's gravity. The kids ran around excitedly, and some jumped, reaching about two meters off the ground before gently gliding back down.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Everyone know what to do?"</span>, the instructor asked.</p>
+<p>"Yes!", many kids shouted in unison.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Then we will begin the game in five ... four ... three ... two ... one ... blast off!"</span></p>
+<p>The personal copters flew into the air.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"You know, I'm surprised they still do this in schools"</span>, Gladias said to Seila. <span style="color:oklch(0.7 0.15 93.33333333333333)">"If this were invented today, they would definitely say it's too dangerous."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"It was only invented less than ten years ago."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"In Dzego."</span></p>
+<p>Zven caught sight of a redball, and began flying toward it. A few moments after, two kids wearing purple shirts also saw the redball, and began to chase it right behind him.</p>
+<p>The redball suddenly shifted direction to the left.</p>
+<p>Zven and the other kids also turned left. Zven's copter's rotor shield bumped into the rotor shield of one of the other kids' copters, and the two bounced harmlessly off each other.</p>
+<p>Zven aimed his copter to fly higher. He fell slightly behind the kid he had just bumped into, while the third kid flew forward, and was soon directly under him. The air sucked Zven down, and soon his feet bounced into the grid on top of the other copter's rotors.</p>
+<p>Zven jumped off quickly, and he and the other kid both tumbled down a few meters before they stabilized and flew off in separate directions.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"The AI on these things is getting really good now"</span>, Gladias murmured.</p>
+<p>The redball suddenly changed direction again, this time going upwards. Zven immediately set his rotor to full power and climbed upward. The kid he had just bumped into was still a few meters below him, and the other kid did not notice the redball's change of direction in time, and so Zven was ahead.</p>
+<p>Zven saw the redball get closer, and then closer again. Now it was only one meter in front of him.</p>
+<p>The redball suddenly turned off its rotors, and began to drop. Thinking quickly, Zven kicked the ball back up just as it dropped to the level of his feet, and moved his copter forward. He stretched out his hand, and caught the redball in his palm.</p>
+<p>He then aimed the copter to fly toward the instructor. The rotor slowed down - though it did not stop completely. It sped back up when Zven's altitude was decreasing at the safe maximum of five meters per tick - the speed that you would hit the ground after a fall from a height of slightly under two meters. The instructor watched Zven land, and stretched out his hand to receive the redball that Zven handed over.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"First catch of the game by Zven, first point for team yellow!"</span></p>
+<p>He let the redball fly once again. It quickly shot forward, in the opposite direction from where Zven was standing.</p>
+<p>Zven flew back up, and continued his search for more redballs.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"How are Hreda, Lily and Febric doing?"</span>, Gladias asked Daia. Seila heard the question, and turned her head toward them slightly to hear the answer.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Hreda is off in Northglade doing a math competition. We've been trying to get Lily more interested in art, though that hasn't been really successful so far."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I also talked to Zven for a bit and he showed me his homework. I was surprised. I saw the questions they were giving him for arithmetic, and they seemed just slightly ... less advanced than what Febric got at his age?"</span></p>
+<p><span style="color:oklch(0.7 0.15 120)">"Nice catch by Dommus!"</span>, the instructor shouted. <span style="color:oklch(0.7 0.15 120)">"And nice catch for Gale! Two points for team purple"</span></p>
+<p>Seila joined into the conversation.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Well, Glad, you're a -"</span> she stopped herself, briefly remembering that it would be improper even to specify Keeper - <span style="color:oklch(0.7 0.15 253.33333333333334)">"an Order member now. Anything the Order can do to make Veridia's education better?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"You know the schools aren't Order business, the public ones are run by the education committee, staffed by parliament. Though there have been people thinking about trying to support more private ones, support them out of Graph Funding, figure out some rubrics to give them the right incentives."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Maybe you should try pushing for that in your Keeper meetings?"</span>, Seila replied, whispering into her watch as a substitute for a neck band. Better to just have this conversation privately than have to choose each word carefully to avoid giving out Gladias's position, she thought.</p>
+<p>Delwart would be supportive, Gladias thought. Though he would be even more supportive of private schools with <em>no</em> rubric micro-nudging attached.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Another nice catch by Zven! Second point for team yellow."</span></p>
+<p>Gladias and Seila's attention went back to the game. There were three groups of three kids each in the sky, each group chasing what they assumed must be a different redball. Zven flew up alone, and did not try to join any of the groups. Instead, he seemed to simply wander the sky, his eyes constantly watching the horizon to try to find where the fourth redball might be.</p>
+<p>One of the kids tumbled out of the sky, though the rotor's AI automatically broke his fall. He hit the ground, and then a few ticks later stood back up and went back into the sky.</p>
+<p>A minute later, a kid landed beside the instructor, and handed him a redball.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Another nice catch by Gale! Third point for team purple."</span></p>
+<p>The redball flew back into the sky, and both Gale and the other two kids who were chasing the redball with him once again flew after it.</p>
+<p>Two more minutes passed. Another kid landed beside the instructor.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Nice catch by Dela! Third point for team yellow."</span></p>
+<p>One more minute later, two more kids landed at around the same time:</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Nice catch by Plat! Fourth point for team yellow."</span></p>
+<p><span style="color:oklch(0.7 0.15 120)">"And a nice catch by Meny! Fourth point for team purple."</span></p>
+<p>Zven continued his solitary quest to search for the fourth redball, which all the other kids seemed to have completely forgotten the existence of.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"Nice catch by Egardo! Fifth point for team purple."</span></p>
+<p><span style="color:oklch(0.7 0.15 120)">"Another nice catch by Dela! Fifth point for team yellow."</span></p>
+<p>He began to fly closer to the ground.</p>
+<p>Gladias and Seila saw Gale shooting ahead of his two competitors, getting ready to catch the redball. It was only one meter in front of him.</p>
+<p>Gale's hand stretched out. He prepared to grab hold of it.</p>
+<p>Then, suddenly, another kid bumped into him, and he veered several meters to the right. That kid attempted to grab the redball instead, but it quickly flipped direction and flew backwards, right in between the two of them. Gale and the other kid both attempted to grab it with their hands as it passed by, but both missed.</p>
+<p>Gale regained sight of the redball first, and quickly flew towards it. His two competitors soon followed, though they were at least ten meters behind.</p>
+<p>Gale and the redball both gained altitude, and Gale began to get closer to the redball. Five meters. Four meters. Three meters.</p>
+<p>Meanwhile, out of nowhere, Zven seemed to fall to the ground, the fall broken as usual by the copter's AI.</p>
+<p>High in the sky, far above the other players, Gale raised his hand triumphantly, holding the redball inside a clenched fist.</p>
+<p>Many in the audience cheered. Gale maneuvered around the other two students who were following him, and began to drop back down at the maximum speed of five meters per tick.</p>
+<p>Suddenly, Gladias and Seila's eyes shifted toward Zven. He had gotten out of his copter, and was running toward the instructor.</p>
+<p>When Gale was still about thirty meters in the air, Zven opened up his hand and gave the instructor the fourth redball, with broken rotors, that he had found on the ground.</p>
+<p><span style="color:oklch(0.7 0.15 120)">"And, nice catch by Zven. Sixth point for team yellow. Team yellow wins the game!"</span></p>
+<p>Gladias sighed with relief.</p>
+<p>Seila beamed with pride for Zven.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"He took the path less traveled"</span>, she quietly recited, quoting an old Veridian author, <span style="color:oklch(0.7 0.15 253.33333333333334)">"and that blazed a trail for all."</span></p>
+<hr>
+<p>Gladias slid the barrier open, entered the booth, and slid the barrier shut again.</p>
+<p>Three other Keepers were already there. The other three, Gladias thought, must still be on their way.</p>
+<p>This was the third circle of Keepers that Gladias was assigned to, and the topic was air quality. Here, his assigned number was two.</p>
+<p>Gladias immediately took out his watch, and whispered into his neck band to check the air quality of the current room.</p>
+<br><div class="device-view narrow-device-view"><div style="font-size:150%"></div>
+<table>
+    <tr>
+      <td style="font-size:150%" colspan="2">Air</td>
+    </tr>
+<tr>
+<td style="font-size:150%">CO<sub>2</sub></td>
+<td style="font-size:150%; color: yellow">906</td>
+</tr>
+<tr>
+<td style="font-size:150%">PM2.5</td>
+<td style="font-size:150%; color: #8f8">4.4</td>
+</tr>
+</table>
+<table>
+<tr>
+<td style="font-size:150%" colspan="2">Devices</td>
+</tr>
+<tr>
+<td style="font-size:150%; color: #8f8">Attested ✓</td>
+<td style="font-size:150%; color: #8f8">16</td>
+</tr>
+<tr>
+<td style="font-size:150%; color: #fc8">Unknown ?</td>
+<td style="font-size:150%; color: #8f8">0</td>
+</tr>
+</table></div><br>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"How are we already at 906 with just four people here?"</span>, he asked. <span style="color:oklch(0.7 0.15 93.33333333333333)">"Filters are working great, but I guess they haven't yet figured out how to give these secure booths any ventilation?"</span></p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"Yeah, pretty much everyone is really behind standards. We've been saying that we really have to increase the taxes on this bracket across the board."</span></p>
+<p>The CO<sub>2</sub> reading on Gladias's watch refreshed. It now showed 918.</p>
+<p><span style="color:oklch(0.7 0.15 200)">"I think people will figure this out on their own"</span>, another Keeper replied. <span style="color:oklch(0.7 0.15 200)">"It's just a matter of the technology being open and deployable enough. We've been making these filters twice as cheap every two years for the past decade."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well I feel like we have to push harder"</span>, Gladias replied.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What do the indoor air quality tax rubrics say now?"</span></p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"It's a land tax component. Zero if your air quality is perfect, an extra third of a percent per year if the average occupied room reads worse than a thousand. The limits get adjusted up if you have filters or UVC."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Only a third of a percent? For the difference between theoretically perfect and abysmally bad?"</span></p>
+<p><span style="color:oklch(0.7 0.15 200)">"A third of a percent of the land value, per year. For many businesses, that's like a sixth of their revenue."</span></p>
+<p><span style="color:oklch(0.7 0.15 200)">"There's so many things that go into land tax. Public aesthetics. Accessibility - both the kind that's about being friendly to disabled people, <em>and</em> the kind that's about letting people walk across your land freely and not fencing it off. What percent of the lot you're building on. Ground-floor active use, though that one is controversial and some people think it should just be folded into aesthetics. Emergency preparedness. Fire safety. There's just not enough space for everything."</span></p>
+<p><span style="color:oklch(0.7 0.15 200)">"And come on, Veridians are not that sick. If you look at the broad listen report we ran a month ago, indoor airborne disease resistance is just not one of Veridians' top ten concerns."</span></p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"The ground-floor active use isn't just about aesthetics, it also contributes to walkability, reduces congestion-"</span></p>
+<p><span style="color:oklch(0.7 0.15 200)">"Fine, though I think we should just target those things directly."</span></p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"Anyway, that's not our rubric to decide. Air quality is. You're missing the tail risk."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What tail risk?"</span>, Gladias interjected.</p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"Super-pandemics. Like, deliberately released by the Arctics."</span></p>
+<p><span style="color:oklch(0.7 0.15 200)">"Is there any evidence of them working on anything like that?"</span></p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"They're a super opaque society, the only evidence we have that the Arctics even know Veridia exists is that we have to listen to Lord Ephelion giving his sermons all the time."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So what are the possible plans on the table?"</span></p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"Increase the maximum to two thirds of a percent. And then make the case to the funding organs - Graph Funding, Quadratic Funding, parliament allocations - that they should support more open-"</span></p>
+<p>Another Keeper interjected:</p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Quadratic funding? That round is a mess right now. Someone released a program you can download onto your device and prove that you donated to a particular project researching social media polarization - actually not a very good one - and get a reward. You donate ten zipcoins and get back twenty, they get a hundred including the bounded matching. Lots of people participated. And then yesterday some insider at Bluewhale blew the whistle, apparently that was all their doing."</span></p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"Bluewhale? But why would they do that? They don't even control the project that was getting that funding."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"It doesn't matter where it goes, if it was hiring people from Iptak to come dig holes and then fill them back up again they would still have done it. Their goal is to drain funding from anything that interfaces with open platforms. Starve the open ecosystem, the closed one wins by default."</span></p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"Fine, we'll stick to Graph Funding. Go through our channels to suggest to the Graph Funding people that they support more open source tech for air filtering, cleaning, wastewater scanning, all of it."</span></p>
+<p><span style="color:oklch(0.7 0.15 200)">"Wastewater scanning too? You want to break everyone's privacy even more? What if the Arctics hack in and take all that data, and then they'll find out who lives where even if they move homes, and when each person is healthy or sick?"</span></p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"I thought you were the one who keeps saying there's no evidence the Arctics are actually doing those kinds of crazy things?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Isn't there some cryptographic way to get the data we want out of the scans, without ever collecting the data itself in cleartext in any one place?"</span></p>
+<p><span style="color:oklch(0.7 0.15 200)">"Well, if you can find a genius who can figure out something like that, let us know."</span></p>
+<hr>
+<p>Gladias got off the autobus, and pulled on the strap on his privacy robe's front face covering. His face was still covered, but the belt between the areas above and below his nose was now no longer tight. Less virus protection - outside the unusually crowded indoor space that was the autobus, he no longer needed it - but more comfortable and easier to breathe. He began to walk back home.</p>
+<p>He passed by the same restaurant where he had bumped into Febric months earlier. On the restaurant's outer wall, he saw an advertisement. On the left side of the advertisement, there was a Hydrafill mascot, clothed in Hydrafill's classic yellow and green colors, hugging a small child, and using his back to shield the child from a jet of sludge-like green-colored water. On the right side of the advertisement, there was the text:</p>
+<blockquote>
+<p>Heavy water, with its atoms of hydrogen replaced by the neutron-bearing isotope deuterium, is known to be toxic in large doses.</p>
+<p>We studied our competitors' water, and found that on average, it contains 145 parts per million heavy water.</p>
+<p>Our water comes from fresh Veridian NORTHERN ICE, bravely extracted only thirty kilometers away from the Arctic border, and it contains 132 parts per million heavy water.</p>
+<p>Hence, our water is TEN PERCENT LESS TOXIC than our competitors. Only WE care about your health. Nobody else does. Hydrafill wants to heal and protect you. Our competitors think you deserve to drown in sludge and die.</p>
+<p>Trust Hydrafill. Buy Hydrafill today.</p>
+</blockquote>
+<p>Gladias smiled. He kept walking.</p>
+<p>Suddenly, someone grabbed and hugged him from behind.</p>
+<p>Gladias turned around.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Seila!"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Finally caught you on your way home."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"How was the rest of your day?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Finished up my post on urban economics in Freetown. It's online, you should go see it."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Ooh, I'm excited."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Jahn gave me some gossip recently, about how a lot of things are changing now that people there are getting more spooked about the Arctics."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Do you have any theories about why people in Veridia seem so... nonchalant about the whole Arctic situation?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I guess the Arctics don't really affect people's lives here much? They just publish their stupid sermons from time to time and people watch and listen out of curiosity."</span></p>
+<p>Gladias groaned.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Even inside the Keepers, the situation is so strange. The older ones seem to understand there's a problem. But the newer ones ... not all, but many of them think we should just not care?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"What's weird is that the corporates in Freetown seem more resistant to ... whatever is causing that stupidity. They're basically the only city taking the problem seriously - except for Redshire, and the cities partially run by Redshire's parliament through co-governance."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I guess more than anything, the newer Keepers seem suspicious of Steering and Quadratic Funding and Graph Funding and government being able to do much of anything in general."</span></p>
+<p>Seila sighed.</p>
+<p>They continued walking. After a few minutes, they arrived at the door to their house. Gladias put his watch against the circle, and the door opened. They walked in.</p>
+<p>Seila opened up her hand device.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Dzego food truck in one minute. The usual I assume?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Yep, how did you know?"</span></p>
+<p>Seila laughed.</p>
+<p>Seila clicked a few buttons, and ordered.</p>
+<p>The door to the house was not yet closed, and Seila could already see the food truck coming towards them from a few hundred meters away. They both waited for the food truck to arrive.</p>
+<p>Seila went out, and picked up the food directly from the food truck. She walked back into the house, and closed the door behind her.</p>
+<p>She put the food on the table, and immediately unpacked it.</p>
+<p>They both sat down, opened their food boxes, and began to eat.</p>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-10.html" title="Previous chapter: Chapter 10" aria-label="Previous chapter: Chapter 10"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-12.html" title="Next chapter: Chapter 12" aria-label="Next chapter: Chapter 12"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>

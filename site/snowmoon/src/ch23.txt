@@ -1,0 +1,267 @@
+<chapter_nav prev="chapter-22.html" next="chapter-24.html" />
+
+# Chapter 23
+
+<chapter_open place="Pafogai Du, Dzego" date="3724 Mistime 22" />
+
+Gladias, Bai and Fin were sitting at a table in a cafeteria, deep underground inside the mountain pyramid.
+
+Between the tables and the wall of the cafeteria, there were green trees on all sides. Two of the walls were covered with vines. The other two walls were covered with large mirrors, making the whole room seem like it was part of some kind of endlessly-repeating infinitely large space. There was a single entrance, with two thick shrubs on both sides blocking the view to the entrance tunnel, in one of the corners.
+
+In one of the other corners, and in the middle of the cafeteria a few meters away from them, a few air filters stood on the ground - clearly recently added, with not yet much thought put in to how to make them fit into the room aesthetically. Downward-pointed fans and violet lights hung on the ceiling.
+
+The three of them were in a private area, with shrubs blocking most of the rest of the cafeteria from view. Two speakers were simulating the sound of cicadas buzzing in a forest in the morning, drowning out the conversations from the other tables - and thus, they knew, protecting their own conversation as well.
+
+Zei walked in, visibly exhausted, and sat down with them.
+
+![Zei: "That was close. We got ambushed by some Arctic drones, we just barely managed to beat them. Fortunately, we had a full five minutes before the next swarm came to finish ours off, so I think we were able to destroy any chips that the Arctics could extract to get training data from the battle."]
+
+![Fin: "How are the Freetown folks feeling?"]
+
+![Zei: "They're very excited."]
+
+![Bai: "See, I told you that working with Freetown first is going to be a good way to warm the Kungaupei up to cooperating more internationally."]
+
+![Bai: "You have to give people some quick wins that they can show their superiors or their friends, get legitimacy by performance as soon as possible so people trust you to take the next step."]
+
+![Zei: "Yep, your advice was good. But ... I suspect the next step will be harder than this one. The Freetown defense corps want to cooperate. In Veridia, we'll have to find a way to work around their institutions, that's much harder."]
+
+![Bai: "You can do small projects by working around people. But if you want to win the big battle, you need scale. And if you want scale, you have to do the hard thing, and actually bring some of the bigger institutions onto your side."]
+
+![Zei: "Do you have any ideas on how?"]
+
+![Gladias: "Seila says she's going to try to figure something out. I gave her Verdow's contact, so far he's the only senator I really trust. So we'll see."]
+
+A robot arrived, putting food for the four of them onto the table. They began to quietly eat the food.
+
+Fin and Gladias finished their food first, and rested for a few minutes, drinking their tea.
+
+Fin took out a book from his bag, and handed it to Gladias.
+
+![Fin: "Here, let's see how good your Dzegoban is. Open up a page and read."]
+
+Gladias grabbed the book and flipped to a random page. He took a look.
+
+<wide_device_view color="red-plain" textcolor="#fee" align="left">
+
+<dzegoban bare title-color="fee">
+ci zan fe da cei bia sia ci jei fe hi dzia lin ji bia sia
+</dzegoban>
+
+<div style="border-top:1px solid rgba(255,255,255,0.35); height:1em; margin:0 4px;"></div>
+
+<dzegoban bare>
+ci dze fei dzen ji fo gu shan jin dzan ji dzo cei de bun sia de shia sin hie
+li bia sia
+ci gi jan li sia kin fe lo lo ju fe gi da jui zo tin hu lin pin cu cie fan
+ci ki sau dan te ki sau pin
+ci ju je ka cin pin ka su zo zai
+ci ti fo gu shan jin dzan ka dzei zo cai
+ci ten min cu hi dzia lin li lia fa
+te gi jan jei da jui li fa fe lo jie hu
+ci kau min li jie hu gau fe hui pei min cu lau za min cu lau shau min cu pa no bu ji dzan ju min
+ci dzen fe sei gen hu ji sha liu
+ci dzo mi li su zo de gi pen li den fe ten cei
+te da cei de sau zo tia gei
+ci bui je shan jin ka fe bu sin hie li kin
+ci dzo tei hu ka jan shau dai dzu li hen fe jan de sia kie hen su
+ci tin hu lo fe gia dzan jan li bia pin zo
+mia fe lo jie sen pin fe pui sen hu
+ci dzo jan li shau fe dzo jan zo
+cu lo sin sia ce hu ka jan pui su de sin sia ce hu dzei li dzo jan shau pen zo
+tu mia fe ti
+ci jan li bia pin fe hi dzia lin de gi pen
+ci pui sen hu de shen sin de sia li sie hu cu kin sia je zo
+de go li ti die sie
+ci fe lo zun li dziu kin zo cu lo fe jan zu sin li sin fin zo cu dzo
+li bia pin
+ci pui sen hu li tin hu
+ci jan li sia kin fa fe lo
+lo hi dzia lin li lan pin zo miu sie fe lan pin kai
+ci dzo mi sho kan fe lo bu bia sia li lia fa
+ci ti li hi dzia lin bia sia
+ci zie hu
+ci pui ten min ka zu
+ci ten cei li sie gie zo ce gau fe da cei bia sia
+ci miu ka min sia cu pui ten min de bin dai li sie gie zo ce gau fe hi dzia lin bia sia
+ci pui min ka ce ju fe dzo cei
+</dzegoban>
+
+</wide_device_view>
+
+![Gladias: "You think I can do this?"], Gladias asked incredulously.
+
+![Fin: "Come on, try."]
+
+![Gladias: "Okay, here goes..."]
+
+![Gladias: "From material world small thinking, to internet small thinking."]
+
+![Fin: "Small thinking is minimalism."]
+
+![Gladias: "Ah, I see, this is one of those cases where knowing the roots on its own really doesn't get you there."]
+
+![Fin: "Indeed. And the whole project of shrinking the roots down only succeeded once we accepted that that's inevitable."]
+
+![Gladias: "Containing inside the green, forty years ago, a big pattern change in beautiful thinking in the whole world was minimalism."]
+
+![Fin: "That first bit is a set phrase, it means 'including Dzego and Veridia'. Beautiful thinking is aesthetics."]
+
+![Gladias: "Many people recognized that having many physical things is not only line-heartedness but also a locked room."]
+
+![Fin: "Line-heartedness is a feeling of simplicity, or convenience, a locked room in this context is more like a prison."]
+
+![Gladias: "A complicated room implies a complicated heart."]
+
+![Fin: "Good!"]
+
+![Gladias: "Living with the warm-heartedness - happiness? - of having few things is freedom."]
+
+![Fin: "Great!"]
+
+![Gladias: "That this happened forty years ago has a logic - a reason?"]
+
+![Fin: "Yep."]
+
+![Gladias: "Electric machines and the internet began to exist."]
+
+![Gladias: "This implied that many people gathered physical things ... wait, physical things gathered by many people, began to be unwanted."]
+
+![Fin: "I would say unnecessary here."]
+
+![Gladias: "Hand devices caused to be unnecessary aggregate-and-group devices, music devices, sound conversation devices and ten other devices that one would previously have."]
+
+![Fin: "Aggregate-and-group devices should be add and multiply devices - calculators. Sound conversation devices are phones."]
+
+![Gladias: "It can contain books without an upper lid."]
+
+![Fin: "Unlimited."]
+
+![Gladias: "Many parts of that we all live are moving to the electric world."]
+
+![Fin: "Many parts of all our lives."]
+
+![Gladias: "As a result, the complexity of the physical world stopped behind."]
+
+![Fin: "Was left behind."]
+
+![Gladias: "In the nearby few years, we are seeking a different change in pattern."]
+
+Gladias paused for a few moments.
+
+![Gladias: "Okay, I'm tired. But I am curious. Can you just tell me what the rest means?"]
+
+Zei picked up the book.
+
+![Zei: "Social media is not always good for people's mental health. Much of the interest in privacy is driven not just by fear of the Arctics, but rather the sheer volume of everyone talking about everyone else, and the unpredictability with which random events from people's private lives become public discourse."]
+
+![Zei: "People are afraid of many parts of the internet, especially in other countries where privacy technology is not as strong and well-understood. Location tracking, behavior profiling, all of it. And it's not just privacy - people are recognizing that the internet can be as addictive as drugs."]
+
+![Zei: "And so now we're slowly seeing the emergence of a different kind of minimalism: internet minimalism. Disconnect. Do things on your own device. And like physical minimalism was made possible by the growing capabilities of the digital world, internet minimalism is made possible by the growing capabilities of AI and local software - you can have your whole world on your own device."]
+
+![Gladias: "Fascinating."]
+
+![Zei: "Gladias, you're doing very well."]
+
+![Gladias: "Thank you. Now your turn. How well do you understand the Order of Steering's governance rules?"]
+
+![Zei: "There is a collection of tax rubrics. For each rubric, twenty one Keepers are randomly chosen - seven added in each year, for a three year term. The job of the group is to propose and vote on changes to the rubric. The twenty one are split into three sub-groups of seven, all mixing first, second and third years. Any Keeper can make a proposal for a change to the rubric. Each sub-group discusses every proposal independently, they don't know who the other sub-groups are. After a few rounds of discussion, all twenty one Keepers vote on each of the proposals, and the ones that pass, with at least thirteen out of twenty one votes approving them, get accepted."]
+
+![Zei: "There is a separate mechanism, the Sentinels, who are randomly selected and put into groups that audit individual businesses. There, it's three groups of three. They have a very specific task: determine what tier on each rubric a business gets. And then smaller businesses have audits done by Acolytes, Order members in training. For an Acolyte to get accepted, they have to both pass Senate committee approval, and be in the top ten percent by prediction score - by how well their votes on the small portion of their audits that get randomly sampled and re-done by Sentinels agree with the Sentinels' results."]
+
+![Gladias: "Now, what about the Courts?"]
+
+![Zei: "Same mechanism as the Sentinels, though with five judges instead of nine. Also, in civil cases either side, in criminal cases only the defense, can appeal a ruling. There's no hierarchy, it just selects another random sample. There's a common law rule that if you submit a case - either an appeal, or even a first-time lawsuit - that has no merit to the point of being bad-faith, then that case can end not just with you losing, but even with a penalty judgement against you. That's the protection against what we call denial of service attacks."]
+
+![Gladias: "Actually, good that you mention that last part. My co-father, Vil, was in a long lawsuit against, well, basically his former employer, for doing some financial trickery to fire him and get away without paying the pre-agreed severance. He won the first round. The company appealed and lost. Then they appealed again. And just yesterday, the court struck down their second appeal, declared it bad faith, and tripled the amount that they have to pay Vil and the other workers."]
+
+![Zei: "Glad to hear the system works!"]
+
+![Gladias: "That's always the most important question: whether or not it actually works. The Parliament hearings approving new Keepers and Sentinels, for example, barely work at all at this point - at least in my view."]
+
+Bai spoke up.
+
+![Bai: "This is all really good info, Gladias, and thank you Zei for getting up to speed on it so quickly. If we want to affect Veridia, understanding how these institutions all work today is just as important as the military side."]
+
+![Bai: "Anyway, I think Den is waiting for me and Zei in his private room. We should start heading over."]
+
+![Zei: "Sounds good"], Zei replied.
+
+Zei and Gladias simultaneously raced to put their watches against the small green circle on the corner of the table. They ended up both pushing each other's wrists too far away to make the connection. Fin joined in, and slapped his watch against the circle. A moment later, his watch buzzed.
+
+The four of them all stood up, and began to walk to leave the cafeteria.
+
+----
+
+Gladias was in bed, getting ready to go to sleep. Suddenly, his watch buzzed.
+
+<narrow_device_view>
+<table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th></th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%; color: red"><center>Seila</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td style="color: red">[requesting call]</td>
+      <td style="color: red">91454</td>
+    </tr>
+    </tbody>
+</table>
+</narrow_device_view>
+
+He had only seen messages in this shade of red twice before: once when Seila had messaged him when Northglade was attacked, and once when she had called him about Delwart.
+
+Emerald was letting Gladias know the level of importance and Seila's mood and, Gladias knew, this was already a large part of the message.
+
+Gladias's heart raced, as he answered the call.
+
+![Seila: "DO YOU KNOW WHAT HAPPENED TO LILY?"], Seila screamed.
+
+![Gladias: "I ... do not. I just remember hearing that she got eighty-one percent on her latest exam. What happened?!"]
+
+![Seila: "I entered her room. She was talking, typing on her hand device. And I could see what she was reading and saying in the mirror."]
+
+![Seila: "For a few minutes, I just stared. I could not believe it."]
+
+![Gladias: "What was it?"]
+
+![Seila: "She was in some kind of chat group, and they were sharing Arctic propaganda. Cheering on Lord Ephelion's messages. Hoping that the Arctics would come to the rest of Veridia soon."]
+
+![Gladias: "WHAT?"]
+
+![Seila: "I snapped. I called her out on it, and asked how she could possibly be betraying us like this, when Febric and Hreda were stuck a thousand kilometers away because of them."]
+
+![Gladias: "What did she reply?"]
+
+![Seila: "That the Arctics were right. Their philosophy, their idea that some people are worse and other people are better, and that the better people should rule everyone else, and the most important thing in life is to strive to be one of the better people, was the thing that had motivated her, and given her a reason to study and work hard. That our unconditional love was poison. That the Arctics' philosophy - appreciation and love only as reward for success - actually brought her out of her hole, when nothing we did helped even a little bit."]
+
+![Gladias: "That's ... horrible."]
+
+![Seila: "I screamed at her for ten minutes, and shut the door."]
+
+![Seila: "I cried for a longhour. And then, when I opened the door again, the window was open, and she was gone."]
+
+![Gladias: "Can you ... track her? Through her watch?"]
+
+![Seila: "Already got Mov to do that. It was a waste of time, she threw her watch onto some random autobus."]
+
+![Gladias: "Wow. Now I feel so bad. We really haven't been doing anything to actually motivate or encourage her."]
+
+![Seila: "GLADIAS, SHE GOT BRAINWASHED BY THE ARCTICS. DON'T YOU DARE GET IN YOUR PHILOSOPHER MOOD AND TELL ME THEY HAVE A POINT."]
+
+![Seila: "HOW COULD YOU HAVE BEEN SO NEGLIGENT?"]
+
+![Gladias: "Okay, hold on. Not seeing through Delwart, that one is on me. I was dumb. Mov was dumb. I admit it. This, this is on both of us. You're Lily's mom. You saw her many times - before she went to Vil and Daia's, when we visited them during her time with them, and after she came back. You had many chances to make things better, just like I did. And you didn't succeed, just like I didn't succeed. So let's solve this problem together."]
+
+![Seila: "YOU DON'T UNDERSTAND AT ALL, DO YOU?"]
+
+Seila hung up the call.
+
+<chapter_nav prev="chapter-22.html" next="chapter-24.html" />

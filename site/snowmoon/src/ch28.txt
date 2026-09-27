@@ -1,0 +1,203 @@
+<chapter_nav prev="chapter-27.html" next="chapter-29.html" />
+
+# Chapter 28
+
+<chapter_open place="Meldan, Veridia" date="3724 Frostime 15" />
+
+Zei, Den, Bai and Mu were sitting around a table inside a conference room.
+
+They heard the door buzz. They immediately paused their conversation, and waited to see who was coming inside.
+
+The door opened. It was Verdow.
+
+![Verdow: "You have a visitor."]
+
+![Zei: "Who is it?"], Zei asked.
+
+![Verdow: "One of the generals. Actually one of the few that I respect. I ran an analysis through Emerald, everything I got back is very positive about him."]
+
+![Zei: "What does he want?"]
+
+![Verdow: "To talk. About the ongoing case."]
+
+![Bai: "Sure, we're happy to talk to him"], Bai replied. ![Bai: "Is he here now?"]
+
+![Verdow: "He is."]
+
+![Bai: "Then let him in."]
+
+A middle-aged man entered the room. He was wearing a shirt that seemed almost perfectly designed to strike the balance of looking like traditional Veridian military attire while being comfortable for everyday wear.
+
+![Lektor: "I'm Lektor"], he exclaimed. ![Lektor: "Nice to meet you."]
+
+Zei was about to start with a response, but Den motioned for him to stay quiet.
+
+![Den: "I'm Den, this is Zei, Mu and Bai. Welcome."]
+
+Lektor walked in, and sat down on one of the empty chairs.
+
+![Lektor: "Look"], he began, ![Lektor: "I want to understand what in the world you guys are thinking."]
+
+![Lektor: "This is the first time in Veridian history we've seen someone try to get a court to fire high-ranking government officials. It seems like madness. I get that people are upset, but you're trying to fire the entire military leadership. You don't get a competent military that way."]
+
+Then he paused.
+
+![Lektor: "But also ... I get that people are upset. We saw the same Silverchat polls as everyone else."]
+
+![Lektor: "So what are you thinking?"]
+
+Den began to speak.
+
+![Den: "Are you familiar with the operation that rescued Tafindel?"]
+
+![Lektor: "Of course. We've been trying to piece together what happened this whole time."]
+
+![Den: "That was us - the Kungaupei. We rescued him, working together with two Freetown defense companies."]
+
+Lektor's jaw dropped.
+
+![Lektor: "Wait, you're _here_? How many of you?"]
+
+![Den: "Dozens of us. I'm one of the High Council members. Zei and Mu over there personally commanded the operation with me."]
+
+![Lektor: "I see..."]
+
+Lektor paused.
+
+![Lektor: "So what's your plan? Personally take control of the Veridian drone fleet and use it to take back Northshore?"]
+
+![Den: "I know it's not a very _polite_ plan. But you have to understand. We're desperate. The Arctic Empire is expanding. They're clearly planning to target you before they target us: you're more advanced, and we're better prepared defensively. So we think the Arctics want to knock out Veridia completely within the next year, maybe sooner. Then they will take down the United Cities one by one, and then they will go south and clear out Messalia and Haragmir, or just bomb them to save time. After that it's just them versus us. We can defend well with what we have, but really we've depended on you so much for the most advanced technology. So we have to take a stand. Together, now."]
+
+![Lektor: "You can't just commandeer a military the same way you just pick up and drive a new car. Our soldiers, including our commanders and generals, have spent years working together, training together. They know Veridian logistics inside and out. They know how many new drones we can produce, what that would take, what you can do with Helisport copters if you had to turn _those_ into drones. They have over a thousand drone pilots, and thousands of support staff of every kind. With your dozens of advisors, you would have to let almost every drone fly on AI alone. They would get lost, and get tricked by the Arctics at the first opportunity."]
+
+![Lektor: "I know we've failed completely at Northshore, but you can't just go throw everything we've built away. Even the command structure - that's something they've spent years working inside. You can't just rip that up and replace it and expect to get a good result."]
+
+Bai felt that the conversation was going off track, and saw her chance to intervene.
+
+![Bai: "Lektor"], Bai began. ![Bai: "We don't actually want to zero out the top three levels of the Veridian military hierarchy. Even if we _could_ bring over all of our top thousand Minpentai players tomorrow and get them to pilot all your drone fleets successfully, and somehow all the logistics solve themselves, the court case would take over three months to finalize. We don't have that time. So that was never our plan."]
+
+![Lektor: "So what _was_ your plan?"]
+
+![Bai: "Well, we wanted someone like you to step in and help."]
+
+Lektor responded with silence.
+
+![Bai: "Even the most criticized and hated institutions are never quite as irredeemable and talentless as social media makes them seem. We know that. But at the same time, they _can_ get stuck in unhealthy places. And your situation is the toughest: you have to shift paradigms from peacetime to wartime, at the exact moment that many of the generals are probably being bribed or blackmailed by the Arctics. We know that's true - the surveillance cameras that we backdoored already caught several. So we don't want to zero out the military, but we also know it can't stay as it was."]
+
+![Bai: "So I think there's an opportunity for you to step up here. You're respected by all sides. I checked that while you and Zei were talking. High ratings uniformly across different people of different political persuasions, inside the military and in parliament, and across different personality types. I think you should consider proposing to parliament that you take over and run things. And we can work with you, inside your structure."]
+
+Den, Zei and Mu immediately nodded. That line of argument was not part of their plan, but they could all recognize that it was the right plan to switch to.
+
+Lektor pondered for a moment, and then responded again.
+
+![Lektor: "You've been very quiet about the fact that you're here. Even among all the people who are excited about the idea of the Kungaupei running the Veridian military, and who voted that way in the poll, everyone thinks it's just a fantasy. If I start making the argument that I can run things with your support, would that not blow your cover? Even in a closed door session, if the parliament is as corrupt as you say, the information will leak back to the Arctics."]
+
+This time, Mu spoke up.
+
+![Mu: "Don't tell them about us. We have a few exploits against Arctic drones that we can share with you. Those exploits are already outdated against the Arctics themselves - so if the Arctics find out, that's actually _better_, it would help keep their guard down. But the exploits will work great against the damaged drone that you guys managed to recover from Northshore two months ago. You can take the credit for them."]
+
+Lektor stared again. They knew about the damaged drone? How did they penetrate Veridia so ... completely? And if the Kungaupei could do that, then the Arctics...
+
+![Mu: "Oh we can also tell you about one of the generals that's taking bribes. We have clear evidence, security camera footage of his conversations with an Arctic spy."]
+
+![Mu: "They used the wrong kind of booth for too many discussions"], Mu grinned.
+
+![Bai: "We'll give you a dump of the info we have. You can figure out the plan. After all, it's going to be _your_ army, and _your_ plan"], Bai added.
+
+----
+
+Gladias and Seila heard a knock on the door of her room.
+
+![Seila: "Who is it?"], Seila asked.
+
+![Zven: "It's me, Mom!"]
+
+![Seila: "Zven!"]
+
+She ran to the door and opened it. Zven ran in, and excitedly jumped onto a sofa with his hand device.
+
+![Seila: "What's up, Zven?"]
+
+![Zven: "I have some good news. It's Lily!"]
+
+![Seila: "What is it?"]
+
+![Zven: "She says that she is starting to feel like she wants to come back now!"]
+
+![Seila: "What happened?"]
+
+![Zven: "She says that in the Arctic civics class, the instructor was talking about Helisport and how the scoring rules were stupid and an example of how Veridians like to overcomplicate things."]
+
+![Zven: "She was talking with me through her neck band the whole time. I got Febric on the line too. We went through the history of Helisport. She got up and told the instructor how you can prove that if you score by giving each type of ball some number of points and adding those points up, then almost always the best strategy is to just focus on one type of ball. But if you multiply, then the number of points you get from scoring with one type of ball goes up with the number of points you've already scored with the other type. So it makes sense to balance."]
+
+![Zven: "But the instructor did not want to listen. He threw up his hands and said that it doesn't matter in real life, in real life you win by focusing on only one thing, the Arctics understand that and Veridia doesn't, and that's why the Arctics win."]
+
+![Zven: "And Lily replied: but think about personal life and work. If you work really hard for almost the whole day every day, you get paid more and you can get a bigger house, but you can only enjoy the house during the time that you're not working. It's exactly the same math! So real life needs balance too!"]
+
+![Zven: "And then she got thrown in detention."]
+
+![Zven: "So now she thinks the Arctics are lame and stupid. They talk about striving for the best, but really they just care about their own authority."]
+
+![Gladias: "Some of the Arctics are smart"], Gladias interjected. ![Gladias: "They do make very good technology. But that teacher sounds like a total loser."]
+
+![Gladias: "That's exactly how anyone would behave if they were a loser that happened to be born on a winning team. They put their entire identity into the team, they buy into all the ideas about why their team is great, and how it's a big sign of your worth which team you're from. And then they don't even notice that they don't actually carry any of that greatness themselves, and they're just a pathetic shell on the inside."]
+
+![Seila: "Glad, don't teach Zven to think about people like that!"]
+
+![Gladias: "Zven, it's okay to be mean to people who hurt people"], Gladias continued, his tone becoming increasingly self-righteous. ![Gladias: "If someone is struggling or doesn't understand, then help them and be kind. But if someone is whacking others over the head with authority that they do not even deserve, then hit them right back."]
+
+![Seila: "Glad!"]
+
+![Gladias: "If we want to beat the Arctics, then we have to know how to sometimes be at least a little bit Arctic ourselves. But make sure to channel that energy for good."]
+
+Seila sighed.
+
+![Seila: "I guess I can see it from that perspective. After all, we did find Lily by doing exactly what the Arctics do - surveiling everything. Does that count as being a little bit Arctic?"]
+
+![Gladias: "I suppose it does."]
+
+![Gladias: "Though I'm sure we don't need unrestricted camera surveillance of our whole country's teenagers to bring our loved ones home. Unrestricted cameras helped us find Lily, but they also helped the Arctics almost break us. I'm confident Zei already knows of some better way to get the good without the bad."]
+
+![Seila: "Wait..."]
+
+![Gladias: "What is it?"]
+
+![Seila: "I think Zei might be the perfect mentor for Lily. She needs to have a good role model of what a real winner is like - someone who doesn't lord over others and push them down, but helps lift other people up and wants others to win along with him."]
+
+![Zven: "Mom, Dad?"], Zven interjected. ![Zven: "What do we do for Lily now?"]
+
+![Seila: "Can Lily leave Northshore on her own?"]
+
+![Zven: "I asked. She says the borders of Northshore are open but she is in a boarding school, they will not let her leave."]
+
+Gladias groaned.
+
+![Gladias: "I guess if nothing else, we'll get all three of our kids back when we take back Northshore."]
+
+![Seila: "Let me and Bai figure out the advice for Lily, Glad. She knows that the Arctics are lame now, she wants to come home. But until we get her back, she needs advice that's not going to get her killed."]
+
+Gladias grunted with resigned acceptance.
+
+<scene_break date="3724 Frostime 18"/>
+
+![Gladias: "Well, I just heard back from Lektor"], Gladias said to Seila as she was pouring herself a tea in their hotel room.
+
+![Seila: "What did he say?"]
+
+![Gladias: "They convened a special closed session yesterday. Verdow was there."]
+
+![Gladias: "Lektor presented the evidence that one of the other generals was taking bribes. He opened the topic of reforming the military leadership. He took some advice that Bai gave: he led the conversation in a direction that led the detractors themselves to first defend the existing top general, and then propose another general as the obvious leader if there had to be a change. Then he flipped over his cards, and showed more evidence - that the top general had been having regular meetings with someone who turned out to be an Arctic spy, and the other candidate they were proposing as an alternative was being blackmailed."]
+
+![Gladias: "After that, he proposed a different strategy that they could use against Arctics that involved using their dependence on AI against them. He showed some exploits against Arctic drones including some Kungaupei footage from Redshire - though he explained it away as being sent to him through spies that he knows in Redshire."]
+
+![Gladias: "It worked, far more easily than he or Bai expected. It turned out that among the senators who were just lazy and tired, letting Lektor do what he wanted was the path of least resistance - because that meant that the legal case would immediately end. And among the senators who were being blackmailed, they just needed to have an excuse that it would not be feasible to resist, and Lektor's arguments, together with the knowledge that the legal case might at some point start poking into their situations, provided that. So Lektor is the head general now."]
+
+![Seila: "That sounds like a perfect resolution. The Kungaupei can be involved in the military, they can work with Lektor, and he and much of the rest of the structure is still there. So we're not going in and replacing everything, we're preserving continuity. It's exactly what the forecaster bots wanted."]
+
+![Gladias: "Exactly."]
+
+![Seila: "So that's it, we won?"]
+
+![Gladias: "The battle for the halls of Meldan is over. The battle of Northshore is about to begin."]
+
+<chapter_nav prev="chapter-27.html" next="chapter-29.html" />

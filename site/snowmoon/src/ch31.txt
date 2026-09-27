@@ -1,0 +1,212 @@
+<chapter_nav prev="chapter-30.html" next="chapter-32.html" />
+
+# Chapter 31
+
+<chapter_open place="Northglade, Veridia" date="3725 Rainmoon 2" />
+
+Zei, Bai and Mu slowly walked up the staircase on the side of the mountain. The mountain was fully covered with snow on both sides, and the sunlight reflected off the snow into their eyes. Only pine trees and the staircase with its handrails were visible above the snow - the trees and the handrails because they were too high for the snow to fully cover them, and the staircase itself because it was being regularly plowed and salted by a drone that they could see about thirty meters further above them.
+
+A strong, cold wind blasted into their faces. They continued climbing. Several minutes later, they reached the circular platform at the top of the mountain.
+
+From there, they could see a full view of the island on which Northglade was located. It was about twenty kilometers wide - small enough that the most simplified and highly zoomed out maps of the region did not even bother showing it, but at the same time large enough that it seemed like if it really had to, that island alone would be large enough to sustain a civilization. If Northglade had been a Dzego city, Zei thought, it would have a fully self-sufficient emergency industry already.
+
+To their east, they could see the main city of Northglade. To the west and north, they saw snowy hills for kilometers on end, and a path gently twisting as it descended deeper into the forest. Looking downward to the east, Zei could see another staircase leading up to the summit, and a young man wearing only a sweater and a light hood climbing up.
+
+As he neared the top of the summit, Zei could recognize a familiar face.
+
+![Zei: "Deluin!"], he shouted.
+
+Deluin raised his head up, saw Zei, and ran up the last twenty meters of the staircase.
+
+He reached the top, and almost threw Zei off balance as he threw himself into his arms for a hug.
+
+![Deluin: "I'm so happy you're still alive, Zei, and that I can finally see you again."]
+
+Deluin slowly let go of Zei and turned toward Bai.
+
+![Deluin: "Wait, do I recognize you?"]
+
+![Bai: "I'm Bai. You might have seen me watching some of the practice games in Sadzu Du."]
+
+![Deluin: "Ah yes, I remember you!"], Deluin replied, somewhat unsure if he was genuinely recollecting a memory of seeing her or simply confabulating one.
+
+![Mu: "And I'm Mu. Don't you dare mix me up with Su - she's still back in Dzego, she's a completely different person from me."]
+
+![Deluin: "Nice to meet you, Mu"], Deluin replied, gently laughing.
+
+![Zei: "So tell me. What happened?"]
+
+![Deluin: "Well, this is a long story. Are you sure you want it told at the top of a cold snowy mountain?"]
+
+Zei, Bai and Mu all immediately nodded in unison.
+
+![Deluin: "I see you're more fit to live in Redshire than I might have expected!"]
+
+![Deluin: "Okay fine, I'll start."]
+
+![Deluin: "Back in Grapetime, about two months after they occupied Redshire, some Arctic officers came to our house, to talk with my parents. My parents were never particularly worried about the Arctic threat, saying we should be more open to peace and cooperating with them. But once the invasion happened, they quickly flipped to just being full supporters of what the Arctics were doing. Quite a large chunk of the Redshire population did."]
+
+![Deluin: "The Arctics offered them a position. They said that they should come to Glasscrown, and advise the top leadership on integration - first of the captured Redshire population, then of Northglade residents and eventually of everyone else that they would conquer."]
+
+![Deluin: "I made a big risky decision. I decided I would 'go native' - pretend to be a full-on supporter of the Arctic cause, try to use my parents' reputation together with my own status as a Minpentai champion-"]
+
+![Zei: "I'm the Minpentai champion!"], Zei playfully interrupted.
+
+![Deluin: "Only because the game was cancelled and they gave you the title. You never beat me."]
+
+![Zei: "I beat you in the battle two days ago!"]
+
+![Deluin: "What was that line from that old poem? mi fu zo de tei ka ciu pin - when I am defeated, I feel like I won?"]
+
+![Zei: "Now you get it!"]
+
+![Deluin: "Anyway, I used my parents' reputation and my status as a Minpentai _semifinals winner_ to climb up the hierarchy myself. Within two months they figured out independently that Minpentai was an effective way to train people for modern warfare-"]
+
+![Zei: "Wait, they figured out what Minpentai is for?"]
+
+![Deluin: "Wait ... you mean you guys _intentionally_ designed the Minpentai tournaments to train people for defense?"]
+
+Zei, Bai and Mu immediately nodded.
+
+![Deluin: "Then no, they definitely did not figure that out. They just figured out that Minpentai _happened_ to be effective for that purpose. And so within three months they put me as one of their top commanders."]
+
+![Deluin: "The Arctics are actually quite easy to play, you know."]
+
+![Zei: "What do you mean?"]
+
+![Deluin: "Their entire ideology completely de-values alignment, and only values competence. They see top talent as being fungible. People as bots that can just be reallocated by pointing a higher salary at them. They don't really have much of a theory of people having their own motivations, dreaming their own hundred thousand dreams, and how to tell when someone's heart beats together with yours and when they are just pretending. And so if you just say the right slogans, and convince them that you're top talent, they just ... trust you."]
+
+![Zei: "Wow."]
+
+![Bai: "I'm ... actually not surprised"], Bai added. ![Bai: "I'm just glad that you managed to play the game better than any of the others did."]
+
+![Mu: "So what are the most _interesting_ things about the Arctic Empire?"], Mu quietly asked. ![Mu: "What can we learn from them?"]
+
+![Deluin: "Their advancements in technology are real, and they are amazing. The medical treatments that they gave to the residents in Northglade are only a sample. They believe that they have already figured out how to make people live a decade longer, and that they're only accelerating."]
+
+![Deluin: "Glasscrown is one of the most fascinating cities I've ever seen. It's beautiful in its own way. It makes you feel like you're living inside of a giant ice crystal. Its tallest tower is a kilometer above ground, and its caverns stretch deep underground."]
+
+![Deluin: "They even have rows of pine trees alongside some of the walls. That itself is an impressive feat of engineering: genetic engineering to help the plants better tolerate cold, together with underground heating and cleverly shaped reflective walls to make their environment warmer."]
+
+![Deluin: "In the winter, Glasscrown has a month and a half of polar night with no sun. Then, the whole city gets enveloped with the glow of white and blue artificial light."]
+
+![Zei: "Now you sound like you want to go back!"]
+
+![Deluin: "Actually, I want something else. I think it's good that the Arctics have built all of this technology - though if I could shut one of the things down, it would be the research on superviruses. But what's dangerous is how they keep everything they make for themselves and don't let anyone else benefit. Even when they gave some of it to the Northgladers, it was on their own terms - you come to our health clinics, you don't get to learn what we are doing to your body, and if you don't want to go back to how you were before, you have to keep coming back to our clinics again and again."]
+
+![Deluin: "Instead of science and technology bringing the world together, it's turning one group into a bigger and bigger threat that the rest of the world has to fear more and more."]
+
+![Deluin: "But thanks to you, we - we as in all of humanity - have now captured a big pile of their technology. Some that they brought into Northglade. Piles of their military equipment scattered around Elenar Forest. And a bunch on the island of Thaldur, core Arctic territory that has tens of thousands of people living on it."]
+
+![Deluin: "So our next step should be to convince as many of them as we can to volunteer, and share their knowledge and expertise voluntarily, and bring the whole world up to at least the frontier that the Arctics have created to keep for themselves."]
+
+![Zei: "Open source - it's not just a good idea, it's the law"], Zei replied.
+
+![Deluin: "Exactly. Make the whole world a little bit more like Veridia in that way."]
+
+![Zei: "And then we can play their strategy in reverse. Show the people in Thaldur that they have more calm, more peace and more actual freedom under our way of life, at the same time as having powerful technology. Then perhaps through them, we can convince even more Arctics to join our side."]
+
+The conversation paused. Deluin took his turn to walk all around the top of the mountain and enjoy the view of Northglade.
+
+About ten minutes later, Mu spoke up again.
+
+![Mu: "I got some bad news, Deluin."]
+
+![Deluin: "What is it?"]
+
+![Mu: "Freetown defense corps are reporting that the Arctic garrison in Redshire has tripled. They tried some sabotage operations with their drones already on Redshire using the tricks that we discovered during the battle two days ago, but they are mostly failing now."]
+
+![Mu: "They now think that there is basically no chance of us getting Redshire back."]
+
+Deluin sighed. An expression of deep sadness filled his eyes.
+
+![Mu: "Tafindel is recommending that we play a little bit of hardball. Close the borders between Thaldur and the rest of Arctic territory. And then offer a deal. We let anyone who wants to go back to the Arctic Empire go back, and in exchange anyone in Redshire who wants to leave is allowed to leave. They keep Redshire, we keep Thaldur. And then find a beautiful place in Veridia to make a new Redshire."]
+
+![Zei: "Why not just give them the peninsula between here and Thaldur, the one dangling off the eastern end of Northshore? Very beautiful land there."]
+
+![Mu: "I think that should be up to them to decide."]
+
+Deluin nodded. ![Deluin: "Tafindel is probably right. It's as good an outcome as we're going to get."]
+
+The conversation paused once again. All four of them looked toward the east, and enjoyed the view of snowflakes gently falling on every building in the town of Northglade and covering it with thick snow.
+
+---
+
+Gladias and Seila walked through the large stone gates at the entrance to the Greater Plum Harbor in Northglade. The turnstile gates had been smashed and thrown to the ground to let people freely move in and out, and the administrative staff did not seem to have the heart to enforce any visa rules at that particular time. Two Greater Plum Harbor security guards, wearing purple and grey attire, simply watched the crowds move in and out, and resigned themselves to meeting the fallback objective of preventing any theft and violence.
+
+Seila's watch buzzed. She raised up her hand, and took a look.
+
+<narrow_device_view>
+<table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th></th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Jahn</center></td> 
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><speech speaker="Jahn">[5 images]</speech></td>
+      <td>45904</td>
+    </tr> 
+    </tbody>
+</table>
+</narrow_device_view>
+
+She clicked, and took a look at the pictures. The first three were pictures of people in Freetown in its streets and parks celebrating.
+
+The fourth appeared to be an open public concert hosted in a parking lot. In the background was a giant factory building, on the side of which there was a prominently displayed logo of Ichara - one of the now famous Freetown defense companies.
+
+The last was a picture of Jahn himself taking a selfie with what appeared to be one of the managers who worked at the defense company.
+
+![Gladias: "Are you going to go to Freetown and see Jahn?"]
+
+![Seila: "Actually I was thinking to stay in Northglade another five days or so after you leave, and let him come here. He's always wanted to come see Veridia."]
+
+![Gladias: "You should"], Gladias replied gently.
+
+They walked forward along the street for about a hundred meters, and then descended down into a tunnel. About two hundred meters later, they turned right and walked up a staircase. At the end of the staircase, there was a door.
+
+Gladias prepared to tap his watch against the green circle on the side of the door, but before he could do so, the door opened on its own.
+
+![Lily: "Dad!"], Lily yelled as she ran up to Gladias and hugged him.
+
+![Gladias: "Lily! I'm so happy you're safe."]
+
+Febric and Hreda emerged from another room, and rushed to embrace Gladias and Seila.
+
+![Seila: "I'm so glad that you are all here together."]
+
+![Lily: "I'm sorry, Mom."]
+
+![Seila: "Don't be. We all made lots of mistakes this past year. We've gotten through it now, and if we need to, we can get through even more. We're a family."]
+
+![Lily: "Is Zven here?"]
+
+![Seila: "Oh, Zven, Vil and Daia are coming tomorrow morning!"]
+
+![Hreda: "Amazing! I'm so excited to see Mom!"], Hreda exclaimed.
+
+![Gladias: "So how has the Greater Plum Harbor been treating you?"], Gladias asked.
+
+![Hreda: "It's been actually quite fun."], Hreda replied. ![Hreda: "They did a very good job of organizing education, entertainment, public activities, all kinds of things to keep people happy. They convinced the Arctics to allow food to get droned in, so aside from being a small enclosed space it's been fine."]
+
+![Febric: "We had Arctic food out of curiosity a few times here"], Febric added. ![Febric: "They've figured out like a dozen substances that taste like sugar but don't have any calories. They also have protein contraptions that taste like fish and meat. It's not bad! Whatever taste you want with whatever nutrition profile you need, the slogan goes."]
+
+Seila lowered her face quietly. She was still not entirely used to having to admit that the Arctic ways of doing things sometimes did actually have upsides and they could learn from them.
+
+![Gladias: "How about I invite some of our new friends"], Gladias interjected, ![Gladias: "and they can show us what actual properly cooked Dzego food is like?"]
+
+![Lily: "Yay!"], Lily shouted.
+
+Febric and Hreda also nodded eagerly.
+
+![Gladias: "Then I'll ask them to come tonight. I have to go out again this afternoon. There's a military funeral for Den and our fallen soldiers at the top of the mountain. Then we can come back down together and enjoy a nice meal."]
+
+Lily, Febric and Hreda nodded their heads with excitement.
+
+<chapter_nav prev="chapter-30.html" next="chapter-32.html" />

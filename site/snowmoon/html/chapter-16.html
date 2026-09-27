@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-15.html" title="Previous chapter: Chapter 15" aria-label="Previous chapter: Chapter 15"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-17.html" title="Next chapter: Chapter 17" aria-label="Next chapter: Chapter 17"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+<h1>Chapter 16</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Meldan, Veridia</span><span class="sep">·</span><span class="date">3724 Firemoon 25</span></span></div>
+<p>Gladias pulled open the barrier on the booth, walked in, and slid the barrier shut behind him. He sat down angrily on the bench across from Delwart.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"You have a lot of explaining to do."</span></p>
+<p>Delwart looked downwards toward the table, with a sorry expression on his face.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Look, Gladias, you were right, I was wrong. I let my hate for all this interventionism in Veridia's government and culture blind me to the fact that there are things government has always been for, and defense is one of them."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"That's not why I'm angry."</span></p>
+<p>Delwart looked up, startled.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I mean, it's one of the reasons, but far from the primary."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"What is the primary then?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What the hell is going on? Who are you? Who are you working with?"</span></p>
+<p>Delwart sighed. For a few moments he was silent. Then he leaned forward.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Fine, I will explain."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I'm not just one ideologue who is doing this alone. I, and a group of others - I don't know them - are working for Silverchat."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"We were frustrated by these rubrics that were increasing our taxes just because a bunch of people were putting crude jokes on our platform. We wanted Silverchat to be a refuge from the blandness that's taking over so much of the rest of Veridia. We wanted to be a place where Hydrafill and even Dreadknot could be welcome."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"And so we decided to take matters into our own hands. Make an organized effort to try to pull the politics in a better direction. Appeal to the Keepers directly."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"And now I realize just how naive this all was. If we manage to ward off blandness, but at the price of the Arctic Empire being able to take over and inflict things far worse - first on Redshire and later on the whole world - then this whole thing was not just not worth it - it was ruinous."</span></p>
+<p>Gladias sighed. He was still extremely angry at Delwart, but the anger was now mixed with a dose of sympathy.</p>
+<p>A robot slid up to them, carrying a salad, a rectangular nutrition bar and water for the two of them to eat and drink.</p>
+<p>Gladias and Delwart both first picked up their plates of food, and put them down on the table. Gladias then picked up his cup and drank about half the water in one gulp. Delwart did the same.</p>
+<p>They began eating, silently. After a few minutes, the conversation resumed.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What do you want me to do now?"</span>, Gladias asked.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Obviously don't make the rubric exclude military now. You could even increase the tax brackets, though you doing that would only help a tiny bit - the most important levers there are on the Graph Funding side."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"But I also have another idea for what you could do."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What is it?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I think you should go to Dzego."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Me? Dzego? Why?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"They clearly have this whole Arctic question figured out much better than we do in Veridia. Study them. Learn from them. See what you can bring back to Veridia."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"And why should I listen to you when you've been so untrustworthy?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Well definitely don't just listen to me. Ask your closest friends and advisors. See what they think."</span></p>
+<hr>
+<p>Gladias walked along the same path through Kalimar that he would usually pass through. As usual, it was covered with trees and surrounded by stone houses on both sides. But on that day, it was unusually hot, and Gladias sweated slightly as some of the sunlight managed to shine through the tree cover and warm up his entire body inside of his privacy robe.</p>
+<p>He passed by one of the houses that he remembered for selling traditional Veridian food products. This time, an additional note was hastily taped on to the poster, advertising packages that offered tasty, nutritionally complete and long-lasting preserved food that was sufficient for thirty days of survival.</p>
+<p>He tapped his watch, and called Mov.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So I had my chat with Delwart."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"How did it go?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"You're right. There was an organized effort. Turns out - at least he now says - he's been working for Silverchat this whole time."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Silverchat? And here I was expecting some more evil company, like Bluewhale."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"I guess it makes sense, probably that conversation I overheard a month and a half ago was with a Silverchat guy."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So he wants me to go to Dzego now."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Dzego? What for?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"He says we in Veridia have a lot to learn from them. Do you think that's true?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"You know, one of my friends mentioned something like that to me the day Redshire got taken over. He thought <em>I</em> should go, and see how their secret societies work or something."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well you know, Seila has a friend from there now, and the last thing she told me was that he's been climbing up the Minpentai ranks really well, gotten into the nationals. So if I go, maybe I will actually be able to learn a few things."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Yeah I can certainly see the appeal. Veridians really need to know the outside world better. Especially the people in the institutions - the Order, the Courts, the parliament, all of them."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Give me a few days to think through this."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well, the votes on the rubrics are in eight, twelve and sixteen days, so you have that time to think through it no matter what happens."</span></p>
+<p>Gladias paused for a moment.</p>
+<p>At that moment, he was walking past the restaurant near his home where he would often stop for food and drinks. Through the window, he could see Febric eating.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I'll think about it too"</span>, he finally said, and ended the call.</p>
+<hr>
+<p>Gladias entered the restaurant, and almost immediately took off the face cover from his privacy robe, and partially unzipped the front. He could not be that private while eating anyway, and he had been sweating in the hot sun. He sat down beside Febric.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"Oh uncle Glad, happy to see you here again!"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"And I'm happy to see you!"</span></p>
+<p>Gladias noticed that Febric had been watching the screen. A game of Helisport was actively broadcasting.</p>
+<p>Gladias let himself watch the action for a minute. The screen was following the lead player wearing a yellow shirt chasing a redball.</p>
+<p>Suddenly, out of nowhere, a player from the other team, wearing a purple shirt, whacked him off to the side. The player in the yellow shirt tumbled, and then automatically regained his bearings about five meters further down.</p>
+<p>The screen shifted view to the player wearing the purple shirt. He caught a blueball in midair. Two other players wearing yellow shirts started flying towards him. Before they could get to him, he threw the blueball toward a teammate. That teammate successfully caught it, and began flying forward.</p>
+<p>The screen shifted view toward ten yellow standing pins arranged in a triangle on a circular board mounted on a pole high above the ground. The player wearing the purple shirt holding the blueball came into view. A player wearing a yellow shirt zoomed into position between him and the pins.</p>
+<p>The player wearing the purple shirt suddenly threw the blueball up high into the air, just as a different player wearing a yellow shirt crashed into him.</p>
+<p>The blueball passed about five meters over the player wearing the yellow shirt protecting the pins, and then landed on the board. It knocked three of the pins down.</p>
+<p>A scoreboard onscreen adjusted.</p>
+<br><div class="device-view wide-device-view"><div style="font-size:150%"></div>
+<table>
+    <thead>
+    <tr>
+      <th></th>
+      <th style="font-size:150%; color: yellow">Yellow</th>
+      <th style="font-size:150%; color: #808">Purple</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td style="font-size:150%; color: red">Redball captures</td>
+      <td style="font-size:150%; color: red">6</td>
+      <td style="font-size:150%; color: red">11</td>
+    </tr>
+<tr>
+<td style="font-size:150%; color: #8f8">Greenball player hits</td>
+<td style="font-size:150%; color: #8f8">9</td>
+<td style="font-size:150%; color: #8f8">7</td>
+</tr>
+<tr>
+<td style="font-size:150%; color: #88f">Blueball pin knockdowns</td>
+<td style="font-size:150%; color: #88f">31</td>
+<td style="font-size:150%; color: #88f">23</td>
+</tr>
+<tr>
+<td style="font-size:150%; color: #fff">Combined score</td>
+<td style="font-size:150%; color: #fff">1674</td>
+<td style="font-size:150%; color: #fff">1771</td>
+</tr>
+</tbody>
+</table></div><br>
+<p>Purple's blueball score had just increased from 20 to 23, and their combined score from 1540 to 1771 - enough to push them ahead of their opponents.</p>
+<p>Suddenly, while the player who had just taken down those pins was celebrating, a greenball hit him in the back and splatted its paint over him.</p>
+<p>The score adjusted again.</p>
+<br><div class="device-view wide-device-view"><div style="font-size:150%"></div>
+<table>
+    <thead>
+    <tr>
+      <th></th>
+      <th style="font-size:150%; color: yellow">Yellow</th>
+      <th style="font-size:150%; color: #808">Purple</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td style="font-size:150%; color: red">Redball captures</td>
+      <td style="font-size:150%; color: red">6</td>
+      <td style="font-size:150%; color: red">11</td>
+    </tr>
+<tr>
+<td style="font-size:150%; color: #8f8">Greenball player hits</td>
+<td style="font-size:150%; color: #8f8">10</td>
+<td style="font-size:150%; color: #8f8">7</td>
+</tr>
+<tr>
+<td style="font-size:150%; color: #88f">Blueball pin knockdowns</td>
+<td style="font-size:150%; color: #88f">31</td>
+<td style="font-size:150%; color: #88f">23</td>
+</tr>
+<tr>
+<td style="font-size:150%; color: #fff">Combined score</td>
+<td style="font-size:150%; color: #fff">1860</td>
+<td style="font-size:150%; color: #fff">1771</td>
+</tr>
+</tbody>
+</table></div><br>
+<p><span style="color:oklch(0.7 0.15 80)">"You have to admit, the scoring system is really good now"</span>, Febric exclaimed.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"I remember when I was much younger, they kept adjusting the ratios between what a redball gives you, versus a pin knockdown or a player hit. And they just couldn't get out of having a situation where the rational thing is to just focus all your attention on one."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Even when they got it right, within a year the strategies adjusted, and it became lopsided again."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"I think making the score multiplicative was the only way out. That way you pretty much have to care about all three of the point types."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Or try really hard to make sure your opponent can't get any of one type"</span>, Gladias interjected.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"Ah yeah that was the first thing a few people tried"</span>, Febric replied. <span style="color:oklch(0.7 0.15 80)">"Holding onto redballs for more than thirty ticks had already been banned for ages, that had been a good cheat for whichever side was worse at redballs even back when the scores were additive. But what one team did try, is knock down a bunch of pins very early in the game, and then use most of their players to protect their pins for the rest of the game."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Turns out it doesn't actually work. People on copters can only pack together so tightly, no matter what you do, the other team always manages to sneak a few blueballs through. And then if you do pack tightly in one place around the pins, you're a sitting duck for the greenballs."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Are you thinking of playing?"</span>, Gladias asked.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"No, but I just had a bunch of conversations with Zven about this. The math is almost as fun as the actual game!"</span></p>
+<p>Gladias and Febric both turned their attention to the food.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"How's Lily doing by the way?"</span>, Gladias asked.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"She actually started getting a little better over the last couple of months. She mentioned to me a few days ago that she got seventy on her latest civics test. She seems happier. And she's even more engaged playing that game on her hand device."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Do you know what game?"</span>, Gladias asked.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"She doesn't show me either."</span></p>
+<p>Gladias and Febric both returned to eating. A few minutes later, they were both finished.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"Did you remember to take out your zipcoins this time?"</span>, Febric asked playfully.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Hey, I may make lots of mistakes, but I don't make the same mistake twice"</span>, Gladias snapped back.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"By the way, Febric, thanks for reminding me - I need to test my recovery procedure for my coins"</span>, he whispered through his neck band.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"Want me to help you sign a test operation?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Sure! What do you want the test to be?"</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"I dunno, buy a Hydrafill bottle?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Buy a Hydrafill bottle? Straight out of a life savings wallet?"</span>, Gladias asked incredulously. <span style="color:oklch(0.7 0.15 93.33333333333333)">"Those ads really have been getting to you too, haven't they?"</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Hey, you're the one who asked me!"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Okay fine ... let me start the operation."</span></p>
+<p>Gladias began whispering into his neck band. Out of the corner of his eye, he saw Febric run off somewhere, though he was too busy to wonder where.</p>
+<p>A few ticks later, Febric's watch buzzed.</p>
+<br><div class="device-view narrow-device-view"><table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th></th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Gladias</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 93.33333333333333)">[Wallet 0x8f62... social recovery mode transaction request]</span></td>
+      <td>65129</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p>Febric opened up his hand device, and a more detailed view of the transaction appeared. He asked Emerald to search for the receiving address online. A few ticks later, Emerald replied with a confirmation that it was, in fact, the Hydrafill purchase address. He then checked the amount - 5.5 zipcoins. It seemed reasonable for a water bottle plus shipping, though the bulk of the cost was definitely the shipping. He checked the transaction data field. Yep, looked like an encoding of Gladias's home address, in the correct format according to the standard online shopping protocol.</p>
+<p>In the cryptographic network that processed these transactions, all of this data was, of course, encrypted.</p>
+<p>Febric clicked "Confirm".</p>
+<p>Gladias's watch immediately buzzed.</p>
+<p>Less than a minute later, Gladias's watch buzzed again.</p>
+<br><div class="device-view narrow-device-view"><table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th></th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Seila</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 253.33333333333334)">Security question: what was the most unusual thing I did on the evening the kids came back from Vil and Daia's?</span></td>
+      <td>73105</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p>Gladias immediately whispered into his neck band a reply.</p>
+<br><div class="device-view narrow-device-view"><table>
+  <thead>
+    <tr>
+      <th>Message</th>
+      <th></th>
+      <th>To</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span style="color:oklch(0.7 0.15 93.33333333333333)">You unplugged the screen in the restaurant when it was showing Lord Ephelion's speech.</span></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td style="width: 25%"><center>Seila</center></td>
+    </tr>
+    </tbody>
+</table>
+<button> Send </button></div><br>
+<p>A few moments later, Gladias's watch buzzed again. Three signatures done, including his own. One to go. Either Mov or Pelow - or, of course, if he really had to, himself running to the vault and picking up his second key.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"I'm obviously not gonna ask who that was, or who else you need to confirm it"</span>, Febric added. <span style="color:oklch(0.7 0.15 80)">"But good luck!"</span></p>
+<hr>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Seila, I'm home!"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Glad!"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So I have interesting news."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"What is it?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"There's some chance I'll be going to Dzego soon."</span></p>
+<p>Seila stared.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Why?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I talked to Mov about this. He thinks that Veridians, especially Keepers, the Order, the institutions generally, have a lot to learn from what's going on over there."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I'm not sure about this ... it's a difficult time. You're not really the best person to make good use of a Dzego trip. And the Keepers would benefit from having a strong hand guide them these next few months."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Arctic stuff is really much more of a military and parliament responsibility, maybe Graph Funding too. And ... maybe I can make good use of a trip if you introduce me to Zei?"</span></p>
+<p>Seila retreated into her thoughts for a few moments.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"If Mov thinks it's a good idea, then fine. But please do your homework first. Find someone, anyone, in Graph Funding or in parliament to talk to, so you get some idea of whether this trip will be useful, and if you do go, how to make it as useful as possible."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"But really, think hard about this."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"If you go, then yes, of course I'll introduce you to Zei. And Bai too."</span></p>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-15.html" title="Previous chapter: Chapter 15" aria-label="Previous chapter: Chapter 15"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-17.html" title="Next chapter: Chapter 17" aria-label="Next chapter: Chapter 17"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>

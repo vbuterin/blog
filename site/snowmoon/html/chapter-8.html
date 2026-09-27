@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-7.html" title="Previous chapter: Chapter 7" aria-label="Previous chapter: Chapter 7"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-9.html" title="Next chapter: Chapter 9" aria-label="Next chapter: Chapter 9"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+<h1>Chapter 8</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Meldan, Veridia</span><span class="sep">·</span><span class="date">3724 Rainmoon 26</span></span></div>
+<p>Gladias's watch buzzed as he was walking along the street.</p>
+<br><div class="device-view narrow-device-view"><table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th></th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Seila</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 253.33333333333334)">[5 images]</span></td>
+      <td>34125</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p>He opened up his hand device to see the images more clearly.</p>
+<p>Seila was sending photos from Iptak. Gladias was immediately curious. Neither he nor Seila had ever before been to "the aks", as the Veridians liked to call the cluster of Ondak, Iptak, Mantak and Belpaki. The architecture was visibly different, more brick and wood, the colors more red and brown than what he was used to seeing not just in Veridia, but even in pictures of Dzego, or for that matter any of the United Cities that Gladias had been to or seen pictures of.</p>
+<p>The signs were in a language that was half alphabet, half pictorial - the sort of thing that Dzegoban had been not too far from before they stripped that out in order to streamline the language.</p>
+<p>He pressed a button, responding to Seila with a heart symbol.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I'm looking forward to your blog"</span>, Gladias whispered through his neck band, letting Emerald automatically route that message to Seila.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I'll be back in a few days!"</span>, Seila replied.</p>
+<p>At that point, Gladias arrived at the end of the path, at an intersection with the sidewalk along a street. Right in front, there was a sign listing the autobuses that stopped at that point. Gladias saw the number of the autobus that he was meant to take. He stood and began to wait.</p>
+<p>Gladias's watch buzzed, and a notification appeared onscreen.</p>
+<br><div class="device-view narrow-device-view"><table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th></th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 15%"><center>Mov</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 173.33333333333331)">Remember that your trial in today is not just about knowledge. It's also about making sure the senators like you.</span></td>
+      <td>34576</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p>Gladias sighed, and let his arm drop back down to beside his waist. He continued to wait.</p>
+<hr>
+<p>A few minutes later, the next autobus arrived. Gladias checked the number. It was exactly the autobus that he needed. He quickly got on, and the door closed behind him.</p>
+<p>Out of the corner of his eye, he saw more people than usual looking intently at their hand devices at that moment. Curious, he stepped forward and quietly looked at what one of the other passengers was looking at.</p>
+<p>"Veridia National University", the header at the top of the view on the passenger's hand device said. "Live debate between Professor Sylka, president of VNU, and Lord Ephelion, Arctic ambassador to Veridia".</p>
+<p>Sylka was speaking, and Gladias could make out the subtitles.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Gross economic output alone measures one part of human progress"</span>, she said - though Gladias could only see and not hear. <span style="color:oklch(0.7 0.15 253.33333333333334)">"But it becomes a very limiting and impoverished perspective if you start viewing it as the entire goal."</span></p>
+<p>Gladias was curious enough that he whispered to Emerald through his neck band to put up an audio livestream of the debate.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"There is so much more that matters. There is the citizens' health, their emotional well-being, and how healthy the bonds in the society are."</span></p>
+<p>As Sylka finished speaking, the audio livestream connected. Gladias stepped back from the passenger, somewhat embarrassed that he had momentarily violated the passenger's privacy by looking at his screen, and relieved that he was now receiving the feed in a completely ethical way.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"What good is a large car if people feel unhappy because they have no purpose in life? What good is a large house if people feel alienated in their society, and don't have friends to invite to it?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"What good are the latest electronics, if the people at the bottom use them to hack and steal, the people at the top use them to invade people's privacy and surveil, and everyone all the time uses them to get outraged on social media platforms?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Such questions are the entire reason why Veridia has mechanisms like Steering."</span></p>
+<p>Sylka paused. Lord Ephelion started speaking.</p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"There has now been a century-long tradition of people trying to make better metrics than gross economic output. But what we have seen is that especially over the long term, the countries that perform best on any of those metrics are precisely the ones whose economic output is highest."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"And there is a deep reason for this. Historians have long understood that many phenomena in society move in cycles. The ancients talked about a cycle: flourishing, pride, arrogance, downfall, suffering, rebirth, and then flourishing once again. They said the same thing about governance, and how it inevitably cycles between technocratic, democratic, chaotic and strongman."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Whenever we talk about the inevitability of rises and falls, it is precisely these 'softer' traits like 'societal cohesion', 'freedom' and 'well-being' that move in this fashion. On those dimensions, the dominant transformation is a rotation: good creates the generator of the bad, which creates the bad, which creates the generator of the good once more."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"And let us be real: these 'softer' traits that people are targeting, they're chosen by committees of priests - selected not for competence, but for echoing whatever ideology strikes people's fancy at the time."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"There is only one thing that stands out from this pattern and offers a truly lasting improvement: the relentless march of economic growth, enabled by the unceasing progress of science, technology, and capital accumulation. While the emotional vibrations in a society cycle between the pride of success, and the desperation of collapse and defeat, with every cycle, people are smarter and richer than before."</span></p>
+<p>Gladias could see the eyes of a few of the people on the autobus watching perking up.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"The Order members are chosen by a sophisticated-"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Order, please. Ephelion has the floor."</span>, the moderator interjected.</p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"And so if you want to truly improve a society, in a way that provides lasting value for the long term, you do not focus on the thing that moves in cycles. You do not focus on accelerating the rotation. Instead, you focus on increasing the largest eigenvector. You focus on affecting the thing that has a thousand-year record of compounding on itself, the vector on which good reliably leads to more good. And you let the rest follow the natural laws as it may."</span></p>
+<p>Ephelion stopped, and Sylka cleared her throat, preparing to speak. At that point, Gladias realized that the autobus door was open, and it was already at his destination. He quickly ran out, and Emerald automatically paused the livestream to help him concentrate.</p>
+<p>His mind lingered on the debate for a moment longer, and he noticed with faint irritation how easily Ephelion's sentences arranged themselves into an argument that seemed to make sense on its own terms. A gifted demagogue, he concluded. He then refocused on what lay ahead.</p>
+<p>Gladias started walking forward along a path covered with trees on both sides. After a few minutes, he saw a large circular building ahead. This was the parliament. The structure was notably different from the intentionally distant and mysterious headquarters of the Order of Steering: it was on ground level, the construction mixing medieval and modern aesthetics, with multiple entrances on all sides.</p>
+<p>He kept walking forward, and soon arrived at the entrance.</p>
+<hr>
+<p><span style="color:oklch(0.7 0.15 40)">"Welcome, Gladias, to your selection hearing."</span></p>
+<p><span style="color:oklch(0.7 0.15 40)">"You have been an Acolyte for four years, and you have reached the ninety-fourth percentile in your prediction score. You have applied to join the Order of Steering in full standing - though whether you're applying to be a Sentinel or a Keeper, that's something that only you and perhaps your most trusted advisors will ever know."</span></p>
+<p><span style="color:oklch(0.7 0.15 40)">"Today, we will administer the second part of the admissions test: the approval of the Parliament committee. Are you ready to begin the hearing?"</span></p>
+<p>A robot slid up to the chair in the middle of the room where Gladias was sitting, carrying a cup of water. Gladias took the cup, and moved it to the cup holder on the side of the chair.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I am ready."</span></p>
+<p><span style="color:oklch(0.7 0.15 40)">"Then let the questions begin."</span></p>
+<p>Twenty senators were sitting on large chairs arranged along the whole edge of the circular-shaped room, spread about two meters apart from each other. In between some of the chairs, there were air filters. Above them, there were bright lights aimed downward, some bright yellow lights to light up the room, and a few faint violet-looking lights to keep the air clean.</p>
+<p>In a particularly distinguished seat was the Chairman of the committee. About five senators pressed down on the buttons on their table, requesting to speak.</p>
+<p>The system automatically selected one, and lighting around the edge of his seat turned green.</p>
+<p><span style="color:oklch(0.7 0.15 40)">"Senator Verdow, you may ask your question."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Gladias, tell us about your background."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well"</span>, Gladias stammered. <span style="color:oklch(0.7 0.15 93.33333333333333)">"I was born thirty-nine years ago. Fairly middle class family, nothing too fancy. I went to a normal school, got good grades, but never got top of the class or anything."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Why not?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I think I was just not motivated to. I tried very hard for one year, got an average of ninety-seven percent. But then I realized that the main emotion I was feeling, was the fear that if I screwed up even once, my beautiful record would be gone. I even avoided taking the harder classes. At the end of that year, I just felt like that was a game not worth playing. So I put in less effort, and started programming, and then studying law, in my spare time, because those things interested me, and I ended up doing decently well in the programming competitions."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Why did you choose to become an Acolyte?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"The first hobby project I gave myself when I seriously got into programming as an adult was writing an alternative client for Silverchat. After I finished, I tried to do the same for Bluewhale. And it was so much harder, because they were more closed and proprietary in many ways. That was when I realized just how much value Silverchat's openness was bringing to me that Silverchat itself would never capture. And I had been studying rubrics only a few days before, and it clicked - this, the aspects of a good society that the market alone misses, is exactly why Steering is so important. And so I felt motiv-"</span></p>
+<p>A timer buzzed.</p>
+<p><span style="color:oklch(0.7 0.15 40)">"Next question! Papli."</span></p>
+<p><span style="color:oklch(0.7 0.15 213.33333333333331)">"What's your favorite band?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Err... I don't really have one."</span></p>
+<p><span style="color:oklch(0.7 0.15 213.33333333333331)">"Favorite game?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Don't have one either."</span></p>
+<p><span style="color:oklch(0.7 0.15 213.33333333333331)">"Favorite sport?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I remember enjoying playing Colorball when I was a kid? The school game that Helisport ended up being based on."</span></p>
+<p><span style="color:oklch(0.7 0.15 213.33333333333331)">"How can we possibly trust you to judge on our society's behalf, when you're so out of touch with so much of regular Veridian people's lives?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Isn't this why citizens' assemblies and broad listen reports exist, and why a Keeper group has months to listen to both before it makes its decision on a rubric? And isn't this why Keepers and Sentinels are allowed to specialize? I probably won't be deciding on anything that has to do with sports."</span></p>
+<p><span style="color:oklch(0.7 0.15 213.33333333333331)">"What do you think of Dzego?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I like their food. I only started learning more about their history recently. My wife met a couple of Dzegojan kids and they seemed nice. In general, I feel for their plight, I hope we could find a way to support them more."</span></p>
+<p><span style="color:oklch(0.7 0.15 213.33333333333331)">"Aha, so you want us to support Dzego, and you want us to make our social networks more open so that some super smart kids can play with them more easily. But I haven't seen you talk once about something that a regular Veridian would care about, that affects their lives."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"You don't think increasing hardware openness allows more mechanics to join the market, which makes owning things cheaper-"</span></p>
+<p><span style="color:oklch(0.7 0.15 213.33333333333331)">"Well what about the salaries of the mechanics themselves!"</span></p>
+<p>Gladias started formulating a response in his head. Economics was a basic part of the curriculum for anyone training to be an Acolyte, and so he could immediately recognize the fallacy.</p>
+<p>On the one hand, every dollar of price increase in repair was a dollar taken from a customer but given to a mechanic, so from that view the good and the bad balanced out. But on the other hand there were second order effects: reducing the cost of ownership of goods means that people can use the money they saved to buy other things, which means more jobs get created somewhere else. Ignoring this was the fallacy of all naive economic interventionism done in the name of politics: favoring the seen at the expense of unseen.</p>
+<p>It took him about three ticks to formulate the structure of this argument in his head. But then he realized that it would take him about twenty ticks to speak it - when the timer on the clock had only four ticks left. Gladias gave up, and simply did not respond.</p>
+<p>The timer buzzed.</p>
+<p>Gladias began to sweat nervously.</p>
+<p><span style="color:oklch(0.7 0.15 40)">"Senator Ancus?"</span></p>
+<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"What was the last thing you voted on for the aesthetics tax?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"A blue and grey building on Badra street. It was hard to decide, it was just average, nothing out of character in a bad way, but also nothing exceptional. Whenever I pass by it, there were always families coming in and out, people even sitting on the benches outside. Children occasionally selling food they make. But that's normal for Meldan these days. So I just gave it a very tiny vote of approval."</span></p>
+<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"What was the last thing you <em>wished</em> you could have voted on?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"A Hydrafill billboard. The one that talked about their drinks being free of over 2,000 poisons and anti-recommended substances."</span></p>
+<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"Why?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"The ad was fun. I still remember when I was young, and all the ads were boring or just painful to look at. They were just trying to get inside your head, that's all they cared about. It's especially bad when they do that on public transit; if the public transit experience is bad then even more people switch over to cars and we get more pollution and congestion and that's bad for everyone. I was glad that Hydrafill tries so hard to be better than that."</span></p>
+<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"Papli"</span>, Ancus shouted, whipping his head toward Papli. <span style="color:oklch(0.7 0.15 13.333333333333332)">"Don't you think families enjoying the outdoor environment, good public transit, and fun are all things that regular Veridians value a lot?"</span></p>
+<p>Papli did not answer.</p>
+<p><span style="color:oklch(0.7 0.15 40)">"Keep the conversation between the asking Senator and the applicant"</span>, the Chairman interjected.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I think so. Maybe Papli would say Hydrafill's style of humor is pretentious smart people humor or something like that."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"But I think he underestimates Veridians, and just how smart many of them are. I was on the autobus coming here, when Sylka was debating Ephelion on how to measure social progress, and people seemed really engaged when she was speaking."</span></p>
+<p><span style="color:oklch(0.7 0.15 213.33333333333331)">"That's just the smug smart people's version of enjoying watching people fight. Helisport is actually <em>more</em> peaceful"</span>, Papli interjected. <span style="color:oklch(0.7 0.15 213.33333333333331)">"At least the Quadratic Funding funds Helisport games. We should get rid of you guys and just make a negative version of Quadratic Funding and use that to calculate the taxes on all the big businesses."</span></p>
+<p><span style="color:oklch(0.7 0.15 40)">"Order!"</span>, the Chairman shouted. <span style="color:oklch(0.7 0.15 40)">"Next question."</span></p>
+<p>The questioning continued for another half longhour, as each Senator got a chance to ask.</p>
+<p>After the last Senator asked Gladias his question, and the timer buzzed, the Chairman stood up.</p>
+<p><span style="color:oklch(0.7 0.15 40)">"Time for the vote!"</span></p>
+<p>The YES and NO voting buttons were clearly visible on the table, so Gladias could make out any Senator's vote just by looking at them.</p>
+<p>The Senators started pressing down on their buttons. A different noise buzzed every time a vote was made. Within ticks, every vote had been cast. Gladias looked toward the screen near the top of the room.</p>
+<br><div class="device-view narrow-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+<rect width="200" height="200" fill="#245" />
+<text x="100.0" y="20" font-family="sans-serif" font-size="12" fill="lightblue" text-anchor="middle">Acceptance vote: Gladias</text>
+<circle cx="100.0" cy="46.0" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="120.4" cy="49.2" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+<circle cx="138.8" cy="58.6" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="153.4" cy="73.2" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+<circle cx="162.8" cy="91.6" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+<circle cx="166.0" cy="112.0" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="162.8" cy="132.4" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="153.4" cy="150.8" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="138.8" cy="165.4" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+<circle cx="120.4" cy="174.8" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="100.0" cy="178.0" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="79.6" cy="174.8" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="61.2" cy="165.4" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+<circle cx="46.6" cy="150.8" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="37.2" cy="132.4" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+<circle cx="34.0" cy="112.0" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="37.2" cy="91.6" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+<circle cx="46.6" cy="73.2" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+<circle cx="61.2" cy="58.6" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+<circle cx="79.6" cy="49.2" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+</svg></div><br>
+<p><span style="color:oklch(0.7 0.15 40)">"Wow"</span>, the Chairman exclaimed. <span style="color:oklch(0.7 0.15 40)">"Ten to ten, exactly. By the rules of Acceptance voting, I am the deciding vote. And so I vote..."</span></p>
+<p>He pressed down on one of the two buttons on his desk.</p>
+<p><span style="color:oklch(0.7 0.15 40)">"Yes."</span></p>
+<br><div class="device-view narrow-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+<rect width="200" height="200" fill="#245" />
+<text x="100.0" y="20" font-family="sans-serif" font-size="12" fill="lightblue" text-anchor="middle">Acceptance vote: Gladias</text>
+<circle cx="100.0" cy="112.0" r="8" fill="#6c6" stroke="#cef" stroke-width="2"/>
+<circle cx="100.0" cy="46.0" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="120.4" cy="49.2" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+<circle cx="138.8" cy="58.6" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="153.4" cy="73.2" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+<circle cx="162.8" cy="91.6" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+<circle cx="166.0" cy="112.0" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="162.8" cy="132.4" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="153.4" cy="150.8" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="138.8" cy="165.4" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+<circle cx="120.4" cy="174.8" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="100.0" cy="178.0" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="79.6" cy="174.8" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="61.2" cy="165.4" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+<circle cx="46.6" cy="150.8" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="37.2" cy="132.4" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+<circle cx="34.0" cy="112.0" r="8" fill="#6c6" stroke="#245" stroke-width="1"/>
+<circle cx="37.2" cy="91.6" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+<circle cx="46.6" cy="73.2" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+<circle cx="61.2" cy="58.6" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+<circle cx="79.6" cy="49.2" r="8" fill="#f66" stroke="#245" stroke-width="1"/>
+</svg></div><br>
+<p><span style="color:oklch(0.7 0.15 40)">"Welcome to the Order, Gladias."</span></p>
+<hr>
+<p>Once Gladias left the building, he checked his watch. There had been loud buzzing while the acceptance session was in progress, and he had been ignoring it.</p>
+<br><div class="device-view narrow-device-view"><table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th></th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 15%"><center>Vil</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 293.3333333333333)">Sorry to bother you, but it's about Lily. She just failed a test in civics class. I think she would benefit from seeing you and Seila.</span></td>
+      <td>45183</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p>Seila's still in Iptak, Gladias thought. He would have to go himself.</p>
+<p>Gladias did not bother asking Emerald for a route to Vil's house. He knew it himself, it was not too far. He started walking, his mind filled mostly with concern for Lily's wellbeing, and slightly - perhaps more than he was willing to admit - frustration that his triumph was so quickly replaced by dread, a feeling that he was faced with a problem he had no idea how to solve.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I'm coming"</span>, Gladias whispered into his neck band - once again, not out of any strong desire to conceal his privacy at that moment, but because by that point he was simply accustomed to whispering. <span style="color:oklch(0.7 0.15 93.33333333333333)">"Get me the usual food I get. I just got out of my acceptance hearing so I'll be hungry."</span></p>
+<br><div class="device-view narrow-device-view"><table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th></th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 15%"><center>Vil</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 293.3333333333333)">Did you at least get accepted?</span></td>
+      <td>45501</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I did. Just barely though."</span></p>
+<p>After twenty minutes of walking, Gladias arrived at Vil's house. Vil opened the door for him, and then sat back down in his chair. Lily was sitting on the couch, crying.</p>
+<p>Gladias sat down on the couch beside Lily, and hugged her.</p>
+<p>Gladias waited for a few moments, and began to speak.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"It's all right"</span>, he whispered. <span style="color:oklch(0.7 0.15 93.33333333333333)">"Scores aren't everything. Vil, Daia, Seila and I all know the beautiful person that you are inside, and we love you."</span></p>
+<p>Lily turned her face away, unhappy.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"We can help you. We just have to find some way to engage with the material that you can relate to."</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"You've already tried"</span>, Lily replied softly, sobbing. <span style="color:oklch(0.7 0.15 160)">"I got fifty-nine percent on this test. FIFTY-NINE PERCENT. Third-worst in the class."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well, do you think the smartest kid in your class can bake a birthday cake for Seila the way you did six months ago? Would he bring food to Hreda every day for a month the way you did when she was recovering from that accident years ago?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"You need to realize that you're a beautiful person already. That's where self-confidence comes from, and that's where you can get your motivation to improve."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"These schools really need to get better at connecting these topics like civics to topics that matter in your life. I only went down my path to become an Acolyte because I saw how the Steering incentives were helping to open up the online world so I could participate and write code for it. You will have your moment too."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"If you get above seventy-five on your next civics test"</span>, Vil said, <span style="color:oklch(0.7 0.15 293.3333333333333)">"I'll take you on my next trip up to Northglade."</span></p>
+<p>Gladias winced slightly at the crudeness of the incentive - though he figured in the back of his mind that it was worth a try.</p>
+<p>At that moment, the doorbell buzzed. Vil stood up and walked toward the door, and opened it. It was the food.</p>
+<p>Vil picked up the food, and put it down on the table. Vil and Gladias together began to open it.</p>
+<p>Lily slowly stood up, and also joined the table. The three of them began to eat.</p>
+<hr>
+<p>Gladias's watch buzzed.</p>
+<br><div class="device-view narrow-device-view"><table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th></th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Mov</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 173.33333333333331)">[call requested]</span></td>
+      <td>59063</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p>He picked up.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Mov, how are you?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"I have some interesting news to share. But first of all, you got in, right?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Just barely."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"In is in."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So what's your update?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Looks like we're not going to be Keepers after all. The cryptographic random gods selected me to become a Herald starting next term."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Wow."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Yep. So as of today, I have no more formal power."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What do you expect you will do as a Herald? I can't imagine you actually running those assemblies or giving speeches or anything like that. Are you just going to go moderate a sub-forum on Silverchat?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"You know me too well. But also, I'll have more time to help you."</span></p>
+<hr>
+<p>That evening, Gladias called Seila.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I got in!"</span>, he said excitedly.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I knew you would!"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"It came quite close. Ten to ten, the Chairman broke the tie."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"A win is a win. Ever since you told me you were going to go Keeper, I've been so excited about all the good you can do from that role."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I'll try my best!"</span></p>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-7.html" title="Previous chapter: Chapter 7" aria-label="Previous chapter: Chapter 7"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-9.html" title="Next chapter: Chapter 9" aria-label="Next chapter: Chapter 9"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>

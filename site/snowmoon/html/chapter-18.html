@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-17.html" title="Previous chapter: Chapter 17" aria-label="Previous chapter: Chapter 17"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-19.html" title="Next chapter: Chapter 19" aria-label="Next chapter: Chapter 19"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+<h1>Chapter 18</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Pafogai Du, Dzego</span><span class="sep">·</span><span class="date">3724 Fruitmoon 18</span></span></div>
+<p>Gladias exited the air harbor, stepping through a sealed opening that opened immediately into a large black car.</p>
+<p>Zei and Bai were both already sitting inside, Zei on a backward-facing seat and Bai facing him on a forward-facing seat.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"You must be Zei and Bai."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"We are indeed!"</span>, Bai replied.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well, I'm glad to finally meet."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"As are we."</span></p>
+<p>Gladias sat down to the left of Zei.</p>
+<p>The door closed, and the car began to accelerate.</p>
+<p>Gladias stared to the right, looking past Zei to the right-side window of the car.</p>
+<p>The car exited the air harbor, and soon began passing by a series of stores.</p>
+<p>Gladias immediately noticed that something was off: the view on the window shifted as the car moved, but it did not respond to Gladias himself shifting his body position.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Is that a real window?"</span>, Gladias asked.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"It can be"</span>, Zei replied. <span style="color:oklch(0.7 0.15 346.66666666666663)">"But we have heightened security protocols now, and the black cars changed their settings. Can't let light pass through windows directly, because that would be bi-directional even if it was dimmed - a good camera could see that we're inside. So it's a simulated window now, picking up the view with cameras."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"It actually works well when there's one person, because it tracks your eyes too so it adjusts to look more natural. But now there's two of us, and it's picking me."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Huh."</span></p>
+<p>Gladias looked through the left window instead. He adjusted his body a few times to test it. The colors and the depth seemed somewhat unnatural, but otherwise it looked surprisingly normal. He continued looking, paying close attention to everything that he saw outside.</p>
+<p>Many of the stores had cartoon animals on the sides, with speech bubbles saying various things in Dzegoban that Gladias could not understand at all.</p>
+<p>Gladias could briefly see the products inside each of the stores: hand devices, compute boxes, lamps, drones, sensors.</p>
+<p>"MIN KUI", a sign on a store selling compute boxes read.</p>
+<p>"GUI SAU", a sign on a store selling lamps, most of them in the shapes of long cylinders, read.</p>
+<p>But to his surprise, only a few of the stores seemed to be open.</p>
+<p>The buildings were all one or two storeys tall, with many stairways leading underground.</p>
+<p>There were people outside, though fewer than Gladias was used to seeing in Veridia - despite the visibly greater density of Pafogai Du compared to his own hometown.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"hun fe bin jin zo de jan li gi"</span>, Zei wondered aloud.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Huh?"</span>, Gladias replied.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Ah, sorry. So many people wearing neck bands, I was just saying."</span></p>
+<p>Gladias also noticed a large number of identical black cars on the roads.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Does everyone in Pafogai Du use this kind of black car? Is this a privacy thing?"</span>, he asked.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Now that I think about it, no. We've had them for a while, but having this many people use them is quite new. Just a few days ago, there were barely half as many."</span></p>
+<p>They continued riding silently.</p>
+<p>A few minutes later, the car descended into a tunnel. Midway through, it slowed and then came to a stop. Gladias could feel a gentle bump, some mechanical noises, and what seemed to be the car shifting in all directions: up, sideways and then down. He looked out through the window, but could see nothing. And about half a minute later, the procedure ended, and the car appeared to be accelerating forward again.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Did we just ... swap cars?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Swapped cabins. The system waits for ten cars to come, swaps the cabins around randomly, and then everyone drives back out. No one watching the exits knows which one we're in. Like a mixnet, but for people."</span></p>
+<p>Less than a minute later, they exited the tunnel. Soon, the mountain pyramid in the south of Pafogai Du came into view.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"That ... is an impressive structure"</span>, Gladias said.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Heh, everyone says that. Actually we carved it out of a pre-existing mountain."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Still impressive! Probably more secure that way too, if ninety or ninety-nine percent of the inside is solid rock."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"It's ninety-six point seven."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So one over thirty open space? If a normal building is ten percent solid, that makes it equivalent in capacity to a normal building three times smaller in each dimension?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"You got it!"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Maybe you're right we should be impressed. It <em>is</em> the largest one of these in all of Dzego."</span></p>
+<p>The car began to slow down, and soon it came to a stop. The car door opened, directly into the hotel.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"This is your hotel, Gladias!"</span></p>
+<p>Gladias stood up, and stepped out of the car with his bag.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So what's the plan?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Take a longhour to rest, we'll meet you back here and chat more."</span></p>
+<p>Gladias walked into the hotel, and tapped his watch onto the nearest green circle.</p>
+<br><div class="device-view narrow-device-view"><table>
+  <tbody>
+    <tr>
+      <td><center><div style="border: 1px solid; border-radius: 5px; padding: 5px">sen hen zi li die fe 100 <br> zo lia kin  <b style="font-size: 150%; color: #8f8">✓</b></div></center></td>
+      <td><center><div style="border: 1px solid; border-radius: 5px; padding: 5px">man dun li jie hu <b style="font-size: 150%; color: #8f8">✓</b></div></center></td>
+    </tr>
+    </tbody>
+</table>
+<b>cau tie zen <br> ci fan zi li 448</b></div><br>
+<p>His watch buzzed. He had his room key.</p>
+<p>Gladias looked around. Zei was right, he realized. <em>Almost everyone</em> was already wearing neck bands here.</p>
+<p>Gladias walked into the elevator. The elevator door closed. When it opened again, Gladias stepped out, and walked into his room.</p>
+<hr>
+<p>Gladias stepped out of the front door of the hotel, and looked outside. He had only taken forty minutes to rest; he had another sixty left before Zei and Bai would be expecting him. He figured that he would go on a walk, and take a look around at least this one piece of Pafogai Du himself.</p>
+<p>He turned around. He saw the hotel address: 1565 Tan Kai.</p>
+<p>He turned right, and began walking.</p>
+<p>Almost immediately, his watch began flashing warnings at him, "unknown" counts in the double digits. Figuring that this was just his Veridian watch not being up to date on Dzego electronics, he decided to ignore the warnings, and continued his walk.</p>
+<p>He crossed the street. He saw a black car pass by him, and then almost immediately slow to a stop. A man walked out from a nearby shop, holding a large box. He put the large box down on the ground beside the car.</p>
+<p>The door of the car opened, and the driver stepped outside, putting her own large box down on the ground, identical in size. She proceeded to open the top of the box.</p>
+<p>Looking at the box from a few meters away, Gladias could see about thirty much smaller white boxes on the top row inside.</p>
+<p>The driver took out a tray containing the top row, and put it on the ground, on a staircase. The man from the store took out a hand device, and seemed to scan the two-dimensional codes on all the white boxes simultaneously.</p>
+<p>The driver then took out a tray containing the second topmost row, and put it on top of the first tray. The man from the store scanned again.</p>
+<p>This repeated five more times. Then, the driver opened up the man's large box, and scanned it row by row as well.</p>
+<p>After scanning each row, she put the tray into her own box. And finally, she took the box back into her car and drove away.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What's going on?"</span>, Gladias asked.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Shipping"</span>, the man replied. <span style="color:oklch(0.7 0.15 173.33333333333331)">"High security."</span></p>
+<p>The man finished putting the trays on the staircase into his own box, picked up the box, hurried back inside his shop and locked the door.</p>
+<p>A mixnet for physical objects, Gladias realized - Zei had told him about it once. Each object would pass through several carriers, and no single person knew both the source and the destination. There was no way to sabotage one person's device without sabotaging <em>everyone's</em> device - and if you did that, you would quickly get caught.</p>
+<p>Gladias kept walking. He turned right on 17th street, and could see Pafogai Du's giant mountain pyramid in front of him, and the pathway leading up to it starting after only two more streets.</p>
+<p>On this street, Gladias could see far more shops that were open. Almost every shop had a sign above the window advertising it, about half the time polished and professional and the other half the time improvised and hand-made from neon lights. He saw a flower shop, still bustling with customers. About twenty meters after that, a clothing shop. The posters on the outside still advertised jackets, but looking through the window inside, he could see that about half the space was now taken up by hastily-added privacy robes. About twenty meters after that, an unmarked staircase leading to a basement, with two teenage boys and one girl climbing down.</p>
+<p>At the top of the staircase, Gladias saw a sign. There were pictures of cute cartoon animals playing with electronic gadgets and chemistry lab equipment, with a backdrop of green trees and blue skies. In the middle of the sign, he saw a motto in Dzegoban:</p>
+<center>
+<div class="dz-card" style="font-family:'TeX Gyre Chorus',cursive;font-size:17px;line-height:1.55"><div class="dz-line dz-blank" style="height:1em"></div>
+<div class="dz-line" style="margin:3px 0;padding-left:2ch"><span style="background:rgba(255,255,255,0.110);border-radius:4px;box-decoration-break:clone;-webkit-box-decoration-break:clone"><span style="white-space:nowrap"><span style="color:#d8effc;font-family:'TeX Gyre Chorus',cursive">pa jan</span></span> <span style="white-space:nowrap"><span style="font-family:'Courier New','Liberation Mono',monospace;color:#8fd6ff;font-size:80%;letter-spacing:0.6px;font-style:italic;font-weight:bold;">li</span>&nbsp;<span style="white-space:nowrap"><span style="color:#d8effc;font-family:'TeX Gyre Chorus',cursive">sun</span></span></span> <span style="font-family:'Courier New','Liberation Mono',monospace;color:#9fd8c9;font-size:80%;letter-spacing:0.6px;font-style:italic;">zo</span></span></div>
+<div class="dz-line" style="margin:3px 0;padding-left:0ch"><span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">zai gau</span></span> <span style="white-space:nowrap"><span style="font-family:'Courier New','Liberation Mono',monospace;color:#8fd6ff;font-size:80%;letter-spacing:0.6px;font-style:italic;font-weight:bold;">fe</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">pa jan</span></span></span></div>
+<div class="dz-line dz-blank" style="height:1em"></div>
+<div class="dz-line" style="margin:3px 0;padding-left:2ch"><span style="background:rgba(255,255,255,0.110);border-radius:4px;box-decoration-break:clone;-webkit-box-decoration-break:clone"><span style="white-space:nowrap"><span style="color:#d8effc;font-family:'TeX Gyre Chorus',cursive">go</span></span> <span style="white-space:nowrap"><span style="font-family:'Courier New','Liberation Mono',monospace;color:#8fd6ff;font-size:80%;letter-spacing:0.6px;font-style:italic;font-weight:bold;">li</span>&nbsp;<span style="white-space:nowrap"><span style="color:#d8effc;font-family:'TeX Gyre Chorus',cursive">sun</span></span></span> <span style="font-family:'Courier New','Liberation Mono',monospace;color:#9fd8c9;font-size:80%;letter-spacing:0.6px;font-style:italic;">zo</span></span></div>
+<div class="dz-line" style="margin:3px 0;padding-left:0ch"><span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">bai gau</span></span> <span style="white-space:nowrap"><span style="font-family:'Courier New','Liberation Mono',monospace;color:#8fd6ff;font-size:80%;letter-spacing:0.6px;font-style:italic;font-weight:bold;">fe</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">go</span></span></span></div>
+<div class="dz-line dz-blank" style="height:1em"></div></div>
+</center>
+<p>He wondered what the words meant.</p>
+<p>He made a mental note to himself: gotta actually learn those 256 Dzegoban roots now that I'm here.</p>
+<p>About twenty meters after that, he saw another staircase, leading down to what seemed like an underground tea shop. The entrance and the staircase were decorated in a style that reminded Gladias of depictions he had seen as a child of Dzego's medieval era.</p>
+<p>And soon after that, Gladias arrived at the next street: Zin Go. The sidewalk had had good tree cover, enough so that he had lost sight of the giant pyramid towering in front of him. Here, the street intersection temporarily interrupted the trees, and he could see the pyramid once again. He saw many people going up and down the inclined walkway leading up to the entrance. The majority of them were wearing privacy robes. He wondered what they were up to.</p>
+<p>He crossed the street, and continued walking until he got to the next street: Dzai Gun. This was the last street before the hill began. He crossed the street again, and began to walk up the incline.</p>
+<p>About five minutes later, Gladias was high enough that he was now towering over Pafogai Du, and could see the roofs of nearly all of the buildings. From the top, the city was a mix of concrete roofs and green trees - much more green than Freetown, but still much less green than Veridia.</p>
+<p>He noticed a large rock nearby. He sat down on it, and enjoyed the view.</p>
+<p>A few minutes later, he began to walk back down.</p>
+<p>He got to Dzai Gun street, and turned left, walking along the edge of the city until the westernmost point. He was pleased by the beautiful path covered with trees that seemed to surrounding the whole perimeter of the city. He saw many people walking and running along it. When he reached 0th street, on the west edge of the city, the path turned north.</p>
+<p>He continued following the path, walking north two streets back to Tan Kai, and then crossed back into the city, heading east until he got back to his hotel.</p>
+<hr>
+<p>Gladias entered the hotel, and immediately turned left to enter the lobby restaurant. Even though he was ten minutes early, he saw Zei and Bai already sitting down at a table, looking at a hand device. Bai looked up, and waved at him.</p>
+<p>Gladias headed over to their table, and sat down.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What are you looking at?"</span>, he asked.</p>
+<p>Bai showed him the screen.</p>
+<br><div class="device-view wide-device-view"><blockquote>
+<p>He took the path less traveled, and that blazed a trail for all.</p>
+<pre style="color:#fff">
+         jan jo san sia
+   ci pa jan li san sia
+           te bia pin hu fe lo shun
+ci fi mu jan li san sia
+       fe fi mu san sia
+           te shun zo bia pin fe jan
+</pre>
+</blockquote></div><br>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Do you know what it means?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well, that first line is from a Veridian."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Indeed. And the rest?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Not yet. I only know like five Dzegoban roots"</span>, Gladias laughed.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Two percent of the language already"</span>, Bai replied.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"People should dream. If one person dreams, they will not fear pain. If a hundred thousand people dream a hundred thousand dreams, pain will fear them."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"It's an old poem."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Not too different a message from ours."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Indeed. Although you're blazing trails, and we're fighting here to survive."</span></p>
+<p>Immediately after she finished speaking, Zei and Bai both turned to wave at someone else who was running up to the table.</p>
+<p>Zei immediately recognized him, and slid out the remaining chair for him to sit down.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Gladias, meet Fin."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Nice to meet you, Fin. Seila mentioned all the good things that Zei had said about you."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"And nice to meet you too, Gladias. Anyone Zei brings is a friend to me."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well I'm just happy to finally get to see Dzego with my own eyes."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"So what's been up in your world, Fin?"</span>, Bai interjected. <span style="color:oklch(0.7 0.15 26.666666666666664)">"I think this is the first time we've seen you in almost half a month."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"I'm really sorry I've been ignoring you guys for so long. But thank you for asking the question - because finally, I think I can give a worthy answer."</span></p>
+<p>Gladias, Zei and Bai all turned to stare at Fin.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"You might have been wondering"</span>, Fin began, <span style="color:oklch(0.7 0.15 80)">"why we spend so much effort on the Bansunpei. What's the point of optimizing Dzegoban, optimizing the measurement units, all of this, when there's so much else that Dzego desperately needs - education, defense, economic development, all of it."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"And for quite a few years, I've been wondering this myself. And it's not until my Bansunpei meeting the day Redshire was attacked that I finally got the answer."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"What is the answer?"</span>, Zei asked.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"Dzegoban is coordination training."</span></p>
+<p>Zei and Bai both opened their mouths.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"Think about what we're doing each time we release a new iteration of Dzegoban."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"First, we A/B test many different versions of it. We motivate different people to try different things, and report back on their experiences."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"This ensures two things. First, it ensures that there's public feedback into the process, so the final product is informed by what behaviors actually work when you get real human beings to try to start doing them."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Second, the public feedback, and the fact that the final outcome is a result of many people choosing between many different options across different dimensions, helps people accept the outcome. It takes no one by surprise. Anyone who disagrees with some part of it almost always knows someone who likes it more, and can at least hear their perspective."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"The Bansunpei intentionally seeks out members from all walks of life - you actually get <em>bonuses</em> for recruiting someone whom no one else in the organization knows."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"And so on the day Redshire was attacked, the Bansunpei digitally convened, and made an unprecedented decision. At least for the time being, they were putting Dzegoban version nine on hold. Releasing a few basic highlighting changes that had been agreed upon for over a year, but that's it."</span></p>
+<p>Zei audibly sighed with relief.</p>
+<p>Gladias could understand. The last month had been intense for everyone - hardly a good time to get everyone across the country to learn a whole new version of their language.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"Instead, they decided to use the exact same machinery, though with less public participation and more secrecy because of the unique circumstances and the time constraint, to coordinate a totally different set of changes across Dzego."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"Have you seen how many more people are wearing and having conversations through neck bands now? Or wearing privacy robes? Or going between places in black cars? Or buying products online, through the physical-delivery mixnets, instead of going to stores. And ten times more meaningful than any of that is what you don't see - more of the sensitive meetings are just going online, and everyone doing things on the internet is using much more secure tools too. Bluewhale Messenger has almost disappeared from Dzego overnight."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"None of that was happening three days ago. Instead, the Bansunpei just released its new privacy and security recommendations, through the channel where all the people who follow them were expecting news about Dzegoban version nine. About five percent of the population saw the recommendations at the same time. They were surprised, but they read and understood the reasoning, and respected the people who made the decisions. The majority of those people have already changed their behavior in at least one major way, and even that two and a half percent was already enough to start a trend that's now sweeping across all of Dzego."</span></p>
+<p>Fin grew even more excited, and he continued.</p>
+<p><span style="color:oklch(0.7 0.15 80)">"The Arctics talk a lot about a person's Intelligence Score, and how society should be run by those whose score is the highest. A few Veridian academics say that we should take Emotional Intelligence Scores seriously as well - though they always have a hard time getting people to actually do anything beyond just nodding along to that statement."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"But there's a third category that they are completely missing. The Coordination Score. A Coordination Score is not a property of a person - it's a property of an entire community. It's a community's ability to make collective decisions, to choose positive-sum, even if personally risky, cooperation over zero-sum competition, and to jump out of bad equilibria into better ones."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"This is what the Arctics think can only be done with a strong leader that everyone bows down to. But we Dzegojan say NO. We say 'gie fe kiu kai ci bin hu' - grow roots, no head. And now we've grown our roots, and we Dzegojan, who have improved and perfected our language eight times with no top-down coercion and no head, are going to take on the Arctics with no head. And we are going to WIN."</span></p>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-17.html" title="Previous chapter: Chapter 17" aria-label="Previous chapter: Chapter 17"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-19.html" title="Next chapter: Chapter 19" aria-label="Next chapter: Chapter 19"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>

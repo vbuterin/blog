@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-19.html" title="Previous chapter: Chapter 19" aria-label="Previous chapter: Chapter 19"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-21.html" title="Next chapter: Chapter 21" aria-label="Next chapter: Chapter 21"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+<h1>Chapter 20</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Meldan, Veridia</span><span class="sep">·</span><span class="date">3724 Mistime 10</span></span></div>
+<p>Seila woke up, as the alarm in her watch buzzed. Her watch was flashing bright red - a message from Emerald of a type that she had never before seen.</p>
+<p>She immediately sat up, and opened up her hand device to take a look at the news in more detail.</p>
+<p>When she saw the top line, her heart almost stopped.</p>
+<blockquote>
+<p>ARCTIC EMPIRE INVADES NORTHGLADE</p>
+</blockquote>
+<p>Northglade. Febric and Hreda were there. No.....</p>
+<p>She kept reading.</p>
+<blockquote>
+<p>At 5,250 this morning, Arctic soldiers, flying vehicles and drones descended on the province of Northshore from all sides.</p>
+<p>The Veridian military offered almost no resistance, and within two longhours their soldiers and drones were stationed in Northglade.</p>
+<p>The entire area is now fully under Arctic control, with only one exception. The Greater Plum Harbor inside Northglade has remained untouched by the Arctics, and seems to be at present respected as some kind of neutral zone. Hundreds of refugees streamed into the Greater Plum Harbor, before the Arctics set up barricades to stem any further entrances. More refugees attempted to enter on personal copters. About half succeeded, especially in the first longhour, and others were shot down.</p>
+<p>Internet communications between Northglade and the rest of Veridia have been cut, except for the Greater Plum Harbor. Long-distance transmissions between the Greater Plum Harbor and the rest of Northglade, which are evading the jamming mechanisms, are now the main channel of two-way communication with the province of Northshore.</p>
+<p>Neither local Northshore politicians nor Arctic officials have yet made any public comment. As of our last knowledge, Lord Ephelion, Arctic consul to Veridia, was in Northglade at the time of the invasion. We await further information.</p>
+</blockquote>
+<p>She scrolled down in her hand device, and saw that Emerald was highlighting five other messages that it deemed very important to her.</p>
+<br><div class="device-view wide-device-view"><table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th></th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Febric</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 80)">Hreda and I are both safely inside the Greater Plum Harbor. We will survive the best that we can. <br><br> We love you.</span></td>
+      <td>19867</td>
+    </tr>
+    <tr>
+      <td style="width: 25%"><center>Hreda</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 106.66666666666666)">Northglade was invaded this morning.</span></td>
+      <td>20045</td>
+    </tr>
+    <tr>
+      <td style="width: 25%"><center>Hreda</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 106.66666666666666)">It looked like there were barely any battles, as though our politicians and army are totally okay with this happening.</span></td>
+      <td>20060</td>
+    </tr>
+    <tr>
+      <td style="width: 25%"><center>Hreda</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 106.66666666666666)">Febric and I are safely inside the Greater Plum Harbor. The Arctics seem to be respecting it as some kind of neutral zone, at least for now.</span></td>
+      <td>20071</td>
+    </tr>
+    <tr>
+      <td style="width: 25%"><center>Hreda</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 106.66666666666666)">I'm scared. I hope everything will be okay. <br><br> Love you.</span></td>
+      <td>20077</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p>Seila started typing back a message, confirming to Febric and Hreda that she received their message and she and Vil and Daia would do everything she could to bring them home. Before she finished typing, she began to cry.</p>
+<hr>
+<p>A longhour later, she heard a knock on her door. She walked up to the door, and saw through a screen that there was a man wearing a privacy robe outside.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Who are you?"</span>, she asked.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"I'm Mov. Gladias knows me well."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Why should I believe you?"</span></p>
+<p>The man whispered a few words into his neck band, and put up his hand device against the green circle beside the door of the house. Seila's watch buzzed.</p>
+<br><div class="device-view narrow-device-view"><div style="border: 1px solid; border-radius: 5px; padding: 5px"><b>Frequent contact of Gladias <br><br> Proof verified.</b> <b style="font-size: 150%; color: #8f8">✓</b></div></div><br>
+<p>Seila cautiously opened the door, and let the man in.</p>
+<p>Mov took off his shoes, and immediately proceeded to the basement room, knowing exactly where within the house it was located. Seila followed him.</p>
+<p>They both sat down.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"I'm getting really concerned about what's happening to Veridia."</span></p>
+<p>Seila looked at him with a blank stare, suprised that it was even possible to say something so uselessly obvious.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"I don't mean the invasion of Northglade. That was really shocking, it's terrible. And I'm really sorry Febric and Hreda are there. I hope they're safe."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"They are. The Arctics are leaving the Greater Plum Harbor there alone somehow, and Febric and Hreda managed to get there in time."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"So what do you mean?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"I mean the things that made that invasion possible, and succeed with so little resistance. All of those factors are true in the rest of Veridia too."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Gladias would be the person I would normally speak about this with, but he has been very busy in meetings with some Dzego secret government people the past few days, and he's been asleep the past few longhours. So I wanted to talk to you."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"What do you think I know? Our politicians are clearly bought out, or blackmailed, or apathetic, or some of all of those things. Gladias doesn't talk to me much about the Order, after all he's not supposed to."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Maybe I'll tell you what I know. I was following Delwart, the mysterious gentleman who has been having meetings with Gladias for the past months. He was not just talking to Gladias, he was talking to various other Keepers, he seemed to have a pretty wide network."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"At one point, before I lost track of him, I caught him in a meeting with someone from Silverchat. And then Gladias told me that he confronted Delwart, and Delwart admitted that he had been working for Silverchat the whole time."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Silverchat? They're doing some kind of big operation to corrupt the Order? But why? I would have expected Bluewhale to do things like that, but Silverchat were always the good ones! And what does this have to do with the Arctics?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"I think our society has just gotten really complacent. Everyone is focused on maintaining their happy life, getting some advantage that they can, and people don't value actually maintaining the things that keep Veridia running. Even Silverchat. And what's worse, the Keepers just don't seem to be watching out for this."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"The Order seems to be performing better than any other part of our institutions. The military has failed completely at setting up defenses for Northshore. From what I can tell, the Keepers have done what they could, the tax rubric even changed to be even more supportive of open-sourcing defense hardware, Gladias told me that much. He was really proud of it, as was I."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Indeed, though that was a close call. Whoever split up the Keepers into three groups that could not talk to each other was a genius - otherwise Delwart might have gotten to all of them."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Something about this doesn't sit right. Silverchat... they just don't seem like the people who would do this."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"I know you've loved them since you were a child, for the same reasons Gladias did. And I did too. But sometimes ... your heroes turn out not to be heroes. Or maybe Silverchat doesn't care about that particular rubric, and that was just Delwart himself being an extreme peace dove."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Do you know any of the other Keepers that Delwart talked to. Can we talk to any of them?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"I did put trackers on two of them. I could have totally ratted them out to the cryptographic network and gotten a big bounty, but ... I thought it would be better to keep the option to track them more."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Can we talk to them?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"I suppose."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Let's go visit them. Like, right now."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"You don't want to focus on seeing what you can do for Febric and Hreda today?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I may be a worried mom - or, well, aunt - but I know there's not much I can do. I had a call with them already, they're sitting tight, I'm sitting tight, I don't think we and they are any better at pulling off some kind of grand escape from Northglade than any of the hundred people trying to fly in to the Greater Plum Harbor who got shot down. So, sit and tight is the plan, nothing more to do today. But figuring out what on earth is going on with the Order, that's something I can do today."</span></p>
+<p>She sighed.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I guess I feel like I have to be doing <em>something</em>, and this is something that I can do."</span></p>
+<p>Mov nodded.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Just don't take a copter. You might think it's faster and <em>this time</em> the crazy high noise taxes are worth it, but you would just be inviting attention to yourself."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Don't worry, I wasn't planning to."</span></p>
+<p>A taxi arrived. Seila put on one of Gladias's privacy robes. She and Mov, who was already wearing his privacy robe, rushed toward the taxi. Seila reached the door first, and she tapped her watch against a green circle beside the taxi door, simultaneously opening the door and cryptographically approving the payment. They got in the taxi.</p>
+<p>The taxi began moving, headed to a location a short autobus ride away from the home of one of the other Keepers.</p>
+<hr>
+<p>Twenty minutes later, they arrived at an apartment building. It was a new construction. The outer wall was wrapped with some kind of imitation stone material. On the ground floor, they could see restaurants and shops selling various kinds of goods. On the higher floors, from the outside all they could see were regularly-spaced but well-decorated windows of people's apartments.</p>
+<p>They saw another man walking towards the door, about to enter. They immediately slowed down their walk so that they would appear to naturally reach the door right after the man.</p>
+<p>The man walked to the door, put his watch against the green circle beside the door, and the door opened. He walked through. Before the door closed, Seila and Mov walked in too.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"He's in room 515"</span>, Mov said. <span style="color:oklch(0.7 0.15 173.33333333333331)">"Let's just go up the stairs."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"How do you know that?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"The tracker I put on him."</span></p>
+<p>They walked up the stairs, and eventually got to the door of room 515. They knocked.</p>
+<p>On the inside, they heard footsteps. Mov removed the hood on his privacy robe, a gesture to appear less threatening. He was not supposed to know this man, so he had no way to prove that he was someone to talk to - except perhaps for burning a hundred zipcoins at his doorstep. Seila removed her hood too.</p>
+<p>The man simply opened the door.</p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"Hello?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Hi, I'm Seila. I know this is awkward, but we wanted to talk about the Order and Delwart."</span></p>
+<p>The man's eyes opened wide.</p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"Nice to meet you Seila."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"And I'm Mov."</span></p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"I'm Telroy. Though ... if you know I'm in the Order and you know about Delwart, maybe you already know that too."</span></p>
+<p>At that moment, Mov realized that in a certain sense, he already had burned much more than a hundred zipcoins at Telroy's doorstep - by clearly having enough information to claim a large bounty by ratting out his role to the Order's cryptographic network, and choosing not to do that.</p>
+<p>Mov and Seila walked in. Telroy directed them to sit down on the couch, and he began preparing tea for the three of them.</p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"So what do you know about me and Delwart?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"You're a Keeper, you're in the rubric group on cybersecurity. One of the rubrics being debated has to do with data retention in environmental sensors. You met Delwart at least once, though I was not able to hear the content of your conversation."</span></p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"Okay, you do know a lot. Delwart has been insistent during our conversations that the recent push for trying to minimize data collection did not actually make sense, it was some kind of paranoid threat against an enemy that was not really present - though maybe now, he will have changed his tune. He argued to me that the more important information threat is protecting against insider trading."</span></p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"He also said that the local environmental and public safety agencies need broad access to be able to adapt to changing circumstances quickly without asking for permission every time - and that the main privacy defense we really need is delaying their access to non-disease-related data by five or ten days so that they can't trade with it."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"That ... does not sound at all like the Delwart that Gladias told me about."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Did he say anything else?"</span></p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"He was generally anti-war, as I mentioned - that's how he described himself. Otherwise not too much - his main opinion was that he thought people were getting overcomplicated trying to throw in all the cryptography, and we should just trust people more."</span></p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"Okay, now I'm curious - what is the Delwart you know?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"He was anti-war. He valued people's freedom to live their own lives, he wanted the Order to do much less - even the tax nudges were too much for him. In particular, though, he was really against this change to a tax rubric -"</span></p>
+<p>Mov paused. He realized that Seila had already volunteered Gladias's name, and if he continued, he might be giving Telroy information through which Telroy might be able to figure out <em>Gladias's</em> rubric, and collect the bounty by ratting him out.</p>
+<p>But then he thought - Telroy was trusting him and Seila, the least they could do was reciprocate back with some trust of their own.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"The rubric for open source hardware. He believed that anything military-relevant should be exempt from tax breaks, because military is a zero-sum game, we're not doing anything good for the world by participating in that."</span></p>
+<p>Telroy nodded. <span style="color:oklch(0.7 0.15 266.66666666666663)">"I guess he really is anti-war then."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"But then I followed him around more, and Gladias confronted him after Redshire was invaded, and ... it turns out he has been working for Silverchat."</span></p>
+<p>Telroy stared in surprise. <span style="color:oklch(0.7 0.15 266.66666666666663)">"Silverchat?"</span></p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"That is ... surprising."</span></p>
+<hr>
+<p>Seila and Mov got out of the taxi, and walked along the forested path through Kalimar. A gentle cool breeze blew against their backs, subconsciously driving them to walk faster. A few hundred meters later, they walked off the path and turned right. Thirty meters after that, they saw a stone house that was mostly underground, with the above-ground part sticking up only a meter above ground. The whole structure was barely visible from beyond a few meters away.</p>
+<p>That was one way to score high on aesthetics, public access and emergency shelter functionality at the same time, she thought. That house was probably paying close to no land taxes.</p>
+<p>Seila and Mov walked down a staircase, and knocked on the door. They took off the hoods of their privacy robes.</p>
+<p>They heard footsteps.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Who is this?"</span>, they heard a female voice ask.</p>
+<p>Seila quietly stepped on Mov's toe, urging him to stay silent. Mov picked up the cue, and stepped back.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Hi, I'm Seila. I know this is awkward, but we wanted to talk about the Order and Delwart."</span></p>
+<p>The door immediately opened.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Hi, I'm Balme. Please, come in."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Is it okay if my friend Mov comes in too?"</span></p>
+<p>Seila felt slight discomfort from Balme - the interaction was now two on one, and Mov had a larger and more imposing physique - but at that point she had already opened the door, and it would have been very awkward at best to shut it on them.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Sure"</span>, she replied softly.</p>
+<p>Seila and Mov both entered.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"I apologize for intruding so rudely, and for spying on you to know where to come. But I hope you'll forgive me; our country is in a pretty dire situation as you can tell."</span></p>
+<p>Balme nodded.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"What do you know about Delwart?"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"I met him a few times. The first time we talked was when he sent me an anonymous message about a longhour after a Keeper meeting. Somehow he had been able to track me down. I'm in a rubric group for private schools. He talked a lot about his own views about education, and how he thought we should not be putting our thumbs on the scale, using the tax rubrics to encourage what he considered biased civics education talking about how beautiful Veridia is and encouraging the students to cherish and love it - he thought that schools should just teach people knowledge, and they should learn to love Veridia by seeing how great it is on their own."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Did he have any other perspectives?"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"He seemed generally pro-freedom, he believed that people should be left to evolve on their own, generally things work out best when they happen spontaneously and naturally, the Order should not be putting its thumb on the scale so much."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Anything about international politics?"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Not really, he never brought that up. He seemed not to care."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"He did once ask me what I thought about Dreadknot. I responded that I did not like them much. He didn't answer, and changed the subject."</span></p>
+<p>Seila nodded.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"The Delwart that I know is also concerned about freedom, also thinks the Order should do much less. But... he also does have strong opinions on international politics. He basically thinks anything military is a zero-sum game, you can't know what will lead to a good or bad outcome, and Veridia should stay out entirely."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Although ... he's apparently more mixed on the freedom thing. He seems okay with the public security agencies collecting more information, and not using cryptography to try to limit the data collection and get guarantees about what purpose the data is being used for."</span></p>
+<p>Balme's eyes opened wider in surprise.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Wait, I'm curious, how could you use cryptography for that?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I have a friend from Dzego, Zei, who told me about it once. Basically you have a language model inside the camera, that detects whether or not, say, an act of violence is going on. And only if that's happening, it passes the information along. Every time it does, it also uploads a hash onto a cryptographic network, so we get a public trace of how many times the check was triggered."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"And then they have a whole infrastructure to verify that the hardware is actually running that code. Signatures from keys that were randomly generated inside the chip by chemical imperfections in the manufacturing process at the time the chip was created. There's apparently a rule that anyone has a right to randomly take down a camera and micro-inspect it, and many people are doing that as a hobby, so no manufacturer can get away with making cameras that cheat the rules."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"That ... sounds amazing. Cryptography is not my area at all, but ... cameras that you can actually trust, that makes total sense! Wait, but Delwart was so pro-freedom, how could he not already know about that kind of thing and be enthusiastic about it?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I'm confused too."</span></p>
+<p>Seila paused for a few moments.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Okay, I know this is a random question, but - do you know any Keepers who are in any rubric groups related to social media?"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"I know a few Keepers as friends, but I don't dare ask them what they're working on. It's our tradition, you only talk openly about things you did when you already finished your three years and moved on to a different rubric group."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Could you ... forward a message to them from me? I'll write it up for you right now. And tell them that it's worth responding to."</span></p>
+<p>Balme thought for a moment, checking with herself whether or not she thought Seila, and her friend who had so far said nothing at all, could be trusted. An instinct told her that they can.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Of course."</span></p>
+<hr>
+<p>Seila walked up to the door of a house, similar to the one that she and Gladias lived in. This time, Mov stayed back entirely. Seila seemed more effective at winning trust alone, he thought, so he might as well let her do the questioning on her own. If he needed to, he could suggest questions by earpiece.</p>
+<p>Seila knocked on the door.</p>
+<p>No response.</p>
+<p>A minute later, she knocked again.</p>
+<p>Still no response.</p>
+<p>She heard footsteps inside, but they did not seem to be getting closer to the door.</p>
+<p>Her watch buzzed. She got a notification:</p>
+<br><div class="device-view narrow-device-view"><div style="border: 1px solid; border-radius: 5px; padding: 15px"><b>50 zipcoins have just been burned.</b><b style="font-size: 150%; color: #8f8">🔥</b></div></div><br>
+<p>Mov ... she thought. She knew that whoever was in the house would see the same message, and know that she was serious.</p>
+<p>Seila knocked on the door for a third time.</p>
+<p>She heard footsteps again, this time coming toward the door.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"What do you want?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Hi, I'm Seila. I'm the one that asked Balme and Telroy to send the message about the social media rubrics. I want to talk."</span></p>
+<p>The man opened the door.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"I'm Lectoby. I'm in the social media openness rubric."</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"I'm sorry I didn't open the door. My wife is stuck in Northglade. I've been really upset today, I just don't want to talk to people."</span></p>
+<p>Seila nodded.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I'm Seila. I understand. My kids are stuck in Northglade too."</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"Why did you burn those zipcoins? You could have just asked Balme to tell me you're coming."</span></p>
+<p>Mov ... Seila thought to herself furiously. Why did he have to be so impatient?</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I'm sorry, I'm just really desperate."</span></p>
+<p>Lectoby motioned for Seila to come in, and she followed. They both sat down.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"So what is this about?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Has there been any strange man who attempted to contact you, or anyone else you know in your rubric group? In the past year or so."</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"Huh ... nope, never heard of that happening."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Could you maybe ... directly ask in your rubric group chat? I want to confirm."</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"Have <em>you</em> had that happen?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"My husband has. Balme too. Quite a few others. He has strong opinions that seem to differ depending on whom he talks to. Sometimes he's anti-war, sometimes he isn't. Sometimes he's against the Order intervening in anything, sometimes he isn't."</span></p>
+<p>Lectoby whispered a few sentences through his neck band.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"Let's wait for my Keeper group to see what they say."</span></p>
+<p>He stood up.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"Would you like some tea?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Sure."</span></p>
+<p>Lectoby walked over to the kitchen, and started to boil water for himself and for Seila.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"I'm sorry about your kids. This whole Arctic thing is just ... so crazy. Redshire, now this. It feels like they're shifting gears, and within a year or two they'll just launch a big war to take over the whole world."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Or worse, less than a year. They took Northglade, seems like no one is lifting a finger again. I checked the senate hearing on my way here, a lot of performative outrage, no action, no introspection about how we got here."</span></p>
+<p>Lectoby sighed.</p>
+<p>He brought a cup of tea for himself, and a cup for Seila, and they sat down. They drank it silently.</p>
+<p>Twenty minutes later, Lectoby leaned forward, and Seila's attention turned to him.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"They all replied"</span>, he said.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"And?"</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"None of them had that happen. One did reply that a friend in a different rubric group had that happen to him. But none in this rubric group."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"That is ... so strange."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"It could be a coincidence, but..."</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"What's the matter?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Your rubric group is on social media openness and interoperability, right?"</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"It is."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Delwart was supposed to be from Silverchat. But this is the one topic that Silverchat should care about the most, and ... zero inroads into this rubric?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Again, this could be a coincidence, but..."</span></p>
+<p>She stood up.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"Wait, what's going on?"</span></p>
+<p>She knew Mov would want her to leave, so she could sync up with Mov privately. But Lectoby had trusted her, and she thought it was fair to trust him too.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Why would someone from Silverchat care about whether or not Veridian schools are teaching people civics well? Why would someone from Silverchat be so anti-war? How could someone from Silverchat be so effective at tracking down keepers? And ... why would someone from Silverchat, in that position, not make any effort at all on the rubric that Silverchat cared the most about, getting properly rewarded for being so effective at openness and interoperability?"</span></p>
+<p>But by this point Seila had long since known the answer, and this was simply a final confirmatory straw. She figured there was no harm in blurting out her conclusion, as she stood up, and picked up her hand device, getting ready to leave.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Delwart is not from Silverchat."</span></p>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-19.html" title="Previous chapter: Chapter 19" aria-label="Previous chapter: Chapter 19"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-21.html" title="Next chapter: Chapter 21" aria-label="Next chapter: Chapter 21"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>

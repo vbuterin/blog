@@ -1,0 +1,554 @@
+<chapter_nav prev="chapter-11.html" next="chapter-13.html" />
+
+# Chapter 12
+
+<chapter_open place="Sadzu Du, Dzego" date="3724 Grasstime 22" />
+
+Zei looked out of the window of the train, as the train began to slow down.
+
+At first, he saw trees. Then, he began to see buildings with greater and greater density. Finally, after a few minutes, he saw the station.
+
+A sign slowly passed across the window.
+
+<center><dzegoban color="off" font="fancy" wrap="off" align="2,0,2,0">
+sa dzu du
+</dzegoban></center>
+
+"Main city", Dzego's helpfully-named capital city.
+
+The train came to a stop, and Zei could hear the doors open. The other passengers stood up, and started to gather their belongings.
+
+Zei decided he was not in a rush to leave first, and would maximize the quality of his time instead. For about two minutes, he finished his game of Minpentai against a bot.
+
+Fin had never gotten around to writing the harness to fine-tune the AI to play well on custom rulesets, and so Zei was still playing against the stock AI.
+
+At that moment, the other AIs resigned. Zei had beaten them one-on-three. To compensate for their lack of skill, he had adjusted the game to only give him one corner and three other AIs the other three corners, and put them all on the same team against him. Even despite this, Zei had won. He realized that the three-on-one did not even help the AIs that much - playing in that style was not in their training data, so they made basic mistakes and cannibalized each other's negentropy.
+
+Zei put away his hand device and sighed.
+
+By this point, the other passengers were almost all off the train. Zei grabbed his bag, and stood up and began to walk out of the train as well.
+
+When he stepped out, there were six people wearing Minpentai priest robes waiting for him.
+
+![Su: "Welcome to Sadzu Du, Zei"], the lead priest, an older woman about the same age as Mu, said to him.
+
+![Zei: "Excited to be here"], Zei quickly replied. ![Zei: "Only my second time to the capital."]
+
+![Su: "I'm Su by the way. I'm one of the organizers of the nationals."]
+
+![Zei: "Well nice to meet you, Su."]
+
+![Zei: "So what's on my itinerary these next few days?"]
+
+![Su: "Check in to the hotel, then orientation tomorrow morning. Thirty-two contestants, the brightest young minds in Minpentai across all of Dzego. You'll get to meet them all."]
+
+Su led Zei to a room that contained many doors. One of the doors slid open, and on the other side Zei could see the inside of a black car, identical to the one that Den had used to take him to the chip fab a few months earlier.
+
+![Su: "Unfortunately, I'll have to leave you here, Zei. There's another contestant arriving here on a train in half a longhour. But have a good ride and have a good rest."]
+
+![Zei: "Thank you so much."]
+
+Zei got into the car, and the door closed. The car started moving.
+
+Zei stared outside the window of the car, marveling at the buildings and trees in the city. Parts of it looked not too different from Pafogai Du, though here there were fewer electronics stores, and instead a wider variety of venues. Some medicine stores.
+
+On the window of one of the stores, Zei saw a sign:
+
+<center><dzegoban color="off" font="fancy" wrap="off" align="2,0,2,0">
+ti ka dia shu fe cen su jui hui
+</dzegoban></center>
+
+"Get your longevity package here"
+
+Soon the health stores gave way to some stores selling artistic furniture and other household items.
+
+And after that a few traditional-looking restaurants and tea houses, in a style mimicking Dzego's own medieval era.
+
+For a moment, the buildings on the right side stopped completely, and Zei could see a park. Behind the park, Zei could see several mountain pyramids, each about half as tall as the mountain pyramid south of Pafogai Du.
+
+A minute later, the park ended, and the car crossed a bridge across a small river. Zei could see the buildings get denser further ahead.
+
+The road slowly descended underground, and turned into a tunnel.
+
+A few minutes and a few turns later, the car stopped. When the car's door opened, it was pressed tightly against another door, completely shielding Zei from being visible from outside the car and the building he was entering.
+
+Zei stepped out. He was in a hotel.
+
+He walked over to the nearest green circle, and tapped his watch against it.
+
+<narrow_device_view>
+<table>
+  <tbody>
+    <tr>
+      <td><center><div style="border: 1px solid; border-radius: 5px; padding: 5px">sen hen zi li die fe 150 <br> zo lia kin  <b style="font-size: 150%; color: #8f8">✓</b></div></center></td>
+      <td><center><div style="border: 1px solid; border-radius: 5px; padding: 5px">man dun li jie hu <b style="font-size: 150%; color: #8f8">✓</b></div></center></td>
+    </tr>
+    </tbody>
+</table>
+
+<b>cau tie zen <br> ci fan zi li 304</b>
+</narrow_device_view>
+
+Reputation above 150 verified. Payment not needed. Approved, room number is 304.
+
+Zei's watch buzzed, confirming his room key.
+
+Zei entered his room, and took a shower.
+
+He promptly went to sleep.
+
+---
+
+An alarm buzzed.
+
+Zei tapped on his watch to check what time it was. 30,003, the watch said. Only half a longhour before the commencement ceremony. He tapped a few buttons on the room service menu, and ordered a fruit and vegetable juice.
+
+He put on his clothes.
+
+Three minutes later, the juice arrived, and Zei quickly drank it. He immediately felt energized - or at least, energized enough to take the trip to the venue.
+
+Without wasting any more time, he opened the door, and went downstairs.
+
+A black car was already waiting for him. Zei walked through the lobby, and immediately stepped through the hotel door and car door that were already open and pressed tightly against each other. The door closed.
+
+As the car began to move, Zei took out the cryptography textbook that Den had recommended to him in one of their meetings, and continued reading it where he had left off.
+
+The section was on hash functions. In the middle of the page, there was a large diagram.
+
+<wide_device_view>
+
+
+
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="250" viewBox="0 0 400 250">
+  <defs>
+    <marker id="arrowhead-o" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#fa5" />
+    </marker>
+  </defs>
+  <rect width="400" height="250" fill="#245" />
+  <text x="200" y="17" font-family="sans-serif" font-size="13" fill="lightblue" text-anchor="middle">tun bia zi sin de sia</text>
+  <line x1="50" y1="46" x2="350" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="80" y1="46" x2="110" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="110" y1="46" x2="380" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="140" y1="46" x2="260" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="170" y1="46" x2="80" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="200" y1="46" x2="140" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="230" y1="46" x2="230" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="260" y1="46" x2="50" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="290" y1="46" x2="290" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="320" y1="46" x2="200" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="350" y1="46" x2="170" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="380" y1="46" x2="320" y2="74" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="50" y1="102" x2="290" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="80" y1="102" x2="260" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="110" y1="102" x2="50" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="140" y1="102" x2="350" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="170" y1="102" x2="200" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="200" y1="102" x2="80" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="230" y1="102" x2="230" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="260" y1="102" x2="320" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="290" y1="102" x2="140" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="320" y1="102" x2="110" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="350" y1="102" x2="380" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="380" y1="102" x2="170" y2="124" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="50" y1="152" x2="290" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="80" y1="152" x2="50" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="110" y1="152" x2="380" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="140" y1="152" x2="200" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="170" y1="152" x2="140" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="200" y1="152" x2="80" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="230" y1="152" x2="320" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="260" y1="152" x2="260" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="290" y1="152" x2="170" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="320" y1="152" x2="350" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="350" y1="152" x2="230" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="380" y1="152" x2="110" y2="174" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="110" y1="202" x2="140" y2="230" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="170" y1="202" x2="50" y2="230" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="230" y1="202" x2="80" y2="230" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="260" y1="202" x2="110" y2="230" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="290" y1="202" x2="170" y2="230" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <line x1="320" y1="202" x2="200" y2="230" stroke="#9ab" stroke-width="0.8" opacity="0.7" />
+  <path d="M 46 40 H 18 Q 10 40 10 48 V 222 Q 10 230 18 230 H 20.5" stroke="#fa5" stroke-width="1.5" fill="none" />
+  <circle cx="26" cy="230" r="5.5" fill="#245" stroke="#fa5" stroke-width="1.2" />
+  <line x1="23.5" y1="230" x2="28.5" y2="230" stroke="#fa5" stroke-width="1.2" />
+  <line x1="26" y1="227.5" x2="26" y2="232.5" stroke="#fa5" stroke-width="1.2" />
+  <line x1="31.5" y1="230" x2="45" y2="230" stroke="#fa5" stroke-width="1.5" marker-end="url(#arrowhead-o)" />
+  <rect x="46.0" y="74" width="98" height="28" rx="3" fill="rgba(204, 238, 255, 0.04)" stroke="#cef" stroke-width="1" />
+  <text x="95" y="92" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">fai hie</text>
+  <rect x="166.0" y="74" width="98" height="28" rx="3" fill="rgba(204, 238, 255, 0.04)" stroke="#cef" stroke-width="1" />
+  <text x="215" y="92" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">fai hie</text>
+  <rect x="286.0" y="74" width="98" height="28" rx="3" fill="rgba(204, 238, 255, 0.04)" stroke="#cef" stroke-width="1" />
+  <text x="335" y="92" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">fai hie</text>
+  <rect x="46.0" y="124" width="98" height="28" rx="3" fill="rgba(204, 238, 255, 0.04)" stroke="#cef" stroke-width="1" />
+  <text x="95" y="142" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">fai hie</text>
+  <rect x="166.0" y="124" width="98" height="28" rx="3" fill="rgba(204, 238, 255, 0.04)" stroke="#cef" stroke-width="1" />
+  <text x="215" y="142" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">fai hie</text>
+  <rect x="286.0" y="124" width="98" height="28" rx="3" fill="rgba(204, 238, 255, 0.04)" stroke="#cef" stroke-width="1" />
+  <text x="335" y="142" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">fai hie</text>
+  <rect x="46.0" y="174" width="98" height="28" rx="3" fill="rgba(204, 238, 255, 0.04)" stroke="#cef" stroke-width="1" />
+  <text x="95" y="192" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">fai hie</text>
+  <rect x="166.0" y="174" width="98" height="28" rx="3" fill="rgba(204, 238, 255, 0.04)" stroke="#cef" stroke-width="1" />
+  <text x="215" y="192" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">fai hie</text>
+  <rect x="286.0" y="174" width="98" height="28" rx="3" fill="rgba(204, 238, 255, 0.04)" stroke="#cef" stroke-width="1" />
+  <text x="335" y="192" font-family="sans-serif" font-size="10" fill="lightblue" text-anchor="middle">fai hie</text>
+  <circle cx="50" cy="46" r="4" fill="#cef" />
+  <circle cx="80" cy="46" r="4" fill="#cef" />
+  <circle cx="110" cy="46" r="4" fill="#cef" />
+  <circle cx="140" cy="46" r="4" fill="#cef" />
+  <circle cx="170" cy="46" r="4" fill="#cef" />
+  <circle cx="200" cy="46" r="4" fill="#cef" />
+  <circle cx="230" cy="46" r="4" fill="#cef" />
+  <circle cx="260" cy="46" r="4" fill="#cef" />
+  <circle cx="290" cy="46" r="4" fill="#cef" />
+  <circle cx="320" cy="46" r="4" fill="#cef" />
+  <circle cx="350" cy="46" r="4" fill="#cef" />
+  <circle cx="380" cy="46" r="4" fill="#cef" />
+  <circle cx="50" cy="230" r="4" fill="#cef" />
+  <circle cx="80" cy="230" r="4" fill="#cef" />
+  <circle cx="110" cy="230" r="4" fill="#cef" />
+  <circle cx="140" cy="230" r="4" fill="#cef" />
+  <circle cx="170" cy="230" r="4" fill="#cef" />
+  <circle cx="200" cy="230" r="4" fill="#cef" />
+</svg>
+
+
+
+</wide_device_view>
+
+"Conception of a hash algorithm".
+
+Zei read the accompanying text.
+
+Hash algorithms, it said, were there to create a shrunken fingerprint of a large piece of information, that still uniquely identifies the original. The goal is for it to be infeasibly hard to find two different pieces of data that have the same hash.
+
+Hashes inherently destroy information - representing a larger thing with a smaller thing is their entire goal. But there is a paradox: in the internal workings of all the best hash functions that we build, the largest component is an _entropy-preserving_ transformation: a permutation.
+
+The core building block maps inputs to outputs one-to-one. And not only that, it can be _efficiently_ run both forwards and backwards. The shrinking, and the irreversibility, comes from a simple layer on top: a deletion, and an xor of part of the original input, added to the end.
+
+Why do this? Why build irreversibility on top of reversibility? The reason is subtle. If you build irreversibility directly, then you cannot control when entropy is destroyed. If you apply an irreversible round function enough times, then about half the entropy collapses, bringing the protocol's security down along with it. And so even when destroying information is your final goal, it's best to cleanly separate out the piece that's going that - destroy information in one precise spot in the algorithm, on your own terms.
+
+Zei put away his hand device, and leaned back.
+
+It's all entropy, isn't it, he thought to himself.
+
+A minute later, the car suddenly slowed down, and turned left. To his right, Zei could see an area blocked off by safety tape with various large vehicles further inside.
+
+![Zei: "What happened?"], Zei asked in a voice loud enough that the driver would unambiguously recognize that the question was meant for him.
+
+![Driver: "Explosion in an advanced biology research lab. Probably the Arctics, as usual. They're going to spend days cleaning up to make sure everything is safe."]
+
+A few minutes after that, the car slowed down and came to a stop. The door opened, leading straight into a hallway.
+
+---
+
+Zei walked through the tunnel, and down the stairs.
+
+He saw a door in front of him. The door looked similar to the door to the Minpentai room inside the mountain pyramid in Pafogai Du: a series of stone bricks, curving near the top into an arch, and the symbol at the top: two horizontal arms, meeting in the middle with clashing fists.
+
+However, this door was noticeably larger, more well-maintained, and the decorations more grand.
+
+Zei tapped his watch against the green circle, and the door opened. He walked through.
+
+He entered a room with about fifty chairs, with about twenty contestants already sitting down. On the stage, he recognized Su. Beside her, there were three other priests.
+
+Zei sat down. Over the next fifteen minutes, other contestants sat down in their own chairs.
+
+An older teenage boy sat down beside Zei.
+
+![Deluin: "Hi, I'm Deluin"], he said.
+
+That's not a very Dzegojan name, Zei thought.
+
+![Zei: "I'm Zei."]
+
+![Zei: "Where are you from?"]
+
+![Deluin: "Ah, I'm from Redshire. My name gave me away, didn't it?"]
+
+Zei laughed. ![Zei: "Do you get that reaction from everyone?"]
+
+Deluin laughed along with Zei.
+
+![Deluin: "De lu hin, they call me here. 'A fork with the appearance of'. Lovely name, don't you think?"]
+
+![Zei: "Are you studying here? Did your parents immigrate?"]
+
+![Deluin: "Ah, I'm a foreign contestant. They brought in four foreign contestants this time, to make things more fun."]
+
+![Zei: "Are you excited?"]
+
+![Deluin: "Absolutely. Actually my first time in Dzego, super cool place."]
+
+A bell rang, and the contestants quickly quieted down.
+
+![Su: "Welcome to the national Minpentai championship"], Su began. ![Su: "I am honored to see so many brilliant contestants this year, and I hope that everyone arriving had a good evening and a good morning."]
+
+![Su: "I am pleased to introduce our lead organizer, Taskmaster Jin."]
+
+One of the other priests stepped forward, and began speaking.
+
+![Jin: "This is a special moment for all of us in Dzego, not just for us and for you, but for millions of Dzegojan who watch the games from across the country, as they will get to watch the brightest minds from Dzego's new generation face off against each other."]
+
+![Jin: "I'm also honored to announce that this year, we have four distinguished foreign guests participating along with us."]
+
+![Jin: "Today, we will have a walk through the Minpentai museum, right here inside this mountain pyramid. Tomorrow, we will have some tourist excursions around Sadzu Du, and in the evening you will get a chance to rest. Two days after, the first championship games will begin."]
+
+![Jin: "There will be six rounds of qualifying games, with an eight-day-long break in between each game."]
+
+![Jin: "Out of the thirty-two of you, the four players who win the most games will advance to the semifinals. If there is no win threshold that exactly four players pass, we will break ties by the geometric average of the number of turns that you survived before losing your losing games and the inverse of the number of turns that you needed to win your winning games, counted up to a maximum of eight thousand turns. Thus, there is no incentive to resign before eight thousand turns. If there are still ties, we will insert an additional qualifying round."]
+
+![Jin: "I hope you can enjoy the games, enjoy everything that Sadzu Du has to offer, but also, just as importantly, enjoy each other. Here you are not enemies, you are temporary competitors. Off the arena, you should consider each other friends, and remember that we are all part of a shared project together. Dze go ba fau gie."]
+
+"Dze go ba fau gie", all the contestants replied in unison.
+
+![Jin: "Now, please follow Su. She will lead the excursion through the museum."]
+
+<scene_break date="3724 Grasstime 25"/>
+
+<narrow_device_view>
+<table>
+  <thead>
+    <tr>
+      <th>zan</th>
+      <th></th>
+      <th>tie</th>
+      <th>tei</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Bai</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><speech speaker="Bai">[dia lau shau]</speech></td>
+      <td>23098</td>
+    </tr>
+    </tbody>
+</table>
+</narrow_device_view>
+
+Zei woke up. Bai was requesting to call.
+
+Zei tapped the watch.
+
+![Bai: "How are things going over there?"], Bai asked.
+
+![Zei: "This is a bit early for a call, isn't it? It's still 19 minutes before my alarm was supposed to wake me up."]
+
+Zei paused for a moment, and decided to answer Bai's question.
+
+![Zei: "Things have been well. Very fascinating exhibition at the museum three days ago, and got to see a bunch of Sadzu Du the next day. Met someone from Redshire too."]
+
+![Bai: "A contestant?"]
+
+![Zei: "Yep, they've decided to internationalize it a bit this year."]
+
+![Zei: "So how's Pafogai?"]
+
+![Bai: "Ask me something I can answer. I've been staring at the mountain pyramid you'll be playing in from across the river for the last longhour."]
+
+Zei sat up.
+
+![Zei: "You're HERE?"]
+
+![Bai: "Den's people got hold of me and told me to come and take notes on all the contestants' strategies."]
+
+![Bai: "Your first game is today, right?"]
+
+![Zei: "It is indeed."]
+
+![Bai: "Want me to come over and help you out, or at least watch?"]
+
+![Zei: "I... think I'm fine. And I doubt you can get a ticket to the live stadium."]
+
+![Bai: "Not if you let me in."]
+
+Zei groaned.
+
+![Bai: "I'll watch from afar then. We're all rooting for you!"]
+
+![Zei: "How is Fin? I haven't heard from him in days now."]
+
+![Bai: "Busy with Bansunpei stuff I guess. He hasn't said anything to me in days either."]
+
+![Zei: "Alright then. Well, I gotta start preparing. I hope you enjoy your day!"]
+
+![Bai: "Best of luck to you in yours, you'll need it!"]
+
+![Bai: "Oh, and, let's play a practice game tomorrow."]
+
+Zei once again ordered a fruit and vegetable juice, and put on his clothes. A few minutes later, the juice arrived, and Zei quickly drank it. He opened the door, went downstairs, and entered the car that was waiting for him.
+
+Twenty minutes later, the car arrived at an entrance to the pyramid.
+
+Zei stepped out, and began walking through the tunnels.
+
+After a few hundred meters of walking, and a few turns, he once again arrived at the large stone brick door. He entered, and this time immediately turned right, into a hallway that he had not even noticed when he was first there three days ago. He followed the signs, and soon got to a waiting room.
+
+He saw Su, and the other contestant.
+
+![Su: "Welcome Zei! Meet Bo."]
+
+![Bo: "Nice to meet you, Zei."]
+
+![Zei: "Nice to meet you too, Bo."]
+
+![Su: "It will be a fun game today, I'm sure of it."]
+
+A robot arrived, and gave all three of them a cup of tea. They each drank their cup.
+
+![Zei: "So what now? We sit here for a longhour without internet while the others play, so we don't learn the new rule ahead of time?"]
+
+![Su: "Exactly. And no hand devices or watches allowed either. The robot will be coming to pick them up in a minute. You can watch last year's matches on that screen over there."]
+
+---
+
+A longhour later, the elevator doors opened, and Zei and Bo each stepped in to their respective elevators. Su waved them goodbye. The doors closed.
+
+A quarter minute after that, Zei's elevator door opened once again, exposing a giant room much larger than the room in Pafogai Du. About five to ten thousand people seemed to be watching. A path lit up, showing the way to a giant console with a chair.
+
+Zei walked forward. He could make out Bo's silhouette walking forward in the distance. He got to the chair, and sat down.
+
+Drones about the size of a hand device buzzed as they flew around Zei, scanning for any kind of cheating equipment. This time, there were about three times more drones than there were in Pafogai Du, and with even more shapes and sizes. The drones buzzed around for about twenty ticks, and then retreated back to their resting positions.
+
+A loud automated voice, this time sounding more female, announced: ![Loud_voice: "MU GU GEI FA"]. Starting in fifty ticks.
+
+Zei closed his eyes, and breathed in and out, trying his best to calm himself. This match was not decisive, he knew: if he lost, he could still make it up in the others. But in another way, that fact made him more scared: armed with the excuse that it's okay to lose, will his mind have the motivation needed to keep his full attention and mindpower on the game and win?
+
+![Loud_voice: "LE MU GEI FA"]
+
+Zei opened his eyes again.
+
+![Loud_voice: "PA GU GEI FA"]
+
+Zei patiently waited.
+
+![Announcer: "Welcome to the fourth qualifying match of the north stadium for today. Everyone, meet our players for this round: Zei Leimin from Pafogai Du, and Bo Zume, from right here in Sadzu Du."]
+
+![Announcer: "I am also pleased to announce - perhaps one time too many for the audience, but for the first time, for our contestants - today's rule change. Today, Minpentai will be played on a hex grid."]
+
+Zei opened his mouth in shock.
+
+![Announcer: "You will have twenty minutes to figure out your structures, any gliders, spaceships and walls, to the best of your ability. And then the serene battle over a field of snowflakes will begin."]
+
+Zei's display turned on, and he could see the hexagonal grid in front of him.
+
+![Loud_voice: "LE FI SHI GEI TAU FA"], the automated loud voice shouted. The battle begins in two thousand ticks.
+
+Zei began by quickly drawing random junk in his sandbox, seeing what stayed stable and what turned into a glider. Within one minute, he identified a few gliders and a few static structures that could be used for walls. To his surprise, the gliders that moved the fastest moved ... directly east.
+
+His next move was to deliberately draw different kinds of walls, fly gliders at them, and see what sticks.
+
+He watched the gliders carefully, to try to quickly get an intuition for what kinds of shapes can move while preserving their shape. He did several rounds of defining both the gliders and the walls.
+
+![Loud_voice: "PA MU GU GU GEI TAU FA."] The battle begins in fifteen hundred ticks.
+
+Zei began experimenting with shapes that were similar to his  symbol, seeing if any of them could function as a glider. He needed to come up with _something_ - otherwise he would be able to progress only very slowly, by repeatedly building a new symbol beside his existing symbol during each intervention turn.
+
+He realized that to make actual headway, he would need to interact with the rock formations. He made a couple of guesses about what shape the rock formations in the hexgrid version of Minpentai might look like, and examined the behavior of gliders as they crashed into them.
+
+![Loud_voice: "FI SHI GEI TAU FA."] The battle begins in a thousand ticks.
+
+Zei began to sweat. So far, no luck. No combination of a glider, a plausible rock shape and an offset that he tried led to a copy of his symbol.
+
+He thought more about the exact shape of his symbol.
+
+After another two minutes of fruitless exploration, Zei's mind flashed back to the textbook he had been reading less than two longhours before.
+
+<blockquote>
+
+<i>The core building block maps inputs to outputs one-to-one. And not only that, it can be efficiently run both forwards and backwards.</i>
+
+</blockquote>
+
+But unlike the hash function, here there was no truncate-and-xor wrapper at the end. And so if he knew his desired end state ... he just had to put that end state into the sandbox, and play it backwards.
+
+But ... how do you play it backwards?
+
+In the internal permutation of a hash function, you walk backwards from the last layer to the first layer, and invert each step as you go.
+
+Here ... what was the inverse of the hexgrid rules that Zei was interacting with for the first time in his life?
+
+Zei took the gliders he saw, and tried the most basic transformations: flipping them, rotating them 60 degrees, launching them one timestep later. None worked.
+
+![Loud_voice: "MU FI LE GEI TAU FA."] The battle begins in five hundred ticks.
+
+Zei stepped through each step more slowly. And then he saw it. During each step, the game board split up into triangles, and the hexagons rotated inside each triangle - clockwise if it had one hex filled, counterclockwise if it had two hexes filled.
+
+And so in order to time reverse, he just had to ... let each time step happen twice. The opposite of a 120-degree rotation is, after all, two 120-degree rotations. But there was a problem: after each time step, the split into triangles shifted. So to play a time step backward, he had to... play one step forward, then shift time back one step so that he could play the next step forward under the same tiling, then play a second step forward to bring the total rotation under that tiling to 240 degrees within each triangle, then shift time back _two_ steps so that the game would shift to the _previous_ tiling. Invert each step, and play the steps in reverse order, just like inverting a permutation in a hash.
+
+He confirmed: there was a button to play one step forward, and two buttons to shift time - either forward or backward. So that's what he would have to do. A, B, A, B, B. Like some kind of video game cheat code. Which, in some sense, here it literally was.
+
+Fine, he thought.
+
+He put a glider into the sandbox, and tried it. It was an arduous process, and his fingers quickly tired. But it worked. The glider moved backwards.
+
+Basic test passed.
+
+Zei tried the real test: using the same technique, starting with a symbol forming beside a rock formation and a glider flying out.
+
+The first time, it failed: as time went backwards, the glider and the symbol crashed, but then the same symbol re-formed a few steps away, and the glider flew away. So in that particular history that Zei had just sampled, before the crash, the symbol had been there all along.
+
+He tried again, with a different glider. This time, it succeeded. As time moved backwards, past the moment of the crash, the rock-formation-plus-symbol turned into a bare rock formation, and two gliders flew back out.
+
+![Loud_voice: "FI LE GEI TAU FA."] The battle begins in one hundred ticks.
+
+Zei quickly repeated the same experiment with other candidates for a rock formation. He paid no attention to the voice announcing the countdown, and kept trying until he found one for the two other most natural options.
+
+![Loud_voice: "MU GU GEI TAU FA."]
+
+Zei quickly put up symbols, walls, and gliders that would create symbols if they crashed into favorable rock formations.
+
+He was surprised at his own speed doing this, given how much longer everything else had taken. But almost immediately he realized in the back of his mind that this made sense: figuring out what to deploy is the hard part, deployment is just copy and paste.
+
+After making a basic setup on the board, he breathed out. Just as he breathed back in and started doing a final pass refining his structures, a final countdown began.
+
+![Loud_voice: "PA GU ... SO ... BI ... ZE ... HA ... MU ... FO ... SHI ... LE ... PA ..."]
+
+![Loud_voice: "TAU FA."]
+
+Gliders started flying out. At first, nothing happened.
+
+Five hundred turns later, a part of the board came into view. One of his gliders had successfully created a symbol, and revealed a part of the board that showed what the rock formations look like.
+
+Immediately, Zei switched to the next task: figuring out how to build glider factories.
+
+When the first intervention turn hit, Zei had not yet figured this out. However, he did send out several more gliders that flew from his home base, ready to create more copies of his symbol if they collided into a rock formation in the right place. He also sent gliders from nearby his new symbol, rapidly heading east.
+
+The audience watched intently. From across the river, Bai was also watching intently. And from afar, so were Fin, Mu and Den.
+
+<narrow_device_view>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">
+    <polygon points="100,2 184.9,51 184.9,149 100,198 15.1,149 15.1,51" fill="#348"/> 
+
+    <circle cx="80" cy="30" r="3" fill="#cef"/>
+    <circle cx="100" cy="40" r="3" fill="#cef"/>
+    <circle cx="120" cy="30" r="3" fill="#cef"/>
+    <circle cx="75" cy="50" r="3" fill="#cef"/>
+    <circle cx="120" cy="55" r="3" fill="#cef"/>
+
+    <rect x="30" y="120" width="5" height="5" fill="#c9f"/>
+    <rect x="70" y="140" width="5" height="5" fill="#c9f"/>
+    <rect x="95" y="155" width="5" height="5" fill="#c9f"/>
+    <rect x="140" y="120" width="5" height="5" fill="#c9f"/>
+
+    <rect x="45" y="150" width="5" height="5" fill="#c9f"/>
+    <rect x="80" y="165" width="5" height="5" fill="#c9f"/>
+    <rect x="115" y="165" width="5" height="5" fill="#c9f"/>
+    <rect x="170" y="125" width="5" height="5" fill="#c9f"/>
+</svg>
+
+</narrow_device_view>
+
+The audience was surprised. Neither player had managed to figure out any gliders that move vertically, they realized.
+
+On the second intervention turn, Zei launched gliders from the sides of the board, aiming straight toward Bo's home base.
+
+And just before the third intervention turn, one of Zei's gliders hit a rock formation right beside Bo's home base, allowing Zei to see all of Bo's symbols.
+
+Zei used that intervention turn to send gliders directly toward the three of Bo's symbols that he could see, and more toward some locations nearby just in case.
+
+Within three hundred turns, all of Bo's symbols were destroyed, and Zei was announced the winner.
+
+<chapter_nav prev="chapter-11.html" next="chapter-13.html" />

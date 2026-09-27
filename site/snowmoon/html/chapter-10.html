@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-9.html" title="Previous chapter: Chapter 9" aria-label="Previous chapter: Chapter 9"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-11.html" title="Next chapter: Chapter 11" aria-label="Next chapter: Chapter 11"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+<h1>Chapter 10</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Freetown, United Cities</span><span class="sep">·</span><span class="date">3724 Windmoon 24</span></span></div>
+<p>Jahn's taxi pulled up at the Freetown Economics Institute, where he worked as a researcher, and he got out of the car. He entered the building, and tapped his hand device to pay to get through the turnstile.</p>
+<p>Out of the corner of his eye, he noticed that the entrance price was ten percent higher than before.</p>
+<p>He walked to the restaurant section, and saw most tables full. Only one table had empty space, and there was already a woman sitting there.</p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"Can I sit down here?"</span>, Jahn asked.</p>
+<p><span style="color:oklch(0.7 0.15 280)">"Of course."</span></p>
+<p>Jahn sat down.</p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"I'm Jahn"</span>, he offered.</p>
+<p><span style="color:oklch(0.7 0.15 280)">"I'm Utaku. I'm from Belpaki, I'm doing my doctorate program here at the Institute."</span></p>
+<p>A robot slid up to Jahn, offering a menu.</p>
+<p>Jahn quickly scanned through, and ordered a dish with vegetables and fish, and a glass of water.</p>
+<p>He noticed that there too, the prices were higher than before.</p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"Wow, the prices are all up now."</span></p>
+<p><span style="color:oklch(0.7 0.15 280)">"Haven't you been following the news?"</span></p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"Not since I got back from a meeting in Hapton."</span></p>
+<p><span style="color:oklch(0.7 0.15 280)">"Huh, well it should be news in Hapton too. Everyone's been talking about raising their defense budgets."</span></p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"Arctic scare?"</span></p>
+<p><span style="color:oklch(0.7 0.15 280)">"Yeah, their drone activity has been going up. Though there's surprisingly many politicians who seem totally nonchalant about it. Only Redshire and its neighbors seem to be really taking it seriously."</span></p>
+<p><span style="color:oklch(0.7 0.15 280)">"Well, somehow, also Freetown."</span></p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"Why us? I'm glad we are, but like half the United Cities are closer to Redshire than we are, they should be worrying more!"</span></p>
+<p><span style="color:oklch(0.7 0.15 280)">"Well, Devanvil is taking it seriously - after all, Redshire chooses twelve percent of the seats in Devanvil's parliament. But yeah, Deplexi, Ondak, Imber, not at all."</span></p>
+<p><span style="color:oklch(0.7 0.15 280)">"It is weird. Remember, the government here is constitutionally banned from collecting more than the basic land tax and some rent from its natural resource holdings. So it's not even the government that's taking the problem seriously, it's the megacorps."</span></p>
+<p>The robot came back, carrying Jahn's food and water. Jahn picked up the plate of food and put it onto the table. He then picked up the glass of water, and immediately took a sip.</p>
+<p><span style="color:oklch(0.7 0.15 280)">"They're now donating three percent of their revenues to defense, and even colluding to punish companies that don't. Mogna was unwilling to contribute to defense - they said something about corruption, though everyone thought they were just being cheap - and then the charging station makers came together and threatened to lock out Mogna's cars from their grid, ninety percent of charging stations across Freetown, unless they joined in. Yesterday Mogna folded."</span></p>
+<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"That's ... harsh. If any industry tried that in normal times, they'd get half of Freetown counter-colluding, maybe funding five new competitors against them."</span></p>
+<p><span style="color:oklch(0.7 0.15 280)">"Normally yes. But hey, times are different now."</span></p>
+<div class="dateline scene-break"><hr class="rule"><span class="txt"><span class="place">Meldan, Veridia</span></span></div>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"You off to your first Keeper meeting?"</span>, Seila asked Gladias.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"My first two Keeper meetings, back to back. First one is on cultural values in public events and performances - actually the exact one that I judged Dreadknot on way back then."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Oh, what's the topic for cultural values in events going to be?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"In the chat I mentioned how I thought the rubric was encouraging people to be too bland to not offend anyone. Surprisingly, a couple others agreed. I think I'll try to make a big push to fix that."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Veridia ba 'fun' gie!"</span>, Seila joked.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Isn't it the 'gie' that you're supposed to replace? 'fau' just means 'again'."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Aaah right."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"But yes. Veridia will be fun again."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"What about the second one?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"The hardware openness rubric. The topic is whether or not to modify it to exempt military and surveillance products."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Huh, what are the tradeoffs of that?"</span></p>
+<p>Gladias thought carefully about how to phrase this. He thought for a moment about whether or not he should mention Delwart, but then decided against it.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well"</span>, he began, <span style="color:oklch(0.7 0.15 93.33333333333333)">"some of the Keepers think we should be staying out of funding war - it's a negative-sum game, if both sides have better bombs and battle drones, the result is the same, just more things get blown up and more people get hurt."</span></p>
+<p>He was pleased with himself. He had a feeling that Seila might be sensitive about anything that could hurt Dzego, and would plead for him to take whatever position benefited Dzego the most. He braced himself, preparing for Seila's next question.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"But, funding ... isn't that more of an issue on the Graph Funding side?"</span></p>
+<p>Gladias internally sighed with relief.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well remember, we make some weapons too. Also surveillance products. And the rubrics influence how much of the secret sauce we keep to ourselves."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I see..."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Well, tell me how the meetings go!"</span></p>
+<hr>
+<p>Gladias walked down a hallway, and entered a courtyard. He found a series of booths with thick sliding doors. He went to the rightmost one, as he had been instructed.</p>
+<p>He slid the barrier open. It took a significant effort for him to do so. He could tell immediately that this was a much more proper booth than the cloth-covered booths from the Greater Plum Harbor. As the barrier was opening, he could see its internal structure: a layer of anti-transmission foil on the inside, followed by layers of soundproofing, and other layers he could not recognize.</p>
+<p>At that moment, he also noticed a constant humming sound that was being emitted from the outside of the booth on all sides. White noise to further mask anything that makes it through the soundproof walls, he realized. If the noise is at forty decibels and the walls are good enough to attenuate sound by fifty, then it can mask up to ninety decibels coming from the inside - perhaps seventy if you want a safety margin. That's enough to completely mask any conversation.</p>
+<p>After fully opening the barrier, Gladias looked inside the booth. There was a table stretching from near the entrance to the opposite wall, and a long bench on each side.</p>
+<p>There were five others already sitting down, all wearing privacy robes.</p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"Welcome! You must be number Four"</span>, one of them exclaimed.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Indeed I am."</span></p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"I'm number Twenty in this circle, a third-year. We have two second-years - though Eleven has not arrived yet - two third-years, two other first-years, and now also you."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Glad to meet you all."</span></p>
+<p>Gladias sat down on the bench beside Twenty. Twenty had his hand device open, and Gladias could see him scrolling through recent audits measuring various businesses' statuses on the cultural values rubric, and the resulting decisions.</p>
+<p>A few moments later, another Keeper walked in. He slid the barrier shut behind him, and sat down.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"So, cultural values rubric"</span>, the other third-year began.</p>
+<p><span style="color:oklch(0.7 0.15 200)">"Cultural values <em>in events and performances</em> rubric"</span>, the first-year, One, corrected. <span style="color:oklch(0.7 0.15 200)">"We're not doing social media or other online things, that's a different rubric. And we're not doing architecture and public billboards, that goes into the aesthetics taxes."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"We all know that, you don't have to show off here"</span>, the third-year replied, with a joking tone calibrated to try to make the point without offending One.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"How do we want to do this? Maybe we should first come to a common understanding of what the problems we're trying to solve are?"</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Let's go through some examples"</span>, a second year who had not yet spoken up replied.</p>
+<p>Gladias saw his chance to intervene.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"How do you guys feel about Dreadknot?"</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"What do you mean?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Their taxes got bumped up to tier 4 in the last audit."</span></p>
+<p>Gladias began to read from the rubric.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Content weakly promotes one or more of the following: violence, lawless behavior, use of anti-recommended substances, gambling or risky investment, excessive display of wealth, poor conflict resolution practices, religious or ethnic hatred."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Do we think Dreadknot is guilty of promoting violence, lawless behavior or hatred?"</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Their last song was about destroying cities and flaying people's flesh. Why not?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Do we really think that those words are going to make anyone want to flay anyone's flesh in real life? It's a song. I remember we went through this with games a few years ago, and the science ended up saying that they can slightly increase a few aggressive behaviors but there's no evidence that they actually lead to violence."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"I remember that too. And my read was that the conclusion of the evidence was harsher than that."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Do we want to dig up and go through those studies together?"</span></p>
+<p>A few other Keepers nodded. They started whispering instructions at their hand devices.</p>
+<p>Gladias took the opportunity to continue.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"But even aside from all that, do we really want Veridia to be a society where the artists have to constantly worry about this and all the songs, and the games, and the movies, become boring and pale?"</span></p>
+<p><span style="color:oklch(0.7 0.15 200)">"They don't have to constantly worry. That's the whole point of Veridia's system of regulation. We're not banning them. We're just setting their taxes slightly higher instead of slightly lower. So along with the ten things that they have to worry about a medium amount already, like what their fans will like, what might or might not offend their corporate sponsors, and so on - things that won't break them, but still make a difference - we ask them to think about one extra concern: the public interest."</span></p>
+<p>Gladias decided to pursue another line of argument.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I actually like this rubric in general. I think it's great that the Northglade Science Center is getting rewarded for being such a wonderful place for kids to learn about chemistry and biology and rockets."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"But violence is part of life. The human race started out as monkeys fighting over bananas. When we were still living in forests and caves, a quarter of our men died because someone else killed them. The epic poems they make us study and memorize in schools have violence. Every hero of every Great Book did something violent. I don't think we should be discouraging Veridians completely from engaging with such a central part of our human nature. If we steer the public media away from violence everywhere and always, people will get <em>all</em> their ideas about violence from the dark corners of the internet, where nobody gets taxed, and that will be even worse."</span></p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"Are there any studies that try to measure this?"</span>, Twenty interjected.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I don't know if you <em>can</em> measure this with studies"</span>, Gladias replied.</p>
+<p>The other third-year again began to speak.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"This is good, I feel like we've already surfaced some important questions about not just the science, but also our underlying goals and values."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I think we should re-read the studies from back then about games. But also, we should see what the Veridian people think about this. Can we get Emerald to do a broad listen report on what people have been saying about Dreadknot on Bluewhale or Silverchat in the past year?"</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"I don't think what people say on social media is necessarily a good guide to what's good for people"</span>, Eleven interjected.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Okay, but let's take some time right now to read."</span></p>
+<p>Gladias nodded. A few other Keepers nodded after him.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Just give me a minute. Bluewhale always resists letting you read messages on their platform in any way other than their interface, I have a few hacks to get around that."</span></p>
+<p>Almost exactly a minute later, a new window appeared on each Keeper's hand device, showing Emerald think in real time as it fetched and took notes on what people were saying about violence and Dreadknot on Bluewhale and Silverchat.</p>
+<p>The Keepers all began staring intently at their hand devices - some reading the video game studies, others watching Emerald think.</p>
+<hr>
+<p>Gladias was standing outside, and sipping a cup of warm water. His first Keeper meeting, seventy-five minutes long, had finished, and he was taking the twenty-five minute break.</p>
+<p>His watch buzzed.</p>
+<br><div class="device-view narrow-device-view"><table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th></th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Personal reminders</center></td>
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 213.33333333333331)">Next Keeper meeting starts in five minutes.</span></td>
+      <td>39500</td>
+    </tr>
+    </tbody>
+</table></div><br>
+<p>It was time to go.</p>
+<p>Gladias turned the corner and walked the last few steps toward the booth.</p>
+<p>He soon arrived, and slid the barrier open.</p>
+<p>There were two other Keepers already sitting inside, one on each side. Both were wearing privacy robes, with their hoods and face coverings still on.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Hello to you both!"</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Hello! I'm Eighteen. Which number are you?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I'm Six."</span></p>
+<p><span style="color:oklch(0.7 0.15 186.66666666666666)">"And I'm Nine."</span></p>
+<p>Eighteen thought for a few moments, and then stood up.</p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Wait, before anyone else comes here, would you all mind standing up again?"</span></p>
+<p>Gladias and Nine both stood up, and briefly exited the booth and looked in from the outside, with the door open.</p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Alright, let's take a look."</span></p>
+<p>Eighteen switched his hand device to a different mode, and began waving it around the room. He also took out a drone, and pressed a few buttons on his hand device. The drone began flying around the room near the edges, both above and below the table.</p>
+<p>Eighteen and Nine watched silently as Eighteen did his scan, and two more Keepers arrived and quietly joined them.</p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Hmm, nothing transmitting, not picking up any powered electronics with thermal either."</span></p>
+<p>A minute later, the drone beeped unexpectedly just above the middle of the table at the far end.</p>
+<p>Eighteen jumped to that position with his hand device, and started looking and poking at the table intensely. A few moments later, he stood up triumphantly holding up in his hand a needle-like device, with a bulb a few millimeters wide at its tip.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What is that?"</span>, Gladias asked.</p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Spying device. There was a small bump on the table, and this was under it. Definitely takes some skill to insert one of these and then fix up the table this well afterward."</span>, Eighteen replied.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Wow."</span></p>
+<p>Nine stepped forward and looked at the device briefly.</p>
+<p><span style="color:oklch(0.7 0.15 186.66666666666666)">"I doubt it was meant against us"</span>, he said. <span style="color:oklch(0.7 0.15 186.66666666666666)">"Normally, the goal of people who do this is to get information about upcoming business decisions, and trade based on that in the financial markets. Usually, smaller businesses who are less careful. The Order is quite safe against this. Our Keeper group is only one of three discussion groups, so even if you do overhear us all you're only getting one third of the perspective. And we're all speaking through our neck bands so the sound is going between us digitally."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Actually this one had a camera. It can read your lips and your neck, so there might still be enough information to pick up some words, especially if you're a beginner."</span></p>
+<p><span style="color:oklch(0.7 0.15 186.66666666666666)">"How do you know?"</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"That's how the drone detected it, infrared light reflected off the camera lens. My hand device caught it too with the nonlinear junction detector, but I may well have missed it if the drone did not tell me where to look."</span></p>
+<p>The last two Keepers arrived.</p>
+<p>Eighteen stepped out, explained the situation, and the group looked at the listening device together. A few Keepers scanned it with their hand devices. When they were done, Eighteen snapped the listening device in half.</p>
+<p>Eighteen led the group to another open booth a few meters away, and slid the booth door open.</p>
+<p>He spent two minutes checking the new booth for bugs, again using both his own hand device and his drone. Once he was done, he motioned with his hand, and all seven Keepers entered and sat down on the benches.</p>
+<p>One of the newly-arrived Keepers cleared his throat, as though preparing to speak.</p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"Maybe let's get to business?"</span>, the Keeper asked.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Sure!"</span>, Gladias replied.</p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"So we're supposed to be talking about the openness rubric, and how to adjust it for military hardware."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Yep, I read the docs."</span></p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"And I've had some conversations with Zero over there. His argument is that we should just exempt military hardware completely. I'll let him explain why."</span></p>
+<p>Zero heard his number, and quickly raised his head.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"So normally, open hardware is good, because other people can build on it, and everyone benefits, right?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Right."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"But think about what happens with anything military. There isn't actually a net benefit to the world from everyone having better weapons. If everyone has twice as good swords and twice as good shields, the two cancel out."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"If everyone has twice as good swords but shields stay the same, then the benefits to the two sides in any war still cancel out, but more people get hurt."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"But if everyone has twice as good shields but swords stay the same, isn't that good?"</span></p>
+<p><span style="color:oklch(0.7 0.15 186.66666666666666)">"Well, maybe"</span>, Nine interjected. <span style="color:oklch(0.7 0.15 186.66666666666666)">"But actually it's even more complicated than that. What if it's a war of attrition, so if everyone has more defense, the same number of people get hurt, it just takes longer? Or what if increasing defense reduces deterrence, so more wars happen?"</span></p>
+<p>Gladias was surprised: the argument was eerily similar to an argument that Delwart had expressed to him recently.</p>
+<p><span style="color:oklch(0.7 0.15 186.66666666666666)">"Basically, the game tree is just so chaotic that we can't reliably be sure of anything at all. So I think we should just stay out. And instead just increase Steering taxes on all military hardware, open or not, push people to make more useful and pro-human and fun things instead."</span></p>
+<p>A third-year interjected:</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I don't think it's true that we can't be sure of anything. Look at the United Cities. I think it's pretty clear that a big reason they all managed to stay independent from each other for centuries, and figured out things like co-governance to nudge each other to cooperate better without just turning into one big blob, is that they have so many mountains and peninsulas on their continent. So if everyone has more defense, more people can keep their freedom and sovereignty. I think we can be quite confident of that."</span></p>
+<p>Eighteen raised his hand again. The others turned to him, and he began to speak.</p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"I don't think we can look at the situation like it's a black box like that. Let's look at where we are now. The Arctic Empire's technology is the most advanced. Ours is second. On military tech, Dzego and the United Cities are furthest behind."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"And so when we release open-source military-relevant anything, it doesn't benefit the Arctics at all, and it's marginally good for us because it makes it easier for us to make more."</span></p>
+<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"But for Dzego, it's a lifeline. They're not set up to invent their own proprietary stuff at the top end, but they're really good at building and adapting from open-source plans. Twenty years ago, when we got our programming languages and formal verification to the point where our devices basically stopped having critical errors in their code that could let someone take it over from the outside, the fact that it was open allowed the Dzegojan to adopt those techniques, and protect themselves much better from Arctic sabotage."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"But do we really want to play this game"</span>, Zero continued, <span style="color:oklch(0.7 0.15 346.66666666666663)">"being so confident in our view of who's good and who's bad? Computer security was defensive, fine. But the next technology we invent might be offensive. Won't we just accelerate the arms race even more for everyone?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I'm not even that convinced the Arctics are that big a threat. Sure, they're waving more drones around the northern United Cities now, but I don't think the intention is to attack, I think they're just trying to impress us with their power so we become attracted to their ideology."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Do <em>you</em> think we should be more receptive to their ideology?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I think we should keep an open mind. Just remember, the Dzegojan are definitely trying to manipulate us too."</span></p>
+<p>For a few moments, the discussion went quiet. Gladias let it rest. He was still trying to understand how everyone else was thinking before forming his own views.</p>
+<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"Let's all think about this more on our own. We'll keep talking about this, we still have a few more discussions, the last one is in four months. And then the actual vote is only in six months."</span></p>
+<div class="dateline scene-break"><hr class="rule"><span class="txt"><span class="place">Pafogai Du, Dzego</span></span></div>
+<p>Bai and Zei sat together at a courtyard table, both staring at their hand devices.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Fin not joining us this time?"</span>, Bai asked.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"No"</span>, Zei replied with a strong hint of disappointment. <span style="color:oklch(0.7 0.15 346.66666666666663)">"He's busy with the Bansunpei."</span></p>
+<p>The hand devices buzzed. It was their intervention turn. Zei arranged a few gliders and symbol-carrying spaceships. A few hundred turns passed.</p>
+<p>Suddenly, as the spaceship hit a rock formation and was in the process of reflecting, gliders from Bai hit it. The spaceship exploded into a storm of gliders.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"What?"</span>, Zei shouted.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Caught you, I had a symbol along the path, right in the position where you could not see it. So I could see the edge of your spaceship coming."</span></p>
+<p>Zei groaned. That had been his last-ditch attempt to rescue the game. More gliders from Bai came in, and shredded through both of his remaining symbols in the southwest corner.</p>
+<p>Zei clicked a button to resign.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Good game"</span>, Zei said, not yet with total sincerity, but with more sincerity than he had in any game where he had lost to Bai before.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"You know, I am going to need your help in the nationals."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Happy to. As long as..."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Yes, I know, you want to visit Veridia now."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Anyway, thanks for explaining your thought process in that championship game. Really made me think."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Of course."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Of course you enjoy reliving the moment you defeated me, just like I enjoyed beating you right now."</span></p>
+<p>Zei sighed.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Anyway, I have to go. The Kungaupei councilor, Den, is asking to see me again."</span></p>
+<hr>
+<p>Zei entered the long room, and immediately saw Den and Mu sitting on the other side.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Thank you for coming."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Of course. I went through the hash-based signatures you recommended. It's a really fun set of constructions, especially the stateless tree-of-tree-based ones."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Do you see why, when I looked at your style of Minpentai, I knew that you would do well in this?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I think so!"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"You are truly amazing. You've rushed through a third of the cryptography lectures in less than a month, and got a perfect score on both of the first two tests. I can't think of anyone who did better."</span></p>
+<p>Zei's eyes gleamed with satisfaction at receiving the compliment.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Zei, do you know why I called you in?"</span></p>
+<p>At this point, Zei realized one possible implication of Den's words, and his cheerful facial expression suddenly dropped into a fearful one.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Are you going to convince me to go into this full-time? Like, abandon the Minpentai nationals?"</span></p>
+<p>Mu laughed. <span style="color:oklch(0.7 0.15 173.33333333333331)">"So I guess my hunch was wrong - this part, you still don't get."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Huh?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Have you ever thought about why the Minpentai game is so serious, so much ceremony, the priests going into the dungeon for days, and so well-funded?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"It's a sport. Sports are taken seriously and well-funded in many countries."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Not sports of the mind. Their audience isn't large enough to fund it just based on advertising and national prestige and all those other reasons."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"So why then?"</span></p>
+<p>Mu leaned forward.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"It's because Minpentai isn't just a sport."</span></p>
+<p>Zei stared.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"It's military training."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"The whole point of the sport, and why we support it so much, is to raise the next generation of defenders."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"We need people who can think quickly, and think strategically under pressure."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"People who can compete with their foes, but also cooperate with their allies, even allies that they do not personally get along with."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"People who can understand a battlefield, including the battle itself, all the way up to grand strategy and resources and logistics, and all the way down to the level of surveillance and secrecy and trickery, and ultimately entropy itself."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"People who can deal with suddenly changing rules."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"People who are able to micromanage, but are also able to set a plan in motion and watch it unfold."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"And people who can work with the latest technology - including AI - but also understand and work around its limits."</span></p>
+<p>The realizations hit Zei all at once. At first, he had wanted to ask a basic question: why pretend it's a game, why not just have a regular military with regular recruitment? But as soon as he put together the question, he already knew the answer: the Arctics would put all their energy into targeting anything like that. Minpentai was only safe because it pretended to be just a game. But even then, Zei knew, the ruse could not be safe forever.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Why are you telling me this now?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Because we have to give you <em>some</em> reason why we're now telling you to work hard on cryptography <em>and</em> continue to the nationals. If we didn't tell you, you might get suspicious, eventually figure it out for yourself, and then do something stupid, like excitedly blurting out your discovery to a dozen other people."</span></p>
+<p>Zei nodded.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I won't tell anyone. Not even Fin."</span></p>
+<p>Den and Mu nodded.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"And when the nationals come, you'll want a sparring partner who knows your style."</span></p>
+<p>No one said a name. No one had to.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"We appreciate your support"</span>, Den replied.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Dze go ba fau gie"</span>, Mu added.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Dze go ba fau gie."</span></p>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-9.html" title="Previous chapter: Chapter 9" aria-label="Previous chapter: Chapter 9"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-11.html" title="Next chapter: Chapter 11" aria-label="Next chapter: Chapter 11"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>

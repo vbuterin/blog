@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-31.html" title="Previous chapter: Chapter 31" aria-label="Previous chapter: Chapter 31"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><span class="nav-empty"></span></nav>
+<h1>Chapter 32</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Meldan, Veridia</span><span class="sep">·</span><span class="date">3725 Rainmoon 12</span></span></div>
+<p>Gladias and Seila walked together along the same path through Kalimar that they had by this point taken hundreds of times. The path was covered with trees and surrounded by stone houses on both sides.</p>
+<p>To their left, they saw a man climbing a tall ladder leaning against a tree. Once he reached the top of the ladder, he began unscrewing a security camera that was located there. Once he finished, he unceremoniously threw the camera into a box that was several meters below him on the ground. The throw landed perfectly. Gladias and Seila heard a loud clang as the camera crashed against the dozens of other cameras that were already in the box. The man immediately proceeded to climb down the ladder.</p>
+<p>They continued walking. They passed by a store, one that Gladias had remembered seeing hastily replace much of its inventory with emergency preserved food rations only months earlier. This time, the inventory item that took up the front shelves was a particular type of red flower that was native to Northglade, that residents were buying to celebrate the province's liberation.</p>
+<p>Taped to the side of the store, there was an advertisement:</p>
+<blockquote>
+<p>We are now offering the freshest of fresh water SEIZED from the CORE TERRITORY of the ARCTIC EMPIRE.</p>
+<p>Get the latest Hydrafill water, bottled at the springs of Thaldur, today!</p>
+<p>Enjoy the spoils of victory. Buy Hydrafill.</p>
+</blockquote>
+<p>The road transitioned to dense shrubbery, and then to a sky bridge overlooking a busy highway. To the left, they could see a mountain covered with trees. A few apartment buildings about fifteen storeys tall, decorated and shaped like oversized medieval castle towers though with far more windows on the sides, poked up high above the trees.</p>
+<p>After crossing the sky bridge, the road transitioned into a tunnel, and Gladias and Seila arrived at a Y-shaped intersection. They turned left, walked forward until the path came back up above ground, and then turned right. Gladias checked his watch for directions. He had never actually <em>walked</em> all the way to parliament before.</p>
+<p>Twenty minutes later, they arrived at the large circular building. Gladias tapped his watch against the green circle, and the doors opened. Inside the building, he remembered the directions well. Forward, then right turn, then forward, then third door on the left.</p>
+<p>He tapped his watch again, and the door opened.</p>
+<p>Verdow and Zei were both sitting inside the office. They both turned their heads toward Gladias and Seila.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Gladias, Seila, welcome back!"</span>, Verdow exclaimed with a warm friendly tone.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Verdow, good to see you again!"</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Please, please sit down."</span></p>
+<p>A robot slid into the room.</p>
+<p>Gladias briefly turned to face the robot. <span style="color:oklch(0.7 0.15 93.33333333333333)">"dia jie fe kai ja cu dze kai lin pan"</span>, he told the robot in a deliberately clear tone.</p>
+<p>The robot buzzed, and left the room.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Impressive, Gladias. Even I would not have been able to do that."</span></p>
+<p>Verdow briefly went silent, and then spoke up again.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Okay, I'm embarrassed. What is dze kai lin pan?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Vegetable and rice."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Ah right, green plant line bread."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"By the way Zei, when are we going to start switching over from meters to lightfeet?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Fin tells me the Bansunpei is completely busy on getting Dzego's privacy and security habits fully up to the new standards. In about ten days he and some others are actually going to come here to Veridia, and see if they can help you guys get up to speed on those things too."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"But I guess we don't have to wait for them, if you like lightfeet you can just start using lightfeet today."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"I guess they're right. Switching over to lightfeet isn't the highest priority right now."</span></p>
+<p>Verdow's tone suddenly became more serious.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"A lot of people are celebrating this month. For the first time in a century, the Arctic Empire has been defeated. Northglade is free. And we already have many people in Thaldur taking up our offers and helping open up the Arctic technologies we captured so that we can properly benefit and learn from them."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"But we have to remember - this was only the first round. And even this round, we did not fully win."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"The Arctics lost Northshore and lost Thaldur, but they kept Redshire. They lost some of their lead in technology, but we've learned over the past few months that they are rapidly gaining in other kinds of technology."</span></p>
+<p>Verdow sighed, and then continued giving his cautionary note.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"The privacy that we thought we had, we do not actually have. In the digital world, we're okay - cybersecurity and cryptography are amazing now, though we have to remember that language models will always be attackable in ways that regular software is not. In the physical world, it's much harder. Information in physical reality is fundamentally much more leaky. There are dozens of ways even our keystrokes on our keyboards leak out into the world outside. We can make an effort to fight this - especially in our private spaces - but there's a limit to how much we can succeed."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I hear there's already a batch of the new cameras from Dzego flying in, with built-in hard guarantees of what information they can and can't transmit. VNU is figuring out the process for inspecting them. They seem to want to just copy the way that Dzego has been doing it."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Ooh, so that's what it was? We saw someone unscrewing a hundred cameras in Kalimar when we were walking to get here."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Looks like it."</span></p>
+<p>Gladias decided to change to a different topic.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What do you think about our government?"</span>, he asked Verdow.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"The Order of Steering worked, the Courts worked, Graph Funding has been fine. But everything more transparent has been broken. By default, I expect that everything the government does is going to become even more private going forward. More digital-first, more sealed anti-transmission rooms, more privacy robes."</span></p>
+<p>Verdow sighed, clearly at least somewhat unhappy with the state of affairs that he was predicting.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"There's a fundamental tension here that our system of government has been grappling with since the day it was first created. In an interconnected world, how is it even possible for a government to be accountable to its own citizens, without also being 'accountable' to powerful financial interests on the inside and adversaries on the outside, both of which are trying to press at the weakest point, isolate it and pressure and twist it to serve their own ends?"</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"We need to keep improving our theory of what transparency and accountability even mean. In this current iteration of our government, the answer has been the selection process from one end, and Heralds from the other end. In the next iteration, it might have to be something else. I think it will have to involve something like Silverchat polls, or maybe something even higher bandwidth, to understand people's goals, and something involving AI to figure out how to achieve those goals."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Zei, what do you think?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"AI is the start of the conversation, not the answer. What kind of AI is it? How do we train it? Who trains it? What instructions do we give it? Who feeds the AI information, and who intervenes in the AI's thought process to assist it?"</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"How would you answer that?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I would first take a step back and ask what the problems are. And I think I have noticed one. Veridian institutions, as they exist today, don't really have a built-in concept of predicting the future. It's all about the present, and public opinion in the present."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"There's no position where you have to stand up and say - if we do X, then Y will happen - and you rise up if you're right, and fall if you're wrong. The closest is Acolytes, that have to predict the Sentinels. But even there, they're not predicting the real world. They're predicting Sentinels. So they're still just predicting other people's opinions. You've aligning people to each other, but you're not aligning people to reality."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"That's where AI could do very well - it's where AI already <em>has</em> done very well for us. But I don't think we should pick one AI, we should have some kind of open competition of them. AI should be a player, not the game. Let different people choose different AIs and different ways of working with them, and hold them accountable to the goals."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Should a society have goals?"</span></p>
+<p>Zei stared at Verdow.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"What do you mean?"</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"The Arctics are better at having goals than any of our nations. They know exactly what they want, and are single-minded about achieving it. If you make a perfect goal-executing machine, the Arctics are what you get."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"That's why you need the other piece - being able to gather together different people's goals and add them up, so you know that you're achieving the actual goals of the people, and not just one emperor."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"But what if any goal you come up with and write down on a piece of paper ends up looking like that?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"What do you mean?"</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"What if part of the human condition is that we don't fully know what we want, and any attempt to crystallize it into one piece breaks down if you push it far enough? We see this with our rubrics: they work for some time, then eventually they get gamed, and then we adjust the rubrics, and repeat. What if that's unavoidable?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Then what's the alternative?"</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Think of a lake, full of water. Every molecule of water in the lake acts independently. There is no master plan. There are only trillions of molecules dreaming trillions of dreams. The lake has a harmony and balance to it, we can all see that. But it's not because anyone forces that balance to happen, it's because if any one part of the lake's surface ends up lower than the other parts for even a brief moment, then gravity will attract water to flow in, and the height everywhere will be the same again."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"But also, when winter comes, the molecules come together, into thick crystalline structures of impenetrable ice."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"You understand physics well."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"My daughter is starting to study chemistry, she has been telling me a lot about it. Her friends think she's over-working, but I've been encouraging her - I told her that if she studies hard, one day she can be just like you."</span></p>
+<p>Zei blushed.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"So that's what I think the ideal is. A society that can do the good of ordinary life but not the evil of empire and conquest. One that can both resist the Arctic Empire, and avoid becoming one, and instead prosper peacefully one step at a time."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"It's hard to agree on what we want, it's easier to agree on what we don't want. I think that's the asymmetry that we build everything on top of. In the winter, we all align in the same direction, and we can form the crystal, and defend and strike back. In the summer, we flow like water. Decentralized forces - markets, open intellectual discourse, open science, culture and law - passively make the trillion forces of our trillion dreams add more often than they subtract. We adjust their rules over time, but only carefully and slowly. The natural, gentle progress we make from decades upon decades of that is worth more than satisfying any goal."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What if sometimes different parts of the lake have to be water and ice at the same time?"</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"That may be."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"And what if a lake where every point is at the exact same height as every other point is also a kind of uniformity that we don't want, and sometimes it's better if we form snowballs and let them float?"</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"That too may be."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Seila, what do you think we should do more?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"The Arctics have competition - they care about who's better and who's worse, and they encourage people to challenge each other and strive and try to rise to the top - but they do not understand cooperation. They are ice without the water. Veridia has cooperation, but maybe we do not understand competition. We can be water, but we don't yet know how to be ice - and even our water does not always flow as well as we would like. Actually I think it's Dzego that's figured out how to have both, and make them serve each other. We should learn from them more."</span></p>
+<p>She sighed deeply. After a few moments, Verdow replied again.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"These are all good thoughts."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Zei, would you be interested in staying back and helping us figure out some of these issues?"</span></p>
+<p>Zei thought for a moment.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I'm sure Mu and Su can handle the Kungaupei well"</span>, Gladias interjected.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Of course! Though you might find Fin will be even more helpful than I am."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Well I appreciate it. You know, Parliament realizes now that their current ways of thinking have hit their limits. Many senators have resigned. The ones who are still there - like me - we want new ideas. We're open to listening."</span></p>
+<p>Verdow stood up, and walked over slowly to a map of the world that was printed on the side of the office wall.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"This is our world. Ninety million people. Gladias, Seila, Zei, have you ever wondered what things might be like if it was nine hundred million, or nine billion?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I have not. Why do you ask?"</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"The larger the population, the faster new technologies get invented. That's why the medieval era was so stagnant, and why things are moving so much faster today. But no matter how large the population, everyone still adapts to the technology at the same rate. Maybe we've done so well at adapting - eradicating computer viruses, adding so much privacy and verifiability to everything, optimizing our society to be so beautiful and healthy - only because we don't have nine billion people pushing technology forward even faster and increasing the complexity of the society that has to accept it."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"That's interesting. Do you think we will have nine billion people one day?"</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Not one day. Very soon. And not people. Bots. And not nine billion. Nine trillion."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"That's what I worry about. AI is going to really change everything. So far, progress has been moderate, nobody has lost their jobs, it feels more like everyone has been promoted to being a manager - or sometimes a repairman. But at some point, once the AI can do almost everything that humans can do, even if at a few percent the efficiency, our human population won't be a constraint anymore."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So what do we do?"</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Well, we don't really have much power to be the ones to answer that question if the Arctics continue to stay further ahead."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"If we want to get back into balance, we have to get better at penetrating <em>them</em>. Have more of a view into their society and their technology, make sure that for any advance they make, we learn about it. Privacy for the weak, transparency for the powerful. Having those people from Thaldur helping us is great, and hopefully Deluin is far from the only person from Redshire who pretended to join the Arctics but would be interested in passing more information to us."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"There's a known result from game theory"</span>, Zei interjected. <span style="color:oklch(0.7 0.15 346.66666666666663)">"If two players are locked in a game that has some mixture of cooperation and competition, then you can unlock strictly higher levels of cooperation if those players can at least partially read each others' minds. Maybe that's the right outcome to hope for. As time passes, we'll learn more about each other, we'll learn from each other, and we'll come to actually understand each other better."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"I'm not so optimistic. The Arctic Emperor is upset. He can't do anything to us right now, but he's definitely scheming. There will be a next round. It could be five years from now, it could be twenty years from now. If we can at least keep pace on technology, we can survive."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Do you think we should try to slow <em>them</em> down?"</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Do the same thing to them that they have been doing to Dzego for a century? It's not the worst idea."</span></p>
+<p>Zei sighed.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"If we were able to keep advancing under their pressure, they'll definitely be able to keep advancing under any pressure we can bring to bear against them."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"You know, the later stages of all this are going to get crazy. At some point, eventually we'll have drones the size of worms and flies burrowing under the ground, flying through the air and swimming under the sea. We'll have new forms of genetically engineered life that we can't even imagine - both for peace and for war. Some of us might be uploaded and living inside computers. Not this year. Not the next few years. But definitely in the next hundred years."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Maybe in two hundred years it will be stable. We'll have figured out exactly the ideal type of drone at every scale, the largest as large as aeroplanes or even hollowed-out asteroids floating in space, and the smallest so tiny that there's no more gap between them and viruses. Once we hit the ceiling, there would be nothing else even stronger that could defeat them. Just big distributed immune systems protecting our planets, our animals and our trees, and ourselves. We will be wiser, almost everyone will choose peace over war, and those who don't will have no path to impose their will. And everyone will just live the kind of life they want to live."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I just hope we have peace"</span>, Seila added. <span style="color:oklch(0.7 0.15 253.33333333333334)">"All these questions: genetic engineering, uploading, going to the stars, I don't think we can get the right answers if we take every step in a rush because we're scared. I'm not sure I want to upload. But a year ago I was not sure if I wanted to live for more than a hundred years. These things should all be a choice we make carefully, and have respect for people who choose not to take the same choice as we do, not an urgent decision we make to survive in a war."</span></p>
+<p>Verdow rejoined the conversation.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"We might have that peace, we might not. We can hope for the best, but we have to be ready for all possibilities."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"You know, a few days ago Bai mentioned to me that she was thinking of spending a year in Thaldur - precisely to better understand how the Arctics think, and see if she can find a path to that peace."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"That sounds a lot less scary than what Deluin did. I support her."</span></p>
+<p>The door opened. A robot slid up to Gladias, carrying his tea and rice and vegetable dish. Gladias picked up both with his hands. He thanked the robot, and the robot slid back out of the room.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Do you want to go upstairs and check out the roof?"</span>, Verdow asked.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Sure"</span>, Zei answered.</p>
+<p>Gladias, Seila and Zei stood up. Verdow walked out of the room and began to walk through the corridor. The three of them followed, Gladias still holding his tea in one hand and his food in the other.</p>
+<p>Verdow led them up a staircase, and reached a door which opened automatically. They stepped out.</p>
+<p>To their left, they could see the main commercial district of Meldan. There were buildings of various styles, some that were aesthetic imitations of something older and almost medieval, and others that were openly modern and futuristic. The building that looked like an aeroplane stood out from among the others, slightly spoiling the view. The trees are only good at covering it up when you're at ground level yourself, Gladias thought.</p>
+<p>Further left of the commercial district, they could see the grey and purple Greater Plum Harbor. The whole thing was a square nearly a kilometer wide, and they could see many of its buildings clearly from where they were. And on the right edge of the commercial district, Gladias could make out the large concert venue.</p>
+<p>In front of them, they could see the Kalimar district. From where they stood, it looked not too different from a forest. Tall trees covered up most of the area, with only a few buildings poking up just barely above them. After scanning the area quickly, Gladias spotted the headquarters of Silverchat.</p>
+<p>To their right, they could see the mountain covered with trees. They were already partway up the mountain, about forty meters higher than most of the rest of Meldan. But about two hundred meters to their right, the mountain began sloping upward properly. Only about half of the apartment buildings shaped like oversided medieval-style castle towers were visible from where they were. The mountain looked much larger and more imposing from close up, Gladias thought.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Probably not as beautiful as the views in Northglade?"</span>, Verdow asked.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I like the green here. I don't think I could handle being up north and dealing with several months of no green and only snow."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"And besides, Meldan is my home."</span></p>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-31.html" title="Previous chapter: Chapter 31" aria-label="Previous chapter: Chapter 31"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><span class="nav-empty"></span></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>

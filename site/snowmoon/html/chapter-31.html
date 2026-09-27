@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-30.html" title="Previous chapter: Chapter 30" aria-label="Previous chapter: Chapter 30"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-32.html" title="Next chapter: Chapter 32" aria-label="Next chapter: Chapter 32"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+<h1>Chapter 31</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Northglade, Veridia</span><span class="sep">·</span><span class="date">3725 Rainmoon 2</span></span></div>
+<p>Zei, Bai and Mu slowly walked up the staircase on the side of the mountain. The mountain was fully covered with snow on both sides, and the sunlight reflected off the snow into their eyes. Only pine trees and the staircase with its handrails were visible above the snow - the trees and the handrails because they were too high for the snow to fully cover them, and the staircase itself because it was being regularly plowed and salted by a drone that they could see about thirty meters further above them.</p>
+<p>A strong, cold wind blasted into their faces. They continued climbing. Several minutes later, they reached the circular platform at the top of the mountain.</p>
+<p>From there, they could see a full view of the island on which Northglade was located. It was about twenty kilometers wide - small enough that the most simplified and highly zoomed out maps of the region did not even bother showing it, but at the same time large enough that it seemed like if it really had to, that island alone would be large enough to sustain a civilization. If Northglade had been a Dzego city, Zei thought, it would have a fully self-sufficient emergency industry already.</p>
+<p>To their east, they could see the main city of Northglade. To the west and north, they saw snowy hills for kilometers on end, and a path gently twisting as it descended deeper into the forest. Looking downward to the east, Zei could see another staircase leading up to the summit, and a young man wearing only a sweater and a light hood climbing up.</p>
+<p>As he neared the top of the summit, Zei could recognize a familiar face.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Deluin!"</span>, he shouted.</p>
+<p>Deluin raised his head up, saw Zei, and ran up the last twenty meters of the staircase.</p>
+<p>He reached the top, and almost threw Zei off balance as he threw himself into his arms for a hug.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I'm so happy you're still alive, Zei, and that I can finally see you again."</span></p>
+<p>Deluin slowly let go of Zei and turned toward Bai.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Wait, do I recognize you?"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"I'm Bai. You might have seen me watching some of the practice games in Sadzu Du."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Ah yes, I remember you!"</span>, Deluin replied, somewhat unsure if he was genuinely recollecting a memory of seeing her or simply confabulating one.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"And I'm Mu. Don't you dare mix me up with Su - she's still back in Dzego, she's a completely different person from me."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Nice to meet you, Mu"</span>, Deluin replied, gently laughing.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"So tell me. What happened?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Well, this is a long story. Are you sure you want it told at the top of a cold snowy mountain?"</span></p>
+<p>Zei, Bai and Mu all immediately nodded in unison.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I see you're more fit to live in Redshire than I might have expected!"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Okay fine, I'll start."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Back in Grapetime, about two months after they occupied Redshire, some Arctic officers came to our house, to talk with my parents. My parents were never particularly worried about the Arctic threat, saying we should be more open to peace and cooperating with them. But once the invasion happened, they quickly flipped to just being full supporters of what the Arctics were doing. Quite a large chunk of the Redshire population did."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"The Arctics offered them a position. They said that they should come to Glasscrown, and advise the top leadership on integration - first of the captured Redshire population, then of Northglade residents and eventually of everyone else that they would conquer."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I made a big risky decision. I decided I would 'go native' - pretend to be a full-on supporter of the Arctic cause, try to use my parents' reputation together with my own status as a Minpentai champion-"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I'm the Minpentai champion!"</span>, Zei playfully interrupted.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Only because the game was cancelled and they gave you the title. You never beat me."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I beat you in the battle two days ago!"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"What was that line from that old poem? mi fu zo de tei ka ciu pin - when I am defeated, I feel like I won?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Now you get it!"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Anyway, I used my parents' reputation and my status as a Minpentai <em>semifinals winner</em> to climb up the hierarchy myself. Within two months they figured out independently that Minpentai was an effective way to train people for modern warfare-"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Wait, they figured out what Minpentai is for?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Wait ... you mean you guys <em>intentionally</em> designed the Minpentai tournaments to train people for defense?"</span></p>
+<p>Zei, Bai and Mu immediately nodded.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Then no, they definitely did not figure that out. They just figured out that Minpentai <em>happened</em> to be effective for that purpose. And so within three months they put me as one of their top commanders."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"The Arctics are actually quite easy to play, you know."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"What do you mean?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Their entire ideology completely de-values alignment, and only values competence. They see top talent as being fungible. People as bots that can just be reallocated by pointing a higher salary at them. They don't really have much of a theory of people having their own motivations, dreaming their own hundred thousand dreams, and how to tell when someone's heart beats together with yours and when they are just pretending. And so if you just say the right slogans, and convince them that you're top talent, they just ... trust you."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Wow."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"I'm ... actually not surprised"</span>, Bai added. <span style="color:oklch(0.7 0.15 26.666666666666664)">"I'm just glad that you managed to play the game better than any of the others did."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"So what are the most <em>interesting</em> things about the Arctic Empire?"</span>, Mu quietly asked. <span style="color:oklch(0.7 0.15 173.33333333333331)">"What can we learn from them?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Their advancements in technology are real, and they are amazing. The medical treatments that they gave to the residents in Northglade are only a sample. They believe that they have already figured out how to make people live a decade longer, and that they're only accelerating."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Glasscrown is one of the most fascinating cities I've ever seen. It's beautiful in its own way. It makes you feel like you're living inside of a giant ice crystal. Its tallest tower is a kilometer above ground, and its caverns stretch deep underground."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"They even have rows of pine trees alongside some of the walls. That itself is an impressive feat of engineering: genetic engineering to help the plants better tolerate cold, together with underground heating and cleverly shaped reflective walls to make their environment warmer."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"In the winter, Glasscrown has a month and a half of polar night with no sun. Then, the whole city gets enveloped with the glow of white and blue artificial light."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Now you sound like you want to go back!"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Actually, I want something else. I think it's good that the Arctics have built all of this technology - though if I could shut one of the things down, it would be the research on superviruses. But what's dangerous is how they keep everything they make for themselves and don't let anyone else benefit. Even when they gave some of it to the Northgladers, it was on their own terms - you come to our health clinics, you don't get to learn what we are doing to your body, and if you don't want to go back to how you were before, you have to keep coming back to our clinics again and again."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Instead of science and technology bringing the world together, it's turning one group into a bigger and bigger threat that the rest of the world has to fear more and more."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"But thanks to you, we - we as in all of humanity - have now captured a big pile of their technology. Some that they brought into Northglade. Piles of their military equipment scattered around Elenar Forest. And a bunch on the island of Thaldur, core Arctic territory that has tens of thousands of people living on it."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"So our next step should be to convince as many of them as we can to volunteer, and share their knowledge and expertise voluntarily, and bring the whole world up to at least the frontier that the Arctics have created to keep for themselves."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Open source - it's not just a good idea, it's the law"</span>, Zei replied.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Exactly. Make the whole world a little bit more like Veridia in that way."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"And then we can play their strategy in reverse. Show the people in Thaldur that they have more calm, more peace and more actual freedom under our way of life, at the same time as having powerful technology. Then perhaps through them, we can convince even more Arctics to join our side."</span></p>
+<p>The conversation paused. Deluin took his turn to walk all around the top of the mountain and enjoy the view of Northglade.</p>
+<p>About ten minutes later, Mu spoke up again.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"I got some bad news, Deluin."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"What is it?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Freetown defense corps are reporting that the Arctic garrison in Redshire has tripled. They tried some sabotage operations with their drones already on Redshire using the tricks that we discovered during the battle two days ago, but they are mostly failing now."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"They now think that there is basically no chance of us getting Redshire back."</span></p>
+<p>Deluin sighed. An expression of deep sadness filled his eyes.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Tafindel is recommending that we play a little bit of hardball. Close the borders between Thaldur and the rest of Arctic territory. And then offer a deal. We let anyone who wants to go back to the Arctic Empire go back, and in exchange anyone in Redshire who wants to leave is allowed to leave. They keep Redshire, we keep Thaldur. And then find a beautiful place in Veridia to make a new Redshire."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Why not just give them the peninsula between here and Thaldur, the one dangling off the eastern end of Northshore? Very beautiful land there."</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"I think that should be up to them to decide."</span></p>
+<p>Deluin nodded. <span style="color:oklch(0.7 0.15 53.33333333333333)">"Tafindel is probably right. It's as good an outcome as we're going to get."</span></p>
+<p>The conversation paused once again. All four of them looked toward the east, and enjoyed the view of snowflakes gently falling on every building in the town of Northglade and covering it with thick snow.</p>
+<hr>
+<p>Gladias and Seila walked through the large stone gates at the entrance to the Greater Plum Harbor in Northglade. The turnstile gates had been smashed and thrown to the ground to let people freely move in and out, and the administrative staff did not seem to have the heart to enforce any visa rules at that particular time. Two Greater Plum Harbor security guards, wearing purple and grey attire, simply watched the crowds move in and out, and resigned themselves to meeting the fallback objective of preventing any theft and violence.</p>
+<p>Seila's watch buzzed. She raised up her hand, and took a look.</p>
+<br><div class="device-view narrow-device-view"><table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th></th>
+      <th>Message</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="width: 25%"><center>Jahn</center></td> 
+      <td style="width: 6%; text-align:center">&#8594;</td>
+      <td><span style="color:oklch(0.7 0.15 133.33333333333331)">[5 images]</span></td>
+      <td>45904</td>
+    </tr> 
+    </tbody>
+</table></div><br>
+<p>She clicked, and took a look at the pictures. The first three were pictures of people in Freetown in its streets and parks celebrating.</p>
+<p>The fourth appeared to be an open public concert hosted in a parking lot. In the background was a giant factory building, on the side of which there was a prominently displayed logo of Ichara - one of the now famous Freetown defense companies.</p>
+<p>The last was a picture of Jahn himself taking a selfie with what appeared to be one of the managers who worked at the defense company.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Are you going to go to Freetown and see Jahn?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Actually I was thinking to stay in Northglade another five days or so after you leave, and let him come here. He's always wanted to come see Veridia."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"You should"</span>, Gladias replied gently.</p>
+<p>They walked forward along the street for about a hundred meters, and then descended down into a tunnel. About two hundred meters later, they turned right and walked up a staircase. At the end of the staircase, there was a door.</p>
+<p>Gladias prepared to tap his watch against the green circle on the side of the door, but before he could do so, the door opened on its own.</p>
+<p><span style="color:oklch(0.7 0.15 160)">"Dad!"</span>, Lily yelled as she ran up to Gladias and hugged him.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Lily! I'm so happy you're safe."</span></p>
+<p>Febric and Hreda emerged from another room, and rushed to embrace Gladias and Seila.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I'm so glad that you are all here together."</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"I'm sorry, Mom."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Don't be. We all made lots of mistakes this past year. We've gotten through it now, and if we need to, we can get through even more. We're a family."</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"Is Zven here?"</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Oh, Zven, Vil and Daia are coming tomorrow morning!"</span></p>
+<p><span style="color:oklch(0.7 0.15 106.66666666666666)">"Amazing! I'm so excited to see Mom!"</span>, Hreda exclaimed.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So how has the Greater Plum Harbor been treating you?"</span>, Gladias asked.</p>
+<p><span style="color:oklch(0.7 0.15 106.66666666666666)">"It's been actually quite fun."</span>, Hreda replied. <span style="color:oklch(0.7 0.15 106.66666666666666)">"They did a very good job of organizing education, entertainment, public activities, all kinds of things to keep people happy. They convinced the Arctics to allow food to get droned in, so aside from being a small enclosed space it's been fine."</span></p>
+<p><span style="color:oklch(0.7 0.15 80)">"We had Arctic food out of curiosity a few times here"</span>, Febric added. <span style="color:oklch(0.7 0.15 80)">"They've figured out like a dozen substances that taste like sugar but don't have any calories. They also have protein contraptions that taste like fish and meat. It's not bad! Whatever taste you want with whatever nutrition profile you need, the slogan goes."</span></p>
+<p>Seila lowered her face quietly. She was still not entirely used to having to admit that the Arctic ways of doing things sometimes did actually have upsides and they could learn from them.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"How about I invite some of our new friends"</span>, Gladias interjected, <span style="color:oklch(0.7 0.15 93.33333333333333)">"and they can show us what actual properly cooked Dzego food is like?"</span></p>
+<p><span style="color:oklch(0.7 0.15 160)">"Yay!"</span>, Lily shouted.</p>
+<p>Febric and Hreda also nodded eagerly.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Then I'll ask them to come tonight. I have to go out again this afternoon. There's a military funeral for Den and our fallen soldiers at the top of the mountain. Then we can come back down together and enjoy a nice meal."</span></p>
+<p>Lily, Febric and Hreda nodded their heads with excitement.</p>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-30.html" title="Previous chapter: Chapter 30" aria-label="Previous chapter: Chapter 30"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-32.html" title="Next chapter: Chapter 32" aria-label="Next chapter: Chapter 32"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>

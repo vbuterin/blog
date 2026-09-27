@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-25.html" title="Previous chapter: Chapter 25" aria-label="Previous chapter: Chapter 25"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-27.html" title="Next chapter: Chapter 27" aria-label="Next chapter: Chapter 27"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+<h1>Chapter 26</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Veridia</span><span class="sep">·</span><span class="date">3724 Frostime 5</span></span></div>
+<p>Zei, Bai, Gladias and Den were sitting in a small enclosed cabin in an aeroplane, with Zei and Bai facing forward and Gladias and Den facing backward. All four were looking silently out the window, enjoying the view of a mostly flat, green landscape. The main visible features were a row of small mountains and the city of Meldan further in the background.</p>
+<p>An announcement alarm buzzed. The four of them snapped out of their trance-like state, and prepared to listen.</p>
+<blockquote>
+<p>jo hen jei fe fei go de di mei dan du</p>
+</blockquote>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Your turn to translate, Gladias!"</span>, Zei prodded.</p>
+<p>Gladias scrambled in his mind to understand the words quickly enough to give the answer before the next sentence began. After a few moments, he blurted out:</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Everyone, welcome to Meldan, Veridia."</span></p>
+<blockquote>
+<p>ti zun no tei li ze fo fi shi ci cin ho li ze ci bia tei gei ka fiu den min ba fia zui</p>
+</blockquote>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"The local time is 74,000 and the temperature is seven degrees. After a short time, the flying machine will descend to the ground."</span></p>
+<blockquote>
+<p>ti tei li dzai hen fe lo kin fe hai bun</p>
+</blockquote>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Now is a great time to look at the beauty outside."</span></p>
+<blockquote>
+<p>hai ka sho kin ce fe fei go de bun ji dze kai zui liu</p>
+</blockquote>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Outside right now, you can see Veridia's beautiful earth sheet of green plants."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Landscape of green plants"</span>, Zei corrected gently.</p>
+<blockquote>
+<p>biu ka di ge le bo gai dei li lia</p>
+</blockquote>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"On the right, there are the Gelebor mountains."</span></p>
+<blockquote>
+<p>cen hai ka ge le bo gai dei de dziu hai ka ce kin fe di mei dan du ci ti li sa dzu du fe fei go</p>
+</blockquote>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Far outside, continuing beyond the Gelebor mountains, you can see the Meldan city. This is the capital city of Veridia."</span></p>
+<blockquote>
+<p>di mei dan du li bai</p>
+<p>ci di mei dan du de jan zi li pa pi pa fi ha</p>
+<p>ci dzen fe gi hie pen</p>
+</blockquote>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Meldan is a large city. The population of Meldan is 1.1 million. It has many different districts."</span></p>
+<blockquote>
+<p>dzu ka kin ce fe bia gai dei</p>
+<p>ci fia sai pen ka dan fe gi jan</p>
+<p>ci sei sai pen ka jen bin pei de pen li pai</p>
+<p>ci mui dau fe ti li cin pin cu bun</p>
+</blockquote>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"In the center there is a small mountain. In the lower half there are many people's homes. In the upper half part of the government works. Hiking up it is happy and beautiful."</span></p>
+<blockquote>
+<p>gai dei de zei biu ka pai hui pen li bia</p>
+<p>ci pai hui pen fei ka fei go de gi bai pai hui li lia</p>
+<p>ci sa dzu pai hui li dzen fe ten min de bin dai cu man jei cu su kun gau</p>
+</blockquote>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"East of the mountain, there is the business district. In the business district there are many large companies. The main industries include computer software, finance and health protection."</span></p>
+<blockquote>
+<p>gai dei de zei gei ka di ka lia mai pen li lia</p>
+<p>ci ti pen li lu fe bai kai zun</p>
+<p>ko ti dzen fe gi pui gau ji dan</p>
+</blockquote>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"South of the mountain, there is Kalimar district. This part looks like a forest, but it contains many hidden homes."</span></p>
+<blockquote>
+<p>gai dei de zei dzun ka gi dan pen li lia</p>
+<p>co ti ka gi jan li san cu sun cu mo</p>
+<p>ci ti ju fe gi kai de sai hui cu gi dau kin zun</p>
+</blockquote>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"West of the mountain, there is a large residential district. Many people sleep, learn and eat here. It has many categories of food and many go-and-see places."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Tourist attractions."</span></p>
+<blockquote>
+<p>ti li tin bia pen fe di mei dan du de ce kin ji gi mui sun jui</p>
+<p>ci di mei dan du fei ka ji gi shan jin tei ka jan ki su</p>
+<p>te zen hu ka ki kia sin fe ti du</p>
+</blockquote>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"This was only a small part of the many interesting things in Meldan. Even if a person lives for years in Meldan, they will not know the city completely."</span></p>
+<blockquote>
+<p>jie fe lo cin pin fe lo di mei dan du cu fei go li bun</p>
+</blockquote>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"We hope you enjoy Meldan and the beauty of Veridia."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Well done. Only two months and you're almost a local already."</span></p>
+<p>Zei paused for a moment, and then opened his mouth again to speak slowly.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"ci jie fe lo cin pin fe di pa fo gai du"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I enjoyed Pafogai Du very much."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I hope you come back."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Of course I will!"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Wait, I just realized ... Pafogai means 'fourteen stone'? Where did that name come from?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Think of the periodic table."</span></p>
+<hr>
+<p>The aeroplane came to a stop. Through the window, they could see over a dozen large autobuses and cars approaching.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"The larger black one is ours. We'll exit last, for our privacy"</span>, Den stated.</p>
+<p>Zei, Gladias and Bai nodded. The four of them reclined back in their seats and waited.</p>
+<p>About ten minutes later, the door to their cabin automatically opened. The four of them immediately stood up, grabbed their carry-on bags from under their seats, and walked toward the front of the aeroplane. As they passed through the aeroplane, they could see all of other cabin doors already open and empty, with used blankets and empty bottles and cups littering many of the tables and seats.</p>
+<p>They exited the aeroplane though a doorway that was directly connected to a staircase, and then to a narrow room that was clearly also the inside of an autobus. The room had an entrance, which they had just passed through, an exit on the other side, and two passage gates blocking the way in the middle.</p>
+<p>Zei and Gladias stepped forward first. They each put their watches against the green circle on the side of the gate they were passing through, and looked at the camera in front. A few ticks later, almost in unison, both gates announced: <span style="color:oklch(0.7 0.15 66.66666666666666)">"Welcome to Veridia."</span></p>
+<p>The gates opened, and Zei and Gladias stepped through. The exit at the other end of the room led straight into the interior of one of the large black cars that they had seen earlier through the window of the aeroplane. They both stepped in, and found another man already sitting inside.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Senator Verdow!"</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Welcome home, Gladias!"</span>, Verdow replied, with a facial expression and tone warmer than Gladias had ever heard him. He immediately looked to Gladias's side. <span style="color:oklch(0.7 0.15 293.3333333333333)">"And you must be Zei."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"It's a pleasure to meet you, Senator."</span></p>
+<p>As Zei and Gladias were sitting down, Zei could already hear the footsteps of Bai and Den approaching. They also stepped through the opening and entered the car.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"And you must be Bai and Den!"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"We are indeed"</span>, Bai replied.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Well, let's sit down. We have a lot of work to do."</span></p>
+<p>All four of them sat down in their seats. The opening linking the car to the entrance room closed. Almost immediately they could feel the car start to accelerate.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"So first of all, Gladias, I have some very good news for you."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Oh, what is that?"</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Looks like we know where Lily is."</span></p>
+<p>Gladias's eyes opened.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Seila pushed really hard and got in touch with me, she told me the whole situation. Zven stayed in touch with Lily, and she admitted to him where she was: she had crossed over into Arctic-occupied territory and was in Northglade."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"We then scanned through all the feeds the security cameras that you so brilliantly suggested the Dzegojan should hack into. After a few days, we found her. She is in some kind of boarding school that the Arctics set up. About one kilometer away from the GPH."</span></p>
+<p>Gladias sighed. <span style="color:oklch(0.7 0.15 93.33333333333333)">"At least we know where she is. It's going to be difficult to get her out of Northglade, but at least that's also the place Febric and Hreda are, so we can get them all together."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Indeed. If you really wanted to, you could even go to Northglade now - though the doors to the GPH are still closed."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"The Arctics recently started allowing communication and travel both ways between Northshore and the rest of Veridia. They opened up clinics in Northglade offering some of their most advanced treatments, for both longevity and performance enhancement. Looks like they've decided to try to get Veridians to join the Arctic Empire voluntarily, by offering us their shiny technology."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"It's a good strategy."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What was your line, Zei? Manipulating someone to do something by just showing them how it's in their interest, is just convincing?"</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"That's definitely how Ephelion would see it. Of course, Sylka would get upset and say they're hiding the hidden cost - if you can live longer but it depends on ongoing infusions of proprietary Arctic medicine, you become dependent on them for your life, you become their slave. Though Ephelion would say that being dead - being inside a coffin where you are not free to move a single muscle or think a single thought - is the worst slavery of all. And that that's not just true for a person, it's true for a civilization."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"If we want Veridia to succeed and thrive, we have to find the synthesis. We can admit that the Arctics do some things very well, and that their striving for a radically better future can be healthy. Veridia's north star cannot be to just stay the same as we are but with less greed and a better social fabric. We need to have actual progress, and take the good parts of it without the bad. We need to recognize success, and reward it."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"But first, we have to give ourselves breathing room. And that means defeating the Arctics in Northshore."</span></p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Exactly. And to do that, we have to be willing to learn from the outside - learn from our enemies in the Arctic Empire, and from our friends in Freetown and Dzego."</span></p>
+<p>The car slowly came to a stop. A few moments later, the doors opened, leading straight into the inside of what looked to be a government-run hotel.</p>
+<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Get a good sleep, friends. Zei, Den, the two of you have a big day tomorrow morning. And then once that's done, we'll meet and talk about our big plans. Veridia ba fau gie."</span></p>
+<p>Gladias and Zei stepped out of the car first. Almost immediately, Gladias could see a woman waiting in the far corner of the room. She turned toward him, and began running toward him with outstretched arms.</p>
+<p>It was Seila.</p>
+<div class="dateline scene-break"><hr class="rule"><span class="txt"><span class="place">Meldan, Veridia</span><span class="sep">·</span>3724 Frostime 6</span></div>
+<p>Zei sat down on a chair, in front of a console that looked remarkably similar to the consoles on which he had played all of his championship Minpentai games. The main difference that he could see was that this time, there were no anti-cheating detection drones buzzing around.</p>
+<p>He put on the earpiece and glasses, and spoke into the microphone.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Can you hear me, Den?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Yep, loud and clear. I think I'm in the room right below you."</span></p>
+<p>Zei playfully stomped his feet.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Can you hear that?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I'm only hearing your voice through the earpiece."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I guess your soundproofing is very good!"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Okay, Zei, let's go through the whole operation again."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Location: Redshire, presidential residence. Goal: rescue our target - Tafindel, the president's son. Strategy: our man on the inside asks the target to step out onto the balcony. We fly in, drop down a rope for him to tie around his waist and hold on to, fly out before the Arctics can do anything."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Exactly, that's the mainline plan. Now what are the contingency plans?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"If Arctics appear - soldiers or drones - we shoot them. If he doesn't step out onto the balcony, no backup plan, we're screwed - our drones won't survive if they have to land directly on the building. If the drone with the rope gets shot down, we have a second drone, and potentially even the other combat drones could pick the target back up, though they're not as well-designed for it. The only dangerous window is if the drone gets shot down within a few ticks after it picks him up - too soon for the backup drones to swoop in and grab him before he hits the ground."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"What's my responsibility?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Supervising the mainline plan."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"What's yours?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Supervising the combat and the contingency plans."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Mu, are you here?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"I am indeed. I'm supervising the surveillance, I'll make sure we learn about anything unexpected as soon as possible."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Mu, how did you get here!?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"I was on the same aeroplane as you yesterday, Zei. Just in a different cabin, and different car going into the city. Privacy precautions."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Well I'm happy to see you! Or, at least, hear you."</span></p>
+<p>Zei checked the various numbers in the display that was being blasted into his eyes through the glasses he was wearing.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Fi le gei tau fa"</span>, he exclaimed, mimicking the voice of the announcer that would count down to the beginning of each Minpentai game.</p>
+<p>He then consciously switched his mood to be entirely focused on the battle that was very soon to begin.</p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">
+<rect width="200" height="200" fill="#348"/>
+<rect x="150" y="50" width="40" height="14" fill="#89c"/>
+<polygon points="170,60 180,60 175,68" fill="#550"/>
+<circle cx="20" cy="100" r="3" fill="#cef"/>
+<circle cx="27" cy="120" r="3" fill="#cef"/>
+<circle cx="34" cy="140" r="3" fill="#cef"/>
+<line x1="20" y1="100" x2="0" y2="107" stroke="#cef" stroke-dasharray="2"/>
+<line x1="27" y1="120" x2="7" y2="127" stroke="#cef" stroke-dasharray="2"/>
+<line x1="34" y1="140" x2="14" y2="147" stroke="#cef" stroke-dasharray="2"/>
+</svg></div><br>
+<p>Zei stared intently at the screen as the drones came closer to the parliament building and more drones appeared onscreen.</p>
+<p>Twenty ticks later, the dark yellow triangle onscreen turned into a brighter yellow checkmark. Tafindel stepped out onto the balcony, exactly on schedule.</p>
+<p>Thirty more ticks passed.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"mu gu gei tau fa"</span>, he said softly. Battle starts in fifty ticks. In some sense, the battle had started already, but the moment he was waiting for was the moment Tafindel would grab hold of the rope. That is when the real challenge would begin, he thought.</p>
+<p>Twenty more ticks passed.</p>
+<p>Suddenly, the checkmark turned back into a dark yellow triangle.</p>
+<p>Zei zoomed in to the video feed. Someone had grabbed Tafindel, and pulled him back inside.</p>
+<p>And almost at that same moment, Arctic drones started shooting.</p>
+<p>Zei could immediately hear Den's words blasting through his earpiece.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I'll figure out what happened to the target. Zei, supervise the battle."</span></p>
+<p>Zei subconsciously nodded. The headset automatically translated the nod into a checkmark icon, which flashed onto Den and Mu's displays.</p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">
+<rect width="200" height="200" fill="#348"/>
+<rect x="150" y="50" width="40" height="14" fill="#89c"/>
+<polygon points="170,60 180,60 175,68" fill="#550"/>
+<circle cx="100" cy="72" r="3" fill="#cef"/>
+<circle cx="107" cy="92" r="3" fill="#cef"/>
+<circle cx="114" cy="112" r="3" fill="#cef"/>
+<line x1="100" y1="72" x2="80" y2="79" stroke="#cef" stroke-dasharray="2"/>
+<line x1="107" y1="92" x2="87" y2="99" stroke="#cef" stroke-dasharray="2"/>
+<text x="107" y="92" fill="#f04" font-family="sans-serif" font-size="12" text-anchor="middle">x</text>
+<line x1="114" y1="112" x2="94" y2="119" stroke="#cef" stroke-dasharray="2"/>
+<circle cx="57" cy="76" r="3" fill="#cef"/>
+<circle cx="64" cy="96" r="3" fill="#cef"/>
+<circle cx="71" cy="116" r="3" fill="#cef"/>
+<circle cx="78" cy="136" r="3" fill="#cef"/>
+<line x1="57" y1="76" x2="37" y2="83" stroke="#cef" stroke-dasharray="2"/>
+<line x1="64" y1="96" x2="44" y2="103" stroke="#cef" stroke-dasharray="2"/>
+<line x1="71" y1="116" x2="51" y2="123" stroke="#cef" stroke-dasharray="2"/>
+<text x="71" y="116" fill="#f04" font-family="sans-serif" font-size="12" text-anchor="middle">x</text>
+<line x1="78" y1="136" x2="58" y2="143" stroke="#cef" stroke-dasharray="2"/>
+<text x="78" y="136" fill="#f04" font-family="sans-serif" font-size="12" text-anchor="middle">x</text>
+<circle cx="24" cy="110" r="3" fill="#cef"/>
+<circle cx="31" cy="130" r="3" fill="#cef"/>
+<line x1="24" y1="110" x2="4" y2="117" stroke="#cef" stroke-dasharray="2"/>
+<line x1="31" y1="130" x2="11" y2="137" stroke="#cef" stroke-dasharray="2"/>
+</svg></div><br>
+<p>Zei groaned. Three of his drones had already been hit.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Evasive action, return fire at hostiles. All damaged drones, if you are still functional, descend to ground and play dead."</span></p>
+<p>Arctic surveillance was more powerful than he had thought, he realized.</p>
+<p>At that moment, an X appeared above a fourth one of his drones - the drone that had been intended to grab the target. A tick later, that drone disappeared completely from the display map. Zei checked the raw visual feed. It had been directly hit, and exploded in midair.</p>
+<p>Zei screamed with despair. The evasion tricks that they had learned from their previous missions were not helping. It looked like the mission was going to fail - and perhaps with it, the Kungaupei's credibility.</p>
+<p>The next moment, through his earpiece, he heard Mu speaking intensely.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"New plan. Everyone fly low, under the buildings and trees. Fly through the streets. That's where their firing ability is weakest. Then I have a trick up my sleeve."</span></p>
+<p>Zei nodded, and passed along the instruction to all drones. Within ten ticks, the four surviving and fully functional drones were all near ground level. An additional damaged drone, which Zei had instructed to play dead, was already at ground level - it had been there for over half a minute.</p>
+<p>Suddenly, Zei could see in his visual feed the streetlights and the lights inside the buildings all blinking chaotically. Arctic drones started firing in all directions, confused about where their adversaries were.</p>
+<p>His drones kept flying forward. As soon as one got within a hundred meters of the presidential residence, Den spoke up.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I need a crash at these coordinates."</span></p>
+<p>A new yellow triangle appeared on the side of the building. Zei immediately directed his drone to crash there at full speed. Four ticks later, it did, and there was a large explosion and smoke.</p>
+<p>Ten ticks after that, the yellow triangle turned into two bright yellow checkmarks.</p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">
+<rect width="200" height="200" fill="#348"/>
+<rect x="150" y="50" width="40" height="14" fill="#89c"/>
+<circle cx="120" cy="67" r="3" fill="#cef"/>
+<circle cx="130" cy="72" r="3" fill="#cef"/>
+<circle cx="140" cy="80" r="3" fill="#cef"/>
+<line x1="120" y1="67" x2="110" y2="77" stroke="#cef" stroke-dasharray="2"/>
+<line x1="130" y1="72" x2="120" y2="82" stroke="#cef" stroke-dasharray="2"/>
+<line x1="140" y1="80" x2="133" y2="92" stroke="#cef" stroke-dasharray="2"/>
+<text x="140" y="52" fill="#cf0" font-family="sans-serif" font-size="12" text-anchor="middle">✓</text>
+<text x="147" y="56" fill="#cf0" font-family="sans-serif" font-size="12" text-anchor="middle">✓</text>
+<circle cx="79" cy="75" r="3" fill="#cef"/>
+<text x="79" y="75" fill="#f04" font-family="sans-serif" font-size="12" text-anchor="middle">x</text>
+</svg></div><br>
+<p>Zei was confused, but immediately did the only thing that made sense. The drones were too low for the rope to work. Instead, he directed two of the three remaining drones to slow to a stop, right in front of the presidential residence.</p>
+<p>Both checkmarks turned green. The drones accelerated again, and sped ahead. Zei directed the third drone to hold back, and fire on all Arctic drones that it could detect.</p>
+<p>He checked the visual. On each of the two drones that were flying off, someone was holding on tightly to their backs. One was Tafindel, and the other was their man on the inside - his assistant. They were both wearing thermal cloaks. Good job Den, Zei thought.</p>
+<p>Zei continued to watch the screen intently. Somehow, against all odds, they seemed to have done it?</p>
+<p>Den cleared his throat and began to speak.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"This is not going to work"</span>, he muttered. <span style="color:oklch(0.7 0.15 53.33333333333333)">"I see more Arctic drones coming in. They are faster, they will catch up."</span></p>
+<p>Mu immediately responded.</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Already on it. The targets will jump off the drones soon, the drones will keep going. The targets will be told to run two hundred meters to a road - NOT the road closest to them. I have a car coming to pick them up. With luck, they will be tens of kilometers away before the Arctics know what's going on. Once they get to the shore, a sea drone will come and take them out of Redshire."</span></p>
+<p>Zei sighed. <span style="color:oklch(0.7 0.15 346.66666666666663)">"I trust you, Mu."</span></p>
+<br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">
+<rect width="200" height="200" fill="#348"/>
+<circle cx="70" cy="50" r="3" fill="#cef"/>
+<circle cx="85" cy="55" r="3" fill="#cef"/>
+<line x1="70" y1="50" x2="75" y2="75" stroke="#cef" stroke-dasharray="2"/>
+<line x1="85" y1="55" x2="90" y2="80" stroke="#cef" stroke-dasharray="2"/>
+<text x="80" y="100" fill="#cf0" font-family="sans-serif" font-size="12" text-anchor="middle">✓</text>
+<text x="95" y="105" fill="#cf0" font-family="sans-serif" font-size="12" text-anchor="middle">✓</text>
+<line x1="150" y1="0" x2="150" y2="200" stroke="#cef" width="2"/>
+<line x1="70" y1="100" x2="90" y2="200" stroke="#cef" width="2"/>
+<line x1="0" y1="100" x2="70" y2="100" stroke="#cef" width="2"/>
+</svg></div><br>
+<p>Zei sat back down on his chair and sighed, feeling deep disappointment at himself. He closed his eyes.</p>
+<p>A minute later, the first good news:</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Pickup successful."</span></p>
+<p>Another ten minutes later:</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Our drones touched down at a large shopping complex in Dolinar. Arctics are closing in on them. Hopefully the manhunt will take as long as possible."</span></p>
+<p>Another thirty minutes later:</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Our car reached the shore without incident. Targets now entering the seaborne drone."</span></p>
+<p>Ten more minutes after that:</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"The Arctics realized that we tricked them. They are broadening their search."</span></p>
+<p>Zei watched the screen, which was at this point showing the slow grinding progress of the seaborne drone making its way westward away from the Redshire coast.</p>
+<p>Fifty minutes after that:</p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"The targets have successfully arrived on the coast of Arturia."</span></p>
+<hr>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I'm so sorry guys"</span>, Zei muttered softly. <span style="color:oklch(0.7 0.15 346.66666666666663)">"I failed completely, and if it weren't for Mu somehow saving us with a completely new plan, we would have failed, and probably everything else we're planning would have failed too."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Welcome to real life warfare, Zei"</span>, Den replied. <span style="color:oklch(0.7 0.15 53.33333333333333)">"It's not like Minpentai. Sometimes the only way to win is to think completely outside the box. Not outside the box as in figuring out some clever way to encode an entire computer inside of a glider structure, but outside the box as in, jumping out of your console chair and running over and bashing the other player in the face."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"So ... Mu, what did you do there?"</span></p>
+<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"This is not the Arctic Empire, this is Redshire. There are lots of people there who quietly support us, and a lot of the technical infrastructure has still not been shifted over to full Arctic control. So for the moment, it's still possible to break into some things. I have a bunch of admin passwords that people from Redshire gave me. I used them to first take control of the streetlights, and then to commandeer a few dozen automated cars. There were actually multiple decoys, the planes stopped and restarted in a few places. We should have done this plan all along, but - I underestimated the extent of Arctic surveillance as much as you did."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"It was truly an amazing job, Mu."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"But what matters is that we won. Tafindel is safe in Arturia. The Arctics have been humiliated. The whole world now knows that they can be defeated."</span></p>
+<p>Den paused, and then began to speak again.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"For the moment, they think it's just Freetown's defense companies. But now it's time for the Kungaupei to stand up and take its share of the credit. And then see if the Veridians are up for giving Veridia the defense that it deserves."</span></p>
+<hr>
+<p>Gladias slid open the door to the booth, and stepped in. Five judges that Mov and Seila had helped to identify - with significant help from surveillance cameras that had been backdoored by Dzego - were already sitting inside.</p>
+<p><span style="color:oklch(0.7 0.15 40)">"So what is it that you wanted to talk about?"</span>, the first judge asked.</p>
+<p>Gladias sat down, and slid the booth door behind him.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I am planning to open a case against the Veridian military leadership. Under the fourteenth Ground Law, the Veridian military is required to defend Veridia. As we have seen from what happened in Northglade, they have completely failed to do this. And so I am arguing that they have broken the law, and should be fired."</span></p>
+<p><span style="color:oklch(0.7 0.15 40)">"That's crazy. Yes, we were caught by surprise in Northshore and lost pretty badly. But the Veridian military are doing the best job they can in a difficult time. We can't just come in from the outside and say we don't like how they're doing their job and replace them, when we don't even know what standard we're comparing them to-"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Caeron"</span>, Gladias interrupted. <span style="color:oklch(0.7 0.15 93.33333333333333)">"Did you see in the news what happened today?"</span></p>
+<p><span style="color:oklch(0.7 0.15 40)">"I did not. Come on, Gladias, you know it's a rule that judges should not read the daily news. We're here to apply timeless principles, not get swayed in every direction by crowds of people getting angry in the moment."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"A Dzegojan group flew into Redshire and successfully rescued the president's son."</span></p>
+<p>Almost immediately, another judge began to reply.</p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"So you want us to replace the Veridian military leadership with some Dzegojan?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Yes, exactly."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I'm sorry, this is insane. That's not the court's job. Veridia is a democracy. The people in charge of the military, who can change the composition of the military, are the parliament. So if you want to try your crazy scheme, you should go talk to them."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Come on, Sewlert, you know as well as I do that the parliament is corrupt. They're either already inside an Arctic-engineered bubble of propaganda, or bribed, or have them or their families threatened thanks to the Arctics having broken into our surveillance systems."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"We're a court. We don't have the right to just go and decide the entire parliament is corrupt."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Actually, you do. Twenty-first Ground Law. Veridian government officials are required to perform their duties honestly, in good faith and without undue influence, and report and resign if any undue influence befalls them."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"So you want us to fire the parliament too?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"If necessary, yes."</span></p>
+<p>Gladias could feel that he was not getting through. So he decided to try a different line.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Do any of you have family in Northshore?"</span></p>
+<p>A third judge spoke up.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I do, a son. He's in the GPH, that's the one place that they are still blockading and not letting people leave from."</span></p>
+<p>Caeron turned angrily toward him.</p>
+<p><span style="color:oklch(0.7 0.15 40)">"Why are you bringing this up? Gladias said it himself, we're required to perform our duties without undue influence."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Six percent of the Veridian population is in Northshore. Each person has about ten close family members - parents, siblings, children, spouse, other close relations, co-parents. So among the five of you, that's fifty total, so statistically, there should be three of your family members total in Northshore. If you have none, then you're not feeling something that many other Veridians are feeling. So your interests are misaligned. You're misaligned toward compacency, but is that not also a form of undue influence?"</span></p>
+<p><span style="color:oklch(0.7 0.15 40)">"That's not how those laws work, there are precedents about it."</span></p>
+<p><span style="color:oklch(0.7 0.15 40)">"Do <em>you</em> have family in Northshore? If so, then  <em>you</em> are the one with the undue influence."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Now you're getting the law wrong. Plaintiffs are allowed to have a stake in the outcome - in fact, they're required to. The legal term for that is <em>standing</em>."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"And yes, I have three children there."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Look, Gladias. Again, Veridia is a democracy. We are not going to stomp our feet over our democracy just because a bunch of Dzego-man whiz kids rescued a prince and you think you're smarter and more morally pure than the entire parliament."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"And even if we did, just think about the procedure. A case takes a minimum of thirty days from start to finish, and that's if the judges don't decide that it needs to take longer. And then they can appeal, multiple times. Appeals can be shorter, but only from the third round. So it will take months for all this to resolve. And in the meantime, Veridia will be in chaos, and the Arctics will just swoop in and take over."</span></p>
+<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"So we're not doing this."</span></p>
+<p>Gladias looked around. Three of the other four judges were nodding along to what Selwert was saying. The remaining judge, Zevin, seemed much more sympathetic to Gladias - no doubt in no small part because he also had a son stuck in Northglade - but he did not seem to feel comfortable expressing his opinion.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Understood"</span>, Gladias said softly. If this sample of judges was that hostile to his pitch, the sample of judges that he would get if he launched a real case would almost certainly be quite hostile too. He needed a different strategy.</p>
+<p>He slid open the door to the booth, and slowly exited.</p>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-25.html" title="Previous chapter: Chapter 25" aria-label="Previous chapter: Chapter 25"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-27.html" title="Next chapter: Chapter 27" aria-label="Next chapter: Chapter 27"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>

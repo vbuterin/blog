@@ -1,0 +1,511 @@
+<chapter_nav prev="chapter-21.html" next="chapter-23.html" />
+
+# Chapter 22
+
+<chapter_open place="Freetown, United Cities" date="3724 Mistime 22" />
+
+Jahn, sitting in a taxi, looked out through the window. He saw Freetown's usual chaotic mixture of buildings: some glass and steel, some concrete, some stone, some tall, some short, some beautiful, some ugly.
+
+The taxi passed under a highway, and he could see piles of uncollected garbage on the sides of the road. Almost immediately after the highway, the taxi passed by a small park to the left, and a tall industrial building on the right. A movie with subtitles was playing, projected onto the industrial building's wall. Jahn looked again to the left, to see where the movie was projected from. Just before the taxi moved too far away for Jahn to be able to see, he found the projector, hidden under a bench in the park. Even without Graph Funding or rubrics, he thought, some people will always provide public goods.
+
+On the whole, everything seemed normal - though Jahn could just barely notice that the amount of activity on the streets seemed to be lower than usual.
+
+The taxi passed under another highway. On the other side, on the side of one of the buildings, Jahn noticed a large advertisement.
+
+<blockquote>
+
+Buy a luxurious room in a shelter, right on the northern edge of central Freetown.
+
+10 meters underground, maximum-grade physical, bio and info filtration and insulation.
+
+Only 325,000 zipcoins!
+
+</blockquote>
+
+A minute later, another advertisement:
+
+<blockquote>
+
+Shelters for the common man, in all shapes and sizes.
+
+Prices start at only 50,000 zipcoins, mortgage plans available!
+
+</blockquote>
+
+As the taxi continued west, it entered the region that the advertisement was talking about. Here, Jahn saw a type of activity that, to him, seemed to have been steadily increasing for the past six months: construction of roads. Jahn had also seen many shelters being constructed, but roads were a close second - particularly on the northern side of the town.
+
+Jahn's hand device buzzed in his lap.
+
+<wide_device_view>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3">Taxi fare</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><center>Driver base fare</center></td>
+      <td></td>
+      <td>3.69</td>
+    </tr>
+    <tr>
+      <td><center>Per-minute toll</center></td>
+      <td>9 min</td>
+      <td>1.89</td>
+    </tr>
+    <tr>
+      <td><center>Per-kilometer toll</center></td>
+      <td>5.65 km</td>
+      <td>1.26</td>
+    </tr>
+    <tr>
+      <td><center>Acceleration and deceleration toll</center></td>
+      <td>113 m/s Δv</td>
+      <td>1.03</td>
+    </tr>
+    <tr>
+      <td><center>Road congestion toll</center></td>
+      <td></td>
+      <td>1.50</td>
+    </tr>
+    <tr>
+      <td><center>Road congestion toll</center></td>
+      <td></td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <td><center>Road congestion toll</center></td>
+      <td></td>
+      <td>2.25</td>
+    </tr>
+    <tr>
+      <td><center>Total</center></td>
+      <td></td>
+      <td>12.52</td>
+    </tr>
+    </tbody>
+</table>
+
+</wide_device_view>
+
+![Jahn: "Hey, Chief?"], Jahn asked the driver.
+
+![Driver: "What is it?"], the driver replied.
+
+![Jahn: "Do you know why there's so many congestion charges this time? The road seems quite a bit less congested than usual, why would the tolls be going that high?"]
+
+![Driver: "Ah yeah, they're bumping up every tax and toll they can. Funding defense, they say."]
+
+![Jahn: "Huh, the roads too?"]
+
+![Driver: "Are they bumping up any other fees on you?"], the driver asked.
+
+![Jahn: "Actually not the government"], Jahn replied. ![Jahn: "At least, not directly. But, the shelters. I heard some interesting gossip there."]
+
+![Driver: "And what is that?"]
+
+![Jahn: "The best shelters were originally owned by a few defense companies. Soon after Redshire got annexed, they got together and formed a cartel. Sold off a lot of the shelter space for money, and used that to modernize their armor and weapons a bunch."]
+
+![Driver: "Huh, all private companies? I guess that's their property, their rules. Less shelter space left for us poor folks than if they just rationed it, but hey, they are trying. And if they use that money to defend us well, less chance we'll end up needing any shelters in the first place. And with fewer cars on the road, I'm enjoying the roads more too."]
+
+![Jahn: "Well, yes that's the polite story. Freetown's economic philosophy at its finest. But I'm getting the feeling it's not _quite_ that clean. The government seems to be making a special effort to build roads in exactly those places that make it easier to get to and from the shelters. There's no evidence of any collusion between them and the companies - that would get knocked down hard by the courts - but my theory is that it's a sort of retroactive reward. Create the expectation that if you use your private property for the public good, then the government will twist the public work that it does in order to make life easier for you. It's a trick to work around the maximum budget rule - pay people without actually directly paying them."]
+
+![Jahn: "And if you refuse to use your private property in public-spirited ways, well... if things get really bad the next step might be that they'll start closing some roads for 'maintenance'. Though I guess people can always fly."]
+
+![Driver: "The Greater Plum Harbor has been refusing to fund anything that could be seen as going against the Arctics, they're scared that their node in Northglade might get shut down. I guess that's where we'll find out how good Freetown is at staying 'free'."]
+
+![Jahn: "And at defending itself."]
+
+The driver and Jahn stayed silent for a minute. Soon, the taxi slowed to a halt. Jahn looked outside the window. He had arrived at the Freetown Economics Institute.
+
+![Jahn: "Thank you Chief, and have a good day!"]
+
+![Driver: "You too, boss"], the driver replied.
+
+Jahn opened the door, and got out of the taxi.
+
+---
+
+Jahn passed through the turnstile in the Freetown Economics Institute, and walked toward the restaurant.
+
+After a minute of walking, he arrived. He saw a familiar face: Utaku.
+
+![Jahn: "Utaku! Surprised to see you still here."]
+
+![Utaku: "My parents told me to come back. They think Freetown is taking defense more seriously than the other United Cities, so it's safer than Belpaki here."]
+
+![Jahn: "Do you think that?"]
+
+![Utaku: "There have been some moves recently to create a unified defense grid between the aks. I'll be more optimistic if that goes through. But even then, I worry it's more theater than anything substantive."]
+
+![Jahn: "Has Freetown been doing anything substantive?"]
+
+![Utaku: "Well the big corps are paying insurance on all their property, the rates tripled when Redshire was annexed, and doubled again after Northglade. And then apparently the rates dropped back down by a quarter when the corps announced their recent defense packages."]
+
+![Utaku: "So ... somehow the market incentives seem to be working."]
+
+![Jahn: "You know, I've been talking to Zei from Dzego lately, and learning how quickly they've gotten everyone to start caring about privacy, now about bio safety, average indoor CO2 levels dropped by over a hundred points within a month. All coordinated by machinery that they originally created, supposedly, to upgrade their language - and to give us a much more sensible distance and time system."]
+
+![Jahn: "I've been getting this feeling that maybe almost any system can work well if people accept it and believe in it."]
+
+![Utaku: "Do people in Freetown believe strongly in economic freedom? Everyone in the Economics Institute does, obviously, but what about regular people?"]
+
+![Jahn: "Are you familiar with the early history of the United Cities, a hundred years ago?"]
+
+![Utaku: "Vaguely. I know there were some wars, both between some of the cities and against the Arctics."]
+
+![Jahn: "But do you know how those wars got resolved?"]
+
+![Utaku: "Eventually the armies of this continent came together and cooperated more, and that was a big part of why the Arctic offensive against Dzego was finally stopped."]
+
+![Jahn: "Coming together in a crisis is easy. What's hard is keeping that spirit together through the easy times, the boring times, the times when the founding generation dies out and the kids and the grandkids need someone to fight against and have a hard time resisting the urge to start turning on each other."]
+
+![Utaku: "So what happened? The co-governance system, I'm guessing?"]
+
+![Jahn: "That's one part of it. Each city gave a percent of the votes in its parliament to its neighbors - not enough to threaten the cities' independence and their unique cultures, but enough that future politicians would not have an incentive to ignore their surrounding continent completely."]
+
+![Jahn: "But also, they did another thing to preserve unique cultures. They had a period during which they subsidized people swapping homes and citizenships. People who felt more at home in another city were able to move easily and change their allegiance to their new home."]
+
+![Jahn: "The government of Freetown made a decision. They passed a new constitution, the one we still have today, which limited the government's power to regulate and tax anything down to a bare minimum. And then they said: this is what we are about. If you are scared of it, go to another city, but if you like it, no matter which city you're from, we welcome you. They even did a personality test without telling people what it's for, and then gave bigger subsidies to people who got what the government thought was a compatible result."]
+
+![Utaku: "Wow, I did not know that."]
+
+![Jahn: "Actually Arturia did a similar thing, in a somewhat opposite direction. They described their values as being about peace and quiet, research and learning, and they filtered by conscientiousness and test scores. Today, their whole society is sort of like a big university. If you go against the system too much, you get pushed harder and harder to leave and go to Freetown. But if you're fine with the system, you can learn a lot and have a lot of fun inside it. They actually do quite a lot of good science and have reliable infrastructure."]
+
+![Jahn: "The strongest legitimacy comes from people buying in to an idea voluntarily - signing the form, knowing exactly what they are getting themselves into and what they are giving up."]
+
+![Utaku: "That sounds like selection matters too. Different styles work for different people. Maybe a Freetown made out of people from Arturia would be a disaster, and same with the reverse."]
+
+![Jahn: "Of course, now we're several generations into people being just born here, like people get born anywhere else. But for now, Freetown has held."]
+
+![Utaku: "Do you think some people are ... genetically more freedom-loving than others? And Freetown got a lot of those people back then, and those genes got passed down?"]
+
+![Jahn: "People here bring that idea up from time to time. To me it feels unlikely. All the congestion tolls that I paid to get here, all the turnstiles, I somehow doubt that there can exist a gene that would register all that as being "free". You need to have a pretty deep education to understand how it's free - how it's all part of a market, each person and institution allocating their private property as they see fit, and how all these payments give people the ability to honestly self-report whether or not they truly value something more than the resources that it costs to make it available for them, and how that's better and more civilized than the government just deciding what things it thinks are wasteful and banning them."]
+
+![Utaku: "I think there might be a core that even someone from the medieval era would understand. I don't bother you, you don't bother me. We're all each just trying to live our own lives, if we can help each other that's great, but not at the expense of leaving each other space to be in peace. You don't get the forager freedom of the great outdoors, especially not in the city, but within your own box you are the master."]
+
+![Utaku: "At least, that's what Freetown always feels like to me."]
+
+![Utaku: "Although ... I do love the economists here. Well, the intellectual culture in general. I like that you can honestly bring up the genetics stuff, and even if people disagree, it's not like Belpaki where they just immediately think you must be an Arctic or something."]
+
+![Utaku: "Changing the subject a bit, of course I know why they would never tell either of us, but I am curious what these defense companies are up to. What do they think the threat model is? Same type of invasion as Redshire and Northglade? But what happens if we resist harder? And how are they going to fight back?"]
+
+![Jahn: "Well, funny you ask. I actually do know some gossip, although ... this is military, I don't think I'm allowed to tell you."]
+
+![Utaku: "Huh, I'm surprised you got into those circles at all. Were they interested in your thoughts as an economist on how to raise more funding for defense?"]
+
+Jahn sighed. ![Jahn: "Unfortunately, I really can't tell you. Freedom of speech is great for many things, but ... not for military secrets."]
+
+----
+
+Jahn ordered a dish with vegetables and a tea, and stayed in the restaurant area studying the internet to better understand exactly the question Utaku had asked: what options Freetown still had to raise more funding for defense. He took out a computer, and made a table, scoring different options in three columns: how much money it could raise, how much economic collateral damage it would cause, and how much it risked making Freetown less ... free.
+
+A longhour later, Jahn's watch buzzed. It was Zei, asking for a call.
+
+Jahn picked up his computer and his glass of water, and moved over to a nearby calling booth.
+
+![Jahn: "What's up, Zei?"]
+
+![Zei: "Thank you again for that connection you made with the defense companies last month. I actually have some interesting updates there!"]
+
+![Jahn: "Hey, I only connected you to the Economics Institute director, the connection to the companies was his doing."]
+
+![Jahn: "But what is it?"]
+
+![Zei: "Well, first let me give you a status update. Do you know what the Dzego folks have been doing with the defense companies' help?"]
+
+![Jahn: "I do not."]
+
+![Zei: "They've been hunting down Arctic drones in Redshire."]
+
+![Jahn: "If you're allowed to ... tell me more?"]
+
+![Zei: "How about I show you more?"]
+
+Jahn's computer buzzed, and he saw a file download. It was a view-once file. If Jahn wanted, he could of course save it clandestinely through the operating system, or just take a picture of the screen with another device. But by default, once opened, the file would stay viewable for five minutes, cannot be copied, and would self-delete at the end. Politeness dictated not interfering with these defaults.
+
+Jahn clicked on the file, and a view opened up.
+
+<wide_device_view>
+
+
+   <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">                                                                                
+     <rect width="200" height="200" fill="#348"/>                                                                                                                         
+                                                                              
+     <circle cx="60" cy="40" r="3" fill="#cef"/>
+     <circle cx="140" cy="40" r="3" fill="#cef"/>
+     <circle cx="170" cy="100" r="3" fill="#cef"/>
+     <circle cx="100" cy="100" r="3" fill="#cef"/>
+     <circle cx="140" cy="160" r="3" fill="#cef"/>
+     <circle cx="60" cy="160" r="3" fill="#cef"/>
+     <circle cx="30" cy="100" r="3" fill="#cef"/>
+     <rect x="85" y="145" width="5" height="5" fill="#f04"/>
+     <line x1="88" y1="148" x2="93" y2="160" stroke="#f04" stroke-dasharray="2"/>
+                                                       
+   </svg> 
+
+</wide_device_view>
+
+![Jahn: "What am I looking at here?"]
+
+![Zei: "This is happening right now as we speak. It's our clandestine kill chain on an Arctic ground drone in Redshire."]
+
+![Zei: "The red square is the enemy. The blue circles are seven of our own drones, that we arranged in a hexagon. Their role is to jam communications. Right now, they are dormant, waiting for the Arctic drone to get fully inside."]
+
+![Jahn: "So what happens next?"]
+
+![Zei: "Ah, well let's find out together."]
+
+About ten ticks later, another view-once file appeared on Jahn's screen.
+
+<wide_device_view>
+
+
+   <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">                                                                                
+     <rect width="200" height="200" fill="#348"/>                                                                                                                         
+                                                                              
+     <circle cx="60" cy="40" r="3" fill="#cef"/>
+     <circle cx="140" cy="40" r="3" fill="#cef"/>
+     <circle cx="170" cy="100" r="3" fill="#cef"/>
+     <circle cx="100" cy="100" r="3" fill="#cef"/>
+     <circle cx="140" cy="160" r="3" fill="#cef"/>
+     <circle cx="60" cy="160" r="3" fill="#cef"/>
+     <circle cx="30" cy="100" r="3" fill="#cef"/>
+     <rect x="77" y="125" width="5" height="5" fill="#f04"/>
+     <line x1="80" y1="128" x2="85" y2="140" stroke="#f04" stroke-dasharray="2"/>
+                                                       
+   </svg> 
+
+</wide_device_view>
+
+![Zei: "Just waiting a little bit longer."]
+
+![Jahn: "I'm excited."]
+
+![Zei: "And ... action."]
+
+<wide_device_view>
+
+
+   <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">                                                                                
+     <rect width="200" height="200" fill="#348"/>                                                                                                                         
+                                                                              
+     <circle cx="60" cy="40" r="3" fill="#cef"/>
+     <circle cx="60" cy="40" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <circle cx="140" cy="40" r="3" fill="#cef"/>
+     <circle cx="140" cy="40" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <circle cx="170" cy="100" r="3" fill="#cef"/>
+     <circle cx="170" cy="100" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <circle cx="100" cy="100" r="3" fill="#cef"/>
+     <circle cx="100" cy="100" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <circle cx="140" cy="160" r="3" fill="#cef"/>
+     <circle cx="140" cy="160" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <circle cx="60" cy="160" r="3" fill="#cef"/>
+     <circle cx="60" cy="160" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <circle cx="30" cy="100" r="3" fill="#cef"/>
+     <circle cx="30" cy="100" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <rect x="70" y="105" width="5" height="5" fill="#f04"/>
+     <line x1="73" y1="108" x2="78" y2="120" stroke="#f04" stroke-dasharray="2"/>
+     <polygon points="95,175 101,175 98,180" fill="#3ef"/>
+     <polygon points="75,190 81,190 78,195" fill="#3ef"/>
+     <text x="78" y="108" fill="#f04" font-family="sans-serif" font-size="12" text-anchor="middle">x</text>                           
+
+   </svg> 
+
+</wide_device_view>
+
+![Zei: "Do you see it?"]
+
+![Jahn: "Yep."]
+
+![Zei: "The jammer drones are jamming. The red X signifies that there was a hit on the target. It's supposed to be two hits: one on its main antenna, and the other on its legs, to prevent it from leaving the jamming area. And the blue triangles are our two attack drones."]
+
+The conversation paused for about twenty ticks.
+
+<wide_device_view>
+
+
+   <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">                                                                                
+     <rect width="200" height="200" fill="#348"/>                                                                                                                         
+                                                                              
+     <circle cx="60" cy="40" r="3" fill="#cef"/>
+     <circle cx="60" cy="40" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <circle cx="140" cy="40" r="3" fill="#cef"/>
+     <circle cx="140" cy="40" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <circle cx="170" cy="100" r="3" fill="#cef"/>
+     <circle cx="170" cy="100" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <circle cx="100" cy="100" r="3" fill="#cef"/>
+     <circle cx="100" cy="100" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <circle cx="140" cy="160" r="3" fill="#cef"/>
+     <circle cx="140" cy="160" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <circle cx="60" cy="160" r="3" fill="#cef"/>
+     <circle cx="60" cy="160" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <circle cx="30" cy="100" r="3" fill="#cef"/>
+     <circle cx="30" cy="100" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <rect x="68" y="100" width="5" height="5" fill="#f04"/>
+     <polygon points="65,85 71,85 68,90" fill="#3ef"/>
+     <polygon points="90,85 96,85 93,90" fill="#3ef"/>
+
+   </svg> 
+
+</wide_device_view>
+
+![Jahn: "Still not dead? What's taking so long?"]
+
+![Zei: "Our drones, the triangles, are not actually trying to make a kill - if we wanted to do that, we could have just done that with a bigger first strike."]
+
+![Jahn: "So what are they doing?"]
+
+![Zei: "They are dancing."]
+
+![Jahn: "Dancing?"]
+
+![Zei: "Their goal is to _survive_ as long as possible, trying any kind of trick to avoid getting killed, ideally get mistaken for an Arctic drone or even an animal, and eventually only kill when the target is too close to escaping the trap."]
+
+![Zei: "That's our goal. Using Arctic drones as target practice to improve our ability to kill them is expensive. But using Arctic drones as practice to improve our ability to _survive_ them, that we can do, for basically as long as either of the triangles is still alive. Then the seven drones in the hexagon can finish the kill, and make sure to fry the target's circuits so the Arctics don't get any training data themselves."]
+
+![Zei: "Wait ..."]
+
+![Jahn: "What's the matter?"]
+
+![Zei: "We have a problem."]
+
+<wide_device_view>
+
+
+   <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">                                                                                
+     <rect width="200" height="200" fill="#348"/>                                                                                                                         
+                                                                              
+     <circle cx="60" cy="40" r="3" fill="#cef"/>
+     <circle cx="60" cy="40" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <circle cx="140" cy="40" r="3" fill="#cef"/>
+     <circle cx="140" cy="40" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <circle cx="170" cy="100" r="3" fill="#cef"/>
+     <circle cx="170" cy="100" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <text x="174" y="100" fill="#f04" font-family="sans-serif" font-size="12" text-anchor="middle">x</text>                           
+     <circle cx="100" cy="100" r="3" fill="#cef"/>
+     <circle cx="100" cy="100" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <text x="104" y="100" fill="#f04" font-family="sans-serif" font-size="12" text-anchor="middle">x</text>                           
+     <text x="134" y="160" fill="#f04" font-family="sans-serif" font-size="12" text-anchor="middle">x</text>                           
+     <circle cx="60" cy="160" r="3" fill="#cef"/>
+     <circle cx="60" cy="160" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <circle cx="30" cy="100" r="3" fill="#cef"/>
+     <circle cx="30" cy="100" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <rect x="60" y="92" width="5" height="5" fill="#f04"/>
+     <polygon points="70,110 76,110 73,115" fill="#3ef"/>
+     <rect x="158" y="190" width="5" height="5" fill="#f04"/>
+     <line x1="161" y1="193" x2="170" y2="200" stroke="#f04" stroke-dasharray="2"/>
+     <rect x="168" y="170" width="5" height="5" fill="#f04"/>
+     <line x1="171" y1="173" x2="181" y2="181" stroke="#f04" stroke-dasharray="2"/>
+     <rect x="178" y="150" width="5" height="5" fill="#f04"/>
+     <line x1="181" y1="153" x2="191" y2="161" stroke="#f04" stroke-dasharray="2"/>
+   </svg> 
+
+</wide_device_view>
+
+![Jahn: "Arctic reinforcements? Are you going to take over and pilot your drones to victory now?"]
+
+![Zei: "Yep, that's exactly what I'm doing. Temporarily have the two damaged-but-alive jammers play dead, lure the attackers to center, jammers reactivate, reform a circle, and then make a kill."]
+
+![Jahn: "Do your thing, no need to give me a play by play."]
+
+![Zei: "I'm talking to the AI and letting you listen."]
+
+![Zei: "Circles, finish the northwest square now. Goal: all comms and memory dead."]
+
+![Zei: "Deactivate all jamming except left and top left."]
+
+![Zei: "When it makes sense, reform the circle, reactivate jamming and strike. Maximize surprise."]
+
+![Zei: "No-"]
+
+![Jahn: "Wha-"]
+
+Jahn stopped mid-word, remembering that he was not supposed to distract Zei.
+
+![Zei: "They started jamming, I got disconnected."]
+
+![Zei: "Nothing for me to do now. It's just our AI against the Arctics, AI plus human. And if our jamming works, our AI against theirs."]
+
+They both waited silently.
+
+Ten ticks.
+
+Twenty ticks.
+
+Thirty ticks.
+
+Finally, the download icon turned on again on Jahn's computer.
+
+<wide_device_view>
+
+
+   <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" style="margin-left:35px">                                                                                
+     <rect width="200" height="200" fill="#348"/>                                                                                                                         
+                                                                              
+     <circle cx="65" cy="60" r="3" fill="#cef"/>
+     <circle cx="65" cy="60" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <text x="69" y="60" fill="#f04" font-family="sans-serif" font-size="12" text-anchor="middle">x</text>                           
+     <circle cx="95" cy="95" r="3" fill="#cef"/>
+     <circle cx="95" cy="95" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <text x="99" y="95" fill="#f04" font-family="sans-serif" font-size="12" text-anchor="middle">x</text>                           
+     <circle cx="55" cy="120" r="3" fill="#cef"/>
+     <circle cx="55" cy="120" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <text x="59" y="120" fill="#f04" font-family="sans-serif" font-size="12" text-anchor="middle">x</text>                           
+     <circle cx="30" cy="100" r="3" fill="#cef"/>
+     <circle cx="30" cy="100" r="45" stroke="#cef" fill="none" stroke-dasharray="2 10"/>
+     <rect x="60" y="90" width="5" height="5" fill="#f04"/>
+     <text x="67" y="93" fill="#f04" font-family="sans-serif" font-size="12" text-anchor="middle">x</text> 
+     <text x="67" y="99" fill="#f04" font-family="sans-serif" font-size="12" text-anchor="middle">x</text>                                                     
+     <rect x="45" y="95" width="5" height="5" fill="#f04"/>
+     <text x="52" y="98" fill="#f04" font-family="sans-serif" font-size="12" text-anchor="middle">x</text>                           
+     <rect x="65" y="110" width="5" height="5" fill="#f04"/>
+     <text x="72" y="113" fill="#f04" font-family="sans-serif" font-size="12" text-anchor="middle">x</text>  
+     <text x="72" y="119" fill="#f04" font-family="sans-serif" font-size="12" text-anchor="middle">x</text>                                                    
+     <rect x="80" y="95" width="5" height="5" fill="#f04"/>
+     <text x="87" y="98" fill="#f04" font-family="sans-serif" font-size="12" text-anchor="middle">x</text>                           
+   </svg> 
+
+</wide_device_view>
+
+![Zei: "That was really close."]
+
+![Jahn: "Wow."]
+
+![Zei: "Only one undamaged drone on our side. Last step is that it will walk around and chip and memory-kill all the drones, first the Arctics and then the rest of our own just in case. It needs to do that before more Arctic drones come."]
+
+![Jahn: "Can the damaged ones help?"]
+
+![Zei: "They can't move. They can still attack, but proper chip and memory-killing is best done from ten centimeters away."]
+
+![Zei: "Even then we can't actually be certain that the Arctics won't be able to salvage training data. We can just hope for the best."]
+
+![Zei: "Okay... I gave it the instructions, now I'm just watching."]
+
+![Jahn: "I am curious. How does your internet link into Redshire work?"]
+
+![Zei: "Ah, that's one of our other big projects. The problem now is that the Arctics have confiscated all the un-backdoored electronics. There's still many watches, hand devices and compute boxes left hidden in various places, but the Arctics will be able to tell if any device tries to transmit things. So what we do is steganography."]
+
+![Zei: "Two people pretend to have a voice or video call. While the call is happening, the un-backdoored device is sitting nearby, and it's softly playing audio. That audio stream sounds random - it's representing encrypted data wrapped in an erasure code that's highly noise-tolerant - but we use the same tricks I told you before with the health data to maximize how much data we can hide, so that it appears to anyone or any bot spying on the call that there's nothing abnormal."]
+
+![Jahn: "One of ... do you have more big projects?"]
+
+![Zei: "Well, the next step is that we want to actually kidnap an Arctic drone and bring it back to Dzego for analysis."]
+
+![Jahn: "Wow."]
+
+![Zei: "Actually, that's what I'll ask for your help one more time for."]
+
+![Jahn: "So what do you need?"]
+
+![Zei: "I want you to introduce me to another defense corp. Preferably not through the Institute director, find a different path."]
+
+![Jahn: "Why?"]
+
+![Zei: "The company the Institute director introduced does seaborne well, I want to find one of the others, that are better at airborne."]
+
+![Zei: "Also, come on, it's Freetown, this is a market. You gotta talk to multiple people and compare them against each other, to make sure they're not screwing you over."]
+
+<chapter_nav prev="chapter-21.html" next="chapter-23.html" />

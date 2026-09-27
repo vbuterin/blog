@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+:root { --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --header-bg: rgba(255,255,255,0.1); --editor-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%); --preview-bg: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); --text-light: white; --text-dark: #333; }
+html.dark { --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); --header-bg: rgba(0,0,0,0.3); --editor-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.6) 0%, rgba(48, 43, 99, 0.6) 100%); --preview-bg: linear-gradient(135deg, rgba(15, 12, 41, 0.3) 0%, rgba(48, 43, 99, 0.3) 100%); }
+.dark-toggle { background: white; color: #667eea; border: none; padding: 12px 16px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+.dark-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.dark-toggle .icon { font-size: 1.2rem; }
+html.dark .dark-toggle { background: #1a1a2e; color: #f0e68c; }
+html.dark .document-page { background: #1a1a2e; color: #e0e0e0; }
+html.dark .document-page h1 { color: #f0f0f0; border-bottom-color: #8b83c3; }
+html.dark .document-page h2 { color: #d0d0d0; }
+html.dark .document-page h3 { color: #c0c0c0; }
+html.dark .document-page p, html.dark .document-page ul, html.dark .document-page ol { color: #d0d0d0; }
+html.dark .document-page li { color: #d0d0d0; }
+html.dark .document-page blockquote { color: #b0b0b0; background: rgba(255,255,255,0.05); border-left-color: #8b83c3; }
+html.dark .document-page code { background: rgba(255,255,255,0.1); color: #f08dcd; }
+html.dark .document-page table { border-color: #444; }
+html.dark .document-page th, html.dark .document-page td { border-color: #444; color: #d0d0d0; }
+html.dark .document-page th { background: #4a4580; color: white; }
+html.dark .document-page tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b5ba0); }
+:root { --squeeze-x: clamp(5px, calc(5vw - 40px), 40px); --squeeze-half: clamp(2.5px, calc(2.5vw - 20px), 20px); }
+.document-page { box-sizing: content-box; background: #fff; border-radius: 12px; padding: 60px var(--squeeze-half); box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 635px; max-width: 100%; min-height: 1000px; margin: 0 auto 10px; }
+.document-page h1 { font-size: 2.5rem; color: #333; margin-bottom: 20px; line-height: 1.2; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
+.document-page h2 { font-size: 2rem; color: #444; margin-bottom: 15px; margin-top: 30px; }
+.document-page h3 { font-size: 1.5rem; color: #555; margin-bottom: 12px; margin-top: 25px; }
+.document-page p { font-size: 1.1rem; color: #333; line-height: 1.8; margin-bottom: 15px; }
+.document-page ul { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: disc; }
+.document-page ol { font-size: 1.1rem; color: #333; line-height: 2; margin-bottom: 20px; padding-left: 30px; list-style-type: decimal; }
+.document-page li { margin-bottom: 8px; color: #333; }
+.document-page ul ul, .document-page ul ol, .document-page ol ul, .document-page ol ol { margin-top: 8px; margin-bottom: 8px; }
+.document-page blockquote { border-left: 5px solid #667eea; padding-left: 25px; margin: 25px 0; font-size: 1.1rem; color: #555; font-style: italic; background: #f8f9fa; padding: 20px 25px; border-radius: 4px; }
+.document-page pre { background: #282c34; color: #abb2bf; padding: 25px; border-radius: 8px; overflow-x: auto; margin: 25px 0; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.95rem; line-height: 1.5; }
+.document-page code { font-family: 'Monaco', 'Menlo', monospace; background: #f5f5f5; padding: 3px 8px; border-radius: 4px; color: #e83e8c; }
+.document-page pre code { background: none; color: inherit; padding: 0; }
+.document-page table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+.document-page th, .document-page td { border: 1px solid #ddd; padding: 15px; text-align: left; color: #333; }
+.document-page img { display: block; margin: 20px auto; max-width: 100%; height: auto; }
+.document-page svg { display: block; margin: 0 !important; max-width: 100%; height: auto; }
+.document-page th { background: #667eea; color: white; }
+.document-page tr:nth-child(even) { background: #f9f9f9; }
+.document-page hr { border: none; height: 3px; background: linear-gradient(to right, #667eea, #764ba2); margin: 30px 0; border-radius: 2px; }
+@keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
+@keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
+.document-page { animation: fadeIn 0.3s ease forwards; }
+.document-page .dateline .rule { margin: 0; }
+.document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
+.document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
+.document-page .dateline.chapter-open .rule { margin-bottom: 10px; }
+.document-page .dateline.chapter-open .txt { font-size: 0.9rem; letter-spacing: 0.05em; color: #5a5480; }
+.document-page .dateline.chapter-open .place { font-weight: 600; }
+.document-page .dateline.chapter-open .sep { margin: 0 0.5em; color: #c3bed6; }
+.document-page .dateline.chapter-open .date { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.76rem; color: #8a83a8; }
+.document-page .dateline.scene-break { margin: 26px 0; }
+.document-page .dateline.scene-break .rule { margin-bottom: 8px; }
+.document-page .dateline.scene-break .txt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #a49dc4; }
+.document-page .dateline.scene-break .place { font-weight: 600; color: #8a83a8; }
+.document-page .dateline.scene-break .sep { margin: 0 0.55em; color: #c3bed6; }
+.document-page .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.document-page .chapter-nav:first-child { margin-top: 0; }
+.document-page .chapter-nav:last-child { margin-bottom: 0; }
+.document-page .chapter-nav a { color: #a49dc4; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.document-page .chapter-nav a:hover { color: #5a5480; }
+.document-page .chapter-nav .nav-empty { flex: 0 0 auto; }
+.document-page .chapter-nav a.nav-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e3def0; border-radius: 50%; }
+.document-page .chapter-nav a.nav-icon:hover { border-color: #b7b0d4; }
+.document-page .chapter-nav a.nav-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.document-page .chapter-nav a:not(.nav-icon) svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: baseline; }
+.device-view { background-color: #0a0e27; color: #7fbcff; font-family: 'Courier New', Courier, monospace; padding: 20px; margin: 0; border-radius: 15px; font-size: 75%; display: block; margin: 20px auto; text-align: center; }
+.device-view table { margin-left: auto; margin-right: auto; text-align: initial; }
+.document-page .device-view svg, .document-page .device-view img { display: block; margin-left: auto !important; margin-right: auto !important; }
+.device-view.device-view-left { text-align: left; }
+.device-view.device-view-left table { margin-left: 0; margin-right: auto; }
+.document-page .device-view-left svg, .document-page .device-view-left img { margin-left: 0 !important; margin-right: auto !important; }
+.wide-device-view { max-width: 900px; }
+.narrow-device-view { max-width: 50%; }
+.device-view h3 { color: #7fbcff; border-bottom: 2px solid #3d70c3; padding-bottom: 10px; margin-bottom: 20px; }
+.device-view table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+.device-view thead tr { background-color: #1a2a4a; border: 1px solid #3d70c3; }
+.device-view th { padding: 12px; text-align: left; border: 1px solid #3d70c3; color: #cef; font-weight: bold; }
+.device-view tbody tr:nth-child(odd) { background-color: #0f1a3a !important; border: 1px solid #2a4a7a; }
+.device-view tbody tr:nth-child(even) { background-color: #12204a !important; border: 1px solid #2a4a7a; }
+.device-view td { padding: 10px; border: 1px solid #2a4a7a; color: #b8d8ff; font-weight: bold; }
+.device-view button { background-color: #1a3a6a; border: 1px solid #3d70c3; padding: 10px 25px; font-family: 'Courier New', Courier, monospace; font-size: 14px; cursor: pointer; border-radius: 3px; transition: all 0.2s; color: #cef; }
+.device-view button:hover { background-color: #2a4a7a; border-color: #7fbcff; }
+.device-view ul, .device-view ol { padding-left: 10px !important; margin-left: 0 !important; margin-bottom: 0 !important; list-style-position: outside !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; line-height: inherit !important; font-family: inherit !important; }
+.device-view li { padding-left: 0 !important; list-style-position: outside !important; margin-bottom: 0 !important; font-size: inherit !important; color: var(--dv-ink, #9cc2ff) !important; font-family: inherit !important; }
+.device-view p { color: var(--dv-ink, #7fbcff) !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
+html.dark .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; }
+html.dark .document-page .dateline.chapter-open .txt { color: #b3aed0; }
+html.dark .document-page .dateline.chapter-open .sep { color: #5f5a80; }
+html.dark .document-page .dateline.chapter-open .date { color: #6f6a90; }
+html.dark .document-page .dateline.scene-break .txt { color: #5f5a80; }
+html.dark .document-page .dateline.scene-break .place { color: #7a74a0; }
+html.dark .document-page .dateline.scene-break .sep { color: #4a4568; }
+html.dark .document-page .chapter-nav a { color: #5f5a80; }
+html.dark .document-page .chapter-nav a:hover { color: #b3aed0; }
+html.dark .document-page .chapter-nav a.nav-icon { border-color: #3a3656; }
+html.dark .document-page .chapter-nav a.nav-icon:hover { border-color: #6f6a90; }
+html.dark .device-view { background-color: #050510; border-color: #1a1a40; }
+html.dark .device-view h3 { color: #5588cc; border-bottom-color: #1a3a6a; }
+html.dark .device-view th { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view td { color: #88bbee; border-color: #1a3a6a; }
+html.dark .device-view tbody tr:nth-child(odd) { background-color: #080820; border-color: #0f1a3a; }
+html.dark .device-view tbody tr:nth-child(even) { background-color: #0a0a2a; border-color: #0f1a3a; }
+html.dark .device-view button { background-color: #0a1a3a; border-color: #1a3a6a; color: #88bbee; }
+html.dark .device-view button:hover { background-color: #1a2a4a; border-color: #4488cc; }
+html.dark .device-view ul, html.dark .device-view ol, html.dark .device-view li { color: #6699bb; }
+.dz-card { background: #1b2b36; color: #e6f4ff; border-radius: 10px; padding: 20px 24px; margin: 12px 0; box-sizing: border-box; }
+.dz-card .dz-title { font-weight: bold; margin-bottom: 12px; }
+.dz-card.dz-mono { font-family: 'Courier New','Liberation Mono',monospace; }
+
+body { padding-top: 40px; }
+body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+
+@media (min-width: 700px) { .document-page { padding-left: calc(var(--squeeze-half) + 25px); padding-right: calc(var(--squeeze-half) + 25px); } }
+
+@media (max-width: 699px) { .document-page { padding-left: 18px; padding-right: 18px; width: calc(100% - 36px); } }
+    </style>
+</head>
+<body>
+    <button class="dark-toggle" onclick="toggleDarkMode()">☀️</button>
+    <div class="document-page">
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-23.html" title="Previous chapter: Chapter 23" aria-label="Previous chapter: Chapter 23"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-25.html" title="Next chapter: Chapter 25" aria-label="Next chapter: Chapter 25"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+<h1>Chapter 24</h1>
+<div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Pafogai Du, Dzego</span><span class="sep">·</span><span class="date">3724 Mistime 27</span></span></div>
+<p>Gladias checked his watch. The time just hit 20,000. He had been awake all night after his call with Seila. He had tried to go to sleep twice, but gave up after twenty minutes each time.</p>
+<p>He could not go to sleep knowing that three of the four children he loved dearly were now, in one way or another, in the hands of the Arctics.</p>
+<p>He could not go to sleep after Seila gave him that kind of vote of non-confidence, and then cut off communication without giving him any chance to even apologize.</p>
+<p>And he <em>definitely</em> could not go to sleep when both of those things were happening to him at the same time, and anyone he could hug for emotional support was thousands of kilometers away.</p>
+<p>Finally, thinking as much about redeeming himself in Seila's eyes as about his daughter's safety, he decided to do something unorthodox: he called Zven.</p>
+<p>Zven picked up immediately.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Dad?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Are you still in contact with Lily?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Her icon went green about forty minutes ago. I think she logged in from a new device."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Good."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Zven, are you willing to help us save Lily?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Of course! Anything for my sister."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Then here's what I want you to do. Stay in touch with her. Reach out, ask her what's up. Don't give any indication that you disapprove of her decision. Even show sympathy for her. Just stay in contact, and try to learn where she is."</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Dad..."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What is it?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"That's like ... <em>exactly</em> what Mom told me to do a longhour ago. She gave me a lot of good advice for things I should and shouldn't say."</span></p>
+<hr>
+<p>Gladias opened the door, walked through the hallways until he left the hotel area, and then turned left and kept going through the tunnel.</p>
+<p>This was now his eighth day living entirely underground, inside the mountain pyramid at the south end of Pafogai Du. Soon after he first arrived in Dzego, he had been relocated there from his original hotel. The new recommendations were for all "important business" to move to underground locations, and as a de-facto Kungaupei advisor, Gladias certainly qualified.</p>
+<p>For over two months, he would take daily twenty minute walks every day along the trees around the perimeter halfway up the mountain pyramid, and sometimes a longer walk down and into the nearby forest. For the past few days, he had been spending each day in the library, learning about different aspects of Dzego and having almost daily calls with Verdow to think through how to convince the Veridian military to cooperate with the Kungaupei.</p>
+<p>And today, after what happened last night, and after only getting one longhour of sleep after it, he did not have the will to go outside at all.</p>
+<p>Gladias walked slowly, taking many breaks to stare at the wall and at any side rooms that he walked past on his way to the library.</p>
+<p>High-tech industry of all kinds - biomedical, chip manufacturing, even parts of car production - had moved into the mountain pyramid since he came in, he noticed. And now that he thought about it, there had not been a single successful Arctic attack on Dzego in the news since Northglade had been annexed.</p>
+<p>He also noticed that the number of air filters and ultraviolet lamps scattered around various locations had increased more than tenfold. At least the Dzegojan manufacturers and the Bansunpei are doing a good job, he thought.</p>
+<p>He passed by the entrance to a cafeteria. Trees about two meters tall growing inside clay pots were now inside, he saw, along with various shrubs. The greenery seemed to play a triple role of giving the people sitting inside a feeling of calm from seeing nature, reducing CO2 levels, and splitting up different sections of the cafeteria to improve privacy.</p>
+<p>After about fifteen minutes of slow walking, he finally arrived at the entrance to the library.</p>
+<p>He noticed that the slogan at the top of the door had changed since the last time he had been there.</p>
+<center><div class="dz-card" style="font-family:'TeX Gyre Chorus',cursive;font-size:17px;line-height:1.55"><div class="dz-line dz-blank" style="height:1em"></div>
+<div class="dz-line dz-blank" style="height:1em"></div>
+<div class="dz-line" style="margin:3px 0;padding-left:2ch"><span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">sun jan</span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;color:#8fd6ff;font-weight:bold;">li</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">shai</span></span></span> <span style="font-family:'TeX Gyre Chorus',cursive;color:#8fd6ff;font-weight:bold;">fe</span> <span style="background:rgba(255,255,255,0.110);border-radius:4px;box-decoration-break:clone;-webkit-box-decoration-break:clone"><span style="font-family:'TeX Gyre Chorus',cursive;color:#9fd8c9;">to</span> <span style="white-space:nowrap"><span style="color:#d8effc;font-family:'TeX Gyre Chorus',cursive">dzan dzie</span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;color:#8fd6ff;font-weight:bold;">ka</span>&nbsp;<span style="white-space:nowrap"><span style="color:#d8effc;font-family:'TeX Gyre Chorus',cursive">jie dau</span></span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;color:#8fd6ff;font-weight:bold;">fe</span>&nbsp;<span style="white-space:nowrap"><span style="color:#d8effc;font-family:'TeX Gyre Chorus',cursive">sei sui</span></span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;color:#c9a0f0;">ji</span>&nbsp;<span style="white-space:nowrap"><span style="color:#d8effc;font-family:'TeX Gyre Chorus',cursive">cen hai zun</span></span></span></span></div>
+<div class="dz-line" style="margin:3px 0;padding-left:0ch"><span style="font-family:'TeX Gyre Chorus',cursive;color:#7ee2a0;font-weight:bold;">ci</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">sun gau jan</span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;color:#8fd6ff;font-weight:bold;">li</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">gei shai</span></span></span> <span style="font-family:'TeX Gyre Chorus',cursive;color:#8fd6ff;font-weight:bold;">fe</span> <span style="background:rgba(255,255,255,0.110);border-radius:4px;box-decoration-break:clone;-webkit-box-decoration-break:clone"><span style="font-family:'TeX Gyre Chorus',cursive;color:#9fd8c9;">to</span> <span style="white-space:nowrap"><span style="color:#d8effc;font-family:'TeX Gyre Chorus',cursive">dzan dzie</span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;color:#ffb27f;">de</span>&nbsp;<span style="white-space:nowrap"><span style="color:#d8effc;font-family:'TeX Gyre Chorus',cursive">mia</span></span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;color:#8fd6ff;font-weight:bold;">ka</span>&nbsp;<span style="white-space:nowrap"><span style="color:#d8effc;font-family:'TeX Gyre Chorus',cursive">ti dzie</span></span></span> <span style="font-family:'TeX Gyre Chorus',cursive;color:#8fd6ff;font-weight:bold;">ka</span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;color:#8fd6ff;font-weight:bold;">pu</span>&nbsp;<span style="white-space:nowrap"><span style="color:#d8effc;font-family:'TeX Gyre Chorus',cursive">she</span></span></span></span></div>
+<div class="dz-line dz-blank" style="height:1em"></div>
+<div class="dz-line dz-blank" style="height:1em"></div></div></center>
+<p>He stopped, and took a moment to read.</p>
+<p>"The student says: tomorrow I want to go to a magical and far away place. The teacher replies: for the sake of tomorrow, what have you done today?"</p>
+<p>To Gladias's surprise, the admonishment gave him a small burst of energy, allowing him to raise his hand against the green circle to open the door, and enter the library.</p>
+<p>He walked through the door, and then slowly turned right and started walking toward one of the computer terminals.</p>
+<p>Bai noticed him, and walked up.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"What's the matter?"</span>, she asked.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I'm fine"</span>, Gladias replied in a quiet and flat tone.</p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Well, I know enough to know that you're not fine. Though I also know enough to know that forcing you to divulge the source of your darkness if you're not comfortable will make you feel even worse."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"So don't worry, I won't ask any questions."</span></p>
+<p>She walked up to Gladias, and gently hugged him.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I just learned that Lily has been eating up Arctic propaganda for the last year, and Lord Ephelion's sermons made her feel valued and appreciated more than I ever did. And less than a minute later, I learned that she ran away from home. And a minute after that, I learned that Seila now hates me and doesn't want to talk to me."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"What do the Arctics say that someone like her would find compelling?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"That unconditional love is meaningless. Love is only worth anything if you love some quality that the object of your love has. And so to receive love, you have to deserve it, you have to earn it. Love has to come not as a constant background radiation, but as a reward for winning."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"The most important thing is to always strive to improve yourself. But if you can improve, that means you can be better than your former self - and at that point, you've basically admitted that one person can be better than another. So the whole idea that we're all equal, that the most important thing about us is our equal humanity, is total nonsense."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"You know ... I kind of agree."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What?"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"I don't mean in some absolute sense, that that way of thinking is healthy for everyone. It definitely isn't. If you think it does, then of course once you think you're the best, you're going to want to start conquering everyone just to prove it. I meant more ... that that kind of thinking was good for me."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What do you mean?"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"My parents died when I was very young. In an explosion, triggered by the Arctics. I grew up with my aunt, who basically just ignored me. No one loved me unconditionally. I had to start figuring out how to earn money on my own when I was twelve. I learned all my social skills from that. The only appreciation from other human beings that I got, was when I provided something of value to them, or when I impressed them with my success. The loop that you said Ephelion talks about, of love as a reward for winning, that was my childhood. And, I got second place in the Pafogai Du Minpentai games because of that."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Who got first place?"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Zei. And he had a motivation to succeed that was even more pure, even more beautiful, than my desire to succeed in order to prove to the world that I deserve love because I am strong."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"And what motivation was that?"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Curiosity."</span></p>
+<p>The conversation paused for a moment. Then Gladias spoke up again.</p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"When you hugged me a few minutes ago, were you not offering exactly the thing that Ephelion says is poison? Love as a reward for weakness?"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"I would not have done that a year ago."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"And yet it worked."</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"I would love to say that I did that because I gave up the false god of greed and converted to the true religion, that of valuing curiosity. But even that is false. If I was motivated by curiosity, I would probably have just directly asked you what's wrong, and that would have triggered your resentment."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"It definitely would have."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So what's your conclusion?"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"That maybe there really is no master formula. There are different bags of tricks that work for different people. I'm not going to say I'm fully unopinionated between all the different motivations that human beings might have - I'm very comfortable saying, today, that curiosity is almost always a better motivation than greed. And resentment might be the worst of all. But I don't think there's a one size fits all for everyone."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So how do I save Lily? And, for that matter, Febric and Hreda? And how do I get Seila to stop hating me?"</span></p>
+<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Well, maybe that's the one place where you do need to become at least ten or twenty percent Arctic. Your family will be back together, fully, if we can win. Think about it from Seila's perspective. The only way <em>she</em> can be happy, is if she can hug Febric, Hreda and Lily again. And there is no way to use emotional support and love alone to bring the three of them back. The only thing that <em>will</em> bring them back, is if you win - by helping Veridia win against the Arctics. So let that motivate you to try harder, so that in this next battle you can be a winner."</span></p>
+<hr>
+<p>Gladias and Zei walked down the tunnel, and down the stairs. After a few minutes, they got to a sealed door. Zei tapped his watch against the green circle beside the door. The door slowly opened.</p>
+<p>They saw a long room, and at the end of the room there was a large table. At the table, a man was sitting wearing a shadowy cloak.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Welcome to you both!"</span>, Den exclaimed.</p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Good to see you again, Den"</span>, Zei replied.</p>
+<p>Gladias cleared his throat. <span style="color:oklch(0.7 0.15 93.33333333333333)">"mi cin pin fe lo kin do"</span>, he added.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Wow, even your accent is good now. And I'm happy to see you too, Gladias."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"By the way, please sit down."</span></p>
+<p>Gladias and Zei both stepped forward, and sat down on two chairs opposite Den.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"So, Gladias. You called this meeting. What did you want to talk about?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well, so far we have not figured out any amazing plan for how to convince the Veridian military to cooperate with you."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"But, I have a somewhat unorthodox idea for what you can do in the interim."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"And what is that?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Spy on us."</span></p>
+<p>Den briefly stared at Gladias in surprise. His face almost immediately smoothed, as though remembering that it was not compatible with his self-image to be openly expressing any excitement or other unplanned emotion.</p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I think I see the reasoning. But I want to hear yours."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"The Arctics have made a very deep infiltration into Veridian society. They've corrupted many of the politicians. They've corrupted the military. The only institutions that seem to be resisting are the ones that have some stronger privacy built in: the Order of Steering, Graph Funding and the Courts. Though even within the Order, the intrusion got in pretty deep."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So if you can spy on Veridia, you might be able to spy on the spies. Figure out as much as you can about where the intrusion into Veridia is, and perhaps even try to counteract it. Maybe even put that information more directly into people's hands, and empower them to try to solve it without going through the central institutions."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"You know the risk, right?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"If you get caught, a lot of trust between Veridia and Dzego is lost. And then we're divided completely and the Arctics win."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"So why should we be okay with that risk?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well, first of all, we're already pretty late in the game and this is a desperate situation. A ninth intervention turn, as you or Zei might put it."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Second, I'm not just giving you the one-word suggestion 'spy'. I'm offering to give some very detailed specifics about how the Arctics operate, as well as connections to a whole bunch of Keepers that we're now in contact with, so you can better track the Arctics down."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Third, I think we should tell Verdow, and convince him to take responsibility, along with me, for proposing and even running the project if this all gets out."</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I like this plan. Zei?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"You're asking me?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Of course. You're already one of our best cryptographers. You've been coordinating the work with the Freetown corps. What do you think?"</span></p>
+<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"For the past fifteen years now, security on digital devices has been very strong. Spying is primarily a physical-world thing, the physical world is much harder to secure. I think we should take Gladias on a tour of some of the stores and the fabs, like the one you showed me way back then, and we can try to think, what would be a reasonably unobtrusive way to get more information on Veridia."</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Actually ... I think Veridia buys its security cameras from Dzego. The ones that are already in a bunch of places, and that they wanted to put everywhere else too. Veridia used to require cryptographically enforced limits on what the data gets used for if the cameras are in public places, but that got watered down a few years back, an administrative change by the Transportation Ministry no one paid attention to. Could you just ... backdoor those?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"If it was that easy, then surely the Arctics must have massively infiltrated Veridia already?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Yes?"</span></p>
+<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Have they?"</span></p>
+<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Yes? That's what I've been trying to tell you all along!"</span></p>
+<nav class="chapter-nav wc-exclude"><a class="nav-prev nav-icon" rel="prev" href="chapter-23.html" title="Previous chapter: Chapter 23" aria-label="Previous chapter: Chapter 23"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5 L7.5 12 L14.5 19"/></svg></a><a class="nav-next nav-icon" rel="next" href="chapter-25.html" title="Next chapter: Chapter 25" aria-label="Next chapter: Chapter 25"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5 L16.5 12 L9.5 19"/></svg></a></nav>
+</div>
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'true';
+    function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        var html = document.documentElement;
+        var btn = document.querySelector('.dark-toggle');
+        if (isDarkMode) { html.classList.add('dark'); btn.textContent = '\uD83C\uDF19'; }
+        else { html.classList.remove('dark'); btn.textContent = '\u2600\uFE0F'; }
+    }
+    if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.querySelector('.dark-toggle').textContent = '\uD83C\uDF19';
+    }
+</script>
+</body>
+</html>
