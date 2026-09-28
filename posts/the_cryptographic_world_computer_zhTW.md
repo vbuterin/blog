@@ -41,79 +41,79 @@
 .svg-scope-1qzhbm line { stroke:#999; stroke-width:1 }</style>
 <rect width="600" height="636" fill="#fff"/>
 <rect x="0" y="0" width="600" height="24" fill="#e8e8ee"/>
-<text x="10" y="16" class="hdr">主題</text>
-<text x="100" y="16" class="hdr">2010 年的策略</text>
-<text x="354" y="16" class="hdr">2030 年的策略</text>
-<line x1="0" y1="0" x2="600" y2="0"/>
-<line x1="0" y1="24" x2="600" y2="24"/>
-<line x1="0" y1="72" x2="600" y2="72"/>
-<line x1="0" y1="120" x2="600" y2="120"/>
-<line x1="0" y1="168" x2="600" y2="168"/>
-<line x1="0" y1="258" x2="600" y2="258"/>
-<line x1="0" y1="319" x2="600" y2="319"/>
-<line x1="0" y1="393" x2="600" y2="393"/>
-<line x1="0" y1="441" x2="600" y2="441"/>
-<line x1="0" y1="476" x2="600" y2="476"/>
-<line x1="0" y1="511" x2="600" y2="511"/>
-<line x1="0" y1="588" x2="600" y2="588"/>
-<line x1="0" y1="636" x2="600" y2="636"/>
-<line x1="0" y1="0" x2="0" y2="636"/>
-<line x1="92" y1="0" x2="92" y2="636"/>
-<line x1="346" y1="0" x2="346" y2="636"/>
-<line x1="600" y1="0" x2="599" y2="636"/>
-<text x="10" y="39" class="cat">如何確認交易</text>
-<text x="10" y="52" class="cat">已獲授權？</text>
-<text x="100" y="39">簽章</text>
-<text x="354" y="39">有時是抗量子簽章（或多個），</text>
-<text x="354" y="52">有時是零知識證明</text>
-<text x="10" y="87" class="cat">如何辨識</text>
-<text x="10" y="100" class="cat">正統鏈？</text>
-<text x="100" y="87">PoW</text>
-<text x="354" y="87">PoS，具備數個時隙內的最終確定性與可用鏈</text>
-<text x="10" y="135" class="cat">如何驗證</text>
-<text x="10" y="148" class="cat">區塊？</text>
-<text x="100" y="135">完整重新下載並重新計算</text>
-<text x="354" y="135">SNARK 驗證 + 以 PeerDAS 確保資料可用性</text>
-<text x="10" y="183" class="cat">交易被納入</text>
-<text x="10" y="196" class="cat">區塊的流程</text>
-<text x="10" y="209" class="cat">是怎樣的？</text>
-<text x="100" y="183">使用者 → 記憶池 → 礦工 → 區塊</text>
-<text x="354" y="183">使用者 → 具強隱私性的記憶池 →</text>
-<text x="354" y="196">FOCIL 參與者或建構者 → 區塊</text>
-<text x="362" y="225" class="dim">簽章／證明會被提早剝離，</text>
-<text x="362" y="238" class="dim">並先由記憶池節點、再由建構者進行聚合</text>
-<text x="10" y="273" class="cat">計算的結構</text>
-<text x="10" y="286" class="cat">是怎樣的？</text>
-<text x="100" y="273">線性／序列</text>
-<text x="354" y="273">平行：</text>
-<text x="362" y="286" class="dim">簽章／證明在記憶池內平行處理</text>
-<text x="362" y="299" class="dim">Gas 規則激勵適合平行化的工作流程</text>
-<text x="10" y="334" class="cat">客戶端節點</text>
-<text x="10" y="347" class="cat">如何節省空間</text>
-<text x="100" y="334">修剪舊的歷史資料</text>
-<text x="354" y="334">只儲存一小部分歷史</text>
-<text x="354" y="347">分散式的歷史與狀態儲存</text>
-<text x="354" y="360">通常不需要儲存樹的內部節點</text>
-<text x="354" y="373">以不同格式儲存不同物件（資料庫、平面檔案等）</text>
-<text x="10" y="408" class="cat">輕客戶端能</text>
-<text x="10" y="421" class="cat">驗證什麼？</text>
-<text x="100" y="408">共識；有效性需信任誠實多數</text>
-<text x="354" y="408">共識與有效性（包括資料可用性與計算）</text>
-<text x="10" y="456" class="cat">寫入的隱私</text>
-<text x="100" y="456">假設 UTXO 圖無法被有效分析</text>
-<text x="354" y="456">ZK-SNARK</text>
-<text x="10" y="491" class="cat">帳戶策略的隱私</text>
-<text x="100" y="491">無</text>
-<text x="354" y="491">ZK-SNARK + 私密帳戶抽象</text>
-<text x="10" y="526" class="cat">讀取的隱私</text>
-<text x="100" y="526">自己運行全節點，否則毫無隱私</text>
-<text x="354" y="526">選項 1：運行全節點</text>
-<text x="354" y="539">（SNARK 免除了計算需求，因此更容易）</text>
-<text x="354" y="568">選項 2：TEE+ORAM、PIR 等類似技術</text>
-<text x="10" y="603" class="cat">網路層隱私</text>
-<text x="100" y="603">假設大多數記憶池節點是誠實的，</text>
-<text x="100" y="616">而且沒有在追蹤你</text>
-<text x="354" y="603">可使用洋蔥路由、混合網路等</text>
+<text x="10" y="16" class="hdr" font-size="11" fill="#1a1a1a" font-weight="bold">主題</text>
+<text x="100" y="16" class="hdr" font-size="11" fill="#1a1a1a" font-weight="bold">2010 年的策略</text>
+<text x="354" y="16" class="hdr" font-size="11" fill="#1a1a1a" font-weight="bold">2030 年的策略</text>
+<line x1="0" y1="0" x2="600" y2="0" stroke="#999" stroke-width="1"/>
+<line x1="0" y1="24" x2="600" y2="24" stroke="#999" stroke-width="1"/>
+<line x1="0" y1="72" x2="600" y2="72" stroke="#999" stroke-width="1"/>
+<line x1="0" y1="120" x2="600" y2="120" stroke="#999" stroke-width="1"/>
+<line x1="0" y1="168" x2="600" y2="168" stroke="#999" stroke-width="1"/>
+<line x1="0" y1="258" x2="600" y2="258" stroke="#999" stroke-width="1"/>
+<line x1="0" y1="319" x2="600" y2="319" stroke="#999" stroke-width="1"/>
+<line x1="0" y1="393" x2="600" y2="393" stroke="#999" stroke-width="1"/>
+<line x1="0" y1="441" x2="600" y2="441" stroke="#999" stroke-width="1"/>
+<line x1="0" y1="476" x2="600" y2="476" stroke="#999" stroke-width="1"/>
+<line x1="0" y1="511" x2="600" y2="511" stroke="#999" stroke-width="1"/>
+<line x1="0" y1="588" x2="600" y2="588" stroke="#999" stroke-width="1"/>
+<line x1="0" y1="636" x2="600" y2="636" stroke="#999" stroke-width="1"/>
+<line x1="0" y1="0" x2="0" y2="636" stroke="#999" stroke-width="1"/>
+<line x1="92" y1="0" x2="92" y2="636" stroke="#999" stroke-width="1"/>
+<line x1="346" y1="0" x2="346" y2="636" stroke="#999" stroke-width="1"/>
+<line x1="600" y1="0" x2="599" y2="636" stroke="#999" stroke-width="1"/>
+<text x="10" y="39" class="cat" font-size="10" fill="#1a1a1a" font-weight="bold">如何確認交易</text>
+<text x="10" y="52" class="cat" font-size="10" fill="#1a1a1a" font-weight="bold">已獲授權？</text>
+<text x="100" y="39" font-size="10" fill="#1a1a1a">簽章</text>
+<text x="354" y="39" font-size="10" fill="#1a1a1a">有時是抗量子簽章（或多個），</text>
+<text x="354" y="52" font-size="10" fill="#1a1a1a">有時是零知識證明</text>
+<text x="10" y="87" class="cat" font-size="10" fill="#1a1a1a" font-weight="bold">如何辨識</text>
+<text x="10" y="100" class="cat" font-size="10" fill="#1a1a1a" font-weight="bold">正統鏈？</text>
+<text x="100" y="87" font-size="10" fill="#1a1a1a">PoW</text>
+<text x="354" y="87" font-size="10" fill="#1a1a1a">PoS，具備數個時隙內的最終確定性與可用鏈</text>
+<text x="10" y="135" class="cat" font-size="10" fill="#1a1a1a" font-weight="bold">如何驗證</text>
+<text x="10" y="148" class="cat" font-size="10" fill="#1a1a1a" font-weight="bold">區塊？</text>
+<text x="100" y="135" font-size="10" fill="#1a1a1a">完整重新下載並重新計算</text>
+<text x="354" y="135" font-size="10" fill="#1a1a1a">SNARK 驗證 + 以 PeerDAS 確保資料可用性</text>
+<text x="10" y="183" class="cat" font-size="10" fill="#1a1a1a" font-weight="bold">交易被納入</text>
+<text x="10" y="196" class="cat" font-size="10" fill="#1a1a1a" font-weight="bold">區塊的流程</text>
+<text x="10" y="209" class="cat" font-size="10" fill="#1a1a1a" font-weight="bold">是怎樣的？</text>
+<text x="100" y="183" font-size="10" fill="#1a1a1a">使用者 → 記憶池 → 礦工 → 區塊</text>
+<text x="354" y="183" font-size="10" fill="#1a1a1a">使用者 → 具強隱私性的記憶池 →</text>
+<text x="354" y="196" font-size="10" fill="#1a1a1a">FOCIL 參與者或建構者 → 區塊</text>
+<text x="362" y="225" class="dim" font-size="10" fill="#444">簽章／證明會被提早剝離，</text>
+<text x="362" y="238" class="dim" font-size="10" fill="#444">並先由記憶池節點、再由建構者進行聚合</text>
+<text x="10" y="273" class="cat" font-size="10" fill="#1a1a1a" font-weight="bold">計算的結構</text>
+<text x="10" y="286" class="cat" font-size="10" fill="#1a1a1a" font-weight="bold">是怎樣的？</text>
+<text x="100" y="273" font-size="10" fill="#1a1a1a">線性／序列</text>
+<text x="354" y="273" font-size="10" fill="#1a1a1a">平行：</text>
+<text x="362" y="286" class="dim" font-size="10" fill="#444">簽章／證明在記憶池內平行處理</text>
+<text x="362" y="299" class="dim" font-size="10" fill="#444">Gas 規則激勵適合平行化的工作流程</text>
+<text x="10" y="334" class="cat" font-size="10" fill="#1a1a1a" font-weight="bold">客戶端節點</text>
+<text x="10" y="347" class="cat" font-size="10" fill="#1a1a1a" font-weight="bold">如何節省空間</text>
+<text x="100" y="334" font-size="10" fill="#1a1a1a">修剪舊的歷史資料</text>
+<text x="354" y="334" font-size="10" fill="#1a1a1a">只儲存一小部分歷史</text>
+<text x="354" y="347" font-size="10" fill="#1a1a1a">分散式的歷史與狀態儲存</text>
+<text x="354" y="360" font-size="10" fill="#1a1a1a">通常不需要儲存樹的內部節點</text>
+<text x="354" y="373" font-size="10" fill="#1a1a1a">以不同格式儲存不同物件（資料庫、平面檔案等）</text>
+<text x="10" y="408" class="cat" font-size="10" fill="#1a1a1a" font-weight="bold">輕客戶端能</text>
+<text x="10" y="421" class="cat" font-size="10" fill="#1a1a1a" font-weight="bold">驗證什麼？</text>
+<text x="100" y="408" font-size="10" fill="#1a1a1a">共識；有效性需信任誠實多數</text>
+<text x="354" y="408" font-size="10" fill="#1a1a1a">共識與有效性（包括資料可用性與計算）</text>
+<text x="10" y="456" class="cat" font-size="10" fill="#1a1a1a" font-weight="bold">寫入的隱私</text>
+<text x="100" y="456" font-size="10" fill="#1a1a1a">假設 UTXO 圖無法被有效分析</text>
+<text x="354" y="456" font-size="10" fill="#1a1a1a">ZK-SNARK</text>
+<text x="10" y="491" class="cat" font-size="10" fill="#1a1a1a" font-weight="bold">帳戶策略的隱私</text>
+<text x="100" y="491" font-size="10" fill="#1a1a1a">無</text>
+<text x="354" y="491" font-size="10" fill="#1a1a1a">ZK-SNARK + 私密帳戶抽象</text>
+<text x="10" y="526" class="cat" font-size="10" fill="#1a1a1a" font-weight="bold">讀取的隱私</text>
+<text x="100" y="526" font-size="10" fill="#1a1a1a">自己運行全節點，否則毫無隱私</text>
+<text x="354" y="526" font-size="10" fill="#1a1a1a">選項 1：運行全節點</text>
+<text x="354" y="539" font-size="10" fill="#1a1a1a">（SNARK 免除了計算需求，因此更容易）</text>
+<text x="354" y="568" font-size="10" fill="#1a1a1a">選項 2：TEE+ORAM、PIR 等類似技術</text>
+<text x="10" y="603" class="cat" font-size="10" fill="#1a1a1a" font-weight="bold">網路層隱私</text>
+<text x="100" y="603" font-size="10" fill="#1a1a1a">假設大多數記憶池節點是誠實的，</text>
+<text x="100" y="616" font-size="10" fill="#1a1a1a">而且沒有在追蹤你</text>
+<text x="354" y="603" font-size="10" fill="#1a1a1a">可使用洋蔥路由、混合網路等</text>
 </svg>
 </figure>
 
@@ -150,42 +150,42 @@
 <rect x="0" y="24" width="600" height="175" fill="#eef8f0"/>
 <rect x="0" y="199" width="600" height="140" fill="#fdf0f0"/>
 <rect x="0" y="0" width="600" height="24" fill="#e8e8ee"/>
-<text x="34" y="16" class="hdr">2015 年的以太坊</text>
-<text x="321" y="16" class="hdr">2030 年的以太坊</text>
-<line x1="0" y1="0" x2="600" y2="0"/>
-<line x1="0" y1="24" x2="600" y2="24"/>
-<line x1="26" y1="59" x2="600" y2="59"/>
-<line x1="26" y1="94" x2="600" y2="94"/>
-<line x1="26" y1="129" x2="600" y2="129"/>
-<line x1="26" y1="164" x2="600" y2="164"/>
-<line x1="0" y1="199" x2="600" y2="199"/>
-<line x1="26" y1="234" x2="600" y2="234"/>
-<line x1="26" y1="269" x2="600" y2="269"/>
-<line x1="26" y1="304" x2="600" y2="304"/>
-<line x1="0" y1="339" x2="600" y2="339"/>
-<line x1="0" y1="0" x2="0" y2="339"/>
-<line x1="26" y1="0" x2="26" y2="339"/>
-<line x1="313" y1="0" x2="313" y2="339"/>
-<line x1="600" y1="0" x2="599" y2="339"/>
-<text x="13.0" y="118.5" text-anchor="middle" class="seclab" font-size="18" fill="#1a7f37">+</text>
-<text x="13.0" y="276.0" text-anchor="middle" class="seclab" font-size="18" fill="#b91c1c">−</text>
-<text x="34" y="39">100% 正常運行時間</text>
-<text x="321" y="39">100% 正常運行時間</text>
-<text x="34" y="74">抗審查（即保證交易會被納入區塊）</text>
-<text x="321" y="74">強抗審查：保證交易即時被納入區塊（透過 FOCIL）</text>
-<text x="34" y="109">保證依照程式設定的規則執行</text>
-<text x="321" y="109">保證依照程式設定的規則執行</text>
-<text x="34" y="144">不可逆性</text>
-<text x="321" y="144">不可逆性</text>
-<text x="321" y="179">隱私性往往比伺服器更強</text>
-<text x="34" y="214">成本非常高</text>
-<text x="321" y="214">通用計算成本高（許多形式的專用計算開銷低得多）</text>
-<text x="34" y="249">隱私</text>
-<text x="321" y="249">通用計算的隱私（許多專用應用已具有非常強的隱私）</text>
-<text x="34" y="284">延遲（出塊約 17 秒，12 次確認約 200 秒）</text>
-<text x="321" y="284">有些延遲（一個時隙約 4-8 秒，最終確定約 8-32 秒）</text>
-<text x="34" y="319">要麼運行一個龐大吃資源的節點，要麼信任某人</text>
-<text x="321" y="319">要獲得最佳保證仍需運行節點，但要求輕得多</text>
+<text x="34" y="16" class="hdr" font-size="11" fill="#1a1a1a" font-weight="bold">2015 年的以太坊</text>
+<text x="321" y="16" class="hdr" font-size="11" fill="#1a1a1a" font-weight="bold">2030 年的以太坊</text>
+<line x1="0" y1="0" x2="600" y2="0" stroke="#999" stroke-width="1"/>
+<line x1="0" y1="24" x2="600" y2="24" stroke="#999" stroke-width="1"/>
+<line x1="26" y1="59" x2="600" y2="59" stroke="#999" stroke-width="1"/>
+<line x1="26" y1="94" x2="600" y2="94" stroke="#999" stroke-width="1"/>
+<line x1="26" y1="129" x2="600" y2="129" stroke="#999" stroke-width="1"/>
+<line x1="26" y1="164" x2="600" y2="164" stroke="#999" stroke-width="1"/>
+<line x1="0" y1="199" x2="600" y2="199" stroke="#999" stroke-width="1"/>
+<line x1="26" y1="234" x2="600" y2="234" stroke="#999" stroke-width="1"/>
+<line x1="26" y1="269" x2="600" y2="269" stroke="#999" stroke-width="1"/>
+<line x1="26" y1="304" x2="600" y2="304" stroke="#999" stroke-width="1"/>
+<line x1="0" y1="339" x2="600" y2="339" stroke="#999" stroke-width="1"/>
+<line x1="0" y1="0" x2="0" y2="339" stroke="#999" stroke-width="1"/>
+<line x1="26" y1="0" x2="26" y2="339" stroke="#999" stroke-width="1"/>
+<line x1="313" y1="0" x2="313" y2="339" stroke="#999" stroke-width="1"/>
+<line x1="600" y1="0" x2="599" y2="339" stroke="#999" stroke-width="1"/>
+<text x="13.0" y="118.5" text-anchor="middle" class="seclab" font-size="18" fill="#1a7f37" font-weight="bold">+</text>
+<text x="13.0" y="276.0" text-anchor="middle" class="seclab" font-size="18" fill="#b91c1c" font-weight="bold">−</text>
+<text x="34" y="39" font-size="10" fill="#1a1a1a">100% 正常運行時間</text>
+<text x="321" y="39" font-size="10" fill="#1a1a1a">100% 正常運行時間</text>
+<text x="34" y="74" font-size="10" fill="#1a1a1a">抗審查（即保證交易會被納入區塊）</text>
+<text x="321" y="74" font-size="10" fill="#1a1a1a">強抗審查：保證交易即時被納入區塊（透過 FOCIL）</text>
+<text x="34" y="109" font-size="10" fill="#1a1a1a">保證依照程式設定的規則執行</text>
+<text x="321" y="109" font-size="10" fill="#1a1a1a">保證依照程式設定的規則執行</text>
+<text x="34" y="144" font-size="10" fill="#1a1a1a">不可逆性</text>
+<text x="321" y="144" font-size="10" fill="#1a1a1a">不可逆性</text>
+<text x="321" y="179" font-size="10" fill="#1a1a1a">隱私性往往比伺服器更強</text>
+<text x="34" y="214" font-size="10" fill="#1a1a1a">成本非常高</text>
+<text x="321" y="214" font-size="10" fill="#1a1a1a">通用計算成本高（許多形式的專用計算開銷低得多）</text>
+<text x="34" y="249" font-size="10" fill="#1a1a1a">隱私</text>
+<text x="321" y="249" font-size="10" fill="#1a1a1a">通用計算的隱私（許多專用應用已具有非常強的隱私）</text>
+<text x="34" y="284" font-size="10" fill="#1a1a1a">延遲（出塊約 17 秒，12 次確認約 200 秒）</text>
+<text x="321" y="284" font-size="10" fill="#1a1a1a">有些延遲（一個時隙約 4-8 秒，最終確定約 8-32 秒）</text>
+<text x="34" y="319" font-size="10" fill="#1a1a1a">要麼運行一個龐大吃資源的節點，要麼信任某人</text>
+<text x="321" y="319" font-size="10" fill="#1a1a1a">要獲得最佳保證仍需運行節點，但要求輕得多</text>
 </svg>
 </figure>
 
