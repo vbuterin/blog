@@ -50,6 +50,8 @@ html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b
 @keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
 @keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
 .document-page { animation: fadeIn 0.3s ease forwards; }
+.spk { color: var(--spk-lt); }
+html.dark .spk { color: var(--spk-dk); }
 .document-page .dateline .rule { margin: 0; }
 .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
 .document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
@@ -150,15 +152,15 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 <p>Zei put away his hand device and sighed.</p>
 <p>By this point, the other passengers were almost all off the train. Zei grabbed his bag, and stood up and began to walk out of the train as well.</p>
 <p>When he stepped out, there were six people wearing Minpentai priest robes waiting for him.</p>
-<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Welcome to Sadzu Du, Zei"</span>, the lead priest, an older woman about the same age as Mu, said to him.</p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Excited to be here"</span>, Zei quickly replied. <span style="color:oklch(0.7 0.15 346.66666666666663)">"Only my second time to the capital."</span></p>
-<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I'm Su by the way. I'm one of the organizers of the nationals."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Well nice to meet you, Su."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"So what's on my itinerary these next few days?"</span></p>
-<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Check in to the hotel, then orientation tomorrow morning. Thirty-two contestants, the brightest young minds in Minpentai across all of Dzego. You'll get to meet them all."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"Welcome to Sadzu Du, Zei"</span>, the lead priest, an older woman about the same age as Mu, said to him.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Excited to be here"</span>, Zei quickly replied. <span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Only my second time to the capital."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"I'm Su by the way. I'm one of the organizers of the nationals."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Well nice to meet you, Su."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"So what's on my itinerary these next few days?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"Check in to the hotel, then orientation tomorrow morning. Thirty-two contestants, the brightest young minds in Minpentai across all of Dzego. You'll get to meet them all."</span></p>
 <p>Su led Zei to a room that contained many doors. One of the doors slid open, and on the other side Zei could see the inside of a black car, identical to the one that Den had used to take him to the chip fab a few months earlier.</p>
-<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Unfortunately, I'll have to leave you here, Zei. There's another contestant arriving here on a train in half a longhour. But have a good ride and have a good rest."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Thank you so much."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"Unfortunately, I'll have to leave you here, Zei. There's another contestant arriving here on a train in half a longhour. But have a good ride and have a good rest."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Thank you so much."</span></p>
 <p>Zei got into the car, and the door closed. The car started moving.</p>
 <p>Zei stared outside the window of the car, marveling at the buildings and trees in the city. Parts of it looked not too different from Pafogai Du, though here there were fewer electronics stores, and instead a wider variety of venues. Some medicine stores.</p>
 <p>On the window of one of the stores, Zei saw a sign:</p>
@@ -297,8 +299,8 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 <p>Zei put away his hand device, and leaned back.</p>
 <p>It's all entropy, isn't it, he thought to himself.</p>
 <p>A minute later, the car suddenly slowed down, and turned left. To his right, Zei could see an area blocked off by safety tape with various large vehicles further inside.</p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"What happened?"</span>, Zei asked in a voice loud enough that the driver would unambiguously recognize that the question was meant for him.</p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Explosion in an advanced biology research lab. Probably the Arctics, as usual. They're going to spend days cleaning up to make sure everything is safe."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"What happened?"</span>, Zei asked in a voice loud enough that the driver would unambiguously recognize that the question was meant for him.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"Explosion in an advanced biology research lab. Probably the Arctics, as usual. They're going to spend days cleaning up to make sure everything is safe."</span></p>
 <p>A few minutes after that, the car slowed down and came to a stop. The door opened, leading straight into a hallway.</p>
 <hr>
 <p>Zei walked through the tunnel, and down the stairs.</p>
@@ -308,30 +310,30 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 <p>He entered a room with about fifty chairs, with about twenty contestants already sitting down. On the stage, he recognized Su. Beside her, there were three other priests.</p>
 <p>Zei sat down. Over the next fifteen minutes, other contestants sat down in their own chairs.</p>
 <p>An older teenage boy sat down beside Zei.</p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Hi, I'm Deluin"</span>, he said.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"Hi, I'm Deluin"</span>, he said.</p>
 <p>That's not a very Dzegojan name, Zei thought.</p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I'm Zei."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Where are you from?"</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Ah, I'm from Redshire. My name gave me away, didn't it?"</span></p>
-<p>Zei laughed. <span style="color:oklch(0.7 0.15 346.66666666666663)">"Do you get that reaction from everyone?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"I'm Zei."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Where are you from?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"Ah, I'm from Redshire. My name gave me away, didn't it?"</span></p>
+<p>Zei laughed. <span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Do you get that reaction from everyone?"</span></p>
 <p>Deluin laughed along with Zei.</p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"De lu hin, they call me here. 'A fork with the appearance of'. Lovely name, don't you think?"</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Are you studying here? Did your parents immigrate?"</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Ah, I'm a foreign contestant. They brought in four foreign contestants this time, to make things more fun."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Are you excited?"</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Absolutely. Actually my first time in Dzego, super cool place."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"De lu hin, they call me here. 'A fork with the appearance of'. Lovely name, don't you think?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Are you studying here? Did your parents immigrate?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"Ah, I'm a foreign contestant. They brought in four foreign contestants this time, to make things more fun."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Are you excited?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"Absolutely. Actually my first time in Dzego, super cool place."</span></p>
 <p>A bell rang, and the contestants quickly quieted down.</p>
-<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Welcome to the national Minpentai championship"</span>, Su began. <span style="color:oklch(0.7 0.15 253.33333333333334)">"I am honored to see so many brilliant contestants this year, and I hope that everyone arriving had a good evening and a good morning."</span></p>
-<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I am pleased to introduce our lead organizer, Taskmaster Jin."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"Welcome to the national Minpentai championship"</span>, Su began. <span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"I am honored to see so many brilliant contestants this year, and I hope that everyone arriving had a good evening and a good morning."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"I am pleased to introduce our lead organizer, Taskmaster Jin."</span></p>
 <p>One of the other priests stepped forward, and began speaking.</p>
-<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"This is a special moment for all of us in Dzego, not just for us and for you, but for millions of Dzegojan who watch the games from across the country, as they will get to watch the brightest minds from Dzego's new generation face off against each other."</span></p>
-<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"I'm also honored to announce that this year, we have four distinguished foreign guests participating along with us."</span></p>
-<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"Today, we will have a walk through the Minpentai museum, right here inside this mountain pyramid. Tomorrow, we will have some tourist excursions around Sadzu Du, and in the evening you will get a chance to rest. Two days after, the first championship games will begin."</span></p>
-<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"There will be six rounds of qualifying games, with an eight-day-long break in between each game."</span></p>
-<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"Out of the thirty-two of you, the four players who win the most games will advance to the semifinals. If there is no win threshold that exactly four players pass, we will break ties by the geometric average of the number of turns that you survived before losing your losing games and the inverse of the number of turns that you needed to win your winning games, counted up to a maximum of eight thousand turns. Thus, there is no incentive to resign before eight thousand turns. If there are still ties, we will insert an additional qualifying round."</span></p>
-<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"I hope you can enjoy the games, enjoy everything that Sadzu Du has to offer, but also, just as importantly, enjoy each other. Here you are not enemies, you are temporary competitors. Off the arena, you should consider each other friends, and remember that we are all part of a shared project together. Dze go ba fau gie."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.658 0.150 133.3);--spk-dk:oklch(0.806 0.150 133.3)">"This is a special moment for all of us in Dzego, not just for us and for you, but for millions of Dzegojan who watch the games from across the country, as they will get to watch the brightest minds from Dzego's new generation face off against each other."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.658 0.150 133.3);--spk-dk:oklch(0.806 0.150 133.3)">"I'm also honored to announce that this year, we have four distinguished foreign guests participating along with us."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.658 0.150 133.3);--spk-dk:oklch(0.806 0.150 133.3)">"Today, we will have a walk through the Minpentai museum, right here inside this mountain pyramid. Tomorrow, we will have some tourist excursions around Sadzu Du, and in the evening you will get a chance to rest. Two days after, the first championship games will begin."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.658 0.150 133.3);--spk-dk:oklch(0.806 0.150 133.3)">"There will be six rounds of qualifying games, with an eight-day-long break in between each game."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.658 0.150 133.3);--spk-dk:oklch(0.806 0.150 133.3)">"Out of the thirty-two of you, the four players who win the most games will advance to the semifinals. If there is no win threshold that exactly four players pass, we will break ties by the geometric average of the number of turns that you survived before losing your losing games and the inverse of the number of turns that you needed to win your winning games, counted up to a maximum of eight thousand turns. Thus, there is no incentive to resign before eight thousand turns. If there are still ties, we will insert an additional qualifying round."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.658 0.150 133.3);--spk-dk:oklch(0.806 0.150 133.3)">"I hope you can enjoy the games, enjoy everything that Sadzu Du has to offer, but also, just as importantly, enjoy each other. Here you are not enemies, you are temporary competitors. Off the arena, you should consider each other friends, and remember that we are all part of a shared project together. Dze go ba fau gie."</span></p>
 <p>"Dze go ba fau gie", all the contestants replied in unison.</p>
-<p><span style="color:oklch(0.7 0.15 133.33333333333331)">"Now, please follow Su. She will lead the excursion through the museum."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.658 0.150 133.3);--spk-dk:oklch(0.806 0.150 133.3)">"Now, please follow Su. She will lead the excursion through the museum."</span></p>
 <div class="dateline scene-break"><hr class="rule"><span class="txt">3724 Grasstime 25</span></div>
 <br><div class="device-view narrow-device-view"><table>
   <thead>
@@ -346,72 +348,72 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
     <tr>
       <td style="width: 25%"><center>Bai</center></td>
       <td style="width: 6%; text-align:center">&#8594;</td>
-      <td><span style="color:oklch(0.7 0.15 26.666666666666664)">[dia lau shau]</span></td>
+      <td><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">[dia lau shau]</span></td>
       <td>23098</td>
     </tr>
     </tbody>
 </table></div><br>
 <p>Zei woke up. Bai was requesting to call.</p>
 <p>Zei tapped the watch.</p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"How are things going over there?"</span>, Bai asked.</p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"This is a bit early for a call, isn't it? It's still 19 minutes before my alarm was supposed to wake me up."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"How are things going over there?"</span>, Bai asked.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"This is a bit early for a call, isn't it? It's still 19 minutes before my alarm was supposed to wake me up."</span></p>
 <p>Zei paused for a moment, and decided to answer Bai's question.</p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Things have been well. Very fascinating exhibition at the museum three days ago, and got to see a bunch of Sadzu Du the next day. Met someone from Redshire too."</span></p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"A contestant?"</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Yep, they've decided to internationalize it a bit this year."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"So how's Pafogai?"</span></p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Ask me something I can answer. I've been staring at the mountain pyramid you'll be playing in from across the river for the last longhour."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Things have been well. Very fascinating exhibition at the museum three days ago, and got to see a bunch of Sadzu Du the next day. Met someone from Redshire too."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"A contestant?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Yep, they've decided to internationalize it a bit this year."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"So how's Pafogai?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"Ask me something I can answer. I've been staring at the mountain pyramid you'll be playing in from across the river for the last longhour."</span></p>
 <p>Zei sat up.</p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"You're HERE?"</span></p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Den's people got hold of me and told me to come and take notes on all the contestants' strategies."</span></p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Your first game is today, right?"</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"It is indeed."</span></p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Want me to come over and help you out, or at least watch?"</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I... think I'm fine. And I doubt you can get a ticket to the live stadium."</span></p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Not if you let me in."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"You're HERE?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"Den's people got hold of me and told me to come and take notes on all the contestants' strategies."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"Your first game is today, right?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"It is indeed."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"Want me to come over and help you out, or at least watch?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"I... think I'm fine. And I doubt you can get a ticket to the live stadium."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"Not if you let me in."</span></p>
 <p>Zei groaned.</p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"I'll watch from afar then. We're all rooting for you!"</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"How is Fin? I haven't heard from him in days now."</span></p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Busy with Bansunpei stuff I guess. He hasn't said anything to me in days either."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Alright then. Well, I gotta start preparing. I hope you enjoy your day!"</span></p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Best of luck to you in yours, you'll need it!"</span></p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Oh, and, let's play a practice game tomorrow."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"I'll watch from afar then. We're all rooting for you!"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"How is Fin? I haven't heard from him in days now."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"Busy with Bansunpei stuff I guess. He hasn't said anything to me in days either."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Alright then. Well, I gotta start preparing. I hope you enjoy your day!"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"Best of luck to you in yours, you'll need it!"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"Oh, and, let's play a practice game tomorrow."</span></p>
 <p>Zei once again ordered a fruit and vegetable juice, and put on his clothes. A few minutes later, the juice arrived, and Zei quickly drank it. He opened the door, went downstairs, and entered the car that was waiting for him.</p>
 <p>Twenty minutes later, the car arrived at an entrance to the pyramid.</p>
 <p>Zei stepped out, and began walking through the tunnels.</p>
 <p>After a few hundred meters of walking, and a few turns, he once again arrived at the large stone brick door. He entered, and this time immediately turned right, into a hallway that he had not even noticed when he was first there three days ago. He followed the signs, and soon got to a waiting room.</p>
 <p>He saw Su, and the other contestant.</p>
-<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Welcome Zei! Meet Bo."</span></p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Nice to meet you, Zei."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Nice to meet you too, Bo."</span></p>
-<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"It will be a fun game today, I'm sure of it."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"Welcome Zei! Meet Bo."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"Nice to meet you, Zei."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Nice to meet you too, Bo."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"It will be a fun game today, I'm sure of it."</span></p>
 <p>A robot arrived, and gave all three of them a cup of tea. They each drank their cup.</p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"So what now? We sit here for a longhour without internet while the others play, so we don't learn the new rule ahead of time?"</span></p>
-<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Exactly. And no hand devices or watches allowed either. The robot will be coming to pick them up in a minute. You can watch last year's matches on that screen over there."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"So what now? We sit here for a longhour without internet while the others play, so we don't learn the new rule ahead of time?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"Exactly. And no hand devices or watches allowed either. The robot will be coming to pick them up in a minute. You can watch last year's matches on that screen over there."</span></p>
 <hr>
 <p>A longhour later, the elevator doors opened, and Zei and Bo each stepped in to their respective elevators. Su waved them goodbye. The doors closed.</p>
 <p>A quarter minute after that, Zei's elevator door opened once again, exposing a giant room much larger than the room in Pafogai Du. About five to ten thousand people seemed to be watching. A path lit up, showing the way to a giant console with a chair.</p>
 <p>Zei walked forward. He could make out Bo's silhouette walking forward in the distance. He got to the chair, and sat down.</p>
 <p>Drones about the size of a hand device buzzed as they flew around Zei, scanning for any kind of cheating equipment. This time, there were about three times more drones than there were in Pafogai Du, and with even more shapes and sizes. The drones buzzed around for about twenty ticks, and then retreated back to their resting positions.</p>
-<p>A loud automated voice, this time sounding more female, announced: <span style="color:oklch(0.7 0.15 160)">"MU GU GEI FA"</span>. Starting in fifty ticks.</p>
+<p>A loud automated voice, this time sounding more female, announced: <span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"MU GU GEI FA"</span>. Starting in fifty ticks.</p>
 <p>Zei closed his eyes, and breathed in and out, trying his best to calm himself. This match was not decisive, he knew: if he lost, he could still make it up in the others. But in another way, that fact made him more scared: armed with the excuse that it's okay to lose, will his mind have the motivation needed to keep his full attention and mindpower on the game and win?</p>
-<p><span style="color:oklch(0.7 0.15 160)">"LE MU GEI FA"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"LE MU GEI FA"</span></p>
 <p>Zei opened his eyes again.</p>
-<p><span style="color:oklch(0.7 0.15 160)">"PA GU GEI FA"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"PA GU GEI FA"</span></p>
 <p>Zei patiently waited.</p>
-<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"Welcome to the fourth qualifying match of the north stadium for today. Everyone, meet our players for this round: Zei Leimin from Pafogai Du, and Bo Zume, from right here in Sadzu Du."</span></p>
-<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"I am also pleased to announce - perhaps one time too many for the audience, but for the first time, for our contestants - today's rule change. Today, Minpentai will be played on a hex grid."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.665 0.107 13.3);--spk-dk:oklch(0.815 0.107 13.3)">"Welcome to the fourth qualifying match of the north stadium for today. Everyone, meet our players for this round: Zei Leimin from Pafogai Du, and Bo Zume, from right here in Sadzu Du."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.665 0.107 13.3);--spk-dk:oklch(0.815 0.107 13.3)">"I am also pleased to announce - perhaps one time too many for the audience, but for the first time, for our contestants - today's rule change. Today, Minpentai will be played on a hex grid."</span></p>
 <p>Zei opened his mouth in shock.</p>
-<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"You will have twenty minutes to figure out your structures, any gliders, spaceships and walls, to the best of your ability. And then the serene battle over a field of snowflakes will begin."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.665 0.107 13.3);--spk-dk:oklch(0.815 0.107 13.3)">"You will have twenty minutes to figure out your structures, any gliders, spaceships and walls, to the best of your ability. And then the serene battle over a field of snowflakes will begin."</span></p>
 <p>Zei's display turned on, and he could see the hexagonal grid in front of him.</p>
-<p><span style="color:oklch(0.7 0.15 160)">"LE FI SHI GEI TAU FA"</span>, the automated loud voice shouted. The battle begins in two thousand ticks.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"LE FI SHI GEI TAU FA"</span>, the automated loud voice shouted. The battle begins in two thousand ticks.</p>
 <p>Zei began by quickly drawing random junk in his sandbox, seeing what stayed stable and what turned into a glider. Within one minute, he identified a few gliders and a few static structures that could be used for walls. To his surprise, the gliders that moved the fastest moved ... directly east.</p>
 <p>His next move was to deliberately draw different kinds of walls, fly gliders at them, and see what sticks.</p>
 <p>He watched the gliders carefully, to try to quickly get an intuition for what kinds of shapes can move while preserving their shape. He did several rounds of defining both the gliders and the walls.</p>
-<p><span style="color:oklch(0.7 0.15 160)">"PA MU GU GU GEI TAU FA."</span> The battle begins in fifteen hundred ticks.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"PA MU GU GU GEI TAU FA."</span> The battle begins in fifteen hundred ticks.</p>
 <p>Zei began experimenting with shapes that were similar to his  symbol, seeing if any of them could function as a glider. He needed to come up with <em>something</em> - otherwise he would be able to progress only very slowly, by repeatedly building a new symbol beside his existing symbol during each intervention turn.</p>
 <p>He realized that to make actual headway, he would need to interact with the rock formations. He made a couple of guesses about what shape the rock formations in the hexgrid version of Minpentai might look like, and examined the behavior of gliders as they crashed into them.</p>
-<p><span style="color:oklch(0.7 0.15 160)">"FI SHI GEI TAU FA."</span> The battle begins in a thousand ticks.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"FI SHI GEI TAU FA."</span> The battle begins in a thousand ticks.</p>
 <p>Zei began to sweat. So far, no luck. No combination of a glider, a plausible rock shape and an offset that he tried led to a copy of his symbol.</p>
 <p>He thought more about the exact shape of his symbol.</p>
 <p>After another two minutes of fruitless exploration, Zei's mind flashed back to the textbook he had been reading less than two longhours before.</p>
@@ -423,7 +425,7 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 <p>In the internal permutation of a hash function, you walk backwards from the last layer to the first layer, and invert each step as you go.</p>
 <p>Here ... what was the inverse of the hexgrid rules that Zei was interacting with for the first time in his life?</p>
 <p>Zei took the gliders he saw, and tried the most basic transformations: flipping them, rotating them 60 degrees, launching them one timestep later. None worked.</p>
-<p><span style="color:oklch(0.7 0.15 160)">"MU FI LE GEI TAU FA."</span> The battle begins in five hundred ticks.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"MU FI LE GEI TAU FA."</span> The battle begins in five hundred ticks.</p>
 <p>Zei stepped through each step more slowly. And then he saw it. During each step, the game board split up into triangles, and the hexagons rotated inside each triangle - clockwise if it had one hex filled, counterclockwise if it had two hexes filled.</p>
 <p>And so in order to time reverse, he just had to ... let each time step happen twice. The opposite of a 120-degree rotation is, after all, two 120-degree rotations. But there was a problem: after each time step, the split into triangles shifted. So to play a time step backward, he had to... play one step forward, then shift time back one step so that he could play the next step forward under the same tiling, then play a second step forward to bring the total rotation under that tiling to 240 degrees within each triangle, then shift time back <em>two</em> steps so that the game would shift to the <em>previous</em> tiling. Invert each step, and play the steps in reverse order, just like inverting a permutation in a hash.</p>
 <p>He confirmed: there was a button to play one step forward, and two buttons to shift time - either forward or backward. So that's what he would have to do. A, B, A, B, B. Like some kind of video game cheat code. Which, in some sense, here it literally was.</p>
@@ -433,14 +435,14 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 <p>Zei tried the real test: using the same technique, starting with a symbol forming beside a rock formation and a glider flying out.</p>
 <p>The first time, it failed: as time went backwards, the glider and the symbol crashed, but then the same symbol re-formed a few steps away, and the glider flew away. So in that particular history that Zei had just sampled, before the crash, the symbol had been there all along.</p>
 <p>He tried again, with a different glider. This time, it succeeded. As time moved backwards, past the moment of the crash, the rock-formation-plus-symbol turned into a bare rock formation, and two gliders flew back out.</p>
-<p><span style="color:oklch(0.7 0.15 160)">"FI LE GEI TAU FA."</span> The battle begins in one hundred ticks.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"FI LE GEI TAU FA."</span> The battle begins in one hundred ticks.</p>
 <p>Zei quickly repeated the same experiment with other candidates for a rock formation. He paid no attention to the voice announcing the countdown, and kept trying until he found one for the two other most natural options.</p>
-<p><span style="color:oklch(0.7 0.15 160)">"MU GU GEI TAU FA."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"MU GU GEI TAU FA."</span></p>
 <p>Zei quickly put up symbols, walls, and gliders that would create symbols if they crashed into favorable rock formations.</p>
 <p>He was surprised at his own speed doing this, given how much longer everything else had taken. But almost immediately he realized in the back of his mind that this made sense: figuring out what to deploy is the hard part, deployment is just copy and paste.</p>
 <p>After making a basic setup on the board, he breathed out. Just as he breathed back in and started doing a final pass refining his structures, a final countdown began.</p>
-<p><span style="color:oklch(0.7 0.15 160)">"PA GU ... SO ... BI ... ZE ... HA ... MU ... FO ... SHI ... LE ... PA ..."</span></p>
-<p><span style="color:oklch(0.7 0.15 160)">"TAU FA."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"PA GU ... SO ... BI ... ZE ... HA ... MU ... FO ... SHI ... LE ... PA ..."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"TAU FA."</span></p>
 <p>Gliders started flying out. At first, nothing happened.</p>
 <p>Five hundred turns later, a part of the board came into view. One of his gliders had successfully created a symbol, and revealed a part of the board that showed what the rock formations look like.</p>
 <p>Immediately, Zei switched to the next task: figuring out how to build glider factories.</p>

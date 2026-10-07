@@ -50,6 +50,8 @@ html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b
 @keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
 @keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
 .document-page { animation: fadeIn 0.3s ease forwards; }
+.spk { color: var(--spk-lt); }
+html.dark .spk { color: var(--spk-dk); }
 .document-page .dateline .rule { margin: 0; }
 .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
 .document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
@@ -140,13 +142,13 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 <p>He looked around, breathed in and briefly stopped to enjoy the nature, dense enough and quiet enough that he almost forgot that he was in the middle of the Kalimar district of Meldan, the capital city of Veridia.</p>
 <p>Suddenly, a small drone flew over his head. Gladias instinctively checked his watch. Almost immediately, a green checkmark lit up. Even before he could fully process what had happened, his watch had engaged in a zero-knowledge authentication protocol, and received a cryptographic attestation verifying that the drone was a toy, and its navigation algorithm had a safety override that would prevent it from coming within five decimeters of a human without permission. His watch had learned that the drone was not a threat - and nothing else.</p>
 <p>The drone flew off, and continued above a sidewalk branching off to the left. For a moment, Gladias could briefly see its shape: a small ball, with feather-like rotors on three sides. And the very next moment, a young boy jumped up, and grabbed it with his hand while it was still in the sky.</p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Five points for me!"</span>, the boy shouted excitedly.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"Five points for me!"</span>, the boy shouted excitedly.</p>
 <p>Gladias let his attention wander back to peacefully observing his surroundings. The boy who had just caught the ball was part of a family with four children, the younger two each riding a tricycle.</p>
 <p>On another sidewalk branching off to the right, Gladias could see a grandmother with a small child. As they approached a bench and seemed to stop, a couple that was already sitting on the bench pre-emptively stood up to offer their seats. The grandmother thanked them, and sat down with her child.</p>
 <p>And playing into Gladias's ear this whole time, there was an audio program from Emerald, the local AI running from Gladias's hand device, explaining the nuances of airborne virus transmission and how to calculate how much a given change to a building's ventilation or density might affect total city-wide cases in an epidemic.</p>
 <hr>
 <p>As Gladias walked forward, the houses soon gave way to thick green shrubbery. As soon as the shrubbery cleared, the foot path started gently curving upward. Smoothly, and suddenly, the path transitioned into a sky bridge above a busy road, with many cars and autobuses and a few autonomous delivery vehicles passing beneath him. A chilly breeze blew into his face.</p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Pause, I want to enjoy the view"</span>, Gladias said to Emerald, out of habit whispering the sentence so softly that only his throat muscles moved and no sound at all left his lips. The silken cloth band tightly covering Gladias's neck picked it up perfectly.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Pause, I want to enjoy the view"</span>, Gladias said to Emerald, out of habit whispering the sentence so softly that only his throat muscles moved and no sound at all left his lips. The silken cloth band tightly covering Gladias's neck picked it up perfectly.</p>
 <p>He stopped in the middle of the sky bridge, turned to his left side, and looked forward. The busy road beneath him continued for about two kilometers, and then turned rightward. Beyond that point, he could see a mountain covered with trees. A few apartment buildings about fifteen storeys tall, decorated and shaped like over-sized medieval castle towers though with far more windows on the sides, poked up high above the trees in several places on the lower half of the mountain slope.</p>
 <p>Gladias turned his face left once again, and took one last look at the natural world. The nature in Veridia is beautiful, he thought. He then turned his face to the right, where the road continued past the sky bridge with a much higher density of buildings. Today, his job was to offer opinions on the human world.</p>
 <p>Gladias began to walk forward once more, and stepped off the sky bridge. On the left side, there was now a row of five-storey apartment buildings, interspersed with walking paths and small shops selling various kinds of goods. Both the walking paths and the sidewalk were protected from the sun by tall green trees.</p>
@@ -268,7 +270,7 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 <p>He continued walking, and after a minute he arrived at an opening in the soundproof barrier: the entrance to the concert that he was attending.</p>
 <hr>
 <p>Gladias held his hand device near a circle with a glowing green outline on the entrance gate. He waited briefly as his hand device produced a cryptographic proof, and then a machine embedded in the entrance gate verified it.</p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Verified, welcome"</span>, the machine said.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"Verified, welcome"</span>, the machine said.</p>
 <p>The gate learned that someone holding a valid and unused credential had arrived - and nothing else.</p>
 <p>Gladias passed through the gate, and headed toward the main concert area.</p>
 <p>He could see a few of the attendees wearing the same signature Veridian Privacy Robe that he was wearing. This was a loose-fitting dark purple dress that covered the full body from the hood covering the wearer's head down to the ankles. Below the ankles, privacy robe wearers all wore shoes of the same dark purple color.</p>
@@ -440,7 +442,7 @@ THE SMOKE OF CITIES BURNING IN THE NIGHT
 <p>Gladias sighed. The other two groups were probably thinking the same way. If we simplify and say every other Acolyte was a coin-flip between Tier 3 and Tier 4, then by the binomial formula, the probability the other six would also be evenly split was six choose three - 20 - divided by 64, or about thirty-one percent. Now if the other Acolytes' votes were <em>not</em> coin-flips ... eh, calculating that exactly is too hard, but it's definitely lower, let's just say twenty percent. A twenty or thirty percent chance his vote would significantly affect Dreadknot's tax rate for the next year. Oh great. Actual responsibility.</p>
 <p>Gladias looked around once more at the crowd. The first song finished, and he heard them cheering. He felt a burst of courage. He would take the ten percent chance of a hit to his prediction score. Without thinking further, he pressed Tier 3.</p>
 <p>For a brief moment, he felt proud of his decision.</p>
-<p><span style="color:oklch(0.7 0.15 213.33333333333331)">"HEY EVERYONE, IT'S AN ORDER MEMBER!"</span>, someone behind him yelled.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.583 0.133 213.3);--spk-dk:oklch(0.705 0.133 213.3)">"HEY EVERYONE, IT'S AN ORDER MEMBER!"</span>, someone behind him yelled.</p>
 <hr>
 <p>Gladias's body froze in shock for a moment. Before his mind could catch up, his eyes had already scanned the venue, and discovered the nearest exit.</p>
 <p>He immediately understood what had happened. The security of the Order, particularly preventing influence and bribery, rests on the privacy of its members. Order members are strictly forbidden to reveal their assigned task. To make sure that Order members take their privacy seriously, they were kept on their toes by a sort of deliberately engineered game. Anyone can connect to the decentralized cryptographic network that manages the Order's operations, and send in a guess about what a particular Order member's assigned task is, along with a small deposit. If their guess is correct, the Order member's salary is docked, and the discoverer gets half as a reward.</p>
@@ -448,10 +450,10 @@ THE SMOKE OF CITIES BURNING IN THE NIGHT
 <p>Gladias turned around, intending to run. But before he could take a step, he saw right in front of him a large burly man, pointing a hand device straight at his face.</p>
 <p>Gladias froze. At first, he thought that he was done for. His mind raced through the possibilities, looking for any possible way out. Finally, Gladias the thoughtful philosopher gave way to a different Gladias, more imaginative and mischievous - a Gladias that had not been awake since recess in middle school.</p>
 <p>Gladias looked toward the right.</p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Wait, is that a new screed from the Arctic Emperor?"</span>, he asked.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Wait, is that a new screed from the Arctic Emperor?"</span>, he asked.</p>
 <p>The man, confused, looked to where Gladias was looking. At that moment, Gladias snatched the man's hand device from his arm, and suddenly turned around.</p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Delete all audio, images and video from the last longhour. Reboot."</span></p>
-<p>He began to run. A few ticks later, the device responded, <span style="color:oklch(0.7 0.15 53.33333333333333)">"4 files deleted"</span>, and briefly showed screenshots of some photos and videos. The one on the bottom right was of Gladias's face. The screen turned black.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Delete all audio, images and video from the last longhour. Reboot."</span></p>
+<p>He began to run. A few ticks later, the device responded, <span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"4 files deleted"</span>, and briefly showed screenshots of some photos and videos. The one on the bottom right was of Gladias's face. The screen turned black.</p>
 <p>Gladias threw the hand device up into the air, hoping that his pursuer would choose not losing his device over chasing him. He continued running.</p>
 <p>Despite being slowed down by his shoes, which had high heels to raise his height to the same level as other robe wearers and deliberately uneven soles to randomize his gait, Gladias managed to quickly reach the exit. Distracted by the rest of the commotion, the crowd seemed not to notice.</p>
 <p>He exited the concert venue, and hopped onto a local autobus.</p>
@@ -474,41 +476,41 @@ THE SMOKE OF CITIES BURNING IN THE NIGHT
 <p>We need more fun in the world.</p>
 <hr>
 <p>Fifteen minutes later, Gladias stepped off the autobus. After a short walk along a street, he arrived at his house. He opened the door.</p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Are you home, Seila?"</span>, he shouted.</p>
-<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Was just writing up my blog post"</span>, she replied, and came out of her room to greet Gladias.</p>
-<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"So, what do we want for dinner?"</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well, the Dzego food truck is coming in seven minutes, how about we have that again?"</span></p>
-<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Sure! I assume the number ten for you again?"</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Yep!"</span></p>
-<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Okay, I'll have the number thirteen this time."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Are you home, Seila?"</span>, he shouted.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"Was just writing up my blog post"</span>, she replied, and came out of her room to greet Gladias.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"So, what do we want for dinner?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Well, the Dzego food truck is coming in seven minutes, how about we have that again?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"Sure! I assume the number ten for you again?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Yep!"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"Okay, I'll have the number thirteen this time."</span></p>
 <p>Seila took out her hand device, and began to place the order.</p>
 <p>They heard loud footsteps coming down the stairs.</p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Dad is home!"</span>, the younger boy, Zven, shouted. Zven jumped down the stairs three steps at a time, and ran up to hug Gladias, who obliged.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Dad is home!"</span>, the younger boy, Zven, shouted. Zven jumped down the stairs three steps at a time, and ran up to hug Gladias, who obliged.</p>
 <p>The older teenage boy, Febric, walked down more slowly, carrying his hand device in one hand, attached by a cable to a larger compute box in the other.</p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"We're ordering from the Dzego food truck. What do you guys want?"</span>, Gladias asked.</p>
-<p><span style="color:oklch(0.7 0.15 80)">"Number four!"</span>, Febric answered.</p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Number five, I win!"</span>, Zven shouted.</p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What about Lily and Hreda?"</span></p>
-<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Lily's in the bathroom. Hreda will be back from after-school number theory in a longhour. Come on, you know she always gets the number nine."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"We're ordering from the Dzego food truck. What do you guys want?"</span>, Gladias asked.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.638 0.106 80.0);--spk-dk:oklch(0.778 0.106 80.0)">"Number four!"</span>, Febric answered.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Number five, I win!"</span>, Zven shouted.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"What about Lily and Hreda?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"Lily's in the bathroom. Hreda will be back from after-school number theory in a longhour. Come on, you know she always gets the number nine."</span></p>
 <p>The bathroom door opened, and Lily slowly walked out, her eyes looking to the ground.</p>
-<p>Seila sighed. <span style="color:oklch(0.7 0.15 253.33333333333334)">"What happened?"</span></p>
-<p><span style="color:oklch(0.7 0.15 160)">"Sixty percent on the history exam. Whatever..."</span></p>
-<p>Seila turned, and put her arms around Lily. <span style="color:oklch(0.7 0.15 253.33333333333334)">"It's okay to not be good at everything"</span>, she said softly.</p>
+<p>Seila sighed. <span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"What happened?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"Sixty percent on the history exam. Whatever..."</span></p>
+<p>Seila turned, and put her arms around Lily. <span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"It's okay to not be good at everything"</span>, she said softly.</p>
 <p>Lily turned her face further away from Seila and the family. She ran forward, and sat down on the couch.</p>
 <p>Seila sighed, and ordered Lily the number eight.</p>
 <p>Seila clicked order. Gladias, Seila, Zven and Febric sat at the table and waited.</p>
 <p>On the couch, Lily took out her hand device, and began intently watching and quickly tapping on the screen, devoting all her attention to some game that Gladias and Seila could never make out.</p>
 <p>This was Gladias and Seila's fourth last dinner with the kids - of whom Zven and Lily were theirs, and Febric and Hreda were from their co-family, Uncle Vil and Aunt Daia. In four days, Uncle Vil and Aunt Daia were going to come and pick all four kids up, and take care of them for the next half of the year.</p>
 <p>Gladias sighed. He would miss the kids. But at the same time, he was looking forward to the six months of freedom.</p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Are we still going to stay with Uncle Vil for six months?"</span>, Zven asked.</p>
-<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"Of course!"</span>, Seila replied.</p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Yay, I love Uncle Vil!"</span></p>
-<p><span style="color:oklch(0.7 0.15 80)">"For me Vil is <em>Dad</em>!"</span>, Febric made a point of reminding. He thought for a moment longer. <span style="color:oklch(0.7 0.15 80)">"Uncle Glad and Aunt Seila, I love you both too!"</span></p>
-<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"And I love you."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Are we still going to stay with Uncle Vil for six months?"</span>, Zven asked.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"Of course!"</span>, Seila replied.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Yay, I love Uncle Vil!"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.638 0.106 80.0);--spk-dk:oklch(0.778 0.106 80.0)">"For me Vil is <em>Dad</em>!"</span>, Febric made a point of reminding. He thought for a moment longer. <span class="spk" style="--spk-lt:oklch(0.638 0.106 80.0);--spk-dk:oklch(0.778 0.106 80.0)">"Uncle Glad and Aunt Seila, I love you both too!"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"And I love you."</span></p>
 <p>A doorbell rang. Gladias walked to the door, opened the door, and got a bag full of food boxes. He set the bag on the table, and took out and gave each person the food box with their number on it. Gladias, Seila, Febric and Zven all started eating.</p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Any plans once Vil is here?"</span>, Gladias asked.</p>
-<p><span style="color:oklch(0.7 0.15 253.33333333333334)">"I'm going to visit Freetown for a month or two, see Jahn, maybe figure out some blog post to write on the United Cities. I've spent so much time reading about their co-governance, actually looking forward to seeing more how it all connects to what's on the ground."</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Nice! I'm going to go on some long walks in the forest and take a deep dive with the bot on the environment and biology rubrics. Still have four more audits to do before I can become a Sentinel!"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Any plans once Vil is here?"</span>, Gladias asked.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">"I'm going to visit Freetown for a month or two, see Jahn, maybe figure out some blog post to write on the United Cities. I've spent so much time reading about their co-governance, actually looking forward to seeing more how it all connects to what's on the ground."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Nice! I'm going to go on some long walks in the forest and take a deep dive with the bot on the environment and biology rubrics. Still have four more audits to do before I can become a Sentinel!"</span></p>
 <p>Gladias and Seila both resumed eating. Quietly, Lily walked up to the table, and began to open her food box as well.</p>
 <p>At that moment, Gladias's hand device buzzed. He took it out. A single notification popped up.</p>
 <br><div class="device-view wide-device-view"><table>
@@ -524,7 +526,7 @@ THE SMOKE OF CITIES BURNING IN THE NIGHT
     <tr>
       <td style="width: 25%"><center>Anonymous <br><br> <div style="border: 1px solid; border-radius: 5px; padding: 5px">Rep score ≥ 200 Verified <b style="font-size: 150%; color: #8f8">✓</b></div></center></td>
       <td style="width: 6%; text-align:center">&#8594;</td>
-      <td><span style="color:oklch(0.7 0.15 13.333333333333332)">I saw you at the concert, I know that you are in the Order.</span></td>
+      <td><span class="spk" style="--spk-lt:oklch(0.665 0.107 13.3);--spk-dk:oklch(0.815 0.107 13.3)">I saw you at the concert, I know that you are in the Order.</span></td>
       <td>60259</td>
     </tr>
     </tbody>
@@ -544,7 +546,7 @@ THE SMOKE OF CITIES BURNING IN THE NIGHT
 <tr>
 <td style="width: 25%"><center>Anonymous <br><br> <div style="border: 1px solid; border-radius: 5px; padding: 5px">Rep score ≥ 200 Verified <b style="font-size: 150%; color: #8f8">✓</b></div></center></td>
 <td style="width: 6%; text-align:center">&#8594;</td>
-<td><span style="color:oklch(0.7 0.15 13.333333333333332)">Don't worry, I'm not intending to report you for the bounty. But I do have a request that I would like to make.</span></td>
+<td><span class="spk" style="--spk-lt:oklch(0.665 0.107 13.3);--spk-dk:oklch(0.815 0.107 13.3)">Don't worry, I'm not intending to report you for the bounty. But I do have a request that I would like to make.</span></td>
 <td>60266</td>
 </tr>
 </tbody>

@@ -50,6 +50,8 @@ html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b
 @keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
 @keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
 .document-page { animation: fadeIn 0.3s ease forwards; }
+.spk { color: var(--spk-lt); }
+html.dark .spk { color: var(--spk-dk); }
 .document-page .dateline .rule { margin: 0; }
 .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
 .document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
@@ -153,29 +155,29 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 <p>Suddenly, Gladias felt a tap on his shoulder.</p>
 <p>Gladias turned his head.</p>
 <hr>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Oh, is it you, Mov?"</span></p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"No, it's the Arctic Emperor. I'm here to literally suck out your soul."</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Okay fine... Wait, I'm like one of a hundred people walking toward the Greater Plum Harbor wearing a privacy robe, how did you figure out where I am?"</span></p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"You put me on your trust list a year ago and never took me off, so our local AIs had permission to enable location sharing. Your AI knew that we were supposed to meet before I shadow you when you go see the mysterious gentleman, so it unlocked location sharing with me for today."</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Aaaah, I see ... something something contextual intimacy or whatever the new buzzword is."</span></p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Yep, probably didn't even need the two-party garbled circuit feature to do that."</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So what's been on your mind?"</span></p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Well, I'm assigned to one of the openness rubrics on internet media this year. We've been talking a lot in our Keeper group about bumping up the taxes on API restrictions. I talked to a citizens' assembly about the topic a month ago, and they're really unhappy about how things are going."</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Why is it such a big issue now?"</span></p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Bluewhale announced a month ago that they're cutting their API and are only letting verified hardware interface with the platform. They say it's to prevent automated spam, but basically everyone in the assembly thought they just want to block alternative interfaces so they can control people's attention more and extract more money."</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Do we know exactly what kinds of things they are doing? Are any of their algorithms public?"</span></p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Nah, their algorithms are totally opaque, and they're already paying the max tax bracket for that."</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"I see..."</span></p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"So yeah, many of the Keepers think we should bump up more taxes on that kind of behavior. So either they stop, or, well, they keep going and the internet sucks more, but the gov gets enough money that we can pay for everyone to get better healthcare. The problem is, Bluewhale has been driving a hard campaign against it. One Keeper was not careful about their privacy, she and her views got found out recently, it went public, and her husband lost his job only a few days later. No idea if it's connected, but, well, this is why we gotta run this whole tax system with all these cryptographic networks randomly selecting Keepers, anonymous discussion and voting, and privacy robes."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Oh, is it you, Mov?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"No, it's the Arctic Emperor. I'm here to literally suck out your soul."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Okay fine... Wait, I'm like one of a hundred people walking toward the Greater Plum Harbor wearing a privacy robe, how did you figure out where I am?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"You put me on your trust list a year ago and never took me off, so our local AIs had permission to enable location sharing. Your AI knew that we were supposed to meet before I shadow you when you go see the mysterious gentleman, so it unlocked location sharing with me for today."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Aaaah, I see ... something something contextual intimacy or whatever the new buzzword is."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"Yep, probably didn't even need the two-party garbled circuit feature to do that."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"So what's been on your mind?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"Well, I'm assigned to one of the openness rubrics on internet media this year. We've been talking a lot in our Keeper group about bumping up the taxes on API restrictions. I talked to a citizens' assembly about the topic a month ago, and they're really unhappy about how things are going."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Why is it such a big issue now?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"Bluewhale announced a month ago that they're cutting their API and are only letting verified hardware interface with the platform. They say it's to prevent automated spam, but basically everyone in the assembly thought they just want to block alternative interfaces so they can control people's attention more and extract more money."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Do we know exactly what kinds of things they are doing? Are any of their algorithms public?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"Nah, their algorithms are totally opaque, and they're already paying the max tax bracket for that."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"I see..."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"So yeah, many of the Keepers think we should bump up more taxes on that kind of behavior. So either they stop, or, well, they keep going and the internet sucks more, but the gov gets enough money that we can pay for everyone to get better healthcare. The problem is, Bluewhale has been driving a hard campaign against it. One Keeper was not careful about their privacy, she and her views got found out recently, it went public, and her husband lost his job only a few days later. No idea if it's connected, but, well, this is why we gotta run this whole tax system with all these cryptographic networks randomly selecting Keepers, anonymous discussion and voting, and privacy robes."</span></p>
 <p>The mention of Bluewhale brought Gladias back to his younger days, when he had learned programming by writing an alternative client for the other major social platform, Silverchat. That had only been possible, he knew, because the API was open, and the platform allowed developers to make alternative clients and users to export and migrate their data - all decisions that had undoubtedly been motivated, or at least justified to the bean counters, by trying to lower their tax rate on the hardware and software openness rubric. That experience had been what motivated Gladias to contribute back, and get involved in Steering himself.</p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Anyway, speaking of privacy, what's the plan with your 200 rep anon friend?"</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well, he told me that he thinks the whole Steering mechanism is fundamentally broken. I figured I would hear him out. Often even people who are crazy are at least ten percent right in some way that's interesting. And hopefully figure out some clue about how he found me?"</span></p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"And... what if this is a trap, to get even more compromising info on you?"</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Well, if he really wanted to hurt me, he could have just submitted my identity and task into the network and pulled me out of the running for Sentinel status for this whole year. But anyway, figuring out this kind of thing is what you're here for."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"Anyway, speaking of privacy, what's the plan with your 200 rep anon friend?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Well, he told me that he thinks the whole Steering mechanism is fundamentally broken. I figured I would hear him out. Often even people who are crazy are at least ten percent right in some way that's interesting. And hopefully figure out some clue about how he found me?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"And... what if this is a trap, to get even more compromising info on you?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Well, if he really wanted to hurt me, he could have just submitted my identity and task into the network and pulled me out of the running for Sentinel status for this whole year. But anyway, figuring out this kind of thing is what you're here for."</span></p>
 <p>Mov then opened up his privacy robe, and took out a large package from an inside pocket.</p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Here, before we get into the rest of the business, put on a fresh privacy robe. Just in case there's some piece of dirt that makes yours trackable. The Arctics are getting better at smuggling their surveillance devices in here, faster than we're getting better at detecting them. We gotta step up our paranoia."</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Surely if it's at this level we should have just not met in person at all."</span></p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Come on Glad, you're not just someone about to join me as a Sentinel, you're a friend. I enjoy it when we see each other - while we still can."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"Here, before we get into the rest of the business, put on a fresh privacy robe. Just in case there's some piece of dirt that makes yours trackable. The Arctics are getting better at smuggling their surveillance devices in here, faster than we're getting better at detecting them. We gotta step up our paranoia."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Surely if it's at this level we should have just not met in person at all."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"Come on Glad, you're not just someone about to join me as a Sentinel, you're a friend. I enjoy it when we see each other - while we still can."</span></p>
 <hr>
 <p>The tunnel sloped up, and the outdoor light once again shone into Gladias's eyes. Both sides of the path were covered by trees.</p>
 <p>He passed by two children standing beside a water fountain and talking. He could make out one of them saying something about a recent visit to Northglade with his family, and the other mentioning that he liked their Helisport team.</p>
@@ -193,7 +195,7 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
     <tr>
       <td style="width: 25%"><center>Seila</center></td>
       <td style="width: 6%; text-align:center">&#8594;</td>
-      <td><span style="color:oklch(0.7 0.15 253.33333333333334)">[4 images]</span></td>
+      <td><span class="spk" style="--spk-lt:oklch(0.627 0.111 253.3);--spk-dk:oklch(0.764 0.111 253.3)">[4 images]</span></td>
       <td>44029</td>
     </tr>
     </tbody>
@@ -251,21 +253,21 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 </table>
 <div><b>All research outputs and tooling done by GPH are open source! <br> Partially funded by Veridian Quadratic Funding</b></div></div><br>
 <p>Gladias saw two people sitting on a bench, each drinking a tea and looking at the billboard, one with a hand device on his lap.</p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Have you ever been in there?"</span>, the first man asked.</p>
-<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"No I haven't, never managed to get a visa"</span>, the second replied.</p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"It's a fascinating place, it looks totally different inside than the rest of Veridia, it's almost like a country inside a country."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"Have you ever been in there?"</span>, the first man asked.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.671 0.110 293.3);--spk-dk:oklch(0.823 0.110 293.3)">"No I haven't, never managed to get a visa"</span>, the second replied.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"It's a fascinating place, it looks totally different inside than the rest of Veridia, it's almost like a country inside a country."</span></p>
 <p>Gladias stopped, and faced the billboard to avoid arousing suspicion. Overhearing a conversation was slightly impolite, but understanding public sentiment was part of his duty as a future Sentinel. Citizens' advisory assemblies helped, but they were never quite as good as an authentic conversation by people who did not realize that anyone was listening.</p>
-<p>The second man looked down at the hand device that the two were sharing. <span style="color:oklch(0.7 0.15 293.3333333333333)">"Oof, check what taxes they pay."</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"What taxes do they pay?"</span>, Gladias asked Emerald, whispering silently so only his neck band could make out what he was saying.</p>
+<p>The second man looked down at the hand device that the two were sharing. <span class="spk" style="--spk-lt:oklch(0.671 0.110 293.3);--spk-dk:oklch(0.823 0.110 293.3)">"Oof, check what taxes they pay."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"What taxes do they pay?"</span>, Gladias asked Emerald, whispering silently so only his neck band could make out what he was saying.</p>
 <p>Emerald immediately replied.</p>
-<p><span style="color:oklch(0.7 0.15 66.66666666666666)">"Sales tax, averaging 5.2%, half of the city average. Total land tax is 1.48%, slightly greater than the city average. Graph Funding and especially Quadratic Funding revenue recovers roughly half of this."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.604 0.150 66.7);--spk-dk:oklch(0.733 0.150 66.7)">"Sales tax, averaging 5.2%, half of the city average. Total land tax is 1.48%, slightly greater than the city average. Graph Funding and especially Quadratic Funding revenue recovers roughly half of this."</span></p>
 <p>Gladias turned his attention back to the conversation.</p>
-<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"I don't get it. These guys are just peacefully off in a corner, by themselves. I've never been there, and they've never bothered me. And they even do all this work on the environment, education, healthcare, their museums. They can't even just work on the science they're actually good at, they have to do all these populistic things to push their taxes down and get some of the money back from Quadratic Funding, things that they're not even good at. And even after all this? So many people hate them, and pretend their wall is ugly just to push their land taxes up. What's the point of worrying so much about the Arctics when we're so good at being our own worst enemy?"</span></p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"At least here that's the worst we can do to them. If this was Devanvil or Inglewore, GPH would be fighting to not get shut down entirely."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.671 0.110 293.3);--spk-dk:oklch(0.823 0.110 293.3)">"I don't get it. These guys are just peacefully off in a corner, by themselves. I've never been there, and they've never bothered me. And they even do all this work on the environment, education, healthcare, their museums. They can't even just work on the science they're actually good at, they have to do all these populistic things to push their taxes down and get some of the money back from Quadratic Funding, things that they're not even good at. And even after all this? So many people hate them, and pretend their wall is ugly just to push their land taxes up. What's the point of worrying so much about the Arctics when we're so good at being our own worst enemy?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"At least here that's the worst we can do to them. If this was Devanvil or Inglewore, GPH would be fighting to not get shut down entirely."</span></p>
 <p>Gladias had not been inside Greater Plum Harbor for nearly a decade, so this made him all the more curious to see it again. He kept walking.</p>
 <hr>
 <p>Gladias held his watch near the green circle on the entrance gate, and waited for about one tick.</p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Proof verified, welcome"</span>, the machine answered in a robotic but approving tone.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"Proof verified, welcome"</span>, the machine answered in a robotic but approving tone.</p>
 <p>He walked through the gate.</p>
 <p>He could immediately see why the two people on the bench had described Greater Plum Harbor as being so different from the rest of Veridia.</p>
 <p>The buildings inside Greater Plum Harbor were more uniform than those outside, all with similar circular and rectangular shapes, a mixture of white, grey and purple colors, and roughly five to ten meters in height. The trees were all of a few types, and carefully planted an equal distance apart on the sidewalk. Beyond having distinct names and distinct quarter-meter-wide logos, the stores and restaurants were not trying at all to distinguish themselves, instead accepting their visual role as small elements of the Greater Plum Harbor's whole. The buildings were noticeably more futuristic, more glass-and-steel, and with more sharp edges than the usual structures in Veridia.</p>
@@ -307,47 +309,47 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 <p>Two minutes later, a robot with a smiley face slid up to the table, carrying water and a salad. Gladias took both and put them on the table, and the robot slid away.</p>
 <p>Five minutes later, another man wearing a privacy robe stepped in.</p>
 <hr>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"So, we meet at last."</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"You track me down, you tell me you know things I need to hear but only want to tell me in person, and you bring me to a far corner of GPH that I did not even know existed. And so far I don't even know your name."</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Ah, my name is Delwart. Pleased to meet you."</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"And I'm Gladias."</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I knew that. And your wife is Seila, your children's names are-"</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Are you trying to intimidate me?"</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Actually no, I guess now that I think about it, that was more showing off than anything else. I do apologize."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"So, we meet at last."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"You track me down, you tell me you know things I need to hear but only want to tell me in person, and you bring me to a far corner of GPH that I did not even know existed. And so far I don't even know your name."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"Ah, my name is Delwart. Pleased to meet you."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"And I'm Gladias."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"I knew that. And your wife is Seila, your children's names are-"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Are you trying to intimidate me?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"Actually no, I guess now that I think about it, that was more showing off than anything else. I do apologize."</span></p>
 <p>The two went quiet for a couple minutes. Both took off the face covers and hoods from their privacy robes. Gladias started to drink his water and eat his salad. Delwart tapped his own watch against the green circle on the table, and a minute later his own tea, and some kind of rectangular nutrition bar along with a fork, arrived.</p>
 <p>Gladias leaned forward again.</p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So what do you want?"</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Do you feel happy with the Steering system lately?"</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"It has its flaws like any system, but in general it feels fine?"</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I see, I haven't broken your wall yet. Okay, let's take the Dreadknot concert for example. They're a nice band, they're great fun, right?"</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Yeah, I like them."</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"But a bunch of the Sentinels are trying to push them up into Tier 4, because their lyrics are not gentle enough."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"So what do you want?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"Do you feel happy with the Steering system lately?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"It has its flaws like any system, but in general it feels fine?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"I see, I haven't broken your wall yet. Okay, let's take the Dreadknot concert for example. They're a nice band, they're great fun, right?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Yeah, I like them."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"But a bunch of the Sentinels are trying to push them up into Tier 4, because their lyrics are not gentle enough."</span></p>
 <p>Gladias nodded in agreement.</p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"You were brave, voting Tier 3. Most Acolytes would cave to what they think the Sentinels want. You didn't. That's rare."</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"But let's take another example. What do you think about GPH?"</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"It's clearly a nice place. Not like Veridia, but beautiful and impressive in its own way. It's not for everyone, but I can see why a lot of people like coming here."</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Well, do you know what their Steering taxes are?"</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"The Steering taxes are okay, but they really get dinged on the land tax."</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Exactly. A well-considered argument about how much this place benefits Veridia is worth less than a barely thought-through 'I don't like you'."</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"So what do you propose?"</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Freedom. Actual freedom. Stop trying to nudge everyone, and let people's true selves come out."</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"And how can I help?"</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Are you planning to be a Sentinel or a Keeper if you get accepted in two months?"</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Was thinking Sentinel so far."</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Be a Keeper. And just vote to delete every rubric you see."</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"That's it? That's your plan?"</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"See, there's a lot more Sentinels these days than Keepers. And Sentinels are the people everyone is trying to influence. Why? Because Sentinels get direct connections to specific things in the world. Keepers adjust the global rules. But there's a limit to how much any single rule can affect any single business, and there's like twenty Keepers deciding each on each rule. Being a Sentinel, you have a much more tangible impact. And it's more fun."</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"My program is different. I'm trying to round up as many Keepers as I can, because what I want is systemic change. It's not about one concert or one enclave that has too much purple in it. It's about releasing Veridians from this tyranny of people's prejudices and letting them be themselves."</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Do you want to remove Graph Funding too?"</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"I think Graph Funding definitely overreaches in a bunch of ways too, but my focus is Steering."</span></p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"A lot of the open tech Graph Funding supports has been pretty key to helping Dzego modernize to defend itself, do you not think that's important?"</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Look, I like their people, but really we're playing a dangerous game cutting so close to funding a potential war. We should focus on our own problems first."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"You were brave, voting Tier 3. Most Acolytes would cave to what they think the Sentinels want. You didn't. That's rare."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"But let's take another example. What do you think about GPH?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"It's clearly a nice place. Not like Veridia, but beautiful and impressive in its own way. It's not for everyone, but I can see why a lot of people like coming here."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"Well, do you know what their Steering taxes are?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"The Steering taxes are okay, but they really get dinged on the land tax."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"Exactly. A well-considered argument about how much this place benefits Veridia is worth less than a barely thought-through 'I don't like you'."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"So what do you propose?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"Freedom. Actual freedom. Stop trying to nudge everyone, and let people's true selves come out."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"And how can I help?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"Are you planning to be a Sentinel or a Keeper if you get accepted in two months?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Was thinking Sentinel so far."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"Be a Keeper. And just vote to delete every rubric you see."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"That's it? That's your plan?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"See, there's a lot more Sentinels these days than Keepers. And Sentinels are the people everyone is trying to influence. Why? Because Sentinels get direct connections to specific things in the world. Keepers adjust the global rules. But there's a limit to how much any single rule can affect any single business, and there's like twenty Keepers deciding each on each rule. Being a Sentinel, you have a much more tangible impact. And it's more fun."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"My program is different. I'm trying to round up as many Keepers as I can, because what I want is systemic change. It's not about one concert or one enclave that has too much purple in it. It's about releasing Veridians from this tyranny of people's prejudices and letting them be themselves."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Do you want to remove Graph Funding too?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"I think Graph Funding definitely overreaches in a bunch of ways too, but my focus is Steering."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"A lot of the open tech Graph Funding supports has been pretty key to helping Dzego modernize to defend itself, do you not think that's important?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"Look, I like their people, but really we're playing a dangerous game cutting so close to funding a potential war. We should focus on our own problems first."</span></p>
 <p>Delwart stopped speaking, and began to drink his own tea and eat his nutrition bar. Gladias took the moment to ponder Delwart's words, while continuing to drink his water and finishing his salad.</p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"It's an interesting thought, that the Steering is just manipulating people too much. I don't know if I fully agree with just dropping it all to zero, and especially killing the Graph Funding - which we would have to do, if the Steering taxes went to zero."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"It's an interesting thought, that the Steering is just manipulating people too much. I don't know if I fully agree with just dropping it all to zero, and especially killing the Graph Funding - which we would have to do, if the Steering taxes went to zero."</span></p>
 <p>Gladias paused for a few ticks, and looked at Delwart. Delwart looked back. They each took another sip of their respective drinks.</p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"But okay, even if I might agree on some parts, why should I listen to you?"</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Well, I know you, I know where you live, I know how you think. And if I can find out all that, imagine what kinds of things Bluewhale might be able to do. Or, for that matter, the Arctics. I can help protect you. But I will need your help too."</span></p>
-<p><span style="color:oklch(0.7 0.15 53.33333333333333)">"Anyway, the deadline for you to submit your final track decision is in about a month. Don't go for being a Sentinel, be a Keeper. Let's just start with that."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"But okay, even if I might agree on some parts, why should I listen to you?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"Well, I know you, I know where you live, I know how you think. And if I can find out all that, imagine what kinds of things Bluewhale might be able to do. Or, for that matter, the Arctics. I can help protect you. But I will need your help too."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"Anyway, the deadline for you to submit your final track decision is in about a month. Don't go for being a Sentinel, be a Keeper. Let's just start with that."</span></p>
 <p>Delwart stood up, and exited the booth.</p>
 <p>Gladias kept the crack in the middle of the curtain slightly open, and watched Delwart go. Just before Delwart disappeared from view, another person wearing a privacy robe exited the adjacent booth, and followed Delwart.</p>
 <p>Gladias checked his watch.</p>

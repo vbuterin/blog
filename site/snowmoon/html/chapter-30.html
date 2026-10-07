@@ -50,6 +50,8 @@ html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b
 @keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
 @keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
 .document-page { animation: fadeIn 0.3s ease forwards; }
+.spk { color: var(--spk-lt); }
+html.dark .spk { color: var(--spk-dk); }
 .document-page .dateline .rule { margin: 0; }
 .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
 .document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
@@ -155,27 +157,27 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 <span style="font-family:monospace; font-size: 75%">0ca84c8548d95f6edcd3b6fd1b695d743aff2904cec00fd411bd9d36566e4048: af0dd33ec09e8e8331ff34bf9d15432d8f91ec4870720d8fdc2bdffe29f871d5</span></div><br>
 <p>Zei immediately forwarded the note to Bai. He also sent a copy to Fin, and sent Emerald an instruction to send Fin a maximum-priority emergency alarm and an explanation of what was going on.</p>
 <p>Fin responded almost immediately.</p>
-<p><span style="color:oklch(0.7 0.15 80)">"Alright Zei, what do you need?"</span></p>
-<p><span style="color:oklch(0.7 0.15 80)">"Reading..."</span></p>
-<p><span style="color:oklch(0.7 0.15 80)">"Yeah this seems doable. It's a not very well known fact that you don't actually need the raw weights of a model to effectively train adversarial attacks. There's definitely Bansunpei people who are very good at this stuff - 'language models' are quite connected to language!"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.638 0.106 80.0);--spk-dk:oklch(0.778 0.106 80.0)">"Alright Zei, what do you need?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.638 0.106 80.0);--spk-dk:oklch(0.778 0.106 80.0)">"Reading..."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.638 0.106 80.0);--spk-dk:oklch(0.778 0.106 80.0)">"Yeah this seems doable. It's a not very well known fact that you don't actually need the raw weights of a model to effectively train adversarial attacks. There's definitely Bansunpei people who are very good at this stuff - 'language models' are quite connected to language!"</span></p>
 <p>Zei also forwarded the note to Mu. Emerald automatically formed a real-time chat group. After a minute, about ten people were sharing insights about the problem and beginning to attack it in parallel.</p>
-<p><span style="color:oklch(0.7 0.15 40)">"Let's assume that our attack medium is that we have our snow drones, and we have stick-on paper that we can print things on. We'll assume we deploy this after sunrise. Here's what you do: start with one pattern, run it inside the simulator, have our drone slowly approach the target and see how long it takes for the target to detect it. Measure detection time so that we have a scalar signal of how well we're hiding, not just a binary."</span></p>
-<p><span style="color:oklch(0.7 0.15 40)">"Continue making small modifications to the pattern in all kinds of directions. Keep each modification that increases the target's detection time. It doesn't matter if the process has a lot of noise, the signal accumulates and the noise averages out over time. It's not as fast as gradient descent, but it still works. Eventually you get to a pattern that reliably tricks the adversary."</span></p>
-<p><span style="color:oklch(0.7 0.15 160)">"We can do better. We have our own models that were trained in similar ways to the Arctic ones, and we obviously have the raw weights to those. So we can use gradient descent against our model. Identify, say, ten optimal perpendicular directions that maximize time-to-detection according to our model inside our simulator, and then use those as the trial deviations we try against their model inside their simulator. Simultaneously, we also use the results of every query to fine-tune our model to make it a better predictor of how the Arctic model will behave on these attacks."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"How quickly can we get this working?"</span>, Zei interjected.</p>
-<p><span style="color:oklch(0.7 0.15 40)">"Coding should take at most ten minutes, Emerald can do it quickly. The full training loop ... maybe a longhour?"</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"So it will be done around sunrise?"</span></p>
-<p><span style="color:oklch(0.7 0.15 40)">"Exactly. And then you will need I don't know how many minutes to actually print the attack patterns on the sides of the drones, you should prepare that pipeline on your side so it's ready to go as soon as we are."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Alright, everyone. Let's get moving."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.594 0.128 40.0);--spk-dk:oklch(0.719 0.128 40.0)">"Let's assume that our attack medium is that we have our snow drones, and we have stick-on paper that we can print things on. We'll assume we deploy this after sunrise. Here's what you do: start with one pattern, run it inside the simulator, have our drone slowly approach the target and see how long it takes for the target to detect it. Measure detection time so that we have a scalar signal of how well we're hiding, not just a binary."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.594 0.128 40.0);--spk-dk:oklch(0.719 0.128 40.0)">"Continue making small modifications to the pattern in all kinds of directions. Keep each modification that increases the target's detection time. It doesn't matter if the process has a lot of noise, the signal accumulates and the noise averages out over time. It's not as fast as gradient descent, but it still works. Eventually you get to a pattern that reliably tricks the adversary."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"We can do better. We have our own models that were trained in similar ways to the Arctic ones, and we obviously have the raw weights to those. So we can use gradient descent against our model. Identify, say, ten optimal perpendicular directions that maximize time-to-detection according to our model inside our simulator, and then use those as the trial deviations we try against their model inside their simulator. Simultaneously, we also use the results of every query to fine-tune our model to make it a better predictor of how the Arctic model will behave on these attacks."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"How quickly can we get this working?"</span>, Zei interjected.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.594 0.128 40.0);--spk-dk:oklch(0.719 0.128 40.0)">"Coding should take at most ten minutes, Emerald can do it quickly. The full training loop ... maybe a longhour?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"So it will be done around sunrise?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.594 0.128 40.0);--spk-dk:oklch(0.719 0.128 40.0)">"Exactly. And then you will need I don't know how many minutes to actually print the attack patterns on the sides of the drones, you should prepare that pipeline on your side so it's ready to go as soon as we are."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Alright, everyone. Let's get moving."</span></p>
 <p>Zei sat back, and kept scanning through zoomed-in views of the battle map and visual feeds. About a third of the Veridian drone fleet was already lost, but casualty rates had decreased considerably. The slow retreat strategy was working well: it also meant that any Veridian drones that had motion disabled by combat damage but had their weapons still intact could go into low-power mode and then wake up and do a final burst of damage as soon as the Arctics themselves advanced to their position.</p>
 <p>After about fifteen minutes, Zei's watch buzzed again. Emerald was telling him to rejoin the chat.</p>
-<p><span style="color:oklch(0.7 0.15 40)">"We have some early good news"</span>, a Bansunpei researcher exclaimed.</p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"What is it?"</span></p>
-<p><span style="color:oklch(0.7 0.15 40)">"We've successfully accessed the Arctic simulation platform, and we've run the first few hundred trial rounds against the simulator. We have patterns that are increasing detection time by about five percent."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Only five percent?"</span></p>
-<p><span style="color:oklch(0.7 0.15 40)">"That just means the pipeline is starting to work."</span></p>
-<p><span style="color:oklch(0.7 0.15 40)">"Oh, it just went up to eleven percent."</span></p>
-<p><span style="color:oklch(0.7 0.15 160)">"It's definitely working"</span>, another researcher interjected. <span style="color:oklch(0.7 0.15 160)">"We're continuing to run Emerald in parallel, optimizing the software. It's finding ways to extract more information from each query, and better parallelize the queries so this all happens faster."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.594 0.128 40.0);--spk-dk:oklch(0.719 0.128 40.0)">"We have some early good news"</span>, a Bansunpei researcher exclaimed.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"What is it?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.594 0.128 40.0);--spk-dk:oklch(0.719 0.128 40.0)">"We've successfully accessed the Arctic simulation platform, and we've run the first few hundred trial rounds against the simulator. We have patterns that are increasing detection time by about five percent."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Only five percent?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.594 0.128 40.0);--spk-dk:oklch(0.719 0.128 40.0)">"That just means the pipeline is starting to work."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.594 0.128 40.0);--spk-dk:oklch(0.719 0.128 40.0)">"Oh, it just went up to eleven percent."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"It's definitely working"</span>, another researcher interjected. <span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"We're continuing to run Emerald in parallel, optimizing the software. It's finding ways to extract more information from each query, and better parallelize the queries so this all happens faster."</span></p>
 <p>Zei's watch buzzed.</p>
 <br><div class="device-view wide-device-view device-view-left"><p>I can see you are starting to run queries! Though you want to be more careful - if I can see it, the sentries might be able to as well. Here are some more proxy endpoints.</p>
 <span style="font-family:monospace; font-size: 75%">c8baa6614d9fba874af5cb90ba7c3d1a53aabaa8facd1e4f5fe46bdeb229a106: 3fa5fbd0bc8aa8af8a4842b099dad4e700b5d54edcd4a21c9e272552318d4a55</span>
@@ -193,16 +195,16 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 <p>Lektor gave the order to set up printing infrastructure about two kilometers behind their current positions - a place they would be able to safely organize a retreat to around sunrise.</p>
 <p>Human Veridian soldiers were already tens of kilometers behind the robotic frontline, and Lektor ordered them to start moving toward the front, so that they would be available to paste the attack patterns onto the snow drones. Manual dexterity was still a major weakness of AI.</p>
 <p>Slowly, the sky began to shift from a near-total pitch black to a dark blue that was especially visible in the far east. As the minutes passed, the blue became brighter.</p>
-<p><span style="color:oklch(0.7 0.15 40)">"Alright, we have some good patterns. It's getting close to sunrise in Northshore. I recommend shipping them now."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Agreed"</span>, Zei replied.</p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Then let's do it"</span>, Mu added.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.594 0.128 40.0);--spk-dk:oklch(0.719 0.128 40.0)">"Alright, we have some good patterns. It's getting close to sunrise in Northshore. I recommend shipping them now."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Agreed"</span>, Zei replied.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"Then let's do it"</span>, Mu added.</p>
 <hr>
 <p>Zei flipped through the visual feeds in his display. The majority of their drone fleet had retreated a kilometer, and a large number of pieces of paper were being printed and then almost immediately getting distributed and then stuck onto all sides of each snow drone and sky drone. The plan was in motion.</p>
-<p><span style="color:oklch(0.7 0.15 93.33333333333333)">"Group North reporting: all non-forward drones have been equipped."</span></p>
-<p><span style="color:oklch(0.7 0.15 266.66666666666663)">"Group Center reporting: all non-forward drones have been equipped."</span></p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Group South reporting: all non-forward drones have been equipped."</span></p>
-<p><span style="color:oklch(0.7 0.15 293.3333333333333)">"Group Naval reporting: we commandeered equipment in villages on the outskirts of Northglade, the locals were amazing, many woke up in the middle of the night to help us. Most non-forward drones have been equipped."</span></p>
-<p><span style="color:oklch(0.7 0.15 160)">"Alright then"</span>, Lektor spoke up softly but firmly. <span style="color:oklch(0.7 0.15 160)">"Action."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.746 0.150 93.3);--spk-dk:oklch(0.924 0.150 93.3)">"Group North reporting: all non-forward drones have been equipped."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.742 0.146 266.7);--spk-dk:oklch(0.919 0.146 266.7)">"Group Center reporting: all non-forward drones have been equipped."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"Group South reporting: all non-forward drones have been equipped."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.671 0.110 293.3);--spk-dk:oklch(0.823 0.110 293.3)">"Group Naval reporting: we commandeered equipment in villages on the outskirts of Northglade, the locals were amazing, many woke up in the middle of the night to help us. Most non-forward drones have been equipped."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"Alright then"</span>, Lektor spoke up softly but firmly. <span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"Action."</span></p>
 <p>Zei checked the visual feeds, curious what the final version of the attack patterns actually looked like. He saw an endless row of snow drones with large pieces of paper plastered on all sides, each paper containing many colorful and squiggly patterns - and in a giant font, the word "<strong>DOG</strong>".</p>
 <p>A few minutes later, he could see the results. The Veridian snow drones advanced quickly, pushing through enemy lines and turning the front into a chaotic mixture of drones on both sides. Casualty ratios were more than ten to one in the Veridian drone fleet's favor.</p>
 <br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
@@ -240,7 +242,7 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 <circle cx="195" cy="135" r="2.0" fill="#f00"/>
 <circle cx="215" cy="140" r="2.0" fill="#f00"/></div><br>
 <p>Zei allowed himself to feel a moment of joy - the first genuine joy that he had felt the whole night.</p>
-<p>He remembered Den's words to him the day that he had almost caused the failure of the mission to rescue the Redshire president's son. <span style="color:oklch(0.7 0.15 53.33333333333333)">"Outside the box as in, jumping out of your console chair and running over and bashing the other player in the face."</span></p>
+<p>He remembered Den's words to him the day that he had almost caused the failure of the mission to rescue the Redshire president's son. <span class="spk" style="--spk-lt:oklch(0.708 0.129 53.3);--spk-dk:oklch(0.874 0.129 53.3)">"Outside the box as in, jumping out of your console chair and running over and bashing the other player in the face."</span></p>
 <p>Breaking into your opponent's simulation environment, running millions of queries to optimize squiggles that you could draw on a piece of paper, and tricking your opponent's drones into thinking that your drones are dogs - did that count?</p>
 <p>It probably did, Zei decided. Den would be proud.</p>
 <p>As soon as he felt he had celebrated enough, Zei turned to a visual view of the statistic that really mattered: the casualty ratios. They had already dropped to six to one. So far the Arctic army had not yet adapted, but they had adopted emergency defensive positions, each squad of drones circling into a formation, to buy time. And they would adapt soon, Zei knew.</p>
@@ -248,7 +250,7 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 <p>Casualty ratios briefly increased back in the Veridians' favor, and then started decreasing again, though slowly. Zei continued watching.</p>
 <p>After fifteen minutes, all access to the simulation environment was suddenly cut off. At around the same time, casualty ratios suddenly dropped back down to only one and a half to one in the Veridians' favor.</p>
 <p>They had destroyed a large part of the Arctic drone fleet, but a large part still remained. They were now in a complicated positional battle, with a chaotic mixture of both sides' drone squads littering the battlefield with no clear front line.</p>
-<p>Veridian human soldiers were only hundreds of meters behind the frontline, finding snow drones that were quickly repairable and repairing them. They were wearing thermal cloaks to minimize the chance of detection, and smoke from nearby burning trees provided additional cover. In a few of the visual feeds, Zei could see images of Arctic human soldiers doing the same thing in the distance, but they were fear fewer in number: while Veridians had been retreating through the night, they had been laying traps along the way, and those traps were much more effective against humans than against drones.</p>
+<p>Veridian human soldiers were only hundreds of meters behind the frontline, finding snow drones that were quickly repairable and repairing them. They were wearing thermal cloaks to minimize the chance of detection, and smoke from nearby burning trees provided additional cover. In a few of the visual feeds, Zei could see images of Arctic human soldiers doing the same thing in the distance, but they were far fewer in number: while Veridians had been retreating through the night, they had been laying traps along the way, and those traps were much more effective against humans than against drones.</p>
 <p>A few minutes later, Zei's watch buzzed again.</p>
 <br><div class="device-view wide-device-view device-view-left"><p>I hope you trust me now.</p>
 <p>My next message will contain exact coordinates of some of our units on the southern flank, and recommended weak points to attack through.</p>
@@ -257,8 +259,8 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 <p>Of course I trust you, Deluin, he thought.</p>
 <p>Almost immediately, Zei's watch buzzed again. He had received the second message.</p>
 <p>He forwarded the coordinates to Mu.</p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"It's your chance to shine, Mu."</span></p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Don't forget Vakaria."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"It's your chance to shine, Mu."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"Don't forget Vakaria."</span></p>
 <p>Within minutes, casualty ratios on the southern front began to diverge heavily from the fronts further north, going back up in the Veridians' favor.</p>
 <p>And only a few minutes later, they seemed to have achieved the result that they needed.</p>
 <br><div class="device-view wide-device-view"><svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">

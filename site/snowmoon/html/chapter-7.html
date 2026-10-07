@@ -50,6 +50,8 @@ html.dark .document-page hr { background: linear-gradient(to right, #8b83c3, #6b
 @keyframes blinker{0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; }}
 @keyframes fadeIn{from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }}
 .document-page { animation: fadeIn 0.3s ease forwards; }
+.spk { color: var(--spk-lt); }
+html.dark .spk { color: var(--spk-dk); }
 .document-page .dateline .rule { margin: 0; }
 .document-page h1:has(+ .dateline.chapter-open) { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
 .document-page .dateline.chapter-open { margin: 2px 0 26px 0; }
@@ -138,7 +140,7 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 <div class="dateline chapter-open"><hr class="rule"><span class="txt"><span class="place">Pafogai Du, Dzego</span><span class="sep">·</span><span class="date">3724 Rainmoon 23</span></span></div>
 <p>Zei was sitting alone at a table in a courtyard, drinking a tea and eating a rice and vegetable dish. In his left hand, he held his hand device, reviewing Minpentai strategies.</p>
 <p>A robot slid up to him.</p>
-<p><span style="color:oklch(0.7 0.15 240)">"mo da cu ja li hen ma?"</span>, it asked. "Is the food and drink good?"</p>
+<p><span class="spk" style="--spk-lt:oklch(0.625 0.150 240.0);--spk-dk:oklch(0.761 0.150 240.0)">"mo da cu ja li hen ma?"</span>, it asked. "Is the food and drink good?"</p>
 <p>The screen on the robot turned into a voting view.</p>
 <br><div class="device-view wide-device-view"><table>
   <thead>
@@ -165,76 +167,76 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 <p>Zei thought for a few moments, and moved the bar about three quarters of the way to the right.</p>
 <p>The robot beeped, and slowly slid away.</p>
 <p>When Zei looked up again, he could see Fin running up to him. Fin arrived, and sat down.</p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Where have you been?"</span>, Zei asked.</p>
-<p><span style="color:oklch(0.7 0.15 80)">"More linguistics training"</span>, Fin replied. <span style="color:oklch(0.7 0.15 80)">"Looks like the Bansunpei think I'm actually a good fit for them."</span></p>
-<p><span style="color:oklch(0.7 0.15 80)">"How is training for the big game?"</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Did about five games against the bots in the past longhour"</span>, Zei replied. <span style="color:oklch(0.7 0.15 346.66666666666663)">"I feel like this is already hitting diminishing returns. It's all going to hinge on what the rule change this time is."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"So in my last two games I asked the bots to come up with random rule changes, and played against them. Problem is, I won easily both times: the bots play better than me on stock Minpentai, but they are much worse at adapting to any new situation they don't have training data for."</span></p>
-<p><span style="color:oklch(0.7 0.15 80)">"Can't you make a pipeline where once they come up with the new rule, they self-play finetune to get good at it, and then you play against that?"</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Well if you can go help spin that up for me in the next two longhours, I'd much appreciate it. Game is tomorrow, remember!"</span></p>
-<p>Fin thought briefly. <span style="color:oklch(0.7 0.15 80)">"If I do that I'll have to tell the Bansunpei I am skipping tonight then."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"'Po so dze go ban' can wait, the game against Bai is tomorrow."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Please?"</span></p>
-<p>Fin thought for a few ticks more. <span style="color:oklch(0.7 0.15 80)">"Okay fine, I'll tell them I'm skipping. But I'll have to make it up with them next month."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Where have you been?"</span>, Zei asked.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.638 0.106 80.0);--spk-dk:oklch(0.778 0.106 80.0)">"More linguistics training"</span>, Fin replied. <span class="spk" style="--spk-lt:oklch(0.638 0.106 80.0);--spk-dk:oklch(0.778 0.106 80.0)">"Looks like the Bansunpei think I'm actually a good fit for them."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.638 0.106 80.0);--spk-dk:oklch(0.778 0.106 80.0)">"How is training for the big game?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Did about five games against the bots in the past longhour"</span>, Zei replied. <span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"I feel like this is already hitting diminishing returns. It's all going to hinge on what the rule change this time is."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"So in my last two games I asked the bots to come up with random rule changes, and played against them. Problem is, I won easily both times: the bots play better than me on stock Minpentai, but they are much worse at adapting to any new situation they don't have training data for."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.638 0.106 80.0);--spk-dk:oklch(0.778 0.106 80.0)">"Can't you make a pipeline where once they come up with the new rule, they self-play finetune to get good at it, and then you play against that?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Well if you can go help spin that up for me in the next two longhours, I'd much appreciate it. Game is tomorrow, remember!"</span></p>
+<p>Fin thought briefly. <span class="spk" style="--spk-lt:oklch(0.638 0.106 80.0);--spk-dk:oklch(0.778 0.106 80.0)">"If I do that I'll have to tell the Bansunpei I am skipping tonight then."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"'Po so dze go ban' can wait, the game against Bai is tomorrow."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Please?"</span></p>
+<p>Fin thought for a few ticks more. <span class="spk" style="--spk-lt:oklch(0.638 0.106 80.0);--spk-dk:oklch(0.778 0.106 80.0)">"Okay fine, I'll tell them I'm skipping. But I'll have to make it up with them next month."</span></p>
 <div class="dateline scene-break"><hr class="rule"><span class="txt">3724 Rainmoon 24</span></div>
 <p>Fin and Zei walked up the slope toward the mountain pyramid. Zei went through Minpentai strategies in his mind, as the tiring climb helped him concentrate, suppressing his mind's desire to wander toward anything else.</p>
 <p>Suddenly he felt a tap on his shoulder.</p>
 <p>Zei turned around. It was Bai.</p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"So, excited about today's game?"</span>, she asked. <span style="color:oklch(0.7 0.15 26.666666666666664)">"I think it'll be a good finish for you, I don't think your mom quite realizes how impressive it is that you are going to come in second across the whole city."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"So, excited about today's game?"</span>, she asked. <span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"I think it'll be a good finish for you, I don't think your mom quite realizes how impressive it is that you are going to come in second across the whole city."</span></p>
 <p>Zei's mind raced for a retort.</p>
-<p><span style="color:oklch(0.7 0.15 80)">"You know if you were nicer to Zei"</span>, Fin snapped back, <span style="color:oklch(0.7 0.15 80)">"he might pay for <em>your</em> next trip to Redshire or Freetown from the prize money when he wins the nationals."</span></p>
-<p><span style="color:oklch(0.7 0.15 80)">"Maybe bring along your mom too."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.638 0.106 80.0);--spk-dk:oklch(0.778 0.106 80.0)">"You know if you were nicer to Zei"</span>, Fin snapped back, <span class="spk" style="--spk-lt:oklch(0.638 0.106 80.0);--spk-dk:oklch(0.778 0.106 80.0)">"he might pay for <em>your</em> next trip to Redshire or Freetown from the prize money when he wins the nationals."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.638 0.106 80.0);--spk-dk:oklch(0.778 0.106 80.0)">"Maybe bring along your mom too."</span></p>
 <p>Bai's grin faltered for a moment, then returned.</p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Thank you, Fin."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"But seriously, let's just concentrate on giving everyone a good game."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Thank you, Fin."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"But seriously, let's just concentrate on giving everyone a good game."</span></p>
 <p>Suddenly, the ground shook slightly. A few moments later, from their high vantage point already a third of the way up the mountain, they could see a cloud of smoke emerging in the distance, somewhere in the outskirts of the city.</p>
-<p><span style="color:oklch(0.7 0.15 80)">"Whoa, what is that?"</span>, Fin asked.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.638 0.106 80.0);--spk-dk:oklch(0.778 0.106 80.0)">"Whoa, what is that?"</span>, Fin asked.</p>
 <p>Zei took out his hand device, and pointed it at the cloud of smoke.</p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Let's check."</span></p>
-<p>Zei held his hand device pointed at the cloud of smoke and the area below for a moment, and then put it down. <span style="color:oklch(0.7 0.15 346.66666666666663)">"Geolocated it. It's the largest computer chip manufacturing facility in the city. Remember, the Arctics have been trying hard to stop us from progressing any more in our technology."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Looks like this facility was government-run. I imagine they'll just say it was an accident or something."</span></p>
-<p><span style="color:oklch(0.7 0.15 80)">"Heh"</span>, Fin smirked.</p>
-<p><span style="color:oklch(0.7 0.15 80)">"What part of the 'bin hu' in 'gie fe kiu kai ci bin hu' do these people not get? No head. You're not supposed to centralize stuff this much."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Again, this is government. Half of them don't understand what they're doing, and many of the rest are probably on the payroll of the Arctics themselves in some form. All of the actually smart and effective stuff in Dzego has been outside of government <em>or</em> the big corporations for decades."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"But anyway, we have lots of smaller, distributed underground fabs these days. We'll be fine."</span></p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Okay, guys"</span>, Bai interjected. <span style="color:oklch(0.7 0.15 26.666666666666664)">"We have to actually get to the game."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Let's check."</span></p>
+<p>Zei held his hand device pointed at the cloud of smoke and the area below for a moment, and then put it down. <span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Geolocated it. It's the largest computer chip manufacturing facility in the city. Remember, the Arctics have been trying hard to stop us from progressing any more in our technology."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Looks like this facility was government-run. I imagine they'll just say it was an accident or something."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.638 0.106 80.0);--spk-dk:oklch(0.778 0.106 80.0)">"Heh"</span>, Fin smirked.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.638 0.106 80.0);--spk-dk:oklch(0.778 0.106 80.0)">"What part of the 'bin hu' in 'gie fe kiu kai ci bin hu' do these people not get? No head. You're not supposed to centralize stuff this much."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Again, this is government. Half of them don't understand what they're doing, and many of the rest are probably on the payroll of the Arctics themselves in some form. All of the actually smart and effective stuff in Dzego has been outside of government <em>or</em> the big corporations for decades."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"But anyway, we have lots of smaller, distributed underground fabs these days. We'll be fine."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"Okay, guys"</span>, Bai interjected. <span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"We have to actually get to the game."</span></p>
 <p>The three of them resumed climbing. After a few more minutes, they arrived at the main door, and entered the tunnels. On the third turn, Fin turned left to go to the audience section, and Bai and Zei turned right. They walked through the door, and saw Mu waiting for them.</p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Welcome back to you both"</span>, Mu said. <span style="color:oklch(0.7 0.15 173.33333333333331)">"Excited to see how you both perform."</span></p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"I hope the rule change this time is going to be good."</span></p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Oh, it will be. You'll see."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"Welcome back to you both"</span>, Mu said. <span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"Excited to see how you both perform."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"I hope the rule change this time is going to be good."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"Oh, it will be. You'll see."</span></p>
 <p>A robot slid toward them, and gave them three glasses of water. Zei, Bai and Mu each took a glass.</p>
-<p>Mu raised the glass. <span style="color:oklch(0.7 0.15 173.33333333333331)">"To our future,"</span> she said. <span style="color:oklch(0.7 0.15 173.33333333333331)">"Dze go ba fau gie."</span></p>
+<p>Mu raised the glass. <span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"To our future,"</span> she said. <span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"Dze go ba fau gie."</span></p>
 <p>Zei felt slightly confused - "Dzego will rise again" was a beautiful thing to say, but it seemed more appropriate for either an actual battle or some kind of industrial or educational activity than for a Minpentai championship game. But he nevertheless instinctively replied back, at the same time as Bai.</p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Dze go ba fau gie."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Dze go ba fau gie."</span></p>
 <p>The three of them drank their water.</p>
 <p>They sat down and rested for a few minutes. Then, two elevator doors opened.</p>
 <hr>
-<p><span style="color:oklch(0.7 0.15 160)">"MU GU GEI FA"</span>, the loud automated voice announced. Starting in fifty ticks.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"MU GU GEI FA"</span>, the loud automated voice announced. Starting in fifty ticks.</p>
 <p>Zei breathed in and out, and recited his strategies in his head for the last time.</p>
-<p><span style="color:oklch(0.7 0.15 160)">"LE MU GEI FA"</span>.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"LE MU GEI FA"</span>.</p>
 <p>Zei scanned the audience with his eyes. He could barely see most of them, but in the aggregate he could make out more excitement than he saw in both of his previous two games.</p>
-<p><span style="color:oklch(0.7 0.15 160)">"PA GU GEI FA"</span>.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"PA GU GEI FA"</span>.</p>
 <p>Zei breathed in again, and held his breath for the last remaining ten ticks until the announcement.</p>
-<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"Welcome to the final round of the eighteenth year of the Minpentai tournaments in Pafogai Du. Tonight, we will witness the most decisive game in our entire city, between contestants whose playing skills have both been rated by AI as better than the national champions of only five years before."</span></p>
-<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"Today, we have our two finalists, two brilliant minds whom we saw fight side by side as teammates a month earlier: Zei Leimin and Bai Jahen."</span></p>
-<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"And today, I am also pleased to announce the new rule for this round. Both players will have access to a powerful personal AI, which will be able to assist them in their gameplay."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.665 0.107 13.3);--spk-dk:oklch(0.815 0.107 13.3)">"Welcome to the final round of the eighteenth year of the Minpentai tournaments in Pafogai Du. Tonight, we will witness the most decisive game in our entire city, between contestants whose playing skills have both been rated by AI as better than the national champions of only five years before."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.665 0.107 13.3);--spk-dk:oklch(0.815 0.107 13.3)">"Today, we have our two finalists, two brilliant minds whom we saw fight side by side as teammates a month earlier: Zei Leimin and Bai Jahen."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.665 0.107 13.3);--spk-dk:oklch(0.815 0.107 13.3)">"And today, I am also pleased to announce the new rule for this round. Both players will have access to a powerful personal AI, which will be able to assist them in their gameplay."</span></p>
 <p>A new tab suddenly opened up on Zei's display.</p>
-<p><span style="color:oklch(0.7 0.15 13.333333333333332)">"However, the players and their AIs will have full read access to the thought transcripts of each other's AI."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.665 0.107 13.3);--spk-dk:oklch(0.815 0.107 13.3)">"However, the players and their AIs will have full read access to the thought transcripts of each other's AI."</span></p>
 <p>Zei took in the information, and quickly began to formulate his thoughts about how he would use the AI. He asked it to set up standard glider and wall formations, in his own style. To his surprise, the AI knew what his style was.</p>
 <p>He saw Bai's AI transcript in a separate tab to the side; Bai was doing the same, and Bai's AI also knew her style.</p>
-<p><span style="color:oklch(0.7 0.15 160)">"MU GU GEI TAU FA"</span>, the loud automated voice blared. The battle begins in fifty ticks.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"MU GU GEI TAU FA"</span>, the loud automated voice blared. The battle begins in fifty ticks.</p>
 <p>The AIs kept optimizing their glider and wall formations. At this point, both AIs started designing countermeasures to the strategies in the other's transcripts.</p>
 <p>Zei started planting a few structures by hand, speeding up his work by copying and pasting pieces of what the AI had already made, looking attentively at Bai's transcript to see what strategies Bai's AI had not yet built countermeasures to.</p>
-<p><span style="color:oklch(0.7 0.15 160)">"LE MU GEI TAU FA"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"LE MU GEI TAU FA"</span></p>
 <p>Zei started planting one last major structure by hand: a symbol-carrying spaceship. There were already four created by his AI, but he figured that he would make one all on his own, so that Bai would not see it, and with a different style of moving wall in front of it. He aimed the symbol-carrying spaceship so that it would reflect off a wall that his AI had already constructed, and then move upwards along the middle of the game field.</p>
-<p><span style="color:oklch(0.7 0.15 160)">"PA GU..."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"PA GU..."</span></p>
 <p>Come on, Zei thought, finish the symbol-carrying spaceship.</p>
-<p><span style="color:oklch(0.7 0.15 160)">"SO ... BI ... ZE ... HA ..."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"SO ... BI ... ZE ... HA ..."</span></p>
 <p>Zei put down a few last squares.</p>
-<p><span style="color:oklch(0.7 0.15 160)">"MU ... FO ..."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"MU ... FO ..."</span></p>
 <p>And... done.</p>
 <p>Zei let out a long breath.</p>
-<p><span style="color:oklch(0.7 0.15 160)">"SHI ... LE ... PA ... TAU FA"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.725 0.138 160.0);--spk-dk:oklch(0.896 0.138 160.0)">"SHI ... LE ... PA ... TAU FA"</span></p>
 <p>Gliders started flying. Zei's symbol-carrying spaceship started moving west from the southeast corner. The portion of the game field that Zei could see increased.</p>
 <p>Both AI transcripts were focused intensely on exploiting their territories, building more gliders, spaceships and walls, and expanding.</p>
 <p>After a few hundred turns, Zei and Bai's gliders began to crash into each other, and then into each other's spaceships and walls.</p>
@@ -332,7 +334,7 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 <p>An unexpected set of gliders knocked out another two of Zei's symbols, one slightly southwest of the center of the field, and another slightly west of the center near the south end. Another set of gliders unexpectedly hit Zei's southeast base, but bounced off harmlessly against now well-prepared walls.</p>
 <p>Sitting on the other side of the room, in less comfortable public seating, Fin gazed with fear at the gameboard as well.</p>
 <p>Finally, something inside of Zei's mind clicked.</p>
-<p><span style="color:oklch(0.7 0.15 346.66666666666663)">"Take my fourth westernmost symbol"</span>, he told the AI. <span style="color:oklch(0.7 0.15 346.66666666666663)">"Take the best sixteen strategies that you can come up with. Construct near that symbol a factory capable of executing each of those strategies. It should be activated by a glider coming in from the southwest, and the exact strategy chosen should depend on the type of glider and the time it hits. Then, near my second westernmost symbol, make that glider. Allocate eighty percent of resources this intervention turn to this."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Take my fourth westernmost symbol"</span>, he told the AI. <span class="spk" style="--spk-lt:oklch(0.591 0.150 346.7);--spk-dk:oklch(0.716 0.150 346.7)">"Take the best sixteen strategies that you can come up with. Construct near that symbol a factory capable of executing each of those strategies. It should be activated by a glider coming in from the southwest, and the exact strategy chosen should depend on the type of glider and the time it hits. Then, near my second westernmost symbol, make that glider. Allocate eighty percent of resources this intervention turn to this."</span></p>
 <p>The AI started thinking in detail, implementing the factory, and the glider.</p>
 <p>Bai's AI started thinking about countermeasures to all sixteen strategies, but soon hit a limit: it could not optimize defenses against all of them at the same time.</p>
 <p>Bai's AI also focused on increasing defenses across her own western flank. Zei's <em>first</em> gamble paid off, he realized: Bai herself did not realize just how much damage she had done on the west side, and just how little Zei had done to compensate. And so neither she nor her AI realized that by this point, Zei's fourth westernmost symbol could be in the middle of the field.</p>
@@ -400,24 +402,24 @@ body > .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 <p>Bai resigned.</p>
 <p>The audience cheered.</p>
 <hr>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Congratulations, you two-"</span>, Mu began to speak, standing in the waiting room along with Zei and Bai.</p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Congratulations, Zei. You only had to wait until our last season to beat me."</span></p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"You played the best game of your life today, Bai."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"Congratulations, you two-"</span>, Mu began to speak, standing in the waiting room along with Zei and Bai.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"Congratulations, Zei. You only had to wait until our last season to beat me."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"You played the best game of your life today, Bai."</span></p>
 <p>Mu paused for a few moments.</p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"The priests did not even know what you two would come up with. They told me that they wanted to make the game a little more ... <em>realistic</em> - but they were as curious as anyone else to find out what that means."</span></p>
-<p><span style="color:oklch(0.7 0.15 26.666666666666664)">"Realistic?"</span>, Bai exclaimed incredulously. <span style="color:oklch(0.7 0.15 26.666666666666664)">"How is it at all realistic that AIs can read each other's minds?"</span></p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"It sounded crazy to me too. But the more I think about it, the more I've come to see their point."</span></p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Look at the Veridian Steering system, for example. It's one of the most opaque parts of the government - even the Keepers don't know who each other are - and yet one of the most trustworthy and incorruptible parts precisely for that reason. Similar for the Courts - anonymous, randomly selected committees out of a large pool."</span></p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"But the Parliament is transparent, and so when it comes to the Parliament's direct decisions - large-scale infrastructure, foreign policy, healthcare, all the things that it's funding - everyone keeps exploiting and outsmarting it. Same with the quadratic funding - actually, it's even worse. Keepers, Sentinels and Court judges are not fully insulated - it is still Parliament committees that are approving them - but at least there's a layer of indirection there, and those positions are also gated by prediction scores."</span></p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"That's the lesson. In the real world, it's not just thinking well that matters, it's also hiding your thoughts - sometimes, even hiding your thoughts from your allies or the people you're meant to serve."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"The priests did not even know what you two would come up with. They told me that they wanted to make the game a little more ... <em>realistic</em> - but they were as curious as anyone else to find out what that means."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"Realistic?"</span>, Bai exclaimed incredulously. <span class="spk" style="--spk-lt:oklch(0.692 0.150 26.7);--spk-dk:oklch(0.851 0.150 26.7)">"How is it at all realistic that AIs can read each other's minds?"</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"It sounded crazy to me too. But the more I think about it, the more I've come to see their point."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"Look at the Veridian Steering system, for example. It's one of the most opaque parts of the government - even the Keepers don't know who each other are - and yet one of the most trustworthy and incorruptible parts precisely for that reason. Similar for the Courts - anonymous, randomly selected committees out of a large pool."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"But the Parliament is transparent, and so when it comes to the Parliament's direct decisions - large-scale infrastructure, foreign policy, healthcare, all the things that it's funding - everyone keeps exploiting and outsmarting it. Same with the quadratic funding - actually, it's even worse. Keepers, Sentinels and Court judges are not fully insulated - it is still Parliament committees that are approving them - but at least there's a layer of indirection there, and those positions are also gated by prediction scores."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"That's the lesson. In the real world, it's not just thinking well that matters, it's also hiding your thoughts - sometimes, even hiding your thoughts from your allies or the people you're meant to serve."</span></p>
 <p>Zei and Bai both stared at Mu.</p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"Anyway, you've both performed extremely well today."</span></p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"Anyway, you've both performed extremely well today."</span></p>
 <p>A robot slid in carrying two bags, one with the number 1 on the side and the other with the number 2.</p>
 <p>Mu handed the first bag to Zei and the second bag to Bai.</p>
 <p>Zei and Bai both sat down and started looking at the contents inside their bags. A plaque, a scratch-off one-time-scannable code containing some cryptographic tokens and credentials, and smaller gifts: a cup, a handwriting instrument, and an ozone-based electric water disinfection pen.</p>
 <p>Bai began studying all of the gift items in detail. Zei immediately started to scratch off the cover from the scannable code, and took out his hand device to prepare to scan it. He had been hoping to be able to buy his mom a new compute box for many months now, and he still could not believe that now he could finally actually get it.</p>
 <p>Mu stood up.</p>
-<p><span style="color:oklch(0.7 0.15 173.33333333333331)">"I hope you both have a good rest"</span>, she said, as she turned and began to leave the room.</p>
+<p><span class="spk" style="--spk-lt:oklch(0.571 0.150 173.3);--spk-dk:oklch(0.688 0.150 173.3)">"I hope you both have a good rest"</span>, she said, as she turned and began to leave the room.</p>
 <p>As soon as Mu was gone, Zei noticed that he got one gift that Bai did not: a dark purple letter, with an inscription on the front.</p>
 <center><div class="dz-card dz-mono" style="font-family:'TeX Gyre Chorus',cursive;font-size:17px;line-height:1.55"><div class="dz-line" style="margin:3px 0;padding-left:2ch"><span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">dun</span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;">fe</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">tin di zei</span></span></span> <span style="white-space:nowrap"><span style="font-family:'TeX Gyre Chorus',cursive;">de</span>&nbsp;<span style="white-space:nowrap"><span style="color:#e6f4ff;font-family:'TeX Gyre Chorus',cursive">kin kie</span></span></span></div></div></center>
 <p>"For Zei's eyes only"</p>
