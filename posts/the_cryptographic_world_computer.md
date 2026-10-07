@@ -153,7 +153,7 @@ As an AI might say, the only *honest* conclusion (ok fine, the *honest punchline
 
 <p style="text-align: center"><em class="select-text pointer-events-auto">How much crypto is in crypto? 2009 vs 2020 vs 2030</em></p>
 
-Cryptography is not the only science that matters. Also important are: [formal verification](https://vitalik.eth.limo/general/2026/05/18/fv.html), database theory, improvements in peer-to-peer networking theory, information theory, economics and much more. But all of those things are compatible with the fundamental core of “everyone tries to make the next block with valid PoW, one guy succeeds, broadcasts it, everyone else downloads it and re-executes, repeat”. The cryptographic changes are not.
+Cryptography is not the only science that matters. Also important are: [formal verification](https://vitalik.eth.limo/general/2026/05/18/fv.html), database theory, peer-to-peer networking theory, information theory, economics and much more. But all of those things are compatible with the fundamental core of “everyone tries to make the next block with valid PoW, one guy succeeds, broadcasts it, everyone else downloads it and re-executes, repeat”. The cryptographic changes are not.
 
 Now, what does this mean for users?
 
