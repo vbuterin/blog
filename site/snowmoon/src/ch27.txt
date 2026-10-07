@@ -136,7 +136,7 @@ Seila showed her hand device to Evelor. Evelor briefly scrolled through the ques
 
 Zei saw the opportunity to speak. ![Zei: "Yep, that's just an extension over garbled circuits - you probably want verifiable garbled circuits. Overhead is quite nasty-"]
 
-![Evelor: "There's optimizations specific to AI computation. Remember, almost everything inside a large language model is linear. The nonlinear part is necessary for the language to be smart, but it's only a tenth of a percent of the entire computation."]
+![Evelor: "There's optimizations specific to AI computation. Remember, almost everything inside a large language model is linear. The nonlinear part is necessary for the model to be smart, but it's only a tenth of a percent of the entire computation."]
 
 Zei realized that, on this particular specialized topic, he had been outmatched. Looks like in his nine months of studying cryptography he had not managed to become smarter than everyone at everything.
 

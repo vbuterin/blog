@@ -73,7 +73,7 @@ Zei stopped, and showed his watch to Fin.
 
 ![Zei: "Okay, anyway, it says Mun Gui 1842. We... just passed 1990 Hun Min. So it's behind us."]
 
-![Fin: "Let's just turn left here on 20th, and then left again on Mun Gui?"]
+![Fin: "Let's just right left here on 20th, and then right again on Mun Gui?"]
 
 Zei checked over the math in his mind. Named streets were spaced two hundred meters apart, H to M was four streets. House numbers were just meters, so to get from 2000 to 1842 they had to walk one hundred fifty eight meters. Eight hundred and one hundred fifty eight together is ... nine hundred fifty eight meters to walk.  The lesson starts at seventy thousand, so they had a little under a thousand ticks, or more colloquially, ten minutes. A slow walking pace is one meter per tick, and Fin and Zei were fast. So they were fine.
 
@@ -176,7 +176,7 @@ The instructor pressed a button on his watch, and a slide showed up on the front
 
 </wide_device_view>
 
-![Instructor: "Imagine that we have two jars of gas. Each jar has a million molecules. But in the jar on the left, the molecules are moving much faster. Suppose, in the jar on the left, you can represent the velocities with six-digit numbers, from zero to 999,999. And in the jar on the right, the molecules are moving slowly, so you can represent the velocities with six-digit numbers, from zero to 99."]
+![Instructor: "Imagine that we have two jars of gas. Each jar has a million molecules. But in the jar on the left, the molecules are moving much faster. Suppose, in the jar on the left, you can represent the velocities with six-digit numbers, from zero to 999,999. And in the jar on the right, the molecules are moving slowly, so you can represent the velocities with two-digit numbers, from zero to 99."]
 
 
 ![Instructor: "Can someone tell me, how many digits do you need to fully represent everything going on in the jar on the left? Assume that they already know it's gas and there's a million molecules, the only free variable is the velocities."]

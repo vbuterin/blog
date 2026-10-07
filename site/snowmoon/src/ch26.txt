@@ -85,7 +85,7 @@ ci mui dau fe ti li cin pin cu bun
 
 <blockquote>
 
-gai dei de zei biu ka pai hui pen li bia
+gai dei de zei biu ka pai hui pen li lia
 ci pai hui pen fei ka fei go de gi bai pai hui li lia
 ci sa dzu pai hui li dzen fe ten min de bin dai cu man jei cu su kun gau
 
@@ -106,7 +106,7 @@ ko ti dzen fe gi pui gau ji dan
 <blockquote>
 
 gai dei de zei dzun ka gi dan pen li lia
-co ti ka gi jan li san cu sun cu mo
+ci ti ka gi jan li san cu sun cu mo
 ci ti ju fe gi kai de sai hui cu gi dau kin zun
 
 </blockquote>
