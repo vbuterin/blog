@@ -199,7 +199,7 @@ Next, we treat this extension as _columns_, and make a Merkle tree of the column
 
 </center><br>
 
-Now, let's suppose that the prover wants to prove an evaluation of this polynomial at some point $r = \{r_0, r_1, r_2, r_3\}$. There is one nuance in Binius that makes it somewhat weaker than other polynomial commitment schemes: the prover should not know, or be able to guess, $s$, until after they committed to the Merkle root (in other words, $r$ should be a pseudo-random value that depends on the Merkle root). This makes the scheme useless for "database lookup" (eg. "ok you gave me the Merkle root, now prove to me $P(0, 0, 1, 0)$!"). But the actual zero-knowledge proof protocols that we use generally don't need "database lookup"; they simply need to check the polynomial at a random evaluation point. Hence, this restriction is okay for our purposes.
+Now, let's suppose that the prover wants to prove an evaluation of this polynomial at some point $r = \{r_0, r_1, r_2, r_3\}$. There is one nuance in Binius that makes it somewhat weaker than other polynomial commitment schemes: the prover should not know, or be able to guess, $r$, until after they committed to the Merkle root (in other words, $r$ should be a pseudo-random value that depends on the Merkle root). This makes the scheme useless for "database lookup" (eg. "ok you gave me the Merkle root, now prove to me $P(0, 0, 1, 0)$!"). But the actual zero-knowledge proof protocols that we use generally don't need "database lookup"; they simply need to check the polynomial at a random evaluation point. Hence, this restriction is okay for our purposes.
 
 Suppose we pick $r = \{1, 2, 3, 4\}$ (the polynomial, at this point, evaluates to $-137$; you can confirm it [with this code](https://github.com/ethereum/research/blob/master/binius/utils.py#L100)). Now, we get into the process of actually making the proof. We split up $r$ into two parts: the first part $\{1, 2\}$ representing a linear combination of _columns within a row_, and the second part $\{3, 4\}$ representing a linear combination _of rows_. We compute a "tensor product", both for the column part:
 
@@ -329,11 +329,12 @@ $= 1 + x_0 + x_2 + x_2x_1 + x_3 + x_2x_3 + x_0x_2x_3 + x_1x_2x_3 + x_0x_1x_2x_3$
 
 </center>
 
-This is a relatively uncommon notation, but I like representing binary field elements as integers, taking the bit representation where more-significant bits are to the right. That is, $\texttt{1} = 1$, $x_0 = \texttt{01} = 2$, $1 + x_0 = \texttt{11} = 3$, $1 + x_0 + x_2 = \texttt{11001000} = 19$, and so forth. $\texttt{1100101010001111}$ is, in this representation, 61779.
+This is a relatively uncommon notation, but I like representing binary field elements as integers, taking the bit representation where more-significant bits are to the right. That is, $\texttt{1} = 1$, $x_0 = \texttt{01} = 2$, $1 + x_0 = \texttt{11} = 3$, $1 + x_0 + x_3 = \texttt{11001} = 19$, and so forth. $\texttt{1100101010001111}$ is, in this representation, 61779.
 
 Addition in binary fields is just XOR (and, incidentally, so is subtraction); note that this implies that $x + x = 0$ for any $x$. To multiply two elements $x * y$, there's a pretty simple recursive algorithm: split each number into two halves:
 
 $x = L_x + R_x * x_k$
+
 $y = L_y + R_y * x_k$
 
 Then, split up the multiplication:
@@ -353,7 +354,7 @@ Division in binary fields is done by combining multiplication and inversion: $\f
 
 </center><br>
 
-The beautiful thing about this type of binary field is that it combines some of the best parts of "regular" integers and modular arithmetic. Like regular integers, binary field elements are unbounded: you can keep extending as far as you want. But like modular arithmetic, if you do operations over values within a certain size limit, all of your answers also stay within the same bound. For example, if you take successive powers of $42$, you get:
+The beautiful thing about this type of binary field is that it combines some of the best parts of "regular" integers and modular arithmetic. Like regular integers, binary field elements are unbounded: you can keep extending as far as you want. But like modular arithmetic, if you do operations over values within a certain size limit, all of your answers also stay within the same bound. For example, if you take successive powers of $42$ in 8-bit binary field, you get:
 
 $$1, 42, 199, 215, 245, 249, 180, 91...$$
 
