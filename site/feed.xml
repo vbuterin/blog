@@ -11,6 +11,15 @@
   </image>
 
 <item>
+<title>Digital minimalism</title>
+<link>https://vitalik.ca/general/2026/10/31/digital_minimalism.html</link>
+<guid>https://vitalik.ca/general/2026/10/31/digital_minimalism.html</guid>
+<pubDate>Sat, 31 Oct 2026 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
 <title>The cryptographic world computer</title>
 <link>https://vitalik.ca/general/2026/09/27/the_cryptographic_world_computer.html</link>
 <guid>https://vitalik.ca/general/2026/09/27/the_cryptographic_world_computer.html</guid>
@@ -218,18 +227,18 @@
 
 
 <item>
-<title>We should talk less about public goods funding and more about open source funding</title>
-<link>https://vitalik.ca/general/2025/03/29/pubos.html</link>
-<guid>https://vitalik.ca/general/2025/03/29/pubos.html</guid>
+<title>The tree ring model of culture and politics</title>
+<link>https://vitalik.ca/general/2025/03/29/treering.html</link>
+<guid>https://vitalik.ca/general/2025/03/29/treering.html</guid>
 <pubDate>Sat, 29 Mar 2025 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
 
 <item>
-<title>The tree ring model of culture and politics</title>
-<link>https://vitalik.ca/general/2025/03/29/treering.html</link>
-<guid>https://vitalik.ca/general/2025/03/29/treering.html</guid>
+<title>We should talk less about public goods funding and more about open source funding</title>
+<link>https://vitalik.ca/general/2025/03/29/pubos.html</link>
+<guid>https://vitalik.ca/general/2025/03/29/pubos.html</guid>
 <pubDate>Sat, 29 Mar 2025 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -677,6 +686,15 @@
 
 
 <item>
+<title>收入-邪恶曲线：思考“公共物品融资优先”的另一种方式</title>
+<link>https://vitalik.ca/general/2022/10/28/revenue_evil_zhCN.html</link>
+<guid>https://vitalik.ca/general/2022/10/28/revenue_evil_zhCN.html</guid>
+<pubDate>Fri, 28 Oct 2022 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
 <title>The Revenue-Evil Curve: a different way to think about prioritizing public goods funding</title>
 <link>https://vitalik.ca/general/2022/10/28/revenue_evil.html</link>
 <guid>https://vitalik.ca/general/2022/10/28/revenue_evil.html</guid>
@@ -689,15 +707,6 @@
 <title>我在加密世界的一些个人体验</title>
 <link>https://vitalik.ca/general/2022/10/28/ux_zhCN.html</link>
 <guid>https://vitalik.ca/general/2022/10/28/ux_zhCN.html</guid>
-<pubDate>Fri, 28 Oct 2022 00:00:00 +0000</pubDate>
-<description></description>
-</item>
-
-
-<item>
-<title>收入-邪恶曲线：思考“公共物品融资优先”的另一种方式</title>
-<link>https://vitalik.ca/general/2022/10/28/revenue_evil_zhCN.html</link>
-<guid>https://vitalik.ca/general/2022/10/28/revenue_evil_zhCN.html</guid>
 <pubDate>Fri, 28 Oct 2022 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -992,18 +1001,18 @@
 
 
 <item>
-<title>El recurso escaso más importante es la legitimidad</title>
-<link>https://vitalik.ca/general/2021/03/23/legitimacy_ES.html</link>
-<guid>https://vitalik.ca/general/2021/03/23/legitimacy_ES.html</guid>
+<title>The Most Important Scarce Resource is Legitimacy</title>
+<link>https://vitalik.ca/general/2021/03/23/legitimacy.html</link>
+<guid>https://vitalik.ca/general/2021/03/23/legitimacy.html</guid>
 <pubDate>Tue, 23 Mar 2021 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
 
 <item>
-<title>The Most Important Scarce Resource is Legitimacy</title>
-<link>https://vitalik.ca/general/2021/03/23/legitimacy.html</link>
-<guid>https://vitalik.ca/general/2021/03/23/legitimacy.html</guid>
+<title>El recurso escaso más importante es la legitimidad</title>
+<link>https://vitalik.ca/general/2021/03/23/legitimacy_ES.html</link>
+<guid>https://vitalik.ca/general/2021/03/23/legitimacy_ES.html</guid>
 <pubDate>Tue, 23 Mar 2021 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -1037,18 +1046,18 @@
 
 
 <item>
-<title>La Guía Incompleta de los Rollups</title>
-<link>https://vitalik.ca/general/2021/01/05/rollup_ES.html</link>
-<guid>https://vitalik.ca/general/2021/01/05/rollup_ES.html</guid>
+<title>An Incomplete Guide to Rollups</title>
+<link>https://vitalik.ca/general/2021/01/05/rollup.html</link>
+<guid>https://vitalik.ca/general/2021/01/05/rollup.html</guid>
 <pubDate>Tue, 05 Jan 2021 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
 
 <item>
-<title>An Incomplete Guide to Rollups</title>
-<link>https://vitalik.ca/general/2021/01/05/rollup.html</link>
-<guid>https://vitalik.ca/general/2021/01/05/rollup.html</guid>
+<title>La Guía Incompleta de los Rollups</title>
+<link>https://vitalik.ca/general/2021/01/05/rollup_ES.html</link>
+<guid>https://vitalik.ca/general/2021/01/05/rollup_ES.html</guid>
 <pubDate>Tue, 05 Jan 2021 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -1091,18 +1100,18 @@
 
 
 <item>
-<title> 7ème tour des subventions Gitcoin - Rétrospective </title>
-<link>https://vitalik.ca/general/2020/10/18/round7_FR.html</link>
-<guid>https://vitalik.ca/general/2020/10/18/round7_FR.html</guid>
+<title>Gitcoin Grants Round 7 Retrospective</title>
+<link>https://vitalik.ca/general/2020/10/18/round7.html</link>
+<guid>https://vitalik.ca/general/2020/10/18/round7.html</guid>
 <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
 
 <item>
-<title>Gitcoin Grants Round 7 Retrospective</title>
-<link>https://vitalik.ca/general/2020/10/18/round7.html</link>
-<guid>https://vitalik.ca/general/2020/10/18/round7.html</guid>
+<title> 7ème tour des subventions Gitcoin - Rétrospective </title>
+<link>https://vitalik.ca/general/2020/10/18/round7_FR.html</link>
+<guid>https://vitalik.ca/general/2020/10/18/round7_FR.html</guid>
 <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -1532,18 +1541,18 @@
 
 
 <item>
-<title>[Mirror] Bir Proof of Stake Tasarım Felsefesi</title>
-<link>https://vitalik.ca/general/2016/12/29/pos_design_TR.html</link>
-<guid>https://vitalik.ca/general/2016/12/29/pos_design_TR.html</guid>
+<title>[Mirror] A Proof of Stake Design Philosophy</title>
+<link>https://vitalik.ca/general/2016/12/29/pos_design.html</link>
+<guid>https://vitalik.ca/general/2016/12/29/pos_design.html</guid>
 <pubDate>Thu, 29 Dec 2016 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
 
 <item>
-<title>[Mirror] A Proof of Stake Design Philosophy</title>
-<link>https://vitalik.ca/general/2016/12/29/pos_design.html</link>
-<guid>https://vitalik.ca/general/2016/12/29/pos_design.html</guid>
+<title>[Mirror] Bir Proof of Stake Tasarım Felsefesi</title>
+<link>https://vitalik.ca/general/2016/12/29/pos_design_TR.html</link>
+<guid>https://vitalik.ca/general/2016/12/29/pos_design_TR.html</guid>
 <pubDate>Thu, 29 Dec 2016 00:00:00 +0000</pubDate>
 <description></description>
 </item>
@@ -1554,6 +1563,15 @@
 <link>https://vitalik.ca/general/2016/12/10/qap.html</link>
 <guid>https://vitalik.ca/general/2016/12/10/qap.html</guid>
 <pubDate>Sat, 10 Dec 2016 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Situazioni di collusione</title>
+<link>https://vitalik.ca/general/2000/01/01/On_Collusion_IT.html</link>
+<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_IT.html</guid>
+<pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
 <description></description>
 </item>
 
@@ -1571,15 +1589,6 @@
 <title>Na colusão</title>
 <link>https://vitalik.ca/general/2000/01/01/On_Collusion_Portuguese.html</link>
 <guid>https://vitalik.ca/general/2000/01/01/On_Collusion_Portuguese.html</guid>
-<pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
-<description></description>
-</item>
-
-
-<item>
-<title>Situazioni di collusione</title>
-<link>https://vitalik.ca/general/2000/01/01/On_Collusion_IT.html</link>
-<guid>https://vitalik.ca/general/2000/01/01/On_Collusion_IT.html</guid>
 <pubDate>Sat, 01 Jan 2000 00:00:00 +0000</pubDate>
 <description></description>
 </item>
