@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import os, sys, datetime, re
+import os, sys, datetime, re, html
 
 PRE_HEADER = """
 
@@ -215,13 +215,13 @@ def generate_feed(global_config, metadatas):
 
     def get_item(metadata):
         return RSS_ITEM_TEMPLATE.format(
-            title=metadata['title'],
+            title=html.escape(metadata['title']),
             link=get_link('/'.join([global_config['posts_directory'], metadata['date'], metadata['filename']])),
             pub_date=get_date(metadata['date']), description=''
         )
 
     return RSS_MAIN_TEMPLATE.strip().format(
-        title=global_config['title'],
+        title=html.escape(global_config['title']),
         link=get_link(''),
         icon=global_config['icon'],
         items="\n".join(map(get_item, metadatas))
@@ -231,7 +231,7 @@ def generate_feed(global_config, metadatas):
 
 
 def make_twitter_card(title, global_config):
-    return TWITTER_CARD_TEMPLATE.format(title, global_config['icon'])
+    return TWITTER_CARD_TEMPLATE.format(html.escape(title), global_config['icon'])
 
 
 def defancify(text):
@@ -403,7 +403,7 @@ def make_toc(toc_items, global_config, all_categories, category=None):
 
     return (
         PRE_HEADER +
-        RSS_LINK.format(root_path, title) +
+        RSS_LINK.format(root_path, html.escape(title)) +
         HEADER_TEMPLATE.replace('$root', root_path) +
         TOGGLE_COLOR_SCHEME_JS +
         make_twitter_card(title, global_config) +
@@ -445,7 +445,7 @@ if __name__ == '__main__':
         )
         total_file_contents = (
             PRE_HEADER +
-            RSS_LINK.format(root_path, metadata['title']) +
+            RSS_LINK.format(root_path, html.escape(metadata['title'])) +
             HEADER_TEMPLATE.replace('$root', root_path) +
             TOGGLE_COLOR_SCHEME_JS +
             make_twitter_card(metadata['title'], global_config) +
