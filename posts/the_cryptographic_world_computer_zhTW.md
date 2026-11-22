@@ -232,21 +232,21 @@ _原文：[The cryptographic world computer](../../../2026/09/27/the_cryptograph
     <path d="M 632,368 L 632,368 A 4 4 0 0 1 636,364 L 672,364 A 4 4 0 0 1 676,368 L 676,412 A 4 4 0 0 1 672,416 L 592,416 A 4 4 0 0 1 588,412 L 588,394.5 A 4 4 0 0 1 592,390.5 L 628,390.5 A 4 4 0 0 0 632,386.5 Z"/>
   </g>
   <g font-size="16" fill="#9a3412" text-anchor="middle">
-    <text x="654" y="34" font-size="12.5">這就是</text>
-    <text x="654" y="49.4" font-size="12.5">為何</text>
-    <text x="632" y="64.8" font-size="12.5">允許這麼做</text>
-    <text x="654" y="120" font-size="12.5">這就是</text>
-    <text x="654" y="135.4" font-size="12.5">為何</text>
-    <text x="632" y="150.8" font-size="12.5">允許這麼做</text>
-    <text x="654" y="206" font-size="12.5">這就是</text>
-    <text x="654" y="221.4" font-size="12.5">為何</text>
-    <text x="632" y="236.8" font-size="12.5">允許這麼做</text>
-    <text x="654" y="292" font-size="12.5">這就是</text>
-    <text x="654" y="307.4" font-size="12.5">為何</text>
-    <text x="632" y="322.8" font-size="12.5">允許這麼做</text>
-    <text x="654" y="378" font-size="12.5">這就是</text>
-    <text x="654" y="393.4" font-size="12.5">為何</text>
-    <text x="632" y="408.8" font-size="12.5">允許這麼做</text>
+    <text x="654" y="34" font-size="13">這就是</text>
+    <text x="654" y="49.4" font-size="13">為何</text>
+    <text x="632" y="64.8" font-size="13">允許這麼做</text>
+    <text x="654" y="120" font-size="13">這就是</text>
+    <text x="654" y="135.4" font-size="13">為何</text>
+    <text x="632" y="150.8" font-size="13">允許這麼做</text>
+    <text x="654" y="206" font-size="13">這就是</text>
+    <text x="654" y="221.4" font-size="13">為何</text>
+    <text x="632" y="236.8" font-size="13">允許這麼做</text>
+    <text x="654" y="292" font-size="13">這就是</text>
+    <text x="654" y="307.4" font-size="13">為何</text>
+    <text x="632" y="322.8" font-size="13">允許這麼做</text>
+    <text x="654" y="378" font-size="13">這就是</text>
+    <text x="654" y="393.4" font-size="13">為何</text>
+    <text x="632" y="408.8" font-size="13">允許這麼做</text>
   </g>
   <g fill="#dbeafe" stroke="#2563eb" stroke-width="2">
     <rect x="570" y="2" width="46.2" height="25.5" rx="4"/>
