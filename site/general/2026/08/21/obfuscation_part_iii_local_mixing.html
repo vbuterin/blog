@@ -607,8 +607,11 @@ input x, acted on by a random permutation C interleaved with slice
 gates, then by an independent random circuit D interleaved with more
 slice gates. Between them, fourteen CNOTs copy the top half into the
 bottom half, which is the slice register pinned to zero.</desc>
-<style>.svg-scope-1lswzmn .ts { font-family:ui-sans-serif,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif; font-size:13px; fill:#3c3c36 }
-.svg-scope-1lswzmn .th { font-family:ui-sans-serif,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif; font-size:14px; fill:#3c3c36 }</style>
+<style>.svg-scope-1lswzmn .ts {
+font-family:ui-sans-serif,-apple-system,"Segoe
+UI",Helvetica,Arial,sans-serif; font-size:13px; fill:#3c3c36 }
+.svg-scope-1lswzmn .th { font-family:ui-sans-serif,-apple-system,"Segoe
+UI",Helvetica,Arial,sans-serif; font-size:14px; fill:#3c3c36 }</style>
 <line x1="96" y1="56" x2="570" y2="56" stroke="#b6b6ae" stroke-width="0.6"/>
 <line x1="96" y1="69" x2="570" y2="69" stroke="#b6b6ae" stroke-width="0.6"/>
 <line x1="96" y1="82" x2="570" y2="82" stroke="#b6b6ae" stroke-width="0.6"/>
@@ -1019,10 +1022,16 @@ Rainbow-table replacement of a four-gate window
 states sorted into buckets, the rainbow-table entries for the matched
 bucket, and the spliced replacement. The chosen path is blue; sibling
 paths converging on the same class or bucket are bluish grey.</desc>
-<style>.svg-scope-175syhe .t { font-family:ui-sans-serif,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif; font-size:11px }
-.svg-scope-175syhe .s { font-family:ui-sans-serif,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif; font-size:9px }
-.svg-scope-175syhe .h { font-family:ui-sans-serif,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif; font-size:12px; font-weight:600 }
-.svg-scope-175syhe .p { font-family:ui-monospace,Menlo,Consolas,monospace; font-size:8px }</style>
+<style>.svg-scope-175syhe .t {
+font-family:ui-sans-serif,-apple-system,"Segoe
+UI",Helvetica,Arial,sans-serif; font-size:11px } .svg-scope-175syhe .s {
+font-family:ui-sans-serif,-apple-system,"Segoe
+UI",Helvetica,Arial,sans-serif; font-size:9px } .svg-scope-175syhe .h {
+font-family:ui-sans-serif,-apple-system,"Segoe
+UI",Helvetica,Arial,sans-serif; font-size:12px; font-weight:600 }
+.svg-scope-175syhe .p {
+font-family:ui-monospace,Menlo,Consolas,monospace; font-size:8px
+}</style>
 <defs><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#2B6CB0" stroke-width="1.7" stroke-linecap="round"/></marker></defs>
 <rect x="818" y="58" width="40" height="50" rx="3" fill="#EBF3FA" stroke="#2B6CB0" stroke-width="1.6"/>
 <line x1="827.5" y1="65.0" x2="827.5" y2="101.0" stroke="#eeeee8" stroke-width="0.5"/>
@@ -3391,11 +3400,13 @@ How the Gray fold cancellation works
 corner shows the expansion of u times z at that state. Terms appearing
 an even number of times across the four corners are shown in matching
 muted colours; the single surviving term P times Q is circled in the
-bottom-right corner.</desc>
-<style>.svg-scope-azgd8r .ts { font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 13px }
-.svg-scope-azgd8r .tm { font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 10px }
-.svg-scope-azgd8r .th { font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 600 }</style>
-<defs>
+bottom-right corner.</desc> <style>.svg-scope-azgd8r .ts { font-family:
+ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+font-size: 13px } .svg-scope-azgd8r .tm { font-family: ui-sans-serif,
+-apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 10px
+} .svg-scope-azgd8r .th { font-family: ui-sans-serif, -apple-system,
+"Segoe UI", Helvetica, Arial, sans-serif; font-size: 13px; font-weight:
+600 }</style> <defs>
 <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#6b6b63" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
 <marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#6b6b63" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></marker>
 <marker id="ar3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#D85A30" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></marker>
@@ -3644,21 +3655,21 @@ circuit. Let's re-summarize the specific attacks:</p>
 <col style="width: 38%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th>Relation</th>
 <th>Attacker</th>
 <th>Complexity</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>Exact linear matches of any weight</td>
 <td>Gaussian elimination or more advanced matrix inversion</td>
 <td><span data-type="inlineMath" data-latex="O(|Obf(C)|)^{\approx 2.8}"
 data-display="no" data-evaluate="no"><span
 class="math inline">\(O(|Obf(C)|)^{\approx 2.8}\)</span></span></td>
 </tr>
-<tr class="even">
+<tr>
 <td>Exact degree-k matches of any weight</td>
 <td>Gaussian elimination or more advanced matrix inversion on k'th
 tensor power of <span data-type="inlineMath" data-latex="Obf(C)"
@@ -3668,7 +3679,7 @@ class="math inline">\(Obf(C)\)</span></span></td>
 data-display="no" data-evaluate="no"><span
 class="math inline">\(O(|Obf(C)|)^{\approx 2.8}\)</span></span></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Correlations with weight-k linear functions</td>
 <td>Sparse learning parity with noise (LPN); <a
 href="https://www.cs.cmu.edu/~odonnell/papers/juntas.pdf">MOS
@@ -3677,7 +3688,7 @@ algorithm</a></td>
 data-display="no" data-evaluate="no"><span
 class="math inline">\(O(|Obf(C)|)^{\approx 0.7k}\)</span></span></td>
 </tr>
-<tr class="even">
+<tr>
 <td>Correlations with weight-k nonlinear functions</td>
 <td>Exhaustive search, junta learning; <a
 href="https://www.cs.cmu.edu/~odonnell/papers/juntas.pdf">MOS
@@ -4133,14 +4144,14 @@ correspondence like this:</p>
 <col style="width: 75%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th>Object</th>
 <th>Where it's hiding plaintext</th>
 <th>How you compute on it</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>Elliptic curves</td>
 <td>Discrete log wrt a standardized point <span data-type="inlineMath"
 data-latex="G" data-display="no" data-evaluate="no"><span
@@ -4160,7 +4171,7 @@ Q\)</span></span> hides <span data-type="inlineMath"
 data-latex="G * (j+k)" data-display="no" data-evaluate="no"><span
 class="math inline">\(G * (j+k)\)</span></span></td>
 </tr>
-<tr class="even">
+<tr>
 <td>RSA</td>
 <td>k'th root modulo <span data-type="inlineMath" data-latex="N = pq"
 data-display="no" data-evaluate="no"><span class="math inline">\(N =
@@ -4177,7 +4188,7 @@ b^k = (ab)^k\)</span></span> mod <span data-type="inlineMath"
 data-latex="N" data-display="no" data-evaluate="no"><span
 class="math inline">\(N\)</span></span></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Lattices</td>
 <td>Approximate linear equations: <span data-type="inlineMath"
 data-latex="C * s + e = m" data-display="no" data-evaluate="no"><span
@@ -4207,7 +4218,7 @@ data-latex="\approx m_1 * m_2 * s" data-display="no"
 data-evaluate="no"><span class="math inline">\(\approx m_1 * m_2 *
 s\)</span></span>, same for addition</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Local mixing gadgetization</td>
 <td>Low-degree low-weight (but not <em>too</em> low degree or weight)
 polynomial functions of <span data-type="inlineMath" data-latex="G"
