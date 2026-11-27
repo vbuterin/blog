@@ -14,7 +14,7 @@ Some are trying to respond to this crisis by reminding us of the virtues of the 
 
 The problem is that this is a fundamentally reactionary mentality, and it fails for the exact same reasons why all other reactionary mentalities fail. If before we were at political equilibrium A, and today we are at political equilibrium B, then that alone is strong evidence that A is unstable, and even if you somehow force a transition back to A, the likely outcome is that we'll come right back to B again.
 
-As much as defenders of the ancien regime might wish otherwise, pre-internet old guard elite notions of respectability and decorum are simply fundamentally incompatible with the world as it stands in the 2020s. And so instead of trying to look backward, we need to look forward. So what is the forward-looking ideology that solves these problems? **Degen communism**.
+As much as defenders of the ancient regime might wish otherwise, pre-internet old guard elite notions of respectability and decorum are simply fundamentally incompatible with the world as it stands in the 2020s. And so instead of trying to look backward, we need to look forward. So what is the forward-looking ideology that solves these problems? **Degen communism**.
 
 ## What is degen communism?
 
@@ -34,7 +34,7 @@ Degen communist ideas can be adopted by any type of entity with a network effect
 
 ## Cryptocurrency: the avant garde in degen. Can it become degen communist?
 
-The world of cryptocurrencies is one of the sectors of society that embraces the "degen" the most. It has ups and downs that are unseen in almost any other market. Meanwhile, the actual _effects_ of the downs are often smaller than they seem, which is why the space has not collapsed completely. A 90% price drop erases billions of dollars of value, but the average dollar lost is only lost in mark-to-market book-value terms: it's people to held on the way up, and kept holding on the way down. The average coin lost from a [$100 million defi hack](https://blockworks.co/news/biggest-defi-hacks-2023) is a coin that was worth ten times less two years earlier. Sometimes, the unpredictable chaos also does good: many memecoins have donated significant amounts to charity.
+The world of cryptocurrencies is one of the sectors of society that embraces the "degen" the most. It has ups and downs that are unseen in almost any other market. Meanwhile, the actual _effects_ of the downs are often smaller than they seem, which is why the space has not collapsed completely. A 90% price drop erases billions of dollars of value, but the average dollar lost is only lost in mark-to-market book-value terms: it's people who held on the way up, and kept holding on the way down. The average coin lost from a [$100 million defi hack](https://blockworks.co/news/biggest-defi-hacks-2023) is a coin that was worth ten times less two years earlier. Sometimes, the unpredictable chaos also does good: many memecoins have donated significant amounts to charity.
 
 But even still, when the prices crash, especially due to sudden failures of projects that promised their users stability, too many people get hurt. Could we create a world where the chaos remains, but the _human_ harm that comes from the downfalls is 10x smaller? Here, I will resurrect an idea that I supported during the Terra/Luna collapse of 2022:
 
