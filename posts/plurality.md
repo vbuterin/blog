@@ -86,7 +86,7 @@ If I had to expand on that a little bit, and define Plurality the book in four b
 * **Plurality-inspired mechanism design**: there is a set of principled mathematical techniques by which you can design social, political and economic mechanisms that treat not just _individuals_, but also _connections between individuals_ as a first-class object. Doing this can create newer forms of markets and democracy that solve common problems in markets and democracy today, particularly around bridging tribal divides and polarization.
 * **Audrey's practical experience in Taiwan**: Audrey has already incorporated a lot of Plurality-aligned ideas while serving as Digital Minister in Taiwan, and this is a starting point that can be learned from and built upon.
 
-The book also includes contributions from many authors other than Glen and Audrey, and if you reach the chapters closely you will notice the different emphases. However, you will also find many common threads.
+The book also includes contributions from many authors other than Glen and Audrey, and if you read the chapters closely you will notice the different emphases. However, you will also find many common threads.
 
 <a id="4" />
 
