@@ -106,7 +106,7 @@ img,svg{max-width:100%;height:auto;}
 #color-mode-switch label{cursor:pointer;font-size:.875rem;user-select:none;}
 
 /* Responsive typography */
-@media only screen and (orientation: portrait) {
+@media only screen and (orientation: portrait) and (pointer: coarse) {
   .markdown-body{max-width:1000px; padding: 40px;}
   h1{font-size:4rem;}
   h2{font-size:3.5rem;}
@@ -221,7 +221,7 @@ img,svg{max-width:100%;height:auto;}
   gap:24px;
   margin:1em 0;
 }
-@media only screen and (orientation: portrait){
+@media only screen and (orientation: portrait) and (pointer: coarse){
   .markdown-body div[data-type="columns"]{display:block;}
   .markdown-body div[data-type="columns"] > div[data-type="column"]{margin-bottom:1em;}
   .markdown-body figure[data-type="resizable-media"] figcaption{font-size:1.4rem;}
@@ -319,7 +319,7 @@ img,svg{max-width:100%;height:auto;}
       padding-left: 4px; }
 }
 
-@media only screen and (orientation: portrait) {
+@media only screen and (orientation: portrait) and (pointer: coarse) {
     .post-link {
       display: block; }
     .post-meta {
