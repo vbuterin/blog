@@ -25,7 +25,7 @@ _原文：[Some personal user experiences](../../../2023/02/28/ux.html)_
 
 <center>
 
-![](https://vitalik.ca/images/ux/diagram.png)
+![](../../../../images/ux/diagram.png)
 
 <small>
 

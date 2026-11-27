@@ -1,0 +1,8 @@
+# Redirect all traffic from vitalik.ca to vitalik.eth.limo
+# This preserves the full URL path so old links continue to work
+# For example: vitalik.ca/general/2022/06/20/backpack.html
+# will redirect to: vitalik.eth.limo/general/2022/06/20/backpack.html
+
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^(www\.)?vitalik\.ca$ [NC]
+RewriteRule ^(.*)$ https://vitalik.eth.limo/$1 [R=301,L]
